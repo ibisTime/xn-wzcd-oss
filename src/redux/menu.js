@@ -131,7 +131,14 @@ function getFilterList(result, data) {
 }
 
 function createMenus(newList, result) {
-  newList.sort((a, b) => +a.orderNo > +b.orderNo).forEach(v => {
+  for(let i = 0; i < newList.length - 1; i++) {
+    for(let j = i + 1; j < newList.length; j++) {
+      if (+newList[i].orderNo > +newList[j].orderNo) {
+        [newList[i], newList[j]] = [newList[j], newList[i]];
+      }
+    }
+  }
+  newList.forEach(v => {
     v.url = getRealUrl(v.url);
     let pCode = v.parentCode;
     if (result.top2SubObj[pCode]) {

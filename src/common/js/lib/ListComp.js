@@ -18,7 +18,7 @@ const { RangePicker } = DatePicker;
 const DATE_FORMAT = 'YYYY-MM-DD';
 const DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
-export default class ListComponent extends React.Component {
+export default class ListComp extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {

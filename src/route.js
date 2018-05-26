@@ -77,6 +77,18 @@ const ROUTES = [
     component: asyncComponent(() => import('container/security/post/post'))
   },
 
+  // 贷前管理
+  // 预算单申请
+  {
+    path: '/loan/budget',
+    component: asyncComponent(() => import('container/loan/budget/budget'))
+  },
+  // 预算单申请 详情
+  {
+    path: '/loan/budget/addedit',
+    component: asyncComponent(() => import('container/loan/budget-addedit/budget-addedit'))
+  },
+
   //  贷前工具
   //  垫资请款预算单
   {

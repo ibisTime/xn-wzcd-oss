@@ -27,6 +27,12 @@ import { publicNotice } from './redux/public/notice';
 import { publicNoticeAddEdit } from './redux/public/notice-addedit';
 
 /**
+ * 贷前管理
+ */
+// 预算单申请
+import { loanBudget } from './redux/loan/budget';
+
+/**
  * 贷前工具
  */
 //  垫资请款预算单 + 详情 + 申请 + 审核 + 确认
@@ -183,6 +189,7 @@ export default combineReducers({
   publicTimeAddEdit,
   publicNotice,
   publicNoticeAddEdit,
+  loanBudget,
   loanstoolsEstimate,
   loanstoolsEstimateAddEdit,
   loanstoolsEstimateApply,

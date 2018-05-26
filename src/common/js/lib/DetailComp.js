@@ -33,7 +33,7 @@ const fileUploadBtn = (
   </Button>
 );
 
-export default class DetailComponent extends React.Component {
+export default class DetailComp extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.first = true;
