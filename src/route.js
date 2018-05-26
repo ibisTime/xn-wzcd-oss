@@ -68,6 +68,10 @@ const ROUTES = [
     path: '/system/user/addedit',
     component: asyncComponent(() => import('container/security/user-addedit/user-addedit'))
   },
+  // {
+  //   path: '/system/compConstruct',
+  //   component: asyncComponent(() => import('container/security/compConstruct/compConstruct'))
+  // },
 
   //  贷前工具
   //  垫资请款预算单

@@ -105,6 +105,7 @@ export default class DetailComponent extends React.Component {
   componentWillUnmount() {
     this.props.restore();
   }
+  // 构建详情页面
   buildDetail = (options) => {
     this.options = {
       ...this.options,
@@ -137,6 +138,7 @@ export default class DetailComponent extends React.Component {
     this.first = false;
     return this.getPageComponent(children);
   }
+  // 拼装表单数据
   beforeSubmit(err, values) {
     if (err) {
       return false;
@@ -175,6 +177,7 @@ export default class DetailComponent extends React.Component {
     values.updater = values.updater || getUserName();
     return values;
   }
+  // 自定义页面按钮校验表单
   customSubmit = (handler) => {
     this.props.form.validateFieldsAndScroll((err, values) => {
       let params = this.beforeSubmit(err, values);
@@ -184,6 +187,7 @@ export default class DetailComponent extends React.Component {
       handler && handler(params);
     });
   }
+  // 表单提交
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -206,9 +210,11 @@ export default class DetailComponent extends React.Component {
       }).catch(this.props.cancelFetching);
     });
   }
+  // 返回按钮的处理函数
   onCancel = () => {
     this.options.onCancel ? this.options.onCancel() : this.props.history.go(-1);
   }
+  // 获取文件上传的值
   normFile = (e) => {
     if (e) {
       return e.fileList.map(v => {
@@ -222,13 +228,16 @@ export default class DetailComponent extends React.Component {
     }
     return '';
   }
+  // 隐藏展示图片的modal
   handleCancel = () => this.setState({ previewVisible: false })
+  // 显示展示图片的modal
   handlePreview = (file) => {
     this.setState({
       previewImage: file.url || file.thumbUrl,
       previewVisible: true
     });
   }
+  // 文件点击事件
   handleFilePreview = (file) => {
     if (file.status === 'done') {
       let key = file.key || (file.response && file.response.key) || '';
@@ -238,6 +247,7 @@ export default class DetailComponent extends React.Component {
       showErrMsg(msg);
     }
   }
+  // 获取7牛token
   getToken() {
     if (!this.tokenFetch) {
       this.tokenFetch = true;
@@ -246,9 +256,11 @@ export default class DetailComponent extends React.Component {
       }).catch(() => this.tokenFetch = false);
     }
   }
+  // 获取图片上传的额外参数
   getUploadData = (file) => {
     return { token: this.state.token };
   }
+  // 获取页面详情
   getDetailInfo() {
     let key = this.options.key || 'code';
     let param = { [key]: this.options.code };
@@ -259,6 +271,7 @@ export default class DetailComponent extends React.Component {
       this.props.setPageData(data);
     }).catch(this.props.cancelFetching);
   }
+  // 设置搜索框的loading状态
   setSearchLoading(item, flag) {
     this.setState({
       fetching: {
@@ -266,6 +279,51 @@ export default class DetailComponent extends React.Component {
         [item.field]: flag
       }
     });
+  }
+  // 获取item.dict下的数据
+  getDictList(dict, item, startIdx = 0) {
+    if (!this.getDictList[item.field]) {
+      this.getDictList[item.field] = true;
+      let fetchList = dict.map(d => {
+        return getDictList({ parentKey: d[1] });
+      });
+      Promise.all(fetchList).then(([...dictDatas]) => {
+        let list = this.props.selectData[item.field];
+        dictDatas.forEach((data, i) => {
+          this.props.setSelectData({ data, key: dict[i][1] });
+          this.props.selectData[item.field].forEach((s, j) => {
+            data.forEach(d => {
+              if (s[dict[i][0]] === d['dkey']) {
+                list[j][dict[i][0] + 'Name'] = d['dvalue'];
+              }
+            });
+          });
+        });
+        this.props.setSelectData({
+          key: item.field,
+          data: list
+        });
+      });
+    } else if (item.pageCode) {
+      setTimeout(() => {
+        let list = this.props.selectData[item.field];
+        dict.forEach((v, i) => {
+          let data = this.props.selectData[v[1]];
+          for (let j = startIdx; j < list.length; j++) {
+            let s = list[j];
+            data.forEach(d => {
+              if (s[dict[i][0]] === d['dkey']) {
+                list[j][dict[i][0] + 'Name'] = d['dvalue'];
+              }
+            });
+          }
+        });
+        this.props.setSelectData({
+          key: item.field,
+          data: list
+        });
+      }, 20);
+    }
   }
   // 获取搜索框数据
   searchSelectChange({ keyword, item, start = 1, limit = 20, key }) {
@@ -287,6 +345,7 @@ export default class DetailComponent extends React.Component {
         let list = this.props.selectData[item.field] || [];
         list = start === 1 ? [] : list;
         this.props.setSelectData({ data: list.concat(data.list), key: item.field });
+        item.dict && this.getDictList(item.dict, item, list.length);
       }).catch(() => {
         !key && this.setSearchLoading(item, false);
       });
@@ -302,9 +361,11 @@ export default class DetailComponent extends React.Component {
       let param = item.params || {};
       fetch(item.listCode, param).then(data => {
         this.props.setSelectData({ data, key: item.field });
+        item.dict && this.getDictList(item.dict, item);
       }).catch(() => {});
     }
   }
+  // 生成页面结构
   getPageComponent = (children) => {
     const { previewImage, previewVisible } = this.state;
     return (
@@ -318,6 +379,7 @@ export default class DetailComponent extends React.Component {
       </Spin>
     );
   }
+  // 根据类型获取相应的组件
   getItemByType(type, item) {
     const { getFieldDecorator } = this.props.form;
     let rules = this.getRules(item);
@@ -353,6 +415,7 @@ export default class DetailComponent extends React.Component {
         return this.getInputComp(item, initVal, rules, getFieldDecorator);
     }
   }
+  // 选中o2m的table的某条数据
   onSelectChange = (selectedRowKeys, key) => {
     this.setState((prevState, props) => ({
       o2mSKeys: {
@@ -361,6 +424,7 @@ export default class DetailComponent extends React.Component {
       }
     }));
   }
+  // 生成o2m的table的结构
   getTableItem(item, initVal, rules, getFieldDecorator) {
     const columns = this.getTableColumns(item);
     const { o2mSKeys } = this.state;
@@ -379,6 +443,7 @@ export default class DetailComponent extends React.Component {
       </FormItem>
     );
   }
+  // 获取o2m的table的属性
   getTableProps(rowSelection, columns, item, dataSource) {
     const props = {
       columns,
@@ -392,6 +457,7 @@ export default class DetailComponent extends React.Component {
     }
     return props;
   }
+  // 获取o2m的table的头部按钮
   getTableBtn(item, hasSelected) {
     if (!item.options.buttons) {
       let _this = this;
@@ -479,6 +545,7 @@ export default class DetailComponent extends React.Component {
       </div>
     );
   }
+  // 获取o2m的table的列
   getTableColumns(item) {
     const columns = item.options.fields;
     let first = this.o2mFirst[item.field];

@@ -118,16 +118,17 @@ export default class ListComponent extends React.Component {
     }
   }
   // 获取item.dict下的数据
-  getDictList(dict, f) {
-    if (!this.getDictList[f.field]) {
-      this.getDictList[f.field] = true;
+  getDictList(dict, item, startIdx = 0) {
+    if (!this.getDictList[item.field]) {
+      this.getDictList[item.field] = true;
       let fetchList = dict.map(d => {
         return getDictList({ parentKey: d[1] });
       });
       Promise.all(fetchList).then(([...dictDatas]) => {
-        let list = this.props.searchData[f.field];
+        let list = this.props.searchData[item.field];
         dictDatas.forEach((data, i) => {
-          this.props.searchData[f.field].forEach((s, j) => {
+          this.props.setSearchData({ data, key: dict[i][1] });
+          this.props.searchData[item.field].forEach((s, j) => {
             data.forEach(d => {
               if (s[dict[i][0]] === d['dkey']) {
                 list[j][dict[i][0] + 'Name'] = d['dvalue'];
@@ -136,10 +137,29 @@ export default class ListComponent extends React.Component {
           });
         });
         this.props.setSearchData({
-          key: f.field,
+          key: item.field,
           data: list
         });
       });
+    } else if (item.pageCode) {
+      setTimeout(() => {
+        let list = this.props.searchData[item.field];
+        dict.forEach((v, i) => {
+          let data = this.props.searchData[v[1]];
+          for (let j = startIdx; j < list.length; j++) {
+            let s = list[j];
+            data.forEach(d => {
+              if (s[dict[i][0]] === d['dkey']) {
+                list[j][dict[i][0] + 'Name'] = d['dvalue'];
+              }
+            });
+          }
+        });
+        this.props.setSearchData({
+          key: item.field,
+          data: list
+        });
+      }, 20);
     }
   }
   // 导出表单
@@ -194,6 +214,7 @@ export default class ListComponent extends React.Component {
         let list = this.props.searchData[item.field] || [];
         list = start === 1 ? [] : list;
         this.props.setSearchData({ data: list.concat(data.list), key: item.field });
+        item.dict && this.getDictList(item.dict, item, list.length);
       }).catch(() => {});
     }, 300);
   }
@@ -228,6 +249,7 @@ export default class ListComponent extends React.Component {
     let values = this.props.form.getFieldsValue();
     this.getPageData(1, values);
   }
+  // 获取搜索框的真实值
   getRealSearchParams(params) {
     let result = {};
     this.options.fields.forEach(v => {
