@@ -12,12 +12,10 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
-import {
-  DetailWrapper
-} from 'common/js/build-detail';
+import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
-  state => state.securityEstimateCertian, {
+  state => state.loanstoolsEstimateCertian, {
     initStates,
     doFetching,
     cancelFetching,

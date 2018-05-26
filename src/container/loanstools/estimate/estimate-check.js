@@ -12,14 +12,10 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
-import {
-  DetailWrapper,
-  beforeDetail
-} from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
+import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
-  state => state.securityEstimateCheck, {
+  state => state.loanstoolsEstimateCheck, {
     initStates,
     doFetching,
     cancelFetching,
@@ -60,7 +56,7 @@ class EstimateCheck extends React.Component {
     }, {
       title: '审核说明',
       field: 'financeCheckNote',
-      requied: true
+      required: true
     }];
     return this.props.buildDetail({
       fields,

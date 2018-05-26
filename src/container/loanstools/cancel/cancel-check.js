@@ -12,11 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
-import {
-  DetailWrapper,
-  beforeDetail
-} from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
+import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
   state => state.loanstoolsCancelCheck, {
@@ -39,11 +35,11 @@ class CancelCheck extends React.Component {
       title: '客户姓名',
       field: 'companyCode',
       select: true,
-      requied: true
+      required: true
     }, {
       title: '作废原因',
       field: 'receiptBank',
-      requied: true
+      required: true
     }, {
       title: '预算单',
       field: 'receiptAccount'

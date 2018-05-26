@@ -1,16 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Spin, Button, Tree, Modal } from 'antd';
+import { Spin, Button, Tree, Modal, Row, Col, Form, Input } from 'antd';
 import CompAdd from 'component/comp-add/comp-add';
-import { showSucMsg, showWarnMsg } from 'common/js/util';
+import { showSucMsg, showWarnMsg, getUserName } from 'common/js/util';
+import { initData, setSelectedKeys, addComp, deleteCompany, updateCompany } from '@redux/security/compConstruct';
 import { formItemLayout, tailFormItemLayout } from 'common/js/config';
-import { initData } from '@redux/security/compConstruct';
 
-const TreeNode = Tree.TreeNode;
+const { TreeNode } = Tree;
+const { Item } = Form;
+const rule0 = [{
+  required: true,
+  message: '必填字段'
+}, {
+  min: 1,
+  max: 30,
+  message: '请输入一个长度最多是30的字符串'
+}];
+const rule1 = [{
+  required: true,
+  message: '必填字段'
+}];
 
 @connect(
   state => state.securityCompConstruct,
-  { initData, setSelectedKeys }
+  { initData, setSelectedKeys, addComp, deleteCompany, updateCompany }
 )
 class CompConstruct extends React.Component {
   constructor(props) {
@@ -25,8 +38,26 @@ class CompConstruct extends React.Component {
   setCompVisible = (compVisible) => {
     this.setState({ compVisible });
   }
-  handleBtnClick = (url) => {}
-  renderTreeNodes = (data) => {
+  // 头部按钮点击事件
+  handleBtnClick = (url) => {
+    switch(url) {
+      case 'add':
+        return this.addCompany();
+      case 'delete':
+        return this.deleteCompany();
+    }
+  }
+  // 表单上传事件
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        values.parentCode = values.parentCode === 'ROOT' ? '' : values.parentCode;
+        this.props.updateCompany(values);
+      }
+    });
+  }
+  renderTreeNodes(data) {
     return data.map((item) => {
       if (item.children) {
         return (
@@ -39,55 +70,40 @@ class CompConstruct extends React.Component {
     });
   }
   onSelect = (keys) => {
-    this.props.setSelectedKeys(keys);
+    let sKeys = keys.checked || keys;
+    this.props.setSelectedKeys(sKeys, this.props.form.setFieldsValue);
   }
-  // editCompany = () => {
-  //   if (this.state.selectKey !== '') {
-  //     this.props.history.push(`/newProj/addCompany?code=${this.state.selectKey}`);
-  //   } else {
-  //     showWarnMsg('请选择一家公司');
-  //   }
-  // }
-  // addBumen = () => {
-  //   if (this.state.selectKey !== '') {
-  //     this.props.history.push(`/newProj/addBumen?companyCode=${this.state.selectKey}`);
-  //   } else {
-  //     showWarnMsg('请选择一家公司');
-  //   }
-  // }
-  // editBumen = () => {
-  //   if (this.state.selectKey !== '' && this.companyCodeObj[this.state.selectKey] !== undefined) {
-  //     let companyCode = this.companyCodeObj[this.state.selectKey];
-  //     this.props.history.push(`/newProj/addBumen?code=${this.state.selectKey}&companyCode=${companyCode}`);
-  //   } else {
-  //     showWarnMsg('请选择一个部门');
-  //   }
-  // }
-  // deleteBumen = () => {
-    // if (this.state.selectKey !== '') {
-    //   Modal.confirm({
-    //     okText: '确认',
-    //     cancelText: '取消',
-    //     content: '确定删除该部门？',
-    //     onOk: () => {
-    //       this.setState({ fetching: true });
-    //       deleteBumen1(this.state.selectKey).then(() => {
-    //         showSucMsg('操作成功');
-    //         this.setState({ fetching: false });
-    //       }).catch(this.setState({ fetching: false }));
-    //     }
-    //   });
-    // } else {
-    //   showWarnMsg('请选择一家公司');
-    // }
-  // }
+  // 新增部门
+  addCompany() {
+    if (!this.props.selectedKeys.length) {
+      showWarnMsg('请先选择公司/部门');
+      return;
+    }
+    this.setCompVisible(true);
+  }
+  // 删除部门
+  deleteCompany() {
+    if (!this.props.selectedKeys.length) {
+      showWarnMsg('请先选择公司/部门');
+      return;
+    }
+    Modal.confirm({
+      okText: '确定',
+      cancelText: '取消',
+      content: '确定删除该公司/部门？',
+      onOk: () => {
+        this.props.deleteCompany(this.props.selectedKeys[0]);
+      }
+    });
+  }
   render() {
     const { compVisible } = this.state;
     const { btnList, treeData, selectedKeys, checkedKeys,
-      defaultExpandedKeys, fetching } = this.props;
+      defaultExpandedKeys, fetching, current } = this.props;
+    const { getFieldDecorator } = this.props.form;
     return (
       <div>
-        {/* <CompAdd parentCode={selectedKeys[0]} compVisible={compVisible} setCompVisible={this.setCompVisible}/> */}
+        <CompAdd addComp={this.props.addComp} parentCode={selectedKeys[0]} compVisible={compVisible} setCompVisible={this.setCompVisible}/>
         <Spin spinning={fetching}>
           <div className="tools-wrapper">
             {btnList.map(v => (
@@ -97,19 +113,67 @@ class CompConstruct extends React.Component {
             ))}
           </div>
           <div className="table-wrapper">
-            {treeData.length ? (
-              <Tree showLine
-                checkable={true}
-                checkStrictly={true}
-                // defaultExpandedKeys={defaultExpandedKeys}
-                // onSelect={this.onSelect}
-                // onCheck={this.onSelect}
-                // checkedKeys={checkedKeys}
-                // selectedKeys={selectedKeys}
-              >
-                {this.renderTreeNodes(treeData)}
-              </Tree>
-            ) : null}
+            <Row>
+              <Col span={8}>
+                {treeData.length ? (
+                  <Tree showLine
+                    checkable={true}
+                    checkStrictly={true}
+                    defaultExpandedKeys={defaultExpandedKeys}
+                    onSelect={this.onSelect}
+                    onCheck={this.onSelect}
+                    checkedKeys={checkedKeys}
+                    selectedKeys={selectedKeys}
+                  >
+                    {this.renderTreeNodes(treeData)}
+                  </Tree>
+                ) : null}
+              </Col>
+              <Col span={8}>
+                <Form onSubmit={this.handleSubmit}>
+                  <Item key='updater' {...formItemLayout} className='hidden'>
+                    {getFieldDecorator('updater', {
+                      rules: rule1,
+                      initialValue: getUserName()
+                    })(<Input type='hidden'/>)}
+                  </Item>
+                  <Item key='type' {...formItemLayout} className='hidden'>
+                    {getFieldDecorator('type', {
+                      rules: rule1,
+                      initialValue: 1
+                    })(<Input type='hidden'/>)}
+                  </Item>
+                  <Item key='parentCode' {...formItemLayout} className='hidden'>
+                    {getFieldDecorator('parentCode', {
+                      rules: rule1
+                    })(<Input type='hidden'/>)}
+                  </Item>
+                  <Item key='code' {...formItemLayout} className='hidden'>
+                    {getFieldDecorator('code', {
+                      rules: rule1
+                    })(<Input type='hidden'/>)}
+                  </Item>
+                  <Item key='name' {...formItemLayout} label='名称'>
+                    {getFieldDecorator('name', {
+                      rules: rule0
+                    })(<Input />)}
+                  </Item>
+                  <Item key='leadName' {...formItemLayout} label='负责人'>
+                    {getFieldDecorator('leadName', {
+                      rules: rule0
+                    })(<Input />)}
+                  </Item>
+                  <Item key='mobile' {...formItemLayout} label='负责人手机号'>
+                    {getFieldDecorator('mobile', {
+                      rules: rule0
+                    })(<Input />)}
+                  </Item>
+                  <Item key='btns' {...tailFormItemLayout}>
+                    <Button type="primary" htmlType="submit">保存</Button>
+                  </Item>
+                </Form>
+              </Col>
+            </Row>
           </div>
         </Spin>
       </div>
@@ -117,4 +181,4 @@ class CompConstruct extends React.Component {
   }
 }
 
-export default CompConstruct;
+export default Form.create()(CompConstruct);

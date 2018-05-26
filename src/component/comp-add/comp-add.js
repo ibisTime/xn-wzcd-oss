@@ -3,11 +3,12 @@ import ModalDetail from 'common/js/build-modal-detail';
 
 class CompAdd extends React.Component {
   render() {
+    let that = this;
     const options = {
       fields: [{
         field: 'type',
         hidden: true,
-        value: 0
+        value: '1'
       }, {
         field: 'parentCode',
         hidden: true,
@@ -28,7 +29,13 @@ class CompAdd extends React.Component {
         required: true,
         mobile: true
       }],
-      addCode: 630100
+      addCode: 630100,
+      onOk: (data, params) => {
+        that.props.addComp({
+          ...params,
+          code: data.code
+        }, this.props.parentCode);
+      }
     };
     return (
       <ModalDetail

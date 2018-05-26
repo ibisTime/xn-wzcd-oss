@@ -7,17 +7,11 @@ import {
   setPageData,
   restore
 } from '@redux/loanstools/estimate-addedit';
-import {
-  getQueryString
-} from 'common/js/util';
-import {
-  DetailWrapper,
-  beforeDetail
-} from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
+import { getQueryString } from 'common/js/util';
+import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
-  state => state.securityEstimateAddEdit, {
+  state => state.loanstoolsEstimateAddEdit, {
     initStates,
     doFetching,
     cancelFetching,

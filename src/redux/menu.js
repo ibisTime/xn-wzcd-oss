@@ -131,7 +131,7 @@ function getFilterList(result, data) {
 }
 
 function createMenus(newList, result) {
-  newList.forEach(v => {
+  newList.sort((a, b) => +a.orderNo > +b.orderNo).forEach(v => {
     v.url = getRealUrl(v.url);
     let pCode = v.parentCode;
     if (result.top2SubObj[pCode]) {

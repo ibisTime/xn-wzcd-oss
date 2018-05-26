@@ -4,7 +4,7 @@ import { getUserName } from 'common/js/util';
 
 class UpDown extends React.Component {
   render() {
-    let { code, key = 'code', biz } = this.props;
+    let { code, key = 'code', bizCode } = this.props;
     const options = {
       fields: [{
         field: key,
@@ -32,7 +32,7 @@ class UpDown extends React.Component {
         integer: true,
         maxlength: 30
       }],
-      addCode: biz
+      addCode: bizCode
     };
     return (
       <ModalDetail

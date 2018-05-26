@@ -12,11 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
-import {
-  DetailWrapper,
-  beforeDetail
-} from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
+import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
   state => state.loanstoolsMisInvoiceApply, {
@@ -37,26 +33,33 @@ class MisInvoiceApply extends React.Component {
   render() {
     const fields = [{
         title: '客户姓名',
-        field: 'companyCode'
+        field: 'companyCode',
+        readonly: true
     }, {
         title: '业务编号',
-        field: 'receiptBank'
+        field: 'receiptBank',
+        readonly: true
     }, {
         title: '身份证',
-        field: 'receiptAccount'
+        field: 'receiptAccount',
+        readonly: true
     }, {
         title: '贷款金额',
         field: 'receiptAccount',
-        amount: true
+        amount: true,
+        readonly: true
     }, {
         title: '贷款银行',
-        field: 'receiptAccount'
+        field: 'receiptAccount',
+        readonly: true
     }, {
         title: '征信结果',
-        field: 'receiptAccount'
+        field: 'receiptAccount',
+        readonly: true
     }, {
         title: '预算单',
-        field: 'receiptAccount'
+        field: 'receiptAccount',
+        readonly: true
     }];
     return this.props.buildDetail({
       fields,

@@ -197,11 +197,11 @@ export default class DetailComponent extends React.Component {
       }
       let code = this.props.code ? this.options.editCode : this.options.addCode;
       this.props.doFetching();
-      fetch(code, params).then(() => {
+      fetch(code, params).then((data) => {
         showSucMsg('操作成功');
         this.props.cancelFetching();
         if (this.options.onOk) {
-          this.options.onOk();
+          this.options.onOk(data);
         } else {
           setTimeout(() => {
             this.props.history.go(-1);
@@ -1035,7 +1035,7 @@ export default class DetailComponent extends React.Component {
     }
     if (item.mobile) {
       rules.push({
-        pattern: /^1[3|4|5|7|8]\d{9}$/,
+        pattern: /^1[3|4|5|7|8|9]\d{9}$/,
         message: '手机格式不对'
       });
     }

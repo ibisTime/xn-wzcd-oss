@@ -58,16 +58,16 @@ class TakeEnter extends React.Component {
             field: 'receiptAccount',
             readonly: true,
             amount: true,
-            requied: true
+            required: true
         }, {
             title: '收款金额',
             field: 'receiptAccount',
-            requied: true,
+            required: true,
             amount: true
         }, {
             title: '11',
             field: 'receiptAccount',
-            requied: true,
+            required: true,
             amount: true
         }, {
             title: '收款账号',

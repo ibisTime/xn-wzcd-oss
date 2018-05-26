@@ -64,7 +64,7 @@ class TakeFreeEnter extends React.Component {
         }, {
             title: '交款类型',
             field: 'receiptAccount',
-            requied: true
+            required: true
         }, {
             title: '交款单位',
             field: 'receiptAccount'

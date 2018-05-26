@@ -29,7 +29,7 @@ import {
 
 @listWrapper(
     state => ({
-        ...state.securityEstimate,
+        ...state.loanstoolsEstimate,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,

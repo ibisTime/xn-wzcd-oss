@@ -12,14 +12,10 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
-import {
-  DetailWrapper,
-  beforeDetail
-} from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
+import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
-  state => state.securityEstimateApply, {
+  state => state.loanstoolsEstimateApply, {
     initStates,
     doFetching,
     cancelFetching,
@@ -47,12 +43,12 @@ class EstimateApply extends React.Component {
       title: '预算金额',
       field: 'budgetAmount',
       amount: true,
-      requied: true
+      required: true
     }, {
       title: '用款日期',
       field: 'useDatetime',
       type: 'date',
-      requied: true
+      required: true
     }];
     return this.props.buildDetail({
       fields,

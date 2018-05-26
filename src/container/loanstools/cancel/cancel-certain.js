@@ -58,7 +58,7 @@ class CancelCertain extends React.Component {
             title: '收款金额',
             field: 'receiptAccount',
             amount: true,
-            requied: true
+            required: true
         }, {
             title: '收款银行',
             field: 'payBank',
@@ -73,11 +73,11 @@ class CancelCertain extends React.Component {
             title: '收款时间',
             field: 'payDatetime',
             type: 'date',
-            requied: true
+            required: true
         }, {
             title: '备注',
             field: 'receiptAccount',
-            requied: true
+            required: true
         }];
         return this.props.buildDetail({
             fields,

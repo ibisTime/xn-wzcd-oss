@@ -76,11 +76,11 @@ class InvoiceEnter extends React.Component {
         }, {
             title: '发票是否正确',
             field: 'dzDatetime',
-            requied: true
+            required: true
         }, {
             title: '现发票价',
             field: 'receiptAccount',
-            requied: true,
+            required: true,
             amount: true
         }, {
             title: '准入贷款成数标准',
@@ -93,32 +93,32 @@ class InvoiceEnter extends React.Component {
         }, {
             title: '发票',
             field: 'receiptAccount',
-            requied: true,
+            required: true,
             type: 'img'
         }, {
             title: '合格证',
             field: 'receiptAccount',
-            requied: true,
+            required: true,
             type: 'img'
         }, {
             title: '交强险',
             field: 'receiptAccount',
-            requied: true,
+            required: true,
             type: 'img'
         }, {
             title: '商业险',
             field: 'receiptAccount',
-            requied: true,
+            required: true,
             type: 'img'
         }, {
             title: '机动车登记证书',
             field: 'receiptAccount',
-            requied: true,
+            required: true,
             type: 'img'
         }, {
             title: '批单',
             field: 'receiptAccount',
-            requied: true,
+            required: true,
             type: 'img'
         }, {
             title: '备注',

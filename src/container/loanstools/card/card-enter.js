@@ -52,7 +52,7 @@ class CardEnter extends React.Component {
             title: '信用卡号',
             field: 'receiptAccount',
             amount: true,
-            requied: true
+            required: true
         }, {
             title: '备注',
             field: 'remark'
