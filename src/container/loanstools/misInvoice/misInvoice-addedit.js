@@ -6,17 +6,18 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/loanstools/take-addedit';
+} from '@redux/loanstools/misInvoice-addedit';
 import {
     getQueryString
 } from 'common/js/util';
 import {
-    DetailWrapper
+    DetailWrapper,
+    beforeDetail
 } from 'common/js/build-detail';
 // import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
-    state => state.loanstoolsTakeAddedit, {
+    state => state.loanstoolsMisInvoiceAddedit, {
         initStates,
         doFetching,
         cancelFetching,
@@ -25,7 +26,7 @@ import {
         restore
     }
 )
-class TakeAddedit extends React.Component {
+class MisInvoiceAddedit extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -34,8 +35,7 @@ class TakeAddedit extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'companyCode',
-            select: true
+            field: 'companyCode'
         }, {
             title: '业务编号',
             field: 'receiptBank'
@@ -65,4 +65,4 @@ class TakeAddedit extends React.Component {
     }
 }
 
-export default TakeAddedit;
+export default MisInvoiceAddedit;

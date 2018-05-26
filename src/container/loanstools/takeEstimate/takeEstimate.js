@@ -29,7 +29,7 @@ import {
 
 @listWrapper(
     state => ({
-        ...state.loanstoolsTake,
+        ...state.loanstoolsTakeEstimate,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -45,28 +45,40 @@ import {
 class take extends React.Component {
     render() {
         const fields = [{
-            title: '业务编号',
+            title: '预算单号',
             field: 'code',
             search: true
         }, {
-            title: '客户姓名',
+            title: '业务公司',
             field: 'companyCode',
             search: true
         }, {
-            title: '收款金额',
+            title: '打款金额',
             field: 'budgetAmount',
             amount: true
         }, {
-            title: '是否垫资',
+            title: '垫资总额',
             field: 'receiptAccount',
-            search: true
+            amount: true
         }, {
-            title: '收款日期',
+            title: '垫资日期',
             field: 'useDatetime',
             search: true,
             type: 'date'
         }, {
-            title: '是否提交作废申请',
+            title: '应收金额',
+            field: 'receiptAccount',
+            amount: true
+        }, {
+            title: '实收金额',
+            field: 'receiptAccount',
+            amount: true
+        }, {
+            title: '收款时间',
+            field: 'useDatetime',
+            type: 'date'
+        }, {
+            title: '办理状态',
             field: 'name',
             search: true
         }];

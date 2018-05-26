@@ -8,7 +8,7 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/loanstools/take';
+} from '@redux/loanstools/invoice';
 import {
   showWarnMsg,
   showSucMsg
@@ -29,7 +29,7 @@ import {
 
 @listWrapper(
     state => ({
-        ...state.loanstoolsTake,
+        ...state.loanstoolsInvoice,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -42,33 +42,54 @@ import {
         setSearchData
     }
 )
-class take extends React.Component {
+class invoice extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
-            field: 'code',
+            field: 'code'
+        }, {
+            title: '业务公司',
+            field: 'companyCode',
             search: true
         }, {
             title: '客户姓名',
             field: 'companyCode',
             search: true
         }, {
-            title: '收款金额',
+            title: '贷款额',
             field: 'budgetAmount',
             amount: true
         }, {
-            title: '是否垫资',
-            field: 'receiptAccount',
-            search: true
-        }, {
-            title: '收款日期',
+            title: '垫资日期',
             field: 'useDatetime',
-            search: true,
-            type: 'date'
+            type: 'datetime'
         }, {
-            title: '是否提交作废申请',
+            title: '发保和预警天数',
             field: 'name',
             search: true
+        }, {
+            title: '车辆发票价',
+            field: 'budgetAmount',
+            amount: true
+        }, {
+            title: '新发票价格',
+            field: 'budgetAmount',
+            amount: true
+        }, {
+            title: '状态',
+            field: 'budgetAmount',
+            amount: true
+        }, {
+            title: '更新人',
+            field: 'budgetAmount'
+        }, {
+            title: '跟新时间',
+            field: 'useDatetime',
+            type: 'datetime'
+        }, {
+            title: '备注',
+            field: 'budgetAmount',
+            amount: true
         }];
         return this.props.buildList({
             fields,
@@ -80,7 +101,7 @@ class take extends React.Component {
                 } else if (selectedRowKeys.length > 1) {
                   showWarnMsg('请选择一条记录');
                 } else {
-                  this.props.history.push(`/loanstools/take/enter?code=${selectedRowKeys[0]}`);
+                  this.props.history.push(`/loanstools/invoice/enter?code=${selectedRowKeys[0]}`);
                 }
               }
             }
@@ -88,4 +109,4 @@ class take extends React.Component {
     }
 }
 
-export default take;
+export default invoice;

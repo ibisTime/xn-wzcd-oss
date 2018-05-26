@@ -8,7 +8,7 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/loanstools/take';
+} from '@redux/loanstools/card';
 import {
   showWarnMsg,
   showSucMsg
@@ -29,7 +29,7 @@ import {
 
 @listWrapper(
     state => ({
-        ...state.loanstoolsTake,
+        ...state.loanstoolsCard,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -42,7 +42,7 @@ import {
         setSearchData
     }
 )
-class take extends React.Component {
+class card extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
@@ -53,39 +53,41 @@ class take extends React.Component {
             field: 'companyCode',
             search: true
         }, {
-            title: '收款金额',
+            title: '银行卡号',
             field: 'budgetAmount',
-            amount: true
-        }, {
-            title: '是否垫资',
-            field: 'receiptAccount',
             search: true
         }, {
-            title: '收款日期',
-            field: 'useDatetime',
-            search: true,
-            type: 'date'
+            title: '制卡银行',
+            field: 'receiptAccount'
         }, {
-            title: '是否提交作废申请',
-            field: 'name',
-            search: true
+            title: '状态',
+            field: 'status'
+        }, {
+            title: '跟新人',
+            field: 'useDatetime'
+        }, {
+            title: '备注',
+            field: 'remark'
         }];
         return this.props.buildList({
             fields,
             pageCode: 632105,
             btnEvent: {
-              entering: (selectedRowKeys, selectedRows) => {
+              apply: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
                   showWarnMsg('请选择记录');
                 } else if (selectedRowKeys.length > 1) {
                   showWarnMsg('请选择一条记录');
                 } else {
-                  this.props.history.push(`/loanstools/take/enter?code=${selectedRowKeys[0]}`);
+                    this.props.history.push(`/loanstools/card/apply?code=${selectedRowKeys[0]}`);
                 }
+              },
+              entering: (selectedRowKeys, selectedRows) => {
+                this.props.history.push(`/loanstools/card/enter?code=${selectedRowKeys[0]}`);
               }
             }
         });
     }
 }
 
-export default take;
+export default card;
