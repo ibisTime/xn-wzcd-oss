@@ -77,7 +77,7 @@ export default class DetailComp extends React.Component {
           formdata.append('key', file.name + '_' + new Date().getTime());
         }
       };
-      _this.textareas[v].editor.customConfig.uploadImgServer = 'http://up-z0.qiniup.com';
+      _this.textareas[v].editor.customConfig.uploadImgServer = UPLOAD_URL;
       _this.textareas[v].editor.customConfig.onchange = html => {
         let result = {};
         if (!html) {

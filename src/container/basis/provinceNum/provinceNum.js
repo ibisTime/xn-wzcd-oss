@@ -8,7 +8,7 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/basis/receivables';
+} from '@redux/basis/provinceNum';
 import {
     showWarnMsg,
     showSucMsg
@@ -24,7 +24,7 @@ import {
 
 @listWrapper(
     state => ({
-        ...state.basisReceivables,
+        ...state.basisProvinceNum,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -37,37 +37,24 @@ import {
         setSearchData
     }
 )
-class Receivables extends React.Component {
+class ProvinceNum extends React.Component {
     render() {
         const fields = [{
-            title: '公司',
-            field: 'companyCode'
+            title: '省份编号',
+            field: 'provinceNo',
+            search: true
         }, {
-            title: '户名',
-            field: 'keyword',
-            search: true,
-            render: (e, t) => {
-                return t.realName;
-            }
-        }, {
-            title: '银行名称',
-            field: 'bankName'
-        }, {
-            title: '开户支行',
-            field: 'subbranch'
-        }, {
-            title: '银行卡号',
-            field: 'bankcardNumber'
-        }, {
-            title: '备注',
-            field: 'remark'
+            title: '省份名称',
+            field: 'name',
+            search: true
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632005,
-            deleteCode: 632001
+            pageCode: 632025,
+            rowKey: 'id',
+            deleteCode: 632021
         });
     }
 }
 
-export default Receivables;
+export default ProvinceNum;
