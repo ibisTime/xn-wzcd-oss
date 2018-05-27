@@ -291,7 +291,7 @@ export default class ListComp extends React.Component {
     } else {
       showDelConfirm({
         onOk: () => {
-          let param = { code: selectedRowKeys[0] };
+          let param = { [this.options.rowKey]: selectedRowKeys[0] };
           this.options.beforeDelete && this.options.beforeDelete(param);
           this.props.doFetching();
           fetch(this.options.deleteCode, param).then(data => {
