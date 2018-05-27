@@ -33,6 +33,10 @@ import { publicNoticeAddEdit } from './redux/public/notice-addedit';
 // 预算单申请
 import { loanBudget } from './redux/loan/budget';
 
+// 发起征信查询
+import { loanCreditStart } from './redux/loan/creditStart';
+import { loanCreditStartAddedit } from './redux/loan/creditStart-addedit';
+
 /**
  * 贷前工具
  */
@@ -155,6 +159,9 @@ import { bizBlackListDispose } from './redux/biz/blackList-dispose';
 import { bizHistoryBusinessManage } from './redux/biz/historyBusinessManage';
 import { bizHistoryBusinessManageAddedit } from './redux/biz/historyBusinessManage-addedit';
 
+/**
+ * 基础管理
+ */
 //  保险公司管理 + 新增 + 修改 + 删除
 import { basisInsuranceCompany } from './redux/basis/insuranceCompany';
 import { basisInsuranceCompanyAddedit } from './redux/basis/insuranceCompany-addedit';
@@ -162,6 +169,14 @@ import { basisInsuranceCompanyAddedit } from './redux/basis/insuranceCompany-add
 //  收款账户管理 + 新增 + 修改 + 删除
 import { basisReceivables } from './redux/basis/receivables';
 import { basisReceivablesAddedit } from './redux/basis/receivables-addedit';
+
+//  身份证区域表 + 新增 + 修改 + 删除
+import { basisIdCardArea } from './redux/basis/idCardArea';
+import { basisIdCardAreaAddedit } from './redux/basis/idCardArea-addedit';
+
+//  全国省份编号 + 新增 + 修改 + 删除
+import { basisProvinceNum } from './redux/basis/provinceNum';
+import { basisProvinceNumAddedit } from './redux/basis/provinceNum-addedit';
 
 export default combineReducers({
   user,
@@ -192,6 +207,8 @@ export default combineReducers({
   publicNotice,
   publicNoticeAddEdit,
   loanBudget,
+  loanCreditStart,
+  loanCreditStartAddedit,
   loanstoolsEstimate,
   loanstoolsEstimateAddEdit,
   loanstoolsEstimateApply,
@@ -264,5 +281,9 @@ export default combineReducers({
   basisInsuranceCompany,
   basisInsuranceCompanyAddedit,
   basisReceivables,
-  basisReceivablesAddedit
+  basisReceivablesAddedit,
+  basisIdCardArea,
+  basisIdCardAreaAddedit,
+  basisProvinceNum,
+  basisProvinceNumAddedit
 });
