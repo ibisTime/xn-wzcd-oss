@@ -1,11 +1,13 @@
 import React from 'react';
 import { Form, Spin, Row, Col, Input, Select, Collapse,
-  Table, Popconfirm, Icon, Button } from 'antd';
-import { getQueryString } from 'common/js/util';
+  Table, Popconfirm, Icon, Button, Upload, Modal } from 'antd';
+import { formatFile, formatImg, getQueryString, showErrMsg } from 'common/js/util';
+import { UPLOAD_URL, PIC_PREFIX } from 'common/js/config';
+import { getQiniuToken } from 'api/general';
 import GpsEdit from 'component/gps-edit/gps-edit';
 
 const { Item } = Form;
-const { options } = Select;
+const { Option } = Select;
 const { Panel } = Collapse;
 const { TextArea } = Input;
 const colProps = { xs: 32, sm: 24, md: 12, lg: 8 };
@@ -18,6 +20,17 @@ const rules = [{
   required: true,
   message: '必填字段'
 }];
+const imgUploadBtn = (
+  <div>
+    <Icon type="plus" />
+    <div className="ant-upload-text">上传</div>
+  </div>
+);
+const fileUploadBtn = (
+  <Button>
+    <Icon type="upload" /> 上传
+  </Button>
+);
 
 class BudgetAddEdit extends React.Component {
   constructor(props) {
@@ -38,7 +51,10 @@ class BudgetAddEdit extends React.Component {
       gpsdVisible: false,
       gpsData: null,
       selectedRowKeys: [],
-      selectedRows: []
+      selectedRows: [],
+      previewVisible: false,
+      previewImage: '',
+      token: ''
     };
     this.columns = [{
       title: 'GPS设备号',
@@ -51,6 +67,143 @@ class BudgetAddEdit extends React.Component {
   }
   setGpsVisible = (gpsdVisible) => {
     this.setState({ gpsdVisible });
+  }
+  // 获取上传按钮
+  getUploadBtn(item, isImg) {
+    let btn = isImg ? imgUploadBtn : fileUploadBtn;
+    return item.readonly
+      ? null
+      : item.single
+        ? this.props.form.getFieldValue(item.field)
+          ? null : btn
+        : btn;
+  }
+  setUploadFileUrl(fileList, isImg) {
+    let format = isImg ? formatImg : formatFile;
+    fileList.forEach(f => {
+      if (!f.url && f.status === 'done' && f.response) {
+        f.url = format(f.response.key);
+      }
+    });
+  }
+  // 获取文件上传的值
+  normFile = (e) => {
+    if (e) {
+      return e.fileList.map(v => {
+        if (v.status === 'done') {
+          return v.key || v.response.key;
+        } else if (v.status === 'error') {
+          showErrMsg('文件上传失败');
+        }
+        return '';
+      }).filter(v => v).join('||');
+    }
+    return '';
+  }
+  // 隐藏展示图片的modal
+  handleCancel = () => this.setState({ previewVisible: false })
+  // 显示展示图片的modal
+  handlePreview = (file) => {
+    this.setState({
+      previewImage: file.url || file.thumbUrl,
+      previewVisible: true
+    });
+  }
+  // 文件点击事件
+  handleFilePreview = (file) => {
+    if (file.status === 'done') {
+      let key = file.key || (file.response && file.response.key) || '';
+      window.open(formatFile(key), true);
+    } else {
+      let msg = file.status === 'uploading' ? '文件还未上传完成' : '文件上传失败';
+      showErrMsg(msg);
+    }
+  }
+  getLabel(item) {
+    return (
+      <span>
+        {item.title + (item.single ? '(单)' : '')}
+      </span>
+    );
+  }
+  // 获取7牛token
+  getToken() {
+    if (!this.tokenFetch) {
+      this.tokenFetch = true;
+      getQiniuToken().then(data => {
+        this.setState({ token: data.uploadToken });
+      }).catch(() => this.tokenFetch = false);
+    }
+  }
+  // 获取图片上传的额外参数
+  getUploadData = (file) => {
+    return { token: this.state.token };
+  }
+  getFileComp(item, initVal, rules, getFieldDecorator, isImg) {
+    let initValue = this.getFileInitVal(initVal);
+    return (
+      item.hidden ? null : (
+        <Item key={item.field} label={this.getLabel(item)}>
+          {getFieldDecorator(item.field, {
+            rules,
+            initialValue: initVal,
+            getValueFromEvent: this.normFile
+          })(
+            this.check && !initValue.length && item.required
+              ? <div></div>
+              : (
+                <Upload {...this.getUploadProps(item, initValue, isImg)}>
+                  {this.getUploadBtn(item, isImg)}
+                </Upload>
+              )
+          )}
+        </Item>
+      )
+    );
+  }
+  getImgComp(item, initVal, rules, getFieldDecorator) {
+    return this.getFileComp(item, initVal, rules, getFieldDecorator, true);
+  }
+  getUploadProps(item, initValue, isImg) {
+    const commProps = {
+      action: UPLOAD_URL,
+      multiple: !item.single,
+      defaultFileList: initValue,
+      data: this.getUploadData,
+      showUploadList: {
+        showPreviewIcon: true,
+        showRemoveIcon: !item.readonly
+      }
+    };
+    const fileProps = {
+      ...commProps,
+      onChange: ({fileList}) => this.setUploadFileUrl(fileList),
+      onPreview: this.handleFilePreview
+    };
+    const imgProps = {
+      ...commProps,
+      onChange: ({fileList}) => this.setUploadFileUrl(fileList, true),
+      onPreview: this.handlePreview,
+      listType: 'picture-card',
+      accept: 'image/*'
+    };
+    return isImg ? imgProps : fileProps;
+  }
+  getFileInitVal(initVal, isImg) {
+    const { token } = this.state;
+    !token && this.getToken();
+    let initValue = [];
+    if (initVal) {
+      initValue = initVal.split('||').map(key => ({
+        key,
+        uid: key,
+        name: key,
+        status: 'done',
+        url: isImg ? formatImg(key) : formatFile(key),
+        thumbUrl: isImg ? formatImg(key) : formatFile(key)
+      }));
+    }
+    return initValue;
   }
   handleSubmit = (e) => {
     e.preventDefault();
@@ -102,7 +255,7 @@ class BudgetAddEdit extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { dataSource, gpsdVisible, selectedRowKeys, gpsData } = this.state;
+    const { dataSource, gpsdVisible, selectedRowKeys, gpsData, previewVisible, previewImage } = this.state;
     const columns = this.columns;
     const rowSelection = {
       selectedRowKeys: this.state.selectedRowKeys,
@@ -509,9 +662,30 @@ class BudgetAddEdit extends React.Component {
                   </Item>
                 </Col>
               </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'fczPic',
+                    title: '房产证',
+                    single: true,
+                    required: true
+                  }, null, rules, getFieldDecorator)}
+                </Col>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'yyzz',
+                    title: '营业执照',
+                    single: true,
+                    required: true
+                  }, null, rules, getFieldDecorator)}
+                </Col>
+              </Row>
             </Panel>
           </Collapse>
         </Form>
+        <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+          <img alt="图片" style={{ width: '100%' }} src={previewImage} />
+        </Modal>
       </div>
     );
   }

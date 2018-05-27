@@ -18,6 +18,7 @@ import { securityDataDict } from './redux/security/dataDict';
 import { securityDataDictAddEdit } from './redux/security/dataDict-addedit';
 import { securityCompConstruct } from './redux/security/compConstruct';
 import { securityPost } from './redux/security/post';
+import { securitySaleUser } from './redux/security/saleuser';
 import { publicBanner } from './redux/public/banner';
 import { publicBannerAddEdit } from './redux/public/banner-addedit';
 import { publicAboutusAddEdit } from './redux/public/aboutus-addedit';
@@ -182,6 +183,7 @@ export default combineReducers({
   securityDataDictAddEdit,
   securityCompConstruct,
   securityPost,
+  securitySaleUser,
   publicHotLineAddEdit,
   publicBanner,
   publicBannerAddEdit,

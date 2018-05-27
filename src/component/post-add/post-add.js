@@ -8,7 +8,7 @@ class PostAdd extends React.Component {
       fields: [{
         field: 'type',
         hidden: true,
-        value: '2'
+        value: '3'
       }, {
         field: 'parentCode',
         hidden: true,

@@ -19,11 +19,16 @@ class UserAddEdit extends React.Component {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
+    this.saleuser = !!getQueryString('s', this.props.location.search);
   }
   render() {
     const fields = [{
       field: 'type',
       value: 'P',
+      hidden: true
+    }, {
+      field: 'smsCaptcha',
+      value: '1234',
       hidden: true
     }, {
       title: '登录名',
@@ -56,7 +61,7 @@ class UserAddEdit extends React.Component {
       key: 'userId',
       code: this.code,
       view: this.view,
-      addCode: 630050
+      addCode: this.saleuser ? 630120 : 630050
     });
   }
 }

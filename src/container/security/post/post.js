@@ -67,7 +67,7 @@ class Post extends React.Component {
         );
       }
       let props = item;
-      if (item.type === '2') {
+      if (item.type === '3') {
         props.icon = <Icon type="team" />;
       }
       return <TreeNode {...props}/>;
@@ -77,27 +77,27 @@ class Post extends React.Component {
     let sKeys = keys.checked || keys;
     this.props.setSelectedKeys(sKeys, this.props.form.setFieldsValue);
   }
-  // 新增职位
+  // 新增岗位
   addPost() {
     if (!this.props.selectedKeys.length) {
       showWarnMsg('请先选择部门');
-    } else if (this.props.compInfo[this.props.selectedKeys[0]].type !== '1') {
+    } else if (this.props.compInfo[this.props.selectedKeys[0]].type !== '2') {
       showWarnMsg('请选择部门');
     } else {
       this.setPostVisible(true);
     }
   }
-  // 删除职位
+  // 删除岗位
   deletePost() {
     if (!this.props.selectedKeys.length) {
-      showWarnMsg('请先选择职位');
-    } else if (this.props.compInfo[this.props.selectedKeys[0]].type !== '2') {
-      showWarnMsg('请选择职位');
+      showWarnMsg('请先选择岗位');
+    } else if (this.props.compInfo[this.props.selectedKeys[0]].type !== '3') {
+      showWarnMsg('请选择岗位');
     } else {
       Modal.confirm({
         okText: '确定',
         cancelText: '取消',
-        content: '确定删除该职位？',
+        content: '确定删除该岗位？',
         onOk: () => {
           this.props.deletePost(this.props.selectedKeys[0]);
         }

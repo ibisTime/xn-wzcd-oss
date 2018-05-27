@@ -6,10 +6,6 @@ class CompAdd extends React.Component {
     let that = this;
     const options = {
       fields: [{
-        field: 'type',
-        hidden: true,
-        value: '1'
-      }, {
         field: 'parentCode',
         hidden: true,
         value: this.props.parentCode
@@ -28,6 +24,19 @@ class CompAdd extends React.Component {
         title: '负责人手机号',
         required: true,
         mobile: true
+      }, {
+        field: 'type',
+        title: '类型',
+        type: 'select',
+        data: [{
+          dkey: '1',
+          dvalue: '公司'
+        }, {
+          dkey: '2',
+          dvalue: '部门'
+        }],
+        keyName: 'dkey',
+        valueName: 'dvalue'
       }],
       addCode: 630100,
       onOk: (data, params) => {

@@ -90,7 +90,7 @@ export function setSelectedKeys(keys, setFieldsValue) {
     dispatch(_setSelectedKeys(keys));
     dispatch(_setCheckedKeys(keys));
     let current = keys.length ? compInfo[keys[0]] : {};
-    current = current.type === '2' ? current : {};
+    current = current.type === '3' ? current : {};
     setFieldsValue({
       code: current.code,
       parentCode: current.parentCode || '',

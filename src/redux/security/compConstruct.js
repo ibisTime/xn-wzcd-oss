@@ -95,7 +95,8 @@ export function setSelectedKeys(keys, setFieldsValue) {
       parentCode: current.parentCode || '',
       name: current.name || '',
       leadName: current.leadName || '',
-      mobile: current.mobile || ''
+      mobile: current.mobile || '',
+      type: current.type || ''
     });
   };
 }

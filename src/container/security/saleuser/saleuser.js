@@ -9,14 +9,14 @@ import {
   doFetching,
   cancelFetching,
   setSearchData
-} from '@redux/security/user';
+} from '@redux/security/saleuser';
 import { listWrapper } from 'common/js/build-list';
 import { showWarnMsg } from 'common/js/util';
-import { activateSysUser } from 'api/user';
+import { activateSaleUser } from 'api/user';
 
 @listWrapper(
   state => ({
-    ...state.securityUser,
+    ...state.securitySaleUser,
     parentCode: state.menu.subMenuCode
   }),
   { setTableData, clearSearchParam, doFetching, setBtnList,
@@ -47,16 +47,19 @@ class User extends React.Component {
     }];
     return this.props.buildList({
       fields,
-      pageCode: 630065,
+      pageCode: 630135,
       rowKey: 'userId',
       btnEvent: {
+        add: () => {
+          this.props.history.push(`/system/saleuser/addedit?s=1`);
+        },
         reset: (keys, items) => {
           if (!keys || !keys.length || !items || !items.length) {
             showWarnMsg('请选择记录');
           } else if (keys.length > 1) {
             showWarnMsg('请选择一条记录');
           } else {
-            this.props.history.push(`/system/user/pwd_reset?userId=${keys[0]}`);
+            this.props.history.push(`/system/saleuser/pwd_reset?s=1&userId=${keys[0]}`);
           }
         },
         rock: (keys, items) => {
@@ -71,7 +74,7 @@ class User extends React.Component {
               content: `确认${items[0].status === '0' ? '注销' : '激活'}用户？`,
               onOk: () => {
                 this.props.doFetching();
-                return activateSysUser(keys[0]).then(() => {
+                return activateSaleUser(keys[0]).then(() => {
                   this.props.getPageData();
                   showWarnMsg('操作成功');
                 }).catch(() => {
@@ -87,7 +90,7 @@ class User extends React.Component {
           } else if (keys.length > 1) {
             showWarnMsg('请选择一条记录');
           } else {
-            this.props.history.push(`/system/user/role?userId=${keys[0]}`);
+            this.props.history.push(`/system/saleuser/role?s=1&userId=${keys[0]}`);
           }
         },
         addPost: (keys, item) => {
@@ -96,7 +99,7 @@ class User extends React.Component {
           } else if (keys.length > 1) {
             showWarnMsg('请选择一条记录');
           } else {
-            this.props.history.push(`/system/user/post?userId=${keys[0]}`);
+            this.props.history.push(`/system/saleuser/post?s=1&userId=${keys[0]}`);
           }
         }
       }

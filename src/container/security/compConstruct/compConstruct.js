@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Spin, Button, Tree, Modal, Row, Col, Form, Input } from 'antd';
+import { Spin, Button, Tree, Modal, Row, Col, Form, Input, Select } from 'antd';
 import CompAdd from 'component/comp-add/comp-add';
 import { showSucMsg, showWarnMsg, getUserName } from 'common/js/util';
 import { initData, setSelectedKeys, addComp, deleteCompany, updateCompany } from '@redux/security/compConstruct';
@@ -8,6 +8,7 @@ import { formItemLayout, tailFormItemLayout } from 'common/js/config';
 
 const { TreeNode } = Tree;
 const { Item } = Form;
+const { Option } = Select;
 const rule0 = [{
   required: true,
   message: '必填字段'
@@ -137,12 +138,6 @@ class CompConstruct extends React.Component {
                       initialValue: getUserName()
                     })(<Input type='hidden'/>)}
                   </Item>
-                  <Item key='type' {...formItemLayout} className='hidden'>
-                    {getFieldDecorator('type', {
-                      rules: rule1,
-                      initialValue: 1
-                    })(<Input type='hidden'/>)}
-                  </Item>
                   <Item key='parentCode' {...formItemLayout} className='hidden'>
                     {getFieldDecorator('parentCode', {
                       rules: rule1
@@ -167,6 +162,14 @@ class CompConstruct extends React.Component {
                     {getFieldDecorator('mobile', {
                       rules: rule0
                     })(<Input />)}
+                  </Item>
+                  <Item key='type' {...formItemLayout} label='类型'>
+                    {getFieldDecorator('type', {
+                      rules: rule1
+                    })(<Select>
+                      <Option key='1' value='1'>公司</Option>
+                      <Option key='2' value='2'>部门</Option>
+                    </Select>)}
                   </Item>
                   <Item key='btns' {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">保存</Button>

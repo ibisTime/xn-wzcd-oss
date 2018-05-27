@@ -2,7 +2,7 @@ import fetch from 'common/js/fetch';
 
 // 列表查询公司
 export function getCompList(parentCode) {
-  return fetch(630106, { parentCode, status: 1, type: 1 });
+  return fetch(630106, { parentCode, status: 1, typeList: [1, 2] });
 }
 
 // 删除部门
