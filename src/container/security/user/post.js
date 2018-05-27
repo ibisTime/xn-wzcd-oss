@@ -1,9 +1,9 @@
 import React from 'react';
 import { TreeSelect, Form, Spin, Input, Button } from 'antd';
-import { getQueryString } from 'common/js/util';
+import { getQueryString, showSucMsg } from 'common/js/util';
 import { formItemLayout, tailFormItemLayout } from 'common/js/config';
 import { getPostList } from 'api/company';
-import { getUserById, getSaleUserById } from 'api/user';
+import { getUserById, setUserPost } from 'api/user';
 
 const { TreeNode } = TreeSelect;
 const { Item } = Form;
@@ -21,18 +21,17 @@ class Post extends React.Component {
       userName: ''
     };
     this.userId = getQueryString('userId');
-    this.saleuser = !!getQueryString('s', this.props.location.search);
   }
   componentDidMount() {
     Promise.all([
-      this.saleuser ? getSaleUserById(this.userId) : getUserById(this.userId),
+      getUserById(this.userId),
       getPostList()
     ]).then(([userData, postData]) => {
       this.getTree(postData);
       this.setState({ userName: userData.loginName, fetching: false });
-      // this.props.form.setFieldsValue({
-      //   aaa: userData.code
-      // });
+      this.props.form.setFieldsValue({
+        departmentCode: userData.departmentCode
+      });
     }).catch(() => this.setState({ fetching: false }));
   }
   getTree(data) {
@@ -80,7 +79,16 @@ class Post extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(values);
+        this.setState({ fetching: true });
+        setUserPost(values).then(() => {
+          this.setState({ fetching: false });
+          showSucMsg('操作成功');
+          setTimeout(() => {
+            this.props.history.go(-1);
+          }, 1000);
+        }).catch(() => {
+          this.setState({ fetching: false });
+        });
       }
     });
   }
@@ -99,7 +107,7 @@ class Post extends React.Component {
             <div className="readonly-text">{this.state.userName}</div>
           </Item>
           <Item key='treeMenu' {...formItemLayout} label='岗位名称'>
-            {getFieldDecorator('aaa', {
+            {getFieldDecorator('departmentCode', {
               rules
             })(
               <TreeSelect

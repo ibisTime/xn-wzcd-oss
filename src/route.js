@@ -38,6 +38,10 @@ const ROUTES = [
         component: asyncComponent(() => import('container/security/user/user'))
     },
     {
+        path: '/system/user/addedit',
+        component: asyncComponent(() => import('container/security/user-addedit/user-addedit'))
+    },
+    {
         path: '/system/user/role',
         component: asyncComponent(() => import('container/security/user/assign'))
     },
@@ -48,26 +52,6 @@ const ROUTES = [
     {
         path: '/system/user/post',
         component: asyncComponent(() => import('container/security/user/post'))
-    },
-    {
-        path: '/system/saleuser',
-        component: asyncComponent(() => import('container/security/saleuser/saleuser'))
-    },
-    {
-        path: '/system/saleuser/role',
-        component: asyncComponent(() => import('container/security/user/assign'))
-    },
-    {
-        path: '/system/saleuser/pwd_reset',
-        component: asyncComponent(() => import('container/security/user/pwdReset'))
-    },
-    {
-        path: '/system/saleuser/post',
-        component: asyncComponent(() => import('container/security/user/post'))
-    },
-    {
-        path: '/system/saleuser/addedit',
-        component: asyncComponent(() => import('container/security/user-addedit/user-addedit'))
     },
     //  系统参数
     {
@@ -86,10 +70,6 @@ const ROUTES = [
     {
         path: '/system/dataDict/addedit',
         component: asyncComponent(() => import('container/security/dataDict-addedit/dataDict-addedit'))
-    },
-    {
-        path: '/system/user/addedit',
-        component: asyncComponent(() => import('container/security/user-addedit/user-addedit'))
     },
     {
         path: '/system/compConstruct',

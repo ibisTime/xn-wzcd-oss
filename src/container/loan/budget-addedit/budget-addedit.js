@@ -39,7 +39,7 @@ class BudgetAddEdit extends React.Component {
     this.view = !!getQueryString('v', this.props.location.search);
     this.state = {
       fetching: true,
-      dataSource: [{
+      gpsSource: [{
         code: '0',
         gpsCode: '0',
         type: '1'
@@ -54,15 +54,59 @@ class BudgetAddEdit extends React.Component {
       selectedRows: [],
       previewVisible: false,
       previewImage: '',
-      token: ''
+      token: '',
+      rebateSource: [{
+        code: 0,
+        type: '应退按揭款',
+        amount: '28000.00',
+        bigAmount: '贰万捌仟元整',
+        name: '成都恒钰汽车销售服务有限公司',
+        account: '583248407800015',
+        bankName: '浙江民泰成都高新支行'
+      }, {
+        code: 1,
+        type: '应退返点1',
+        amount: '28000.00',
+        bigAmount: '贰万捌仟元整',
+        name: '成都恒钰汽车销售服务有限公司',
+        account: '583248407800015',
+        bankName: '浙江民泰成都高新支行'
+      }, {
+        code: 2,
+        type: '应退返点2',
+        amount: '28000.00',
+        bigAmount: '贰万捌仟元整',
+        name: '成都恒钰汽车销售服务有限公司',
+        account: '583248407800015',
+        bankName: '浙江民泰成都高新支行'
+      }]
     };
-    this.columns = [{
+    this.gpsColumns = [{
       title: 'GPS设备号',
       dataIndex: 'gpsCode'
     }, {
       title: 'GPS类型',
       dataIndex: 'type',
       render: (v) => ({'0': '无线', '1': '有线'}[v])
+    }];
+    this.rebateColumns = [{
+      title: '用款用途',
+      dataIndex: 'type'
+    }, {
+      title: '金额小写',
+      dataIndex: 'amount'
+    }, {
+      title: '金额大写',
+      dataIndex: 'bigAmount'
+    }, {
+      title: '单位名称',
+      dataIndex: 'name'
+    }, {
+      title: '账号',
+      dataIndex: 'account'
+    }, {
+      title: '开户行',
+      dataIndex: 'bankName'
     }];
   }
   setGpsVisible = (gpsdVisible) => {
@@ -237,14 +281,14 @@ class BudgetAddEdit extends React.Component {
     this.setState({ selectedRowKeys, selectedRows });
   }
   updateGps = (params) => {
-    let { dataSource } = this.state;
-    let idx = dataSource.findIndex(v => v.code === params.code);
+    let { gpsSource } = this.state;
+    let idx = gpsSource.findIndex(v => v.code === params.code);
     if (idx > -1) {
-      dataSource.splice(idx, 1, params);
-      this.setState({ dataSource });
+      gpsSource.splice(idx, 1, params);
+      this.setState({ gpsSource });
     } else {
       this.setState({
-        dataSource: [...dataSource, params]
+        gpsSource: [...gpsSource, params]
       });
     }
     this.setState({
@@ -255,8 +299,8 @@ class BudgetAddEdit extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { dataSource, gpsdVisible, selectedRowKeys, gpsData, previewVisible, previewImage } = this.state;
-    const columns = this.columns;
+    const { gpsSource, gpsdVisible, selectedRowKeys, gpsData, previewVisible,
+      previewImage, rebateSource } = this.state;
     const rowSelection = {
       selectedRowKeys: this.state.selectedRowKeys,
       onChange: this.onSelectChange,
@@ -466,8 +510,8 @@ class BudgetAddEdit extends React.Component {
                   bordered
                   rowKey={record => record.code}
                   rowSelection={rowSelection}
-                  dataSource={dataSource}
-                  columns={columns} />
+                  dataSource={gpsSource}
+                  columns={this.gpsColumns} />
               </div>
               <GpsEdit updateGps={this.updateGps} gpsdVisible={gpsdVisible} gpsData={gpsData} setGpsVisible={this.setGpsVisible}/>
             </Panel>
@@ -666,18 +710,347 @@ class BudgetAddEdit extends React.Component {
                 <Col {...col2Props}>
                   {this.getImgComp({
                     field: 'fczPic',
-                    title: '房产证',
-                    single: true,
-                    required: true
-                  }, null, rules, getFieldDecorator)}
+                    title: '房产证'
+                  }, null, [], getFieldDecorator)}
                 </Col>
                 <Col {...col2Props}>
                   {this.getImgComp({
                     field: 'yyzz',
                     title: '营业执照',
-                    single: true,
-                    required: true
-                  }, null, rules, getFieldDecorator)}
+                    single: true
+                  }, null, [], getFieldDecorator)}
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  <Item key='xycl' label="现有车辆">
+                    {getFieldDecorator('xycl', {
+                      rules
+                    })(<Select>
+                      <Option key='1' value='自有'>自有</Option>
+                      <Option key='0' value='租用'>租用</Option>
+                    </Select>)}
+                  </Item>
+                </Col>
+                <Col {...col2Props}>
+                  <Item key='cdzm' label="提供场地证明">
+                    {getFieldDecorator('cdzm', {
+                      rules,
+                      initialValue: '1'
+                    })(<Select>
+                      <Option key='1' value='1'>是</Option>
+                      <Option key='0' value='0'>否</Option>
+                    </Select>)}
+                  </Item>
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  <Item key='ywjz' label="有无驾照">
+                    {getFieldDecorator('ywjz', {
+                      rules
+                    })(<Select>
+                      <Option key='1' value='1'>有</Option>
+                      <Option key='0' value='0'>无</Option>
+                    </Select>)}
+                  </Item>
+                </Col>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'cdzm',
+                    title: '场地证明'
+                  }, null, [], getFieldDecorator)}
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'jz',
+                    title: '驾照',
+                    single: true
+                  }, null, [], getFieldDecorator)}
+                </Col>
+                <Col {...col2Props}>
+                  <Item key='jycdmj' label="经营场地面积">
+                    {getFieldDecorator('jycdmj')(<Input />)}
+                  </Item>
+                </Col>
+              </Row>
+              <Item key='otRemark' label="其他资产说明">
+                {getFieldDecorator('otRemark')(<TextArea rows={4} />)}
+              </Item>
+            </Panel>
+            <Panel header="其他情况" key="4">
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  <Item key='sqrhjd' label="申请人户籍地">
+                    {getFieldDecorator('sqrhjd', {
+                      rules
+                    })(<Input />)}
+                  </Item>
+                </Col>
+                <Col {...col2Props}>
+                  <Item key='xzdz' label="现住地址">
+                    {getFieldDecorator('xzdz', {
+                      rules
+                    })(<Input />)}
+                  </Item>
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  <Item key='ghrhjd' label="共还人户籍地">
+                    {getFieldDecorator('ghrhjd')(<Input />)}
+                  </Item>
+                </Col>
+                <Col {...col2Props}>
+                  <Item key='type1' label="类型">
+                    {getFieldDecorator('type1', {
+                      rules
+                    })(<Select>
+                      <Option key='1' value='自有'>自有</Option>
+                      <Option key='0' value='租用'>租用</Option>
+                    </Select>)}
+                  </Item>
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  <Item key='dbr1hjd' label="担保1户籍地">
+                    {getFieldDecorator('dbr1hjd')(<Input />)}
+                  </Item>
+                </Col>
+                <Col {...col2Props}>
+                  <Item key='dbr2hjd' label="担保2户籍地">
+                    {getFieldDecorator('dbr2hjd', {
+                      rules
+                    })(<Input />)}
+                  </Item>
+                </Col>
+              </Row>
+              <Item key='othRemark' label="其他情况备注">
+                {getFieldDecorator('othRemark')(<TextArea rows={4} />)}
+              </Item>
+            </Panel>
+            <Panel header="收费情况" key="5">
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  <Item key='yb' label="油补">
+                    {getFieldDecorator('yb', {
+                      rules
+                    })(<Input />)}
+                  </Item>
+                </Col>
+                <Col {...col2Props}>
+                  <Item key='ybgls' label="油补公里数">
+                    {getFieldDecorator('ybgls', {
+                      rules
+                    })(<Input />)}
+                  </Item>
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  <Item key='wsxb' label="我司续保">
+                    {getFieldDecorator('wsxb', {
+                      rules
+                    })(<Select>
+                      <Option key='1' value='是'>是</Option>
+                      <Option key='0' value='否'>否</Option>
+                    </Select>)}
+                  </Item>
+                </Col>
+                <Col {...col2Props}>
+                  <Item key='gpssf' label="GPS收费">
+                    {getFieldDecorator('gpssf', {
+                      rules
+                    })(<Input />)}
+                  </Item>
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  <Item key='lybzj' label="履约保证金">
+                    {getFieldDecorator('lybzj', {
+                      rules
+                    })(<Input />)}
+                  </Item>
+                </Col>
+                <Col {...col2Props}>
+                  <Item key='gpstc' label="GPS提成">
+                    {getFieldDecorator('gpstc', {
+                      rules
+                    })(<Input />)}
+                  </Item>
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  <Item key='dbfxj' label="担保风险金">
+                    {getFieldDecorator('dbfxj', {
+                      rules
+                    })(<Input />)}
+                  </Item>
+                </Col>
+                <Col {...col2Props}>
+                  <Item key='gpssffs' label="GPS收费方式">
+                    {getFieldDecorator('gpssffs', {
+                      rules
+                    })(<Select>
+                      <Option key='0' value='0'>转账</Option>
+                      <Option key='1' value='1'>按揭款扣</Option>
+                      <Option key='2' value='2'>返点扣</Option>
+                      <Option key='3' value='3'>不收费</Option>
+                    </Select>)}
+                  </Item>
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  <Item key='zf' label="杂费">
+                    {getFieldDecorator('zf', {
+                      rules
+                    })(<Input />)}
+                  </Item>
+                </Col>
+                <Col {...col2Props}>
+                  <Item key='sxfsffs' label="手续费收费方式">
+                    {getFieldDecorator('sxfsffs', {
+                      rules
+                    })(<Select>
+                      <Option key='0' value='0'>转账</Option>
+                      <Option key='1' value='1'>按揭款扣</Option>
+                      <Option key='2' value='2'>返点扣</Option>
+                      <Option key='3' value='3'>不收费</Option>
+                    </Select>)}
+                  </Item>
+                </Col>
+              </Row>
+              <Item key='sxfhj' label="收客户手续费合计">
+                <div className="readonly-text"></div>
+              </Item>
+            </Panel>
+            <Panel header="返点情况" key="6">
+              <Table
+                bordered
+                rowKey={record => record.code}
+                rowSelection={rowSelection}
+                dataSource={rebateSource}
+                columns={this.rebateColumns} />
+            </Panel>
+            <Panel header="贷款材料" key="7">
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'jhzPic',
+                    title: '结婚证(离婚证)'
+                  }, null, [], getFieldDecorator)}
+                </Col>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'hkb',
+                    title: '户口本(主贷本人页)',
+                    single: true
+                  }, null, [], getFieldDecorator)}
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'yhlsPic',
+                    title: '银行流水'
+                  }, null, [], getFieldDecorator)}
+                </Col>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'dszmPic',
+                    title: '单身证明',
+                    single: true
+                  }, null, [], getFieldDecorator)}
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'srzmPic',
+                    title: '收入证明'
+                  }, null, [], getFieldDecorator)}
+                </Col>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'jzzmPic',
+                    title: '居住证明',
+                    single: true
+                  }, null, [], getFieldDecorator)}
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'gffpPic',
+                    title: '购房发票'
+                  }, null, [], getFieldDecorator)}
+                </Col>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'zjfzmPic',
+                    title: '自建房证明',
+                    single: true
+                  }, null, [], getFieldDecorator)}
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'hkbPic',
+                    title: '户口本（首页）'
+                  }, null, [], getFieldDecorator)}
+                </Col>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'hkbhzPic',
+                    title: '户口本（户主页）',
+                    single: true
+                  }, null, [], getFieldDecorator)}
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'hkbghrPic',
+                    title: '共还人户口本'
+                  }, null, [], getFieldDecorator)}
+                </Col>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'hkbdbr1Pic',
+                    title: '担保人1身份证',
+                    single: true
+                  }, null, [], getFieldDecorator)}
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'hkbdbr1hPic',
+                    title: '担保人1户口本'
+                  }, null, [], getFieldDecorator)}
+                </Col>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'hkbdbr2Pic',
+                    title: '担保人2身份证',
+                    single: true
+                  }, null, [], getFieldDecorator)}
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col {...col2Props}>
+                  {this.getImgComp({
+                    field: 'hkbdbr2hPic',
+                    title: '担保人2户口本',
+                    single: true
+                  }, null, [], getFieldDecorator)}
                 </Col>
               </Row>
             </Panel>

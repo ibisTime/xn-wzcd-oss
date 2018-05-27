@@ -39,12 +39,10 @@ export function getUserById(userId) {
   return fetch(630067, { userId });
 }
 
-// 获取业务员详情
-export function getSaleUser() {
-  return getUserById(getUserId());
-}
-
-// 获取业务员详情
-export function getSaleUserById(userId) {
-  return fetch(630137, { userId });
+// 为用户设置岗位
+export function setUserPost(params) {
+  return fetch(630058, {
+    ...params,
+    updater: getUserName()
+  });
 }

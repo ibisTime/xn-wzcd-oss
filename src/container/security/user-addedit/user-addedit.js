@@ -19,7 +19,6 @@ class UserAddEdit extends React.Component {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
-    this.saleuser = !!getQueryString('s', this.props.location.search);
   }
   render() {
     const fields = [{
@@ -61,7 +60,7 @@ class UserAddEdit extends React.Component {
       key: 'userId',
       code: this.code,
       view: this.view,
-      addCode: this.saleuser ? 630120 : 630050
+      addCode: 630050
     });
   }
 }
