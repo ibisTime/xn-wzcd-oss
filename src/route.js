@@ -87,7 +87,7 @@ const ROUTES = [
         component: asyncComponent(() => import('container/loan/budget/budget'))
     },
 
-    // 预算单申请 详情
+    // 预算单申请 详情111
     {
         path: '/loan/budget/addedit',
         component: asyncComponent(() => import('container/loan/budget-addedit/budget-addedit'))
