@@ -125,6 +125,18 @@ const ROUTES = [
         component: asyncComponent(() => import('container/loan/creditStart-addedit/creditStart-addedit'))
     },
 
+    // 征信录入
+    {
+        path: '/loan/creditEntering',
+        component: asyncComponent(() => import('container/loan/creditEntering/creditEntering'))
+    },
+
+    // 准入审查
+    {
+        path: '/loan/creditCheck',
+        component: asyncComponent(() => import('container/loan/creditCheck/creditCheck'))
+    },
+
     //  贷前工具
     //  垫资请款预算单
     {

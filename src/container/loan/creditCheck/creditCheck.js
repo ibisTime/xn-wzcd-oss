@@ -8,7 +8,7 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/loan/creditStart';
+} from '@redux/loan/creditCheck';
 import {
     showWarnMsg,
     showSucMsg,
@@ -25,7 +25,7 @@ import {
 
 @listWrapper(
     state => ({
-        ...state.loanCreditStart,
+        ...state.loanCreditCheck,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -38,12 +38,12 @@ import {
         setSearchData
     }
 )
-class CreditStart extends React.Component {
+class CreditCheck extends React.Component {
     render() {
         const fields = [{
-        //     title: '业务编号',
-        //     field: 'code'
-        // }, {
+            //     title: '业务编号',
+            //     field: 'code'
+            // }, {
             title: '客户姓名',
             field: 'userName',
             render: (e, t) => {
@@ -68,12 +68,12 @@ class CreditStart extends React.Component {
             render: (e, t) => {
                 return (t.creditUser ? t.creditUser.idNo : '-');
             }
-        // }, {
-        //     title: '业务员',
-        //     field: 'salesman',
-        //     render: (e, t) => {
-        //         return (t.creditUser ? t.creditUser.idNo : '-');
-        //     }
+            // }, {
+            //     title: '业务员',
+            //     field: 'salesman',
+            //     render: (e, t) => {
+            //         return (t.creditUser ? t.creditUser.idNo : '-');
+            //     }
         }, {
             title: '申请日期',
             field: 'applyDatetime',
@@ -82,11 +82,22 @@ class CreditStart extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632115,
-            searchParams: {
+            searchParam: {
                 roleCode: getRoleCode()
+            },
+            btnEvent: {
+                edit: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loan/creditStart/addedit?v=1&isEntry=1&code=${selectedRowKeys[0]}`);
+                    }
+                }
             }
         });
     }
 }
 
-export default CreditStart;
+export default CreditCheck;

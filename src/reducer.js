@@ -37,6 +37,12 @@ import { loanBudget } from './redux/loan/budget';
 import { loanCreditStart } from './redux/loan/creditStart';
 import { loanCreditStartAddedit } from './redux/loan/creditStart-addedit';
 
+// 征信录入
+import { loanCreditEntering } from './redux/loan/creditEntering';
+
+// 准入审查
+import { loanCreditCheck } from './redux/loan/creditCheck';
+
 /**
  * 贷前工具
  */
@@ -209,6 +215,8 @@ export default combineReducers({
   loanBudget,
   loanCreditStart,
   loanCreditStartAddedit,
+  loanCreditEntering,
+  loanCreditCheck,
   loanstoolsEstimate,
   loanstoolsEstimateAddEdit,
   loanstoolsEstimateApply,
