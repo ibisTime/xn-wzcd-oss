@@ -111,10 +111,14 @@ export default class DetailComp extends React.Component {
       ...this.options,
       ...options
     };
-    if (this.first) {
+    if (this.options.useData) {
+      this.props.setPageData(this.options.useData);
+      this.props.initStates({ code: this.options.code, view: this.options.view });
+    } else if (this.first) {
       this.options.code && this.options.detailCode && this.getDetailInfo();
       this.props.initStates({ code: this.options.code, view: this.options.view });
     }
+
     const children = [];
     this.options.fields.forEach(f => {
       f.readonly = isUndefined(f.readonly) ? this.options.view : f.readonly;

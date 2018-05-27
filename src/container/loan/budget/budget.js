@@ -10,7 +10,7 @@ import {
   setSearchData
 } from '@redux/loan/budget';
 import { listWrapper } from 'common/js/build-list';
-import { showWarnMsg } from 'common/js/util';
+import { showWarnMsg, dateTimeFormat } from 'common/js/util';
 
 @listWrapper(
   state => ({
@@ -87,7 +87,9 @@ class Budget extends React.Component {
     }, {
       field: 'updateDatetime',
       title: '申请时间',
-      type: 'datetime',
+      type: 'date',
+      rangedate: ['start_datetime', 'end_datetime'],
+      render: dateTimeFormat,
       search: true
     }, {
       field: 'status',
@@ -100,16 +102,17 @@ class Budget extends React.Component {
       apply: (keys, items) => {
         if (!keys || !keys.length || !items || !items.length) {
           showWarnMsg('请选择记录');
-        } else if (items[0].status !== '1') {
-          showWarnMsg('该状态不可下架');
+        } else if (items[0].status === '1') {
+          showWarnMsg('该状态不是待申请状态');
         } else {
+          this.props.history.push(`/loan/budget/addedit?code=${keys[0]}`);
         }
       }
     };
     return this.props.buildList({
       fields,
-      pageCode: 630035,
-      rowKey: 'id'
+      btnEvent,
+      pageCode: 630035
     });
   }
 }

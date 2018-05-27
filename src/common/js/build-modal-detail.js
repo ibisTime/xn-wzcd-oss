@@ -47,7 +47,7 @@ class ModalDetail extends DetailComp {
       options.buttons = options.buttons.map(v => ({
         ...v,
         handler: (params) => {
-          v.handler(params, this.props.doFetching, this.props.cancelFetching, this.handleCancel);
+          v.handler(params, this.props.doFetching, this.props.cancelFetching, this.handleCancel, this.props.selectData);
         }
       }));
       options.buttons.push({
