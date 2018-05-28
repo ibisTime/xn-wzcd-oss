@@ -26,7 +26,7 @@ export function getMenuBtnList() {
  * 列表获取节点
  */
 export function getNodeList() {
-  return fetch(630157);
+  return fetch(630147);
 }
 
 /**

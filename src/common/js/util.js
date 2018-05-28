@@ -1,12 +1,6 @@
 import cookies from 'browser-cookies';
-import {
-  message,
-  Modal
-} from 'antd';
-import {
-  PIC_PREFIX
-} from './config';
-import './lib/BigDecimal';
+import { message, Modal } from 'antd';
+import { PIC_PREFIX } from './config';
 
 /**
  * 保存用户登录信息
@@ -35,13 +29,11 @@ export function getUserId() {
 // 设置用户角色信息
 export function setRoleInfo({
   roleCode,
-  kind,
-  level,
+  companyCode,
   loginName
 }) {
   cookies.set('roleCode', roleCode);
-  // cookies.set('loginKind', kind);
-  // cookies.set('roleLevel', level);
+  companyCode && cookies.set('companyCode', companyCode);
   cookies.set('userName', loginName);
 }
 
@@ -53,6 +45,11 @@ export function getRoleCode() {
 // 获取用户username
 export function getUserName() {
   return cookies.get('userName');
+}
+
+// 获取公司编号
+export function getCompanyCode() {
+  return cookies.get('companyCode');
 }
 
 /**
@@ -165,18 +162,6 @@ export function moneyFormat(money, format) {
     money = '-' + money;
   }
   return money;
-  // var unit = coin === 'SC' ? '1e24' : '1e18';
-  // if (isUndefined(money)) {
-  //   return '-';
-  // }
-  // format = typeof format === 'object' ? 8 : format;
-  // money = new BigDecimal(money);
-  // money = money.divide(new BigDecimal(unit), format, MathContext.ROUND_DOWN).toString();
-  // // money = money.replace(/^(.+\..*[^0])0+$/, '$1').replace(/^(.+)\.0+$/, '$1');
-  // // 千分位转化
-  // var re = /\d{1,3}(?=(\d{3})+$)/g;
-  // money = money.replace(/^(\d+)((\.\d+)?)$/, (s, s1, s2) => (s1.replace(re, '$&,') + s2));
-  // return money;
 }
 
 /**
@@ -186,20 +171,6 @@ export function moneyFormat(money, format) {
  */
 export function moneyParse(money, rate = 1000) {
   return ((+('' + money).replace(/,/g, '')) * rate).toFixed(0);
-}
-
-/**
- * 大数相乘
- * @param a
- * @param b
- */
-export function multiply(a, b) {
-  if (a && b) {
-    let _a = new BigDecimal(a);
-    var _b = new BigDecimal(b);
-    return _a.multiply(_b).toString();
-  }
-  return '';
 }
 
 /**

@@ -10,9 +10,12 @@ import {
 import {
   getQueryString,
   showSucMsg,
-  getUserId
+  getUserId,
+  getCompanyCode
 } from 'common/js/util';
 import { DetailWrapper } from 'common/js/build-detail';
+import { getCompanyBankList } from 'api/company';
+import fetch from 'common/js/fetch';
 
 @DetailWrapper(
   state => state.loanstoolsEstimateApply, {
@@ -30,15 +33,22 @@ class EstimateApply extends React.Component {
     this.code = getQueryString('code', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
   }
+  componentDidMount() {}
   render() {
     const fields = [{
-      title: '收款银行',
-      field: 'receiptBank',
-      readonly: true
+      field: 'applyUser',
+      value: getUserId(),
+      hidden: true
     }, {
       title: '收款账号',
-      field: 'receiptAccount',
-      readonly: true
+      field: 'receiptBank',
+      type: 'select',
+      listCode: '632007',
+      params: {
+        companyCode: getCompanyCode()
+      },
+      keyName: 'code',
+      valueName: '{{bankName.DATA}} {{subbranch.DATA}} {{bankcardNumber.DATA}}'
     }, {
       title: '预算金额',
       field: 'budgetAmount',
@@ -59,6 +69,10 @@ class EstimateApply extends React.Component {
         check: true,
         handler: (params) => {
           this.props.doFetching();
+          let bank = this.props.selectData.receiptBank.find(v => v.code === params.receiptBank);
+          params.receiptAccount = bank.bankcardNumber;
+          params.receiptBank = bank.bankCode;
+          params.buttonCode = 1;
           fetch(632100, params).then(() => {
             showSucMsg('操作成功');
             setTimeout(() => {

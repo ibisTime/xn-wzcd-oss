@@ -107,7 +107,7 @@ class Post extends React.Component {
             <div className="readonly-text">{this.state.userName}</div>
           </Item>
           <Item key='treeMenu' {...formItemLayout} label='岗位名称'>
-            {getFieldDecorator('departmentCode', {
+            {getFieldDecorator('postCode', {
               rules
             })(
               <TreeSelect
