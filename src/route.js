@@ -587,6 +587,24 @@ const ROUTES = [
     {
         path: '/basis/provinceNum/addedit',
         component: asyncComponent(() => import('container/basis/provinceNum/provinceNum-addedit'))
+    },
+
+    //  经销商管理
+    {
+        path: '/basis/dealer',
+        component: asyncComponent(() => import('container/basis/dealer/dealer'))
+    },
+
+    //  经销商管理 新增，修改
+    {
+        path: '/basis/dealer/addedit',
+        component: asyncComponent(() => import('container/basis/dealer/dealer-addedit'))
+    },
+
+    //  经销商管理 审核
+    {
+        path: '/basis/dealer/check',
+        component: asyncComponent(() => import('container/basis/dealer/dealer-check'))
     }
 ];
 

@@ -184,6 +184,11 @@ import { basisIdCardAreaAddedit } from './redux/basis/idCardArea-addedit';
 import { basisProvinceNum } from './redux/basis/provinceNum';
 import { basisProvinceNumAddedit } from './redux/basis/provinceNum-addedit';
 
+//  经销商管理 + 详情 + + 删除
+import { basisDealer } from './redux/basis/dealer';
+import { basisDealerAddedit } from './redux/basis/dealer-addedit';
+import { basisDealerCheck } from './redux/basis/dealer-check';
+
 export default combineReducers({
   user,
   menu,
@@ -293,5 +298,8 @@ export default combineReducers({
   basisIdCardArea,
   basisIdCardAreaAddedit,
   basisProvinceNum,
-  basisProvinceNumAddedit
+  basisProvinceNumAddedit,
+  basisDealer,
+  basisDealerAddedit,
+  basisDealerCheck
 });
