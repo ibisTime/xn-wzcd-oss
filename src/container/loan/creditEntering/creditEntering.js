@@ -41,9 +41,6 @@ import {
 class CreditEntering extends React.Component {
     render() {
         const fields = [{
-            //     title: '业务编号',
-            //     field: 'code'
-            // }, {
             title: '客户姓名',
             field: 'userName',
             render: (e, t) => {
@@ -82,7 +79,7 @@ class CreditEntering extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632115,
-            searchParam: {
+            searchParams: {
                 roleCode: getRoleCode()
             },
             btnEvent: {
