@@ -605,7 +605,105 @@ const ROUTES = [
     {
         path: '/basis/dealer/check',
         component: asyncComponent(() => import('container/basis/dealer/dealer-check'))
+    },
+
+    //  贷后工具
+    //  逾期客户导入
+    {
+        path: '/postloantools/import',
+        component: asyncComponent(() => import('container/postloantools/import/import'))
+    },
+
+    //  逾期客户导入 详情
+    {
+        path: '/postloantools/import/addedit',
+        component: asyncComponent(() => import('container/postloantools/import/import-addedit'))
+    },
+
+    //  逾期客户导入 提前还款
+    {
+        path: '/postloantools/import/prepayment',
+        component: asyncComponent(() => import('container/postloantools/import/import-prepayment'))
+    },
+
+    //  逾期客户导入 结清单申请
+    {
+        path: '/postloantools/import/apply',
+        component: asyncComponent(() => import('container/postloantools/import/import-apply'))
+    },
+
+    //  逾期客户导入 还款计划
+    {
+        path: '/postloantools/import/plan',
+        component: asyncComponent(() => import('container/postloantools/import/import-plan'))
+    },
+
+    //  代偿预算单
+    {
+        path: '/postloantools/budget',
+        component: asyncComponent(() => import('container/postloantools/budget/budget'))
+    },
+
+    //  代偿预算单 详情
+    {
+        path: '/postloantools/budget/addedit',
+        component: asyncComponent(() => import('container/postloantools/budget/budget-addedit'))
+    },
+
+    //  代偿预算单 结清单申请
+    {
+        path: '/postloantools/budget/apply',
+        component: asyncComponent(() => import('container/postloantools/budget/budget-apply'))
+    },
+
+    //  代偿预算单 财务经理审核
+    {
+        path: '/postloantools/budget/check',
+        component: asyncComponent(() => import('container/postloantools/budget/budget-check'))
+    },
+
+    //  代偿审核
+    {
+        path: '/postloantools/compensatory',
+        component: asyncComponent(() => import('container/postloantools/compensatory/compensatory'))
+    },
+
+    //  代偿审核 详情
+    {
+        path: '/postloantools/compensatory/addedit',
+        component: asyncComponent(() => import('container/postloantools/compensatory/compensatory-addedit'))
+    },
+
+    //  代偿审核 确认结清
+    {
+        path: '/postloantools/compensatory/certain',
+        component: asyncComponent(() => import('container/postloantools/compensatory/compensatory-certain'))
+    },
+
+    //  代偿审核 财务经理审核
+    {
+        path: '/postloantools/compensatory/check',
+        component: asyncComponent(() => import('container/postloantools/compensatory/compensatory-check'))
+    },
+
+    //  结算单审核
+    {
+        path: '/postloantools/settlement',
+        component: asyncComponent(() => import('container/postloantools/settlement/settlement'))
+    },
+
+    //  结算单审核 确认付款
+    {
+        path: '/postloantools/settlement/certain',
+        component: asyncComponent(() => import('container/postloantools/settlement/settlement-certain'))
+    },
+
+    //  结算单审核 审核
+    {
+        path: '/postloantools/settlement/check',
+        component: asyncComponent(() => import('container/postloantools/settlement/settlement-check'))
     }
+
 ];
 
 export default ROUTES;

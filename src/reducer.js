@@ -184,10 +184,38 @@ import { basisIdCardAreaAddedit } from './redux/basis/idCardArea-addedit';
 import { basisProvinceNum } from './redux/basis/provinceNum';
 import { basisProvinceNumAddedit } from './redux/basis/provinceNum-addedit';
 
-//  经销商管理 + 详情 + + 删除
+//  经销商管理 + 详情 + 删除
 import { basisDealer } from './redux/basis/dealer';
 import { basisDealerAddedit } from './redux/basis/dealer-addedit';
 import { basisDealerCheck } from './redux/basis/dealer-check';
+
+/**
+ * 贷后工具
+ */
+//  预期客户导入 + 详情 + 结清单申请 + 提前还款 + 还款计划
+import { postloantoolsImport } from './redux/postloantools/import';
+import { postloantoolsImportAddEdit } from './redux/postloantools/import-addedit';
+import { postloantoolsImportApply } from './redux/postloantools/import-apply';
+import { postloantoolsImportPrepayment } from './redux/postloantools/import-prepayment';
+import { postloantoolsImportPlan } from './redux/postloantools/import-plan';
+
+//  代偿预算单 + 详情 + 申请 + 财务经理审核 + 制单
+import { postloantoolsBudget } from './redux/postloantools/budget';
+import { postloantoolsBudgetAddEdit } from './redux/postloantools/budget-addedit';
+import { postloantoolsBudgetApply } from './redux/postloantools/budget-apply';
+import { postloantoolsBudgetCheck } from './redux/postloantools/budget-check';
+import { postloantoolsBudgetMakebill } from './redux/postloantools/budget-makebill';
+
+//  代偿审核 + 详情 + 审核 + 确认放款
+import { postloantoolsCompensatory } from './redux/postloantools/compensatory';
+import { postloantoolsCompensatoryAddEdit } from './redux/postloantools/compensatory-addedit';
+import { postloantoolsCompensatoryCheck } from './redux/postloantools/compensatory-check';
+import { postloantoolsBudgetCertain } from './redux/postloantools/compensatory-certain';
+
+//  结算单申请 + 审核 + 确认放款
+import { postloantoolsSettlement } from './redux/postloantools/settlement';
+import { postloantoolsSettlementCheck } from './redux/postloantools/settlement-check';
+import { postloantoolsSettlementCertain } from './redux/postloantools/settlement-certain';
 
 export default combineReducers({
   user,
@@ -301,5 +329,22 @@ export default combineReducers({
   basisProvinceNumAddedit,
   basisDealer,
   basisDealerAddedit,
-  basisDealerCheck
+  basisDealerCheck,
+  postloantoolsImport,
+  postloantoolsImportAddEdit,
+  postloantoolsImportApply,
+  postloantoolsImportPrepayment,
+  postloantoolsImportPlan,
+  postloantoolsBudget,
+  postloantoolsBudgetAddEdit,
+  postloantoolsBudgetApply,
+  postloantoolsBudgetCheck,
+  postloantoolsBudgetMakebill,
+  postloantoolsCompensatory,
+  postloantoolsCompensatoryAddEdit,
+  postloantoolsCompensatoryCheck,
+  postloantoolsBudgetCertain,
+  postloantoolsSettlement,
+  postloantoolsSettlementCheck,
+  postloantoolsSettlementCertain
 });
