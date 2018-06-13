@@ -18,7 +18,7 @@ const { RangePicker } = DatePicker;
 const DATE_FORMAT = 'YYYY-MM-DD';
 const DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
-export default class ListComp extends React.Component {
+export default class ListComponent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -56,15 +56,23 @@ export default class ListComp extends React.Component {
         dataIndex: f.field
       };
       if (f.type === 'datetime') {
-        obj.render = (v) => {
-          return f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{dateTimeFormat(v)}</span> : dateTimeFormat(v);
-        };
-        this.addRender(f, dateTimeFormat);
+        if (f.render) {
+            obj.render = f.render;
+        } else {
+          obj.render = (v) => {
+            return f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{dateTimeFormat(v)}</span> : dateTimeFormat(v);
+          };
+          this.addRender(f, dateTimeFormat);
+        }
       } else if (f.type === 'date') {
-        obj.render = (v) => {
-          return f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{dateFormat(v)}</span> : dateFormat(v);
-        };
-        this.addRender(f, dateFormat);
+        if (f.render) {
+          obj.render = f.render;
+        } else {
+          obj.render = (v) => {
+             return f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{dateFormat(v)}</span> : dateFormat(v);
+          };
+          this.addRender(f, dateFormat);
+        }
       } else if (f.type === 'select') {
         if (f.key) {
           f.keyName = f.keyName || 'dkey';
@@ -76,10 +84,14 @@ export default class ListComp extends React.Component {
         } else if (!this.props.searchData[f.field]) {
           this.props.setSearchData({ data: f.data, key: f.field });
         }
-        obj.render = (value) => {
-          let val = this.renderSelect(value, f);
-          return f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{val}</span> : val;
-        };
+        if (!f.render) {
+          obj.render = (value) => {
+            let val = this.renderSelect(value, f);
+            return f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{val}</span> : val;
+          };
+        } else {
+          obj.render = f.render;
+        }
         this.addRender(f, (val) => this.renderSelect(val, f));
       } else if (f.type === 'img') {
         obj.render = (value) => <img src={PIC_PREFIX + value}/>;
@@ -88,13 +100,17 @@ export default class ListComp extends React.Component {
         obj.render = (v, d) => <span style={{whiteSpace: 'nowrap'}}>{moneyFormat(v, d)}</span>;
         this.addRender(f, moneyFormat);
       }
-      if (f.render) {
-        obj.render = f.render;
-      } else if (!obj.render) {
-        obj.render = (v) => f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{v}</span> : v;
-        this.addRender(f, v => v);
+      if (!obj.render) {
+        if (f.render) {
+          obj.render = f.render;
+        } else {
+          obj.render = (v) => f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{v}</span> : v;
+          this.addRender(f, v => v);
+        }
       }
-      columns.push(obj);
+      if (!f.hidden) {
+        columns.push(obj);
+      }
     });
     this.first = false;
     this.columns = columns;
@@ -115,51 +131,6 @@ export default class ListComp extends React.Component {
   addRender(f, func) {
     if (!f.render) {
       f.render = func;
-    }
-  }
-  // 获取item.dict下的数据
-  getDictList(dict, item, startIdx = 0) {
-    if (!this.getDictList[item.field]) {
-      this.getDictList[item.field] = true;
-      let fetchList = dict.map(d => {
-        return getDictList({ parentKey: d[1] });
-      });
-      Promise.all(fetchList).then(([...dictDatas]) => {
-        let list = this.props.searchData[item.field];
-        dictDatas.forEach((data, i) => {
-          this.props.setSearchData({ data, key: dict[i][1] });
-          this.props.searchData[item.field].forEach((s, j) => {
-            data.forEach(d => {
-              if (s[dict[i][0]] === d['dkey']) {
-                list[j][dict[i][0] + 'Name'] = d['dvalue'];
-              }
-            });
-          });
-        });
-        this.props.setSearchData({
-          key: item.field,
-          data: list
-        });
-      });
-    } else if (item.pageCode) {
-      setTimeout(() => {
-        let list = this.props.searchData[item.field];
-        dict.forEach((v, i) => {
-          let data = this.props.searchData[v[1]];
-          for (let j = startIdx; j < list.length; j++) {
-            let s = list[j];
-            data.forEach(d => {
-              if (s[dict[i][0]] === d['dkey']) {
-                list[j][dict[i][0] + 'Name'] = d['dvalue'];
-              }
-            });
-          }
-        });
-        this.props.setSearchData({
-          key: item.field,
-          data: list
-        });
-      }, 20);
     }
   }
   // 导出表单
@@ -214,7 +185,6 @@ export default class ListComp extends React.Component {
         let list = this.props.searchData[item.field] || [];
         list = start === 1 ? [] : list;
         this.props.setSearchData({ data: list.concat(data.list), key: item.field });
-        item.dict && this.getDictList(item.dict, item, list.length);
       }).catch(() => {});
     }, 300);
   }
@@ -249,7 +219,6 @@ export default class ListComp extends React.Component {
     let values = this.props.form.getFieldsValue();
     this.getPageData(1, values);
   }
-  // 获取搜索框的真实值
   getRealSearchParams(params) {
     let result = {};
     this.options.fields.forEach(v => {
@@ -291,7 +260,7 @@ export default class ListComp extends React.Component {
     } else {
       showDelConfirm({
         onOk: () => {
-          let param = { [this.options.rowKey]: selectedRowKeys[0] };
+          let param = { code: selectedRowKeys[0] };
           this.options.beforeDelete && this.options.beforeDelete(param);
           this.props.doFetching();
           fetch(this.options.deleteCode, param).then(data => {
@@ -348,7 +317,6 @@ export default class ListComp extends React.Component {
       let param = item.params || {};
       fetch(item.listCode, param).then(data => {
         this.props.setSearchData({ data, key: item.field });
-        item.dict && this.getDictList(item.dict, item);
       }).catch(() => {});
     }
   }
@@ -389,8 +357,7 @@ export default class ListComp extends React.Component {
     fetch(this.options.pageCode, {
       start: current,
       limit: pagination.pageSize,
-      ...searchParam,
-      ...this.options.searchParams
+      ...searchParam
     }).then(data => {
       this.props.cancelFetching();
       this.props.setTableData(data.list);

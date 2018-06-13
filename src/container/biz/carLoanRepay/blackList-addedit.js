@@ -1,152 +1,154 @@
 import React from 'react';
 import {
-  initStates,
-  doFetching,
-  cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
-} from '@redux/biz/overdueList-addedit';
-import {getQueryString} from 'common/js/util';
-import {DetailWrapper} from 'common/js/build-detail';
+    initStates,
+    doFetching,
+    cancelFetching,
+    setSelectData,
+    setPageData,
+    restore
+} from '@redux/biz/blackList-addedit';
+import {
+    getQueryString,
+    moneyFormat
+} from 'common/js/util';
+import {
+    DetailWrapper
+} from 'common/js/build-detail';
 
 @DetailWrapper(state => state.bizBlackListAddedit, {
-  initStates,
-  doFetching,
-  cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
+    initStates,
+    doFetching,
+    cancelFetching,
+    setSelectData,
+    setPageData,
+    restore
 })
 class blackListAddedit extends React.Component {
-  constructor(props) {
-    super(props);
-    this.code = getQueryString('code', this.props.location.search);
-    this.view = !!getQueryString('v', this.props.location.search);
-  }
-  render() {
-    const fields = [
-      {
-        title: '申请人手机号',
-        field: 'mobile',
-        required: true,
-        mobile: true
-      }, {
-        title: '申请人姓名',
-        field: 'realName',
-        required: true
-      }, {
-        title: '身份证号',
-        field: 'idNo',
-        required: true,
-        idCard: true
-      }, {
-        title: '开户行',
-        field: 'realName',
-        required: true,
-        bankCard: true
-      }, {
-        title: '开户支行',
-        field: 'subbranch',
-        required: true,
-        bankCard: true
-      }, {
-        title: '还款卡号',
-        field: 'bankcardNumber',
-        required: true,
-        bankCard: true
-      }, {
-        title: '购买车辆',
-        field: 'carCode',
-        required: true
-      }, {
-        title: '车辆总价',
-        field: 'carPrice',
-        required: true
-      }, {
-        title: '首付比例',
-        field: 'sfRate',
-        required: true,
-        type: 'select'
-      }, {
-        title: '首款金额',
-        field: 'sfAmount',
-        required: true
-      }, {
-        title: '贷款银行',
-        field: 'loanBank',
-        required: true,
-        type: 'select',
-        bankCard: true
-      }, {
-        title: '贷款金额',
-        field: 'loanAmount',
-        required: true
-      }, {
-        title: '期数',
-        field: 'periods',
-        required: true
-      }, {
-        title: '银行利率',
-        field: 'bankRate',
-        required: true
-      }, {
-        title: '贷款开始时间',
-        field: 'loanStartDatetime',
-        required: true
-      }, {
-        title: '贷款结束时间',
-        field: 'loanEndDatetime',
-        required: true
-      }, {
-        title: '放款日期',
-        field: 'fkDatetime',
-        required: true
-      }, {
-        title: '担保风险金',
-        field: 'fxDeposit',
-        required: true
-      }, {
-        title: '杂费',
-        field: 'otherFee',
-        required: true
-      }, {
-        title: 'GPS收费',
-        field: 'gpsFee',
-        required: true
-      }, {
-        title: '首期还款日期',
-        field: 'firstRepayDatetime',
-        required: true
-      }, {
-        title: '首期月供金额',
-        field: 'firstRepayAmount',
-        required: true
-      }, {
-        title: '每期还款日期',
-        field: 'monthDatetime',
-        required: true
-      }, {
-        title: '每期月供金额',
-        field: 'monthAmount',
-        required: true
-      }, {
-        title: '履约保证金',
-        field: 'lyDeposit',
-        required: true
-      }
-    ];
-    return this
-      .props
-      .buildDetail({
-        fields,
-        code: this.code,
-        view: this.view,
-        addCode: 630500,
-        editCode: 630502,
-        detailCode: 630507
-      });
-  }
+    constructor(props) {
+        super(props);
+        this.code = getQueryString('code', this.props.location.search);
+        this.view = !!getQueryString('v', this.props.location.search);
+    }
+    render() {
+        const fields = [{
+            title: '贷款人',
+            field: 'applyUserName',
+            formatter: (v, d) => {
+                return d.user.realName;
+            },
+            readonly: true
+        }, {
+            title: '手机号',
+            field: 'mobile',
+            formatter: (v, d) => {
+                return d.user.mobile;
+            },
+            readonly: true
+        }, {
+            title: '身份证号',
+            field: 'idNo',
+            formatter: (v, d) => {
+                return d.user.idNo;
+            },
+            readonly: true
+        }, {
+            title: '贷款金额',
+            field: 'loanAmount',
+            amount: true
+        }, {
+            title: '是否提前还款',
+            field: 'isAdvanceSettled',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }]
+        }, {
+            title: '总期数',
+            field: 'periods'
+        }, {
+            title: '剩余期数',
+            field: 'restPeriods'
+        }, {
+            title: '逾期金额',
+            field: 'overdueAmount',
+            amount: true
+        }, {
+            title: '剩余欠款',
+            field: 'restAmount',
+            amount: true
+        }, {
+            title: '未还清收成本',
+            field: 'restTotalCost',
+            amount: true
+        }, {
+            title: '还款计划表',
+            field: 'repayPlanList',
+            type: 'o2m',
+            options: {
+                fields: [{
+                    title: '当前期数',
+                    field: 'curPeriods'
+                }, {
+                    title: '应还本息',
+                    field: 'repayInterest',
+                    render: (v, d) => {
+                        return moneyFormat(d.repayCapital + d.repayInterest);
+                    }
+                }, {
+                    title: '实还金额',
+                    field: 'payedAmount',
+                    amount: true
+                }, {
+                    title: '逾期金额',
+                    field: 'overdueAmount',
+                    amount: true
+                }, {
+                    title: '还款日期',
+                    field: 'repayDatetime',
+                    type: 'date'
+                }, {
+                    title: '剩余欠款',
+                    field: 'overplusAmount',
+                    amount: true
+                }]
+            }
+        }, {
+            title: '可退押金金额',
+            field: 'lyDeposit',
+            render: (v, d) => {
+                return moneyFormat(d.lyDeposit + d.overdueAmount);
+            },
+            amount: true
+        }, {
+            title: '扣除违约金金额',
+            field: 'cutLyDeposit',
+            amount: true
+        }, {
+            title: '实际退款金额',
+            field: 'actualRefunds',
+            amount: true
+        }, {
+            title: '结清时间',
+            field: 'settleDatetime',
+            type: 'datetime'
+        }, {
+            title: '结清证明',
+            field: 'settleAttach',
+            type: 'img'
+        }];
+        return this
+            .props
+            .buildDetail({
+                fields,
+                code: this.code,
+                view: this.view,
+                detailCode: 630521
+            });
+    }
 }
 
 export default blackListAddedit;

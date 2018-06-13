@@ -9,6 +9,7 @@ import {
 } from '@redux/security/role-addedit';
 import { getQueryString } from 'common/js/util';
 import { DetailWrapper } from 'common/js/build-detail';
+// import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
   state => state.securityRoleAddEdit,

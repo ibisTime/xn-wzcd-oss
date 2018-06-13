@@ -10,7 +10,7 @@ import {
   setSearchData
 } from '@redux/biz/carShape';
 import { listWrapper } from 'common/js/build-list';
-import UpDown from 'component/up-down/up-down';
+import OnOrDownShelf from 'component/onordownshelf/onordownshelf';
 import { showWarnMsg, showSucMsg } from 'common/js/util';
 import { Button, Upload, Modal } from 'antd';
 import { lowerFrameShape, onShelfShape } from 'api/biz';
@@ -35,39 +35,53 @@ class CarShape extends React.Component {
   }
   setShelfVisible = (shelfVisible) => {
     this.setState({ shelfVisible });
+    setTimeout(() => {
+        this.props.getPageData();
+    }, 500);
   }
   render() {
     const fields = [{
       title: '名称',
       field: 'name',
-      search: true,
-      nowrap: true
-    }, {
-      title: '品牌',
-      field: 'brandName',
       search: true
     }, {
-      title: '车系',
-      field: 'seriesName',
+      title: '品牌',
+      field: 'brandCode',
       search: true,
-      nowrap: true
+      type: 'select',
+      listCode: 630406,
+      keyName: 'code',
+      valueName: 'name'
+    }, {
+      title: '车系',
+      field: 'seriesCode',
+      search: true,
+      type: 'select',
+      listCode: 630416,
+      keyName: 'code',
+      valueName: 'name'
     }, {
       title: '厂商指导价',
-      field: 'originalPrice',
-      amount: true
+      amount: true,
+      field: 'originalPrice'
     }, {
       title: '经销商参考价',
-      field: 'salePrice',
-      amount: true
-    }, {
-      title: '首付参考价',
-      field: 'sfAmount',
-      amount: true
+      amount: true,
+      field: 'salePrice'
     }, {
       title: 'UI位置',
       field: 'location',
       search: true,
-      key: 'location'
+      type: 'select',
+      data: [{
+        key: 0,
+        value: '首页推荐'
+      }, {
+        key: 1,
+        value: '普通'
+      }],
+      keyName: 'key',
+      valueName: 'value'
     }, {
       title: 'UI次序',
       field: 'orderNo',
@@ -81,12 +95,11 @@ class CarShape extends React.Component {
       key: 'status'
     }, {
       title: '最新修改人',
-      field: 'updater'
+      field: 'updaterName'
     }, {
       title: '最新修改时间',
       field: 'updateDatetime',
-      type: 'datetime',
-      nowrap: true
+      type: 'datetime'
     }, {
       title: '备注',
       field: 'remark'
@@ -105,9 +118,11 @@ class CarShape extends React.Component {
             onOk: () => {
               this.props.doFetching();
               return lowerFrameShape(key[0]).then(() => {
-                this.props.cancelFetching();
-                showWarnMsg('操作成功');
                 this.props.getPageData();
+                showWarnMsg('操作成功');
+                setTimeout(() => {
+                    this.props.getPageData();
+                }, 500);
               }).catch(() => {
                 this.props.cancelFetching();
               });
@@ -135,11 +150,12 @@ class CarShape extends React.Component {
           btnEvent,
           pageCode: 630425
         })}
-        <UpDown
-          code={this.state.selectKey}
-          bizCode={630423}
-          updownVisible={this.state.shelfVisible}
-          setModalVisible={this.setShelfVisible} />
+        <OnOrDownShelf
+          selectKey={this.state.selectKey}
+          addCode={630423}
+          onOk={this.props.getPageData}
+          shelfVisible={this.state.shelfVisible}
+          setShelfVisible={this.setShelfVisible} />
       </div>
     );
   }

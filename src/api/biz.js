@@ -56,6 +56,20 @@ export function receiveGoods(code) {
 }
 
 //  取消订单
-export function cancelBill(code, userId) {
-  return fetch(808053, { code, userId, updater: getUserName() });
+export function cancelBill(code) {
+  return fetch(808053, { code, updater: getUserName() });
+}
+
+//  贷款商品上架
+export function loanGoodsPutaway(code) {
+  return fetch(632173, { code, updater: getUserName() });
+}
+
+//  贷款商品下架
+export function loanGoodsSoldOut(code) {
+  return fetch(632174, { code, updater: getUserName() });
+}
+// 列表获取贷款产品
+export function getListProduct() {
+    return fetch(632177, { status: '3' });
 }

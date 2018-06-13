@@ -54,7 +54,7 @@ class refundBusinessChangeCard extends React.Component {
       }
     }, {
       title: '原银行卡号',
-      field: 'num',
+      field: 'idNo',
       readonly: true,
       formatter: (v, d) => {
         return d.loanOrder.bankcardNumber;
@@ -69,6 +69,14 @@ class refundBusinessChangeCard extends React.Component {
       keyName: 'code',
       valueName: 'bankcardNumber',
       type: 'select'
+    }, {
+      title: '开户行',
+      field: 'bankName',
+      select: true
+    }, {
+      title: '开户支行',
+      field: 'subbranch',
+      select: true
     }];
     return this
       .props
@@ -77,17 +85,6 @@ class refundBusinessChangeCard extends React.Component {
         code: this.code,
         view: this.view,
         detailCode: 630521,
-        beforeSubmit: (param) => {
-          var data = this.props.selectData;
-          let len = data.bankcardCode.length;
-          for(var i = 0; i < len; i++) {
-            if(param.bankcardCode === data.bankcardCode[i].bankCode) {
-              param.bankCode = data.bankcardCode[i].bankCode;
-              param.bankName = data.bankcardCode[i].bankName;
-            }
-          }
-          return param;
-        },
         buttons: [{
           title: '确认',
           handler: (param) => {

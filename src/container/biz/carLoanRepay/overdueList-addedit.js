@@ -7,12 +7,8 @@ import {
   setPageData,
   restore
 } from '@redux/biz/overdueList-addedit';
-import {
-  getQueryString
-} from 'common/js/util';
-import {
-  DetailWrapper
-} from 'common/js/build-detail';
+import {getQueryString} from 'common/js/util';
+import {DetailWrapper} from 'common/js/build-detail';
 
 @DetailWrapper(state => state.bizOverdueListAddedit, {
   initStates,
@@ -29,99 +25,126 @@ class overdueListAddedit extends React.Component {
     this.view = !!getQueryString('v', this.props.location.search);
   }
   render() {
-    const fields = [{
-      title: '贷款人',
-      field: 'name',
-      readonly: true,
-      formatter: (v, d) => {
-        return d.user.realName;
+    const fields = [
+      {
+        title: '申请人手机号',
+        field: 'mobile',
+        required: true,
+        mobile: true
+      }, {
+        title: '申请人姓名',
+        field: 'realName',
+        required: true
+      }, {
+        title: '身份证号',
+        field: 'idNo',
+        required: true,
+        idCard: true
+      }, {
+        title: '开户行',
+        field: 'realName',
+        required: true,
+        bankCard: true
+      }, {
+        title: '开户支行',
+        field: 'subbranch',
+        required: true,
+        bankCard: true
+      }, {
+        title: '还款卡号',
+        field: 'bankcardNumber',
+        required: true,
+        bankCard: true
+      }, {
+        title: '购买车辆',
+        field: 'carCode',
+        required: true
+      }, {
+        title: '车辆总价',
+        field: 'carPrice',
+        required: true
+      }, {
+        title: '首付比例',
+        field: 'sfRate',
+        required: true,
+        type: 'select'
+      }, {
+        title: '首款金额',
+        field: 'sfAmount',
+        required: true
+      }, {
+        title: '贷款银行',
+        field: 'loanBank',
+        required: true,
+        type: 'select',
+        bankCard: true
+      }, {
+        title: '贷款金额',
+        field: 'loanAmount',
+        required: true
+      }, {
+        title: '期数',
+        field: 'periods',
+        required: true
+      }, {
+        title: '银行利率',
+        field: 'bankRate',
+        required: true
+      }, {
+        title: '贷款开始时间',
+        field: 'loanStartDatetime',
+        required: true
+      }, {
+        title: '贷款结束时间',
+        field: 'loanEndDatetime',
+        required: true
+      }, {
+        title: '放款日期',
+        field: 'fkDatetime',
+        required: true
+      }, {
+        title: '担保风险金',
+        field: 'fxDeposit',
+        required: true
+      }, {
+        title: '杂费',
+        field: 'otherFee',
+        required: true
+      }, {
+        title: 'GPS收费',
+        field: 'gpsFee',
+        required: true
+      }, {
+        title: '首期还款日期',
+        field: 'firstRepayDatetime',
+        required: true
+      }, {
+        title: '首期月供金额',
+        field: 'firstRepayAmount',
+        required: true
+      }, {
+        title: '每期还款日期',
+        field: 'monthDatetime',
+        required: true
+      }, {
+        title: '每期月供金额',
+        field: 'monthAmount',
+        required: true
+      }, {
+        title: '履约保证金',
+        field: 'lyDeposit',
+        required: true
       }
-    }, {
-      title: '手机号',
-      field: 'mobile',
-      readonly: true,
-      formatter: (v, d) => {
-        return d.user.mobile;
-      }
-    }, {
-      title: '期数',
-      field: 'periods',
-      readonly: true
-    }, {
-      title: '逾期期数',
-      field: 'curPeriods',
-      readonly: true
-    }, {
-      title: '逾期日期',
-      field: 'repayDatetime',
-      type: 'date',
-      readonly: true
-    }, {
-      title: '处理历史',
-      field: 'remindLogList',
-      type: 'o2m',
-      options: {
-        add: true,
-        edit: true,
-        delete: true,
-        fields: [{
-          title: '催收方式',
-          field: 'way',
-          type: 'select',
-          select: true,
-          key: 'way'
-        }, {
-          title: '催收对象',
-          field: 'toUser'
-        }, {
-          title: '催收文本',
-          field: 'content'
-        }, {
-          title: '催收时间',
-          field: 'createDatetime'
-        }]
-      }
-    }, {
-      title: '再次逾期保证金',
-      field: 'overdueDeposit'
-    }, {
-      title: '再次逾期保证金收取方式',
-      field: 'overdueDepositWay',
-      type: 'select',
-      select: true,
-      key: 'repay_way'
-    }, {
-      title: '清收成本清单',
-      field: 'costList',
-      type: 'o2m',
-      options: {
-        add: true,
-        edit: true,
-        delete: true,
-        fields: [{
-          title: '费用项',
-          field: 'item'
-        }, {
-          title: '金额（元）',
-          field: 'amount',
-          amount: true
-        }, {
-          title: '发生时间',
-          field: 'payDatetime',
-          type: 'date'
-        }, {
-          title: '备注',
-          field: 'remark'
-        }]
-      }
-    }];
+    ];
     return this
       .props
       .buildDetail({
         fields,
         code: this.code,
         view: this.view,
-        detailCode: 630541
+        addCode: 630500,
+        editCode: 630502,
+        detailCode: 630507
       });
   }
 }

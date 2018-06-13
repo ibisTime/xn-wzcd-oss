@@ -52,7 +52,7 @@ class Post extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        values.parentCode = values.parentCode === 'ROOT' ? '' : values.parentCode;
+        values.parentCode = values.parentCode === 'ROOT' ? '0' : values.parentCode;
         this.props.updatePost(values);
       }
     });

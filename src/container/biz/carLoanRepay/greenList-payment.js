@@ -8,8 +8,11 @@ import {
   restore
 } from '@redux/biz/greenList-payment';
 import {
-  getQueryString
+  getQueryString,
+  getUserId,
+  showSucMsg
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
   DetailWrapper
 } from 'common/js/build-detail';
@@ -25,7 +28,7 @@ import {
 class greenListPayment extends React.Component {
   constructor(props) {
     super(props);
-    this.code = getQueryString('code', this.props.location.search);
+    this.code = getQueryString('staffCode', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
   }
   render() {
@@ -46,16 +49,9 @@ class greenListPayment extends React.Component {
       type: 'date',
       readonly: true
     }, {
-      title: '标识日期',
-      field: 'overdueHandleDatetime',
-      type: 'date',
-      readonly: true
-    }, {
-      title: '未还清收成本',
-      field: 'restTotalCost',
-      render: (v, d) => {
-        return (d.totalFee - d.payedFee) / 1000;
-      },
+      title: '已缴纳清收成本(元)',
+      field: 'payedFee',
+      amount: true,
       readonly: true
     }, {
       title: '清收成本清单',
@@ -70,9 +66,6 @@ class greenListPayment extends React.Component {
           field: 'amount',
           amount: true
         }, {
-          title: '备注',
-          field: 'remark'
-        }, {
           title: '发生时间',
           field: 'payDatetime',
           type: 'date'
@@ -80,7 +73,10 @@ class greenListPayment extends React.Component {
           title: '状态',
           field: 'status',
           type: 'select',
-          key: 'status'
+          key: 'cost_status'
+        }, {
+          title: '备注',
+          field: 'remark'
         }]
       }
     }];
@@ -90,7 +86,47 @@ class greenListPayment extends React.Component {
         fields,
         code: this.code,
         view: this.view,
-        detailCode: 630541
+        detailCode: 630541,
+        buttons: [{
+          title: '线上代扣',
+          handler: (param) => {
+            param.operator = getUserId();
+            param.costList = this.props.o2mSKeys.costList;
+            param.payType = '1';
+            this.props.doFetching();
+            fetch(630533, param).then(() => {
+              showSucMsg('操作成功');
+              this.props.cancelFetching();
+              setTimeout(() => {
+                this.props.history.go(-1);
+              }, 1000);
+            }).catch(this.props.cancelFetching);
+          },
+          check: true,
+          type: 'primary'
+        }, {
+          title: '线下收取',
+          handler: (param) => {
+            param.operator = getUserId();
+            param.costList = this.props.o2mSKeys.costList;
+            param.payType = '2';
+            this.props.doFetching();
+            fetch(630533, param).then(() => {
+              showSucMsg('操作成功');
+              this.props.cancelFetching();
+              setTimeout(() => {
+                this.props.history.go(-1);
+              }, 1000);
+            }).catch(this.props.cancelFetching);
+          },
+          check: true,
+          type: 'primary'
+        }, {
+          title: '返回',
+          handler: (param) => {
+            this.props.history.go(-1);
+          }
+        }]
       });
   }
 }

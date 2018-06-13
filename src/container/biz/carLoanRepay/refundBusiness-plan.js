@@ -8,7 +8,8 @@ import {
     restore
 } from '@redux/biz/refundBusiness-plan';
 import {
-    getQueryString
+    getQueryString,
+    moneyFormat
 } from 'common/js/util';
 import {
     DetailWrapper
@@ -40,6 +41,7 @@ class refundBusinessPlan extends React.Component {
         }, {
             title: '贷款金额',
             field: 'loanAmount',
+            amount: true,
             readonly: true
         }, {
             title: '期数',
@@ -48,51 +50,54 @@ class refundBusinessPlan extends React.Component {
         }, {
             title: '还款计划表',
             field: 'repayPlanList',
-            searchParams: {
-                limit: 24
-            },
             type: 'o2m',
             options: {
-                scroll: {
-                    x: 1300
-                },
+                export: true,
                 fields: [{
                     title: '期数',
                     field: 'curPeriods'
                 }, {
-                    title: '应还本金',
-                    field: 'repayCapital',
-                    amount: true
+                    title: '还款日期',
+                    field: 'repayDatetime',
+                    type: 'date'
                 }, {
-                    title: '应还利息',
+                    title: '应还本息',
                     field: 'repayInterest',
-                    amount: true
+                    render: function (v, data) {
+                        var sum = data.repayCapital + data.repayInterest;
+                        return moneyFormat(sum);
+                    }
                 }, {
                     title: '实还金额',
-                    field: 'payedAmount',
-                    amount: true
+                    amount: true,
+                    field: 'payedAmount'
                 }, {
                     title: '逾期金额',
-                    field: 'overdueAmount',
-                    amount: true
+                    amount: true,
+                    field: 'overdueAmount'
                 }, {
                     title: '剩余欠款',
-                    field: 'overplusAmount',
-                    amount: true
+                    amount: true,
+                    field: 'overplusAmount'
                 }]
             }
         }];
-        return this
-            .props
-            .buildDetail({
-                fields,
-                code: this.code,
-                view: this.view,
-                detailCode: 630521,
-                beforeDetail: (param) => {
-                    param['userId'] = this.userId;
+        return this.props.buildDetail({
+            fields,
+            code: this.code,
+            view: this.view,
+            detailCode: 630521,
+            beforeDetail: (param) => {
+                param['userId'] = this.userId;
+            },
+            buttons: [{
+                title: '返回',
+                handler: (param) => {
+                    this.props.history.go(-1);
                 }
-            });
+            }]
+
+        });
     }
 }
 

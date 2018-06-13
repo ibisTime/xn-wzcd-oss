@@ -16,7 +16,7 @@ import {
     DetailWrapper
 } from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizHistoricalApplyCheck, {
+@DetailWrapper(state => state.bizHistoricalApplyAddedit, {
     initStates,
     doFetching,
     cancelFetching,
@@ -24,49 +24,53 @@ import {
     setPageData,
     restore
 })
-class historicalApplyCheck extends React.Component {
+class historicalApplyAddedit extends React.Component {
     constructor(props) {
         super(props);
-        this.code = getQueryString('staffCode', this.props.location.search);
+        this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
     }
     render() {
         const fields = [{
             title: '订单编号',
-            field: 'code',
-            readonly: true
+            field: 'code'
         }, {
-            title: '申请人姓名',
-            field: 'realName',
-            readonly: true
+            title: '申请人',
+            field: 'userId',
+            type: 'select',
+            listCode: 630066,
+            keyName: 'userId',
+            valueName: 'realName',
+            formatter: (v, data) => {
+                return data.user ? data.user.realName : '-';
+            }
         }, {
-            title: '意向车辆',
-            field: 'idNo',
-            readonly: true
-        }, {
-            title: '首付比例',
-            field: 'sfRate',
-            readonly: true
+            title: '车辆总价',
+            amount: true,
+            field: 'price'
         }, {
             title: '首付金额',
-            field: 'sfAmount',
-            readonly: true
+            amount: true,
+            field: 'sfAmount'
         }, {
-            title: '分期期数',
-            field: 'periods',
-            readonly: true
+            title: '车贷计算器信息',
+            field: 'saleDesc'
         }, {
             title: '申请时间',
             field: 'createDatetime',
-            readonly: true
+            type: 'date'
         }, {
-            title: '车贷计算器信息',
-            field: 'saleDesc',
-            readonly: true
+            title: '处理人',
+            field: 'handler',
+            type: 'select',
+            listCode: 630066,
+            keyName: 'userId',
+            valueName: 'realName'
         }, {
-            title: '备注',
-            field: 'remark',
-            readonly: true
+            title: '状态',
+            field: 'status',
+            type: 'select',
+            key: 'can_order_status'
         }];
         return this
             .props
@@ -79,4 +83,4 @@ class historicalApplyCheck extends React.Component {
     }
 }
 
-export default historicalApplyCheck;
+export default historicalApplyAddedit;

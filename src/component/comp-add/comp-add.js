@@ -36,7 +36,8 @@ class CompAdd extends React.Component {
           dvalue: '部门'
         }],
         keyName: 'dkey',
-        valueName: 'dvalue'
+        valueName: 'dvalue',
+        required: true
       }],
       addCode: 630100,
       onOk: (data, params) => {

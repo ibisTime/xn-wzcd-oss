@@ -8,8 +8,8 @@ import {
   restore
 } from '@redux/biz/carShape-addedit';
 import { getQueryString } from 'common/js/util';
-import { DetailWrapper } from 'common/js/build-detail';
 import fetch from 'common/js/fetch';
+import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
   state => state.bizCarShapeAddEdit,
@@ -23,23 +23,28 @@ class CarShapeAddEdit extends React.Component {
   }
   render() {
     const fields = [{
-      field: 'brandCode',
       title: '品牌',
+      field: 'brandCode',
       type: 'select',
       listCode: 630406,
-      onChange: (v, d) => {
+      params: {
+        status: '1'
+      },
+      onChange: (v) => {
+        this.props.setSelectData({
+          data: [],
+          key: 'seriesCode'
+        });
+        this.props.setSelectData.seriesCode = '';
         fetch(630416, {
-          status: '1',
-          brandCode: v
+          brandCode: v,
+          status: '1'
         }).then((data) => {
           this.props.setSelectData({
             data,
             key: 'seriesCode'
           });
-        });
-      },
-      params: {
-        status: '1'
+        }).catch(() => {});
       },
       keyName: 'code',
       valueName: 'name',
@@ -49,10 +54,6 @@ class CarShapeAddEdit extends React.Component {
       field: 'seriesCode',
       type: 'select',
       required: true,
-      listCode: 630416,
-      params: {
-        status: '1'
-      },
       keyName: 'code',
       valueName: 'name'
     }, {
@@ -71,32 +72,31 @@ class CarShapeAddEdit extends React.Component {
       required: true,
       type: 'img'
     }, {
-      title: '图文描述',
-      field: 'description',
-      required: true,
-      type: 'textarea'
-    }, {
       title: '广告语',
       field: 'slogan',
-      required: true,
-      type: 'textarea'
+      required: true
     }, {
       title: '厂商指导价',
       field: 'originalPrice',
-      required: true,
-      amount: true
+      amount: true,
+      required: true
     }, {
       title: '经销商参考价',
       field: 'salePrice',
-      required: true,
-      amount: true
+      amount: true,
+      required: true
     }, {
       title: '首付参考价',
       field: 'sfAmount',
-      required: true,
-      amount: true
+      amount: true,
+      required: true
     }, {
       title: '车辆分期介绍',
+      field: 'description',
+      type: 'textarea',
+      required: true
+    }, {
+      title: '备注',
       field: 'remark'
     }];
     return this.props.buildDetail({
@@ -106,22 +106,15 @@ class CarShapeAddEdit extends React.Component {
       addCode: 630420,
       editCode: 630422,
       detailCode: 630427,
-      beforeSubmit: (param) => {
-        var data = this.props.selectData;
-        console.log(data);
-        let len = data.brandCode.length;
-        for(var i = 0; i < len; i++) {
-          if(param.brandCode === data.brandCode[i].code) {
-            param.brandName = data.brandCode[i].name;
-          }
-        }
-        let length = data.seriesCode.length;
-        for(var j = 0; j < length; j++) {
-          if(param.seriesCode === data.seriesCode[j].code) {
-            param.seriesName = data.seriesCode[j].name;
-          }
-        }
-        return param;
+      beforeSubmit: (params) => {
+        console.log(this.props.selectData);
+        let brand = this.props.selectData.brandCode.find(v => v.code === params.brandCode);
+        console.log(brand);
+        params.brandName = brand.name;
+        let series = this.props.selectData.seriesCode.find(v => v.code === params.seriesCode);
+        console.log(series);
+        params.seriesName = series.name;
+        return params;
       }
     });
   }

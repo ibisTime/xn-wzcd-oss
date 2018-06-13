@@ -18,7 +18,8 @@ class Post extends React.Component {
     this.state = {
       fetching: true,
       treeData: [],
-      userName: ''
+      userName: '',
+      postCode: ''
     };
     this.userId = getQueryString('userId');
   }
@@ -28,16 +29,13 @@ class Post extends React.Component {
       getPostList()
     ]).then(([userData, postData]) => {
       this.getTree(postData);
-      this.setState({ userName: userData.loginName, fetching: false });
-      this.props.form.setFieldsValue({
-        departmentCode: userData.departmentCode
-      });
+      this.setState({ userName: userData.loginName, postCode: userData.postCode, fetching: false });
     }).catch(() => this.setState({ fetching: false }));
   }
   getTree(data) {
     let result = {};
     data.forEach(v => {
-      v.parentCode = v.parentCode || 'ROOT';
+      v.parentCode = v.parentCode === '0' ? 'ROOT' : v.parentCode;
       if (!result[v.parentCode]) {
         result[v.parentCode] = [];
       }
@@ -108,7 +106,8 @@ class Post extends React.Component {
           </Item>
           <Item key='treeMenu' {...formItemLayout} label='岗位名称'>
             {getFieldDecorator('postCode', {
-              rules
+              rules,
+              initialValue: this.state.postCode
             })(
               <TreeSelect
                 showSearch

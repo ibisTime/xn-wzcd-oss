@@ -1,5 +1,5 @@
-dist/
-.project
+/dist/
 .idea/
+.project
 node_modules/
-build/
+build.zip

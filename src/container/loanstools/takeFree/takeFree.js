@@ -11,13 +11,9 @@ import {
 } from '@redux/loanstools/takeFree';
 import {
   showWarnMsg,
-  showSucMsg
+  showSucMsg,
+ moneyFormat
 } from 'common/js/util';
-import {
-  Button,
-  Upload,
-  Modal
-} from 'antd';
 import {
     listWrapper
 } from 'common/js/build-list';
@@ -50,33 +46,35 @@ class takeFee extends React.Component {
             search: true
         }, {
             title: '业务公司',
-            field: 'companyCode'
+            field: 'companyName'
         }, {
             title: '客户姓名',
-            field: 'companyCode',
+            field: 'userName',
             search: true
         }, {
             title: '应收手续费总额',
-            field: 'budgetAmount',
+            field: 'shouldAmount',
             amount: true
         }, {
             title: '未收手续费总额',
             field: 'receiptAccount',
-            amount: true
+            render: (v, d) => {
+                return moneyFormat(d.shouldAmount - d.realAmount);
+            }
         }, {
             title: '更新人',
-            field: 'useDatetime'
+            field: 'updater'
         }, {
-            title: '跟新时间',
-            field: 'useDatetime',
+            title: '更新时间',
+            field: 'updateDatetime',
             search: true,
             type: 'date'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632105,
+            pageCode: 632165,
             btnEvent: {
-              entering: (selectedRowKeys, selectedRows) => {
+              enter: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
                   showWarnMsg('请选择记录');
                 } else if (selectedRowKeys.length > 1) {
