@@ -42,11 +42,12 @@ class historyBusinessManageAddedit extends React.Component {
         return d.user.realName;
       }
     }, {
-      title: '状态',
-      field: 'status',
+      title: '当前节点',
+      field: 'curNodeCode',
       type: 'select',
-      select: true,
-      key: 'repay_biz_status'
+      listCode: 630147,
+      keyName: 'code',
+      valueName: 'name'
     }, {
       title: '身份证号',
       field: 'idNo',
@@ -81,13 +82,11 @@ class historyBusinessManageAddedit extends React.Component {
           title: '当前期数',
           field: 'curPeriods'
         }, {
-          title: '应还本金',
-          field: 'repayCapital',
-          amount: true
-        }, {
-          title: '应还利息',
+          title: '应还本息',
           field: 'repayInterest',
-          amount: true
+          render: (v, d) => {
+            return (d.repayCapital + d.repayInterest) / 1000;
+          }
         }, {
           title: '实还金额',
           field: 'payedAmount',
@@ -97,6 +96,10 @@ class historyBusinessManageAddedit extends React.Component {
           field: 'overdueAmount',
           amount: true
         }, {
+          title: '还款日期',
+          field: 'repayDatetime',
+          type: 'date'
+        }, {
           title: '剩余欠款',
           field: 'overplusAmount',
           amount: true
@@ -104,10 +107,7 @@ class historyBusinessManageAddedit extends React.Component {
           title: '逾期处理',
           field: 'overdueDeposit',
           render: (v, d) => {
-            return <a onClick = {
-              () => this.goDetail(d.code)
-            }
-            href = "javascript:void(0)" > 详情 < /a>;
+            return <a onClick = { () => this.goDetail(d.code) } href = "javascript:void(0)"> 详情 </a>;
           }
         }]
       }

@@ -56,13 +56,11 @@ class overdueList extends React.Component {
       field: 'periods'
     }, {
       title: '逾期期数',
-      field: 'totalOverdueCount',
-      render: (v, d) => {
-        return d.repayBiz.curOverdueCount;
-      }
+      field: 'curPeriods'
     }, {
       title: '逾期金额',
-      field: 'overdueAmount'
+      field: 'overdueAmount',
+      amount: true
     }, {
       title: '逾期日期',
       field: 'repayDatetime',
@@ -72,7 +70,8 @@ class overdueList extends React.Component {
       fields,
       pageCode: 630540,
       searchParams: {
-        status: 2
+        curNodeCode: '004_03',
+        refType: '0'
       },
       btnEvent: {
         message: (key, item) => {
@@ -121,7 +120,7 @@ class overdueList extends React.Component {
           } else if (selectedRowKeys.length > 1) {
             showWarnMsg('请选择一条记录');
           } else {
-            this.props.history.push(`/biz/overdueList/dispose?code=${selectedRowKeys[0]}`);
+            this.props.history.push(`/biz/overdueList/dispose?staffCode=${selectedRowKeys[0]}`);
           }
         }
       }

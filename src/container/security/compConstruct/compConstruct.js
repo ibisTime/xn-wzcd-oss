@@ -53,7 +53,7 @@ class CompConstruct extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        values.parentCode = values.parentCode === 'ROOT' ? '' : values.parentCode;
+        values.parentCode = values.parentCode === 'ROOT' ? '0' : values.parentCode;
         this.props.updateCompany(values);
       }
     });
@@ -76,7 +76,7 @@ class CompConstruct extends React.Component {
   }
   // 新增部门
   addCompany() {
-    if (!this.props.selectedKeys.length) {
+    if (!this.props.selectedKeys.length && this.props.treeData.length) {
       showWarnMsg('请先选择公司/部门');
       return;
     }

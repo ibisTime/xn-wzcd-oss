@@ -10,7 +10,7 @@ import {
   setSearchData
 } from '@redux/biz/carSeries';
 import { listWrapper } from 'common/js/build-list';
-import UpDown from 'component/up-down/up-down';
+import OnOrDownShelf from 'component/onordownshelf/onordownshelf';
 import { showWarnMsg, showSucMsg } from 'common/js/util';
 import { Button, Upload, Modal } from 'antd';
 import { lowerFrameSys, onShelfSys } from 'api/biz';
@@ -35,12 +35,14 @@ class CarSeries extends React.Component {
   }
   setShelfVisible = (shelfVisible) => {
     this.setState({ shelfVisible });
+    setTimeout(() => {
+        this.props.getPageData();
+    }, 500);
   }
   render() {
     const fields = [{
       title: '名称',
-      field: 'name',
-      search: true
+      field: 'name'
     }, {
       title: '品牌',
       field: 'brandCode',
@@ -57,7 +59,7 @@ class CarSeries extends React.Component {
       key: 'status'
     }, {
       title: '最新修改人',
-      field: 'updater'
+      field: 'updaterName'
     }, {
       title: '最新修改时间',
       field: 'updateDatetime',
@@ -80,9 +82,11 @@ class CarSeries extends React.Component {
             onOk: () => {
               this.props.doFetching();
               return lowerFrameSys(key[0]).then(() => {
-                this.props.cancelFetching();
-                showWarnMsg('操作成功');
                 this.props.getPageData();
+                showWarnMsg('操作成功');
+                setTimeout(() => {
+                    this.props.getPageData();
+                }, 500);
               }).catch(() => {
                 this.props.cancelFetching();
               });
@@ -110,11 +114,12 @@ class CarSeries extends React.Component {
           btnEvent,
           pageCode: 630415
         })}
-        <UpDown
-          code={this.state.selectKey}
-          bizCode={630413}
-          updownVisible={this.state.shelfVisible}
-          setModalVisible={this.setShelfVisible} />
+        <OnOrDownShelf
+          selectKey={this.state.selectKey}
+          addCode={630413}
+          onOk={this.props.getPageData}
+          shelfVisible={this.state.shelfVisible}
+          setShelfVisible={this.setShelfVisible} />
       </div>
     );
   }

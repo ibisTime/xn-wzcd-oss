@@ -14,7 +14,8 @@ import {
 } from 'common/js/build-list';
 import {
   showWarnMsg,
-  showSucMsg
+  showSucMsg,
+  dateTimeFormat
 } from 'common/js/util';
 import {
   Button,
@@ -48,25 +49,30 @@ class HandleApply extends React.Component {
       field: 'code'
     }, {
       title: '申请人',
-      field: 'userId'
-    }, {
-      title: '意向车辆',
-      field: 'status',
-      render: (v, d) => {
-        return (d.brandName + d.carName + d.seriesName);
+      field: 'userId',
+      type: 'select',
+      listCode: 630066,
+      keyName: 'userId',
+      valueName: 'realName',
+      search: true,
+      render: (v, data) => {
+        return data.user.mobile;
       }
     }, {
       title: '车辆总价',
-      field: 'price',
-      amount: true
+      amount: true,
+      field: 'price'
     }, {
       title: '首付金额',
-      field: 'sfAmount',
-      amount: true
+      amount: 'true',
+      field: 'sfAmount'
     }, {
       title: '申请时间',
       field: 'createDatetime',
-      type: 'datetime'
+      type: 'date',
+      rangedate: ['createDatetimeStart', 'createDatetimeEnd'],
+      render: dateTimeFormat,
+      search: true
     }, {
       title: '车贷计算器信息',
       field: 'saleDesc'
@@ -86,6 +92,15 @@ class HandleApply extends React.Component {
           } else {
             this.props.history.push(`/biz/handleApply/check?code=${selectedRowKeys[0]}`);
           }
+        },
+        detail: (selectedRowKeys, selectedRows) => {
+            if (!selectedRowKeys.length) {
+                showWarnMsg('请选择记录');
+            } else if (selectedRowKeys.length > 1) {
+                showWarnMsg('请选择一条记录');
+            } else {
+                this.props.history.push(`/biz/handleApply/check?v=1&code=${selectedRowKeys[0]}`);
+            }
         }
       }
     });

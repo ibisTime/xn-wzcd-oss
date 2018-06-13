@@ -109,6 +109,7 @@ function setExpandedKeys(keys) {
 // 新增部门/公司
 export function addComp(company, parentCode) {
   return dispatch => {
+    console.log(company, parentCode, listInfo);
     listInfo[parentCode] = listInfo[parentCode] || [];
     compInfo[company.code] = company;
     listInfo[parentCode].push({
@@ -188,7 +189,7 @@ function getTree(data, dispatch) {
   let result = {};
   let info = {};
   data.forEach(v => {
-    v.parentCode = v.parentCode || 'ROOT';
+    v.parentCode = v.parentCode === '0' ? 'ROOT' : v.parentCode;
     if (!result[v.parentCode]) {
       result[v.parentCode] = [];
     }

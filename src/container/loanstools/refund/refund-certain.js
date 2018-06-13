@@ -12,6 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
   DetailWrapper
 } from 'common/js/build-detail';
@@ -27,7 +28,7 @@ import {
         restore
     }
 )
-class RefundCertain extends React.Component {
+class refundCertain extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -40,78 +41,42 @@ class RefundCertain extends React.Component {
             readonly: true
         }, {
             title: '业务编号',
-            field: 'receiptBank',
-            readonly: true
-        }, {
-            title: '身份证',
-            field: 'receiptAccount',
-            readonly: true
-        }, {
-            title: '贷款金额',
-            field: 'receiptAccount',
-            amount: true,
+            field: 'code',
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'receiptAccount',
+            field: 'loanBankName',
             readonly: true
         }, {
-            title: '履约保证金',
-            field: 'receiptAccount',
+            title: '贷款金额',
+            field: 'loanAmount',
             amount: true,
             readonly: true
         }, {
-            title: '担保风险金',
-            field: 'receiptAccount',
+            title: '退款金额',
+            field: 'backAdvanceAmount',
             amount: true,
-            readonly: true
-        }, {
-            title: '手续费收取方式',
-            field: 'receiptAccount',
-            readonly: true
-        }, {
-            title: 'GPS收费',
-            field: 'receiptAccount',
-            amount: true,
-            readonly: true
-        }, {
-            title: 'GPS收费方式',
-            field: 'receiptAccount',
-            readonly: true
-        }, {
-            title: '厂家贴息',
-            field: 'receiptAccount',
-            readonly: true
-        }, {
-            title: '应退按揭款',
-            field: 'receiptAccount',
-            amount: true,
-            readonly: true
-        }, {
-            title: '手续费到账清单',
-            field: 'receiptAccount',
-            amount: true,
-            readonly: true
-        }, {
-            title: '付款时间',
-            field: 'payDatetime',
-            type: 'date',
             required: true
         }, {
-            title: '付款银行',
-            field: 'payBank',
-            pageCode: 802115,
+            title: '收款账号',
+            field: 'backAdvanceAccount',
+            bankCard: true,
+            required: true
+        }, {
+            title: '开户行',
+            field: 'backAdvanceOpenBank',
+            type: 'select',
+            listCode: 802116,
             keyName: 'bankCode',
             valueName: 'bankName',
-            type: 'select',
             required: true
         }, {
-            title: '付款账号',
-            field: 'receiptAccount',
+            title: '开户支行',
+            field: 'backAdvanceSubbranch',
             required: true
         }, {
-            title: '付款凭证',
-            field: 'receiptAccount',
+            title: '水单',
+            field: 'backAdvanceWaterBill',
             type: 'img',
             required: true
         }];
@@ -119,13 +84,14 @@ class RefundCertain extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632106,
+            detailCode: 632186,
             buttons: [{
                 title: '确认',
                 check: true,
                 handler: (params) => {
+                    params.operator = getUserId();
                     this.props.doFetching();
-                    fetch(632102, params).then(() => {
+                    fetch(632180, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {
@@ -143,4 +109,4 @@ class RefundCertain extends React.Component {
     }
 }
 
-export default RefundCertain;
+export default refundCertain;

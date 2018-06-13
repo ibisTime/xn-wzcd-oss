@@ -1,4 +1,5 @@
 import fetch from 'common/js/fetch';
+// import {  } from 'common/js/config';
 
 /**
  * 获取数据字典列表

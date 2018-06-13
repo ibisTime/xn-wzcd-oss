@@ -14,8 +14,7 @@ import {
 } from 'common/js/build-list';
 import {
   showWarnMsg,
-  showSucMsg,
-  formatDate
+  showSucMsg
 } from 'common/js/util';
 import {
   Button,
@@ -60,24 +59,17 @@ class refundBusiness extends React.Component {
       field: 'mobile',
       render: (v, d) => {
         return d.user.mobile;
-      }
-    }, {
-      title: '车辆',
-      field: 'carCode',
-      render: (v, d) => {
-        if(d.brandName !== undefined) {
-          return d.brandName + d.seriesName + d.carName;
-        }
-      }
+      },
+      nowrap: true
     }, {
       title: '贷款银行',
-      field: 'loanBank'
-    }, {
-      title: '贷款金额',
+      field: 'loanBankName'
+  }, {
+      title: '贷款金额(元)',
       field: 'loanAmount',
       amount: true
     }, {
-      title: '期数',
+      title: '贷款期数',
       field: 'periods'
     }, {
       title: '剩余期数',
@@ -86,19 +78,19 @@ class refundBusiness extends React.Component {
       title: '还款日',
       field: 'monthDatetime'
     }, {
-      title: '月供',
+      title: '月供(元)',
       field: 'monthAmount',
       amount: true
     }, {
-      title: '剩余欠款',
+      title: '剩余欠款(元)',
       field: 'restAmount',
       amount: true
     }, {
-      title: '未还清收成本',
+      title: '未还清收总成本(元)',
       field: 'restTotalCost',
       amount: true
     }, {
-      title: '逾期金额',
+      title: '逾期金额(元)',
       field: 'overdueAmount',
       amount: true
     }, {
@@ -109,24 +101,22 @@ class refundBusiness extends React.Component {
       field: 'curOverdueCount'
     }, {
       title: '放款日期',
-      field: 'date',
-      render: (v, d) => {
-        if(d.loanOrder !== undefined) {
-          return formatDate(d.loanOrder.fkDatetime);
-        }
-      }
+      field: 'bankFkDatetime',
+      type: 'date'
     }, {
-      title: '状态',
-      field: 'status',
+      title: '当前节点',
+      field: 'curNodeCode',
       type: 'select',
-      select: true,
-      key: 'repay_biz_status'
+      listCode: 630147,
+      keyName: 'code',
+      valueName: 'name'
     }];
     return this.props.buildList({
       fields,
       pageCode: 630520,
       searchParams: {
-        refType: '0'
+        refType: '0',
+        curNodeCode: '003_01'
       },
       btnEvent: {
         refundplan: (selectedRowKeys, selectedRows) => {

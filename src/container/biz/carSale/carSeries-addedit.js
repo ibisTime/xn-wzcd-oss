@@ -7,9 +7,8 @@ import {
   setPageData,
   restore
 } from '@redux/biz/carSeries-addedit';
-import { getQueryString, formatImg } from 'common/js/util';
+import { getQueryString } from 'common/js/util';
 import { DetailWrapper } from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
   state => state.bizCarSeriesAddEdit,
@@ -28,9 +27,6 @@ class CarSeriesAddEdit extends React.Component {
       type: 'select',
       search: true,
       listCode: 630406,
-      params: {
-        status: '1'
-      },
       keyName: 'code',
       valueName: 'name',
       required: true
@@ -41,15 +37,12 @@ class CarSeriesAddEdit extends React.Component {
     }, {
       title: '价格',
       field: 'price',
-      required: true,
-      amount: true
+      amount: true,
+      required: true
     }, {
       title: '广告图',
       field: 'advPic',
       type: 'img',
-      render: (v, d) => {
-        return formatImg(d.advPic);
-      },
       required: true,
       single: true
     }, {
@@ -66,7 +59,11 @@ class CarSeriesAddEdit extends React.Component {
       view: this.view,
       addCode: 630410,
       editCode: 630412,
-      detailCode: 630417
+      detailCode: 630417,
+      beforeSubmit: (param) => {
+          param.updater = '';
+          return param;
+      }
     });
   }
 }

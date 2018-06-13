@@ -10,22 +10,21 @@ import {
     setSearchData
 } from '@redux/postloantools/import';
 import {
-    showWarnMsg,
-    showSucMsg,
-    getRoleCode
+  showWarnMsg,
+  showSucMsg
 } from 'common/js/util';
 import {
-    Button,
-    Upload,
-    Modal
+  Button,
+  Upload,
+  Modal
 } from 'antd';
 import {
     listWrapper
 } from 'common/js/build-list';
 import {
-    lowerFrame,
-    onShelf,
-    sendMsg
+  lowerFrame,
+  onShelf,
+  sendMsg
 } from 'api/biz';
 
 @listWrapper(
@@ -43,118 +42,74 @@ import {
         setSearchData
     }
 )
-class importCustomer extends React.Component {
+class imports extends React.Component {
     render() {
         const fields = [{
-            title: '银行',
+            title: '业务编号',
             field: 'code',
             search: true
         }, {
-            title: '业务编号',
-            field: 'companyCode',
-            search: true
-        }, {
             title: '客户姓名',
-            field: 'budgetAmount',
+            field: 'realName',
             search: true
         }, {
-            title: '证件号',
-            field: 'receiptAccount'
-        }, {
-            title: '放宽日期',
-            field: 'payDatetime',
-            type: 'date'
+            title: '身份证',
+            field: 'idNo'
         }, {
             title: '贷款金额',
-            field: 'budgetAmount',
+            field: 'loanAmount',
             amount: true
         }, {
-            title: '剩余金额',
-            field: 'budgetAmount',
+            title: '贷款银行',
+            field: 'loanBankName'
+        }, {
+            title: '放款日期',
+            field: 'fkDatetime',
+            type: 'date'
+        }, {
+            title: '逾期金额',
+            field: 'overdueAmount',
             amount: true
         }, {
             title: '逾期日期',
-            field: 'payDatetime',
+            field: 'overdueDatetime',
             type: 'date'
         }, {
-            title: '月还款额',
-            field: 'budgetAmount',
-            amount: true
-        }, {
-            title: '逾期金额',
-            field: 'budgetAmount',
-            amount: true
-        }, {
-            title: '剩余代偿金额',
-            field: 'budgetAmount',
-            amount: true
-        }, {
-            title: '累计逾期次数',
-            field: 'budgetAmount'
-        }, {
-            title: '实际逾期期数',
-            field: 'budgetAmount'
-        }, {
-            title: '累计代偿次数',
-            field: 'budgetAmount',
-            amount: true
-        }, {
-            title: '实际代偿次数',
-            field: 'budgetAmount'
-        }, {
-            title: '账单日',
-            field: 'budgetAmount'
-        }, {
-            title: '还款日',
-            field: 'budgetAmount'
-        }, {
-            title: '总期数',
-            field: 'budgetAmount'
-        }, {
-            title: '剩余期数',
-            field: 'budgetAmount',
-            amount: true
-        }, {
-            title: '备注',
-            field: 'remark'
+            title: '状态',
+            field: 'status',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '待处理'
+            }, {
+                key: '1',
+                value: '已处理'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            search: true
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632108,
-            searchParams: {
-                roleCode: getRoleCode()
-            },
+            pageCode: 632305,
             btnEvent: {
-                apply: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push('/postloantools/import/apply');
-                    }
-                },
-                plan: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push(`/postloantools/import/plan?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                prepayment: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push(`/postloantools/import/prepayment?code=${selectedRowKeys[0]}`);
-                    }
+              import: (selectedRowKeys, selectedRows) => {
+                  this.props.history.push(`/postloantools/import/import`);
+              },
+              dispose: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys.length) {
+                  showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                  showWarnMsg('请选择一条记录');
+                } else if (selectedRows[0].status !== '0') {
+                  showWarnMsg('该条记录不是待处理状态');
+                } else {
+                  this.props.history.push(`/postloantools/import/dispose?code=${selectedRowKeys[0]}`);
                 }
+              }
             }
         });
     }
 }
 
-export default importCustomer;
+export default imports;

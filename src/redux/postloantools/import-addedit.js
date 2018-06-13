@@ -10,14 +10,14 @@ const RESTORE = PREFIX + 'RESTORE';
 
 const initState = { ...commDetailState };
 
-export function postloantoolsImportAddEdit(state = initState, action) {
+export function postloantoolsImportAddedit(state = initState, action) {
   switch(action.type) {
     case INIT_STATE:
       return {...state, ...action.payload};
     case SET_SELECT_DATA:
       return {...state, selectData: {...state.selectData, [action.payload.key]: action.payload.data}};
     case SET_PAGE_DATA:
-      return {...state, pageData: action.payload};
+      return {...state, pageData: action.payload, isLoaded: true};
     case RESTORE:
       return {...initState};
     case LOADING:

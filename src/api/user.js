@@ -20,10 +20,6 @@ export function setNodeMenus(nodeList, roleCode) {
 export function activateSysUser(userId) {
   return fetch(630056, { userId, updater: getUserName() });
 }
-// 注销激活业务员
-export function activateSaleUser(userId) {
-  return fetch(630126, { userId, updater: getUserName() });
-}
 // 注销激活c端用户
 export function activateUser(userId) {
   return fetch(805091, { userId, updater: getUserName() });

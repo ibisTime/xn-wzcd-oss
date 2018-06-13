@@ -90,7 +90,7 @@ class refundBusinessCertain extends React.Component {
       }, {
         title: '结清时间',
         field: 'closeDatetime',
-        type: 'date'
+        type: 'datetime'
       }, {
         title: '结清证明',
         field: 'closeAttach',
@@ -107,7 +107,9 @@ class refundBusinessCertain extends React.Component {
         buttons: [{
           title: '确认',
           handler: (param) => {
+            param.bankcardCode = this.bankcardCode;
             param.code = this.code;
+            param.updater = getUserId();
             this.props.doFetching();
             fetch(630513, param).then(() => {
               showSucMsg('操作成功');

@@ -50,10 +50,6 @@ class refundBusinessAddedit extends React.Component {
         amount: true,
         readonly: true
       }, {
-        title: '是否提前还款',
-        field: 'subbranch',
-        readonly: true
-      }, {
         title: '总期数',
         field: 'periods',
         readonly: true
@@ -74,9 +70,7 @@ class refundBusinessAddedit extends React.Component {
       }, {
         title: '可退押金金额',
         field: 'sfAmount',
-        formatter: (v, d) => {
-          return ((d.fxDeposit + d.lyDeposit) / 1000);
-        },
+        amount: true,
         readonly: true
       }, {
         title: '扣除违约金额',
@@ -85,18 +79,15 @@ class refundBusinessAddedit extends React.Component {
         required: true
       }, {
         title: '实际退款金额',
-        field: 'periods',
+        field: 'actualRefunds',
         amount: true,
         readonly: true
       }, {
         title: '结清时间',
         field: 'closeDatetime',
         type: 'img'
-      }
-    ];
-    return this
-      .props
-      .buildDetail({
+      }];
+    return this.props.buildDetail({
         fields,
         code: this.code,
         view: this.view,
