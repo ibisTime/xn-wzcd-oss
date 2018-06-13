@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use('/api', function (req, res) {
-  var url = 'http://39.104.89.43:2601/forward-service/api';
+  var url = 'http://120.26.6.213:2601/forward-service/api';
   var _body = req.body;
   var param = 'code=' + _body.code + '&json=' + encodeURIComponent(_body.json);
 
@@ -31,6 +31,6 @@ app.use('/api', function (req, res) {
   console.log(time + ': {' + 'code: ' + _body.code + ', json: ' + _body.json + '}');
 });
 
-app.listen(9091, function(){
-  console.log('Node app start at port 9091')
+app.listen(9092, function(){
+  console.log('Node app start at port 9092')
 });
