@@ -199,6 +199,10 @@ import { basisDealer } from './redux/basis/dealer';
 import { basisDealerAddedit } from './redux/basis/dealer-addedit';
 import { basisDealerCheck } from './redux/basis/dealer-check';
 
+//  我司贷款成数比例 + 修改
+import { basisLoanPercent } from './redux/basis/loanPercent';
+import { basisLoanPercentAddedit } from './redux/basis/loanPercent-addedit';
+
 /**
  * 贷前管理
  */
@@ -623,5 +627,7 @@ export default combineReducers({
   basisProvinceNumAddedit,
   basisDealer,
   basisDealerAddedit,
-  basisDealerCheck
+  basisDealerCheck,
+  basisLoanPercent,
+  basisLoanPercentAddedit
 });

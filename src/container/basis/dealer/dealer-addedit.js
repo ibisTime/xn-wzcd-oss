@@ -102,8 +102,7 @@ class dealerAddedit extends React.Component {
             }
         }, {
             title: '协议',
-            field: 'agreement',
-            required: true
+            field: 'agreement'
         }, {
             title: '工商返点账号',
             field: 'gsCollectBankcardList',
