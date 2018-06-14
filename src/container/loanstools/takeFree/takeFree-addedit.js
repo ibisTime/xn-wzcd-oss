@@ -10,7 +10,10 @@ import {
 import {
     getQueryString
 } from 'common/js/util';
-import { DetailWrapper } from 'common/js/build-detail';
+import {
+    DetailWrapper
+} from 'common/js/build-detail';
+// import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
     state => state.loanstoolsTakeFreeAddedit, {
@@ -31,82 +34,42 @@ class TakeFreeAddedit extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'userName',
-            readonly: true
+            field: 'companyCode',
+            select: true
         }, {
             title: '业务编号',
-            field: 'code',
-            readonly: true
+            field: 'receiptBank'
         }, {
             title: '贷款金额',
-            field: 'loanAmount',
-            amount: true,
-            readonly: true
+            field: 'receiptAccount',
+            amount: true
         }, {
             title: '贷款银行',
-            field: 'loanBankName',
-            readonly: true
+            field: 'receiptAccount'
         }, {
             title: '应收金额',
-            field: 'shouldAmount',
-            amount: true,
-            readonly: true
+            field: 'receiptAccount',
+            amount: true
         }, {
             title: '实收金额',
-            field: 'realAmount',
-            amount: true,
-            readonly: true
+            field: 'receiptAccount',
+            amount: true
+        }, {
+            title: '未收金额',
+            field: 'receiptAccount',
+            amount: true
+        }, {
+            title: '是够结清',
+            field: 'receiptAccount'
         }, {
             title: '服务费清单',
-            field: 'BudgetOrderFeeDetailList',
-            type: 'o2m',
-            options: {
-                scroll: { x: 1300 },
-                fields: [{
-                    title: '交款类型',
-                    field: 'remitType',
-                    type: 'select',
-                    key: 'remit_type'
-                }, {
-                    title: '交款项目',
-                    field: 'remitProject',
-                    key: 'remit_project',
-                    type: 'checkbox'
-                }, {
-                    title: '金额小写',
-                    field: 'amount',
-                    amount: true
-                }, {
-                    title: '汇入我司账号',
-                    field: 'receiptAccount',
-                    render: (v, d) => {
-                        return d.collectBankcard.bankcardNumber;
-                    }
-                }, {
-                    title: '汇款人',
-                    field: 'remitUser'
-                }, {
-                    title: '到帐日期',
-                    field: 'reachDatetime',
-                    type: 'date'
-                }, {
-                    title: '更新人',
-                    field: 'updater'
-                }, {
-                    title: '更新时间',
-                    field: 'updateDatetime',
-                    type: 'datetime'
-                }, {
-                    title: '备注',
-                    field: 'remark'
-                }]
-            }
+            field: 'receiptAccount'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632166
+            detailCode: 632106
         });
     }
 }

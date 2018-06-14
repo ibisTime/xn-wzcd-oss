@@ -12,10 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
-import fetch from 'common/js/fetch';
-import {
-  DetailWrapper
-} from 'common/js/build-detail';
+import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
   state => state.loanstoolsCancelApply, {
@@ -30,33 +27,34 @@ import {
 class CancelApply extends React.Component {
   constructor(props) {
     super(props);
+    this.code = getQueryString('code', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
   }
   render() {
     const fields = [{
-      title: '选择预算单',
-      field: 'code',
-      type: 'select',
-      pageCode: 632145,
-      searchName: 'key',
-      keyName: 'code',
-      valueName: '{{code.DATA}}-{{applyUserName.DATA}}',
+      title: '客户姓名',
+      field: 'companyCode',
+      select: true,
       required: true
     }, {
       title: '作废原因',
-      field: 'remark',
+      field: 'receiptBank',
       required: true
+    }, {
+      title: '预算单',
+      field: 'receiptAccount'
     }];
     return this.props.buildDetail({
       fields,
+      code: this.code,
       view: this.view,
+      detailCode: 632106,
       buttons: [{
         title: '确认',
         check: true,
         handler: (params) => {
-          params.operator = getUserId();
           this.props.doFetching();
-          fetch(632190, params).then(() => {
+          fetch(632100, params).then(() => {
             showSucMsg('操作成功');
             setTimeout(() => {
               this.props.history.go(-1);

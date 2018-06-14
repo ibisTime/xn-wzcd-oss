@@ -32,17 +32,20 @@ export function getUserId() {
   return cookies.get('userId');
 }
 
+// 获取公司编号
+export function getCompanyCode() {
+    return cookies.get('companyCode');
+}
+
 // 设置用户角色信息
 export function setRoleInfo({
-  roleCode,
-  kind,
-  level,
-  loginName
+    roleCode,
+    companyCode,
+    loginName
 }) {
-  cookies.set('roleCode', roleCode);
-  // cookies.set('loginKind', kind);
-  // cookies.set('roleLevel', level);
-  cookies.set('userName', loginName);
+    cookies.set('roleCode', roleCode);
+    companyCode && cookies.set('companyCode', companyCode);
+    cookies.set('userName', loginName);
 }
 
 // 获取用户角色编号
