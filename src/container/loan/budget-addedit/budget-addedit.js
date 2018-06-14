@@ -1,1067 +1,876 @@
 import React from 'react';
-import { Form, Spin, Row, Col, Input, Select, Collapse,
-  Table, Popconfirm, Icon, Button, Upload, Modal } from 'antd';
-import { formatFile, formatImg, getQueryString, showErrMsg } from 'common/js/util';
-import { UPLOAD_URL, PIC_PREFIX } from 'common/js/config';
-import { getQiniuToken } from 'api/general';
-import GpsEdit from 'component/gps-edit/gps-edit';
+import {
+    getQueryString,
+    getUserId,
+    showWarnMsg,
+    showSucMsg,
+    moneyParse,
+    moneyFormat
+} from 'common/js/util';
+import { CollapseWrapper } from 'component/collapse-detail/collapse-detail';
+import {
+    initStates,
+    doFetching,
+    cancelFetching,
+    setSelectData,
+    setPageData,
+    restore
+} from '@redux/loan/budget-addedit';
+import fetch from 'common/js/fetch';
 
-const { Item } = Form;
-const { Option } = Select;
-const { Panel } = Collapse;
-const { TextArea } = Input;
-const colProps = { xs: 32, sm: 24, md: 12, lg: 8 };
-const col3Props = { xs: 32, sm: 24, md: 24, lg: 8 };
-const col4Props = { xs: 32, sm: 24, md: 12, lg: 6 };
-const col5Props = { xs: 32, sm: 24, md: 12, lg: 5 };
-const col55Props = { xs: 32, sm: 24, md: 12, lg: 4 };
-const col2Props = { xs: 32, sm: 24, md: 12, lg: 12 };
-const rules = [{
-  required: true,
-  message: '必填字段'
-}];
-const imgUploadBtn = (
-  <div>
-    <Icon type="plus" />
-    <div className="ant-upload-text">上传</div>
-  </div>
-);
-const fileUploadBtn = (
-  <Button>
-    <Icon type="upload" /> 上传
-  </Button>
-);
+@CollapseWrapper(
+    state => state.loanAdmittanceAddedit,
+    {initStates, doFetching, cancelFetching, setSelectData, setPageData, restore}
+)
+class BudgetAddedit extends React.Component {
+    constructor(props) {
+        super(props);
+        this.code = getQueryString('code', this.props.location.search);
+        this.view = !!getQueryString('v', this.props.location.search);
+        this.isCheckCommissioner = !!getQueryString('isCheckCommissioner', this.props.location.search);
+        this.isCheckDirector = !!getQueryString('isCheckDirector', this.props.location.search);
+        this.rateData = {};
+        this.wanFactor = 0;
+    }
 
-class BudgetAddEdit extends React.Component {
-  constructor(props) {
-    super(props);
-    this.code = getQueryString('code', this.props.location.search);
-    this.view = !!getQueryString('v', this.props.location.search);
-    this.state = {
-      fetching: true,
-      gpsSource: [{
-        code: '0',
-        gpsCode: '0',
-        type: '1'
-      }, {
-        code: '1',
-        gpsCode: '1',
-        type: '0'
-      }],
-      gpsdVisible: false,
-      gpsData: null,
-      selectedRowKeys: [],
-      selectedRows: [],
-      previewVisible: false,
-      previewImage: '',
-      token: '',
-      rebateSource: [{
-        code: 0,
-        type: '应退按揭款',
-        amount: '28000.00',
-        bigAmount: '贰万捌仟元整',
-        name: '成都恒钰汽车销售服务有限公司',
-        account: '583248407800015',
-        bankName: '浙江民泰成都高新支行'
-      }, {
-        code: 1,
-        type: '应退返点1',
-        amount: '28000.00',
-        bigAmount: '贰万捌仟元整',
-        name: '成都恒钰汽车销售服务有限公司',
-        account: '583248407800015',
-        bankName: '浙江民泰成都高新支行'
-      }, {
-        code: 2,
-        type: '应退返点2',
-        amount: '28000.00',
-        bigAmount: '贰万捌仟元整',
-        name: '成都恒钰汽车销售服务有限公司',
-        account: '583248407800015',
-        bankName: '浙江民泰成都高新支行'
-      }]
-    };
-    this.gpsColumns = [{
-      title: 'GPS设备号',
-      dataIndex: 'gpsCode'
-    }, {
-      title: 'GPS类型',
-      dataIndex: 'type',
-      render: (v) => ({'0': '无线', '1': '有线'}[v])
-    }];
-    this.rebateColumns = [{
-      title: '用款用途',
-      dataIndex: 'type'
-    }, {
-      title: '金额小写',
-      dataIndex: 'amount'
-    }, {
-      title: '金额大写',
-      dataIndex: 'bigAmount'
-    }, {
-      title: '单位名称',
-      dataIndex: 'name'
-    }, {
-      title: '账号',
-      dataIndex: 'account'
-    }, {
-      title: '开户行',
-      dataIndex: 'bankName'
-    }];
-  }
-  setGpsVisible = (gpsdVisible) => {
-    this.setState({ gpsdVisible });
-  }
-  // 获取上传按钮
-  getUploadBtn(item, isImg) {
-    let btn = isImg ? imgUploadBtn : fileUploadBtn;
-    return item.readonly
-      ? null
-      : item.single
-        ? this.props.form.getFieldValue(item.field)
-          ? null : btn
-        : btn;
-  }
-  setUploadFileUrl(fileList, isImg) {
-    let format = isImg ? formatImg : formatFile;
-    fileList.forEach(f => {
-      if (!f.url && f.status === 'done' && f.response) {
-        f.url = format(f.response.key);
-      }
-    });
-  }
-  // 获取文件上传的值
-  normFile = (e) => {
-    if (e) {
-      return e.fileList.map(v => {
-        if (v.status === 'done') {
-          return v.key || v.response.key;
-        } else if (v.status === 'error') {
-          showErrMsg('文件上传失败');
-        }
-        return '';
-      }).filter(v => v).join('||');
-    }
-    return '';
-  }
-  // 隐藏展示图片的modal
-  handleCancel = () => this.setState({ previewVisible: false })
-  // 显示展示图片的modal
-  handlePreview = (file) => {
-    this.setState({
-      previewImage: file.url || file.thumbUrl,
-      previewVisible: true
-    });
-  }
-  // 文件点击事件
-  handleFilePreview = (file) => {
-    if (file.status === 'done') {
-      let key = file.key || (file.response && file.response.key) || '';
-      window.open(formatFile(key), true);
-    } else {
-      let msg = file.status === 'uploading' ? '文件还未上传完成' : '文件上传失败';
-      showErrMsg(msg);
-    }
-  }
-  getLabel(item) {
-    return (
-      <span>
-        {item.title + (item.single ? '(单)' : '')}
-      </span>
-    );
-  }
-  // 获取7牛token
-  getToken() {
-    if (!this.tokenFetch) {
-      this.tokenFetch = true;
-      getQiniuToken().then(data => {
-        this.setState({ token: data.uploadToken });
-      }).catch(() => this.tokenFetch = false);
-    }
-  }
-  // 获取图片上传的额外参数
-  getUploadData = (file) => {
-    return { token: this.state.token };
-  }
-  getFileComp(item, initVal, rules, getFieldDecorator, isImg) {
-    let initValue = this.getFileInitVal(initVal);
-    return (
-      item.hidden ? null : (
-        <Item key={item.field} label={this.getLabel(item)}>
-          {getFieldDecorator(item.field, {
-            rules,
-            initialValue: initVal,
-            getValueFromEvent: this.normFile
-          })(
-            this.check && !initValue.length && item.required
-              ? <div></div>
-              : (
-                <Upload {...this.getUploadProps(item, initValue, isImg)}>
-                  {this.getUploadBtn(item, isImg)}
-                </Upload>
-              )
-          )}
-        </Item>
-      )
-    );
-  }
-  getImgComp(item, initVal, rules, getFieldDecorator) {
-    return this.getFileComp(item, initVal, rules, getFieldDecorator, true);
-  }
-  getUploadProps(item, initValue, isImg) {
-    const commProps = {
-      action: UPLOAD_URL,
-      multiple: !item.single,
-      defaultFileList: initValue,
-      data: this.getUploadData,
-      showUploadList: {
-        showPreviewIcon: true,
-        showRemoveIcon: !item.readonly
-      }
-    };
-    const fileProps = {
-      ...commProps,
-      onChange: ({fileList}) => this.setUploadFileUrl(fileList),
-      onPreview: this.handleFilePreview
-    };
-    const imgProps = {
-      ...commProps,
-      onChange: ({fileList}) => this.setUploadFileUrl(fileList, true),
-      onPreview: this.handlePreview,
-      listType: 'picture-card',
-      accept: 'image/*'
-    };
-    return isImg ? imgProps : fileProps;
-  }
-  getFileInitVal(initVal, isImg) {
-    const { token } = this.state;
-    !token && this.getToken();
-    let initValue = [];
-    if (initVal) {
-      initValue = initVal.split('||').map(key => ({
-        key,
-        uid: key,
-        name: key,
-        status: 'done',
-        url: isImg ? formatImg(key) : formatFile(key),
-        thumbUrl: isImg ? formatImg(key) : formatFile(key)
-      }));
-    }
-    return initValue;
-  }
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-      }
-    });
-  }
-  handleAdd = () => {
-    this.setGpsVisible(true);
-  }
-  handleEdit = () => {
-    let { selectedRows } = this.state;
-    if (selectedRows.length) {
-      this.setState({
-        gpsData: selectedRows[0],
-        gpsdVisible: true
-      });
-    }
-  }
-  handleDelete = () => {
-    let { selectedRowKeys } = this.state;
-    if (selectedRowKeys.length) {
-      this.setState({
-        selectedRows: [],
-        selectedRowKeys: []
-      });
-    }
-  }
-  onSelectChange = (selectedRowKeys, selectedRows) => {
-    this.setState({ selectedRowKeys, selectedRows });
-  }
-  updateGps = (params) => {
-    let { gpsSource } = this.state;
-    let idx = gpsSource.findIndex(v => v.code === params.code);
-    if (idx > -1) {
-      gpsSource.splice(idx, 1, params);
-      this.setState({ gpsSource });
-    } else {
-      this.setState({
-        gpsSource: [...gpsSource, params]
-      });
-    }
-    this.setState({
-      gpsData: null,
-      selectedRows: [],
-      selectedRowKeys: []
-    });
-  }
-  render() {
-    const { getFieldDecorator } = this.props.form;
-    const { gpsSource, gpsdVisible, selectedRowKeys, gpsData, previewVisible,
-      previewImage, rebateSource } = this.state;
-    const rowSelection = {
-      selectedRowKeys: this.state.selectedRowKeys,
-      onChange: this.onSelectChange,
-      type: 'radio'
-    };
-    return (
-      <div>
-        <Form className="budget-addedit-form" onSubmit={this.handleSubmit}>
-          <Collapse defaultActiveKey={['1']}>
-            <Panel header="基础信息" key="1">
-              <Row gutter={24}>
-                <Col {...colProps}>
-                  <Item key='name' label="客户姓名">
-                    <div className="readonly-text">遛弯儿</div>
-                  </Item>
-                </Col>
-                <Col {...colProps}>
-                  <Item key='code' label="业务编号">
-                    <div className="readonly-text">sodif12324342342342</div>
-                  </Item>
-                </Col>
-                <Col {...col3Props}>
-                  <Item key='type' label="客户类型">
-                    {getFieldDecorator('type', {
-                      rules,
-                      initialValue: '1'
-                    })(<Select>
-                      <Option key='1' value='1'>个人</Option>
-                      <Option key='2' value='2'>企业</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...colProps}>
-                  <Item key='jxs' label="汽车经销商">
-                    {getFieldDecorator('jxs', {
-                      rules,
-                      initialValue: '0'
-                    })(<Select>
-                      <Option key='0' value='0'>a经销商</Option>
-                      <Option key='1' value='1'>b经销商</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-                <Col {...colProps}>
-                  <Item key='bank' label="贷款银行">
-                    <div className="readonly-text">sodif12324342342342</div>
-                  </Item>
-                </Col>
-                <Col {...col3Props}>
-                  <Item key='price' label="厂商指导价">
-                    {getFieldDecorator('price', {
-                      // rules,
-                      // initialValue: initVal
-                    })(<Input />)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...colProps}>
-                  <Item key='carXh' label="车辆型号">
-                    {getFieldDecorator('carXh', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...colProps}>
-                  <Item key='bank' label="贷款周期(期)">
-                    {getFieldDecorator('times', {
-                      rules,
-                      initialValue: '12'
-                    })(<Select>
-                      <Option key='0' value='12'>12期</Option>
-                      <Option key='1' value='24'>24期</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-                <Col {...col3Props}>
-                  <Item key='fpPrice' label="发票价格">
-                    {getFieldDecorator('fpPrice', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...colProps}>
-                  <Item key='buyWay' label="购车途径">
-                    <div className="readonly-text">新车</div>
-                  </Item>
-                </Col>
-                <Col {...colProps}>
-                  <Item key='rateType' label="利率类型">
-                    {getFieldDecorator('rateType', {
-                      rules,
-                      initialValue: '1'
-                    })(<Select>
-                      <Option key='1' value='1'>传统利率</Option>
-                      <Option key='2' value='2'>建行直客</Option>
-                      <Option key='3' value='3'>中行直客</Option>
-                      <Option key='4' value='4'>建行直客垫资</Option>
-                      <Option key='5' value='5'>中行直客垫资</Option>
-                      <Option key='6' value='6'>传统利率A</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-                <Col {...col3Props}>
-                  <Item key='loanPrice' label="贷款金额">
-                    {getFieldDecorator('loanPrice', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...colProps}>
-                  <Item key='search' label="是否需要贷前调查">
-                    {getFieldDecorator('search', {
-                      rules,
-                      initialValue: '1'
-                    })(<Select>
-                      <Option key='1' value='1'>是</Option>
-                      <Option key='0' value='0'>否</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-                <Col {...colProps}>
-                  <Item key='rate' label="银行利率(%)">
-                    <Row gutter={8}>
-                      <Col span={12}>
-                        <Select>
-                          <Option key='1' value='3.6'>3.6</Option>
-                          <Option key='2' value='2.4'>2.4</Option>
-                        </Select>
-                      </Col>
-                      <Col span={12}>
-                        {getFieldDecorator('rate', {
-                          rules
-                        })(
-                          <Input />
-                        )}
-                      </Col>
-                    </Row>
-                  </Item>
-                </Col>
-                <Col {...col3Props}>
-                  <Item key='loanPrice' label="我司贷款成数(%)">
-                    <div className="readonly-text">64</div>
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...colProps}>
-                  <Item key='dz' label="是否垫资">
-                    {getFieldDecorator('dz', {
-                      rules,
-                      initialValue: '1'
-                    })(<Select>
-                      <Option key='1' value='1'>是</Option>
-                      <Option key='0' value='0'>否</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-                <Col {...colProps}>
-                  <Item key='rate' label="综合利率(%)">
-                    <div className="readonly-text">2.4</div>
-                  </Item>
-                </Col>
-                <Col {...col3Props}>
-                  <Item key='loanPrice' label="服务费">
-                    {getFieldDecorator('fwf', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...colProps}>
-                  <Item key='tx' label="厂家贴息">
-                    {getFieldDecorator('tx', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...colProps}>
-                </Col>
-                <Col {...col3Props}>
-                  <Item key='loanPrice' label="银行贷款成数(%)">
-                    <div className="readonly-text">64</div>
-                  </Item>
-                </Col>
-              </Row>
-              <div>
-                <div style={{ marginBottom: 16 }}>
-                  <Button onClick={this.handleAdd} type="primary" style={{ marginRight: 16 }}>
-                    新增
-                  </Button>
-                  <Button onClick={this.handleEdit} type="primary" disabled={!selectedRowKeys.length} style={{ marginRight: 16 }}>
-                    修改
-                  </Button>
-                  <Button onClick={this.handleDelete} type="primary" disabled={!selectedRowKeys.length} style={{ marginRight: 16 }}>
-                    删除
-                  </Button>
-                </div>
-                <Table
-                  bordered
-                  rowKey={record => record.code}
-                  rowSelection={rowSelection}
-                  dataSource={gpsSource}
-                  columns={this.gpsColumns} />
-              </div>
-              <GpsEdit updateGps={this.updateGps} gpsdVisible={gpsdVisible} gpsData={gpsData} setGpsVisible={this.setGpsVisible}/>
-            </Panel>
-            <Panel header="职业及收入情况" key="2">
-              <Row gutter={24}>
-                <Col {...col4Props}>
-                  <Item key='name' label="申请人就职单位">
-                    {getFieldDecorator('dw', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col4Props}>
-                  <Item key='code' label="申请人职务">
-                    {getFieldDecorator('zw')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col4Props}>
-                  <Item key='relation' label="申请人共还人关系">
-                    <div className="readonly-text">配偶</div>
-                  </Item>
-                </Col>
-                <Col {...col4Props}>
-                  <Item key='hyzt' label="婚姻状态">
-                    {getFieldDecorator('hyzt', {
-                      rules
-                    })(<Select>
-                      <Option key='1' value='未婚'>未婚</Option>
-                      <Option key='2' value='已婚'>已婚</Option>
-                      <Option key='3' value='离异'>离异</Option>
-                      <Option key='4' value='丧偶'>丧偶</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col5Props}>
-                  <Item key='ysr' label="申请人月收入">
-                    {getFieldDecorator('ysr', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col5Props}>
-                  <Item key='jx' label="申请人结息">
-                    {getFieldDecorator('jx', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col5Props}>
-                  <Item key='ye' label="申请人余额">
-                    {getFieldDecorator('ye', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col5Props}>
-                  <Item key='txysr' label="流水是否体现月收入">
-                    {getFieldDecorator('txysr', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col55Props}>
-                  <Item key='sfdj' label="是否打件">
-                    {getFieldDecorator('sfdj', {
-                      rules
-                    })(<Select>
-                      <Option key='1' value='0'>否</Option>
-                      <Option key='2' value='1'>是</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col5Props}>
-                  <Item key='ysrGhr' label="共还人月收入">
-                    {getFieldDecorator('ysrGhr')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col5Props}>
-                  <Item key='jxGhr' label="共还人结息">
-                    {getFieldDecorator('jxGhr')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col5Props}>
-                  <Item key='yeGhr' label="共还人余额">
-                    {getFieldDecorator('yeGhr')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col5Props}>
-                  <Item key='txysrGhr' label="流水是否体现月收入">
-                    {getFieldDecorator('txysrGhr')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col55Props}>
-                  <Item key='sfdjGhr' label="是否打件">
-                    {getFieldDecorator('sfdjGhr')(<Select>
-                      <Option key='1' value='0'>否</Option>
-                      <Option key='2' value='1'>是</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col5Props}>
-                  <Item key='ysrDbr1' label="担保人1月收入">
-                    {getFieldDecorator('ysrDbr1')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col5Props}>
-                  <Item key='jxDbr1' label="担保人1结息">
-                    {getFieldDecorator('jxDbr1')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col5Props}>
-                  <Item key='yeDbr1' label="担保人1余额">
-                    {getFieldDecorator('yeDbr1')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col5Props}>
-                  <Item key='txysrDbr1' label="流水是否体现月收入">
-                    {getFieldDecorator('txysrDbr1')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col55Props}>
-                  <Item key='sfdjDbr1' label="是否打件">
-                    {getFieldDecorator('sfdjDbr1')(<Select>
-                      <Option key='1' value='0'>否</Option>
-                      <Option key='2' value='1'>是</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col5Props}>
-                  <Item key='ysrDbr2' label="担保人2月收入">
-                    {getFieldDecorator('ysrDbr2')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col5Props}>
-                  <Item key='jxDbr2' label="担保人2结息">
-                    {getFieldDecorator('jxDbr2')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col5Props}>
-                  <Item key='yeDbr2' label="担保人2余额">
-                    {getFieldDecorator('yeDbr2')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col5Props}>
-                  <Item key='txysrDbr2' label="流水是否体现月收入">
-                    {getFieldDecorator('txysrDbr2')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col55Props}>
-                  <Item key='sfdjDbr2' label="是否打件">
-                    {getFieldDecorator('sfdjDbr2')(<Select>
-                      <Option key='1' value='0'>否</Option>
-                      <Option key='2' value='1'>是</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-              </Row>
-              <Item key='oRemark' label="其他收入备注">
-                {getFieldDecorator('oRemark')(<TextArea rows={4} />)}
-              </Item>
-            </Panel>
-            <Panel header="资产情况" key="3">
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  <Item key='fczqk' label="房产证情况">
-                    {getFieldDecorator('fczqk', {
-                      rules,
-                      initialValue: '1'
-                    })(<Select>
-                      <Option key='1' value='1'>有</Option>
-                      <Option key='0' value='0'>无</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-                <Col {...col2Props}>
-                  <Item key='yyzz' label="营业执照">
-                    {getFieldDecorator('yyzz', {
-                      rules,
-                      initialValue: '1'
-                    })(<Select>
-                      <Option key='1' value='1'>有</Option>
-                      <Option key='0' value='0'>无</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'fczPic',
-                    title: '房产证'
-                  }, null, [], getFieldDecorator)}
-                </Col>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'yyzz',
+    render() {
+        let fields = [{
+            title: '预算单信息',
+            items: [
+                [{
+                    title: '客户姓名',
+                    field: 'customerName',
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '业务编号',
+                    field: 'code',
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '客户类型',
+                    field: 'customerType',
+                    type: 'select',
+                    data: [{
+                        key: '1',
+                        value: '个人'
+                    }, {
+                        key: '2',
+                        value: '企业'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }],
+                [{
+                    title: '汽车经销商',
+                    field: 'carDealer',
+                    type: 'select',
+                    required: true
+                }, {
+                    title: '贷款银行',
+                    field: 'loanBankName',
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '厂商指导价',
+                    field: 'originalPrice',
+                    amount: true,
+                    required: true
+                }],
+                [{
+                    title: '车辆型号',
+                    field: 'carModel',
+                    required: true
+                }, {
+                    title: '贷款周期(期)',
+                    field: 'loanPeriods',
+                    required: true
+                }, {
+                    title: '发票价格',
+                    field: 'invoicePrice',
+                    amount: true,
+                    required: true
+                }],
+                [{
+                    title: '购车途径',
+                    field: 'shopWay',
+                    type: 'select',
+                    key: 'budget_orde_biz_typer',
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '利率类型',
+                    field: 'rateType',
+                    required: true
+                }, {
+                    title: '贷款金额',
+                    field: 'loanAmount',
+                    amount: true,
+                    required: true
+                }],
+                [{
+                    title: '是否需要贷前调查',
+                    field: 'isSurvey',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }, {
+                    title: '利率类型',
+                    field: 'bankRate',
+                    required: true
+                }, {
+                    // 贷款金额 / 发票价格
+                    title: '我司贷款成数',
+                    field: 'globalRate',
+                    readonly: true,
+                    required: true
+                }],
+                [{
+                    title: '是否垫资',
+                    field: 'isAdvanceFund',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }, {
+                    // 服务费/贷款金额+银行利率
+                    title: '综合利率',
+                    field: 'globalRate',
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '服务费',
+                    field: 'fee',
+                    amount: true,
+                    required: true
+                }],
+                [{
+                    title: '厂家贴息',
+                    field: 'cardealerSubsidy',
+                    required: true
+                }, {
+                    // (贷款金额+服务费) / 发票价格
+                    title: '银行贷款成数',
+                    field: 'bankLoanNum',
+                    readonly: true,
+                    required: true
+                }],
+                [{
+                    title: 'GPS',
+                    field: 'GPSList',
+                    required: true,
+                    type: 'o2m',
+                    options: [{
+                        add: true,
+                        edit: true,
+                        fields: [{
+                            title: 'GPS设备号',
+                            field: 'cardealerSubsidy',
+                            required: true
+                        }, {
+                            title: 'GPS类型',
+                            field: 'gpsType',
+                            type: 'select',
+                            data: [{
+                                key: '1',
+                                value: '有线'
+                            }, {
+                                key: '0',
+                                value: '无线'
+                            }],
+                            keyName: 'key',
+                            valueName: 'value',
+                            required: true
+                        }]
+                    }]
+                }]
+            ]
+        }, {
+            title: '职业及收入情况',
+            items: [
+                [{
+                    title: '申请人就职单位',
+                    field: '1',
+                    required: true
+                }, {
+                    title: '职务',
+                    field: '2',
+                    required: true
+                }, {
+                    title: '申请人共还人关系',
+                    field: '3',
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '婚姻状况',
+                    field: 'marryState',
+                    type: 'select',
+                    key: 'marry_state',
+                    required: true
+                }],
+                [{
+                    field: '申请人月收入',
+                    title: '4',
+                    amount: true,
+                    required: true
+                }, {
+                    field: '申请人结息',
+                    title: '5',
+                    amount: true,
+                    required: true
+                }, {
+                    field: '申请人余额',
+                    title: '6',
+                    amount: true,
+                    required: true
+                }, {
+                    field: '流水是否体现月收入',
+                    title: '7',
+                    required: true
+                }, {
+                    title: '是否打件',
+                    field: '是否打件',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value'
+                }],
+                [{
+                    field: '共还人月收入',
+                    title: '8',
+                    amount: true,
+                    required: true
+                }, {
+                    field: '共还人结息',
+                    title: '9',
+                    amount: true,
+                    required: true
+                }, {
+                    field: '共还人余额',
+                    title: '10',
+                    amount: true,
+                    required: true
+                }, {
+                    field: '流水是否体现月收入',
+                    title: '11',
+                    required: true
+                }, {
+                    title: '是否打件',
+                    field: '12',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value'
+                }],
+                [{
+                    field: '担保人1月收入',
+                    title: '11',
+                    amount: true,
+                    required: true
+                }, {
+                    field: '担保人1结息',
+                    title: '11',
+                    amount: true,
+                    required: true
+                }, {
+                    field: '担保人1余额',
+                    title: '1',
+                    amount: true,
+                    required: true
+                }, {
+                    field: '流水是否体现月收入',
+                    title: '1',
+                    required: true
+                }, {
+                    title: '是否打件',
+                    field: '1',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value'
+                }],
+                [{
+                    field: '担保人2月收入',
+                    title: '11',
+                    amount: true,
+                    required: true
+                }, {
+                    field: '担保人2结息',
+                    title: '11',
+                    amount: true,
+                    required: true
+                }, {
+                    field: '担保人2余额',
+                    title: '11',
+                    amount: true,
+                    required: true
+                }, {
+                    field: '流水是否体现月收入',
+                    title: '11',
+                    required: true
+                }, {
+                    title: '是否打件',
+                    field: '11',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value'
+                }],
+                [{
+                    field: '其他收入备注',
+                    title: 'applyRemark',
+                    type: 'textarea',
+                    normalArea: true
+                }]
+            ]
+        }, {
+            title: '资产情况',
+            items: [
+                [{
+                    title: '房产证情况',
+                    field: 'isHouseProperty',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '无'
+                    }, {
+                        key: '1',
+                        value: '有'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }, {
                     title: '营业执照',
-                    single: true
-                  }, null, [], getFieldDecorator)}
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  <Item key='xycl' label="现有车辆">
-                    {getFieldDecorator('xycl', {
-                      rules
-                    })(<Select>
-                      <Option key='1' value='自有'>自有</Option>
-                      <Option key='0' value='租用'>租用</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-                <Col {...col2Props}>
-                  <Item key='cdzm' label="提供场地证明">
-                    {getFieldDecorator('cdzm', {
-                      rules,
-                      initialValue: '1'
-                    })(<Select>
-                      <Option key='1' value='1'>是</Option>
-                      <Option key='0' value='0'>否</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  <Item key='ywjz' label="有无驾照">
-                    {getFieldDecorator('ywjz', {
-                      rules
-                    })(<Select>
-                      <Option key='1' value='1'>有</Option>
-                      <Option key='0' value='0'>无</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'cdzm',
-                    title: '场地证明'
-                  }, null, [], getFieldDecorator)}
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'jz',
+                    field: 'isLicense',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '无'
+                    }, {
+                        key: '1',
+                        value: '有'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }],
+                [{
+                    title: '房产证',
+                    field: 'houseProperty',
+                    type: 'img'
+                }, {
+                    title: '营业执照',
+                    field: 'license',
+                    type: 'img'
+                }],
+                [{
+                    title: '现有车辆',
+                    field: 'carType',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '自有'
+                    }, {
+                        key: '1',
+                        value: '租用'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }, {
+                    title: '有无驾照',
+                    field: 'isDriveLicense',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '无'
+                    }, {
+                        key: '1',
+                        value: '有'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }, {
+                    title: '提供场地证明',
+                    field: 'isSiteProve',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '无'
+                    }, {
+                        key: '1',
+                        value: '有'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }],
+                [{
                     title: '驾照',
-                    single: true
-                  }, null, [], getFieldDecorator)}
-                </Col>
-                <Col {...col2Props}>
-                  <Item key='jycdmj' label="经营场地面积">
-                    {getFieldDecorator('jycdmj')(<Input />)}
-                  </Item>
-                </Col>
-              </Row>
-              <Item key='otRemark' label="其他资产说明">
-                {getFieldDecorator('otRemark')(<TextArea rows={4} />)}
-              </Item>
-            </Panel>
-            <Panel header="其他情况" key="4">
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  <Item key='sqrhjd' label="申请人户籍地">
-                    {getFieldDecorator('sqrhjd', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col2Props}>
-                  <Item key='xzdz' label="现住地址">
-                    {getFieldDecorator('xzdz', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  <Item key='ghrhjd' label="共还人户籍地">
-                    {getFieldDecorator('ghrhjd')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col2Props}>
-                  <Item key='type1' label="类型">
-                    {getFieldDecorator('type1', {
-                      rules
-                    })(<Select>
-                      <Option key='1' value='自有'>自有</Option>
-                      <Option key='0' value='租用'>租用</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  <Item key='dbr1hjd' label="担保1户籍地">
-                    {getFieldDecorator('dbr1hjd')(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col2Props}>
-                  <Item key='dbr2hjd' label="担保2户籍地">
-                    {getFieldDecorator('dbr2hjd', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-              </Row>
-              <Item key='othRemark' label="其他情况备注">
-                {getFieldDecorator('othRemark')(<TextArea rows={4} />)}
-              </Item>
-            </Panel>
-            <Panel header="收费情况" key="5">
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  <Item key='yb' label="油补">
-                    {getFieldDecorator('yb', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col2Props}>
-                  <Item key='ybgls' label="油补公里数">
-                    {getFieldDecorator('ybgls', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  <Item key='wsxb' label="我司续保">
-                    {getFieldDecorator('wsxb', {
-                      rules
-                    })(<Select>
-                      <Option key='1' value='是'>是</Option>
-                      <Option key='0' value='否'>否</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-                <Col {...col2Props}>
-                  <Item key='gpssf' label="GPS收费">
-                    {getFieldDecorator('gpssf', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  <Item key='lybzj' label="履约保证金">
-                    {getFieldDecorator('lybzj', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col2Props}>
-                  <Item key='gpstc' label="GPS提成">
-                    {getFieldDecorator('gpstc', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  <Item key='dbfxj' label="担保风险金">
-                    {getFieldDecorator('dbfxj', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col2Props}>
-                  <Item key='gpssffs' label="GPS收费方式">
-                    {getFieldDecorator('gpssffs', {
-                      rules
-                    })(<Select>
-                      <Option key='0' value='0'>转账</Option>
-                      <Option key='1' value='1'>按揭款扣</Option>
-                      <Option key='2' value='2'>返点扣</Option>
-                      <Option key='3' value='3'>不收费</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  <Item key='zf' label="杂费">
-                    {getFieldDecorator('zf', {
-                      rules
-                    })(<Input />)}
-                  </Item>
-                </Col>
-                <Col {...col2Props}>
-                  <Item key='sxfsffs' label="手续费收费方式">
-                    {getFieldDecorator('sxfsffs', {
-                      rules
-                    })(<Select>
-                      <Option key='0' value='0'>转账</Option>
-                      <Option key='1' value='1'>按揭款扣</Option>
-                      <Option key='2' value='2'>返点扣</Option>
-                      <Option key='3' value='3'>不收费</Option>
-                    </Select>)}
-                  </Item>
-                </Col>
-              </Row>
-              <Item key='sxfhj' label="收客户手续费合计">
-                <div className="readonly-text"></div>
-              </Item>
-            </Panel>
-            <Panel header="返点情况" key="6">
-              <Table
-                bordered
-                rowKey={record => record.code}
-                rowSelection={rowSelection}
-                dataSource={rebateSource}
-                columns={this.rebateColumns} />
-            </Panel>
-            <Panel header="贷款材料" key="7">
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'jhzPic',
-                    title: '结婚证(离婚证)'
-                  }, null, [], getFieldDecorator)}
-                </Col>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'hkb',
+                    field: 'driveLicense',
+                    type: 'img'
+                }, {
+                    title: '场地证明',
+                    field: 'siteProve',
+                    type: 'img'
+                }],
+                [{
+                    title: '经营场地面积',
+                    field: 'siteArea'
+                }, {
+                    title: '其他资产说明',
+                    field: 'otherPropertyNote'
+                }]
+            ]
+        }, {
+            title: '其他情况',
+            items: [
+                [{
+                    title: '申请人户籍地',
+                    field: 'applyBirthAddress',
+                    required: true
+                }, {
+                    title: '现住地址',
+                    field: 'applyNowAddress',
+                    required: true
+                }, {
+                    title: '现住房屋类型',
+                    field: 'houseType',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '自有'
+                    }, {
+                        key: '1',
+                        value: '租用'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }],
+                [{
+                    title: '共还人户籍地',
+                    field: 'ghBirthAddress'
+                }, {
+                    title: '担保人1户籍地',
+                    field: 'guarantor1BirthAddress'
+                }, {
+                    title: '担保人2户籍地',
+                    field: 'guarantor2BirthAddress'
+                }],
+                [{
+                    field: '其他情况说明',
+                    title: 'otherNote',
+                    type: 'textarea',
+                    normalArea: true
+                }]
+            ]
+        }, {
+            title: '手续费',
+            items: [
+                [{
+                    title: '油补',
+                    field: 'oilSubsidy',
+                    required: true
+                }, {
+                    title: '油补公里数',
+                    field: 'oilSubsidyKil',
+                    required: true
+                }],
+                [{
+                    title: '我司续保',
+                    field: 'isPlatInsure',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }, {
+                    title: 'GPS收费',
+                    field: 'gpsFee',
+                    amount: true,
+                    required: true
+                }],
+                [{
+                    title: '履约保证金',
+                    field: 'lyAmount',
+                    required: true
+                }, {
+                    title: 'GPS提成',
+                    field: 'gpsDeduct',
+                    required: true
+                }],
+                [{
+                    title: '担保风险金',
+                    field: 'gpsFee',
+                    amount: true,
+                    required: true
+                }, {
+                    title: 'GPS收费方式',
+                    field: 'gpsFeeWay',
+                    type: 'select',
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }],
+                [{
+                    title: '杂费',
+                    field: 'gpsFee',
+                    amount: true,
+                    required: true
+                }, {
+                    title: '手续费收取方式',
+                    field: 'gpsFeeWay',
+                    type: 'select',
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }],
+                [{
+                    // 履约保证金+担保风险金+GPS收费+杂费
+                    title: '收客户手续费合计',
+                    field: 'gpsFee',
+                    amount: true,
+                    required: true
+                }]
+            ]
+        }, {
+            title: '家庭房产情况及家访',
+            items: [
+                [{
+                    title: 'GPS',
+                    field: 'GPSList',
+                    required: true,
+                    type: 'o2m',
+                    options: [{
+                        fields: [{
+                            title: '用款用途',
+                            field: '11',
+                            required: true
+                        }, {
+                            title: '金额小写',
+                            field: '11',
+                            required: true
+                        }, {
+                            title: '金额大写',
+                            field: '11',
+                            required: true
+                        }, {
+                            title: '单位名称',
+                            field: 'companyName',
+                            required: true
+                        }, {
+                            title: '账号',
+                            field: 'bankNumber',
+                            required: true
+                        }, {
+                            title: '开户行',
+                            field: 'subbranch',
+                            required: true
+                        }]
+                    }]
+                }]
+            ]
+        }, {
+            title: '贷款材料',
+            items: [
+                [{
+                    title: '结婚证(离婚证)',
+                    field: 'marryDivorce',
+                    type: 'img'
+                }, {
                     title: '户口本(主贷本人页)',
-                    single: true
-                  }, null, [], getFieldDecorator)}
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'yhlsPic',
-                    title: '银行流水'
-                  }, null, [], getFieldDecorator)}
-                </Col>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'dszmPic',
+                    field: 'applyUserHkb',
+                    type: 'img'
+                }],
+                [{
+                    title: '银行流水',
+                    field: 'bankBillPdf',
+                    type: 'img'
+                }, {
                     title: '单身证明',
-                    single: true
-                  }, null, [], getFieldDecorator)}
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'srzmPic',
-                    title: '收入证明'
-                  }, null, [], getFieldDecorator)}
-                </Col>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'jzzmPic',
+                    field: 'singleProvePdf',
+                    type: 'img'
+                }],
+                [{
+                    title: '收入证明',
+                    field: 'incomeProvePdf',
+                    type: 'img'
+                }, {
                     title: '居住证明',
-                    single: true
-                  }, null, [], getFieldDecorator)}
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'gffpPic',
-                    title: '购房发票'
-                  }, null, [], getFieldDecorator)}
-                </Col>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'zjfzmPic',
+                    field: 'liveProvePdf',
+                    type: 'img'
+                }],
+                [{
+                    title: '购房发票',
+                    field: 'houseInvoice',
+                    type: 'img'
+                }, {
                     title: '自建房证明',
-                    single: true
-                  }, null, [], getFieldDecorator)}
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'hkbPic',
-                    title: '户口本（首页）'
-                  }, null, [], getFieldDecorator)}
-                </Col>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'hkbhzPic',
+                    field: 'buildProvePdf',
+                    type: 'img'
+                }],
+                [{
+                    title: '户口本（首页）',
+                    field: 'hkbFirstPage',
+                    type: 'img'
+                }, {
                     title: '户口本（户主页）',
-                    single: true
-                  }, null, [], getFieldDecorator)}
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'hkbghrPic',
-                    title: '共还人户口本'
-                  }, null, [], getFieldDecorator)}
-                </Col>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'hkbdbr1Pic',
+                    field: 'hkbMainPage',
+                    type: 'img'
+                }],
+                [{
                     title: '担保人1身份证',
-                    single: true
-                  }, null, [], getFieldDecorator)}
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'hkbdbr1hPic',
-                    title: '担保人1户口本'
-                  }, null, [], getFieldDecorator)}
-                </Col>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'hkbdbr2Pic',
+                    field: 'guarantor1IdNo',
+                    type: 'img'
+                }, {
+                    title: '担保人1户口本',
+                    field: 'guarantor1Hkb',
+                    type: 'img'
+                }],
+                [{
                     title: '担保人2身份证',
-                    single: true
-                  }, null, [], getFieldDecorator)}
-                </Col>
-              </Row>
-              <Row gutter={24}>
-                <Col {...col2Props}>
-                  {this.getImgComp({
-                    field: 'hkbdbr2hPic',
+                    field: 'guarantor2IdNo',
+                    type: 'img'
+                }, {
                     title: '担保人2户口本',
-                    single: true
-                  }, null, [], getFieldDecorator)}
-                </Col>
-              </Row>
-            </Panel>
-          </Collapse>
-        </Form>
-        <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-          <img alt="图片" style={{ width: '100%' }} src={previewImage} />
-        </Modal>
-      </div>
-    );
-  }
+                    field: 'guarantor2Hkb',
+                    type: 'img'
+                }],
+                [{
+                    title: '共还人户口本',
+                    field: 'ghHkb',
+                    type: 'img'
+                }]
+            ]
+        }, {
+            title: '家访材料',
+            items: [
+                [{
+                    title: '小区外观',
+                    field: 'housePic',
+                    type: 'img'
+                }, {
+                    title: '单元楼照片',
+                    field: 'houseUnitPic',
+                    type: 'img'
+                }],
+                [{
+                    title: '门牌照片',
+                    field: 'houseDoorPic',
+                    type: 'img'
+                }, {
+                    title: '客厅照片',
+                    field: 'houseRoomPic',
+                    type: 'img'
+                }],
+                [{
+                    title: '主贷与住宅合影',
+                    field: 'houseCustomerPic',
+                    type: 'img'
+                }, {
+                    title: '签约员与客户合影',
+                    field: 'houseSaleCustomerPic',
+                    type: 'img'
+                }]
+            ]
+        }, {
+            title: '企业照片',
+            items: [
+                [{
+                    title: '企业名称照片',
+                    field: 'companyNamePic',
+                    type: 'img'
+                }, {
+                    title: '办公场地照片',
+                    field: 'companyPlacePic',
+                    type: 'img'
+                }],
+                [{
+                    title: '生产车间照片',
+                    field: 'companyWorkshopPic',
+                    type: 'img'
+                }, {
+                    title: '签约员与客户合影',
+                    field: 'companySaleCustomerPic',
+                    type: 'img'
+                }]
+            ]
+        }, {
+            title: '二手车照片',
+            items: [
+                [{
+                    title: '合格证',
+                    field: 'secondHgz',
+                    type: 'img'
+                }, {
+                    title: '里程表',
+                    field: 'secondOdometer',
+                    type: 'img'
+                }],
+                [{
+                    title: '车前正面照',
+                    field: 'secondCarFrontPic',
+                    type: 'img'
+                }, {
+                    title: '中控台',
+                    field: 'secondConsolePic',
+                    type: 'img'
+                }],
+                [{
+                    title: '车300评估页',
+                    field: 'second300Pdf',
+                    type: 'img'
+                }, {
+                    title: '汽修宝截图',
+                    field: 'secondQxbPic',
+                    type: 'img'
+                }],
+                [{
+                    title: '车内饰',
+                    field: 'secondCarInPic',
+                    type: 'img'
+                }, {
+                    title: '铭牌',
+                    field: 'secondNumber',
+                    type: 'img'
+                }]
+            ]
+        }, {
+            title: '其他材料',
+            items: [
+                [{
+                    title: '附件',
+                    field: 'otherFilePdf',
+                    type: 'img'
+                }, {
+                    title: '备注事项',
+                    field: 'otherApplyNote',
+                    type: 'textarea',
+                    normalArea: true
+                }]
+            ]
+        }];
+
+        let checkFields = [{
+            field: 'approveNote',
+            title: '审核说明',
+            type: 'textarea',
+            normalArea: true,
+            readonly: !(this.isCheckCommissioner || this.isCheckDirector)
+        }];
+
+        let buttons = [];
+
+        if (this.isCheckCommissioner || this.isCheckDirector) {
+            fields = fields.concat(checkFields);
+
+            buttons = [{
+                title: '通过',
+                check: true,
+                handler: (params) => {
+                    params.approveResult = '1';
+                    params.operator = getUserId();
+                    let bizCode = this.isCheckCommissioner ? 632121 : 632122;
+                    this.props.doFetching();
+                    fetch(bizCode, params).then(() => {
+                        this.props.cancelFetching();
+                        showSucMsg('操作成功');
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(() => {
+                        this.props.cancelFetching();
+                    });
+                }
+            }, {
+                title: '不通过',
+                check: true,
+                handler: (params) => {
+                    params.approveResult = '0';
+                    params.operator = getUserId();
+                    let bizCode = this.isCheckCommissioner ? 632121 : 632122;
+                    this.props.doFetching();
+                    fetch(bizCode, params).then(() => {
+                        this.props.cancelFetching();
+                        showSucMsg('操作成功');
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(() => {
+                        this.props.cancelFetching();
+                    });
+                }
+            }, {
+                title: '返回',
+                handler: () => {
+                    this.props.history.go(-1);
+                }
+            }];
+        }
+
+        return this.props.buildDetail({
+            fields,
+            code: this.code,
+            view: this.view,
+            editCode: 632120,
+            detailCode: 632131,
+            buttons: buttons,
+            beforeSubmit: (data) => {
+                data.creditCode = this.code;
+                data.operator = getUserId();
+                return data;
+            }
+        });
+    }
 }
 
-export default Form.create()(BudgetAddEdit);
+export default BudgetAddedit;
