@@ -600,6 +600,18 @@ const ROUTES = [
       path: '/basis/receivables/addedit',
       component: asyncComponent(() => import('container/basis/receivables/receivables-addedit'))
   },
+
+  //  银行管理
+  {
+      path: '/basis/bank',
+      component: asyncComponent(() => import('container/basis/bank/bank'))
+  },
+  //  银行管理详情 + 修改
+  {
+      path: '/basis/bank/addedit',
+      component: asyncComponent(() => import('container/basis/bank/bank-addedit'))
+  },
+
   //  身份证区域表
   {
       path: '/basis/idCardArea',
