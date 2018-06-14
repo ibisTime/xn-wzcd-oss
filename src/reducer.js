@@ -186,6 +186,10 @@ import { basisInsuranceCompanyAddedit } from './redux/basis/insuranceCompany-add
 import { basisReceivables } from './redux/basis/receivables';
 import { basisReceivablesAddedit } from './redux/basis/receivables-addedit';
 
+//  银行管理 + 详情 + 修改 + 删除
+import { basisBank } from './redux/basis/bank';
+import { basisBankAddEdit } from './redux/basis/bank-addedit';
+
 //  身份证区域表 + 新增 + 修改 + 删除
 import { basisIdCardArea } from './redux/basis/idCardArea';
 import { basisIdCardAreaAddedit } from './redux/basis/idCardArea-addedit';
@@ -206,17 +210,28 @@ import { basisLoanPercentAddedit } from './redux/basis/loanPercent-addedit';
 /**
  * 贷前管理
  */
+// 预算单申请
+import { loanBudget } from './redux/loan/budget';
+
 // 发起征信查询
-import { loanCredit } from './redux/loan/credit';
-import { loanCreditAddedit } from './redux/loan/credit-addedit';
+import { loanCreditStart } from './redux/loan/creditStart';
+import { loanCreditStartAddedit } from './redux/loan/creditStart-addedit';
+
+// 征信录入
+import { loanCreditEntering } from './redux/loan/creditEntering';
+
+// 准入审查
+import { loanCreditCheck } from './redux/loan/creditCheck';
 
 /**
  * 贷前工具
  */
-//  收回手续费 + 详情 + 收款回录
-import { loanstoolstakeFree } from './redux/loanstools/takeFree';
-import { loanstoolsTakeFreeAddedit } from './redux/loanstools/takeFree-addedit';
-import { loanstoolsTakeFreeEnter } from './redux/loanstools/takeFree-enter';
+//  垫资请款预算单 + 详情 + 申请 + 审核 + 确认
+import { loanstoolsEstimate } from './redux/loanstools/estimate';
+import { loanstoolsEstimateAddEdit } from './redux/loanstools/estimate-addedit';
+import { loanstoolsEstimateApply } from './redux/loanstools/estimate-apply';
+import { loanstoolsEstimateCheck } from './redux/loanstools/estimate-check';
+import { loanstoolsEstimateCertian } from './redux/loanstools/estimate-certain';
 
 //  客户作废 + 详情 + 申请 + 审核 + 确认
 import { loanstoolsCancel } from './redux/loanstools/cancel';
@@ -225,10 +240,57 @@ import { loanstoolsCancelApply } from './redux/loanstools/cancel-apply';
 import { loanstoolsCancelCheck } from './redux/loanstools/cancel-check';
 import { loanstoolsCancelCertain } from './redux/loanstools/cancel-certain';
 
-//  退客户垫资款 + 详情 + 财务确认退款
+//  收回垫资款 + 详情 + 贷款回录
+import { loanstoolsTake } from './redux/loanstools/take';
+import { loanstoolsTakeAddedit } from './redux/loanstools/take-addedit';
+import { loanstoolsTakeEnter } from './redux/loanstools/take-enter';
+
+//  收回预算款 + 详情 + 申请 + 审核 + 确认
+import { loanstoolsTakeEstimate } from './redux/loanstools/takeEstimate';
+import { loanstoolsTakeEstimateAddedit } from './redux/loanstools/takeEstimate-addedit';
+import { loanstoolsTakeEstimateCertain } from './redux/loanstools/takeEstimate-certain';
+
+//  收回手续费 + 详情 + 收款回录
+import { loanstoolstakeFree } from './redux/loanstools/takeFree';
+import { loanstoolsTakeFreeAddedit } from './redux/loanstools/takeFree-addedit';
+import { loanstoolsTakeFreeEnter } from './redux/loanstools/takeFree-enter';
+
+//  客户作废 + 详情 + 申请 + 录入
+import { loanstoolsCard } from './redux/loanstools/card';
+import { loanstoolsCardAddedit } from './redux/loanstools/card-addedit';
+import { loanstoolsCardApply } from './redux/loanstools/card-apply';
+import { loanstoolsCardEnter } from './redux/loanstools/card-enter';
+
+//  发保和 + 详情 + 录入
+import { loanstoolsInvoice } from './redux/loanstools/invoice';
+import { loanstoolsInvoiceAddedit } from './redux/loanstools/invoice-addedit';
+import { loanstoolsInvoiceEnter } from './redux/loanstools/invoice-enter';
+
+//  发票不匹配 + 详情 + 申请 + 审核 + 确认
+import { loanstoolsMisInvoice } from './redux/loanstools/misInvoice';
+import { loanstoolsMisInvoiceAddedit } from './redux/loanstools/misInvoice-addedit';
+import { loanstoolsMisInvoiceApply } from './redux/loanstools/misInvoice-apply';
+import { loanstoolsMisInvoiceCheck } from './redux/loanstools/misInvoice-check';
+import { loanstoolsMisInvoiceCertain } from './redux/loanstools/misInvoice-certain';
+
+//  返点支付 + 详情 + 制单 + 确认
+import { loanstoolsRebates } from './redux/loanstools/rebates';
+import { loanstoolsRebatesAddedit } from './redux/loanstools/rebates-addedit';
+import { loanstoolsRebatesBill } from './redux/loanstools/rebates-bill';
+import { loanstoolsRebatesCertain } from './redux/loanstools/rebates-certain';
+
+//  银行合同 + 导入
+import { loanstoolsContract } from './redux/loanstools/contract';
+import { loanstoolsContractImport } from './redux/loanstools/contract-import';
+
+//  应退按揭款 + 详情 + 确认
 import { loanstoolsRefund } from './redux/loanstools/refund';
 import { loanstoolsRefundAddedit } from './redux/loanstools/refund-addedit';
 import { loanstoolsRefundCertain } from './redux/loanstools/refund-certain';
+
+/**
+ * 贷前工具
+ */
 
 /**
  * 资料传递
@@ -492,16 +554,48 @@ export default combineReducers({
   bizredListCheck,
   bizredListPay,
   bizredListEnter,
-  loanCredit,
-  loanCreditAddedit,
-  loanstoolstakeFree,
-  loanstoolsTakeFreeAddedit,
-  loanstoolsTakeFreeEnter,
+  loanBudget,
+  loanCreditStart,
+  loanCreditStartAddedit,
+  loanCreditEntering,
+  loanCreditCheck,
+  loanstoolsEstimate,
+  loanstoolsEstimateAddEdit,
+  loanstoolsEstimateApply,
+  loanstoolsEstimateCheck,
+  loanstoolsEstimateCertian,
   loanstoolsCancel,
   loanstoolsCancelAddedit,
   loanstoolsCancelApply,
   loanstoolsCancelCheck,
   loanstoolsCancelCertain,
+  loanstoolsTake,
+  loanstoolsTakeAddedit,
+  loanstoolsTakeEnter,
+  loanstoolsTakeEstimate,
+  loanstoolsTakeEstimateAddedit,
+  loanstoolsTakeEstimateCertain,
+  loanstoolstakeFree,
+  loanstoolsTakeFreeAddedit,
+  loanstoolsTakeFreeEnter,
+  loanstoolsCard,
+  loanstoolsCardAddedit,
+  loanstoolsCardApply,
+  loanstoolsCardEnter,
+  loanstoolsInvoice,
+  loanstoolsInvoiceAddedit,
+  loanstoolsInvoiceEnter,
+  loanstoolsMisInvoice,
+  loanstoolsMisInvoiceAddedit,
+  loanstoolsMisInvoiceApply,
+  loanstoolsMisInvoiceCheck,
+  loanstoolsMisInvoiceCertain,
+  loanstoolsRebates,
+  loanstoolsRebatesAddedit,
+  loanstoolsRebatesBill,
+  loanstoolsRebatesCertain,
+  loanstoolsContract,
+  loanstoolsContractImport,
   loanstoolsRefund,
   loanstoolsRefundAddedit,
   loanstoolsRefundCertain,
@@ -628,6 +722,11 @@ export default combineReducers({
   basisDealer,
   basisDealerAddedit,
   basisDealerCheck,
+<<<<<<< .merge_file_a01936
   basisLoanPercent,
   basisLoanPercentAddedit
+=======
+  basisBank,
+  basisBankAddEdit
+>>>>>>> .merge_file_a07156
 });

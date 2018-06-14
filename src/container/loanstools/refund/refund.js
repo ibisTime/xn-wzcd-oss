@@ -46,64 +46,49 @@ class refund extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
-            field: 'code',
-            search: true
-        }, {
-            title: '业务公司',
-            field: 'companyName'
+            field: 'code'
         }, {
             title: '客户姓名',
-            field: 'applyUserName',
+            field: 'companyCode',
             search: true
         }, {
             title: '贷款银行',
-            field: 'loanBankName'
+            field: 'budgetAmount',
+            search: true
+        }, {
+            title: '放款日期',
+            field: 'useDatetime',
+            type: 'date',
+            search: true
         }, {
             title: '贷款金额',
-            field: 'loanAmount',
+            field: 'receiptAccount',
             amount: true
         }, {
-            title: '贷款期数',
-            field: 'loanPeriod'
+            title: '应退按揭款',
+            field: 'receiptAccount',
+            amount: true
         }, {
-            title: '业务种类',
-            field: 'bizType',
-            type: 'select',
-            key: 'budget_orde_biz_typer'
-        }, {
-            title: '业务员',
-            field: 'saleUserName'
-        }, {
-            title: '申请时间',
-            field: 'applyDatetime',
-            type: 'date'
-        }, {
-            title: '放款时间',
-            field: 'bankFkDatetime',
-            type: 'date'
-        }, {
-            title: '是否垫资',
-            field: 'isAdvanceFund',
-            type: 'select',
-            data: [{
-                key: '1',
-                value: '是'
-            }, {
-                key: '0',
-                value: '否'
-            }],
-            keyName: 'key',
-            valueName: 'value'
-        }, {
-            title: '状态',
-            field: 'backAdvanceStatus',
-            type: 'select',
-            key: 'back_advance_status'
+            title: '办理状态',
+            field: 'name',
+            search: true
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632185,
+            pageCode: 632105,
             btnEvent: {
+              apply: (selectedRowKeys, selectedRows) => {
+                this.props.history.push(`/loanstools/refund/apply?code=${selectedRowKeys[0]}`);
+              },
+              check: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys.length) {
+                  showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                  showWarnMsg('请选择一条记录');
+                } else {
+                  this.props.history.push(`/loanstools/refund/check?code=${selectedRowKeys[0]}`);
+                }
+              },
               certain: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
                   showWarnMsg('请选择记录');

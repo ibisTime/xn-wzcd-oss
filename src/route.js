@@ -600,6 +600,18 @@ const ROUTES = [
       path: '/basis/receivables/addedit',
       component: asyncComponent(() => import('container/basis/receivables/receivables-addedit'))
   },
+
+  //  银行管理
+  {
+      path: '/basis/bank',
+      component: asyncComponent(() => import('container/basis/bank/bank'))
+  },
+  //  银行管理详情 + 修改
+  {
+      path: '/basis/bank/addedit',
+      component: asyncComponent(() => import('container/basis/bank/bank-addedit'))
+  },
+
   //  身份证区域表
   {
       path: '/basis/idCardArea',
@@ -658,72 +670,512 @@ const ROUTES = [
     component: asyncComponent(() => import('container/analysis/statistic/protect-addedit'))
   },
   // 贷前管理
+  // 预算单申请
+  {
+      path: '/loan/budget',
+      component: asyncComponent(() => import('container/loan/budget/budget'))
+  },
+
+  // 预算单申请 详情111
+  {
+      path: '/loan/budget/addedit',
+      component: asyncComponent(() => import('container/loan/budget-addedit/budget-addedit'))
+  },
+
   // 发起征信查询
   {
-      path: '/loan/credit',
-      component: asyncComponent(() => import('container/loan/credit/credit'))
+      path: '/loan/creditStart',
+      component: asyncComponent(() => import('container/loan/creditStart/creditStart'))
   },
+
   // 发起征信查询  发起征信查询
   {
-      path: '/loan/credit/addedit',
-      component: asyncComponent(() => import('container/loan/credit-addedit/credit-addedit'))
+      path: '/loan/creditStart/addedit',
+      component: asyncComponent(() => import('container/loan/creditStart-addedit/creditStart-addedit'))
   },
+
+  // 征信录入
+  {
+      path: '/loan/creditEntering',
+      component: asyncComponent(() => import('container/loan/creditEntering/creditEntering'))
+  },
+
+  // 准入审查
+  {
+      path: '/loan/creditCheck',
+      component: asyncComponent(() => import('container/loan/creditCheck/creditCheck'))
+  },
+
   //  贷前工具
-  //  收回手续费
+  //  垫资请款预算单
   {
-    path: '/loanstools/takeFree',
-    component: asyncComponent(() => import('container/loanstools/takeFree/takeFree'))
+      path: '/loanstools/estimate',
+      component: asyncComponent(() => import('container/loanstools/estimate/estimate'))
   },
-  //  收回手续费 详情
+
+  //  垫资请款预算单 详情
   {
-      path: '/loanstools/takeFree/addedit',
-      component: asyncComponent(() => import('container/loanstools/takeFree/takeFree-addedit'))
+      path: '/loanstools/estimate/addedit',
+      component: asyncComponent(() => import('container/loanstools/estimate/estimate-addedit'))
   },
-  //  收回手续费 申请
+
+  //  垫资请款预算单 申请
   {
-      path: '/loanstools/takeFree/enter',
-      component: asyncComponent(() => import('container/loanstools/takeFree/takeFree-enter'))
+      path: '/loanstools/estimate/apply',
+      component: asyncComponent(() => import('container/loanstools/estimate/estimate-apply'))
   },
-  //  退客户垫资款
+
+  //  垫资请款预算单 审核
   {
-    path: '/loanstools/refund',
-    component: asyncComponent(() => import('container/loanstools/refund/refund'))
+      path: '/loanstools/estimate/check',
+      component: asyncComponent(() => import('container/loanstools/estimate/estimate-check'))
   },
-  //  退客户垫资款 详情
+
+  //  垫资请款预算单 确认放款
   {
-      path: '/loanstools/refund/addedit',
-      component: asyncComponent(() => import('container/loanstools/refund/refund-addedit'))
+      path: '/loanstools/estimate/certain',
+      component: asyncComponent(() => import('container/loanstools/estimate/estimate-certain'))
   },
-  //  退客户垫资款 申请
-  {
-      path: '/loanstools/refund/certain',
-      component: asyncComponent(() => import('container/loanstools/refund/refund-certain'))
-  },
+
   //  客户作废
   {
       path: '/loanstools/cancel',
       component: asyncComponent(() => import('container/loanstools/cancel/cancel'))
   },
+
   //  客户作废 详情
   {
       path: '/loanstools/cancel/addedit',
       component: asyncComponent(() => import('container/loanstools/cancel/cancel-addedit'))
   },
+
   //  客户作废 申请
   {
       path: '/loanstools/cancel/apply',
       component: asyncComponent(() => import('container/loanstools/cancel/cancel-apply'))
   },
-  //  客户作废 业务总监审核
+
+  //  客户作废 审核
   {
       path: '/loanstools/cancel/check',
       component: asyncComponent(() => import('container/loanstools/cancel/cancel-check'))
   },
-  //  客户作废 财务总监审核
+
+  //  客户作废 确认放款
   {
       path: '/loanstools/cancel/certain',
       component: asyncComponent(() => import('container/loanstools/cancel/cancel-certain'))
   },
+
+  //  收回垫资款
+  {
+      path: '/loanstools/take',
+      component: asyncComponent(() => import('container/loanstools/take/take'))
+  },
+
+  //  收回垫资款 详情
+  {
+      path: '/loanstools/take/addedit',
+      component: asyncComponent(() => import('container/loanstools/take/take-addedit'))
+  },
+
+  //  收回垫资款 申请
+  {
+      path: '/loanstools/take/enter',
+      component: asyncComponent(() => import('container/loanstools/take/take-enter'))
+  },
+
+  //  收回预算款
+  {
+      path: '/loanstools/takeEstimate',
+      component: asyncComponent(() => import('container/loanstools/takeEstimate/takeEstimate'))
+  },
+
+  //  收回预算款 详情
+  {
+      path: '/loanstools/takeEstimate/addedit',
+      component: asyncComponent(() => import('container/loanstools/takeEstimate/takeEstimate-addedit'))
+  },
+
+  //  收回预算款 申请
+  {
+      path: '/loanstools/takeEstimate/certain',
+      component: asyncComponent(() => import('container/loanstools/takeEstimate/takeEstimate-certain'))
+  },
+
+  //  收回手续费
+  {
+      path: '/loanstools/takeFree',
+      component: asyncComponent(() => import('container/loanstools/takeFree/takeFree'))
+  },
+
+  //  收回手续费 详情
+  {
+      path: '/loanstools/takeFree/addedit',
+      component: asyncComponent(() => import('container/loanstools/takeFree/takeFree-addedit'))
+  },
+
+  //  收回手续费 申请
+  {
+      path: '/loanstools/takeFree/enter',
+      component: asyncComponent(() => import('container/loanstools/takeFree/takeFree-enter'))
+  },
+
+  //  制卡
+  {
+      path: '/loanstools/card',
+      component: asyncComponent(() => import('container/loanstools/card/card'))
+  },
+
+  //  制卡 详情
+  {
+      path: '/loanstools/card/addedit',
+      component: asyncComponent(() => import('container/loanstools/card/card-addedit'))
+  },
+
+  //  制卡 申请
+  {
+      path: '/loanstools/card/apply',
+      component: asyncComponent(() => import('container/loanstools/card/card-apply'))
+  },
+
+  //  发保和
+  {
+      path: '/loanstools/invoice',
+      component: asyncComponent(() => import('container/loanstools/invoice/invoice'))
+  },
+
+  //  发保和 详情
+  {
+      path: '/loanstools/invoice/addedit',
+      component: asyncComponent(() => import('container/loanstools/invoice/invoice-addedit'))
+  },
+
+  //  发保和 申请
+  {
+      path: '/loanstools/invoice/enter',
+      component: asyncComponent(() => import('container/loanstools/invoice/invoice-enter'))
+  },
+
+  //  发票不匹配
+  {
+      path: '/loanstools/misInvoice',
+      component: asyncComponent(() => import('container/loanstools/misInvoice/misInvoice'))
+  },
+
+  //  发票不匹配 详情
+  {
+      path: '/loanstools/misInvoice/addedit',
+      component: asyncComponent(() => import('container/loanstools/misInvoice/misInvoice-addedit'))
+  },
+
+  //  发票不匹配 申请
+  {
+      path: '/loanstools/misInvoice/apply',
+      component: asyncComponent(() => import('container/loanstools/misInvoice/misInvoice-apply'))
+  },
+
+  //  发票不匹配 审核
+  {
+      path: '/loanstools/misInvoice/check',
+      component: asyncComponent(() => import('container/loanstools/misInvoice/misInvoice-check'))
+  },
+
+  //  发票不匹配 确认放款
+  {
+      path: '/loanstools/misInvoice/certain',
+      component: asyncComponent(() => import('container/loanstools/misInvoice/misInvoice-certain'))
+  },
+
+  //  返点支付
+  {
+      path: '/loanstools/rebates',
+      component: asyncComponent(() => import('container/loanstools/rebates/rebates'))
+  },
+
+  //  返点支付 详情
+  {
+      path: '/loanstools/rebates/addedit',
+      component: asyncComponent(() => import('container/loanstools/rebates/rebates-addedit'))
+  },
+
+  //  返点支付 制单
+  {
+      path: '/loanstools/rebates/bill',
+      component: asyncComponent(() => import('container/loanstools/rebates/rebates-bill'))
+  },
+
+  //  返点支付 确认放款
+  {
+      path: '/loanstools/rebates/certain',
+      component: asyncComponent(() => import('container/loanstools/rebates/rebates-certain'))
+  },
+
+  //  银行合同导入
+  {
+      path: '/loanstools/contract',
+      component: asyncComponent(() => import('container/loanstools/contract/contract'))
+  },
+
+  //  银行合同导入 导入
+  {
+      path: '/loanstools/contract/import',
+      component: asyncComponent(() => import('container/loanstools/contract/contract-import'))
+  },
+
+  //  应退按揭款
+  {
+      path: '/loanstools/refund',
+      component: asyncComponent(() => import('container/loanstools/refund/refund'))
+  },
+
+  //  应退按揭款 详情
+  {
+      path: '/loanstools/refund/addedit',
+      component: asyncComponent(() => import('container/loanstools/refund/refund-addedit'))
+  },
+
+  //  应退按揭款 确认放款
+  {
+      path: '/loanstools/refund/certain',
+      component: asyncComponent(() => import('container/loanstools/refund/refund-certain'))
+  },
+
+  //  贷前工具
+  //  垫资请款预算单
+  {
+      path: '/loanstools/estimate',
+      component: asyncComponent(() => import('container/loanstools/estimate/estimate'))
+  },
+
+  //  垫资请款预算单 详情
+  {
+      path: '/loanstools/estimate/addedit',
+      component: asyncComponent(() => import('container/loanstools/estimate/estimate-addedit'))
+  },
+
+  //  垫资请款预算单 申请
+  {
+      path: '/loanstools/estimate/apply',
+      component: asyncComponent(() => import('container/loanstools/estimate/estimate-apply'))
+  },
+
+  //  垫资请款预算单 审核
+  {
+      path: '/loanstools/estimate/check',
+      component: asyncComponent(() => import('container/loanstools/estimate/estimate-check'))
+  },
+
+  //  垫资请款预算单 确认放款
+  {
+      path: '/loanstools/estimate/certain',
+      component: asyncComponent(() => import('container/loanstools/estimate/estimate-certain'))
+  },
+
+  //  客户作废
+  {
+      path: '/loanstools/cancel',
+      component: asyncComponent(() => import('container/loanstools/cancel/cancel'))
+  },
+
+  //  客户作废 详情
+  {
+      path: '/loanstools/cancel/addedit',
+      component: asyncComponent(() => import('container/loanstools/cancel/cancel-addedit'))
+  },
+
+  //  客户作废 申请
+  {
+      path: '/loanstools/cancel/apply',
+      component: asyncComponent(() => import('container/loanstools/cancel/cancel-apply'))
+  },
+
+  //  客户作废 审核
+  {
+      path: '/loanstools/cancel/check',
+      component: asyncComponent(() => import('container/loanstools/cancel/cancel-check'))
+  },
+
+  //  客户作废 确认放款
+  {
+      path: '/loanstools/cancel/certain',
+      component: asyncComponent(() => import('container/loanstools/cancel/cancel-certain'))
+  },
+
+  //  收回垫资款
+  {
+      path: '/loanstools/take',
+      component: asyncComponent(() => import('container/loanstools/take/take'))
+  },
+
+  //  收回垫资款 详情
+  {
+      path: '/loanstools/take/addedit',
+      component: asyncComponent(() => import('container/loanstools/take/take-addedit'))
+  },
+
+  //  收回垫资款 申请
+  {
+      path: '/loanstools/take/enter',
+      component: asyncComponent(() => import('container/loanstools/take/take-enter'))
+  },
+
+  //  收回预算款
+  {
+      path: '/loanstools/takeEstimate',
+      component: asyncComponent(() => import('container/loanstools/takeEstimate/takeEstimate'))
+  },
+
+  //  收回预算款 详情
+  {
+      path: '/loanstools/takeEstimate/addedit',
+      component: asyncComponent(() => import('container/loanstools/takeEstimate/takeEstimate-addedit'))
+  },
+
+  //  收回预算款 申请
+  {
+      path: '/loanstools/takeEstimate/certain',
+      component: asyncComponent(() => import('container/loanstools/takeEstimate/takeEstimate-certain'))
+  },
+
+  //  收回手续费
+  {
+      path: '/loanstools/takeFree',
+      component: asyncComponent(() => import('container/loanstools/takeFree/takeFree'))
+  },
+
+  //  收回手续费 详情
+  {
+      path: '/loanstools/takeFree/addedit',
+      component: asyncComponent(() => import('container/loanstools/takeFree/takeFree-addedit'))
+  },
+
+  //  收回手续费 申请
+  {
+      path: '/loanstools/takeFree/enter',
+      component: asyncComponent(() => import('container/loanstools/takeFree/takeFree-enter'))
+  },
+
+  //  制卡
+  {
+      path: '/loanstools/card',
+      component: asyncComponent(() => import('container/loanstools/card/card'))
+  },
+
+  //  制卡 详情
+  {
+      path: '/loanstools/card/addedit',
+      component: asyncComponent(() => import('container/loanstools/card/card-addedit'))
+  },
+
+  //  制卡 申请
+  {
+      path: '/loanstools/card/apply',
+      component: asyncComponent(() => import('container/loanstools/card/card-apply'))
+  },
+
+  //  发保和
+  {
+      path: '/loanstools/invoice',
+      component: asyncComponent(() => import('container/loanstools/invoice/invoice'))
+  },
+
+  //  发保和 详情
+  {
+      path: '/loanstools/invoice/addedit',
+      component: asyncComponent(() => import('container/loanstools/invoice/invoice-addedit'))
+  },
+
+  //  发保和 申请
+  {
+      path: '/loanstools/invoice/enter',
+      component: asyncComponent(() => import('container/loanstools/invoice/invoice-enter'))
+  },
+
+  //  发票不匹配
+  {
+      path: '/loanstools/misInvoice',
+      component: asyncComponent(() => import('container/loanstools/misInvoice/misInvoice'))
+  },
+
+  //  发票不匹配 详情
+  {
+      path: '/loanstools/misInvoice/addedit',
+      component: asyncComponent(() => import('container/loanstools/misInvoice/misInvoice-addedit'))
+  },
+
+  //  发票不匹配 申请
+  {
+      path: '/loanstools/misInvoice/apply',
+      component: asyncComponent(() => import('container/loanstools/misInvoice/misInvoice-apply'))
+  },
+
+  //  发票不匹配 审核
+  {
+      path: '/loanstools/misInvoice/check',
+      component: asyncComponent(() => import('container/loanstools/misInvoice/misInvoice-check'))
+  },
+
+  //  发票不匹配 确认放款
+  {
+      path: '/loanstools/misInvoice/certain',
+      component: asyncComponent(() => import('container/loanstools/misInvoice/misInvoice-certain'))
+  },
+
+  //  返点支付
+  {
+      path: '/loanstools/rebates',
+      component: asyncComponent(() => import('container/loanstools/rebates/rebates'))
+  },
+
+  //  返点支付 详情
+  {
+      path: '/loanstools/rebates/addedit',
+      component: asyncComponent(() => import('container/loanstools/rebates/rebates-addedit'))
+  },
+
+  //  返点支付 制单
+  {
+      path: '/loanstools/rebates/bill',
+      component: asyncComponent(() => import('container/loanstools/rebates/rebates-bill'))
+  },
+
+  //  返点支付 确认放款
+  {
+      path: '/loanstools/rebates/certain',
+      component: asyncComponent(() => import('container/loanstools/rebates/rebates-certain'))
+  },
+
+  //  银行合同导入
+  {
+      path: '/loanstools/contract',
+      component: asyncComponent(() => import('container/loanstools/contract/contract'))
+  },
+
+  //  银行合同导入 导入
+  {
+      path: '/loanstools/contract/import',
+      component: asyncComponent(() => import('container/loanstools/contract/contract-import'))
+  },
+
+  //  应退按揭款
+  {
+      path: '/loanstools/refund',
+      component: asyncComponent(() => import('container/loanstools/refund/refund'))
+  },
+
+  //  应退按揭款 详情
+  {
+      path: '/loanstools/refund/addedit',
+      component: asyncComponent(() => import('container/loanstools/refund/refund-addedit'))
+  },
+
+  //  应退按揭款 确认放款
+  {
+      path: '/loanstools/refund/certain',
+      component: asyncComponent(() => import('container/loanstools/refund/refund-certain'))
+  },
+
   //  资料传递
   //  资料传递
   {

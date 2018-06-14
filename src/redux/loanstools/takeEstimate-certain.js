@@ -1,6 +1,6 @@
 import { commDetailState } from '../common';
 
-const PREFIX = 'BASEDATA_RECEIVABLES_ADDEDIT_';
+const PREFIX = 'LOANSTOOLS_TAKEESTIMATE_CERTAIN_';
 const SET_SELECT_DATA = PREFIX + 'SET_SELECT_DATA';
 const LOADING = PREFIX + 'LOADING';
 const CANCEL_LOADING = PREFIX + 'CANCEL_LOADING';
@@ -10,14 +10,14 @@ const RESTORE = PREFIX + 'RESTORE';
 
 const initState = { ...commDetailState };
 
-export function basedataReceivablesAddEdit(state = initState, action) {
+export function loanstoolsTakeEstimateCertain(state = initState, action) {
   switch(action.type) {
     case INIT_STATE:
       return {...state, ...action.payload};
     case SET_SELECT_DATA:
       return {...state, selectData: {...state.selectData, [action.payload.key]: action.payload.data}};
     case SET_PAGE_DATA:
-      return {...state, pageData: action.payload, isLoaded: true};
+        return {...state, pageData: action.payload, isLoaded: true};
     case RESTORE:
       return {...initState};
     case LOADING:

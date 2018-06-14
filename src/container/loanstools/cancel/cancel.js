@@ -10,21 +10,21 @@ import {
     setSearchData
 } from '@redux/loanstools/cancel';
 import {
-    showWarnMsg,
-    showSucMsg
+  showWarnMsg,
+  showSucMsg
 } from 'common/js/util';
 import {
-    Button,
-    Upload,
-    Modal
+  Button,
+  Upload,
+  Modal
 } from 'antd';
 import {
     listWrapper
 } from 'common/js/build-list';
 import {
-    lowerFrame,
-    onShelf,
-    sendMsg
+  lowerFrame,
+  onShelf,
+  sendMsg
 } from 'api/biz';
 
 @listWrapper(
@@ -47,82 +47,56 @@ class cancel extends React.Component {
         const fields = [{
             title: '业务编号',
             field: 'code',
-            nowrap: true,
             search: true
-        }, {
-            title: '业务公司',
-            field: 'companyName',
-            nowrap: true
         }, {
             title: '客户姓名',
-            field: 'applyUserName',
+            field: 'companyCode',
             search: true
         }, {
-            title: '贷款银行',
-            field: 'loanBankName'
-        }, {
-            title: '贷款金额',
-            field: 'loanAmount',
-            amount: true
-        }, {
-            title: '业务种类',
-            field: 'bizType',
-            type: 'select',
-            key: 'budget_orde_biz_typer'
+            title: '作废原因',
+            field: 'budgetAmount'
         }, {
             title: '是否垫资',
-            field: 'isAdvanceFund',
-            type: 'select',
-            data: [{
-                key: '1',
-                value: '是'
-            }, {
-                key: '0',
-                value: '否'
-            }],
-            keyName: 'key',
-            valueName: 'value'
+            field: 'receiptAccount',
+            search: true
         }, {
-            title: '垫资时间',
-            field: 'advanceFundDatetime',
+            title: '申请人',
+            field: 'receiptBank',
+            search: true
+        }, {
+            title: '申请日期',
+            field: 'useDatetime',
             type: 'date'
         }, {
-            title: '垫资金额',
-            field: 'advanceFundAmount',
-            amount: true
-        }, {
-            title: '当前节点',
-            field: 'curNodeCode',
-            type: 'select',
-            listCode: 630147,
-            keyName: 'code',
-            valueName: 'name'
+            title: '办理状态',
+            field: 'name',
+            search: true
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632195,
+            pageCode: 632105,
             btnEvent: {
-                apply: (selectedRowKeys, selectedRows) => {
-                    this.props.history.push(`/loanstools/cancel/apply?`);
-                },
-                check: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push(`/loanstools/cancel/check?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                certain: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push(`/loanstools/cancel/certain?code=${selectedRowKeys[0]}`);
-                    }
+              apply: (selectedRowKeys, selectedRows) => {
+                this.props.history.push(`/loanstools/cancel/apply?code=${selectedRowKeys[0]}`);
+              },
+              check: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys.length) {
+                  showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                  showWarnMsg('请选择一条记录');
+                } else {
+                  this.props.history.push(`/loanstools/cancel/check?code=${selectedRowKeys[0]}`);
                 }
+              },
+              certain: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys.length) {
+                  showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                  showWarnMsg('请选择一条记录');
+                } else {
+                  this.props.history.push(`/loanstools/cancel/certain?code=${selectedRowKeys[0]}`);
+                }
+              }
             }
         });
     }
