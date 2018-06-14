@@ -576,18 +576,7 @@ const ROUTES = [
     path: '/biz/historyBusinessManage/addedit/addedit',
     component: asyncComponent(() => import('container/biz/carLoanRepay/historyBusinessManage-addedit-addedit'))
   },
-  //  基础数据
-  //  收款账号管理
-  {
-    path: '/basedata/receivables',
-    component: asyncComponent(() => import('container/basedata/receivables/receivables'))
-  },
-  //  收款账号管理详情 + 修改
-  {
-    path: '/basedata/receivables/addedit',
-    component: asyncComponent(() => import('container/basedata/receivables/receivables-addedit'))
-  },
-  // 基础管理管理
+  // 基础管理
   //  保险公司管理
   {
       path: '/basis/insuranceCompany',
@@ -611,7 +600,6 @@ const ROUTES = [
       path: '/basis/receivables/addedit',
       component: asyncComponent(() => import('container/basis/receivables/receivables-addedit'))
   },
-
   //  身份证区域表
   {
       path: '/basis/idCardArea',

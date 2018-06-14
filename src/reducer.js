@@ -175,11 +175,6 @@ import { bizHistoryBusinessManage } from './redux/biz/historyBusinessManage';
 import { bizHistoryBusinessManageAddedit } from './redux/biz/historyBusinessManage-addedit';
 import { bizHistoryBusinessManageAddeditAddedit } from './redux/biz/historyBusinessManage-addedit-addedit';
 
-//  基础数据
-//  收款账号管理 + 详情 + 修改 + 删除
-import { basedataReceivables } from './redux/basedata/receivables';
-import { basedataReceivablesAddEdit } from './redux/basedata/receivables-addedit';
-
 /**
  * 基础管理
  */
@@ -509,8 +504,6 @@ export default combineReducers({
   bizTrailer,
   bizTrailerAddEdit,
   bizTrailerDispose,
-  basedataReceivables,
-  basedataReceivablesAddEdit,
   transmit,
   transmitAddedit,
   transmitSend,
