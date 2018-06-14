@@ -181,6 +181,30 @@ import { basedataReceivables } from './redux/basedata/receivables';
 import { basedataReceivablesAddEdit } from './redux/basedata/receivables-addedit';
 
 /**
+ * 基础管理
+ */
+//  保险公司管理 + 新增 + 修改 + 删除
+import { basisInsuranceCompany } from './redux/basis/insuranceCompany';
+import { basisInsuranceCompanyAddedit } from './redux/basis/insuranceCompany-addedit';
+
+//  收款账户管理 + 新增 + 修改 + 删除
+import { basisReceivables } from './redux/basis/receivables';
+import { basisReceivablesAddedit } from './redux/basis/receivables-addedit';
+
+//  身份证区域表 + 新增 + 修改 + 删除
+import { basisIdCardArea } from './redux/basis/idCardArea';
+import { basisIdCardAreaAddedit } from './redux/basis/idCardArea-addedit';
+
+//  全国省份编号 + 新增 + 修改 + 删除
+import { basisProvinceNum } from './redux/basis/provinceNum';
+import { basisProvinceNumAddedit } from './redux/basis/provinceNum-addedit';
+
+//  经销商管理 + 详情 + 删除
+import { basisDealer } from './redux/basis/dealer';
+import { basisDealerAddedit } from './redux/basis/dealer-addedit';
+import { basisDealerCheck } from './redux/basis/dealer-check';
+
+/**
  * 贷前管理
  */
 // 发起征信查询
@@ -595,5 +619,16 @@ export default combineReducers({
   bizUserRedemptionCheckFinance,
   carloanfinancePointreturn,
   carloanfinancePointreturnAddedit,
-  carloanfinancePointreturnReturn
+  carloanfinancePointreturnReturn,
+  basisInsuranceCompany,
+  basisInsuranceCompanyAddedit,
+  basisReceivables,
+  basisReceivablesAddedit,
+  basisIdCardArea,
+  basisIdCardAreaAddedit,
+  basisProvinceNum,
+  basisProvinceNumAddedit,
+  basisDealer,
+  basisDealerAddedit,
+  basisDealerCheck
 });

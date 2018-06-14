@@ -587,7 +587,73 @@ const ROUTES = [
     path: '/basedata/receivables/addedit',
     component: asyncComponent(() => import('container/basedata/receivables/receivables-addedit'))
   },
-  //  统计分析模块
+  // 基础管理管理
+  //  保险公司管理
+  {
+      path: '/basis/insuranceCompany',
+      component: asyncComponent(() => import('container/basis/insuranceCompany/insuranceCompany'))
+  },
+
+  //  保险公司管理 新增,修改
+  {
+      path: '/basis/insuranceCompany/addedit',
+      component: asyncComponent(() => import('container/basis/insuranceCompany/insuranceCompany-addedit'))
+  },
+
+  //  收款账户管理
+  {
+      path: '/basis/receivables',
+      component: asyncComponent(() => import('container/basis/receivables/receivables'))
+  },
+
+  //  收款账户管理 新增，修改
+  {
+      path: '/basis/receivables/addedit',
+      component: asyncComponent(() => import('container/basis/receivables/receivables-addedit'))
+  },
+
+  //  身份证区域表
+  {
+      path: '/basis/idCardArea',
+      component: asyncComponent(() => import('container/basis/idCardArea/idCardArea'))
+  },
+
+  //  身份证区域表 新增，修改
+  {
+      path: '/basis/idCardArea/addedit',
+      component: asyncComponent(() => import('container/basis/idCardArea/idCardArea-addedit'))
+  },
+
+  //  全国省份编号
+  {
+      path: '/basis/provinceNum',
+      component: asyncComponent(() => import('container/basis/provinceNum/provinceNum'))
+  },
+
+  //  全国省份编号 新增，修改
+  {
+      path: '/basis/provinceNum/addedit',
+      component: asyncComponent(() => import('container/basis/provinceNum/provinceNum-addedit'))
+  },
+
+  //  经销商管理
+  {
+      path: '/basis/dealer',
+      component: asyncComponent(() => import('container/basis/dealer/dealer'))
+  },
+
+  //  经销商管理 新增，修改
+  {
+      path: '/basis/dealer/addedit',
+      component: asyncComponent(() => import('container/basis/dealer/dealer-addedit'))
+  },
+
+  //  经销商管理 审核
+  {
+      path: '/basis/dealer/check',
+      component: asyncComponent(() => import('container/basis/dealer/dealer-check'))
+  },
+    //  统计分析模块
   //  余额明细
   {
     path: '/statistic/balancedetail',
