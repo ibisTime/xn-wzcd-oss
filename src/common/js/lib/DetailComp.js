@@ -1143,7 +1143,7 @@ export default class DetailComponent extends React.Component {
     getLabel(item) {
         return (
             <span
-                className={item.required && item.type === 'textarea' && !item.normalArea ? 'ant-form-item-required' : ''}>
+                className={(item.required && ((item.type === 'textarea' && !item.normalArea) || (item.type === 'o2m'))) ? 'ant-form-item-required' : ''}>
         {item.title + (item.single ? '(单)' : '')}
                 {item.help
                     ? <Tooltip title={item.help}>
