@@ -653,6 +653,18 @@ const ROUTES = [
       path: '/basis/dealer/check',
       component: asyncComponent(() => import('container/basis/dealer/dealer-check'))
   },
+
+  //  我司贷款成数比例
+  {
+      path: '/basis/loanPercent',
+      component: asyncComponent(() => import('container/basis/loanPercent/loanPercent'))
+  },
+
+  //  我司贷款成数比例 新增，修改
+  {
+      path: '/basis/loanPercent/addedit',
+      component: asyncComponent(() => import('container/basis/loanPercent/loanPercent-addedit'))
+  },
     //  统计分析模块
   //  余额明细
   {
@@ -704,6 +716,48 @@ const ROUTES = [
   {
       path: '/loan/creditCheck',
       component: asyncComponent(() => import('container/loan/creditCheck/creditCheck'))
+  },
+
+  //  放款审核
+  {
+    path: '/loan/bankMoney',
+    component: asyncComponent(() => import('container/loan/bankMoney/bankMoney'))
+  },
+
+  //  放款审核 详情
+  {
+    path: '/loan/bankMoney/addedit',
+    component: asyncComponent(() => import('container/loan/bankMoney/bankMoney-addedit'))
+  },
+
+  //  放款审核 确认提交银行
+  {
+    path: '/loan/bankMoney/apply',
+    component: asyncComponent(() => import('container/loan/bankMoney/bankMoney-apply'))
+  },
+
+  //  放款审核 确认收款
+  {
+    path: '/loan/bankMoney/receive',
+    component: asyncComponent(() => import('container/loan/bankMoney/bankMoney-receive'))
+  },
+
+  //  车辆抵押
+  {
+    path: '/loan/mortgage',
+    component: asyncComponent(() => import('container/loan/mortgage/mortgage'))
+  },
+
+  //  车辆抵押 详情
+  {
+    path: '/loan/mortgage/addedit',
+    component: asyncComponent(() => import('container/loan/mortgage/mortgage-addedit'))
+  },
+
+  //  车辆抵押 确认提交银行
+  {
+    path: '/loan/mortgage/apply',
+    component: asyncComponent(() => import('container/loan/mortgage/mortgage-apply'))
   },
 
   //  贷前工具

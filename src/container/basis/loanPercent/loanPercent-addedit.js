@@ -34,32 +34,33 @@ class loanPercentAddedit extends React.Component {
     render() {
         const fields = [{
             title: '类型',
-            field: 'companyCode',
+            field: 'type',
             type: 'select',
-            key: ''
+            data: [{
+                key: '1',
+                value: '新车'
+            }, {
+                key: '2',
+                value: '二手车'
+            }],
+            keyName: 'key',
+            valueName: 'value'
         }, {
             title: '最低贷款成数',
-            field: 'bankName'
+            field: 'minCs'
         }, {
             title: '最高贷款成数',
-            field: 'subbranch'
+            field: 'maxCs'
+        }, {
+            title: '备注',
+            field: 'remark'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            editCode: 632002,
-            detailCode: 632006,
-            beforeSubmit: (param) => {
-                let data = this.props.selectData;
-                let len = data.bankCode.length;
-                for(var i = 0; i < len; i++) {
-                    if(param.bankCode === data.bankCode[i].bankCode) {
-                        param.bankName = data.bankCode[i].bankName;
-                    }
-                }
-                return param;
-            }
+            editCode: 632080,
+            detailCode: 632086
         });
     }
 }
