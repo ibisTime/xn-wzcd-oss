@@ -212,6 +212,7 @@ import { basisLoanPercentAddedit } from './redux/basis/loanPercent-addedit';
  */
 // 预算单申请
 import { loanBudget } from './redux/loan/budget';
+import { loanBudgetAddedit } from './redux/loan/budget-addedit';
 
 // 发起征信查询
 import { loanCreditStart } from './redux/loan/creditStart';
@@ -304,6 +305,19 @@ import { transmitCheck } from './redux/transmit/transmit-check';
 /**
  * 贷后工具
  */
+//  代偿预算单 + 详情 + 申请 + 财务经理审核 + 制单
+import { postloantoolsBudget } from './redux/postloantools/budget';
+import { postloantoolsBudgetAddEdit } from './redux/postloantools/budget-addedit';
+import { postloantoolsBudgetApply } from './redux/postloantools/budget-apply';
+import { postloantoolsBudgetCheck } from './redux/postloantools/budget-check';
+import { postloantoolsBudgetMakebill } from './redux/postloantools/budget-makebill';
+
+//  代偿审核 + 详情 + 审核 + 确认放款
+import { postloantoolsCompensatory } from './redux/postloantools/compensatory';
+import { postloantoolsCompensatoryAddEdit } from './redux/postloantools/compensatory-addedit';
+import { postloantoolsCompensatoryCheck } from './redux/postloantools/compensatory-check';
+import { postloantoolsBudgetCertain } from './redux/postloantools/compensatory-certain';
+
 //  GPS申领 + 详情 + 申领 + 审核
 import { postloantoolsApplyGps } from './redux/postloantools/applyGps';
 import { postloantoolsApplyGpsAddedit } from './redux/postloantools/applyGps-addedit';
@@ -555,6 +569,7 @@ export default combineReducers({
   bizredListPay,
   bizredListEnter,
   loanBudget,
+  loanBudgetAddedit,
   loanCreditStart,
   loanCreditStartAddedit,
   loanCreditEntering,
@@ -606,6 +621,14 @@ export default combineReducers({
   transmitAddedit,
   transmitSend,
   transmitCheck,
+  postloantoolsBudget,
+  postloantoolsBudgetAddEdit,
+  postloantoolsBudgetApply,
+  postloantoolsBudgetCheck,
+  postloantoolsBudgetMakebill,
+  postloantoolsCompensatory,
+  postloantoolsCompensatoryAddEdit,
+  postloantoolsCompensatoryCheck,
   postloantoolsApplyGps,
   postloantoolsApplyGpsAddedit,
   postloantoolsApplyGpsApply,

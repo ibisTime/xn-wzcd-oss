@@ -676,7 +676,7 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loan/budget/budget'))
   },
 
-  // 预算单申请 详情111
+  // 预算单申请 详情
   {
       path: '/loan/budget/addedit',
       component: asyncComponent(() => import('container/loan/budget-addedit/budget-addedit'))
@@ -1198,6 +1198,54 @@ const ROUTES = [
     component: asyncComponent(() => import('container/transmit/transmit/transmit-check'))
   },
   //  贷后工具
+  //  代偿预算单
+  {
+      path: '/postloantools/budget',
+      component: asyncComponent(() => import('container/postloantools/budget/budget'))
+  },
+
+  //  代偿预算单 详情
+  {
+      path: '/postloantools/budget/addedit',
+      component: asyncComponent(() => import('container/postloantools/budget/budget-addedit'))
+  },
+
+  //  代偿预算单 结清单申请
+  {
+      path: '/postloantools/budget/apply',
+      component: asyncComponent(() => import('container/postloantools/budget/budget-apply'))
+  },
+
+  //  代偿预算单 财务经理审核
+  {
+      path: '/postloantools/budget/check',
+      component: asyncComponent(() => import('container/postloantools/budget/budget-check'))
+  },
+
+  //  代偿审核
+  {
+      path: '/postloantools/compensatory',
+      component: asyncComponent(() => import('container/postloantools/compensatory/compensatory'))
+  },
+
+  //  代偿审核 详情
+  {
+      path: '/postloantools/compensatory/addedit',
+      component: asyncComponent(() => import('container/postloantools/compensatory/compensatory-addedit'))
+  },
+
+  //  代偿审核 确认结清
+  {
+      path: '/postloantools/compensatory/certain',
+      component: asyncComponent(() => import('container/postloantools/compensatory/compensatory-certain'))
+  },
+
+  //  代偿审核 财务经理审核
+  {
+      path: '/postloantools/compensatory/check',
+      component: asyncComponent(() => import('container/postloantools/compensatory/compensatory-check'))
+  },
+
   //  gps申领
   {
     path: '/postloantools/applyGps',

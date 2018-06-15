@@ -12,7 +12,8 @@ import {
 import {
     showWarnMsg,
     showSucMsg,
-    getRoleCode
+    getRoleCode,
+    dateTimeFormat
 } from 'common/js/util';
 import {
     listWrapper
@@ -41,6 +42,12 @@ import {
 class CreditStart extends React.Component {
     render() {
         const fields = [{
+            title: '业务编号',
+            field: 'code'
+        }, {
+            title: '业务公司',
+            field: 'companyName'
+        }, {
             title: '客户姓名',
             field: 'userName',
             render: (e, t) => {
@@ -48,11 +55,7 @@ class CreditStart extends React.Component {
             }
         }, {
             title: '贷款银行',
-            field: 'loanBankCode',
-            type: 'select',
-            listCode: 802116,
-            keyName: 'bankCode',
-            valueName: 'bankName'
+            field: 'loanBankName'
         }, {
             title: '手机号',
             field: 'mobile',
@@ -65,16 +68,23 @@ class CreditStart extends React.Component {
             render: (e, t) => {
                 return (t.creditUser ? t.creditUser.idNo : '-');
             }
-        // }, {
-        //     title: '业务员',
-        //     field: 'salesman',
-        //     render: (e, t) => {
-        //         return (t.creditUser ? t.creditUser.idNo : '-');
-        //     }
+        }, {
+            title: '业务员',
+            field: 'salesmanName'
         }, {
             title: '申请日期',
             field: 'applyDatetime',
-            type: 'datetime'
+            type: 'date',
+            rangedate: ['applyDatetimeStart', 'applyDatetimeEnd'],
+            render: dateTimeFormat,
+            search: true
+        }, {
+            title: '当前节点',
+            field: 'curNodeCode',
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildList({
             fields,
@@ -83,6 +93,9 @@ class CreditStart extends React.Component {
                 roleCode: getRoleCode()
             },
             btnEvent: {
+                add: (selectedRowKeys, selectedRows) => {
+                    this.props.history.push(`/loan/creditStart/addedit?isAddedit=1`);
+                },
                 checkSalesman: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
