@@ -1251,6 +1251,12 @@ export default class DetailComponent extends React.Component {
                 message: '请输入合法的银行卡号'
             });
         }
+        if (item.amount) {
+            rules.push({
+                pattern: /^\d+(\.\d{1,2})?$/,
+                message: '金额必须>0，且小数点后最多2位'
+            });
+        }
         return rules;
     }
 }
