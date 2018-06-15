@@ -722,11 +722,8 @@ export default combineReducers({
   basisDealer,
   basisDealerAddedit,
   basisDealerCheck,
-<<<<<<< .merge_file_a01936
   basisLoanPercent,
-  basisLoanPercentAddedit
-=======
+  basisLoanPercentAddedit,
   basisBank,
   basisBankAddEdit
->>>>>>> .merge_file_a07156
 });
