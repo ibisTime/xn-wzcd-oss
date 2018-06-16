@@ -12,6 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
   DetailWrapper
 } from 'common/js/build-detail';
@@ -36,38 +37,38 @@ class CardEnter extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'companyCode',
+            field: 'customerName',
             select: true,
             readonly: true
         }, {
             title: '贷款金额',
-            field: 'receiptAccount',
+            field: 'loanAmount',
             readonly: true,
             amount: true
         }, {
             title: '贷款银行',
-            field: 'receiptAccount',
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '信用卡号',
-            field: 'receiptAccount',
+            field: 'bankCardNumber',
             amount: true,
             required: true
         }, {
             title: '备注',
-            field: 'remark'
+            field: 'makeCardRemark'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632106,
+            detailCode: 632146,
             buttons: [{
                 title: '确认',
                 check: true,
                 handler: (params) => {
                     this.props.doFetching();
-                    fetch(632102, params).then(() => {
+                    fetch(632211, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {

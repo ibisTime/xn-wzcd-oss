@@ -922,6 +922,12 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loanstools/card/card-apply'))
   },
 
+  //  制卡 录入
+  {
+      path: '/loanstools/card/enter',
+      component: asyncComponent(() => import('container/loanstools/card/card-enter'))
+  },
+
   //  发保和
   {
       path: '/loanstools/invoice',

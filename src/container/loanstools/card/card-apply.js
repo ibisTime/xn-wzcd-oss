@@ -12,6 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
@@ -37,40 +38,40 @@ class CancelApply extends React.Component {
         readonly: true
     }, {
         title: '客户姓名',
-        field: 'companyCode',
+        field: 'customerName',
         readonly: true
     }, {
         title: '银行卡号',
-        field: 'budgetAmount',
+        field: 'bankCardNumber',
         readonly: true
     }, {
         title: '制卡银行',
-        field: 'receiptAccount',
+        field: '1',
         readonly: true
     }, {
         title: '状态',
-        field: 'status',
+        field: 'makeCardStatus',
         readonly: true
     }, {
-        title: '跟新人',
-        field: 'useDatetime',
+        title: '更新人',
+        field: 'makeCardOperator',
         readonly: true
     }, {
         title: '备注',
-        field: 'remark',
-        readonly: true
+        field: 'makeCardRemark'
     }];
     return this.props.buildDetail({
       fields,
       code: this.code,
       view: this.view,
-      detailCode: 632106,
+      detailCode: 632146,
       buttons: [{
         title: '确认',
         check: true,
         handler: (params) => {
           this.props.doFetching();
-          fetch(632100, params).then(() => {
+          params.operator = getUserId();
+          fetch(632210, params).then(() => {
             showSucMsg('操作成功');
             setTimeout(() => {
               this.props.history.go(-1);

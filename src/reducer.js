@@ -211,13 +211,21 @@ import { loanCreditEntering } from './redux/loan/creditEntering';
 // 准入审查
 import { loanCreditCheck } from './redux/loan/creditCheck';
 
+//  发起垫资 + 详情 + 确认用款单 + 区域总经理审查 + 省分公司总经理审查 + 申请撤销
+import { loanAdvMoney } from './redux/loan/advMoney';
+import { loanAdvMoneyAddedit } from './redux/loan/advMoney-addedit';
+import { loanAdvMoneyApply } from './redux/loan/advMoney-apply';
+import { loanAdvMoneyAreaCheck } from './redux/loan/advMoney-areaCheck';
+import { loanAdvMoneyCompCheck } from './redux/loan/advMoney-compCheck';
+import { loanAdvMoneyRevoke } from './redux/loan/advMoney-revoke';
+
 //  放款审核 + 详情 + 确认提交银行 + 确认收款
 import { loanBankMoney } from './redux/loan/bankMoney';
 import { loanBankMoneyAddedit } from './redux/loan/bankMoney-addedit';
 import { loanBankMoneyApply } from './redux/loan/bankMoney-apply';
 import { loanBankMoneyReceive } from './redux/loan/bankMoney-receive';
 
-//  放款审核 + 详情 + 确认提交银行 + 抵押完成
+//  车辆抵押 + 详情 + 确认提交银行 + 抵押完成
 import { loanMortgage } from './redux/loan/mortgage';
 import { loanMortgageAddedit } from './redux/loan/mortgage-addedit';
 import { loanMortgageApply } from './redux/loan/mortgage-apply';
@@ -752,5 +760,11 @@ export default combineReducers({
   loaNarchivesAddedit,
   loaNarchivesEnter,
   basisSubbranch,
-  basisSubbranchAddEdit
+  basisSubbranchAddEdit,
+  loanAdvMoney,
+  loanAdvMoneyAddedit,
+  loanAdvMoneyApply,
+  loanAdvMoneyAreaCheck,
+  loanAdvMoneyCompCheck,
+  loanAdvMoneyRevoke
 });
