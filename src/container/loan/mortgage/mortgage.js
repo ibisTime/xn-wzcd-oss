@@ -74,8 +74,8 @@ class Mortgage extends React.Component {
             field: 'loanAmount',
             amount: true
         }, {
-            title: '贷款期限(年)',
-            filed: '9'
+            title: '贷款期限(月)',
+            filed: 'loanPeriods'
         }, {
             title: '业务员名称',
             filed: 'saleUserName'
@@ -84,10 +84,11 @@ class Mortgage extends React.Component {
             field: 'bankReceiptName'
         }, {
             title: '更新人',
-            field: '3'
+            field: 'operator'
         }, {
             title: '更新时间',
-            field: '3'
+            field: 'operateDatetime',
+            type: 'date'
         }, {
             title: '当前节点',
             field: 'curNodeCode',

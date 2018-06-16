@@ -133,7 +133,8 @@ export function getListProduct() {
 }
 // 抵押完成
 export function done(code) {
-  return fetch(632181, {
-    code
+  return fetch(632191, {
+    code,
+    operator: getUserId()
   });
 }

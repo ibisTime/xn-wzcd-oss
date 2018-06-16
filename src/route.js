@@ -760,6 +760,24 @@ const ROUTES = [
     component: asyncComponent(() => import('container/loan/mortgage/mortgage-apply'))
   },
 
+  //  车贷入档
+  {
+    path: '/loan/archives',
+    component: asyncComponent(() => import('container/loan/archives/archives'))
+  },
+
+  //  车贷入档 详情
+  {
+    path: '/loan/archives/addedit',
+    component: asyncComponent(() => import('container/loan/archives/archives-addedit'))
+  },
+
+  //  车贷入档 入档补录
+  {
+    path: '/loan/archives/enter',
+    component: asyncComponent(() => import('container/loan/archives/archives-enter'))
+  },
+
   //  贷前工具
   //  垫资请款预算单
   {

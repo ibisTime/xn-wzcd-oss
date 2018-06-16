@@ -8,7 +8,7 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/loan/bankMoney';
+} from '@redux/loan/archives';
 import {
     listWrapper
 } from 'common/js/build-list';
@@ -24,13 +24,12 @@ import {
     Modal
 } from 'antd';
 import {
-    lowerFrame,
-    onShelf
+    done
 } from 'api/biz';
 
 @listWrapper(
     state => ({
-        ...state.loanBankMoney,
+        ...state.loaNarchives,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -43,7 +42,7 @@ import {
         setSearchData
     }
 )
-class BankMoney extends React.Component {
+class Archives extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
@@ -61,12 +60,18 @@ class BankMoney extends React.Component {
             valueName: 'name',
             required: true
         }, {
-            title: '汽车经销商',
-            field: 'carDealerName'
-        }, {
             title: '客户姓名',
             field: 'customerName',
             search: true
+        }, {
+            title: '手机号',
+            field: '1'
+        }, {
+            title: '合同编号',
+            field: 'pledgeContractCode'
+        }, {
+            title: '品牌型号',
+            field: 'carBrand'
         }, {
             title: '贷款银行',
             field: 'loanBankName'
@@ -75,25 +80,15 @@ class BankMoney extends React.Component {
             field: 'loanAmount',
             amount: true
         }, {
-            title: '放款日期',
-            field: 'bankFkDatetime',
-            type: 'date',
-            nowrap: true
-        }, {
-            title: '收款银行',
-            field: 'bankReceiptName'
-        }, {
-            title: '收款账号',
-            field: 'bankReceiptNumber',
-            nowrap: true
+            title: '业务员名称',
+            filed: 'saleUserName'
         }, {
             title: '更新人',
             field: 'operatorName'
         }, {
             title: '更新时间',
             field: 'operateDatetime',
-            type: 'date',
-            nowrap: true
+            type: 'date'
         }, {
             title: '当前节点',
             field: 'curNodeCode',
@@ -107,27 +102,18 @@ class BankMoney extends React.Component {
             fields,
             pageCode: 632145,
             btnEvent: {
-              apply: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loan/bankMoney/apply?code=${selectedRowKeys[0]}`);
+                entering: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loan/archives/enter?code=${selectedRowKeys[0]}`);
+                    }
                 }
-              },
-              receive: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loan/bankMoney/receive?code=${selectedRowKeys[0]}`);
-                }
-              }
             }
         });
     }
 }
 
-export default BankMoney;
+export default Archives;

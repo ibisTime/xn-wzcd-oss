@@ -40,7 +40,10 @@ class BankMoneyApply extends React.Component {
             readonly: true
         }, {
             title: '身份证',
-            field: '11',
+            field: 'idNo',
+            render: (v, d) => {
+                return d.user.idNo;
+            },
             readonly: true
         }, {
             title: '贷款金额',
