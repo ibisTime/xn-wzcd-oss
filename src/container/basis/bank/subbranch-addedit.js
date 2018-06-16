@@ -40,7 +40,12 @@ class subbranchAddedit extends React.Component {
             listCode: 632037,
             keyName: 'bankCode',
             valueName: '{{bankName.DATA}}-{{bankCode.DATA}}',
-            required: true
+            required: true,
+            readonly: true,
+            formatter: () => {
+                let bank = this.props.selectData.bankCode.find(v => v.code === this.bankCode);
+                return bank.bankName + '-' + bank.bankCode;
+            }
         }, {
             title: '支行简称',
             field: 'abbrName',
@@ -61,7 +66,7 @@ class subbranchAddedit extends React.Component {
             mobile: true
         }, {
             title: '邮编',
-            field: 'bankClient',
+            field: 'postCode',
             number: true
         }, {
             title: '银行委托人',
@@ -99,19 +104,15 @@ class subbranchAddedit extends React.Component {
         }];
         return this.props.buildDetail({
             fields,
+            key: 'id',
             code: this.code,
             view: this.view,
-            addCode: 632030,
-            editCode: 632032,
-            detailCode: 632036,
+            addCode: 632050,
+            editCode: 632052,
+            detailCode: 632056,
             beforeSubmit: (param) => {
-                if (!param.bankRateList) {
-                    showWarnMsg('至少新增一条利率明细！');
-                    return;
-                }
-                let bank = this.props.selectData.bankCode.find(v => v.bankCode === param.bankCode);
-                param.bankName = bank.bankName;
                 param.updater = getUserId();
+                param.bankCode = this.bankCode;
                 return param;
             }
         });
