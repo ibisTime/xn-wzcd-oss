@@ -80,21 +80,6 @@ import { bizCarLoanBusiness } from './redux/biz/carLoanBusiness';
 import { bizCarLoanBusinessAddedit } from '@redux/biz/carLoanBusiness-addedit';
 import { bizCarLoanBusinessCheck } from '@redux/biz/carLoanBusiness-check';
 
-//  银行放款 + 详情 + 录入抵押信息 + 确认提交银行 + 低压完成
-import { bizBankMoney } from './redux/biz/bankMoney';
-import { bizBankMoneyAddEdit } from './redux/biz/bankMoney-addedit';
-import { bizBankMoneySettle } from './redux/biz/bankMoney-settle';
-import { bizBankMoneySub } from './redux/biz/bankMoney-sub';
-import { bizBankMoneyCertain } from './redux/biz/bankMoney-certain';
-import { bizBankMoneyEnter } from './redux/biz/bankMoney-enter';
-
-//  车辆抵押 + 详情 + 车辆落户 + 确认提交银行 + 确认收款
-import { bizMortgage } from './redux/biz/mortgage';
-import { bizMortgageAddEdit } from './redux/biz/mortgage-addedit';
-import { bizMortgageEnter } from './redux/biz/mortgage-enter';
-import { bizMortgageSub } from './redux/biz/mortgage-sub';
-import { bizMortgageCertain } from './redux/biz/mortgage-certain';
-
 //  档案入党 + 详情 + 确认入党
 import { bizArchives } from './redux/biz/archives';
 import { bizArchivesAddEdit } from './redux/biz/archives-addedit';
@@ -225,6 +210,22 @@ import { loanCreditEntering } from './redux/loan/creditEntering';
 
 // 准入审查
 import { loanCreditCheck } from './redux/loan/creditCheck';
+
+//  放款审核 + 详情 + 确认提交银行 + 确认收款
+import { loanBankMoney } from './redux/loan/bankMoney';
+import { loanBankMoneyAddedit } from './redux/loan/bankMoney-addedit';
+import { loanBankMoneyApply } from './redux/loan/bankMoney-apply';
+import { loanBankMoneyReceive } from './redux/loan/bankMoney-receive';
+
+//  放款审核 + 详情 + 确认提交银行 + 抵押完成
+import { loanMortgage } from './redux/loan/mortgage';
+import { loanMortgageAddedit } from './redux/loan/mortgage-addedit';
+import { loanMortgageApply } from './redux/loan/mortgage-apply';
+
+//  车贷入档 + 详情 + 入档补录
+import { loaNarchives } from './redux/loan/archives';
+import { loaNarchivesAddedit } from './redux/loan/archives-addedit';
+import { loaNarchivesEnter } from './redux/loan/archives-enter';
 
 /**
  * 贷前工具
@@ -550,17 +551,6 @@ export default combineReducers({
   bizRefundListAddedit,
   bizHistoryBusinessManageAddedit,
   bizBlackListAddedit,
-  bizBankMoney,
-  bizBankMoneyAddEdit,
-  bizBankMoneySettle,
-  bizBankMoneySub,
-  bizBankMoneyCertain,
-  bizBankMoneyEnter,
-  bizMortgage,
-  bizMortgageAddEdit,
-  bizMortgageEnter,
-  bizMortgageSub,
-  bizMortgageCertain,
   bizArchives,
   bizArchivesAddEdit,
   bizArchivesCertain,
@@ -751,6 +741,16 @@ export default combineReducers({
   basisLoanPercentAddedit,
   basisBank,
   basisBankAddEdit,
+  loanBankMoney,
+  loanBankMoneyAddedit,
+  loanBankMoneyApply,
+  loanBankMoneyReceive,
+  loanMortgage,
+  loanMortgageAddedit,
+  loanMortgageApply,
+  loaNarchives,
+  loaNarchivesAddedit,
+  loaNarchivesEnter,
   basisSubbranch,
   basisSubbranchAddEdit
 });

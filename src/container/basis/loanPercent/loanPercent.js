@@ -41,19 +41,27 @@ class loanPercent extends React.Component {
     render() {
         const fields = [{
             title: '类型',
-            field: 'companyCode',
+            field: 'type',
             type: 'select',
-            key: ''
+            data: [{
+                key: '1',
+                value: '新车'
+            }, {
+                key: '2',
+                value: '二手车'
+            }],
+            keyName: 'key',
+            valueName: 'value'
         }, {
             title: '最低贷款成数',
-            field: 'bankName'
+            field: 'minCs'
         }, {
             title: '最高贷款成数',
-            field: 'subbranch'
+            field: 'maxCs'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632005
+            pageCode: 632085
         });
     }
 }
