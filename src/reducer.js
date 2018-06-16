@@ -219,6 +219,13 @@ import { loanAdvMoneyAreaCheck } from './redux/loan/advMoney-areaCheck';
 import { loanAdvMoneyCompCheck } from './redux/loan/advMoney-compCheck';
 import { loanAdvMoneyRevoke } from './redux/loan/advMoney-revoke';
 
+//  垫资审核 + 总公司制单 + 分公司制单 + 确认打款车行 + 确认打款分公司
+import { loanMoneyCheck } from './redux/loan/moneyCheck';
+import { loanMoneyCheckAllBill } from './redux/loan/moneyCheck-allBill';
+import { loanMoneyCheckCompBill } from './redux/loan/moneyCheck-compBill';
+import { loanMoneyCheckPayCar } from './redux/loan/moneyCheck-payCar';
+import { loanMoneyCheckPayComp } from './redux/loan/moneyCheck-payComp';
+
 //  放款审核 + 详情 + 确认提交银行 + 确认收款
 import { loanBankMoney } from './redux/loan/bankMoney';
 import { loanBankMoneyAddedit } from './redux/loan/bankMoney-addedit';
@@ -766,5 +773,10 @@ export default combineReducers({
   loanAdvMoneyApply,
   loanAdvMoneyAreaCheck,
   loanAdvMoneyCompCheck,
-  loanAdvMoneyRevoke
+  loanAdvMoneyRevoke,
+  loanMoneyCheck,
+  loanMoneyCheckAllBill,
+  loanMoneyCheckCompBill,
+  loanMoneyCheckPayCar,
+  loanMoneyCheckPayComp
 });

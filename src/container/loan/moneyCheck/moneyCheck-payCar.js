@@ -6,7 +6,7 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/loan/advMoney-apply';
+} from '@redux/loan/moneyCheck-payCar';
 import {
     getQueryString,
     getUserId,
@@ -18,7 +18,7 @@ import {
 } from 'common/js/build-detail';
 
 @DetailWrapper(
-    state => state.loanAdvMoneyApply, {
+    state => state.loanAdvMoneyPayCar, {
         initStates,
         doFetching,
         cancelFetching,
@@ -27,7 +27,7 @@ import {
         restore
     }
 )
-class AdvMoneyApply extends React.Component {
+class AdvMoneyPayCar extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -43,28 +43,12 @@ class AdvMoneyApply extends React.Component {
             field: 'code',
             readonly: true
         }, {
-            title: '业务公司',
-            field: 'companyCode',
-            listCode: 630106,
-            params: {
-                typeList: [1]
-            },
-            type: 'select',
-            keyName: 'code',
-            valueName: 'name',
+            title: '身份证',
+            field: '22',
             readonly: true
         }, {
-            title: '汽车经销商',
-            field: 'carDealerName',
-            readonly: true
-        }, {
-            title: '用款小写',
+            title: '贷款金额',
             field: 'loanAmount',
-            amount: true,
-            readonly: true
-        }, {
-            title: '用款大写',
-            field: '222',
             amount: true,
             readonly: true
         }, {
@@ -72,31 +56,36 @@ class AdvMoneyApply extends React.Component {
             field: 'loanBankName',
             readonly: true
         }, {
-            title: '是否垫资',
-            filed: 'isAdvanceFund',
-            type: 'select',
-            data: [{
-                key: '0',
-                value: '是'
-            }, {
-                key: '1',
-                value: '否'
-            }],
-            keyName: 'key',
-            valueName: 'value',
+            title: '应退按揭款',
+            field: '3333',
+            amount: true,
+            readonly: true
+        }, {
+            title: '垫资金额',
+            field: 'advanceFundAmount',
+            amount: true,
             required: true
         }, {
-            title: '收款单位名称',
-            filed: '111',
-            readonly: true
+            title: '垫资日期',
+            field: 'advanceFundDatetime',
+            type: 'date',
+            required: true
         }, {
-            title: '收款银行账号',
-            field: 'bankReceiptNumber',
-            readonly: true
+            title: '付款银行',
+            field: '3333',
+            type: 'select',
+            listCode: 632037,
+            keyName: 'bankCode',
+            valueName: 'bankName',
+            required: true
         }, {
-            title: '收款银行',
-            field: 'bankReceiptName',
-            readonly: true
+            title: '付款凭证',
+            field: 'billPdf',
+            type: 'img',
+            required: true
+        }, {
+            title: '意见说明',
+            field: 'note'
         }];
         return this.props.buildDetail({
             fields,
@@ -104,12 +93,12 @@ class AdvMoneyApply extends React.Component {
             view: this.view,
             detailCode: 632186,
             buttons: [{
-              title: '发送',
+              title: '确认',
               check: true,
               handler: (params) => {
                 this.props.doFetching();
                 params.operator = getUserId();
-                fetch(632170, params).then(() => {
+                fetch(632175, params).then(() => {
                   showSucMsg('操作成功');
                   setTimeout(() => {
                     this.props.history.go(-1);
@@ -127,4 +116,4 @@ class AdvMoneyApply extends React.Component {
     }
 }
 
-export default AdvMoneyApply;
+export default AdvMoneyPayCar;
