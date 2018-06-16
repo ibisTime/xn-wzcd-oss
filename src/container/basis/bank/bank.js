@@ -20,6 +20,7 @@ import {
     lowerFrame,
     onShelf
 } from 'api/biz';
+import fetch from 'common/js/fetch';
 
 @listWrapper(
     state => ({
