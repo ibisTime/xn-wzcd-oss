@@ -186,9 +186,11 @@ import { basisInsuranceCompanyAddedit } from './redux/basis/insuranceCompany-add
 import { basisReceivables } from './redux/basis/receivables';
 import { basisReceivablesAddedit } from './redux/basis/receivables-addedit';
 
-//  银行管理 + 详情 + 修改 + 删除
+//  银行管理 + 详情 + 修改 + 删除 + 支行管理
 import { basisBank } from './redux/basis/bank';
 import { basisBankAddEdit } from './redux/basis/bank-addedit';
+import { basisSubbranch } from './redux/basis/subbranch';
+import { basisSubbranchAddEdit } from './redux/basis/subbranch-addedit';
 
 //  身份证区域表 + 新增 + 修改 + 删除
 import { basisIdCardArea } from './redux/basis/idCardArea';
@@ -748,5 +750,7 @@ export default combineReducers({
   basisLoanPercent,
   basisLoanPercentAddedit,
   basisBank,
-  basisBankAddEdit
+  basisBankAddEdit,
+  basisSubbranch,
+  basisSubbranchAddEdit
 });

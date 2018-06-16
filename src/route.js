@@ -612,6 +612,17 @@ const ROUTES = [
       component: asyncComponent(() => import('container/basis/bank/bank-addedit'))
   },
 
+  //  银行管理
+  {
+      path: '/basis/bank/subbranch',
+      component: asyncComponent(() => import('container/basis/bank/subbranch'))
+  },
+  //  银行管理详情 + 修改
+  {
+      path: '/basis/bank/subbranch/addedit',
+      component: asyncComponent(() => import('container/basis/bank/subbranch-addedit'))
+  },
+
   //  身份证区域表
   {
       path: '/basis/idCardArea',

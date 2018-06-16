@@ -31,6 +31,23 @@ class BudgetAddedit extends React.Component {
         this.isCheckDirector = !!getQueryString('isCheckDirector', this.props.location.search);
     }
 
+    // 银行贷款成数：   (贷款金额+服务费) / 发票价格
+    getBankLoanNum = (params) => {
+        let fee = parseFloat(params.fee);
+        let loanAmount = parseFloat(params.loanAmount);
+        let invoicePrice = parseFloat(params.invoicePrice);
+        let feeTotal = 0;
+
+        if (fee && loanAmount && invoicePrice) {
+            feeTotal = (loanAmount + fee) / invoicePrice;
+        }else {
+            feeTotal = 0;
+        }
+        this.props.setPageData({
+            bankLoanNum: moneyFormat(feeTotal * 1000)
+        });
+    }
+
     // 收客户手续费合计：履约保证金+担保风险金+GPS收费+杂费
     getCustomerFeeTotal = (params) => {
         let lyAmount = parseFloat(params.lyAmount);
@@ -41,10 +58,12 @@ class BudgetAddedit extends React.Component {
 
         if (lyAmount && fxAmount && gpsFee && otherFee) {
             feeTotal = lyAmount + fxAmount + gpsFee + otherFee;
-            this.props.setPageData({
-                customerFeeTotal: moneyFormat(feeTotal * 1000)
-            });
+        }else{
+            feeTotal = 0;
         }
+        this.props.setPageData({
+            customerFeeTotal: moneyFormat(feeTotal * 1000)
+        });
     }
 
     render() {
@@ -107,7 +126,14 @@ class BudgetAddedit extends React.Component {
                     title: '发票价格',
                     field: 'invoicePrice',
                     amount: true,
-                    required: true
+                    required: true,
+                    onChange: (v) => {
+                        this.getBankLoanNum({
+                            fee: this.props.form.getFieldValue('fee'),
+                            loanAmount: this.props.form.getFieldValue('loanAmount'),
+                            invoicePrice: v
+                        });
+                    }
                 }],
                 [{
                     title: '购车途径',
@@ -126,7 +152,14 @@ class BudgetAddedit extends React.Component {
                     title: '贷款金额',
                     field: 'loanAmount',
                     amount: true,
-                    required: true
+                    required: true,
+                    onChange: (v) => {
+                        this.getBankLoanNum({
+                            fee: this.props.form.getFieldValue('fee'),
+                            loanAmount: this.props.form.getFieldValue('loanAmount'),
+                            invoicePrice: v
+                        });
+                    }
                 }],
                 [{
                     title: '是否需要贷前调查',
@@ -168,7 +201,6 @@ class BudgetAddedit extends React.Component {
                     valueName: 'value',
                     required: true
                 }, {
-                    // 服务费/贷款金额+银行利率
                     title: '综合利率',
                     field: 'globalRate',
                     readonly: true,
@@ -177,7 +209,14 @@ class BudgetAddedit extends React.Component {
                     title: '服务费',
                     field: 'fee',
                     amount: true,
-                    required: true
+                    required: true,
+                    onChange: (v) => {
+                        this.getBankLoanNum({
+                            fee: this.props.form.getFieldValue('fee'),
+                            loanAmount: this.props.form.getFieldValue('loanAmount'),
+                            invoicePrice: v
+                        });
+                    }
                 }],
                 [{
                     title: '厂家贴息',
