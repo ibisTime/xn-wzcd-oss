@@ -187,7 +187,7 @@ class CreditStartAddedit extends React.Component {
                 title: '退回重新征信',
                 check: true,
                 handler: (params) => {
-                    params.approveResult = '1';
+                    params.approveResult = '0';
                     params.operator = getUserId();
                     this.props.doFetching();
                     fetch(632113, params).then(() => {
@@ -262,7 +262,7 @@ class CreditStartAddedit extends React.Component {
                 title: '不通过',
                 check: true,
                 handler: (params) => {
-                    params.approveResult = '1';
+                    params.approveResult = '0';
                     params.operator = getUserId();
                     this.props.doFetching();
                     fetch(632114, params).then(() => {

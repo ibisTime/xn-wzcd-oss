@@ -17,11 +17,6 @@ import {
     showSucMsg
 } from 'common/js/util';
 import {
-    Button,
-    Upload,
-    Modal
-} from 'antd';
-import {
     lowerFrame,
     onShelf
 } from 'api/biz';
@@ -44,11 +39,11 @@ import {
 class Bank extends React.Component {
     render() {
         const fields = [{
+            title: '银行编号',
+            field: 'bankCode'
+        }, {
             title: '名称',
             field: 'bankName'
-        }, {
-            title: '支行',
-            field: 'subbranch'
         }, {
             title: '最新修改人',
             field: 'updater'
@@ -60,7 +55,18 @@ class Bank extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632035,
-            deleteCode: 632031
+            deleteCode: 632031,
+            btnEvent: {
+                subbranch: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/basis/bank/subbranch?code=${selectedRowKeys[0]}`);
+                    }
+                }
+            }
         });
     }
 }

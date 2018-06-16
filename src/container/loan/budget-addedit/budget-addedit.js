@@ -19,7 +19,7 @@ import {
 import fetch from 'common/js/fetch';
 
 @CollapseWrapper(
-    state => state.loanAdmittanceAddedit,
+    state => state.loanBudgetAddedit,
     {initStates, doFetching, cancelFetching, setSelectData, setPageData, restore}
 )
 class BudgetAddedit extends React.Component {
@@ -29,8 +29,41 @@ class BudgetAddedit extends React.Component {
         this.view = !!getQueryString('v', this.props.location.search);
         this.isCheckCommissioner = !!getQueryString('isCheckCommissioner', this.props.location.search);
         this.isCheckDirector = !!getQueryString('isCheckDirector', this.props.location.search);
-        this.rateData = {};
-        this.wanFactor = 0;
+    }
+
+    // 银行贷款成数：   (贷款金额+服务费) / 发票价格
+    getBankLoanNum = (params) => {
+        let fee = parseFloat(params.fee);
+        let loanAmount = parseFloat(params.loanAmount);
+        let invoicePrice = parseFloat(params.invoicePrice);
+        let feeTotal = 0;
+
+        if (fee && loanAmount && invoicePrice) {
+            feeTotal = (loanAmount + fee) / invoicePrice;
+        }else {
+            feeTotal = 0;
+        }
+        this.props.setPageData({
+            bankLoanNum: moneyFormat(feeTotal * 1000)
+        });
+    }
+
+    // 收客户手续费合计：履约保证金+担保风险金+GPS收费+杂费
+    getCustomerFeeTotal = (params) => {
+        let lyAmount = parseFloat(params.lyAmount);
+        let fxAmount = parseFloat(params.fxAmount);
+        let gpsFee = parseFloat(params.gpsFee);
+        let otherFee = parseFloat(params.otherFee);
+        let feeTotal = 0;
+
+        if (lyAmount && fxAmount && gpsFee && otherFee) {
+            feeTotal = lyAmount + fxAmount + gpsFee + otherFee;
+        }else{
+            feeTotal = 0;
+        }
+        this.props.setPageData({
+            customerFeeTotal: moneyFormat(feeTotal * 1000)
+        });
     }
 
     render() {
@@ -66,6 +99,9 @@ class BudgetAddedit extends React.Component {
                     title: '汽车经销商',
                     field: 'carDealer',
                     type: 'select',
+                    pageCode: 632065,
+                    keyName: 'code',
+                    valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
                     required: true
                 }, {
                     title: '贷款银行',
@@ -90,7 +126,14 @@ class BudgetAddedit extends React.Component {
                     title: '发票价格',
                     field: 'invoicePrice',
                     amount: true,
-                    required: true
+                    required: true,
+                    onChange: (v) => {
+                        this.getBankLoanNum({
+                            fee: this.props.form.getFieldValue('fee'),
+                            loanAmount: this.props.form.getFieldValue('loanAmount'),
+                            invoicePrice: v
+                        });
+                    }
                 }],
                 [{
                     title: '购车途径',
@@ -102,12 +145,21 @@ class BudgetAddedit extends React.Component {
                 }, {
                     title: '利率类型',
                     field: 'rateType',
+                    type: 'select',
+                    value: '1',
                     required: true
                 }, {
                     title: '贷款金额',
                     field: 'loanAmount',
                     amount: true,
-                    required: true
+                    required: true,
+                    onChange: (v) => {
+                        this.getBankLoanNum({
+                            fee: this.props.form.getFieldValue('fee'),
+                            loanAmount: this.props.form.getFieldValue('loanAmount'),
+                            invoicePrice: v
+                        });
+                    }
                 }],
                 [{
                     title: '是否需要贷前调查',
@@ -149,7 +201,6 @@ class BudgetAddedit extends React.Component {
                     valueName: 'value',
                     required: true
                 }, {
-                    // 服务费/贷款金额+银行利率
                     title: '综合利率',
                     field: 'globalRate',
                     readonly: true,
@@ -158,7 +209,14 @@ class BudgetAddedit extends React.Component {
                     title: '服务费',
                     field: 'fee',
                     amount: true,
-                    required: true
+                    required: true,
+                    onChange: (v) => {
+                        this.getBankLoanNum({
+                            fee: this.props.form.getFieldValue('fee'),
+                            loanAmount: this.props.form.getFieldValue('loanAmount'),
+                            invoicePrice: v
+                        });
+                    }
                 }],
                 [{
                     title: '厂家贴息',
@@ -173,32 +231,25 @@ class BudgetAddedit extends React.Component {
                 }],
                 [{
                     title: 'GPS',
-                    field: 'GPSList',
+                    field: 'gpsList',
                     required: true,
                     type: 'o2m',
-                    options: [{
+                    options: {
                         add: true,
                         edit: true,
                         fields: [{
-                            title: 'GPS设备号',
-                            field: 'cardealerSubsidy',
-                            required: true
-                        }, {
-                            title: 'GPS类型',
-                            field: 'gpsType',
+                            title: 'GPS',
+                            field: 'code',
                             type: 'select',
-                            data: [{
-                                key: '1',
-                                value: '有线'
-                            }, {
-                                key: '0',
-                                value: '无线'
-                            }],
-                            keyName: 'key',
-                            valueName: 'value',
+                            listCode: 632707,
+                            params: {
+                                applyStatus: 0
+                            },
+                            keyName: 'code',
+                            valueName: 'gpsDevNo',
                             required: true
                         }]
-                    }]
+                    }
                 }]
             ]
         }, {
@@ -225,23 +276,23 @@ class BudgetAddedit extends React.Component {
                     required: true
                 }],
                 [{
-                    field: '申请人月收入',
-                    title: '4',
+                    title: '申请人月收入',
+                    field: '4',
                     amount: true,
                     required: true
                 }, {
-                    field: '申请人结息',
-                    title: '5',
+                    title: '申请人结息',
+                    field: '5',
                     amount: true,
                     required: true
                 }, {
-                    field: '申请人余额',
-                    title: '6',
+                    title: '申请人余额',
+                    field: '6',
                     amount: true,
                     required: true
                 }, {
+                    title: '流水是否体现月收入',
                     field: '流水是否体现月收入',
-                    title: '7',
                     required: true
                 }, {
                     title: '是否打件',
@@ -258,23 +309,20 @@ class BudgetAddedit extends React.Component {
                     valueName: 'value'
                 }],
                 [{
+                    title: '共还人月收入',
                     field: '共还人月收入',
-                    title: '8',
-                    amount: true,
-                    required: true
+                    amount: true
                 }, {
+                    title: '共还人结息',
                     field: '共还人结息',
-                    title: '9',
-                    amount: true,
-                    required: true
+                    amount: true
                 }, {
+                    title: '共还人余额',
                     field: '共还人余额',
-                    title: '10',
-                    amount: true,
-                    required: true
+                    amount: true
                 }, {
+                    title: '流水是否体现月收入',
                     field: '流水是否体现月收入',
-                    title: '11',
                     required: true
                 }, {
                     title: '是否打件',
@@ -291,27 +339,23 @@ class BudgetAddedit extends React.Component {
                     valueName: 'value'
                 }],
                 [{
+                    title: '担保人1月收入',
                     field: '担保人1月收入',
-                    title: '11',
-                    amount: true,
-                    required: true
+                    amount: true
                 }, {
+                    title: '担保人1结息',
                     field: '担保人1结息',
-                    title: '11',
-                    amount: true,
-                    required: true
+                    amount: true
                 }, {
+                    title: '担保人1余额',
                     field: '担保人1余额',
-                    title: '1',
-                    amount: true,
-                    required: true
+                    amount: true
                 }, {
-                    field: '流水是否体现月收入',
-                    title: '1',
-                    required: true
+                    title: '流水是否体现月收入',
+                    field: '流水是否体现月收入'
                 }, {
                     title: '是否打件',
-                    field: '1',
+                    field: '是否打件',
                     type: 'select',
                     data: [{
                         key: '0',
@@ -324,27 +368,23 @@ class BudgetAddedit extends React.Component {
                     valueName: 'value'
                 }],
                 [{
+                    title: '担保人2月收入',
                     field: '担保人2月收入',
-                    title: '11',
-                    amount: true,
-                    required: true
+                    amount: true
                 }, {
+                    title: '担保人2结息',
                     field: '担保人2结息',
-                    title: '11',
-                    amount: true,
-                    required: true
+                    amount: true
                 }, {
+                    title: '担保人2余额',
                     field: '担保人2余额',
-                    title: '11',
-                    amount: true,
-                    required: true
+                    amount: true
                 }, {
-                    field: '流水是否体现月收入',
-                    title: '11',
-                    required: true
+                    title: '流水是否体现月收入',
+                    field: '流水是否体现月收入'
                 }, {
                     title: '是否打件',
-                    field: '11',
+                    field: '是否打件',
                     type: 'select',
                     data: [{
                         key: '0',
@@ -357,8 +397,8 @@ class BudgetAddedit extends React.Component {
                     valueName: 'value'
                 }],
                 [{
-                    field: '其他收入备注',
-                    title: 'applyRemark',
+                    title: '其他收入备注',
+                    field: 'applyRemark',
                     type: 'textarea',
                     normalArea: true
                 }]
@@ -501,8 +541,8 @@ class BudgetAddedit extends React.Component {
                     field: 'guarantor2BirthAddress'
                 }],
                 [{
-                    field: '其他情况说明',
-                    title: 'otherNote',
+                    title: '其他情况说明',
+                    field: 'otherNote',
                     type: 'textarea',
                     normalArea: true
                 }]
@@ -537,12 +577,29 @@ class BudgetAddedit extends React.Component {
                     title: 'GPS收费',
                     field: 'gpsFee',
                     amount: true,
-                    required: true
+                    required: true,
+                    onChange: (v) => {
+                        this.getCustomerFeeTotal({
+                            lyAmount: this.props.form.getFieldValue('lyAmount'),
+                            fxAmount: this.props.form.getFieldValue('fxAmount'),
+                            gpsFee: v,
+                            otherFee: this.props.form.getFieldValue('otherFee')
+                        });
+                    }
                 }],
                 [{
                     title: '履约保证金',
                     field: 'lyAmount',
-                    required: true
+                    amount: true,
+                    required: true,
+                    onChange: (v) => {
+                        this.getCustomerFeeTotal({
+                            lyAmount: v,
+                            fxAmount: this.props.form.getFieldValue('fxAmount'),
+                            gpsFee: this.props.form.getFieldValue('gpsFee'),
+                            otherFee: this.props.form.getFieldValue('otherFee')
+                        });
+                    }
                 }, {
                     title: 'GPS提成',
                     field: 'gpsDeduct',
@@ -550,35 +607,52 @@ class BudgetAddedit extends React.Component {
                 }],
                 [{
                     title: '担保风险金',
-                    field: 'gpsFee',
+                    field: 'fxAmount',
                     amount: true,
-                    required: true
+                    required: true,
+                    onChange: (v) => {
+                        this.getCustomerFeeTotal({
+                            lyAmount: this.props.form.getFieldValue('lyAmount'),
+                            fxAmount: v,
+                            gpsFee: this.props.form.getFieldValue('gpsFee'),
+                            otherFee: this.props.form.getFieldValue('otherFee')
+                        });
+                    }
                 }, {
                     title: 'GPS收费方式',
                     field: 'gpsFeeWay',
                     type: 'select',
+                    value: '1',
                     keyName: 'key',
                     valueName: 'value',
                     required: true
                 }],
                 [{
                     title: '杂费',
-                    field: 'gpsFee',
+                    field: 'otherFee',
                     amount: true,
-                    required: true
+                    required: true,
+                    onChange: (v) => {
+                        this.getCustomerFeeTotal({
+                            lyAmount: this.props.form.getFieldValue('lyAmount'),
+                            fxAmount: this.props.form.getFieldValue('fxAmount'),
+                            gpsFee: this.props.form.getFieldValue('gpsFee'),
+                            otherFee: v
+                        });
+                    }
                 }, {
                     title: '手续费收取方式',
-                    field: 'gpsFeeWay',
+                    field: 'feeWay',
                     type: 'select',
+                    value: '1',
                     keyName: 'key',
                     valueName: 'value',
                     required: true
                 }],
                 [{
-                    // 履约保证金+担保风险金+GPS收费+杂费
                     title: '收客户手续费合计',
-                    field: 'gpsFee',
-                    amount: true,
+                    field: 'customerFeeTotal',
+                    readonly: true,
                     required: true
                 }]
             ]
@@ -586,11 +660,11 @@ class BudgetAddedit extends React.Component {
             title: '家庭房产情况及家访',
             items: [
                 [{
-                    title: 'GPS',
-                    field: 'GPSList',
+                    title: '家庭房产情况',
+                    field: 'creditUserIncomeList',
                     required: true,
                     type: 'o2m',
-                    options: [{
+                    options: {
                         fields: [{
                             title: '用款用途',
                             field: '11',
@@ -616,7 +690,7 @@ class BudgetAddedit extends React.Component {
                             field: 'subbranch',
                             required: true
                         }]
-                    }]
+                    }
                 }]
             ]
         }, {
@@ -791,7 +865,8 @@ class BudgetAddedit extends React.Component {
                     title: '附件',
                     field: 'otherFilePdf',
                     type: 'img'
-                }, {
+                }],
+                [{
                     title: '备注事项',
                     field: 'otherApplyNote',
                     type: 'textarea',
@@ -857,16 +932,22 @@ class BudgetAddedit extends React.Component {
             }];
         }
 
+        // 632131,
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
             editCode: 632120,
-            detailCode: 632131,
+            detailCode: 632117,
             buttons: buttons,
             beforeSubmit: (data) => {
                 data.creditCode = this.code;
                 data.operator = getUserId();
+                let gpsList = [];
+                data.gpsList.forEach((v) => {
+                    gpsList.push(v.code);
+                });
+                data.gpsList = gpsList;
                 return data;
             }
         });

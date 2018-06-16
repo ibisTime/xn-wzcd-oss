@@ -112,16 +112,15 @@ class Budget extends React.Component {
                 // } else if (items[0].status === '1') {
                 //     showWarnMsg('该状态不是待申请状态');
                 // } else {
-                //     this.props.history.push(`/loan/budget/addedit?code=${keys[0]}`);
+                    this.props.history.push(`/loan/budget/addedit?code=${keys[0]}`);
                 // }
-
-                this.props.history.push(`/loan/budget/addedit`);
             }
         };
+        // 632148,
         return this.props.buildList({
             fields,
             btnEvent,
-            pageCode: 632148,
+            pageCode: 632115,
             searchParams: {
                 roleCode: getRoleCode()
             }
