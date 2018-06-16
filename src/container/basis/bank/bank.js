@@ -40,10 +40,12 @@ class Bank extends React.Component {
     render() {
         const fields = [{
             title: '银行编号',
-            field: 'bankCode'
+            field: 'bankCode',
+            search: true
         }, {
-            title: '名称',
-            field: 'bankName'
+            title: '银行名称',
+            field: 'bankName',
+            search: true
         }, {
             title: '最新修改人',
             field: 'updater'
