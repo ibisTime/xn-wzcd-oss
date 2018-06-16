@@ -42,7 +42,11 @@ class ArchivesAddedit extends React.Component {
                 field: 'code'
             }, {
                 title: '保险公司',
-                field: 'insuranceCompanyName'
+                field: 'insuranceCompanyName',
+                type: 'select',
+                listCode: 632046,
+                keyName: 'code',
+                valueName: 'name'
             }],
             [{
                 title: '车辆颜色',
@@ -59,10 +63,12 @@ class ArchivesAddedit extends React.Component {
                 field: 'engineNo'
             }, {
                 title: '交强险',
-                field: 'forceInsurance'
+                field: 'forceInsurance',
+                amount: true
             }, {
                 title: '商业险合计',
-                field: 'commerceInsurance'
+                field: 'commerceInsurance',
+                amount: true
             }],
             [{
                 title: '保险生效日期',
@@ -70,7 +76,11 @@ class ArchivesAddedit extends React.Component {
                 type: 'date'
             }, {
                 title: '经办银行',
-                field: 'insuranceBank'
+                field: 'insuranceBank',
+                type: 'select',
+                listCode: 632037,
+                keyName: 'bankCode',
+                valueName: 'bankName'
             }, {
                 title: '业务员',
                 field: 'saleUserName'
@@ -111,9 +121,7 @@ class ArchivesAddedit extends React.Component {
             [{
                 title: '身份证',
                 field: 'idNo',
-                render: (v, d) => {
-                    return d.user.idNo;
-                }
+                type: 'img'
             }],
             [{
                 title: '已入档清单',
@@ -121,7 +129,17 @@ class ArchivesAddedit extends React.Component {
             }],
             [{
                 title: '资料是否完善',
-                field: 'isComplete'
+                field: 'isComplete',
+                type: 'select',
+                data: [{
+                    key: '0',
+                    value: '不完善'
+                }, {
+                    key: '1',
+                    value: '完善'
+                }],
+                keyName: 'key',
+                valueName: 'value'
             }],
             [{
                 title: '备注',
@@ -136,7 +154,16 @@ class ArchivesAddedit extends React.Component {
                 type: 'date'
             }, {
                 title: '经办部门',
-                field: 'operateDepartmentName'
+                field: 'operateDepartmentName',
+                type: 'select',
+                listCode: 630106,
+                params: {
+                    typeList: ['2']
+                },
+                keyName: 'code',
+                valueName: 'name',
+                readonly: true,
+                value: '333'
             }]
         ]
     }];

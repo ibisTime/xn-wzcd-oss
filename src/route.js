@@ -729,6 +729,66 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loan/creditCheck/creditCheck'))
   },
 
+  //  发起垫资
+  {
+    path: '/loan/advMoney',
+    component: asyncComponent(() => import('container/loan/advMoney/advMoney'))
+  },
+
+  //  发起垫资 详情
+  {
+    path: '/loan/advMoney/addedit',
+    component: asyncComponent(() => import('container/loan/advMoney/advMoney-addedit'))
+  },
+
+  //  发起垫资 确认用款单
+  {
+    path: '/loan/advMoney/apply',
+    component: asyncComponent(() => import('container/loan/advMoney/advMoney-apply'))
+  },
+
+  //  发起垫资 区域总经理审核
+  {
+    path: '/loan/advMoney/areaCheck',
+    component: asyncComponent(() => import('container/loan/advMoney/advMoney-areaCheck'))
+  },
+
+  //  发起垫资 省分公司总经理审核
+  {
+    path: '/loan/advMoney/areaCheck',
+    component: asyncComponent(() => import('container/loan/advMoney/advMoney-areaCheck'))
+  },
+
+  //  垫资审核
+  {
+    path: '/loan/moneyCheck',
+    component: asyncComponent(() => import('container/loan/moneyCheck/moneyCheck'))
+  },
+
+  //  垫资审核 总公司制单
+  {
+    path: '/loan/moneyCheck/allBill',
+    component: asyncComponent(() => import('container/loan/moneyCheck/moneyCheck-allBill'))
+  },
+
+  //  垫资审核 分公司制单
+  {
+    path: '/loan/moneyCheck/compBill',
+    component: asyncComponent(() => import('container/loan/moneyCheck/moneyCheck-compBill'))
+  },
+
+  //  垫资审核 确认打款车行
+  {
+    path: '/loan/moneyCheck/payCar',
+    component: asyncComponent(() => import('container/loan/moneyCheck/moneyCheck-payCar'))
+  },
+
+  //  垫资审核 确认打款分公司
+  {
+    path: '/loan/moneyCheck/payComp',
+    component: asyncComponent(() => import('container/loan/moneyCheck/moneyCheck-payComp'))
+  },
+
   //  放款审核
   {
     path: '/loan/bankMoney',
@@ -920,6 +980,12 @@ const ROUTES = [
   {
       path: '/loanstools/card/apply',
       component: asyncComponent(() => import('container/loanstools/card/card-apply'))
+  },
+
+  //  制卡 录入
+  {
+      path: '/loanstools/card/enter',
+      component: asyncComponent(() => import('container/loanstools/card/card-enter'))
   },
 
   //  发保和

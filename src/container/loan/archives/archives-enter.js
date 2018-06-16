@@ -47,7 +47,11 @@ class ArchivesAddedit extends React.Component {
                 readonly: true
             }, {
                 title: '保险公司',
-                field: 'insuranceCompanyName'
+                field: 'insuranceCompanyName',
+                type: 'select',
+                listCode: 632046,
+                keyName: 'code',
+                valueName: 'name'
             }],
             [{
                 title: '车辆颜色',
@@ -64,10 +68,12 @@ class ArchivesAddedit extends React.Component {
                 field: 'engineNo'
             }, {
                 title: '交强险',
-                field: 'forceInsurance'
+                field: 'forceInsurance',
+                amount: true
             }, {
                 title: '商业险合计',
-                field: 'commerceInsurance'
+                field: 'commerceInsurance',
+                amount: true
             }],
             [{
                 title: '保险生效日期',
@@ -75,7 +81,11 @@ class ArchivesAddedit extends React.Component {
                 type: 'date'
             }, {
                 title: '经办银行',
-                field: 'insuranceBank'
+                field: 'insuranceBank',
+                type: 'select',
+                listCode: 632037,
+                keyName: 'bankCode',
+                valueName: 'bankName'
             }, {
                 title: '业务员',
                 field: 'saleUserName'
@@ -93,21 +103,25 @@ class ArchivesAddedit extends React.Component {
                 field: 'otherContact'
             }, {
                 title: '联系人手机',
-                field: 'contactMobile'
+                field: 'contactMobile',
+                mobile: true
             }],
             [{
                 title: '担保人姓名',
                 field: 'guarantorName'
             }, {
                 title: '担保人手机',
-                field: 'guarantorMobile'
+                field: 'guarantorMobile',
+                mobile: true
             }],
             [{
                 title: '银行卡号',
-                field: 'bankCardNumber'
+                field: 'bankCardNumber',
+                bankCard: true
             }, {
                 title: '对账单日',
-                field: 'billDatetime'
+                field: 'billDatetime',
+                type: 'date'
             }, {
                 title: '月还款额',
                 field: 'monthAmount',
@@ -116,9 +130,7 @@ class ArchivesAddedit extends React.Component {
             [{
                 title: '身份证',
                 field: 'idNo',
-                render: (v, d) => {
-                    return d.user.idNo;
-                }
+                type: 'img'
             }],
             [{
                 title: '已入档清单',
@@ -126,10 +138,22 @@ class ArchivesAddedit extends React.Component {
             }],
             [{
                 title: '资料是否完善',
-                field: 'isComplete'
+                field: 'isComplete',
+                type: 'select',
+                data: [{
+                    key: '0',
+                    value: '不完善'
+                }, {
+                    key: '1',
+                    value: '完善'
+                }],
+                keyName: 'key',
+                valueName: 'value',
+                required: 'true'
             }, {
                 title: '存放位置',
-                field: 'storePlace'
+                field: 'storePlace',
+                required: 'true'
             }],
             [{
                 title: '备注',
@@ -137,14 +161,28 @@ class ArchivesAddedit extends React.Component {
             }],
             [{
                 title: '经办人',
-                field: 'operatorName'
+                field: 'operator',
+                readonly: true,
+                type: 'select',
+                listCode: 630066,
+                keyName: 'userId',
+                valueName: 'realName'
             }, {
                 title: '经办日期',
                 field: 'operateDatetime',
-                type: 'date'
+                type: 'date',
+                readonly: true
             }, {
                 title: '经办部门',
-                field: 'operateDepartmentName'
+                field: 'operateDepartment',
+                type: 'select',
+                listCode: 630106,
+                params: {
+                    typeList: ['2']
+                },
+                keyName: 'code',
+                valueName: 'name',
+                readonly: true
             }]
         ]
     }];
@@ -160,8 +198,11 @@ class ArchivesAddedit extends React.Component {
           check: true,
           handler: (params) => {
             this.props.doFetching();
+            params.operator = this.props.pageData.operator;
+            params.operateDatetime = this.props.pageData.operateDatetime;
+            params.operateDepartment = this.props.pageData.operateDepartment;
             params.operator = getUserId();
-            fetch(632190, params).then(() => {
+            fetch(632200, params).then(() => {
               showSucMsg('操作成功');
               setTimeout(() => {
                 this.props.history.go(-1);

@@ -50,28 +50,28 @@ class card extends React.Component {
             search: true
         }, {
             title: '客户姓名',
-            field: 'companyCode',
+            field: 'customerName',
             search: true
         }, {
             title: '银行卡号',
-            field: 'budgetAmount',
+            field: 'bankCardNumber',
             search: true
         }, {
             title: '制卡银行',
-            field: 'receiptAccount'
+            field: '1'
         }, {
             title: '状态',
-            field: 'status'
+            field: 'makeCardStatus'
         }, {
-            title: '跟新人',
-            field: 'useDatetime'
+            title: '更新人',
+            field: 'makeCardOperator'
         }, {
             title: '备注',
-            field: 'remark'
+            field: 'makeCardRemark'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632105,
+            pageCode: 632145,
             btnEvent: {
               apply: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
