@@ -8,13 +8,13 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/loan/budget';
+} from '@redux/loan/budgetCheck';
 import {listWrapper} from 'common/js/build-list';
 import {showWarnMsg, dateTimeFormat, getRoleCode} from 'common/js/util';
 
 @listWrapper(
     state => ({
-        ...state.loanBudget,
+        ...state.loanBudgetCheck,
         parentCode: state.menu.subMenuCode
     }),
     {
@@ -22,7 +22,7 @@ import {showWarnMsg, dateTimeFormat, getRoleCode} from 'common/js/util';
         cancelFetching, setPagination, setSearchParam, setSearchData
     }
 )
-class Budget extends React.Component {
+class BudgetCheck extends React.Component {
     render() {
         const fields = [{
             field: 'code',
@@ -82,10 +82,8 @@ class Budget extends React.Component {
             field: 'bankSub',
             title: '银行经办支行'
         }, {
-            title: '购车途径',
-            field: 'shopWay',
-            type: 'select',
-            key: 'budget_orde_biz_typer'
+            field: 'buyWay',
+            title: '购车途径'
         }, {
             field: 'updateDatetime',
             title: '申请时间',
@@ -104,9 +102,6 @@ class Budget extends React.Component {
             field: 'remark',
             title: '备注'
         }];
-        const btnEvent = {
-
-        };
         return this.props.buildList({
             fields,
             pageCode: 632145,
@@ -114,22 +109,40 @@ class Budget extends React.Component {
                 roleCode: getRoleCode()
             },
             btnEvent: {
-                apply: (selectedRowKeys, selectedRows) => {
+                areaCheck: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push(`/loan/budget/addedit?isApply=1&code=${selectedRowKeys[0]}&companyCode=${selectedRows[0].companyCode}`);
+                        this.props.history.push(`/loan/budget/addedit?isAreaCheck=1&v=1&code=${selectedRowKeys[0]}`);
                     }
                 },
-                revoke: (selectedRowKeys, selectedRows) => {
+                compCheck: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push(`/loan/budget/addedit?isRevoke=1&v=1&code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/loan/budget/addedit?isCompCheck=1&v=1&code=${selectedRowKeys[0]}`);
+                    }
+                },
+                check: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loan/budget/addedit?isCheck=1&v=1&code=${selectedRowKeys[0]}`);
+                    }
+                },
+                detail: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loan/budget/addedit?v=1&code=${selectedRowKeys[0]}`);
                     }
                 }
             }
@@ -137,4 +150,4 @@ class Budget extends React.Component {
     }
 }
 
-export default Budget;
+export default BudgetCheck;

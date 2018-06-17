@@ -32,54 +32,84 @@ class InvoiceEnter extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.hiddenStatus = true;
     }
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'companyCode',
-            select: true,
+            field: 'customerName',
             readonly: true
         }, {
             title: '业务编号',
-            field: 'receiptBank',
+            field: 'code',
             readonly: true
         }, {
             title: '身份证',
-            field: 'receiptAccount',
+            field: 'idNo',
             readonly: true
         }, {
             title: '贷款金额',
-            field: 'receiptAccount',
+            field: 'loanAmount',
             readonly: true,
             amount: true
         }, {
             title: '贷款银行',
-            field: 'receiptAccount',
-            readonly: true
+            field: 'loanBankName',
+            readonly: true,
+            required: true,
+            formatter: (v, data) => {
+                this.hiddenStatus = data.shopWay === '2';
+                return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName + '-' + data.bankCardNumber);
+            }
         }, {
             title: '购车途径',
-            field: 'receiptAccount',
-            readonly: true
+            field: 'shopWay',
+            type: 'select',
+            key: 'budget_orde_biz_typer',
+            readonly: true,
+            required: true
         }, {
             title: '是否垫资',
-            field: 'receiptAccount',
+            field: 'isAdvanceFund',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            required: true,
             readonly: true
         }, {
             title: '提车日期',
-            field: 'dzDatetime',
-            type: 'date'
+            field: 'deliveryDatetime',
+            type: 'date',
+            required: true
         }, {
             title: '发票价',
-            field: 'receiptAccount',
+            field: 'invoicePrice',
             readonly: true,
             amount: true
         }, {
             title: '发票是否正确',
-            field: 'dzDatetime',
+            field: 'isRightInvoice',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '不匹配'
+            }, {
+                key: '1',
+                value: '匹配'
+            }],
+            keyName: 'key',
+            valueName: 'value',
             required: true
         }, {
             title: '现发票价',
-            field: 'receiptAccount',
+            field: 'currentInvoicePrice',
             required: true,
             amount: true
         }, {
@@ -88,53 +118,55 @@ class InvoiceEnter extends React.Component {
             readonly: true
         }, {
             title: '新贷款成数',
-            field: 'receiptAccount',
+            field: 'receiptAccount1',
             readonly: true
         }, {
             title: '发票',
-            field: 'receiptAccount',
+            field: 'invoice',
             required: true,
             type: 'img'
         }, {
             title: '合格证',
-            field: 'receiptAccount',
+            field: 'certification',
             required: true,
             type: 'img'
         }, {
             title: '交强险',
-            field: 'receiptAccount',
+            field: 'forceInsurance',
             required: true,
             type: 'img'
         }, {
             title: '商业险',
-            field: 'receiptAccount',
+            field: 'businessInsurance',
             required: true,
             type: 'img'
         }, {
             title: '机动车登记证书',
-            field: 'receiptAccount',
+            field: 'motorRegCertification',
             required: true,
+            hidden: this.shopWay === '2',
             type: 'img'
         }, {
             title: '批单',
-            field: 'receiptAccount',
+            field: 'pdPdf',
             required: true,
             type: 'img'
         }, {
             title: '备注',
-            field: 'remark'
+            field: 'fbhRemark'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632106,
+            detailCode: 632146,
             buttons: [{
                 title: '确认',
                 check: true,
                 handler: (params) => {
+                    params.code = this.code;
                     this.props.doFetching();
-                    fetch(632102, params).then(() => {
+                    fetch(632220, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {

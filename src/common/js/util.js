@@ -447,6 +447,5 @@ export function moneyUppercase(Num) {
     if (newchar.charAt(newchar.length - 1) === '元' || newchar.charAt(newchar.length - 1) === '角') {
         newchar = newchar + '整';
     }
-    console.log(newchar);
     return newchar;
 }

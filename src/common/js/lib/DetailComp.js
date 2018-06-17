@@ -701,7 +701,9 @@ export default class DetailComponent extends React.Component {
                 obj.fixed = f.fixed;
                 obj.width = f.width || 100;
             }
-            result.push(obj);
+            if (!f.hidden) {
+                result.push(obj);
+            }
         });
         this.o2mFirst[item.field] = false;
         return result;
@@ -1050,7 +1052,7 @@ export default class DetailComponent extends React.Component {
         };
         if (item.onChange) {
             props.onChange = (v) => {
-                item.onChange(v, this.props.selectData[item.field] ? this.props.selectData[item.field].find(v1 => v1.code === v) : {}, this.props);
+                item.onChange(v, this.props.selectData[item.field] ? this.props.selectData[item.field].find(v1 => v1[item.keyName] === v) : {}, this.props);
             };
         }
         return props;
