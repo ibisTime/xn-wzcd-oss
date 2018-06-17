@@ -82,7 +82,7 @@ class AdvMoneyAreaCheck extends React.Component {
                 param.approveResult = '1';
                 param.operator = getUserId();
                 this.props.doFetching();
-                fetch(632161, param).then(() => {
+                fetch(632171, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {
@@ -98,7 +98,7 @@ class AdvMoneyAreaCheck extends React.Component {
                 param.approveResult = '0';
                 param.operator = getUserId();
                 this.props.doFetching();
-                fetch(632161, param).then(() => {
+                fetch(632171, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {

@@ -129,6 +129,8 @@ class AdvMoney extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '003_01') {
+                        showWarnMsg('请选择一条记录');
                     } else {
                         this.props.history.push(`/loan/advMoney/apply?code=${selectedRowKeys[0]}`);
                     }
