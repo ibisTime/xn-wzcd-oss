@@ -188,7 +188,6 @@ import { basisProvinceNumAddedit } from './redux/basis/provinceNum-addedit';
 //  经销商管理 + 详情 + 删除
 import { basisDealer } from './redux/basis/dealer';
 import { basisDealerAddedit } from './redux/basis/dealer-addedit';
-import { basisDealerCheck } from './redux/basis/dealer-check';
 
 //  我司贷款成数比例 + 修改
 import { basisLoanPercent } from './redux/basis/loanPercent';
@@ -757,7 +756,6 @@ export default combineReducers({
   basisProvinceNumAddedit,
   basisDealer,
   basisDealerAddedit,
-  basisDealerCheck,
   basisLoanPercent,
   basisLoanPercentAddedit,
   basisBank,

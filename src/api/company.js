@@ -1,6 +1,6 @@
 import fetch from 'common/js/fetch';
 
-// 列表查询公司
+// 列表查询公司部门
 export function getCompList(parentCode) {
   return fetch(630106, { parentCode, status: 1, typeList: [1, 2] });
 }
@@ -28,4 +28,9 @@ export function getRoleList(params) {
 // 列表查询角色
 export function addUser(params) {
     return fetch(630050, params);
+}
+
+// 列表查询公司
+export function getCompanyList(parentCode) {
+  return fetch(630106, { parentCode, status: 1, typeList: [1] });
 }

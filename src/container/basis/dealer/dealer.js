@@ -47,7 +47,7 @@ class Dealer extends React.Component {
             field: 'abbrName',
             search: true
         }, {
-            title: '经销商全程',
+            title: '经销商全称',
             field: 'fullName'
         }, {
             title: '是否自主开发',
@@ -66,26 +66,57 @@ class Dealer extends React.Component {
             valueName: 'value'
         }, {
             title: '车行经营性质',
-            field: 'carDealerType'
+            field: 'carDealerType',
+            render: (v) => {
+              let dict = {
+                '0': '综合店',
+                '1': '4S店'
+              };
+              return dict[v];
+            }
         }, {
             title: '所属分公司',
-            field: 'belongBranchCompany'
+            field: 'belongBranchCompany',
+            type: 'select',
+            listCode: 630106,
+            params: {
+              typeList: [1],
+              status: 1
+            },
+            keyName: 'code',
+            valueName: 'name'
         }, {
             title: '办理状态',
             field: 'curNodeCode',
-            search: true
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildList({
             fields,
             pageCode: 632065,
             btnEvent: {
+              edit: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys.length) {
+                  showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                  showWarnMsg('请选择一条记录');
+                } else if (selectedRows[0].curNodeCode !== '006_02' && selectedRows[0].curNodeCode !== '006_03') {
+                  showWarnMsg('当前节点不可修改');
+                } else {
+                  this.props.history.push(`/basis/dealer/addedit?code=${selectedRowKeys[0]}`);
+                }
+              },
               check: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
                   showWarnMsg('请选择记录');
                 } else if (selectedRowKeys.length > 1) {
                   showWarnMsg('请选择一条记录');
+                } else if (selectedRows[0].curNodeCode !== '006_01') {
+                  showWarnMsg('当前不是审核节点');
                 } else {
-                  this.props.history.push(`/basis/dealer/check?code=${selectedRowKeys[0]}`);
+                  this.props.history.push(`/basis/dealer/addedit?v=1&check=1&code=${selectedRowKeys[0]}`);
                 }
               }
             }
