@@ -58,7 +58,8 @@ export default class DetailComponent extends React.Component {
             o2mSKeys: {},
             searchData: {},
             modalVisible: false,
-            modalOptions: {}
+            modalOptions: {},
+            selectFetch: {}
         };
         this.o2mFirst = {};
         this.textareas = {};
@@ -290,11 +291,19 @@ export default class DetailComponent extends React.Component {
 
     // 获取搜索框数据
     searchSelectChange({keyword, item, start = 1, limit = 20, key}) {
+        let selectFetch = this.state.selectFetch;
         if (this.timeout) {
             clearTimeout(this.timeout);
             this.timeout = null;
         }
+        if (!this.props.selectData[item.field]) {
+            this.props.setSelectData({data: [], key: item.field});
+        }
         this.setSearchLoading(item, true);
+        selectFetch[item.field] = false;
+        this.setState({
+            selectFetch: selectFetch
+        });
         this.props.setSelectData({data: [], key: item.field});
         let params = item.params || {};
         params.start = start;
@@ -308,8 +317,16 @@ export default class DetailComponent extends React.Component {
                 let list = this.props.selectData[item.field] || [];
                 list = start === 1 ? [] : list;
                 this.props.setSelectData({data: list.concat(data.list), key: item.field});
+                selectFetch[item.field] = true;
+                this.setState({
+                    selectFetch: selectFetch
+                });
             }).catch(() => {
                 !key && this.setSearchLoading(item, false);
+                selectFetch[item.field] = false;
+                this.setState({
+                    selectFetch: selectFetch
+                });
             });
         }, 300);
     }
@@ -377,6 +394,8 @@ export default class DetailComponent extends React.Component {
                 return this.getCitySelect(item, initVal, rules, getFieldDecorator);
             case 'checkbox':
                 return this.getCheckboxComp(item, initVal, rules, getFieldDecorator);
+            case 'selectInput':
+                return this.getSelectInputComp(item, initVal, rules, getFieldDecorator);
             default:
                 return this.getInputComp(item, initVal, rules, getFieldDecorator);
         }
@@ -790,7 +809,12 @@ export default class DetailComponent extends React.Component {
                             onSearch={v => this.searchSelectChange({item, keyword: v})}
                             optionLabelProp="children"
                             notFoundContent={this.state.fetching[item.field] ? <Spin size="small"/> : '暂无数据'}
-                            placeholder="请输入关键字搜索">
+                            placeholder="请输入关键字搜索"
+                            onChange={v => {
+                                if (item.onChange && this.state.selectFetch[item.field]) {
+                                    item.onChange(v, this.props.selectData[item.field] ? this.props.selectData[item.field].find(v1 => v1.code === v) : {}, this.props);
+                                }
+                            }}>
                             {item.data ? item.data.map(d => (
                                 <Option key={d[item.keyName]} value={d[item.keyName]}>
                                     {d[item.valueName] ? d[item.valueName] : tempString(item.valueName, d)}
@@ -880,7 +904,7 @@ export default class DetailComponent extends React.Component {
         if (item.onChange) {
             props.onChange = (e) => {
                 const {value} = e.target;
-                item.onChange(value);
+                item.onChange(value, this.props);
             };
         }
         return (
@@ -895,6 +919,68 @@ export default class DetailComponent extends React.Component {
                             rules,
                             initialValue: initVal
                         })(<Input {...props}/>)
+                }
+            </FormItem>
+        );
+    }
+
+    getSelectInputComp(item, initVal, rules, getFieldDecorator) {
+        let data;
+        if (item.readonly && item.data) {
+            data = item.data.filter(v => v[item.keyName] === initVal);
+        }
+        let propsSelect = {
+            showSearch: true,
+            allowClear: true,
+            optionFilterProp: 'children',
+            filterOption: (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
+            style: {width: '100%'},
+            placeholder: '请选择'
+        };
+        let propsInput = {
+            type: item.type ? item.type : item.hidden ? 'hidden' : 'text'
+        };
+        let inputInitVal = '';
+        let selectInitVal = '';
+        if (item.isOnlySub && item.isOnlySub === 'input') {
+            inputInitVal = initVal;
+            selectInitVal = '';
+        } else if (item.isOnlySub && item.isOnlySub === 'select') {
+            selectInitVal = initVal;
+            inputInitVal = '';
+        }
+        // 是否关联
+        if (item.isRelation && item.valueInput && !item.readonly) {
+            propsSelect.onChange = (v) => {
+                let selectData = this.props.selectData[item.field] ? this.props.selectData[item.field].find(v1 => v1[item.keyName] === v) : {};
+                inputInitVal = selectData[item.valueInput];
+            };
+        }
+        return (
+            <FormItem className={item.hidden ? 'hidden' : ''} key={item.field} {...this.getInputItemProps()}
+                      label={this.getLabel(item)}>
+                {
+                    item.readonly ? <div
+                            className="readonly-text">{data && data.length ? data[0][item.valueName] || tempString(item.valueName, data[0]) : selectInitVal}</div>
+                        : getFieldDecorator(item.isOnlySub && item.isOnlySub === 'select' ? item.field : item.field + '_select', {
+                            rules,
+                            initialValue: item.data || selectInitVal ? selectInitVal : ''
+                        })(
+                        <Select className="selectInput" {...propsSelect}>
+                            {item.data ? item.data.map(d => (
+                                <Option key={d[item.keyName]} value={d[item.keyName]}>
+                                    {d[item.valueName] ? d[item.valueName] : tempString(item.valueName, d)}
+                                </Option>
+                            )) : null}
+                        </Select>
+                        )
+                }
+                {
+                    item.readonly ? <div className="readonly-text">{initVal}</div>
+                        : getFieldDecorator(item.isOnlySub && item.isOnlySub === 'input' ? item.field : item.field + '_input', {
+                            rules,
+                            initialValue: inputInitVal
+                        })(<Input className="selectInput" {...propsInput}/>)
                 }
             </FormItem>
         );
@@ -1143,7 +1229,7 @@ export default class DetailComponent extends React.Component {
     getLabel(item) {
         return (
             <span
-                className={(item.required && ((item.type === 'textarea' && !item.normalArea) || (item.type === 'o2m'))) ? 'ant-form-item-required' : ''}>
+                className={item.required && ((item.type === 'textarea' && !item.normalArea) || (item.type === 'o2m')) ? 'ant-form-item-required' : ''}>
         {item.title + (item.single ? '(单)' : '')}
                 {item.help
                     ? <Tooltip title={item.help}>
@@ -1253,7 +1339,7 @@ export default class DetailComponent extends React.Component {
         }
         if (item.amount) {
             rules.push({
-                pattern: /^\d+(\.\d{1,2})?$/,
+                pattern: /^[1-9](,\d{3}|[0-9])*(\.\d{1,2})?$/,
                 message: '金额必须>0，且小数点后最多2位'
             });
         }

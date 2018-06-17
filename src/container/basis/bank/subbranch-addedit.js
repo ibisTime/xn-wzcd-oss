@@ -104,7 +104,6 @@ class subbranchAddedit extends React.Component {
         }];
         return this.props.buildDetail({
             fields,
-            key: 'id',
             code: this.code,
             view: this.view,
             addCode: 632050,

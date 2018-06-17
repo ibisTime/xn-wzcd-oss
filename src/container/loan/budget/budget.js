@@ -33,11 +33,11 @@ class Budget extends React.Component {
             title: '业务公司',
             search: true
         }, {
-            field: 'name',
+            field: 'customerName',
             title: '客户姓名',
             search: true
         }, {
-            field: 'jsx',
+            field: 'carDealerName',
             title: '汽车经销商',
             search: true
         }, {
@@ -76,7 +76,7 @@ class Budget extends React.Component {
             valueName: 'dvalue',
             search: true
         }, {
-            field: 'member',
+            field: 'saleUserName',
             title: '业务员'
         }, {
             field: 'bankSub',
@@ -99,28 +99,24 @@ class Budget extends React.Component {
             keyName: 'code',
             valueName: 'name'
         }, {
-            field: 'status',
-            title: '办理状态'
-        }, {
             field: 'remark',
             title: '备注'
         }];
         const btnEvent = {
-            apply: (keys, items) => {
-                // if (!keys || !keys.length || !items || !items.length) {
-                //     showWarnMsg('请选择记录');
-                // } else if (items[0].status === '1') {
-                //     showWarnMsg('该状态不是待申请状态');
-                // } else {
-                    this.props.history.push(`/loan/budget/addedit?code=${keys[0]}`);
-                // }
+            apply: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys.length) {
+                    showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                    showWarnMsg('请选择一条记录');
+                } else {
+                    this.props.history.push(`/loan/budget/addedit?code=${selectedRowKeys[0]}`);
+                }
             }
         };
-        // 632148,
         return this.props.buildList({
             fields,
             btnEvent,
-            pageCode: 632115,
+            pageCode: 632145,
             searchParams: {
                 roleCode: getRoleCode()
             }

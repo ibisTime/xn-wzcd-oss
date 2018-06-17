@@ -285,9 +285,9 @@ class CreditStartAddedit extends React.Component {
             title: '银行',
             field: 'loanBankCode',
             type: 'select',
-            listCode: 632037,
+            listCode: 632057,
             keyName: 'code',
-            valueName: '{{bankName.DATA}}-{{subbranch.DATA}}',
+            valueName: '{{bankName.DATA}}-{{abbrName.DATA}}',
             required: true
         }, {
             title: '购车途径',
