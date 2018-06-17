@@ -12,6 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
@@ -35,52 +36,91 @@ class budgetApply extends React.Component {
     render() {
         const fields = [{
             title: '代偿性质',
-            field: 'companyCode',
+            field: 'type',
+            type: 'select',
+            key: 'replace_repay_type',
             required: true
         }, {
             title: '业务编号',
-            field: 'receiptBank',
+            field: 'bizCode',
+            type: 'select',
+            listCode: 630542,
+            params: {
+                repayBizCode: 'RB_TEST'
+            },
+            keyName: 'code',
+            valueName: 'code',
             required: true
         }, {
             title: '预算金额',
-            field: 'receiptAccount',
+            field: 'amount',
             amount: true,
             required: true
         }, {
             title: '收款人姓名',
-            field: 'useDatetime'
+            field: 'receiptRealName',
+            required: true
         }, {
             title: '收款人开户行',
-            field: 'useDatetime'
+            field: 'receiptBank',
+            type: 'select',
+            listCode: '632037',
+            keyName: 'bankCode',
+            valueName: 'bankName',
+            required: true
         }, {
             title: '收款人账号',
-            field: 'useDatetime'
+            field: 'receiptAccount',
+            bankCard: true,
+            required: true
         }, {
             title: '是否加急',
-            field: 'useDatetime'
+            field: 'isUrgent',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            required: true
         }, {
-            title: '代偿说明',
-            field: 'useDatetime'
+            title: '申请说明',
+            field: 'applyNote'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632106,
+            detailCode: 632326,
             buttons: [{
-                title: '发送',
+                title: '保存',
                 check: true,
                 handler: (params) => {
+                    params.applyUser = getUserId();
                     this.props.doFetching();
-                    let bank = this.props.selectData.receiptBank.find(v => v.code === params.receiptBank);
-                    params.receiptAccount = bank.bankcardNumber;
-                    params.receiptBank = bank.bankCode;
-                    params.buttonCode = 1;
-                    fetch(632100, params).then(() => {
+                    fetch(632320, params).then(() => {
                         showSucMsg('操作成功');
                         setTimeout(() => {
                             this.props.history.go(-1);
-                        }, 1500);
+                        }, 500);
+                        this.props.cancelFetching();
+                    }).catch(this.props.cancelFetching);
+                }
+            }, {
+                title: '发送',
+                check: true,
+                handler: (params) => {
+                    params.applyUser = getUserId();
+                    this.props.doFetching();
+                    fetch(632320, params).then(() => {
+                        showSucMsg('操作成功');
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 500);
                         this.props.cancelFetching();
                     }).catch(this.props.cancelFetching);
                 }

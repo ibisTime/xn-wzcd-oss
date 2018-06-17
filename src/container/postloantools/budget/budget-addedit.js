@@ -33,45 +33,58 @@ class budgetAddEdit extends React.Component {
     render() {
         const fields = [{
             title: '代偿性质',
-            field: 'companyCode'
+            field: 'type',
+            type: 'select',
+            key: 'replace_repay_type'
         }, {
             title: '业务编号',
-            field: 'receiptBank'
+            field: 'code',
+            type: 'select',
+            listCode: 630542,
+            params: {
+                repayBizCode: this.code
+            },
+            keyName: 'code',
+            valueName: 'code'
         }, {
             title: '预算金额',
-            field: 'receiptAccount',
+            field: 'amount',
             amount: true
         }, {
-            title: '预算金额大写',
-            field: 'budgetAmount'
-        }, {
             title: '收款人姓名',
-            field: 'useDatetime'
+            field: 'receiptRealName'
         }, {
             title: '收款人开户行',
-            field: 'useDatetime'
+            field: 'receiptBank',
+            type: 'select',
+            listCode: '632037',
+            keyName: 'bankCode',
+            valueName: 'bankName'
         }, {
             title: '收款人账号',
-            field: 'useDatetime'
-        }, {
-            title: '申请人',
-            field: 'useDatetime'
-        }, {
-            title: '申请时间',
-            field: 'useDatetime',
-            type: 'date'
+            field: 'receiptAccount'
         }, {
             title: '是否加急',
-            field: 'useDatetime'
+            field: 'isUrgent',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value'
         }, {
-            title: '代偿说明',
-            field: 'useDatetime'
+            title: '申请说明',
+            field: 'applyNote'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632106
+            detailCode: 632326
         });
     }
 }

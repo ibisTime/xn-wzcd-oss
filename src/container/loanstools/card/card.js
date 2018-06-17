@@ -83,7 +83,13 @@ class card extends React.Component {
                 }
               },
               entering: (selectedRowKeys, selectedRows) => {
-                this.props.history.push(`/loanstools/card/enter?code=${selectedRowKeys[0]}`);
+                if (!selectedRowKeys.length) {
+                  showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                  showWarnMsg('请选择一条记录');
+                } else {
+                    this.props.history.push(`/loanstools/card/enter?code=${selectedRowKeys[0]}`);
+                }
               }
             }
         });
