@@ -18,7 +18,7 @@ import {
 } from 'common/js/build-detail';
 
 @DetailWrapper(
-    state => state.loanAdvMoneyPayCar, {
+    state => state.loanMoneyCheckPayCar, {
         initStates,
         doFetching,
         cancelFetching,
@@ -71,12 +71,12 @@ class AdvMoneyPayCar extends React.Component {
             type: 'date',
             required: true
         }, {
-            title: '付款银行',
-            field: '3333',
+            title: '付款账号',
+            field: 'payBankcardCode',
             type: 'select',
-            listCode: 632037,
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            listCode: 632007,
+            keyName: 'code',
+            valueName: 'bankcardNumber',
             required: true
         }, {
             title: '付款凭证',

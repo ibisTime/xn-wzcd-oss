@@ -47,13 +47,6 @@ class MoneyCheck extends React.Component {
         const fields = [{
             title: '业务公司',
             field: 'companyCode',
-            listCode: 630106,
-            params: {
-                typeList: [1]
-            },
-            type: 'select',
-            keyName: 'code',
-            valueName: 'name',
             search: true
         }, {
             title: '客户姓名',
@@ -118,7 +111,7 @@ class MoneyCheck extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632145,
+            pageCode: 632185,
             btnEvent: {
                 allBill: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {

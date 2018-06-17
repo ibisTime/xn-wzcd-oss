@@ -18,7 +18,7 @@ import {
 } from 'common/js/build-detail';
 
 @DetailWrapper(
-    state => state.loanAdvMoneyAllBill, {
+    state => state.loanMoneyCheckAllBill, {
         initStates,
         doFetching,
         cancelFetching,
@@ -47,17 +47,17 @@ class AdvMoneyAllBill extends React.Component {
             required: true
         }, {
             title: '垫资总金额',
-            field: 'code',
+            field: 'totalAdvanceFund',
             amount: true,
             readonly: true
         }, {
             title: '已垫资金额',
-            field: '22',
+            field: '3344',
             amount: true,
             readonly: true
         }, {
             title: '未垫资金额',
-            field: 'loanAmount',
+            field: '4433',
             amount: true,
             readonly: true
         }, {
@@ -99,7 +99,7 @@ class AdvMoneyAllBill extends React.Component {
             }
         }, {
             title: '垫资金额',
-            field: '3333',
+            field: 'payAmount',
             amount: true,
             readonly: true
         }, {
@@ -117,6 +117,8 @@ class AdvMoneyAllBill extends React.Component {
               handler: (params) => {
                 this.props.doFetching();
                 params.operator = getUserId();
+                params.payAmount = this.props.pageData.payAmount;
+                params.totalAdvanceFund = this.props.pageData.totalAdvanceFund;
                 fetch(632173, params).then(() => {
                   showSucMsg('操作成功');
                   setTimeout(() => {

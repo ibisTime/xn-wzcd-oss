@@ -18,7 +18,7 @@ import {
 } from 'common/js/build-detail';
 
 @DetailWrapper(
-    state => state.loanAdvMoneyCompBill, {
+    state => state.loanMoneyCheckCompBill, {
         initStates,
         doFetching,
         cancelFetching,
@@ -47,7 +47,7 @@ class AdvMoneyCompBill extends React.Component {
             required: true
         }, {
             title: '垫资总金额',
-            field: 'code',
+            field: 'totalAdvanceFund',
             amount: true,
             readonly: true
         }, {
@@ -99,7 +99,7 @@ class AdvMoneyCompBill extends React.Component {
             }
         }, {
             title: '垫资金额',
-            field: '3333',
+            field: 'payAmount',
             amount: true,
             readonly: true
         }, {
