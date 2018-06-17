@@ -11,13 +11,9 @@ import {
 } from '@redux/loanstools/refund';
 import {
     showWarnMsg,
-    showSucMsg
+    showSucMsg,
+    getRoleCode
 } from 'common/js/util';
-import {
-    Button,
-    Upload,
-    Modal
-} from 'antd';
 import {
     listWrapper
 } from 'common/js/build-list';
@@ -83,7 +79,10 @@ class refund extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632145,
+            pageCode: 632148,
+            searchParams: {
+                roleCode: getRoleCode()
+            },
             btnEvent: {
                 certain: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
