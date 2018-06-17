@@ -10,21 +10,17 @@ import {
     setSearchData
 } from '@redux/loanstools/invoice';
 import {
-  showWarnMsg,
-  showSucMsg
+    showWarnMsg,
+    showSucMsg,
+    getRoleCode
 } from 'common/js/util';
-import {
-  Button,
-  Upload,
-  Modal
-} from 'antd';
 import {
     listWrapper
 } from 'common/js/build-list';
 import {
-  lowerFrame,
-  onShelf,
-  sendMsg
+    lowerFrame,
+    onShelf,
+    sendMsg
 } from 'api/biz';
 
 @listWrapper(
@@ -101,17 +97,20 @@ class invoice extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632145,
+            pageCode: 632148,
+            searchParams: {
+                roleCode: getRoleCode()
+            },
             btnEvent: {
-              entering: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loanstools/invoice/enter?code=${selectedRowKeys[0]}`);
+                entering: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loanstools/invoice/enter?code=${selectedRowKeys[0]}`);
+                    }
                 }
-              }
             }
         });
     }

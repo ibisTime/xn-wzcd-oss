@@ -41,10 +41,10 @@ class Budget extends React.Component {
             title: '汽车经销商',
             search: true
         }, {
-            field: 'car',
+            field: 'carModel',
             title: '车辆型号'
         }, {
-            field: 'price',
+            field: 'invoicePrice',
             title: '车辆价格',
             amount: true
         }, {
@@ -52,35 +52,34 @@ class Budget extends React.Component {
             title: '贷款金额',
             amount: true
         }, {
-            field: 'times',
-            title: '期数'
+            field: 'loanPeriods',
+            title: '贷款周期',
+            type: 'select',
+            key: 'loan_period',
         }, {
             field: 'bank',
             title: '贷款银行',
             search: true
         }, {
-            field: 'rate',
+            field: 'bankRate',
             title: '银行利率'
         }, {
-            field: 'dz',
+            field: 'isAdvanceFund',
             title: '是否垫资',
             type: 'select',
             data: [{
-                dkey: '0',
-                dvalue: '否'
+                key: '0',
+                value: '否'
             }, {
-                dkey: '1',
-                dvalue: '是'
+                key: '1',
+                value: '是'
             }],
-            keyName: 'dkey',
-            valueName: 'dvalue',
+            keyName: 'key',
+            valueName: 'value',
             search: true
         }, {
             field: 'saleUserName',
             title: '业务员'
-        }, {
-            field: 'bankSub',
-            title: '银行经办支行'
         }, {
             title: '购车途径',
             field: 'shopWay',
@@ -104,12 +103,9 @@ class Budget extends React.Component {
             field: 'remark',
             title: '备注'
         }];
-        const btnEvent = {
-
-        };
         return this.props.buildList({
             fields,
-            pageCode: 632145,
+            pageCode: 632148,
             searchParams: {
                 roleCode: getRoleCode()
             },
