@@ -138,3 +138,16 @@ export function done(code) {
     operator: getUserId()
   });
 }
+// 制单
+export function makeBill(code) {
+  return fetch(632322, {
+    code,
+    operator: getUserId()
+  });
+}
+// 提醒发起流程
+export function remind(code) {
+  return fetch(632281, {
+    code
+  });
+}

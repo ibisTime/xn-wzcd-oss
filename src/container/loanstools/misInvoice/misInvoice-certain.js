@@ -12,6 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
@@ -124,7 +125,7 @@ class MisInvoiceCertain extends React.Component {
       fields,
       code: this.code,
       view: this.view,
-      detailCode: 632106,
+      detailCode: 632146,
       buttons: [{
         title: '确认',
         check: true,

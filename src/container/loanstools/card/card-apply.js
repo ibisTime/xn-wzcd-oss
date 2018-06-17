@@ -46,7 +46,7 @@ class CancelApply extends React.Component {
         readonly: true
     }, {
         title: '制卡银行',
-        field: '1',
+        field: 'loanBankName',
         readonly: true
     }, {
         title: '状态',

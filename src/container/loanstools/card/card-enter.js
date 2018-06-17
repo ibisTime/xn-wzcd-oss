@@ -52,7 +52,6 @@ class CardEnter extends React.Component {
         }, {
             title: '信用卡号',
             field: 'bankCardNumber',
-            amount: true,
             required: true
         }, {
             title: '备注',

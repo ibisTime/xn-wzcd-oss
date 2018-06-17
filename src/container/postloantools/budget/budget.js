@@ -12,7 +12,8 @@ import {
 import {
     showWarnMsg,
     showSucMsg,
-    getRoleCode
+    getRoleCode,
+    dateTimeFormat
 } from 'common/js/util';
 import {
     Button,
@@ -25,7 +26,8 @@ import {
 import {
     lowerFrame,
     onShelf,
-    sendMsg
+    sendMsg,
+    makeBill
 } from 'api/biz';
 
 @listWrapper(
@@ -51,47 +53,55 @@ class budget extends React.Component {
             search: true
         }, {
             title: '业务编号',
-            field: 'companyCode'
+            field: 'bizCode'
         }, {
             title: '预算金额',
-            field: 'budgetAmount',
+            field: 'amount',
             amount: true
         }, {
             title: '代偿类型',
-            field: 'receiptAccount',
+            field: 'type',
+            type: 'select',
+            key: 'replace_repay_type',
             search: true
         }, {
             title: '收款人名称',
-            field: 'payDatetime'
+            field: 'receiptRealName'
         }, {
             title: '收款人开户行',
-            field: 'budgetAmount'
+            field: 'receiptBank',
+            type: 'select',
+            listCode: '632037',
+            keyName: 'bankCode',
+            valueName: 'bankName'
         }, {
             title: '收款人账号',
-            field: 'budgetAmount'
+            field: 'receiptAccount'
         }, {
             title: '申请人',
-            field: 'payDatetime',
+            field: 'applyUser',
+            type: 'select',
+            listCode: 630066,
+            keyName: 'userId',
+            valueName: 'realName',
             search: true
         }, {
             title: '申请时间',
-            field: 'budgetAmount',
+            field: 'applyDatetime',
+            rangedate: ['applyDateStart', 'applyDateEnd'],
+            type: 'date',
+            render: dateTimeFormat,
             search: true
         }, {
             title: '状态',
-            field: 'budgetAmount',
+            field: 'status',
+            type: 'select',
+            key: 'replace_repay_status',
             search: true
-        }, {
-            title: '剩余代偿金额',
-            field: 'budgetAmount',
-            amount: true
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632108,
-            searchParams: {
-                roleCode: getRoleCode()
-            },
+            pageCode: 632325,
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
@@ -99,7 +109,7 @@ class budget extends React.Component {
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push('/postloantools/budget/apply');
+                        this.props.history.push(`/postloantools/budget/apply?code=${selectedRowKeys[0]}`);
                     }
                 },
                 check: (selectedRowKeys, selectedRows) => {
@@ -107,18 +117,36 @@ class budget extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].status !== '1') {
+                        showWarnMsg('不是dai财务审核状态');
                     } else {
                         this.props.history.push(`/postloantools/budget/check?code=${selectedRowKeys[0]}`);
                     }
                 },
-                prepayment: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push(`/postloantools/budget/prepayment?code=${selectedRowKeys[0]}`);
-                    }
+                makebill: (key, item) => {
+                  if (!key || !key.length || !item || !item.length) {
+                    showWarnMsg('请选择记录');
+                  } else if (item[0].status !== '2') {
+                    showWarnMsg('该状态不可制单');
+                  } else {
+                    Modal.confirm({
+                      okText: '确认',
+                      cancelText: '取消',
+                      content: '确定制单？',
+                      onOk: () => {
+                        this.props.doFetching();
+                        return makeBill(key[0]).then(() => {
+                          this.props.getPageData();
+                          showWarnMsg('操作成功');
+                          setTimeout(() => {
+                              this.props.getPageData();
+                          }, 500);
+                        }).catch(() => {
+                          this.props.cancelFetching();
+                        });
+                      }
+                    });
+                  }
                 }
             }
         });

@@ -29,32 +29,32 @@ class MisInvoiceAddedit extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'companyCode'
-        }, {
+            field: 'customerName'
+          }, {
             title: '业务编号',
-            field: 'receiptBank'
-        }, {
+            field: 'code'
+          }, {
             title: '身份证',
-            field: 'receiptAccount'
-        }, {
+            field: '22'
+          }, {
             title: '贷款金额',
-            field: 'receiptAccount',
+            field: 'loanAmount',
             amount: true
-        }, {
+          }, {
             title: '贷款银行',
-            field: 'receiptAccount'
-        }, {
+            field: 'loanBankName'
+          }, {
             title: '征信结果',
-            field: 'receiptAccount'
-        }, {
+            field: '33'
+          }, {
             title: '预算单',
-            field: 'receiptAccount'
-        }];
+            field: '44'
+          }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632106
+            detailCode: 632146
         });
     }
 }

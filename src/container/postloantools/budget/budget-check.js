@@ -12,6 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
@@ -35,67 +36,69 @@ class budgetCheck extends React.Component {
     render() {
         const fields = [{
             title: '代偿性质',
-            field: 'companyCode',
+            field: 'type',
+            type: 'select',
+            key: 'replace_repay_type',
             readonly: true
         }, {
             title: '业务编号',
-            field: 'receiptBank',
+            field: 'bizCode',
             readonly: true
         }, {
             title: '预算金额',
-            field: 'receiptAccount',
+            field: 'amount',
             amount: true,
             readonly: true
         }, {
-            title: '预算金额大写',
-            field: 'budgetAmount',
-            readonly: true
-        }, {
             title: '收款人姓名',
-            field: 'useDatetime',
+            field: 'receiptRealName',
             readonly: true
         }, {
             title: '收款人开户行',
-            field: 'useDatetime',
+            field: 'receiptBank',
+            type: 'select',
+            listCode: '632037',
+            keyName: 'bankCode',
+            valueName: 'bankName',
             readonly: true
         }, {
             title: '收款人账号',
-            field: 'useDatetime',
-            readonly: true
-        }, {
-            title: '申请人',
-            field: 'useDatetime',
-            readonly: true
-        }, {
-            title: '申请时间',
-            field: 'useDatetime',
-            type: 'date',
+            field: 'receiptAccount',
             readonly: true
         }, {
             title: '是否加急',
-            field: 'useDatetime',
+            field: 'isUrgent',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value',
             readonly: true
         }, {
-            title: '代偿说明',
-            field: 'useDatetime',
+            title: '申请说明',
+            field: 'applyNote',
             readonly: true
         }, {
             title: '审核说明',
-            field: 'financeCheckNote',
-            readonly: true
+            field: 'financeCheckNote'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632106,
+            detailCode: 632326,
             buttons: [{
               title: '通过',
               handler: (param) => {
                 param.approveResult = '1';
-                param.approveUser = getUserId();
+                param.operator = getUserId();
                 this.props.doFetching();
-                fetch(632101, param).then(() => {
+                fetch(632321, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {
@@ -110,9 +113,9 @@ class budgetCheck extends React.Component {
               handler: (param) => {
                 param.approveResult = '0';
                 param.approveNote = this.projectCode;
-                param.approveUser = getUserId();
+                param.operator = getUserId();
                 this.props.doFetching();
-                fetch(632101, param).then(() => {
+                fetch(632321, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {
