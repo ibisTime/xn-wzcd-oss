@@ -1184,29 +1184,17 @@ class BudgetAddedit extends React.Component {
                             required: true,
                             readonly: true
                         }, {
-                            title: '单位名称',
+                            title: '户名',
                             field: 'companyName',
-                            readonly: true,
                             required: true
                         }, {
                             title: '账号',
                             field: 'accountCode',
-                            type: 'select',
-                            listCode: 632007,
-                            params: {type: 3},
-                            keyName: 'bankcardNumber',
-                            valueName: '{{companyCode.DATA}}-{{bankName.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
-                            required: true,
-                            onChange: (v, data, props) => {
-                                props.setPageData({
-                                    companyName: data.companyCode,
-                                    subbranch: data.subbranch
-                                });
-                            }
+                            bankCard: true,
+                            required: true
                         }, {
                             title: '开户行',
                             field: 'subbranch',
-                            readonly: true,
                             required: true
                         }]
                     }
