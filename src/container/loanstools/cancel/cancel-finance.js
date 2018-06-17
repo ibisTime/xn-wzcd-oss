@@ -81,10 +81,13 @@ class CancelFinance extends React.Component {
             amount: true,
             required: true
         }, {
-            title: '收款银行',
+            title: '收款账号',
             field: 'zfSkBankcardCode',
             type: 'select',
             listCode: 632007,
+            params: {
+                type: 1
+            },
             keyName: 'code',
             valueName: '{{bankCode.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
             required: true

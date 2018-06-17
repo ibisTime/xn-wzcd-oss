@@ -73,7 +73,7 @@ class AdvMoneyApply extends React.Component {
             readonly: true
         }, {
             title: '是否垫资',
-            filed: 'isAdvanceFund',
+            field: 'isAdvanceFund',
             type: 'select',
             data: [{
                 key: '0',
@@ -87,7 +87,7 @@ class AdvMoneyApply extends React.Component {
             required: true
         }, {
             title: '收款单位名称',
-            filed: '111',
+            field: '111',
             readonly: true
         }, {
             title: '收款银行账号',

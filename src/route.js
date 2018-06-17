@@ -760,8 +760,14 @@ const ROUTES = [
 
   //  发起垫资 省分公司总经理审核
   {
-    path: '/loan/advMoney/areaCheck',
-    component: asyncComponent(() => import('container/loan/advMoney/advMoney-areaCheck'))
+    path: '/loan/advMoney/compCheck',
+    component: asyncComponent(() => import('container/loan/advMoney/advMoney-compCheck'))
+  },
+
+  //  发起垫资 申请撤销
+  {
+    path: '/loan/advMoney/revoke',
+    component: asyncComponent(() => import('container/loan/advMoney/advMoney-revoke'))
   },
 
   //  垫资审核
