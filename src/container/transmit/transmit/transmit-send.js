@@ -119,6 +119,7 @@ class transmitAddedit extends React.Component {
             buttons: [{
                 title: '确认',
                 handler: (param) => {
+                    param.sendFileList = '123';
                     fetch(632150, param).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
