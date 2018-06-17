@@ -290,6 +290,7 @@ import { loanstoolsMisInvoice } from './redux/loanstools/misInvoice';
 import { loanstoolsMisInvoiceAddedit } from './redux/loanstools/misInvoice-addedit';
 import { loanstoolsMisInvoiceApply } from './redux/loanstools/misInvoice-apply';
 import { loanstoolsMisInvoiceCheck } from './redux/loanstools/misInvoice-check';
+import { loanstoolsMisInvoiceCheckTwo } from './redux/loanstools/misInvoice-checkTwo';
 import { loanstoolsMisInvoiceCertain } from './redux/loanstools/misInvoice-certain';
 
 //  返点支付 + 详情 + 制单 + 确认
@@ -611,6 +612,7 @@ export default combineReducers({
   loanstoolsMisInvoiceAddedit,
   loanstoolsMisInvoiceApply,
   loanstoolsMisInvoiceCheck,
+  loanstoolsMisInvoiceCheckTwo,
   loanstoolsMisInvoiceCertain,
   loanstoolsRebates,
   loanstoolsRebatesAddedit,

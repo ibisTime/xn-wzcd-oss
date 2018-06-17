@@ -11,7 +11,8 @@ import {
 } from '@redux/loanstools/misInvoice';
 import {
   showWarnMsg,
-  showSucMsg
+  showSucMsg,
+  dateTimeFormat
 } from 'common/js/util';
 import {
   Button,
@@ -51,62 +52,92 @@ class misInvoice extends React.Component {
         }, {
             title: '业务公司',
             field: 'companyCode',
+            listCode: 630106,
+            params: {
+                typeList: [1]
+            },
+            type: 'select',
+            keyName: 'code',
+            valueName: 'name',
             search: true
         }, {
             title: '客户姓名',
-            field: 'companyCode',
+            field: 'customerName',
             search: true
         }, {
             title: '汽车经销商',
-            field: 'budgetAmount',
+            field: 'carDealerName',
             search: true
         }, {
             title: '车辆型号',
-            field: 'receiptAccount'
+            field: 'carModel',
+            type: 'select',
+            listCode: 630426,
+            keyName: 'code',
+            valueName: 'name'
         }, {
             title: '车辆价格',
-            field: 'receiptBank',
+            field: '11',
             amount: true
         }, {
             title: '贷款金额',
-            field: 'receiptBank',
+            field: 'loanAmount',
             amount: true
         }, {
             title: '期数',
-            field: 'receiptBank'
+            field: '22'
         }, {
             title: '贷款银行',
-            field: 'receiptBank',
+            field: 'loanBankCode',
+            type: 'select',
+            listCode: 632037,
+            keyName: 'bankCode',
+            valueName: 'bankName',
             search: true
         }, {
             title: '银行利率',
-            field: 'receiptBank'
+            field: 'bankRate'
         }, {
             title: '是否垫资',
-            field: 'receiptBank',
+            field: 'isAdvanceFund',
             type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value',
             search: true
         }, {
             title: '业务员',
-            field: 'receiptBank'
+            field: 'saleUserName'
         }, {
             title: '银行经办支行',
-            field: 'receiptBank'
+            field: 'insuranceBank'
         }, {
             title: '购车途径',
-            field: 'receiptBank'
+            field: 'shopWay'
         }, {
             title: '申请时间',
-            field: 'receiptBank'
-        }, {
-            title: '办理状态',
-            field: 'receiptBank',
-            type: 'select',
+            field: 'applyDatetime',
+            rangedate: ['applyDateStart', 'applyDateEnd'],
+            type: 'date',
+            render: dateTimeFormat,
             search: true
+        }, {
+            title: '当前节点',
+            field: 'curNodeCode',
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632105,
+            pageCode: 632145,
             btnEvent: {
               apply: (selectedRowKeys, selectedRows) => {
                 this.props.history.push(`/loanstools/misInvoice/apply?code=${selectedRowKeys[0]}`);
@@ -118,6 +149,15 @@ class misInvoice extends React.Component {
                   showWarnMsg('请选择一条记录');
                 } else {
                   this.props.history.push(`/loanstools/misInvoice/check?code=${selectedRowKeys[0]}`);
+                }
+              },
+              checkTwo: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys.length) {
+                  showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                  showWarnMsg('请选择一条记录');
+                } else {
+                  this.props.history.push(`/loanstools/misInvoice/checkTwo?code=${selectedRowKeys[0]}`);
                 }
               },
               certain: (selectedRowKeys, selectedRows) => {

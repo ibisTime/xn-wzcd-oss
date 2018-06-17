@@ -145,3 +145,9 @@ export function makeBill(code) {
     operator: getUserId()
   });
 }
+// 提醒发起流程
+export function remind(code) {
+  return fetch(632281, {
+    code
+  });
+}

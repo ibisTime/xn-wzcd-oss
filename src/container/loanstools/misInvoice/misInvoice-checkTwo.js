@@ -6,7 +6,7 @@ import {
   setSelectData,
   setPageData,
   restore
-} from '@redux/loanstools/misInvoice-check';
+} from '@redux/loanstools/misInvoice-checkTwo';
 import {
   getQueryString,
   showSucMsg,
@@ -18,7 +18,7 @@ import {
 } from 'common/js/build-detail';
 
 @DetailWrapper(
-  state => state.loanstoolsMisInvoiceCheck, {
+  state => state.loanstoolsMisInvoiceCheckTwo, {
     initStates,
     doFetching,
     cancelFetching,
@@ -27,7 +27,7 @@ import {
     restore
   }
 )
-class MisInvoiceCheck extends React.Component {
+class MisInvoiceCheckTwo extends React.Component {
   constructor(props) {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
@@ -78,7 +78,7 @@ class MisInvoiceCheck extends React.Component {
           param.approveResult = '1';
           param.operator = getUserId();
           this.props.doFetching();
-          fetch(632231, param).then(() => {
+          fetch(632232, param).then(() => {
             showSucMsg('操作成功');
             this.props.cancelFetching();
             setTimeout(() => {
@@ -89,20 +89,10 @@ class MisInvoiceCheck extends React.Component {
         check: true,
         type: 'primary'
       }, {
-        title: '不通过',
+        title: '重写预算单',
         handler: (param) => {
-          param.approveResult = '0';
-          param.operator = getUserId();
-          this.props.doFetching();
-          fetch(632231, param).then(() => {
-            showSucMsg('操作成功');
-            this.props.cancelFetching();
-            setTimeout(() => {
-              this.props.history.go(-1);
-            }, 1000);
-          }).catch(this.props.cancelFetching);
-        },
-        check: true
+          showSucMsg('待完善');
+        }
       }, {
         title: '返回',
         handler: (param) => {
@@ -113,4 +103,4 @@ class MisInvoiceCheck extends React.Component {
   }
 }
 
-export default MisInvoiceCheck;
+export default MisInvoiceCheckTwo;

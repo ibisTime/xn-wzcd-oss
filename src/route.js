@@ -1030,6 +1030,12 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loanstools/misInvoice/misInvoice-check'))
   },
 
+  //  发票不匹配 二审
+  {
+      path: '/loanstools/misInvoice/checkTwo',
+      component: asyncComponent(() => import('container/loanstools/misInvoice/misInvoice-checkTwo'))
+  },
+
   //  发票不匹配 确认放款
   {
       path: '/loanstools/misInvoice/certain',

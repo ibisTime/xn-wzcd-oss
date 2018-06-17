@@ -12,6 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
   DetailWrapper
 } from 'common/js/build-detail';
@@ -36,25 +37,25 @@ class TakeEnter extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'companyCode',
+            field: 'customerName',
             select: true,
             readonly: true
         }, {
             title: '业务编号',
-            field: 'receiptBank',
+            field: 'code',
             readonly: true
         }, {
             title: '身份证',
-            field: 'receiptAccount',
+            field: '11',
             readonly: true
         }, {
             title: '贷款金额',
-            field: 'receiptAccount',
+            field: 'loanAmount',
             readonly: true,
             amount: true
         }, {
             title: '贷款银行',
-            field: 'receiptAccount',
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '应收金额',
@@ -64,37 +65,37 @@ class TakeEnter extends React.Component {
             required: true
         }, {
             title: '收款金额',
-            field: 'receiptAccount',
-            required: true,
-            amount: true
-        }, {
-            title: '11',
-            field: 'receiptAccount',
-            required: true,
-            amount: true
+            field: 'zfSkAmount',
+            amount: true,
+            required: true
         }, {
             title: '收款账号',
-            field: 'receiptAccount'
+            field: 'zfSkBankcardCode',
+            type: 'select',
+            listCode: 632007,
+            keyName: 'code',
+            valueName: 'bankcardNumber',
+            required: true
         }, {
             title: '收款时间',
-            field: 'dzDatetime',
+            field: 'zfSkReceiptDatetime',
             type: 'date',
-            amount: true
+            required: true
         }, {
             title: '备注',
-            field: 'receiptAccount'
+            field: 'zfFinanceRemark'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632106,
+            detailCode: 632146,
             buttons: [{
                 title: '确认',
                 check: true,
                 handler: (params) => {
                     this.props.doFetching();
-                    fetch(632102, params).then(() => {
+                    fetch(632280, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {
