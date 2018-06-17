@@ -58,7 +58,6 @@ class InvoiceEnter extends React.Component {
             readonly: true,
             required: true,
             formatter: (v, data) => {
-                this.hiddenStatus = data.shopWay === '2';
                 return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName + '-' + data.bankCardNumber);
             }
         }, {
@@ -67,7 +66,10 @@ class InvoiceEnter extends React.Component {
             type: 'select',
             key: 'budget_orde_biz_typer',
             readonly: true,
-            required: true
+            required: true,
+            onChange: (value) => {
+                this.hiddenStatus = value === '1';
+            }
         }, {
             title: '是否垫资',
             field: 'isAdvanceFund',
@@ -144,7 +146,7 @@ class InvoiceEnter extends React.Component {
             title: '机动车登记证书',
             field: 'motorRegCertification',
             required: true,
-            hidden: this.shopWay === '2',
+            hidden: this.hiddenStatus,
             type: 'img'
         }, {
             title: '批单',

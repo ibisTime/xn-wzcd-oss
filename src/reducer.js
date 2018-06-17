@@ -260,7 +260,7 @@ import { loanstoolsCancel } from './redux/loanstools/cancel';
 import { loanstoolsCancelAddedit } from './redux/loanstools/cancel-addedit';
 import { loanstoolsCancelApply } from './redux/loanstools/cancel-apply';
 import { loanstoolsCancelCheck } from './redux/loanstools/cancel-check';
-import { loanstoolsCancelCertain } from './redux/loanstools/cancel-certain';
+import { loanstoolsCancelFinance } from './redux/loanstools/cancel-finance';
 
 //  收回垫资款 + 详情 + 贷款回录
 import { loanstoolsTake } from './redux/loanstools/take';
@@ -595,7 +595,7 @@ export default combineReducers({
   loanstoolsCancelAddedit,
   loanstoolsCancelApply,
   loanstoolsCancelCheck,
-  loanstoolsCancelCertain,
+  loanstoolsCancelFinance,
   loanstoolsTake,
   loanstoolsTakeAddedit,
   loanstoolsTakeEnter,
