@@ -659,12 +659,6 @@ const ROUTES = [
       component: asyncComponent(() => import('container/basis/dealer/dealer-addedit'))
   },
 
-  //  经销商管理 审核
-  {
-      path: '/basis/dealer/check',
-      component: asyncComponent(() => import('container/basis/dealer/dealer-check'))
-  },
-
   //  我司贷款成数比例
   {
       path: '/basis/loanPercent',

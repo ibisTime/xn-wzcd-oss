@@ -127,7 +127,6 @@ class CreditStartAddedit extends React.Component {
         let entryResultFields = [{
             title: '银行查询结果',
             field: 'bankResult',
-            hidden: true,
             render: (text, record) => {
                 return (
                     <span><a href="javascript:;" onClick={() => this.setEnteringVisible(true, record.code)}>录入</a></span>
@@ -209,6 +208,7 @@ class CreditStartAddedit extends React.Component {
         // 银行录入结果
         if (this.isEntry) {
             o2mFields = o2mFields.concat(entryResultFields);
+            console.log(o2mFields);
 
             buttons = [{
                 title: '录入',

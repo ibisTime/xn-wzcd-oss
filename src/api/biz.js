@@ -151,3 +151,11 @@ export function remind(code) {
     code
   });
 }
+// 详情查经销商管理
+export function getJxsDetail(code) {
+  return fetch(632066, { code });
+}
+// 列表查询银行
+export function getBankList() {
+  return fetch(802116);
+}

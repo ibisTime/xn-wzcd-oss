@@ -10,16 +10,17 @@ import {
     setSearchData
 } from '@redux/loanstools/cancel';
 import {
-  showWarnMsg,
-  showSucMsg
+    showWarnMsg,
+    showSucMsg,
+    getRoleCode
 } from 'common/js/util';
 import {
     listWrapper
 } from 'common/js/build-list';
 import {
-  lowerFrame,
-  onShelf,
-  sendMsg
+    lowerFrame,
+    onShelf,
+    sendMsg
 } from 'api/biz';
 
 @listWrapper(
@@ -81,29 +82,32 @@ class cancel extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632145,
+            pageCode: 632148,
+            searchParams: {
+                roleCode: getRoleCode()
+            },
             btnEvent: {
-              apply: (selectedRowKeys, selectedRows) => {
-                this.props.history.push(`/loanstools/cancel/apply`);
-              },
-              check: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loanstools/cancel/check?code=${selectedRowKeys[0]}`);
+                apply: (selectedRowKeys, selectedRows) => {
+                    this.props.history.push(`/loanstools/cancel/apply`);
+                },
+                check: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loanstools/cancel/check?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                finance: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loanstools/cancel/finance?code=${selectedRowKeys[0]}`);
+                    }
                 }
-              },
-              finance: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loanstools/cancel/finance?code=${selectedRowKeys[0]}`);
-                }
-              }
             }
         });
     }

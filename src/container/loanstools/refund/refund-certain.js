@@ -134,9 +134,12 @@ class RefundCertain extends React.Component {
             title: '付款银行',
             field: 'shouldBackBankcardCode',
             type: 'select',
-            listCode: 632057,
+            listCode: 632007,
+            params: {
+                type: 1
+            },
             keyName: 'code',
-            valueName: '{{bankName.DATA}}-{{abbrName.DATA}}',
+            valueName: '{{bankCode.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
             required: true
         }, {
             title: '付款凭证',
@@ -153,8 +156,13 @@ class RefundCertain extends React.Component {
                 title: '确认',
                 check: true,
                 handler: (params) => {
+                    let data = {};
+                    data.code = this.code;
+                    data.shouldBackDatetime = params.shouldBackDatetime;
+                    data.shouldBackBankcardCode = params.shouldBackBankcardCode;
+                    data.shouldBackBillPdf = params.shouldBackBillPdf;
                     this.props.doFetching();
-                    fetch(632102, params).then(() => {
+                    fetch(632260, data).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {
