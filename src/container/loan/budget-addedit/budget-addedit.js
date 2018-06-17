@@ -194,10 +194,10 @@ class BudgetAddedit extends React.Component {
                     onChange: (v, data) => {
                         this.carDealerSelectData = data;
                         let params = this.getCustomerFeeTotal({
-                            lyAmount: data.CarDealerProtocolList[0].lyAmountFee,
-                            fxAmount: data.CarDealerProtocolList[0].assureFee,
-                            gpsFee: data.CarDealerProtocolList[0].gpsFee,
-                            otherFee: data.CarDealerProtocolList[0].otherFee
+                            lyAmount: data.carDealerProtocolList[0].lyAmountFee,
+                            fxAmount: data.carDealerProtocolList[0].assureFee,
+                            gpsFee: data.carDealerProtocolList[0].gpsFee,
+                            otherFee: data.carDealerProtocolList[0].otherFee
                         });
                         this.props.doFetching();
                         fetch(632290, {

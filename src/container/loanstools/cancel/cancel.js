@@ -14,11 +14,6 @@ import {
   showSucMsg
 } from 'common/js/util';
 import {
-  Button,
-  Upload,
-  Modal
-} from 'antd';
-import {
     listWrapper
 } from 'common/js/build-list';
 import {
@@ -50,34 +45,46 @@ class cancel extends React.Component {
             search: true
         }, {
             title: '客户姓名',
-            field: 'companyCode',
+            field: 'customerName',
             search: true
         }, {
             title: '作废原因',
-            field: 'budgetAmount'
+            field: 'zfReason'
         }, {
             title: '是否垫资',
-            field: 'receiptAccount',
-            search: true
+            field: 'isAdvanceFund',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value'
         }, {
             title: '申请人',
-            field: 'receiptBank',
+            field: 'applyUser',
             search: true
         }, {
             title: '申请日期',
-            field: 'useDatetime',
+            field: 'applyDatetime',
             type: 'date'
         }, {
-            title: '办理状态',
-            field: 'name',
-            search: true
+            title: '当前节点',
+            field: 'curNodeCode',
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632105,
+            pageCode: 632145,
             btnEvent: {
               apply: (selectedRowKeys, selectedRows) => {
-                this.props.history.push(`/loanstools/cancel/apply?code=${selectedRowKeys[0]}`);
+                this.props.history.push(`/loanstools/cancel/apply`);
               },
               check: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
@@ -88,13 +95,13 @@ class cancel extends React.Component {
                   this.props.history.push(`/loanstools/cancel/check?code=${selectedRowKeys[0]}`);
                 }
               },
-              certain: (selectedRowKeys, selectedRows) => {
+              finance: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
                   showWarnMsg('请选择记录');
                 } else if (selectedRowKeys.length > 1) {
                   showWarnMsg('请选择一条记录');
                 } else {
-                  this.props.history.push(`/loanstools/cancel/certain?code=${selectedRowKeys[0]}`);
+                  this.props.history.push(`/loanstools/cancel/finance?code=${selectedRowKeys[0]}`);
                 }
               }
             }

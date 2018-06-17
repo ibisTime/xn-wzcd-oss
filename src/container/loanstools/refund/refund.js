@@ -10,21 +10,21 @@ import {
     setSearchData
 } from '@redux/loanstools/refund';
 import {
-  showWarnMsg,
-  showSucMsg
+    showWarnMsg,
+    showSucMsg
 } from 'common/js/util';
 import {
-  Button,
-  Upload,
-  Modal
+    Button,
+    Upload,
+    Modal
 } from 'antd';
 import {
     listWrapper
 } from 'common/js/build-list';
 import {
-  lowerFrame,
-  onShelf,
-  sendMsg
+    lowerFrame,
+    onShelf,
+    sendMsg
 } from 'api/biz';
 
 @listWrapper(
@@ -46,58 +46,54 @@ class refund extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
-            field: 'code'
+            field: 'code',
+            search: true
         }, {
             title: '客户姓名',
-            field: 'companyCode',
+            field: 'customerName',
             search: true
         }, {
             title: '贷款银行',
-            field: 'budgetAmount',
-            search: true
+            field: 'loanBankName',
+            readonly: true,
+            required: true,
+            render: (v, data) => {
+                return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName + '-' + data.bankCardNumber);
+            }
         }, {
             title: '放款日期',
             field: 'useDatetime',
             type: 'date',
             search: true
         }, {
-            title: '贷款金额',
-            field: 'receiptAccount',
+            title: '贷款额',
+            field: 'loanAmount',
             amount: true
         }, {
             title: '应退按揭款',
             field: 'receiptAccount',
             amount: true
         }, {
-            title: '办理状态',
-            field: 'name',
-            search: true
+            title: '当前节点',
+            field: 'curNodeCode',
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632105,
+            pageCode: 632145,
             btnEvent: {
-              apply: (selectedRowKeys, selectedRows) => {
-                this.props.history.push(`/loanstools/refund/apply?code=${selectedRowKeys[0]}`);
-              },
-              check: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loanstools/refund/check?code=${selectedRowKeys[0]}`);
+                certain: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loanstools/refund/certain?code=${selectedRowKeys[0]}`);
+                    }
                 }
-              },
-              certain: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loanstools/refund/certain?code=${selectedRowKeys[0]}`);
-                }
-              }
             }
         });
     }

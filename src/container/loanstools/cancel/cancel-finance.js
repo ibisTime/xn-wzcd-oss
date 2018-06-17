@@ -6,19 +6,20 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/loanstools/cancel-certain';
+} from '@redux/loanstools/cancel-finance';
 import {
-  getQueryString,
-  showSucMsg,
-  getUserId
+    getQueryString,
+    showSucMsg,
+    getUserId,
+    moneyFormat
 } from 'common/js/util';
 import {
-  DetailWrapper
+    DetailWrapper
 } from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
+import fetch from 'common/js/fetch';
 
 @DetailWrapper(
-    state => state.loanstoolsCancelCertain, {
+    state => state.loanstoolsCancelFinance, {
         initStates,
         doFetching,
         cancelFetching,
@@ -27,69 +28,88 @@ import {
         restore
     }
 )
-class CancelCertain extends React.Component {
+class CancelFinance extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
     }
+
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'companyCode'
+            field: 'customerName',
+            readonly: true
         }, {
             title: '业务编号',
-            field: 'receiptBank'
+            field: 'code',
+            readonly: true
+        }, {
+            title: '作废原因',
+            field: 'zfReason',
+            type: 'textarea',
+            normalArea: true,
+            readonly: true
         }, {
             title: '身份证',
-            field: 'receiptAccount'
+            field: 'idNo',
+            readonly: true
         }, {
             title: '贷款金额',
-            field: 'receiptAccount',
+            field: 'loanAmount',
+            readonly: true,
             amount: true
         }, {
             title: '贷款银行',
-            field: 'receiptAccount'
+            field: 'loanBankName',
+            required: true,
+            readonly: true,
+            formatter: (v, data) => {
+                return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName + '-' + data.bankCardNumber);
+            }
         }, {
             title: '应收金额',
             field: 'receiptAccount',
-            amount: true
+            required: true,
+            readonly: true,
+            formatter: (v, data) => {
+                return moneyFormat(data.loanAmount);
+            }
         }, {
             title: '收款金额',
-            field: 'receiptAccount',
+            field: 'zfSkAmount',
             amount: true,
             required: true
         }, {
             title: '收款银行',
-            field: 'payBank',
-            pageCode: 802115,
-            keyName: 'bankCode',
-            valueName: 'bankName',
-            type: 'select'
-        }, {
-            title: '收款账号',
-            field: 'receiptAccount'
+            field: 'zfSkBankcardCode',
+            type: 'select',
+            listCode: 632007,
+            keyName: 'code',
+            valueName: '{{bankCode.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
+            required: true
         }, {
             title: '收款时间',
-            field: 'payDatetime',
+            field: 'zfSkReceiptDatetime',
             type: 'date',
             required: true
         }, {
             title: '备注',
-            field: 'receiptAccount',
-            required: true
+            field: 'zfFinanceRemark'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632106,
+            detailCode: 632146,
             buttons: [{
                 title: '确认',
                 check: true,
                 handler: (params) => {
+                    params.code = this.code;
+                    params.operator = getUserId();
                     this.props.doFetching();
-                    fetch(632102, params).then(() => {
+                    fetch(632272, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {
@@ -107,4 +127,4 @@ class CancelCertain extends React.Component {
     }
 }
 
-export default CancelCertain;
+export default CancelFinance;

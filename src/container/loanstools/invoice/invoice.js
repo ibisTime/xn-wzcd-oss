@@ -64,7 +64,7 @@ class invoice extends React.Component {
             field: 'useDatetime',
             type: 'datetime'
         }, {
-            title: '发保和预警天数',
+            title: '发保合预警天数',
             field: 'name'
         }, {
             title: '车辆发票价',
@@ -96,16 +96,8 @@ class invoice extends React.Component {
             keyName: 'code',
             valueName: 'name'
         }, {
-            title: '更新人',
-            field: 'budgetAmount'
-        }, {
-            title: '跟新时间',
-            field: 'useDatetime',
-            type: 'datetime'
-        }, {
             title: '备注',
-            field: 'budgetAmount',
-            amount: true
+            field: 'fbhRemark'
         }];
         return this.props.buildList({
             fields,

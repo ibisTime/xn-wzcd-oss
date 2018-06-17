@@ -885,36 +885,6 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loanstools/estimate/estimate-certain'))
   },
 
-  //  客户作废
-  {
-      path: '/loanstools/cancel',
-      component: asyncComponent(() => import('container/loanstools/cancel/cancel'))
-  },
-
-  //  客户作废 详情
-  {
-      path: '/loanstools/cancel/addedit',
-      component: asyncComponent(() => import('container/loanstools/cancel/cancel-addedit'))
-  },
-
-  //  客户作废 申请
-  {
-      path: '/loanstools/cancel/apply',
-      component: asyncComponent(() => import('container/loanstools/cancel/cancel-apply'))
-  },
-
-  //  客户作废 审核
-  {
-      path: '/loanstools/cancel/check',
-      component: asyncComponent(() => import('container/loanstools/cancel/cancel-check'))
-  },
-
-  //  客户作废 确认放款
-  {
-      path: '/loanstools/cancel/certain',
-      component: asyncComponent(() => import('container/loanstools/cancel/cancel-certain'))
-  },
-
   //  收回垫资款
   {
       path: '/loanstools/take',
@@ -1158,8 +1128,8 @@ const ROUTES = [
 
   //  客户作废 确认放款
   {
-      path: '/loanstools/cancel/certain',
-      component: asyncComponent(() => import('container/loanstools/cancel/cancel-certain'))
+      path: '/loanstools/cancel/finance',
+      component: asyncComponent(() => import('container/loanstools/cancel/cancel-finance'))
   },
 
   //  收回垫资款
