@@ -53,7 +53,7 @@ class AdvMoneyAreaCheck extends React.Component {
             readonly: true
         }, {
             title: '申请撤销',
-            filed: '1',
+            field: '1',
             readonly: true
         }, {
             title: '征信结果',
