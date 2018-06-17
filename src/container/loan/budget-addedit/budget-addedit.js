@@ -30,14 +30,38 @@ class BudgetAddedit extends React.Component {
             isAdvanceFund: false
         };
         this.code = getQueryString('code', this.props.location.search);
+        this.companyCode = getQueryString('companyCode', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.isCheckCommissioner = !!getQueryString('isCheckCommissioner', this.props.location.search);
-        this.isCheckDirector = !!getQueryString('isCheckDirector', this.props.location.search);
+        // 申请
+        this.isApply = !!getQueryString('isApply', this.props.location.search);
         // 撤销
         this.isRevoke = !!getQueryString('isRevoke', this.props.location.search);
+        // 区域总经理审查
+        this.isAreaCheck = !!getQueryString('isAreaCheck', this.props.location.search);
+        // 分公司总经理审查
+        this.isCompCheck = !!getQueryString('isCompCheck', this.props.location.search);
+        // 二审
+        this.isCheck = !!getQueryString('isCheck', this.props.location.search);
         // 当前选中汽车经销商
         this.carDealerSelectData = {};
+        // 银行利率明细列表
         this.bankRateList = [];
+        // 收款账户
+        this.receivables = {};
+        // 应退按揭款
+        this.repointDetailList1 = [];
+    }
+
+    componentDidMount() {
+        if (this.isApply) {
+            this.props.doFetching();
+            fetch(632007, {
+                companyCode: this.companyCode,
+                type: 1
+            }).then((data) => {
+                this.receivables = data[0];
+            }).catch(this.props.cancelFetching);
+        }
     }
 
     // 我司贷款成数： 贷款金额 / 发票价格
@@ -107,7 +131,30 @@ class BudgetAddedit extends React.Component {
         };
     }
 
+    // 应退按揭款合计 = 贷款金额 - 收客户手续费（按揭款扣）- GPS费（按揭款扣）- 厂家贴息
+    getRefundAmount = (params) => {
+        let loanAmount = moneyParse(params.loanAmount || 0) / 1000;
+        let cardealerSubsidy = moneyParse(params.cardealerSubsidy || 0) / 1000;
+        let otherFee = moneyParse(params.otherFee || 0) / 1000;
+        let gpsFee = moneyParse(params.gpsFee || 0) / 1000;
+        let refund = 0;
+
+        if (loanAmount && cardealerSubsidy) {
+            refund = loanAmount - cardealerSubsidy - gpsFee - otherFee;
+        }
+
+        return refund;
+    }
+
     render() {
+        if (this.props.pageData.gpsList) {
+            let gpsList = [];
+            this.props.pageData.gpsList.forEach((v) => {
+                gpsList.push({
+                    code: v.code
+                });
+            });
+        }
         let fields = [{
             title: '预算单信息',
             items: [
@@ -147,19 +194,43 @@ class BudgetAddedit extends React.Component {
                     onChange: (v, data) => {
                         this.carDealerSelectData = data;
                         let params = this.getCustomerFeeTotal({
-                            lyAmount: data.CarDealerProtocolList.lyAmountFee,
-                            fxAmount: data.CarDealerProtocolList.assureFee,
-                            gpsFee: data.CarDealerProtocolList.gpsFee,
-                            otherFee: data.CarDealerProtocolList.otherFee
+                            lyAmount: data.CarDealerProtocolList[0].lyAmountFee,
+                            fxAmount: data.CarDealerProtocolList[0].assureFee,
+                            gpsFee: data.CarDealerProtocolList[0].gpsFee,
+                            otherFee: data.CarDealerProtocolList[0].otherFee
                         });
-                        this.props.setPageData({
-                            ...this.props.pageData,
-                            lyAmountFee: params.lyAmount,
-                            assureFee: params.fxAmount,
-                            gpsFee: params.gpsFee,
-                            otherFee: params.otherFee,
-                            customerFeeTotal: params.customerFeeTotal
-                        });
+                        this.props.doFetching();
+                        fetch(632290, {
+                            budgetOrderCode: this.code,
+                            carDealerCode: data.code
+                        }).then((data) => {
+                            this.props.cancelFetching();
+                            let detailList1 = [];
+                            let detailList2 = [];
+                            let detailList3 = [];
+                            data.map((item) => {
+                                item.repointAmountL = moneyUppercase(item.repointAmount);
+                                if (item.useMoneyPurpose === '1') {
+                                    detailList1.push(item);
+                                } else if (item.useMoneyPurpose === '2') {
+                                    detailList2.push(item);
+                                } else if (item.useMoneyPurpose === '3') {
+                                    detailList3.push(item);
+                                }
+                            });
+                            this.repointDetailList1 = detailList1;
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                lyAmountFee: params.lyAmount,
+                                assureFee: params.fxAmount,
+                                gpsFee: params.gpsFee,
+                                otherFee: params.otherFee,
+                                customerFeeTotal: params.customerFeeTotal,
+                                repointDetailList1: detailList1,
+                                repointDetailList2: detailList2,
+                                repointDetailList3: detailList3
+                            });
+                        }).catch(this.props.cancelFetching);
                     }
                 }, {
                     title: '贷款银行',
@@ -170,7 +241,7 @@ class BudgetAddedit extends React.Component {
                         if (this.bankRateList.length < 1 && data.bankSubbranch) {
                             this.bankRateList = data.bankSubbranch.bank.bankRateList;
                         }
-                        return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName);
+                        return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName + '-' + data.bankCardNumber);
                     }
                 }, {
                     title: '厂商指导价',
@@ -222,36 +293,64 @@ class BudgetAddedit extends React.Component {
                     key: 'rate_type',
                     required: true
                 }, {
-                //     title: '利率类型',
-                //     field: 'rateType',
-                //     type: 'selectInput',
-                //     isRelation: true,
-                //     isOnlySub: 'input',
-                //     valueInput: 'key',
-                //     required: true
-                // }, {
+                    //     title: '利率类型',
+                    //     field: 'rateType',
+                    //     type: 'selectInput',
+                    //     isRelation: true,
+                    //     isOnlySub: 'input',
+                    //     valueInput: 'key',
+                    //     required: true
+                    // }, {
                     title: '贷款金额',
                     field: 'loanAmount',
                     amount: true,
                     required: true,
                     onChange: (v) => {
-                        this.props.setPageData({
-                            ...this.props.pageData,
-                            companyLoanCs: this.getCompanyLoanNum({
-                                invoicePrice: this.props.form.getFieldValue('invoicePrice'),
-                                loanAmount: v
-                            }),
-                            bankLoanCs: this.getBankLoanNum({
-                                fee: this.props.form.getFieldValue('fee'),
+                        let gpsFee = 0;
+                        let otherFee = 0;
+                        let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
+                        let feeWay = this.props.form.getFieldValue('fee_way');
+                        if (gpsFeeWay === '2') {
+                            gpsFee = this.props.pageData.gpsFee;
+                        }
+                        if (feeWay === '2') {
+                            otherFee = this.props.pageData.otherFee;
+                        }
+                        if (gpsFeeWay && feeWay && this.props.form.getFieldValue('cardealerSubsidy') && v) {
+                            let repointAmount = this.getRefundAmount({
                                 loanAmount: v,
-                                invoicePrice: this.props.form.getFieldValue('invoicePrice')
-                            }),
-                            globalRate: this.getGlobalRate({
-                                fee: this.props.form.getFieldValue('fee'),
-                                loanAmount: v,
-                                bankRate: this.props.form.getFieldValue('bankRate')
-                            })
-                        });
+                                cardealerSubsidy: this.props.form.getFieldValue('cardealerSubsidy'),
+                                gpsFee: gpsFee,
+                                otherFee: otherFee
+                            });
+                            let repointDetailList1 = [{
+                                useMoneyPurpose: '1',
+                                repointAmount: repointAmount,
+                                repointAmountL: moneyUppercase(repointAmount),
+                                companyName: this.receivables.companyCode,
+                                accountCode: this.receivables.bankcardNumber,
+                                subbranch: this.receivables.subbranch
+                            }];
+
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                companyLoanCs: this.getCompanyLoanNum({
+                                    invoicePrice: this.props.form.getFieldValue('invoicePrice'),
+                                    loanAmount: v
+                                }),
+                                bankLoanCs: this.getBankLoanNum({
+                                    fee: this.props.form.getFieldValue('fee'),
+                                    loanAmount: v,
+                                    invoicePrice: this.props.form.getFieldValue('invoicePrice')
+                                }),
+                                globalRate: this.getGlobalRate({
+                                    fee: this.props.form.getFieldValue('fee'),
+                                    loanAmount: v,
+                                    bankRate: this.props.form.getFieldValue('bankRate')
+                                }),
+                                repointDetailList1: repointDetailList1
+                            });
+                        }
                     }
                 }],
                 [{
@@ -312,10 +411,45 @@ class BudgetAddedit extends React.Component {
                             this.setState({
                                 isAdvanceFund: true
                             });
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                repointDetailList1: this.repointDetailList1
+                            });
                         } else {
                             this.setState({
                                 isAdvanceFund: false
                             });
+                            let gpsFee = 0;
+                            let otherFee = 0;
+                            let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
+                            let feeWay = this.props.form.getFieldValue('fee_way');
+                            if (gpsFeeWay === '2') {
+                                gpsFee = this.props.pageData.gpsFee;
+                            }
+                            if (feeWay === '2') {
+                                otherFee = this.props.pageData.otherFee;
+                            }
+                            if (gpsFeeWay && feeWay && this.props.form.getFieldValue('loanAmount') && this.props.form.getFieldValue('cardealerSubsidy')) {
+                                let repointAmount = this.getRefundAmount({
+                                    loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                    cardealerSubsidy: this.props.form.getFieldValue('cardealerSubsidy'),
+                                    gpsFee: gpsFee,
+                                    otherFee: otherFee
+                                });
+                                let repointDetailList1 = [{
+                                    useMoneyPurpose: '1',
+                                    repointAmount: repointAmount,
+                                    repointAmountL: moneyUppercase(repointAmount),
+                                    companyName: this.receivables.companyCode,
+                                    accountCode: this.receivables.bankcardNumber,
+                                    subbranch: this.receivables.subbranch
+                                }];
+
+                                this.props.setPageData({
+                                    ...this.props.pageData,
+                                    repointDetailList1: repointDetailList1
+                                });
+                            }
                         }
                     }
                 }, {
@@ -347,7 +481,40 @@ class BudgetAddedit extends React.Component {
                 [{
                     title: '厂家贴息',
                     field: 'cardealerSubsidy',
-                    required: true
+                    required: true,
+                    onChange: (v) => {
+                        let gpsFee = 0;
+                        let otherFee = 0;
+                        let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
+                        let feeWay = this.props.form.getFieldValue('fee_way');
+                        if (gpsFeeWay === '2') {
+                            gpsFee = this.props.pageData.gpsFee;
+                        }
+                        if (feeWay === '2') {
+                            otherFee = this.props.pageData.otherFee;
+                        }
+                        if (gpsFeeWay && feeWay && this.props.form.getFieldValue('loanAmount') && v) {
+                            let repointAmount = this.getRefundAmount({
+                                loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                cardealerSubsidy: v,
+                                gpsFee: gpsFee,
+                                otherFee: otherFee
+                            });
+                            let repointDetailList1 = [{
+                                useMoneyPurpose: '1',
+                                repointAmount: repointAmount,
+                                repointAmountL: moneyUppercase(repointAmount),
+                                companyName: this.receivables.companyCode,
+                                accountCode: this.receivables.bankcardNumber,
+                                subbranch: this.receivables.subbranch
+                            }];
+
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                repointDetailList1: repointDetailList1
+                            });
+                        }
+                    }
                 }, {
                     // (贷款金额+服务费) / 发票价格
                     title: '银行贷款成数',
@@ -392,7 +559,8 @@ class BudgetAddedit extends React.Component {
                 }, {
                     title: '申请人共还人关系',
                     field: 'applyUserGhrRelation',
-                    required: true
+                    type: 'select',
+                    key: 'credit_user_relation'
                 }, {
                     title: '婚姻状况',
                     field: 'marryState',
@@ -766,7 +934,40 @@ class BudgetAddedit extends React.Component {
                     field: 'gpsFeeWay',
                     type: 'select',
                     key: 'gps_fee_way',
-                    required: true
+                    required: true,
+                    onChange: (v) => {
+                        let gpsFee = 0;
+                        let otherFee = 0;
+                        let gpsFeeWay = v;
+                        let feeWay = this.props.form.getFieldValue('fee_way');
+                        if (gpsFeeWay === '2') {
+                            gpsFee = this.props.pageData.gpsFee;
+                        }
+                        if (feeWay === '2') {
+                            otherFee = this.props.pageData.otherFee;
+                        }
+                        if (gpsFeeWay && feeWay && this.props.form.getFieldValue('cardealerSubsidy') && this.props.form.getFieldValue('loanAmount')) {
+                            let repointAmount = this.getRefundAmount({
+                                loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                cardealerSubsidy: this.props.form.getFieldValue('cardealerSubsidy'),
+                                gpsFee: gpsFee,
+                                otherFee: otherFee
+                            });
+                            let repointDetailList1 = [{
+                                useMoneyPurpose: '1',
+                                repointAmount: repointAmount,
+                                repointAmountL: moneyUppercase(repointAmount),
+                                companyName: this.receivables.companyCode,
+                                accountCode: this.receivables.bankcardNumber,
+                                subbranch: this.receivables.subbranch
+                            }];
+
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                repointDetailList1: repointDetailList1
+                            });
+                        }
+                    }
                 }],
                 [{
                     title: '杂费',
@@ -775,11 +976,44 @@ class BudgetAddedit extends React.Component {
                     required: true,
                     readonly: true
                 }, {
-                    title: '手续费收取方式',
+                    title: '收客户手续费收取方式',
                     field: 'feeWay',
                     type: 'select',
                     key: 'fee_way',
-                    required: true
+                    required: true,
+                    onChange: (v) => {
+                        let gpsFee = 0;
+                        let otherFee = 0;
+                        let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
+                        let feeWay = v;
+                        if (gpsFeeWay === '2') {
+                            gpsFee = this.props.pageData.gpsFee;
+                        }
+                        if (feeWay === '2') {
+                            otherFee = this.props.pageData.otherFee;
+                        }
+                        if (gpsFeeWay && feeWay && this.props.form.getFieldValue('cardealerSubsidy') && this.props.form.getFieldValue('loanAmount')) {
+                            let repointAmount = this.getRefundAmount({
+                                loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                cardealerSubsidy: this.props.form.getFieldValue('cardealerSubsidy'),
+                                gpsFee: gpsFee,
+                                otherFee: otherFee
+                            });
+                            let repointDetailList1 = [{
+                                useMoneyPurpose: '1',
+                                repointAmount: repointAmount,
+                                repointAmountL: moneyUppercase(repointAmount),
+                                companyName: this.receivables.companyCode,
+                                accountCode: this.receivables.bankcardNumber,
+                                subbranch: this.receivables.subbranch
+                            }];
+
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                repointDetailList1: repointDetailList1
+                            });
+                        }
+                    }
                 }],
                 [{
                     title: '收客户手续费合计',
@@ -810,30 +1044,43 @@ class BudgetAddedit extends React.Component {
                             }],
                             keyName: 'key',
                             valueName: 'value',
+                            value: '1',
                             readonly: true,
                             required: true
                         }, {
                             title: '金额小写',
-                            field: 'amountX',
+                            field: 'repointAmount',
                             amount: true,
-                            readonly: true,
                             required: true
                         }, {
                             title: '金额大写',
-                            field: 'amountL',
+                            field: 'repointAmountL',
                             readonly: true,
                             required: true
                         }, {
                             title: '单位名称',
                             field: 'companyName',
+                            readonly: true,
                             required: true
                         }, {
                             title: '账号',
-                            field: 'bankNumber',
-                            required: true
+                            field: 'accountCode',
+                            type: 'select',
+                            listCode: 632007,
+                            params: {type: 3},
+                            keyName: 'bankcardNumber',
+                            valueName: '{{companyCode.DATA}}-{{bankName.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
+                            required: true,
+                            onChange: (v, data, props) => {
+                                props.setPageData({
+                                    companyName: data.companyCode,
+                                    subbranch: data.subbranch
+                                });
+                            }
                         }, {
                             title: '开户行',
                             field: 'subbranch',
+                            readonly: true,
                             required: true
                         }]
                     }
@@ -845,6 +1092,10 @@ class BudgetAddedit extends React.Component {
                     type: 'o2m',
                     options: {
                         fields: [{
+                            title: 'id',
+                            field: 'id',
+                            hidden: true
+                        }, {
                             title: '用款用途',
                             field: 'useMoneyPurpose',
                             type: 'select',
@@ -890,7 +1141,6 @@ class BudgetAddedit extends React.Component {
                 [{
                     title: '协议外返点',
                     field: 'repointDetailList3',
-                    required: true,
                     type: 'o2m',
                     options: {
                         add: true,
@@ -916,7 +1166,7 @@ class BudgetAddedit extends React.Component {
                             required: true
                         }, {
                             title: '金额小写',
-                            field: 'amountX',
+                            field: 'repointAmount',
                             amount: true,
                             required: true,
                             onChange: (v, props) => {
@@ -925,25 +1175,38 @@ class BudgetAddedit extends React.Component {
                                     amountL = moneyUppercase(v);
                                 }
                                 props.setPageData({
-                                    amountL: amountL
+                                    repointAmountL: amountL
                                 });
                             }
                         }, {
                             title: '金额大写',
-                            field: 'amountL',
+                            field: 'repointAmountL',
                             required: true,
                             readonly: true
                         }, {
                             title: '单位名称',
                             field: 'companyName',
+                            readonly: true,
                             required: true
                         }, {
                             title: '账号',
-                            field: 'bankNumber',
-                            required: true
+                            field: 'accountCode',
+                            type: 'select',
+                            listCode: 632007,
+                            params: {type: 3},
+                            keyName: 'bankcardNumber',
+                            valueName: '{{companyCode.DATA}}-{{bankName.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
+                            required: true,
+                            onChange: (v, data, props) => {
+                                props.setPageData({
+                                    companyName: data.companyCode,
+                                    subbranch: data.subbranch
+                                });
+                            }
                         }, {
                             title: '开户行',
                             field: 'subbranch',
+                            readonly: true,
                             required: true
                         }]
                     }
@@ -1129,34 +1392,78 @@ class BudgetAddedit extends React.Component {
                     normalArea: true
                 }]
             ]
-        }, {
-            title: '',
-            field: 'cancelReason',
-            hidden: !this.isRevoke
         }];
+
+        let buttons = [];
+
+        if (this.isRevoke) {
+            let revokeFields = [{
+                title: '撤销理由',
+                field: 'cancelReason',
+                type: 'textarea',
+                normalArea: true,
+                readonly: false,
+                required: true
+            }];
+            fields = fields.concat(revokeFields);
+            buttons = [{
+                title: '撤销',
+                check: true,
+                handler: (params) => {
+                    let data = {};
+                    data.code = this.code;
+                    data.cancelReason = params.cancelReason;
+                    data.operator = getUserId();
+                    let bizCode = 632125;
+                    this.props.doFetching();
+                    fetch(bizCode, data).then(() => {
+                        this.props.cancelFetching();
+                        showSucMsg('操作成功');
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(() => {
+                        this.props.cancelFetching();
+                    });
+                }
+            }, {
+                title: '返回',
+                handler: () => {
+                    this.props.history.go(-1);
+                }
+            }];
+        }
 
         let checkFields = [{
             field: 'approveNote',
             title: '审核说明',
             type: 'textarea',
             normalArea: true,
-            readonly: !(this.isCheckCommissioner || this.isCheckDirector)
+            readonly: false
         }];
 
-        let buttons = [];
-
-        if (this.isCheckCommissioner || this.isCheckDirector) {
+        if (this.isAreaCheck || this.isCompCheck || this.isCheck) {
             fields = fields.concat(checkFields);
 
             buttons = [{
                 title: '通过',
                 check: true,
                 handler: (params) => {
-                    params.approveResult = '1';
-                    params.operator = getUserId();
-                    let bizCode = this.isCheckCommissioner ? 632121 : 632122;
+                    let data = {};
+                    data.code = this.code;
+                    data.approveNote = params.approveNote;
+                    data.approveResult = '1';
+                    data.operator = getUserId();
+                    let bizCode;
+                    if (this.isAreaCheck) {
+                        bizCode = 632122;
+                    } else if (this.isCompCheck) {
+                        bizCode = 632123;
+                    } else if (this.isCheck) {
+                        bizCode = 632124;
+                    }
                     this.props.doFetching();
-                    fetch(bizCode, params).then(() => {
+                    fetch(bizCode, data).then(() => {
                         this.props.cancelFetching();
                         showSucMsg('操作成功');
                         setTimeout(() => {
@@ -1170,11 +1477,21 @@ class BudgetAddedit extends React.Component {
                 title: '不通过',
                 check: true,
                 handler: (params) => {
-                    params.approveResult = '0';
-                    params.operator = getUserId();
-                    let bizCode = this.isCheckCommissioner ? 632121 : 632122;
+                    let data = {};
+                    data.code = this.code;
+                    data.approveNote = params.approveNote;
+                    data.approveResult = '0';
+                    data.operator = getUserId();
+                    let bizCode;
+                    if (this.isAreaCheck) {
+                        bizCode = 632122;
+                    } else if (this.isCompCheck) {
+                        bizCode = 632123;
+                    } else if (this.isCheck) {
+                        bizCode = 632124;
+                    }
                     this.props.doFetching();
-                    fetch(bizCode, params).then(() => {
+                    fetch(bizCode, data).then(() => {
                         this.props.cancelFetching();
                         showSucMsg('操作成功');
                         setTimeout(() => {
@@ -1200,21 +1517,35 @@ class BudgetAddedit extends React.Component {
             detailCode: 632146,
             buttons: buttons,
             beforeSubmit: (data) => {
-                data.creditCode = this.code;
+                data.budgetOrderCode = this.code;
                 data.operator = getUserId();
                 let gpsList = [];
-                data.gpsList.forEach((v) => {
-                    gpsList.push(v.code);
-                });
+                if (data.gpsList) {
+                    data.gpsList.forEach((v) => {
+                        gpsList.push(v.code);
+                    });
+                }
                 data.gpsList = gpsList;
                 let repointDetailList = [];
-                repointDetailList.push(data.repointDetailList1);
-                repointDetailList.push(data.repointDetailList2);
-                repointDetailList.push(data.repointDetailList3);
+                if (data.repointDetailList1) {
+                    repointDetailList = repointDetailList.concat(data.repointDetailList1);
+                }
+                repointDetailList = repointDetailList.concat(data.repointDetailList2);
+                if (data.repointDetailList3) {
+                    repointDetailList = repointDetailList.concat(data.repointDetailList3);
+                }
                 delete data.repointDetailList1;
                 delete data.repointDetailList2;
                 delete data.repointDetailList3;
                 data.repointDetailList = repointDetailList;
+                data.assureFee = this.props.pageData.assureFee;
+                data.gpsFee = this.props.pageData.gpsFee;
+                data.lyAmountFee = this.props.pageData.lyAmountFee;
+                data.otherFee = this.props.pageData.otherFee;
+                data.bankLoanCs = this.props.pageData.bankLoanCs;
+                data.globalRate = this.props.pageData.globalRate;
+                data.companyLoanCs = this.props.pageData.companyLoanCs;
+                data.dealType = '1';
                 return data;
             }
         });

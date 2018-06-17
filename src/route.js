@@ -705,6 +705,11 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loan/budget-addedit/budget-addedit'))
   },
 
+  // 贷款审查
+  {
+      path: '/loan/budgetCheck',
+      component: asyncComponent(() => import('container/loan/budgetCheck/budgetCheck'))
+  },
   // 发起征信查询
   {
       path: '/loan/creditStart',

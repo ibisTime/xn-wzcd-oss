@@ -201,6 +201,9 @@ import { basisLoanPercentAddedit } from './redux/basis/loanPercent-addedit';
 import { loanBudget } from './redux/loan/budget';
 import { loanBudgetAddedit } from './redux/loan/budget-addedit';
 
+// 贷款审查
+import { loanBudgetCheck } from './redux/loan/budgetCheck';
+
 // 发起征信查询
 import { loanCreditStart } from './redux/loan/creditStart';
 import { loanCreditStartAddedit } from './redux/loan/creditStart-addedit';
@@ -577,6 +580,7 @@ export default combineReducers({
   bizredListEnter,
   loanBudget,
   loanBudgetAddedit,
+  loanBudgetCheck,
   loanCreditStart,
   loanCreditStartAddedit,
   loanCreditEntering,

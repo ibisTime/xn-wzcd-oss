@@ -46,18 +46,18 @@ class invoice extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
-            field: 'code'
-        }, {
-            title: '业务公司',
-            field: 'companyCode',
+            field: 'code',
             search: true
         }, {
+            title: '业务公司',
+            field: 'companyCode'
+        }, {
             title: '客户姓名',
-            field: 'companyCode',
+            field: 'customerName',
             search: true
         }, {
             title: '贷款额',
-            field: 'budgetAmount',
+            field: 'loanAmount',
             amount: true
         }, {
             title: '垫资日期',
@@ -65,20 +65,36 @@ class invoice extends React.Component {
             type: 'datetime'
         }, {
             title: '发保和预警天数',
-            field: 'name',
-            search: true
+            field: 'name'
         }, {
             title: '车辆发票价',
-            field: 'budgetAmount',
+            field: 'invoicePrice',
             amount: true
         }, {
             title: '新发票价格',
-            field: 'budgetAmount',
+            field: 'currentInvoicePrice',
             amount: true
         }, {
             title: '状态',
-            field: 'budgetAmount',
-            amount: true
+            field: 'fbhstatus',
+            type: 'select',
+            data: [{
+                key: '1',
+                value: '已录入'
+            }, {
+                key: '0',
+                value: '待录入'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            search: true
+        }, {
+            title: '当前节点',
+            field: 'curNodeCode',
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }, {
             title: '更新人',
             field: 'budgetAmount'
@@ -93,7 +109,7 @@ class invoice extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632105,
+            pageCode: 632145,
             btnEvent: {
               entering: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
