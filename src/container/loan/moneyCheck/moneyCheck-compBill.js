@@ -61,43 +61,6 @@ class AdvMoneyCompBill extends React.Component {
             amount: true,
             readonly: true
         }, {
-            title: '垫资客户',
-            field: 'loanBankName',
-            type: 'o2m',
-            options: {
-                delete: true,
-                fields: [{
-                    title: '客户姓名',
-                    field: '33'
-                }, {
-                    title: '贷款金额',
-                    field: '44',
-                    amount: true
-                }, {
-                    title: '手续费',
-                    field: '44',
-                    amount: true
-                }, {
-                    title: '手续费收取方式',
-                    field: '44',
-                    type: 'select',
-                    key: '444'
-                }, {
-                    title: 'GPS费',
-                    field: '44',
-                    amount: true
-                }, {
-                    title: 'GPS费收取方式',
-                    field: '44',
-                    type: 'select',
-                    key: '444'
-                }, {
-                    title: '应退按揭款',
-                    field: '44',
-                    amount: true
-                }]
-            }
-        }, {
             title: '垫资金额',
             field: 'payAmount',
             amount: true,

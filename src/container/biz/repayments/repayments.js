@@ -55,7 +55,7 @@ class Repayments extends React.Component {
             search: true
         }, {
             title: '银行',
-            field: 'code',
+            field: 'bankCode',
             type: 'select',
             listCode: 632037,
             keyName: 'bankCode',
@@ -97,9 +97,6 @@ class Repayments extends React.Component {
             field: 'overdueAmount',
             amount: true
         }, {
-            title: '剩余代偿金额',
-            field: '22'
-        }, {
             title: '实际逾期期数',
             field: 'curOverdueCount'
         }, {
@@ -126,10 +123,10 @@ class Repayments extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 630520,
-            searchParams: {
-              refType: '0',
-              curNodeCode: '003_06'
-            },
+            // searchParams: {
+            //   refType: '0',
+            //   curNodeCode: '003_06'
+            // },
             btnEvent: {
               relieve: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {

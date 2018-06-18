@@ -123,11 +123,14 @@ import { bizBlackList } from './redux/biz/blackList';
 import { bizBlackListAddedit } from './redux/biz/blackList-addedit';
 import { bizBlackListDispose } from './redux/biz/blackList-dispose';
 
-//  红名单 + 详情 + 申请拖车 + 总经理审批 + 财务打款 + 录入拖车结果
+//  红名单 + 详情 + 风控经理审核 + 分公司总经理审核 + 风控总监审核 + 财务经理审核 + 申请拖车 + 财务打款 + 录入拖车结果
 import { bizredList } from './redux/biz/redList';
 import { bizredListAddEdit } from './redux/biz/redList-addedit';
 import { bizredListApply } from './redux/biz/redList-apply';
-import { bizredListCheck } from './redux/biz/redList-check';
+import { bizredListCheckDirector } from './redux/biz/redList-checkDirector';
+import { bizredListCompCheck } from './redux/biz/redList-compCheck';
+import { bizredListCheckDirectorTwo } from './redux/biz/redList-checkDirectorTwo';
+import { bizredListFinance } from './redux/biz/redList-finance';
 import { bizredListPay } from './redux/biz/redList-pay';
 import { bizredListEnter } from './redux/biz/redList-enter';
 
@@ -578,7 +581,10 @@ export default combineReducers({
   bizredList,
   bizredListAddEdit,
   bizredListApply,
-  bizredListCheck,
+  bizredListCheckDirector,
+  bizredListCompCheck,
+  bizredListCheckDirectorTwo,
+  bizredListFinance,
   bizredListPay,
   bizredListEnter,
   loanBudget,

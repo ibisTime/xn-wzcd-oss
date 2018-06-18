@@ -446,10 +446,25 @@ const ROUTES = [
     path: '/biz/redList/pay',
     component: asyncComponent(() => import('container/biz/carLoanRepay/redList-pay'))
   },
-  //  红名单 总经理审核
+  //  红名单 风控经理审核
   {
-    path: '/biz/redList/check',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/redList-check'))
+    path: '/biz/redList/checkDirector',
+    component: asyncComponent(() => import('container/biz/carLoanRepay/redList-checkDirector'))
+  },
+  //  红名单 分公司总经理审核
+  {
+    path: '/biz/redList/compCheck',
+    component: asyncComponent(() => import('container/biz/carLoanRepay/redList-compCheck'))
+  },
+  //  红名单 财务经理审核
+  {
+    path: '/biz/redList/finance',
+    component: asyncComponent(() => import('container/biz/carLoanRepay/redList-finance'))
+  },
+  //  红名单 风控总监审核
+  {
+    path: '/biz/redList/checkDirectorTwo',
+    component: asyncComponent(() => import('container/biz/carLoanRepay/redList-checkDirectorTwo'))
   },
   //  拖车管理
   {
