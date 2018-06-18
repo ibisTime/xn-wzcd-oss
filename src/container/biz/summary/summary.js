@@ -8,7 +8,7 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/biz/repayments/repayments';
+} from '@redux/biz/summary/summary';
 import {
     listWrapper
 } from 'common/js/build-list';
@@ -34,7 +34,7 @@ import fetch from 'common/js/fetch';
 
 @listWrapper(
     state => ({
-        ...state.repayments,
+        ...state.summary,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -47,7 +47,7 @@ import fetch from 'common/js/fetch';
         setSearchData
     }
 )
-class Repayments extends React.Component {
+class Summary extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
@@ -139,7 +139,7 @@ class Repayments extends React.Component {
                 } else if (selectedRows[0].curNodeCode !== '003_06') {
                     showWarnMsg('当前节点不是解除抵押节点');
                 } else {
-                  this.props.history.push(`/biz/repayments/relieve?code=${selectedRowKeys[0]}`);
+                  this.props.history.push(`/biz/summary/relieve?code=${selectedRowKeys[0]}`);
                 }
               }
             }
@@ -147,4 +147,4 @@ class Repayments extends React.Component {
     }
 }
 
-export default Repayments;
+export default Summary;

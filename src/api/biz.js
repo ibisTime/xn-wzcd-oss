@@ -159,3 +159,9 @@ export function getJxsDetail(code) {
 export function getBankList() {
   return fetch(802116);
 }
+// 车辆续保发信息
+export function sendMessage(code) {
+  return fetch(632340, {
+    code
+  });
+}

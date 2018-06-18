@@ -6,7 +6,7 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/repayments/repayments-addedit';
+} from '@redux/biz/summary/summary-plan';
 import {
     getQueryString,
     moneyFormat
@@ -17,7 +17,7 @@ import {
 // import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
-    state => state.repaymentsAddEdit, {
+    state => state.summaryAddEdit, {
         initStates,
         doFetching,
         cancelFetching,
@@ -26,7 +26,7 @@ import {
         restore
     }
 )
-class RepaymentsAddedit extends React.Component {
+class SummaryPlan extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -87,28 +87,28 @@ class RepaymentsAddedit extends React.Component {
                     amount: true
                 }, {
                     title: '催收回逾期金额',
-                    field: 'payedFee',
+                    field: '22',
                     amount: true
                 }, {
                     title: '清收成本',
-                    field: 'totalFee',
+                    field: '33',
                     amount: true
                 }, {
                     title: '代偿金额',
-                    field: 'replaceRealRepayAmount',
+                    field: '44',
                     amount: true
                 }, {
                     title: '代偿时间',
-                    field: 'replaceRepayDatetime',
-                    type: 'date'
+                    field: '55',
+                    amount: true
                 }, {
                     title: '收回代偿金额',
-                    field: 'replaceBackRepayAmount',
+                    field: '66',
                     amount: true
                 }, {
                     title: '收回代偿时间',
-                    field: 'replaceBackRepayDatetime',
-                    type: 'date'
+                    field: '77',
+                    amount: true
                 }]
             }
         }];
@@ -121,4 +121,4 @@ class RepaymentsAddedit extends React.Component {
     }
 }
 
-export default RepaymentsAddedit;
+export default SummaryPlan;
