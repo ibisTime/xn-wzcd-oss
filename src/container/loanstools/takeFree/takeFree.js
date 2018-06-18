@@ -10,26 +10,21 @@ import {
     setSearchData
 } from '@redux/loanstools/takeFree';
 import {
-  showWarnMsg,
-  showSucMsg
+    showWarnMsg,
+    showSucMsg
 } from 'common/js/util';
-import {
-  Button,
-  Upload,
-  Modal
-} from 'antd';
 import {
     listWrapper
 } from 'common/js/build-list';
 import {
-  lowerFrame,
-  onShelf,
-  sendMsg
+    lowerFrame,
+    onShelf,
+    sendMsg
 } from 'api/biz';
 
 @listWrapper(
     state => ({
-        ...state.loanstoolstakeFree,
+        ...state.loanstoolsTakeFree,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -42,7 +37,7 @@ import {
         setSearchData
     }
 )
-class takeFee extends React.Component {
+class takeFree extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
@@ -53,7 +48,7 @@ class takeFee extends React.Component {
             field: 'companyCode'
         }, {
             title: '客户姓名',
-            field: 'companyCode',
+            field: 'customerName',
             search: true
         }, {
             title: '应收手续费总额',
@@ -71,23 +66,30 @@ class takeFee extends React.Component {
             field: 'useDatetime',
             search: true,
             type: 'date'
+        }, {
+            title: '当前节点',
+            field: 'curNodeCode',
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632105,
+            pageCode: 632145,
             btnEvent: {
-              entering: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loanstools/takeFree/enter?code=${selectedRowKeys[0]}`);
+                entering: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loanstools/takeFree/enter?code=${selectedRowKeys[0]}`);
+                    }
                 }
-              }
             }
         });
     }
 }
 
-export default takeFee;
+export default takeFree;

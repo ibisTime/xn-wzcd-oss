@@ -1335,7 +1335,7 @@ export default class DetailComponent extends React.Component {
         }
         if (item.bankCard) {
             rules.push({
-                pattern: /^([1-9]{1})(\d{14}|\d{18})$/,
+                pattern: /^([1-9]{1})(\d{16}|\d{19})$/,
                 message: '请输入合法的银行卡号'
             });
         }

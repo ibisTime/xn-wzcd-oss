@@ -236,9 +236,9 @@ class costAddedit extends React.Component {
             title: '付款银行',
             field: 'payBank',
             type: 'select',
-            listCode: 632037,
+            listCode: 632057,
             keyName: 'code',
-            valueName: '{{bankName.DATA}}{{subbranch.DATA}}',
+            valueName: '{{bankName.DATA}}{{abbrName.DATA}}',
             readonly: false,
             required: true
         }, {

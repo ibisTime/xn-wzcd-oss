@@ -93,7 +93,8 @@ class ArchivesAddedit extends React.Component {
             [{
                 title: '抵押合同编号',
                 field: 'pledgeContractCode'
-            }, {
+            }],
+            [{
                 title: '登记证书号',
                 field: 'regCertificateCode',
                 type: 'img'
@@ -153,6 +154,10 @@ class ArchivesAddedit extends React.Component {
             }, {
                 title: '存放位置',
                 field: 'storePlace',
+                type: 'select',
+                listCode: 632827,
+                keyName: 'code',
+                valueName: 'name',
                 required: 'true'
             }],
             [{
@@ -186,9 +191,7 @@ class ArchivesAddedit extends React.Component {
             }]
         ]
     }];
-    return this
-      .props
-      .buildDetail({
+    return this.props.buildDetail({
         fields,
         code: this.code,
         view: this.view,

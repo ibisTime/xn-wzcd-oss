@@ -182,6 +182,11 @@ class RebatesBill extends React.Component {
                 handler: (params) => {
                     params.totalAmount = this.props.pageData.totalAmount;
                     params.operator = getUserId();
+                    let repointDetailCodeList = [];
+                    params.repointDetailCodeList.map(value => {
+                        repointDetailCodeList.push(value.code);
+                    });
+                    params.repointDetailCodeList = repointDetailCodeList;
                     this.props.doFetching();
                     fetch(632240, params).then(() => {
                         showSucMsg('操作成功');

@@ -8,17 +8,12 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/loanstools/take';
+} from '@redux/loanstools/takeEstimate';
 import {
   showWarnMsg,
   showSucMsg,
   getRoleCode
 } from 'common/js/util';
-import {
-  Button,
-  Upload,
-  Modal
-} from 'antd';
 import { listWrapper } from 'common/js/build-list';
 import {
   lowerFrame,
@@ -34,7 +29,7 @@ import {
   { setTableData, clearSearchParam, doFetching, setBtnList,
     cancelFetching, setPagination, setSearchParam, setSearchData }
 )
-class take extends React.Component {
+class TakeEstimate extends React.Component {
   render() {
     const fields = [{
       title: '预算单号',
@@ -101,4 +96,4 @@ class take extends React.Component {
   }
 }
 
-export default take;
+export default TakeEstimate;
