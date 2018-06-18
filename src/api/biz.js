@@ -165,3 +165,10 @@ export function sendMessage(code) {
     code
   });
 }
+// 总公司制单
+export function makeAllbill(code) {
+  return fetch(632173, {
+    code,
+    operator: getUserId()
+  });
+}

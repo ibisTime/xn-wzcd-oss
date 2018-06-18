@@ -24,7 +24,7 @@ import {
     Modal
 } from 'antd';
 import {
-    done
+    makeAllbill
 } from 'api/biz';
 
 @listWrapper(
@@ -113,15 +113,6 @@ class MoneyCheck extends React.Component {
             fields,
             pageCode: 632185,
             btnEvent: {
-                allBill: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push(`/loan/moneyCheck/allBill?code=${selectedRowKeys[0]}`);
-                    }
-                },
                 compBill: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
@@ -147,6 +138,31 @@ class MoneyCheck extends React.Component {
                         showWarnMsg('请选择一条记录');
                     } else {
                         this.props.history.push(`/loan/moneyCheck/payComp?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                allBill: (key, item) => {
+                    if (!key || !key.length || !item || !item.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (item[0].curNodeCode !== '003_04') {
+                        showWarnMsg('不是总公司制单节点');
+                    } else {
+                        Modal.confirm({
+                            okText: '确认',
+                            cancelText: '取消',
+                            content: '确定制单？',
+                            onOk: () => {
+                                this.props.doFetching();
+                                return makeAllbill(key[0]).then(() => {
+                                    this.props.getPageData();
+                                    showWarnMsg('操作成功');
+                                    setTimeout(() => {
+                                        this.props.getPageData();
+                                    }, 500);
+                                }).catch(() => {
+                                    this.props.cancelFetching();
+                                });
+                            }
+                        });
                     }
                 }
             }
