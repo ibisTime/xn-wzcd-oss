@@ -1,4 +1,5 @@
 import React from 'react';
+import { Spin } from 'antd';
 
 /**
  * @param {Function} loadComponent e.g: () => import('./component')
@@ -31,7 +32,7 @@ export default (loadComponent, placeholder = null) => {
     render() {
       const C = this.state.component;
       return (
-        C ? <C {...this.props}></C> : placeholder
+        C ? <C {...this.props}></C> : <Spin></Spin>
       );
     }
   }
