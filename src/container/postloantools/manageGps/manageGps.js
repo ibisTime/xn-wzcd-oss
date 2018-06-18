@@ -10,21 +10,21 @@ import {
     setSearchData
 } from '@redux/postloantools/manageGps';
 import {
-  showWarnMsg,
-  showSucMsg
+    showWarnMsg,
+    showSucMsg
 } from 'common/js/util';
 import {
-  Button,
-  Upload,
-  Modal
+    Button,
+    Upload,
+    Modal
 } from 'antd';
 import {
     listWrapper
 } from 'common/js/build-list';
 import {
-  lowerFrame,
-  onShelf,
-  sendMsg
+    lowerFrame,
+    onShelf,
+    sendMsg
 } from 'api/biz';
 
 @listWrapper(
@@ -48,19 +48,6 @@ class manageGps extends React.Component {
             title: 'GPS编号',
             field: 'gpsDevNo'
         }, {
-            title: 'GPS类型',
-            field: 'gpsType',
-            type: 'select',
-            data: [{
-              key: '1',
-              value: '有线'
-            }, {
-              key: '0',
-              value: '无线'
-            }],
-            keyName: 'key',
-            valueName: 'value'
-        }, {
             title: '归属公司',
             field: 'companyCode',
             listCode: 630106,
@@ -72,6 +59,24 @@ class manageGps extends React.Component {
             valueName: 'name',
             search: true
         }, {
+            title: '公司领用状态',
+            field: 'companyApplyStatus',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '待申领'
+            }, {
+                key: '1',
+                value: '已申领'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            search: true
+        }, {
+            title: '公司领用日期',
+            field: 'companyApplyDatetime',
+            type: 'date'
+        }, {
             title: 'GPS领用人',
             field: 'applyUserName'
         }, {
@@ -79,11 +84,14 @@ class manageGps extends React.Component {
             field: 'applyStatus',
             type: 'select',
             data: [{
-              key: '1',
-              value: '已领用'
+                key: '0',
+                value: '待申领'
             }, {
-              key: '0',
-              value: '未领用'
+                key: '1',
+                value: '申领处理中'
+            }, {
+                key: '2',
+                value: '已申领'
             }],
             keyName: 'key',
             valueName: 'value',
@@ -97,11 +105,11 @@ class manageGps extends React.Component {
             field: 'useStatus',
             type: 'select',
             data: [{
-              key: '1',
-              value: '已使用'
+                key: '1',
+                value: '已使用'
             }, {
-              key: '0',
-              value: '未使用'
+                key: '0',
+                value: '未使用'
             }],
             keyName: 'key',
             valueName: 'value',

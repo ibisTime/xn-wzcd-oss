@@ -80,17 +80,11 @@ import { bizCarLoanBusiness } from './redux/biz/carLoanBusiness';
 import { bizCarLoanBusinessAddedit } from '@redux/biz/carLoanBusiness-addedit';
 import { bizCarLoanBusinessCheck } from '@redux/biz/carLoanBusiness-check';
 
-//  档案入党 + 详情 + 确认入党
-import { bizArchives } from './redux/biz/archives';
-import { bizArchivesAddEdit } from './redux/biz/archives-addedit';
-import { bizArchivesCertain } from './redux/biz/archives-certain';
-
-//  还款业务管理 + 详情 + 修改银行卡号 + 查看还款计划 + 确定结清
-import { bizRefundBusiness } from './redux/biz/refundBusiness';
-import { bizRefundBusinessAddedit } from './redux/biz/refundBusiness-addedit';
-import { bizRefundBusinessPlan } from './redux/biz/refundBusiness-plan';
-import { bizRefundBusinessChangeCard } from './redux/biz/refundBusiness-changeCard';
-import { bizRefundBusinessCertian } from './redux/biz/refundBusiness-certain';
+//  还款中客户 + 详情 + 还款计划 +
+import { repayments } from './redux/biz/repayments/repayments';
+import { repaymentsAddEdit } from './redux/biz/repayments/repayments-addedit';
+import { repaymentsPlan } from './redux/biz/repayments/repayments-plan';
+import { repaymentsPay } from './redux/biz/repayments/repayments-pay';
 
 //  当月还款账单 + 详情
 import { bizRefundList } from './redux/biz/refundList';
@@ -339,15 +333,23 @@ import { postloantoolsCompensatoryAddEdit } from './redux/postloantools/compensa
 import { postloantoolsCompensatoryCheck } from './redux/postloantools/compensatory-check';
 import { postloantoolsBudgetCertain } from './redux/postloantools/compensatory-certain';
 
-//  GPS申领 + 详情 + 申领 + 审核
+//  GPS申领 + 详情 + 公司申领 + 个人申领 + 公司审核 + 个人审核
 import { postloantoolsApplyGps } from './redux/postloantools/applyGps';
 import { postloantoolsApplyGpsAddedit } from './redux/postloantools/applyGps-addedit';
-import { postloantoolsApplyGpsApply } from './redux/postloantools/applyGps-apply';
-import { postloantoolsApplyGpsCheck } from './redux/postloantools/applyGps-check';
+import { postloantoolsApplyGpsCompany } from './redux/postloantools/applyGps-company';
+import { postloantoolsApplyGpsPerson } from './redux/postloantools/applyGps-person';
+import { postloantoolsApplyGpsCompanyCheck } from './redux/postloantools/applyGps-companyCheck';
+import { postloantoolsApplyGpsPersonCheck } from './redux/postloantools/applyGps-personCheck';
 
 //  Gps管理 + 详情
 import { postloantoolsManageGps } from './redux/postloantools/manageGps';
 import { postloantoolsManageGpsAddedit } from './redux/postloantools/manageGps-addedit';
+
+//  Gps安装 + 详情 + 安装回录 + 回收作废
+import { postloantoolsInstallGps } from './redux/postloantools/installGps';
+import { postloantoolsInstallGpsAddEdit } from './redux/postloantools/installGps-addedit';
+import { postloantoolsInstallGpsEnter } from './redux/postloantools/installGps-enter';
+import { postloantoolsInstallGpsToVoid } from './redux/postloantools/installGps-toVoid';
 
 //  导入逾期名单 + 详情 + 导入 + 处理
 import { postloantoolsImport } from './redux/postloantools/import';
@@ -545,17 +547,12 @@ export default combineReducers({
   creditAddEdit,
   bizCarLoanBusiness,
   bizCarLoanBusinessAddedit,
-  bizRefundBusiness,
-  bizRefundBusinessAddedit,
   bizRefundList,
   bizOverdueList,
   bizGreenList,
   bizBlackList,
   bizHistoryBusinessManage,
   bizCarLoanBusinessCheck,
-  bizRefundBusinessPlan,
-  bizRefundBusinessChangeCard,
-  bizRefundBusinessCertian,
   bizOverdueListDispose,
   bizBlackListDispose,
   bizGreenListPayment,
@@ -569,9 +566,6 @@ export default combineReducers({
   bizRefundListAddedit,
   bizHistoryBusinessManageAddedit,
   bizBlackListAddedit,
-  bizArchives,
-  bizArchivesAddEdit,
-  bizArchivesCertain,
   bizredList,
   bizredListAddEdit,
   bizredListApply,
@@ -643,10 +637,16 @@ export default combineReducers({
   postloantoolsCompensatoryCheck,
   postloantoolsApplyGps,
   postloantoolsApplyGpsAddedit,
-  postloantoolsApplyGpsApply,
-  postloantoolsApplyGpsCheck,
+  postloantoolsApplyGpsCompany,
+  postloantoolsApplyGpsPerson,
+  postloantoolsApplyGpsCompanyCheck,
+  postloantoolsApplyGpsPersonCheck,
   postloantoolsManageGps,
   postloantoolsManageGpsAddedit,
+  postloantoolsInstallGps,
+  postloantoolsInstallGpsAddEdit,
+  postloantoolsInstallGpsEnter,
+  postloantoolsInstallGpsToVoid,
   bizLitigation,
   bizLitigationAddEdit,
   bizLitigationDispose,
@@ -782,5 +782,9 @@ export default combineReducers({
   loanMoneyCheckAllBill,
   loanMoneyCheckCompBill,
   loanMoneyCheckPayCar,
-  loanMoneyCheckPayComp
+  loanMoneyCheckPayComp,
+  repayments,
+  repaymentsAddEdit,
+  repaymentsPlan,
+  repaymentsPay
 });

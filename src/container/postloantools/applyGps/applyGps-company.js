@@ -6,17 +6,13 @@ import {
   setSelectData,
   setPageData,
   restore
-} from '@redux/postloantools/applyGps-apply';
-import {
-  getQueryString,
-  showSucMsg,
-  getUserId
-} from 'common/js/util';
+} from '@redux/postloantools/applyGps-company';
+import { getQueryString, getUserId, showSucMsg } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
-  state => state.postloantoolsApplyGpsApply, {
+  state => state.postloantoolsApplyGpsCompany, {
     initStates,
     doFetching,
     cancelFetching,
@@ -25,41 +21,39 @@ import { DetailWrapper } from 'common/js/build-detail';
     restore
   }
 )
-class applyGpsApply extends React.Component {
+class applyGpsCompany extends React.Component {
   constructor(props) {
     super(props);
-    this.code = getQueryString('code', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
   }
   render() {
     const fields = [{
       title: '申领个数',
       field: 'applyCount',
-      required: true
+      number: true
     }, {
-      title: '申领原因',
+      title: '申请说明',
       field: 'applyReason'
     }];
     return this.props.buildDetail({
       fields,
-      code: this.code,
       view: this.view,
-      detailCode: 632716,
       buttons: [{
         title: '确认',
-        check: true,
-        handler: (params) => {
-          params.applyUser = getUserId();
-          params.type = '2';
+        handler: (param) => {
+          param.code = this.code;
+          param.applyUser = getUserId();
           this.props.doFetching();
-          fetch(632710, params).then(() => {
+          fetch(632710, param).then(() => {
             showSucMsg('操作成功');
+            this.props.cancelFetching();
             setTimeout(() => {
               this.props.history.go(-1);
             }, 1000);
-            this.props.cancelFetching();
           }).catch(this.props.cancelFetching);
-        }
+        },
+        check: true,
+        type: 'primary'
       }, {
         title: '返回',
         handler: (param) => {
@@ -70,4 +64,4 @@ class applyGpsApply extends React.Component {
   }
 }
 
-export default applyGpsApply;
+export default applyGpsCompany;

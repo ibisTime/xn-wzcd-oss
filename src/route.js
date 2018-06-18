@@ -1386,25 +1386,55 @@ const ROUTES = [
     path: '/postloantools/applyGps/addedit',
     component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-addedit'))
   },
-  //  gps申领 申领
+  //  gps申领 公司申领
   {
-    path: '/postloantools/applyGps/apply',
-    component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-apply'))
+      path: '/postloantools/applyGps/company',
+      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-company'))
   },
-  //  gps申领 GPS管理员审核
+  //  gps申领 个人申领
   {
-    path: '/postloantools/applyGps/check',
-    component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-check'))
+      path: '/postloantools/applyGps/person',
+      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-person'))
   },
-  //  gps安装
+  //  gps申领 公司审核
+  {
+      path: '/postloantools/applyGps/companyCheck',
+      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-companyCheck'))
+  },
+  //  gps申领 个人审核
+  {
+      path: '/postloantools/applyGps/personCheck',
+      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-personCheck'))
+  },
+  //  gps设备管理
   {
     path: '/postloantools/manageGps',
     component: asyncComponent(() => import('container/postloantools/manageGps/manageGps'))
   },
-  //  gps安装 详情
+  //  gps设备管理 详情
   {
     path: '/postloantools/manageGps/addedit',
     component: asyncComponent(() => import('container/postloantools/manageGps/manageGps-addedit'))
+  },
+  //  gps安装
+  {
+    path: '/postloantools/installGps',
+    component: asyncComponent(() => import('container/postloantools/installGps/installGps'))
+  },
+  //  gps安装 详情
+  {
+    path: '/postloantools/installGps/addedit',
+    component: asyncComponent(() => import('container/postloantools/installGps/installGps-addedit'))
+  },
+  //  gps安装 安装回录
+  {
+    path: '/postloantools/installGps/enter',
+    component: asyncComponent(() => import('container/postloantools/installGps/installGps-enter'))
+  },
+  //  gps安装 回收作废
+  {
+    path: '/postloantools/installGps/toVoid',
+    component: asyncComponent(() => import('container/postloantools/installGps/installGps-toVoid'))
   },
   //  导入逾期名单
   {
@@ -1786,20 +1816,30 @@ const ROUTES = [
       path: '/administrative/applyGps',
       component: asyncComponent(() => import('container/postloantools/applyGps/applyGps'))
   },
+  //  gps申领 公司申领
+  {
+      path: '/administrative/applyGps/company',
+      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-company'))
+  },
+  //  gps申领 个人申领
+  {
+      path: '/administrative/applyGps/person',
+      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-person'))
+  },
   //  gps申领 详情
   {
       path: '/administrative/applyGps/addedit',
       component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-addedit'))
   },
-  //  gps申领 申领
+  //  gps申领 公司审核
   {
-      path: '/administrative/applyGps/apply',
-      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-apply'))
+      path: '/administrative/applyGps/companyCheck',
+      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-companyCheck'))
   },
-  //  gps申领 GPS管理员审核
+  //  gps申领 个人审核
   {
-      path: '/administrative/applyGps/check',
-      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-check'))
+      path: '/administrative/applyGps/personCheck',
+      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-personCheck'))
   },
   //  gps库存管理
   {

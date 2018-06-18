@@ -6,17 +6,19 @@ import {
   setSelectData,
   setPageData,
   restore
-} from '@redux/postloantools/applyGps-check';
+} from '@redux/postloantools/applyGps-companyCheck';
 import {
   getQueryString,
   showSucMsg,
   getUserId
 } from 'common/js/util';
-import { DetailWrapper } from 'common/js/build-detail';
+import {
+  DetailWrapper
+} from 'common/js/build-detail';
 import fetch from 'common/js/fetch';
 
 @DetailWrapper(
-  state => state.postloantoolsApplyGpsCheck, {
+  state => state.postloantoolsApplyGpsCompanyCheck, {
     initStates,
     doFetching,
     cancelFetching,
@@ -25,7 +27,7 @@ import fetch from 'common/js/fetch';
     restore
   }
 )
-class applyGpsCheck extends React.Component {
+class applyGpsCompanyCheck extends React.Component {
   constructor(props) {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
@@ -33,44 +35,47 @@ class applyGpsCheck extends React.Component {
   }
   render() {
     const fields = [{
-        title: '申领个数',
-        field: 'applyCount',
-        readonly: true
-      }, {
-        title: '申领人',
-        field: 'applyUserName',
-        readonly: true
-      }, {
-        title: '申领原因',
-        field: 'applyReason',
-        readonly: true
-      }, {
-        title: 'GPS列表',
-        field: 'gpsList',
-        required: true,
-        type: 'o2m',
-        options: {
-          add: true,
-          delete: true,
-          scroll: {
-            x: 400
+      title: '申领个数',
+      field: 'applyCount',
+      readonly: true
+    }, {
+      title: '申领公司',
+      field: 'companyName',
+      readonly: true
+    }, {
+      title: '申领原因',
+      field: 'applyReason',
+      readonly: true
+    }, {
+      title: 'GPS列表',
+      field: 'gpsList',
+      required: true,
+      type: 'o2m',
+      options: {
+        add: true,
+        delete: true,
+        scroll: {
+          x: 400
+        },
+        fields: [{
+          title: 'GPS设备号',
+          field: 'code',
+          type: 'select',
+          listCode: 632707,
+          params: {
+            applyStatus: '0',
+            useStatus: '0'
           },
-          fields: [{
-            title: 'GPS设备号',
-            field: 'code',
-            type: 'select',
-            listCode: 632707,
-            params: {
-              applyStatus: '0',
-              useStatus: '0'
-            },
-            keyName: 'code',
-            valueName: 'gpsDevNo',
-            nowrap: true,
-            required: true
-          }]
-        }
-      }];
+          keyName: 'code',
+          valueName: 'gpsDevNo',
+          nowrap: true,
+          required: true
+        }]
+      }
+    }, {
+      title: '审核说明',
+      field: 'approveNote'
+    }];
     return this.props.buildDetail({
       fields,
       code: this.code,
@@ -82,7 +87,7 @@ class applyGpsCheck extends React.Component {
           param.approveResult = '1';
           param.approveUser = getUserId();
           this.props.doFetching();
-          fetch(632711, param).then(() => {
+          fetch(632712, param).then(() => {
             showSucMsg('操作成功');
             this.props.cancelFetching();
             setTimeout(() => {
@@ -99,7 +104,7 @@ class applyGpsCheck extends React.Component {
           param.approveNote = this.projectCode;
           param.approveUser = getUserId();
           this.props.doFetching();
-          fetch(632711, param).then(() => {
+          fetch(632712, param).then(() => {
             showSucMsg('操作成功');
             this.props.cancelFetching();
             setTimeout(() => {
@@ -118,4 +123,4 @@ class applyGpsCheck extends React.Component {
   }
 }
 
-export default applyGpsCheck;
+export default applyGpsCompanyCheck;

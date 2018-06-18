@@ -10,21 +10,21 @@ import {
     setSearchData
 } from '@redux/postloantools/applyGps';
 import {
-  showWarnMsg,
-  showSucMsg
+    showWarnMsg,
+    showSucMsg
 } from 'common/js/util';
 import {
-  Button,
-  Upload,
-  Modal
+    Button,
+    Upload,
+    Modal
 } from 'antd';
 import {
     listWrapper
 } from 'common/js/build-list';
 import {
-  lowerFrame,
-  onShelf,
-  sendMsg
+    lowerFrame,
+    onShelf,
+    sendMsg
 } from 'api/biz';
 
 @listWrapper(
@@ -45,6 +45,23 @@ import {
 class applyGps extends React.Component {
     render() {
         const fields = [{
+            title: '申领类型',
+            field: 'type',
+            type: 'select',
+            data: [{
+                key: '1',
+                value: '公司'
+            }, {
+                key: '2',
+                value: '个人'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            search: true
+        }, {
+            title: '所属公司',
+            field: 'companyName'
+        }, {
             title: '申领人',
             field: 'applyUserName'
         }, {
@@ -72,25 +89,36 @@ class applyGps extends React.Component {
             search: true
         }, {
             title: '备注',
-            field: 'remark',
-            search: true
+            field: 'remark'
         }];
         return this.props.buildList({
             fields,
             pageCode: 632715,
             btnEvent: {
-              apply: (selectedRowKeys, selectedRows) => {
-                this.props.history.push('/postloantools/applyGps/apply');
-              },
-              check: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/postloantools/applyGps/check?code=${selectedRowKeys[0]}`);
+                company: (selectedRowKeys, selectedRows) => {
+                    this.props.history.push(`/postloantools/applyGps/company`);
+                },
+                person: (selectedRowKeys, selectedRows) => {
+                    this.props.history.push(`/postloantools/applyGps/person`);
+                },
+                companyCheck: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/postloantools/applyGps/companyCheck?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                personCheck: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/postloantools/applyGps/personCheck?code=${selectedRowKeys[0]}`);
+                    }
                 }
-              }
             }
         });
     }
