@@ -54,7 +54,7 @@ class refund extends React.Component {
             readonly: true,
             required: true,
             render: (v, data) => {
-                return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName + '-' + data.bankCardNumber);
+                return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName);
             }
         }, {
             title: '放款日期',

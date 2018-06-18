@@ -54,7 +54,7 @@ class RefundAddedit extends React.Component {
             readonly: true,
             required: true,
             formatter: (v, data) => {
-                return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName + '-' + data.bankCardNumber);
+                return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName);
             }
         }, {
             title: '履约保证金',

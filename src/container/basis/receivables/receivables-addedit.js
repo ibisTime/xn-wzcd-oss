@@ -39,7 +39,7 @@ class ReceivablesAddedit extends React.Component {
             listCode: 630106,
             params: {
                 status: '1',
-                type: '1'
+                typeList: ['1']
             },
             keyName: 'code',
             valueName: 'name',

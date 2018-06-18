@@ -10,21 +10,17 @@ import {
     setSearchData
 } from '@redux/loanstools/rebates';
 import {
-  showWarnMsg,
-  showSucMsg
+    showWarnMsg,
+    showSucMsg,
+    dateTimeFormat
 } from 'common/js/util';
-import {
-  Button,
-  Upload,
-  Modal
-} from 'antd';
 import {
     listWrapper
 } from 'common/js/build-list';
 import {
-  lowerFrame,
-  onShelf,
-  sendMsg
+    lowerFrame,
+    onShelf,
+    sendMsg
 } from 'api/biz';
 
 @listWrapper(
@@ -46,53 +42,52 @@ class rebates extends React.Component {
     render() {
         const fields = [{
             title: '申请公司',
-            field: 'code',
+            field: 'carDealerName',
             search: true
         }, {
             title: '申请人',
-            field: 'companyCode',
+            field: 'applyUserName'
+        }, {
+            title: '申请日期',
+            field: 'applyDatetime',
+            type: 'date',
+            rangedate: ['applyDatetimeStart', 'applyDatetimeEnd'],
+            render: dateTimeFormat,
             search: true
         }, {
-            title: '申请时间',
-            field: 'companyCode',
-            search: true,
-            type: 'date'
-        }, {
-            title: '总金额',
-            field: 'budgetAmount',
+            title: '返点金额',
+            field: 'totalAmount',
             amount: true
         }, {
             title: '缘由',
-            field: 'receiptAccount'
+            field: 'reason'
+        }, {
+            title: '结算方式',
+            field: 'settleType',
+            type: 'select',
+            key: 'settle_way'
         }, {
             title: '办理状态',
-            field: 'status'
+            field: 'curNodeCode',
+            type: 'select',
+            key: 'repoint_status'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632105,
+            pageCode: 632245,
             btnEvent: {
-              apply: (selectedRowKeys, selectedRows) => {
-                this.props.history.push(`/loanstools/rebates/apply?code=${selectedRowKeys[0]}`);
-              },
-              bill: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loanstools/rebates/bill?code=${selectedRowKeys[0]}`);
+                bill: (selectedRowKeys, selectedRows) => {
+                    this.props.history.push(`/loanstools/rebates/bill`);
+                },
+                certain: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loanstools/rebates/certain?code=${selectedRowKeys[0]}`);
+                    }
                 }
-              },
-              certain: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loanstools/rebates/certain?code=${selectedRowKeys[0]}`);
-                }
-              }
             }
         });
     }

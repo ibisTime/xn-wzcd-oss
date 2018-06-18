@@ -59,7 +59,7 @@ class RefundCertain extends React.Component {
             readonly: true,
             required: true,
             formatter: (v, data) => {
-                return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName + '-' + data.bankCardNumber);
+                return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName);
             }
         }, {
             title: '履约保证金',
@@ -122,7 +122,7 @@ class RefundCertain extends React.Component {
             }
         }, {
             title: '手续费到账清单',
-            field: 'receiptAccount',
+            field: 'feeList',
             amount: true,
             readonly: true
         }, {
@@ -135,11 +135,8 @@ class RefundCertain extends React.Component {
             field: 'shouldBackBankcardCode',
             type: 'select',
             listCode: 632007,
-            params: {
-                type: 1
-            },
             keyName: 'code',
-            valueName: '{{bankCode.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
+            valueName: '{{bankCode.DATA}}-{{subbranch.DATA}}',
             required: true
         }, {
             title: '付款凭证',
