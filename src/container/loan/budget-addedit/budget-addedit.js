@@ -192,6 +192,9 @@ class BudgetAddedit extends React.Component {
                     valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
                     required: true,
                     onChange: (v, data) => {
+                        if (!data) {
+                            return;
+                        }
                         this.carDealerSelectData = data;
                         let params = this.getCustomerFeeTotal({
                             lyAmount: data.carDealerProtocolList[0].lyAmountFee,
@@ -241,7 +244,7 @@ class BudgetAddedit extends React.Component {
                         if (this.bankRateList.length < 1 && data.bankSubbranch) {
                             this.bankRateList = data.bankSubbranch.bank.bankRateList;
                         }
-                        return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName + '-' + data.bankCardNumber);
+                        return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName);
                     }
                 }, {
                     title: '厂商指导价',
@@ -1069,7 +1072,7 @@ class BudgetAddedit extends React.Component {
                             listCode: 632007,
                             params: {type: 3},
                             keyName: 'bankcardNumber',
-                            valueName: '{{companyCode.DATA}}-{{bankName.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
+                            valueName: '{{companyCode.DATA}}-{{bankName.DATA}}-{{subbranch.DATA}}',
                             required: true,
                             onChange: (v, data, props) => {
                                 props.setPageData({

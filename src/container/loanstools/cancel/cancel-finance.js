@@ -65,7 +65,7 @@ class CancelFinance extends React.Component {
             required: true,
             readonly: true,
             formatter: (v, data) => {
-                return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName + '-' + data.bankCardNumber);
+                return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName);
             }
         }, {
             title: '应收金额',

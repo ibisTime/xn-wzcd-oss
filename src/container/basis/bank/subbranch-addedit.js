@@ -56,7 +56,8 @@ class subbranchAddedit extends React.Component {
             required: true
         }, {
             title: '开户行',
-            field: 'openBank'
+            field: 'openBank',
+            required: true
         }, {
             title: '银行地址',
             field: 'address'
