@@ -64,7 +64,7 @@ class applyGpsPersonCheck extends React.Component {
               companyCode: getCompanyCode()
             },
             keyName: 'code',
-            valueName: 'gpsNo',
+            valueName: 'gpsDevNo',
             nowrap: true
           }]
         }

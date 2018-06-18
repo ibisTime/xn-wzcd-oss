@@ -1,5 +1,4 @@
 import {
-  getUserName,
   getUserId
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
@@ -7,21 +6,21 @@ import fetch from 'common/js/fetch';
 export function lowerFrame(code) {
   return fetch(630404, {
     code,
-    updater: getUserName()
+    updater: getUserId()
   });
 }
 
 export function onShelf(code) {
   return fetch(630403, {
     code,
-    updater: getUserName()
+    updater: getUserId()
   });
 }
 
 export function lowerFrameSys(code, location, orderNo) {
   return fetch(630414, {
     code,
-    updater: getUserName(),
+    updater: getUserId(),
     location,
     orderNo
   });
@@ -30,7 +29,7 @@ export function lowerFrameSys(code, location, orderNo) {
 export function onShelfSys(code, location, orderNo) {
   return fetch(630413, {
     code,
-    updater: getUserName(),
+    updater: getUserId(),
     location,
     orderNo
   });
@@ -39,7 +38,7 @@ export function onShelfSys(code, location, orderNo) {
 export function lowerFrameShape(code, location, orderNo) {
   return fetch(630424, {
     code,
-    updater: getUserName(),
+    updater: getUserId(),
     location,
     orderNo
   });
@@ -48,7 +47,7 @@ export function lowerFrameShape(code, location, orderNo) {
 export function onShelfShape(code, location, orderNo) {
   return fetch(630423, {
     code,
-    updater: getUserName(),
+    updater: getUserId(),
     location,
     orderNo
   });
@@ -66,7 +65,7 @@ export function sendMsg(code, way) {
 export function putaway(code) {
   return fetch(808003, {
     code,
-    updater: getUserName()
+    updater: getUserId()
   });
 }
 
@@ -74,7 +73,7 @@ export function putaway(code) {
 export function soldOut(code) {
   return fetch(808004, {
     code,
-    updater: getUserName()
+    updater: getUserId()
   });
 }
 
@@ -82,7 +81,7 @@ export function soldOut(code) {
 export function goodsputaway(code) {
   return fetch(808013, {
     code,
-    updater: getUserName()
+    updater: getUserId()
   });
 }
 
@@ -90,7 +89,7 @@ export function goodsputaway(code) {
 export function goodssoldOut(code) {
   return fetch(808014, {
     code,
-    updater: getUserName()
+    updater: getUserId()
   });
 }
 
@@ -98,7 +97,7 @@ export function goodssoldOut(code) {
 export function receiveGoods(code) {
   return fetch(808057, {
     code,
-    updater: getUserName()
+    updater: getUserId()
   });
 }
 
@@ -106,7 +105,7 @@ export function receiveGoods(code) {
 export function cancelBill(code) {
   return fetch(808053, {
     code,
-    updater: getUserName()
+    updater: getUserId()
   });
 }
 
@@ -114,7 +113,7 @@ export function cancelBill(code) {
 export function loanGoodsPutaway(code) {
   return fetch(632173, {
     code,
-    updater: getUserName()
+    updater: getUserId()
   });
 }
 
@@ -122,7 +121,7 @@ export function loanGoodsPutaway(code) {
 export function loanGoodsSoldOut(code) {
   return fetch(632174, {
     code,
-    updater: getUserName()
+    updater: getUserId()
   });
 }
 // 列表获取贷款产品
@@ -158,4 +157,10 @@ export function getJxsDetail(code) {
 // 列表查询银行
 export function getBankList() {
   return fetch(802116);
+}
+// 车辆续保发信息
+export function sendMessage(code) {
+  return fetch(632340, {
+    code
+  });
 }

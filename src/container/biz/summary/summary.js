@@ -8,7 +8,7 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/biz/repayments/repayments';
+} from '@redux/biz/summary/summary';
 import {
     listWrapper
 } from 'common/js/build-list';
@@ -34,7 +34,7 @@ import fetch from 'common/js/fetch';
 
 @listWrapper(
     state => ({
-        ...state.repayments,
+        ...state.summary,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -47,7 +47,7 @@ import fetch from 'common/js/fetch';
         setSearchData
     }
 )
-class Repayments extends React.Component {
+class Summary extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
@@ -55,7 +55,7 @@ class Repayments extends React.Component {
             search: true
         }, {
             title: '银行',
-            field: 'bankCode',
+            field: 'code',
             type: 'select',
             listCode: 632037,
             keyName: 'bankCode',
@@ -97,6 +97,9 @@ class Repayments extends React.Component {
             field: 'overdueAmount',
             amount: true
         }, {
+            title: '剩余代偿金额',
+            field: '22'
+        }, {
             title: '实际逾期期数',
             field: 'curOverdueCount'
         }, {
@@ -123,10 +126,10 @@ class Repayments extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 630520,
-            // searchParams: {
-            //   refType: '0',
-            //   curNodeCode: '003_06'
-            // },
+            searchParams: {
+              refType: '0',
+              curNodeCode: '003_06'
+            },
             btnEvent: {
               relieve: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
@@ -136,7 +139,7 @@ class Repayments extends React.Component {
                 } else if (selectedRows[0].curNodeCode !== '003_06') {
                     showWarnMsg('当前节点不是解除抵押节点');
                 } else {
-                  this.props.history.push(`/biz/repayments/relieve?code=${selectedRowKeys[0]}`);
+                  this.props.history.push(`/biz/summary/relieve?code=${selectedRowKeys[0]}`);
                 }
               }
             }
@@ -144,4 +147,4 @@ class Repayments extends React.Component {
     }
 }
 
-export default Repayments;
+export default Summary;

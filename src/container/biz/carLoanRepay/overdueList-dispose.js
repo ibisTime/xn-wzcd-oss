@@ -6,18 +6,19 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/blackList-dispose';
+} from '@redux/biz/overdueList-dispose';
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizBlackListDispose, {
+@DetailWrapper(state => state.bizOverdueListDispose, {
     initStates,
     doFetching,
     cancelFetching,
@@ -25,58 +26,49 @@ import {
     setPageData,
     restore
 })
-class blackListDispose extends React.Component {
+class OverdueListDispose extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('staffCode', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
     }
-    handlerSumbit(param) {
-      this.props.doFetching();
-      fetch(630532, param).then(() => {
-          showSucMsg('操作成功');
-          this.props.cancelFetching();
-          setTimeout(() => {
-              this.props.history.go(-1);
-          }, 1000);
-      }).catch(this.props.cancelFetching);
-    }
     render() {
         const fields = [{
-            field: 'code',
-            value: this.code,
-            hidden: true
-        }, {
-            title: '贷款人',
-            field: 'name',
-            readonly: true,
+            title: '客户姓名',
+            field: 'realName',
             formatter: (v, d) => {
                 return d.user.realName;
-            }
-        }, {
-            title: '手机号',
-            field: 'mobile',
-            readonly: true,
-            formatter: (v, d) => {
-                return d.user.mobile;
-            }
-        }, {
-            title: '期数',
-            field: 'periods',
+            },
             readonly: true
         }, {
-            title: '逾期期数',
-            field: 'curPeriods',
+            title: '业务编号',
+            field: 'code',
+            readonly: true
+        }, {
+            title: '身份证',
+            field: 'idNo',
+            formatter: (v, d) => {
+                return d.user.idNo;
+            },
+            readonly: true
+        }, {
+            title: '贷款金额',
+            field: 'loanAmount',
+            formatter: (v, d) => {
+                return moneyFormat(d.repayBiz.loanAmount);
+            },
+            readonly: true
+        }, {
+            title: '贷款银行',
+            field: 'loanBankName',
+            formatter: (v, d) => {
+                return moneyFormat(d.repayBiz.loanBank);
+            },
             readonly: true
         }, {
             title: '逾期金额',
             field: 'overdueAmount',
             amount: true,
-            readonly: true
-        }, {
-            title: '逾期日期',
-            field: 'repayDatetime',
-            type: 'date',
             readonly: true
         }, {
             title: '处理历史',
@@ -102,15 +94,61 @@ class blackListDispose extends React.Component {
                 }]
             }
         }, {
-            title: '逾期保证金',
-            field: 'overdueDeposit',
-            amount: true
-        }, {
-            title: '逾期保证金收取方式',
-            field: 'overdueDepositWay',
+            title: '催收方式',
+            field: 'collectionWay',
             type: 'select',
-            select: true,
-            key: 'repay_way'
+            key: 'collection_way',
+            required: true
+        }, {
+            title: '催收对象',
+            field: 'collectionTarget',
+            type: 'select',
+            key: 'collection_target',
+            required: true
+        }, {
+            title: '催收过程',
+            field: 'collectionProcess',
+            type: 'select',
+            key: 'collection_process',
+            required: true
+        }, {
+            title: '客户意愿',
+            field: 'collectionWish',
+            type: 'select',
+            key: 'collection_wish',
+            required: true
+        }, {
+            title: '催收结果',
+            field: 'collectionResult',
+            type: 'select',
+            key: 'collection_result',
+            required: true
+        }, {
+            title: '是否提供押金',
+            field: 'depositIsProvide',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            required: true
+        }, {
+            title: '违约押金',
+            field: 'overdueDeposit',
+            amount: true,
+            number: true,
+            required: true
+        }, {
+            title: '实际还款金额',
+            field: 'realRepayAmount',
+            amount: true,
+            number: true,
+            required: true
         }, {
             title: '清收成本清单',
             field: 'costList',
@@ -135,6 +173,10 @@ class blackListDispose extends React.Component {
                     field: 'remark'
                 }]
             }
+        }, {
+            title: '催收情况说明',
+            field: 'collectionNote',
+            required: true
         }];
         return this
             .props
@@ -143,31 +185,22 @@ class blackListDispose extends React.Component {
                 code: this.code,
                 view: this.view,
                 detailCode: 630541,
-                moreBtns: true,
                 buttons: [{
-                    title: '记绿名单并代扣',
+                    title: '确定',
                     handler: (param) => {
-                        param.dealResult = '1';
-                        this.handlerSumbit(param);
+                        param.code = this.code;
+                        param.operator = getUserId();
+                        this.props.doFetching();
+                        fetch(630532, param).then(() => {
+                            showSucMsg('操作成功');
+                            this.props.cancelFetching();
+                            setTimeout(() => {
+                                this.props.history.go(-1);
+                            }, 1000);
+                        }).catch(this.props.cancelFetching);
                     },
-                    type: 'primary',
-                    check: true
-                }, {
-                    title: '记黄名单并代偿',
-                    handler: (param) => {
-                        param.dealResult = '3';
-                        this.handlerSumbit(param);
-                    },
-                    type: 'primary',
-                    check: true
-                }, {
-                    title: '催收失败记红名单',
-                    handler: (param) => {
-                        param.dealResult = '2';
-                        this.handlerSumbit(param);
-                    },
-                    type: 'primary',
-                    check: true
+                    check: true,
+                    type: 'primary'
                 }, {
                     title: '返回',
                     handler: (param) => {
@@ -178,4 +211,4 @@ class blackListDispose extends React.Component {
     }
 }
 
-export default blackListDispose;
+export default OverdueListDispose;

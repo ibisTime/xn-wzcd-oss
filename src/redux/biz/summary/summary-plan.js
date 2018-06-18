@@ -1,6 +1,6 @@
-import { commDetailState } from '../common';
+import { commDetailState } from '../../common';
 
-const PREFIX = 'CAR_OVERDUE_LIST_ADDEDIT_';
+const PREFIX = 'SUMMARY_PLAN_';
 const SET_SELECT_DATA = PREFIX + 'SET_SELECT_DATA';
 const LOADING = PREFIX + 'LOADING';
 const CANCEL_LOADING = PREFIX + 'CANCEL_LOADING';
@@ -10,7 +10,7 @@ const RESTORE = PREFIX + 'RESTORE';
 
 const initState = { ...commDetailState };
 
-export function bizOverdueListAddedit(state = initState, action) {
+export function summaryPlan(state = initState, action) {
   switch(action.type) {
     case INIT_STATE:
       return {...state, ...action.payload};

@@ -331,50 +331,40 @@ const ROUTES = [
     path: '/biz/archives/certain',
     component: asyncComponent(() => import('container/biz/carLoanRepay/archives-certain'))
   },
-  //  还款业务管理
+  //  还款中客户
   {
-    path: '/biz/refundBusiness',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/refundBusiness'))
+    path: '/biz/repayments',
+    component: asyncComponent(() => import('container/biz/repayments/repayments'))
   },
-  //  还款业务详情
+  //  还款中客户 详情
   {
-    path: '/biz/refundBusiness/addedit',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/refundBusiness-addedit'))
+    path: '/biz/repayments/addedit',
+    component: asyncComponent(() => import('container/biz/repayments/repayments-addedit'))
   },
-  //  还款业务还款计划
+  //  还款中客户 还款计划
   {
-    path: '/biz/refundBusiness/plan',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/refundBusiness-plan'))
+    path: '/biz/repayments/plan',
+    component: asyncComponent(() => import('container/biz/repayments/repayments-plan'))
   },
-  //  还款业务还款卡变更
+  //  逾期客户汇总
   {
-    path: '/biz/refundBusiness/changecard',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/refundBusiness-changeCard'))
+    path: '/biz/summary',
+    component: asyncComponent(() => import('container/biz/summary/summary'))
   },
-  //  还款业务确认结清
+  //  逾期客户汇总 详情
   {
-    path: '/biz/refundBusiness/certain',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/refundBusiness-certain'))
+    path: '/biz/summary/addedit',
+    component: asyncComponent(() => import('container/biz/summary/summary-addedit'))
   },
-  //  当月还款名单
+  //  逾期客户汇总 还款计划
   {
-    path: '/biz/refundList',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/refundList'))
-  },
-  //  当月还款名单详情
-  {
-    path: '/biz/refundList/addedit',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/refundList-addedit'))
+    path: '/biz/summary/plan',
+    component: asyncComponent(() => import('container/biz/summary/summary-plan'))
   },
   //  逾期名单
   {
     path: '/biz/overdueList',
     component: asyncComponent(() => import('container/biz/carLoanRepay/overdueList'))
-  },
-  //  逾期名单详情
-  {
-    path: '/biz/overdueList/addedit',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/overdueList-addedit'))
   },
   //  逾期处理
   {
@@ -456,10 +446,25 @@ const ROUTES = [
     path: '/biz/redList/pay',
     component: asyncComponent(() => import('container/biz/carLoanRepay/redList-pay'))
   },
-  //  红名单 总经理审核
+  //  红名单 风控经理审核
   {
-    path: '/biz/redList/check',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/redList-check'))
+    path: '/biz/redList/checkDirector',
+    component: asyncComponent(() => import('container/biz/carLoanRepay/redList-checkDirector'))
+  },
+  //  红名单 分公司总经理审核
+  {
+    path: '/biz/redList/compCheck',
+    component: asyncComponent(() => import('container/biz/carLoanRepay/redList-compCheck'))
+  },
+  //  红名单 财务经理审核
+  {
+    path: '/biz/redList/finance',
+    component: asyncComponent(() => import('container/biz/carLoanRepay/redList-finance'))
+  },
+  //  红名单 风控总监审核
+  {
+    path: '/biz/redList/checkDirectorTwo',
+    component: asyncComponent(() => import('container/biz/carLoanRepay/redList-checkDirectorTwo'))
   },
   //  拖车管理
   {
@@ -1399,6 +1404,16 @@ const ROUTES = [
   {
     path: '/postloantools/installGps/toVoid',
     component: asyncComponent(() => import('container/postloantools/installGps/installGps-toVoid'))
+  },
+  //  车辆续保
+  {
+    path: '/postloantools/insurance',
+    component: asyncComponent(() => import('container/postloantools/insurance/insurance'))
+  },
+  //  车辆续保 详情
+  {
+    path: '/postloantools/insurance/continue',
+    component: asyncComponent(() => import('container/postloantools/insurance/insurance-continue'))
   },
   //  导入逾期名单
   {

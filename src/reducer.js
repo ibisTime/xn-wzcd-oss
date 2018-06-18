@@ -80,11 +80,16 @@ import { bizCarLoanBusiness } from './redux/biz/carLoanBusiness';
 import { bizCarLoanBusinessAddedit } from '@redux/biz/carLoanBusiness-addedit';
 import { bizCarLoanBusinessCheck } from '@redux/biz/carLoanBusiness-check';
 
-//  还款中客户 + 详情 + 还款计划 +
+//  还款中客户 + 详情 + 还款计划 + 提前还款
 import { repayments } from './redux/biz/repayments/repayments';
 import { repaymentsAddEdit } from './redux/biz/repayments/repayments-addedit';
 import { repaymentsPlan } from './redux/biz/repayments/repayments-plan';
 import { repaymentsPay } from './redux/biz/repayments/repayments-pay';
+
+//  逾期客户汇总 + 详情 + 还款计划
+import { summary } from './redux/biz/summary/summary';
+import { summaryAddEdit } from './redux/biz/summary/summary-addedit';
+import { summaryPlan } from './redux/biz/summary/summary-plan';
 
 //  当月还款账单 + 详情
 import { bizRefundList } from './redux/biz/refundList';
@@ -92,8 +97,8 @@ import { bizRefundListAddedit } from './redux/biz/refundList-addedit';
 
 //  逾期名单 + 详情 + 处理
 import { bizOverdueList } from './redux/biz/overdueList';
-import { bizOverdueListAddedit } from './redux/biz/overdueList-addedit';
 import { bizOverdueListDispose } from './redux/biz/overdueList-dispose';
+import { bizOverdueListApply } from './redux/biz/overdueList-apply';
 
 //  绿名单 + 详情 + 缴纳清收成本
 import { bizGreenList } from './redux/biz/greenList';
@@ -118,11 +123,14 @@ import { bizBlackList } from './redux/biz/blackList';
 import { bizBlackListAddedit } from './redux/biz/blackList-addedit';
 import { bizBlackListDispose } from './redux/biz/blackList-dispose';
 
-//  红名单 + 详情 + 申请拖车 + 总经理审批 + 财务打款 + 录入拖车结果
+//  红名单 + 详情 + 风控经理审核 + 分公司总经理审核 + 风控总监审核 + 财务经理审核 + 申请拖车 + 财务打款 + 录入拖车结果
 import { bizredList } from './redux/biz/redList';
 import { bizredListAddEdit } from './redux/biz/redList-addedit';
 import { bizredListApply } from './redux/biz/redList-apply';
-import { bizredListCheck } from './redux/biz/redList-check';
+import { bizredListCheckDirector } from './redux/biz/redList-checkDirector';
+import { bizredListCompCheck } from './redux/biz/redList-compCheck';
+import { bizredListCheckDirectorTwo } from './redux/biz/redList-checkDirectorTwo';
+import { bizredListFinance } from './redux/biz/redList-finance';
 import { bizredListPay } from './redux/biz/redList-pay';
 import { bizredListEnter } from './redux/biz/redList-enter';
 
@@ -357,6 +365,10 @@ import { postloantoolsImportAddedit } from './redux/postloantools/import-addedit
 import { postloantoolsImportImport } from './redux/postloantools/import-import';
 import { postloantoolsImportDispose } from './redux/postloantools/import-dispose';
 
+//  车辆续保 + 续保
+import { postloantoolsInsurance } from './redux/postloantools/insurance';
+import { postloantoolsInsuranceContinue } from './redux/postloantools/insurance-continue';
+
 /**
  * 统计分析
  */
@@ -554,9 +566,9 @@ export default combineReducers({
   bizHistoryBusinessManage,
   bizCarLoanBusinessCheck,
   bizOverdueListDispose,
+  bizOverdueListApply,
   bizBlackListDispose,
   bizGreenListPayment,
-  bizOverdueListAddedit,
   bizRefundCard,
   bizRefundCardAddedit,
   bizHandleApplyCheck,
@@ -569,7 +581,10 @@ export default combineReducers({
   bizredList,
   bizredListAddEdit,
   bizredListApply,
-  bizredListCheck,
+  bizredListCheckDirector,
+  bizredListCompCheck,
+  bizredListCheckDirectorTwo,
+  bizredListFinance,
   bizredListPay,
   bizredListEnter,
   loanBudget,
@@ -786,5 +801,10 @@ export default combineReducers({
   repayments,
   repaymentsAddEdit,
   repaymentsPlan,
-  repaymentsPay
+  repaymentsPay,
+  summary,
+  summaryAddEdit,
+  summaryPlan,
+  postloantoolsInsurance,
+  postloantoolsInsuranceContinue
 });
