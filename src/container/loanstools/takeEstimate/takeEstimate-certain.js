@@ -6,7 +6,7 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/loanstools/take-enter';
+} from '@redux/loanstools/takeEstimate-certain';
 import {
   getQueryString,
   showSucMsg,
@@ -15,10 +15,9 @@ import {
 import {
   DetailWrapper
 } from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
-    state => state.loanstoolsTakeEnter, {
+    state => state.loanstoolsTakeEstimateCertain, {
         initStates,
         doFetching,
         cancelFetching,
@@ -27,7 +26,7 @@ import {
         restore
     }
 )
-class TakeEnter extends React.Component {
+class TakeEstimateCertain extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -109,4 +108,4 @@ class TakeEnter extends React.Component {
     }
 }
 
-export default TakeEnter;
+export default TakeEstimateCertain;

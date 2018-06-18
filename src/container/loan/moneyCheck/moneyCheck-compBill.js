@@ -62,7 +62,7 @@ class AdvMoneyCompBill extends React.Component {
             readonly: true
         }, {
             title: '垫资客户',
-            field: 'loanBankName',
+            field: 'dzUserList',
             type: 'o2m',
             options: {
                 delete: true,

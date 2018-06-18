@@ -36,20 +36,21 @@ class TakeFreeEnter extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'companyCode',
+            field: 'customerName',
+            select: true,
             readonly: true
         }, {
             title: '业务编号',
-            field: 'receiptBank',
+            field: 'code',
             readonly: true
         }, {
             title: '贷款金额',
-            field: 'receiptAccount',
+            field: 'loanAmount',
             amount: true,
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'receiptAccount',
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '应收金额',
@@ -94,7 +95,7 @@ class TakeFreeEnter extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632106,
+            detailCode: 632146,
             buttons: [{
                 title: '确认',
                 check: true,

@@ -266,7 +266,7 @@ import { loanstoolsTakeEstimateAddedit } from './redux/loanstools/takeEstimate-a
 import { loanstoolsTakeEstimateCertain } from './redux/loanstools/takeEstimate-certain';
 
 //  收回手续费 + 详情 + 收款回录
-import { loanstoolstakeFree } from './redux/loanstools/takeFree';
+import { loanstoolsTakeFree } from './redux/loanstools/takeFree';
 import { loanstoolsTakeFreeAddedit } from './redux/loanstools/takeFree-addedit';
 import { loanstoolsTakeFreeEnter } from './redux/loanstools/takeFree-enter';
 
@@ -595,7 +595,7 @@ export default combineReducers({
   loanstoolsTakeEstimate,
   loanstoolsTakeEstimateAddedit,
   loanstoolsTakeEstimateCertain,
-  loanstoolstakeFree,
+  loanstoolsTakeFree,
   loanstoolsTakeFreeAddedit,
   loanstoolsTakeFreeEnter,
   loanstoolsCard,

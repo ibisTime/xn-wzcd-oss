@@ -23,15 +23,11 @@ import fetch from 'common/js/fetch';
     {initStates, doFetching, cancelFetching, setSelectData, setPageData, restore}
 )
 class CreditStartAddedit extends React.Component {
-    setEnteringVisible = (entryVisible, selectKey) => {
-        this.setState({entryVisible, selectKey});
-    };
-
     constructor(props) {
         super(props);
         this.state = {
             entryVisible: false,
-            bankCreditResult: [],
+            bankCreditResult: null,
             selectKey: ''
         };
         this.code = getQueryString('code', this.props.location.search);
@@ -45,18 +41,31 @@ class CreditStartAddedit extends React.Component {
         this.newCar = true;
     }
 
+    setEnteringVisible = (entryVisible, selectKey) => {
+        let bankCreditResult = [];
+        if (!this.state.bankCreditResult && this.props.isLoaded) {
+            bankCreditResult = this.props.pageData.creditUser;
+        }
+        this.setState({entryVisible, selectKey, bankCreditResult: bankCreditResult});
+
+        console.log(this.state.bankCreditResult);
+    };
+
     creditEntryFun = (data) => {
-        console.log(data);
         let falg = true;
-        for (let i = 0; i < this.state.bankCreditResult.length; i++) {
-            if (this.state.bankCreditResult[i].code === data.code) {
-                this.state.bankCreditResult[i] = data;
+        let bankCreditResult = this.state.bankCreditResult;
+        for (let i = 0; i < bankCreditResult.length; i++) {
+            if (bankCreditResult[i].code === data.code) {
+                bankCreditResult[i] = data;
                 falg = false;
             }
         }
         if (falg) {
-            this.state.bankCreditResult.push(data);
+            bankCreditResult.push(data);
         }
+        this.setState({
+            bankCreditResult: bankCreditResult
+        });
     };
 
     render() {
@@ -208,7 +217,6 @@ class CreditStartAddedit extends React.Component {
         // 银行录入结果
         if (this.isEntry) {
             o2mFields = o2mFields.concat(entryResultFields);
-            console.log(o2mFields);
 
             buttons = [{
                 title: '录入',

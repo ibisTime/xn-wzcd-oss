@@ -34,11 +34,13 @@ class RebatesCertain extends React.Component {
     render() {
         const fields = [{
             title: '缘由',
-            field: 'companyCode',
+            field: 'reason',
+            type: 'textarea',
+            normalArea: true,
             readonly: true
         }, {
             title: '总金额',
-            field: 'receiptAccount',
+            field: 'totalAmount',
             amount: true,
             readonly: true
         }, {
@@ -51,34 +53,30 @@ class RebatesCertain extends React.Component {
             readonly: true
         }, {
             title: '申请人',
-            field: 'receiptAccount',
+            field: 'applyUserName',
             readonly: true
         }, {
             title: '申请时间',
-            field: 'collectionDatetime',
+            field: 'applyDatetime',
             type: 'date',
             readonly: true
         }, {
             title: '付款时间',
-            field: 'collectionDatetime',
+            field: 'payDatetime',
             type: 'date',
             required: true
         }, {
-            title: '付款银行',
-            field: 'receiptAccount',
-            required: true
-        }, {
             title: '付款账号',
-            field: 'receiptAccount',
+            field: 'payBankcardCode',
             required: true
         }, {
             title: '水单',
-            field: 'receiptAccount',
+            field: 'billPdf',
             required: true,
             type: 'img'
         }, {
             title: '备注',
-            field: 'remark'
+            field: 'payRemark'
         }];
         return this.props.buildDetail({
             fields,
@@ -89,6 +87,7 @@ class RebatesCertain extends React.Component {
                 title: '确认',
                 check: true,
                 handler: (params) => {
+                    params.operator = getUserId();
                     this.props.doFetching();
                     fetch(632241, params).then(() => {
                         showSucMsg('操作成功');

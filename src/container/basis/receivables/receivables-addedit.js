@@ -65,10 +65,6 @@ class ReceivablesAddedit extends React.Component {
             searchName: 'bankName',
             required: true
         }, {
-            title: '开户支行',
-            field: 'subbranch',
-            required: true
-        }, {
             title: '银行卡号',
             field: 'bankcardNumber',
             bankCard: true,

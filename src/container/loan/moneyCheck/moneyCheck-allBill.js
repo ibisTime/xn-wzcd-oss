@@ -62,7 +62,7 @@ class AdvMoneyAllBill extends React.Component {
             readonly: true
         }, {
             title: '垫资客户',
-            field: 'loanBankName',
+            field: 'dzUserList',
             type: 'o2m',
             options: {
                 delete: true,
@@ -71,29 +71,29 @@ class AdvMoneyAllBill extends React.Component {
                     field: '33'
                 }, {
                     title: '贷款金额',
-                    field: '44',
+                    field: '441',
                     amount: true
                 }, {
                     title: '手续费',
-                    field: '44',
+                    field: '442',
                     amount: true
                 }, {
                     title: '手续费收取方式',
-                    field: '44',
+                    field: '443',
                     type: 'select',
                     key: '444'
                 }, {
                     title: 'GPS费',
-                    field: '44',
+                    field: '444',
                     amount: true
                 }, {
                     title: 'GPS费收取方式',
-                    field: '44',
+                    field: '445',
                     type: 'select',
                     key: '444'
                 }, {
                     title: '应退按揭款',
-                    field: '44',
+                    field: '446',
                     amount: true
                 }]
             }

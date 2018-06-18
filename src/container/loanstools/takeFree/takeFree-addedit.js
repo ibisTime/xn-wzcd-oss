@@ -34,42 +34,42 @@ class TakeFreeAddedit extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'companyCode',
+            field: 'customerName',
             select: true
         }, {
             title: '业务编号',
-            field: 'receiptBank'
+            field: 'code'
         }, {
             title: '贷款金额',
-            field: 'receiptAccount',
+            field: 'loanAmount',
             amount: true
         }, {
             title: '贷款银行',
-            field: 'receiptAccount'
+            field: 'loanBankName'
         }, {
             title: '应收金额',
             field: 'receiptAccount',
             amount: true
         }, {
             title: '实收金额',
-            field: 'receiptAccount',
+            field: 'receiptAccount2',
             amount: true
         }, {
             title: '未收金额',
-            field: 'receiptAccount',
+            field: 'receiptAccount3',
             amount: true
         }, {
             title: '是够结清',
-            field: 'receiptAccount'
+            field: 'receiptAccount4'
         }, {
             title: '服务费清单',
-            field: 'receiptAccount'
+            field: 'receiptAccount5'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632106
+            detailCode: 632146
         });
     }
 }

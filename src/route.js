@@ -1150,42 +1150,6 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loanstools/take/take-enter'))
   },
 
-  //  收回预算款
-  {
-      path: '/loanstools/takeEstimate',
-      component: asyncComponent(() => import('container/loanstools/takeEstimate/takeEstimate'))
-  },
-
-  //  收回预算款 详情
-  {
-      path: '/loanstools/takeEstimate/addedit',
-      component: asyncComponent(() => import('container/loanstools/takeEstimate/takeEstimate-addedit'))
-  },
-
-  //  收回预算款 申请
-  {
-      path: '/loanstools/takeEstimate/certain',
-      component: asyncComponent(() => import('container/loanstools/takeEstimate/takeEstimate-certain'))
-  },
-
-  //  收回手续费
-  {
-      path: '/loanstools/takeFree',
-      component: asyncComponent(() => import('container/loanstools/takeFree/takeFree'))
-  },
-
-  //  收回手续费 详情
-  {
-      path: '/loanstools/takeFree/addedit',
-      component: asyncComponent(() => import('container/loanstools/takeFree/takeFree-addedit'))
-  },
-
-  //  收回手续费 申请
-  {
-      path: '/loanstools/takeFree/enter',
-      component: asyncComponent(() => import('container/loanstools/takeFree/takeFree-enter'))
-  },
-
   //  制卡
   {
       path: '/loanstools/card',
