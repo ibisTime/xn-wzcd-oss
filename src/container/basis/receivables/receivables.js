@@ -76,9 +76,6 @@ class Receivables extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            searchParams: {
-              type: 1
-            },
             pageCode: 632005,
             deleteCode: 632001,
             searchParams: {
