@@ -3,7 +3,7 @@ import { Form, Input, Select, Row, Col, Spin, Button, Tabs, Divider,
   Table, DatePicker, Card, Popconfirm, Icon, Upload, Tooltip } from 'antd';
 import moment from 'moment';
 import { UPLOAD_URL, tailFormItemLayout } from 'common/js/config';
-import { getQueryString, dateFormat, showSucMsg, showErrMsg,
+import { getQueryString, dateFormat, showSucMsg, showErrMsg, moneyFormat,
   showWarnMsg, formatFile, isUndefined, moneyParse, getUserId } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import { getJxsDetail, getBankList } from 'api/biz';
@@ -404,9 +404,9 @@ class DealerAddedit extends React.Component {
                   </Col>
                   <Col span={12}>
                     {
-                      this.view ? <div className="readonly-text">{pageData[fields[7]]}</div>
+                      this.view ? <div className="readonly-text">{pageData[fields[6]] === '1' ? moneyFormat(pageData[fields[7]]) : pageData[fields[7]]}</div>
                         : getFieldDecorator(fields[7], {
-                          initialValue: pageData[fields[7]]
+                          initialValue: pageData[fields[6]] === '1' ? moneyFormat(pageData[fields[7]]) : pageData[fields[7]]
                         })(<Input />)
                     }
                   </Col>
@@ -426,9 +426,9 @@ class DealerAddedit extends React.Component {
                   </Col>
                   <Col span={12}>
                     {
-                      this.view ? <div className="readonly-text">{pageData[fields[9]]}</div>
+                      this.view ? <div className="readonly-text">{pageData[fields[8]] === '1' ? moneyFormat(pageData[fields[9]]) : pageData[fields[9]]}</div>
                         : getFieldDecorator(fields[9], {
-                          initialValue: pageData[fields[9]]
+                          initialValue: pageData[fields[8]] === '1' ? moneyFormat(pageData[fields[9]]) : pageData[fields[9]]
                         })(<Input />)
                     }
                   </Col>
@@ -450,9 +450,9 @@ class DealerAddedit extends React.Component {
                   </Col>
                   <Col span={12}>
                     {
-                      this.view ? <div className="readonly-text">{pageData[fields[11]]}</div>
+                      this.view ? <div className="readonly-text">{pageData[fields[10]] === '1' ? moneyFormat(pageData[fields[11]]) : pageData[fields[11]]}</div>
                         : getFieldDecorator(fields[11], {
-                          initialValue: pageData[fields[11]]
+                          initialValue: pageData[fields[10]] === '1' ? moneyFormat(pageData[fields[11]]) : pageData[fields[11]]
                         })(<Input />)
                     }
                   </Col>
@@ -472,9 +472,9 @@ class DealerAddedit extends React.Component {
                   </Col>
                   <Col span={12}>
                     {
-                      this.view ? <div className="readonly-text">{pageData[fields[13]]}</div>
+                      this.view ? <div className="readonly-text">{pageData[fields[12]] === '1' ? moneyFormat(pageData[fields[13]]) : pageData[fields[13]]}</div>
                         : getFieldDecorator(fields[13], {
-                          initialValue: pageData[fields[13]]
+                          initialValue: pageData[fields[12]] === '1' ? moneyFormat(pageData[fields[13]]) : pageData[fields[13]]
                         })(<Input />)
                     }
                   </Col>
@@ -496,9 +496,9 @@ class DealerAddedit extends React.Component {
                   </Col>
                   <Col span={12}>
                     {
-                      this.view ? <div className="readonly-text">{pageData[fields[15]]}</div>
+                      this.view ? <div className="readonly-text">{pageData[fields[14]] === '1' ? moneyFormat(pageData[fields[15]]) : pageData[fields[15]]}</div>
                         : getFieldDecorator(fields[15], {
-                          initialValue: pageData[fields[15]]
+                          initialValue: pageData[fields[14]] === '1' ? moneyFormat(pageData[fields[15]]) : pageData[fields[15]]
                         })(<Input />)
                     }
                   </Col>
@@ -518,9 +518,9 @@ class DealerAddedit extends React.Component {
                   </Col>
                   <Col span={12}>
                     {
-                      this.view ? <div className="readonly-text">{pageData[fields[17]]}</div>
+                      this.view ? <div className="readonly-text">{pageData[fields[16]] === '1' ? moneyFormat(pageData[fields[17]]) : pageData[fields[17]]}</div>
                         : getFieldDecorator(fields[17], {
-                          initialValue: pageData[fields[17]]
+                          initialValue: pageData[fields[16]] === '1' ? moneyFormat(pageData[fields[17]]) : pageData[fields[17]]
                         })(<Input />)
                     }
                   </Col>
@@ -542,9 +542,9 @@ class DealerAddedit extends React.Component {
                   </Col>
                   <Col span={12}>
                     {
-                      this.view ? <div className="readonly-text">{pageData[fields[19]]}</div>
+                      this.view ? <div className="readonly-text">{pageData[fields[18]] === '1' ? moneyFormat(pageData[fields[19]]) : pageData[fields[19]]}</div>
                         : getFieldDecorator(fields[19], {
-                          initialValue: pageData[fields[19]]
+                          initialValue: pageData[fields[18]] === '1' ? moneyFormat(pageData[fields[19]]) : pageData[fields[19]]
                         })(<Input />)
                     }
                   </Col>
@@ -859,9 +859,10 @@ class DealerAddedit extends React.Component {
         result.obj['returnPointRate'] = values['returnPointFee_' + tab];
       }
     }
-    ['isDz', 'platCtRate12', 'platCtRate24', 'platCtRate36',
-      'platZkRate12', 'platZkRate24', 'platZkRate36'].forEach(v => {
-      result.obj[v] = values[v];
+    ['isDz', 'platCtRate12', 'platCtRate24', 'platCtRate36', 'platZkRate12',
+      'platZkRate24', 'platZkRate36', 'insuAgencyYear1Type', 'insuAgencyYear2Type',
+      'insuAgencyYear3Type'].forEach(v => {
+      result.obj[v] = values[v + '_' + tab];
     });
     result.obj.bankCode = tab === 'tab1' ? 'ICBC' : tab === 'tab2' ? 'BOC' : 'CCB';
     return result;
@@ -972,7 +973,7 @@ class DealerAddedit extends React.Component {
           dataIndex: col.dataIndex,
           title: col.title,
           banklist: this.state.banklist,
-          placeholder: col.dataIndex === 'pointRate' ? '请输入0~1直接的小数' : '',
+          placeholder: col.dataIndex === 'pointRate' ? '请输入0~1之间的小数' : '',
           editing: this.isEditing(record)
         })
       };

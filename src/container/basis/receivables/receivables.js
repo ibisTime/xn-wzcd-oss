@@ -41,7 +41,15 @@ class Receivables extends React.Component {
     render() {
         const fields = [{
             title: '公司',
-            field: 'companyCode'
+            field: 'companyCode',
+            type: 'select',
+            listCode: 630106,
+            params: {
+              typeList: [1],
+              status: 1
+            },
+            keyName: 'code',
+            valueName: 'name'
         }, {
             title: '户名',
             field: 'keyword',
@@ -51,7 +59,11 @@ class Receivables extends React.Component {
             }
         }, {
             title: '银行名称',
-            field: 'bankName'
+            field: 'bankCode',
+            type: 'select',
+            listCode: 802116,
+            keyName: 'bankCode',
+            valueName: 'bankName'
         }, {
             title: '开户支行',
             field: 'subbranch'
@@ -64,6 +76,9 @@ class Receivables extends React.Component {
         }];
         return this.props.buildList({
             fields,
+            searchParams: {
+              type: 1
+            },
             pageCode: 632005,
             deleteCode: 632001,
             searchParams: {
