@@ -1139,7 +1139,7 @@ export default class DetailComponent extends React.Component {
         try {
             if (item._keys) {
                 result = this.getValFromKeys(item);
-            } else if (!isUndefined(item.value)) {
+            } else if (!isUndefined(item.value) && !result) {
                 result = item.value;
             }
             if (item.type === 'citySelect') {

@@ -27,7 +27,9 @@ class BudgetAddedit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAdvanceFund: false
+            isAdvanceFund: false,
+            sfData: null,
+            sfDataFetch: false
         };
         this.code = getQueryString('code', this.props.location.search);
         this.companyCode = getQueryString('companyCode', this.props.location.search);
@@ -43,9 +45,9 @@ class BudgetAddedit extends React.Component {
         // 二审
         this.isCheck = !!getQueryString('isCheck', this.props.location.search);
         // 当前选中汽车经销商
-        this.carDealerSelectData = {};
+        this.carDealerSelectData = [];
         // 银行利率明细列表
-        this.bankRateList = [];
+        this.bankRateList = null;
         // 收款账户
         this.receivables = {};
         // 应退按揭款
@@ -122,13 +124,7 @@ class BudgetAddedit extends React.Component {
             feeTotal = 0;
         }
 
-        return {
-            lyAmount: lyAmount,
-            fxAmount: fxAmount,
-            gpsFee: gpsFee,
-            otherFee: otherFee,
-            customerFeeTotal: moneyFormat(feeTotal)
-        };
+        return moneyFormat(feeTotal);
     }
 
     // 应退按揭款合计 = 贷款金额 - 收客户手续费（按揭款扣）- GPS费（按揭款扣）- 厂家贴息
@@ -144,6 +140,43 @@ class BudgetAddedit extends React.Component {
         }
 
         return refund;
+    }
+
+    // 展示明细
+    getRepointDetailList = (params) => {
+        if (!this.state.sfData) {
+            return;
+        }
+        let bankRate = this.props.form.getFieldValue('bankRate');
+        let fee = this.props.form.getFieldValue('fee') * 1000;
+        let feeWay = this.props.form.getFieldValue('feeWay');
+        let fxAmount = this.state.sfData.fxAmount;
+        let gpsFee = this.state.sfData.gpsFee;
+        let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
+        let loanPeriods = this.props.form.getFieldValue('loanPeriods');
+        let lyAmount = this.state.sfData.lyAmount;
+        let otherFee = this.state.sfData.otherFee;
+        let rateType = this.props.form.getFieldValue('rateType');
+        let list = {};
+        if (bankRate && fee && feeWay && fxAmount && gpsFee && gpsFeeWay && loanPeriods && lyAmount && otherFee && rateType) {
+            this.props.doFetching();
+            list = {
+                bankRate: bankRate,
+                fee: fee,
+                feeWay: feeWay,
+                fxAmount: fxAmount,
+                gpsFee: gpsFee,
+                gpsFeeWay: gpsFeeWay,
+                loanPeriods: loanPeriods,
+                lyAmount: lyAmount,
+                otherFee: otherFee,
+                rateType: rateType,
+                ...params
+            };
+            return list;
+        } else {
+            return false;
+        }
     }
 
     render() {
@@ -191,49 +224,68 @@ class BudgetAddedit extends React.Component {
                     keyName: 'code',
                     valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
                     required: true,
-                    onChange: (v, data) => {
-                        if (!data) {
+                    onChange: (v, d) => {
+                        if (!d) {
                             return;
                         }
-                        this.carDealerSelectData = data;
-                        let params = this.getCustomerFeeTotal({
-                            lyAmount: data.carDealerProtocolList[0].lyAmountFee,
-                            fxAmount: data.carDealerProtocolList[0].assureFee,
-                            gpsFee: data.carDealerProtocolList[0].gpsFee,
-                            otherFee: data.carDealerProtocolList[0].otherFee
-                        });
                         this.props.doFetching();
-                        fetch(632290, {
+                        this.setState({
+                            sfDataFetch: false
+                        });
+                        this.carDealerSelectData = d;
+                        // 协议收费
+                        fetch(632291, {
                             budgetOrderCode: this.code,
-                            carDealerCode: data.code
-                        }).then((data) => {
+                            carDealerCode: d.code
+                        }).then((sfData) => {
                             this.props.cancelFetching();
-                            let detailList1 = [];
-                            let detailList2 = [];
-                            let detailList3 = [];
-                            data.map((item) => {
-                                item.repointAmountL = moneyUppercase(item.repointAmount);
-                                if (item.useMoneyPurpose === '1') {
-                                    detailList1.push(item);
-                                } else if (item.useMoneyPurpose === '2') {
-                                    detailList2.push(item);
-                                } else if (item.useMoneyPurpose === '3') {
-                                    detailList3.push(item);
-                                }
+                            this.setState({
+                                sfData: sfData
                             });
-                            this.repointDetailList1 = detailList1;
+                            let customerFeeTotal = this.getCustomerFeeTotal(sfData);
                             this.props.setPageData({
                                 ...this.props.pageData,
-                                lyAmountFee: params.lyAmount,
-                                assureFee: params.fxAmount,
-                                gpsFee: params.gpsFee,
-                                otherFee: params.otherFee,
-                                customerFeeTotal: params.customerFeeTotal,
-                                repointDetailList1: detailList1,
-                                repointDetailList2: detailList2,
-                                repointDetailList3: detailList3
+                                lyAmountFee: sfData.lyAmount,
+                                assureFee: sfData.fxAmount,
+                                otherFee: sfData.otherFee,
+                                gpsFee: sfData.gpsFee,
+                                customerFeeTotal: customerFeeTotal
                             });
-                        }).catch(this.props.cancelFetching);
+
+                            let rData = this.getRepointDetailList();
+                            if (!rData) {
+                                return false;
+                            }
+
+                            this.props.doFetching();
+                            fetch(632290, {
+                                budgetOrderCode: this.code,
+                                carDealerCode: this.carDealerSelectData.code,
+                                ...rData
+                            }).then((mxData) => {
+                                this.props.cancelFetching();
+                                let detailList1 = [];
+                                let detailList2 = [];
+                                let detailList3 = [];
+                                mxData.map((item) => {
+                                    item.repointAmountL = moneyUppercase((item.repointAmount / 1000).toFixed(2));
+                                    if (item.useMoneyPurpose === '1') {
+                                        detailList1.push(item);
+                                    } else if (item.useMoneyPurpose === '2') {
+                                        detailList2.push(item);
+                                    } else if (item.useMoneyPurpose === '3') {
+                                        detailList3.push(item);
+                                    }
+                                });
+                                this.repointDetailList1 = detailList1;
+                                this.props.setPageData({
+                                    ...this.props.pageData,
+                                    repointDetailList1: detailList1,
+                                    repointDetailList2: detailList2,
+                                    repointDetailList3: detailList3
+                                });
+                            }).catch(this.props.cancelFetching);
+                        });
                     }
                 }, {
                     title: '贷款银行',
@@ -241,8 +293,16 @@ class BudgetAddedit extends React.Component {
                     readonly: true,
                     required: true,
                     formatter: (v, data) => {
-                        if (this.bankRateList.length < 1 && data.bankSubbranch) {
-                            this.bankRateList = data.bankSubbranch.bank.bankRateList;
+                        if (!this.bankRateList && data) {
+                            if (!this.bankRateList && data.bankSubbranch) {
+                                this.bankRateList = data.bankSubbranch.bank.bankRateList;
+                            }
+                            this.props.setSelectData({
+                                bankRate: data.bankSubbranch.bank.bankRateList
+                            });
+                            this.props.form.setFieldsValue({
+                                bankRate: data.bankSubbranch.bank.bankRateList[0].rate
+                            });
                         }
                         return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName);
                     }
@@ -261,7 +321,42 @@ class BudgetAddedit extends React.Component {
                     field: 'loanPeriods',
                     type: 'select',
                     key: 'loan_period',
-                    required: true
+                    required: true,
+                    onChange: (v, data) => {
+                        let rData = this.getRepointDetailList({loanPeriods: v});
+                        if (!rData) {
+                            return false;
+                        }
+
+                        this.props.doFetching();
+                        fetch(632290, {
+                            budgetOrderCode: this.code,
+                            carDealerCode: this.carDealerSelectData.code,
+                            ...rData
+                        }).then((mxData) => {
+                            this.props.cancelFetching();
+                            let detailList1 = [];
+                            let detailList2 = [];
+                            let detailList3 = [];
+                            mxData.map((item) => {
+                                item.repointAmountL = moneyUppercase(moneyFormat(item.repointAmount));
+                                if (item.useMoneyPurpose === '1') {
+                                    detailList1.push(item);
+                                } else if (item.useMoneyPurpose === '2') {
+                                    detailList2.push(item);
+                                } else if (item.useMoneyPurpose === '3') {
+                                    detailList3.push(item);
+                                }
+                            });
+                            this.repointDetailList1 = detailList1;
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                repointDetailList1: detailList1,
+                                repointDetailList2: detailList2,
+                                repointDetailList3: detailList3
+                            });
+                        }).catch(this.props.cancelFetching);
+                    }
                 }, {
                     title: '发票价格',
                     field: 'invoicePrice',
@@ -379,14 +474,44 @@ class BudgetAddedit extends React.Component {
                     valueName: '{{rate.DATA}}-{{period.DATA}}',
                     required: true,
                     onChange: (v) => {
-                        this.props.setPageData({
-                            ...this.props.pageData,
-                            globalRate: this.getGlobalRate({
-                                fee: this.props.form.getFieldValue('fee'),
-                                loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                bankRate: v
-                            })
-                        });
+                        let rData = this.getRepointDetailList({bankRate: v});
+                        if (!rData) {
+                            return false;
+                        }
+
+                        this.props.doFetching();
+                        fetch(632290, {
+                            budgetOrderCode: this.code,
+                            carDealerCode: this.carDealerSelectData.code,
+                            ...rData
+                        }).then((mxData) => {
+                            this.props.cancelFetching();
+                            let detailList1 = [];
+                            let detailList2 = [];
+                            let detailList3 = [];
+                            mxData.map((item) => {
+                                item.repointAmountL = moneyUppercase(moneyFormat(item.repointAmount));
+                                if (item.useMoneyPurpose === '1') {
+                                    detailList1.push(item);
+                                } else if (item.useMoneyPurpose === '2') {
+                                    detailList2.push(item);
+                                } else if (item.useMoneyPurpose === '3') {
+                                    detailList3.push(item);
+                                }
+                            });
+                            this.repointDetailList1 = detailList1;
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                repointDetailList1: detailList1,
+                                repointDetailList2: detailList2,
+                                repointDetailList3: detailList3,
+                                globalRate: this.getGlobalRate({
+                                    fee: this.props.form.getFieldValue('fee'),
+                                    loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                    bankRate: v
+                                })
+                            });
+                        }).catch(this.props.cancelFetching);
                     }
                 }, {
                     // 贷款金额 / 发票价格
@@ -465,20 +590,51 @@ class BudgetAddedit extends React.Component {
                     field: 'fee',
                     amount: true,
                     required: true,
+                    value: 0,
                     onChange: (v) => {
-                        this.props.setPageData({
-                            ...this.props.pageData,
-                            globalRate: this.getGlobalRate({
-                                fee: v,
-                                loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                bankRate: this.props.form.getFieldValue('bankRate')
-                            }),
-                            bankLoanCs: this.getBankLoanNum({
-                                fee: v,
-                                loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                invoicePrice: this.props.form.getFieldValue('invoicePrice')
-                            })
-                        });
+                        let rData = this.getRepointDetailList({fee: v});
+                        if (!rData) {
+                            return false;
+                        }
+
+                        this.props.doFetching();
+                        fetch(632290, {
+                            budgetOrderCode: this.code,
+                            carDealerCode: this.carDealerSelectData.code,
+                            ...rData
+                        }).then((mxData) => {
+                            this.props.cancelFetching();
+                            let detailList1 = [];
+                            let detailList2 = [];
+                            let detailList3 = [];
+                            mxData.map((item) => {
+                                item.repointAmountL = moneyUppercase(moneyFormat(item.repointAmount));
+                                if (item.useMoneyPurpose === '1') {
+                                    detailList1.push(item);
+                                } else if (item.useMoneyPurpose === '2') {
+                                    detailList2.push(item);
+                                } else if (item.useMoneyPurpose === '3') {
+                                    detailList3.push(item);
+                                }
+                            });
+                            this.repointDetailList1 = detailList1;
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                repointDetailList1: detailList1,
+                                repointDetailList2: detailList2,
+                                repointDetailList3: detailList3,
+                                globalRate: this.getGlobalRate({
+                                    fee: v,
+                                    loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                    bankRate: this.props.form.getFieldValue('bankRate')
+                                }),
+                                bankLoanCs: this.getBankLoanNum({
+                                    fee: v,
+                                    loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                    invoicePrice: this.props.form.getFieldValue('invoicePrice')
+                                })
+                            });
+                        }).catch(this.props.cancelFetching);
                     }
                 }],
                 [{
@@ -939,37 +1095,71 @@ class BudgetAddedit extends React.Component {
                     key: 'gps_fee_way',
                     required: true,
                     onChange: (v) => {
-                        let gpsFee = 0;
-                        let otherFee = 0;
-                        let gpsFeeWay = v;
-                        let feeWay = this.props.form.getFieldValue('fee_way');
-                        if (gpsFeeWay === '2') {
-                            gpsFee = this.props.pageData.gpsFee;
+                        let rData = this.getRepointDetailList({gpsFeeWay: v});
+                        if (!rData) {
+                            return false;
                         }
-                        if (feeWay === '2') {
-                            otherFee = this.props.pageData.otherFee;
-                        }
-                        if (gpsFeeWay && feeWay && this.props.form.getFieldValue('cardealerSubsidy') && this.props.form.getFieldValue('loanAmount')) {
-                            let repointAmount = this.getRefundAmount({
-                                loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                cardealerSubsidy: this.props.form.getFieldValue('cardealerSubsidy'),
-                                gpsFee: gpsFee,
-                                otherFee: otherFee
-                            });
-                            let repointDetailList1 = [{
-                                useMoneyPurpose: '1',
-                                repointAmount: repointAmount,
-                                repointAmountL: moneyUppercase(repointAmount),
-                                companyName: this.receivables.companyCode,
-                                accountCode: this.receivables.bankcardNumber,
-                                subbranch: this.receivables.subbranch
-                            }];
 
+                        this.props.doFetching();
+                        fetch(632290, {
+                            budgetOrderCode: this.code,
+                            carDealerCode: this.carDealerSelectData.code,
+                            ...rData
+                        }).then((mxData) => {
+                            this.props.cancelFetching();
+                            let detailList1 = [];
+                            let detailList2 = [];
+                            let detailList3 = [];
+                            mxData.map((item) => {
+                                item.repointAmountL = moneyUppercase(moneyFormat(item.repointAmount));
+                                if (item.useMoneyPurpose === '1') {
+                                    detailList1.push(item);
+                                } else if (item.useMoneyPurpose === '2') {
+                                    detailList2.push(item);
+                                } else if (item.useMoneyPurpose === '3') {
+                                    detailList3.push(item);
+                                }
+                            });
+                            this.repointDetailList1 = detailList1;
                             this.props.setPageData({
                                 ...this.props.pageData,
-                                repointDetailList1: repointDetailList1
+                                repointDetailList1: detailList1,
+                                repointDetailList2: detailList2,
+                                repointDetailList3: detailList3
                             });
-                        }
+
+                            let gpsFee = 0;
+                            let otherFee = 0;
+                            let gpsFeeWay = v;
+                            let feeWay = this.props.form.getFieldValue('fee_way');
+                            if (gpsFeeWay === '2') {
+                                gpsFee = this.props.pageData.gpsFee;
+                            }
+                            if (feeWay === '2') {
+                                otherFee = this.props.pageData.otherFee;
+                            }
+                            if (gpsFeeWay && feeWay && this.props.form.getFieldValue('cardealerSubsidy') && this.props.form.getFieldValue('loanAmount')) {
+                                let repointAmount = this.getRefundAmount({
+                                    loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                    cardealerSubsidy: this.props.form.getFieldValue('cardealerSubsidy'),
+                                    gpsFee: gpsFee,
+                                    otherFee: otherFee
+                                });
+                                let repointDetailList1 = [{
+                                    useMoneyPurpose: '1',
+                                    repointAmount: repointAmount,
+                                    repointAmountL: moneyUppercase(repointAmount),
+                                    companyName: this.receivables.companyCode,
+                                    accountCode: this.receivables.bankcardNumber,
+                                    subbranch: this.receivables.subbranch
+                                }];
+
+                                this.props.setPageData({
+                                    ...this.props.pageData,
+                                    repointDetailList1: repointDetailList1
+                                });
+                            }
+                        }).catch(this.props.cancelFetching);
                     }
                 }],
                 [{
@@ -985,37 +1175,72 @@ class BudgetAddedit extends React.Component {
                     key: 'fee_way',
                     required: true,
                     onChange: (v) => {
-                        let gpsFee = 0;
-                        let otherFee = 0;
-                        let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
-                        let feeWay = v;
-                        if (gpsFeeWay === '2') {
-                            gpsFee = this.props.pageData.gpsFee;
+                        let rData = this.getRepointDetailList({feeWay: v});
+                        console.log(rData);
+                        if (!rData) {
+                            return false;
                         }
-                        if (feeWay === '2') {
-                            otherFee = this.props.pageData.otherFee;
-                        }
-                        if (gpsFeeWay && feeWay && this.props.form.getFieldValue('cardealerSubsidy') && this.props.form.getFieldValue('loanAmount')) {
-                            let repointAmount = this.getRefundAmount({
-                                loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                cardealerSubsidy: this.props.form.getFieldValue('cardealerSubsidy'),
-                                gpsFee: gpsFee,
-                                otherFee: otherFee
-                            });
-                            let repointDetailList1 = [{
-                                useMoneyPurpose: '1',
-                                repointAmount: repointAmount,
-                                repointAmountL: moneyUppercase(repointAmount),
-                                companyName: this.receivables.companyCode,
-                                accountCode: this.receivables.bankcardNumber,
-                                subbranch: this.receivables.subbranch
-                            }];
 
+                        this.props.doFetching();
+                        fetch(632290, {
+                            budgetOrderCode: this.code,
+                            carDealerCode: this.carDealerSelectData.code,
+                            ...rData
+                        }).then((mxData) => {
+                            this.props.cancelFetching();
+                            let detailList1 = [];
+                            let detailList2 = [];
+                            let detailList3 = [];
+                            mxData.map((item) => {
+                                item.repointAmountL = moneyUppercase(moneyFormat(item.repointAmount));
+                                if (item.useMoneyPurpose === '1') {
+                                    detailList1.push(item);
+                                } else if (item.useMoneyPurpose === '2') {
+                                    detailList2.push(item);
+                                } else if (item.useMoneyPurpose === '3') {
+                                    detailList3.push(item);
+                                }
+                            });
+                            this.repointDetailList1 = detailList1;
                             this.props.setPageData({
                                 ...this.props.pageData,
-                                repointDetailList1: repointDetailList1
+                                repointDetailList1: detailList1,
+                                repointDetailList2: detailList2,
+                                repointDetailList3: detailList3
                             });
-                        }
+
+                            let gpsFee = 0;
+                            let otherFee = 0;
+                            let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
+                            let feeWay = v;
+                            if (gpsFeeWay === '2') {
+                                gpsFee = this.props.pageData.gpsFee;
+                            }
+                            if (feeWay === '2') {
+                                otherFee = this.props.pageData.otherFee;
+                            }
+                            if (gpsFeeWay && feeWay && this.props.form.getFieldValue('cardealerSubsidy') && this.props.form.getFieldValue('loanAmount')) {
+                                let repointAmount = this.getRefundAmount({
+                                    loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                    cardealerSubsidy: this.props.form.getFieldValue('cardealerSubsidy'),
+                                    gpsFee: gpsFee,
+                                    otherFee: otherFee
+                                });
+                                let repointDetailList1 = [{
+                                    useMoneyPurpose: '1',
+                                    repointAmount: repointAmount,
+                                    repointAmountL: moneyUppercase((repointAmount / 1000).toFixed(2)),
+                                    companyName: this.receivables.companyCode,
+                                    accountCode: this.receivables.bankcardNumber,
+                                    subbranch: this.receivables.subbranch
+                                }];
+
+                                this.props.setPageData({
+                                    ...this.props.pageData,
+                                    repointDetailList1: repointDetailList1
+                                });
+                            }
+                        }).catch(this.props.cancelFetching);
                     }
                 }],
                 [{
@@ -1059,7 +1284,8 @@ class BudgetAddedit extends React.Component {
                             title: '金额大写',
                             field: 'repointAmountL',
                             readonly: true,
-                            required: true
+                            required: true,
+                            hidden: true
                         }, {
                             title: '单位名称',
                             field: 'companyName',
@@ -1125,7 +1351,8 @@ class BudgetAddedit extends React.Component {
                         }, {
                             title: '金额大写',
                             field: 'repointAmountL',
-                            required: true
+                            required: true,
+                            hidden: true
                         }, {
                             title: '单位名称',
                             field: 'companyName',
@@ -1185,7 +1412,8 @@ class BudgetAddedit extends React.Component {
                             title: '金额大写',
                             field: 'repointAmountL',
                             required: true,
-                            readonly: true
+                            readonly: true,
+                            hidden: true
                         }, {
                             title: '户名',
                             field: 'companyName',
