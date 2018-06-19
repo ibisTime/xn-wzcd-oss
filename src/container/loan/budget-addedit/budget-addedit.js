@@ -148,33 +148,22 @@ class BudgetAddedit extends React.Component {
         if (!this.state.sfData) {
             return;
         }
-        let bankRate = this.props.form.getFieldValue('bankRate');
-        let fee = parseFloat(this.props.form.getFieldValue('fee')) * 1000;
-        let feeWay = this.props.form.getFieldValue('feeWay');
-        let fxAmount = this.state.sfData.fxAmount;
-        let gpsFee = this.state.sfData.gpsFee;
-        let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
-        let loanPeriods = this.props.form.getFieldValue('loanPeriods');
-        let lyAmount = this.state.sfData.lyAmount;
-        let otherFee = this.state.sfData.otherFee;
-        let rateType = this.props.form.getFieldValue('rateType');
-        let list = {};
-        console.log(bankRate, fee, feeWay, fxAmount, gpsFee, gpsFeeWay, loanPeriods, lyAmount, otherFee, rateType);
-        if (bankRate && fee && feeWay && fxAmount && gpsFee && gpsFeeWay && loanPeriods && lyAmount && otherFee && rateType) {
+        let list = {
+            bankRate: this.props.form.getFieldValue('bankRate'),
+            fee: parseFloat(this.props.form.getFieldValue('fee')) * 1000,
+            feeWay: this.props.form.getFieldValue('feeWay'),
+            fxAmount: this.state.sfData.fxAmount,
+            gpsFee: this.state.sfData.gpsFee,
+            gpsFeeWay: this.props.form.getFieldValue('gpsFeeWay'),
+            loanPeriods: this.props.form.getFieldValue('loanPeriods'),
+            lyAmount: this.state.sfData.lyAmount,
+            otherFee: this.state.sfData.otherFee,
+            rateType: this.props.form.getFieldValue('rateType'),
+            ...params
+        };
+        console.log(params, list.bankRate, list.fee, list.feeWay, list.fxAmount, list.gpsFee, list.gpsFeeWay, list.loanPeriods, list.lyAmount, list.otherFee, list.rateType);
+        if (list.bankRate && list.fee && list.feeWay && list.fxAmount && list.gpsFee && list.gpsFeeWay && list.loanPeriods && list.lyAmount && list.otherFee && list.rateType) {
             this.props.doFetching();
-            list = {
-                bankRate: bankRate,
-                fee: fee,
-                feeWay: feeWay,
-                fxAmount: fxAmount,
-                gpsFee: gpsFee,
-                gpsFeeWay: gpsFeeWay,
-                loanPeriods: loanPeriods,
-                lyAmount: lyAmount,
-                otherFee: otherFee,
-                rateType: rateType,
-                ...params
-            };
             return list;
         } else {
             return false;
@@ -391,7 +380,42 @@ class BudgetAddedit extends React.Component {
                     field: 'rateType',
                     type: 'select',
                     key: 'rate_type',
-                    required: true
+                    required: true,
+                    onChanege: (v, data) => {
+                        let rData = this.getRepointDetailList({rateType: v});
+                        if (!rData) {
+                            return false;
+                        }
+
+                        this.props.doFetching();
+                        fetch(632290, {
+                            budgetOrderCode: this.code,
+                            carDealerCode: this.carDealerSelectData.code,
+                            ...rData
+                        }).then((mxData) => {
+                            this.props.cancelFetching();
+                            let detailList1 = [];
+                            let detailList2 = [];
+                            let detailList3 = [];
+                            mxData.map((item) => {
+                                item.repointAmountL = moneyUppercase(moneyFormat(item.repointAmount));
+                                if (item.useMoneyPurpose === '1') {
+                                    detailList1.push(item);
+                                } else if (item.useMoneyPurpose === '2') {
+                                    detailList2.push(item);
+                                } else if (item.useMoneyPurpose === '3') {
+                                    detailList3.push(item);
+                                }
+                            });
+                            this.repointDetailList1 = detailList1;
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                repointDetailList1: detailList1,
+                                repointDetailList2: detailList2,
+                                repointDetailList3: detailList3
+                            });
+                        }).catch(this.props.cancelFetching);
+                    }
                 }, {
                     //     title: '利率类型',
                     //     field: 'rateType',
@@ -1180,7 +1204,7 @@ class BudgetAddedit extends React.Component {
                     required: true,
                     onChange: (v) => {
                         let rData = this.getRepointDetailList({feeWay: v});
-                        console.log(rData);
+                        console.log(v, rData);
                         if (!rData) {
                             return false;
                         }
