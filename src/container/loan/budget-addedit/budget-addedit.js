@@ -682,6 +682,7 @@ class BudgetAddedit extends React.Component {
                 [{
                     title: '厂家贴息',
                     field: 'carDealerSubsidy',
+                    amount: true,
                     required: true,
                     onChange: (v) => {
                         let rData = this.getRepointDetailList({carDealerSubsidy: moneyParse(v)});
@@ -1238,6 +1239,7 @@ class BudgetAddedit extends React.Component {
                     type: 'o2m',
                     options: {
                         edit: !this.state.isAdvanceFund,
+                        rowKey: 'useMoneyPurpose',
                         fields: [{
                             title: '用款用途',
                             field: 'useMoneyPurpose',
@@ -1301,6 +1303,7 @@ class BudgetAddedit extends React.Component {
                     field: 'repointDetailList2',
                     required: true,
                     type: 'o2m',
+                    rowKey: 'id',
                     options: {
                         fields: [{
                             title: 'id',
@@ -1354,6 +1357,7 @@ class BudgetAddedit extends React.Component {
                     title: '协议外返点',
                     field: 'repointDetailList3',
                     type: 'o2m',
+                    rowKey: 'id',
                     options: {
                         add: true,
                         delete: true,
