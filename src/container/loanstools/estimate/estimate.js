@@ -44,7 +44,7 @@ class estimate extends React.Component {
       search: true
     }, {
       title: '业务公司',
-      field: 'companyCode',
+      field: 'companyName',
       search: true
     }, {
       title: '预算金额',
@@ -71,7 +71,7 @@ class estimate extends React.Component {
       type: 'date'
     }, {
       title: '申请人',
-      field: 'applyUser',
+      field: 'applyUserName',
       search: true
     }, {
       title: '申请时间',

@@ -10,7 +10,8 @@ import {
 import {
     getQueryString,
     showSucMsg,
-    getUserId
+    getUserId,
+    moneyFormat
 } from 'common/js/util';
 import {
     DetailWrapper
@@ -57,7 +58,9 @@ class TakeEstimateAddedit extends React.Component {
             field: 'receiptAccount',
             readonly: true,
             amount: true,
-            required: true
+            formatter: (v, data) => {
+                return moneyFormat(data.loanAmount);
+            }
         }, {
             title: '收款金额',
             field: 'receiptAccount',

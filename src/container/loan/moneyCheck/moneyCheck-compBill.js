@@ -44,7 +44,15 @@ class AdvMoneyCompBill extends React.Component {
             type: 'select',
             keyName: 'code',
             valueName: 'name',
-            required: true
+            required: true,
+            onChange: (value) => {
+                this.props.doFetching();
+                fetch(632188, { companyCode: value }).then((data) => {
+                    this.props.setPageData({
+                    });
+                    this.props.cancelFetching();
+                }).catch(this.props.cancelFetching);
+            }
         }, {
             title: '垫资总金额',
             field: 'totalAdvanceFund',

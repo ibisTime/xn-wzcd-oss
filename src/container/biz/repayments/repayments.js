@@ -55,7 +55,7 @@ class Repayments extends React.Component {
             search: true
         }, {
             title: '银行',
-            field: 'bankCode',
+            field: 'bankcardCode',
             type: 'select',
             listCode: 632037,
             keyName: 'bankCode',
@@ -82,8 +82,8 @@ class Repayments extends React.Component {
             title: '贷款金额',
             field: 'loanAmount'
         }, {
-            title: '剩余金额',
-            field: 'overplusAmount',
+            title: '剩余欠款',
+            field: 'restAmount',
             amount: true
         }, {
             title: '逾期日期',
@@ -120,24 +120,37 @@ class Repayments extends React.Component {
         }, {
             title: '剩余期数',
             field: 'restPeriods'
+        }, {
+            title: '当前节点',
+            field: 'curNodeCode',
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 630520,
-            // searchParams: {
-            //   refType: '0',
-            //   curNodeCode: '003_06'
-            // },
+            pageCode: 630522,
+            searchParams: {
+                roleCode: getRoleCode()
+            },
             btnEvent: {
-              relieve: (selectedRowKeys, selectedRows) => {
+              plan: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
                   showWarnMsg('请选择记录');
                 } else if (selectedRowKeys.length > 1) {
                   showWarnMsg('请选择一条记录');
-                } else if (selectedRows[0].curNodeCode !== '003_06') {
-                    showWarnMsg('当前节点不是解除抵押节点');
                 } else {
-                  this.props.history.push(`/biz/repayments/relieve?code=${selectedRowKeys[0]}`);
+                  this.props.history.push(`/biz/repayments/plan?code=${selectedRowKeys[0]}`);
+                }
+              },
+              pay: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys.length) {
+                  showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                  showWarnMsg('请选择一条记录');
+                } else {
+                  this.props.history.push(`/biz/repayments/pay?code=${selectedRowKeys[0]}`);
                 }
               }
             }

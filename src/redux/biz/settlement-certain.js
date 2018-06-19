@@ -1,6 +1,6 @@
 import { commDetailState } from '../common';
 
-const PREFIX = 'BIZ_SETTLEMENT_MANAGER_';
+const PREFIX = 'BIZ_SETTLEMENT_CERTAIN_';
 const SET_SELECT_DATA = PREFIX + 'SET_SELECT_DATA';
 const LOADING = PREFIX + 'LOADING';
 const CANCEL_LOADING = PREFIX + 'CANCEL_LOADING';
@@ -10,7 +10,7 @@ const RESTORE = PREFIX + 'RESTORE';
 
 const initState = { ...commDetailState };
 
-export function bizSettlementManager(state = initState, action) {
+export function bizSettlementCertain(state = initState, action) {
   switch(action.type) {
     case INIT_STATE:
       return {...state, ...action.payload};

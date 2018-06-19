@@ -346,6 +346,11 @@ const ROUTES = [
     path: '/biz/repayments/plan',
     component: asyncComponent(() => import('container/biz/repayments/repayments-plan'))
   },
+  //  还款中客户 还款计划
+  {
+    path: '/biz/repayments/pay',
+    component: asyncComponent(() => import('container/biz/repayments/repayments-pay'))
+  },
   //  逾期客户汇总
   {
     path: '/biz/summary',
@@ -524,32 +529,22 @@ const ROUTES = [
   //  结清审核
   {
     path: '/biz/settlement',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/settlement'))
+    component: asyncComponent(() => import('container/biz/settlement/settlement'))
   },
-  //  结清审核 详情
+  //  结清审核 结算单申请
   {
-    path: '/biz/settlement/addedit',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/settlement-addedit'))
+    path: '/biz/settlement/apply',
+    component: asyncComponent(() => import('container/biz/settlement/settlement-apply'))
   },
-  //  结清审核 清欠催收部审核
+  //  结清审核 结算单申请
   {
-    path: '/biz/settlement/collection',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/settlement-collection'))
+    path: '/biz/settlement/check',
+    component: asyncComponent(() => import('container/biz/settlement/settlement-check'))
   },
-  //  结清审核 驻行人员审核
+  //  结清审核 结算单申请
   {
-    path: '/biz/settlement/stationed',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/settlement-stationed'))
-  },
-  //  结清审核 总经理审核
-  {
-    path: '/biz/settlement/manager',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/settlement-manager'))
-  },
-  //  结清审核 财务审核
-  {
-    path: '/biz/settlement/finance',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/settlement-finance'))
+    path: '/biz/settlement/certain',
+    component: asyncComponent(() => import('container/biz/settlement/settlement-certain'))
   },
   //  解除抵押
   {

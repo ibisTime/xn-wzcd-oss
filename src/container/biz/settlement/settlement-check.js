@@ -6,9 +6,10 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/repayments/repayments-pay';
+} from '@redux/biz/settlement-check';
 import {
     getQueryString,
+    dateTimeFormat,
     moneyFormat,
     getUserId,
     showSucMsg
@@ -20,7 +21,7 @@ import {
 // import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
-    state => state.repaymentsPay, {
+    state => state.bizSettlementCheck, {
         initStates,
         doFetching,
         cancelFetching,
@@ -29,7 +30,7 @@ import {
         restore
     }
 )
-class RepaymentsPay extends React.Component {
+class settlementCheck extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -69,33 +70,20 @@ class RepaymentsPay extends React.Component {
             },
             readonly: true
         }, {
-            title: '银行欠款',
+            title: '逾期记录',
             field: '11',
             amount: 'true',
             readonly: true
         }, {
-            title: '代偿欠款',
+            title: '代偿记录',
             field: '22',
-            amount: 'true',
-            readonly: true
-        }, {
-            title: '实际逾期次数',
-            field: 'curOverdueCount',
-            readonly: true
-        }, {
-            title: '实际代偿次数',
-            field: 'curReplaceRepayCount',
-            readonly: true
-        }, {
-            title: '押金金额',
-            field: 'lyDeposit',
             amount: 'true',
             readonly: true
         }, {
             title: '扣除违约金额',
             field: 'cutLyDeposit',
             amount: 'true',
-            required: true
+            readonly: true
         }, {
             title: '实际退款金额',
             field: 'actualRefunds',
@@ -104,7 +92,8 @@ class RepaymentsPay extends React.Component {
         }, {
             title: '结清时间',
             field: 'settleDatetime',
-            type: 'date'
+            type: 'date',
+            readonly: true
         }, {
             title: '退款开户行',
             field: 'refundBankSubbranch',
@@ -112,35 +101,43 @@ class RepaymentsPay extends React.Component {
             listCode: 632037,
             keyName: 'bankCode',
             valueName: 'bankName',
-            required: true
+            readonly: true
         }, {
             title: '退款户名',
             field: 'refundBankRealName',
-            required: true
+            readonly: true
         }, {
             title: '退款账号',
             field: 'refundBankcard',
             bankCard: true,
-            required: true
+            readonly: true
         }, {
             title: '第二年按公司指定续保',
             field: 'secondCompanyInsurance',
-            amount: 'true'
+            amount: 'true',
+            readonly: true
         }, {
             title: '第三年按公司指定续保',
             field: 'thirdCompanyInsurance',
-            amount: 'true'
+            amount: 'true',
+            readonly: true
         }, {
             title: '押金单',
             field: 'depositReceipt',
-            type: 'img'
+            type: 'img',
+            readonly: true
         }, {
             title: '结清证明',
             field: 'settleAttach',
-            type: 'img'
+            type: 'img',
+            readonly: true
         }, {
             title: '备注',
-            field: 'remark'
+            field: 'remark',
+            readonly: true
+        }, {
+            title: '审核说明',
+            field: 'approveNote'
         }];
         return this.props.buildDetail({
             fields,
@@ -148,11 +145,12 @@ class RepaymentsPay extends React.Component {
             view: this.view,
             detailCode: 630521,
             buttons: [{
-              title: '确认',
+              title: '通过',
               handler: (param) => {
+                param.approveResult = '1';
                 param.operator = getUserId();
                 this.props.doFetching();
-                fetch(630512, param).then(() => {
+                fetch(630571, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {
@@ -163,6 +161,21 @@ class RepaymentsPay extends React.Component {
               check: true,
               type: 'primary'
             }, {
+              title: '不通过',
+              handler: (param) => {
+                param.approveResult = '0';
+                param.operator = getUserId();
+                this.props.doFetching();
+                fetch(630571, param).then(() => {
+                  showSucMsg('操作成功');
+                  this.props.cancelFetching();
+                  setTimeout(() => {
+                    this.props.history.go(-1);
+                  }, 1000);
+                }).catch(this.props.cancelFetching);
+              },
+              check: true
+            }, {
               title: '返回',
               handler: (param) => {
                 this.props.history.go(-1);
@@ -172,4 +185,4 @@ class RepaymentsPay extends React.Component {
     }
 }
 
-export default RepaymentsPay;
+export default settlementCheck;
