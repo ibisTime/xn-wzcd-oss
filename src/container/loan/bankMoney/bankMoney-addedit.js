@@ -36,10 +36,7 @@ class BankMoneyAddedit extends React.Component {
       field: 'code'
     }, {
       title: '身份证',
-      field: 'idNo',
-      render: (v, d) => {
-          return d.user.idNo;
-      }
+      field: 'idNo'
     }, {
       title: '贷款金额',
       field: 'loanAmount',

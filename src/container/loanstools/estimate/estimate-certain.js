@@ -12,6 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
@@ -68,6 +69,7 @@ class EstimateCertain extends React.Component {
     }, {
       title: '打款账号',
       field: 'payAccount',
+      bankCard: true,
       required: true
     }, {
       title: '打款金额',
@@ -94,6 +96,7 @@ class EstimateCertain extends React.Component {
         check: true,
         handler: (params) => {
           this.props.doFetching();
+          params.operator = getUserId();
           fetch(632102, params).then(() => {
             showSucMsg('操作成功');
             this.props.cancelFetching();

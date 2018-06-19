@@ -12,6 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
@@ -67,7 +68,7 @@ class EstimateCheck extends React.Component {
         title: '通过',
         handler: (param) => {
           param.approveResult = '1';
-          param.approveUser = getUserId();
+          param.operator = getUserId();
           this.props.doFetching();
           fetch(632101, param).then(() => {
             showSucMsg('操作成功');
@@ -84,7 +85,7 @@ class EstimateCheck extends React.Component {
         handler: (param) => {
           param.approveResult = '0';
           param.approveNote = this.projectCode;
-          param.approveUser = getUserId();
+          param.operator = getUserId();
           this.props.doFetching();
           fetch(632101, param).then(() => {
             showSucMsg('操作成功');

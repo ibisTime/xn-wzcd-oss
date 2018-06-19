@@ -37,7 +37,7 @@ class TakeEstimate extends React.Component {
       search: true
     }, {
       title: '业务公司',
-      field: 'companyCode',
+      field: 'companyName',
       search: true
     }, {
       title: '打款金额',
@@ -45,7 +45,7 @@ class TakeEstimate extends React.Component {
       amount: true
     }, {
       title: '垫资总额',
-      field: 'receiptAccount',
+      field: 'dzAmount',
       amount: true
     }, {
       title: '垫资日期',
@@ -55,10 +55,12 @@ class TakeEstimate extends React.Component {
     }, {
       title: '应收金额',
       field: 'receiptAccount',
-      amount: true
+      render: (v, d) => {
+          return (d.payAmount - d.dzAmount) / 1000;
+      }
     }, {
       title: '实收金额',
-      field: 'receiptAccount',
+      field: 'collectionAmount',
       amount: true
     }, {
       title: '收款时间',
@@ -82,13 +84,13 @@ class TakeEstimate extends React.Component {
         roleCode: getRoleCode()
       },
       btnEvent: {
-        entering: (selectedRowKeys, selectedRows) => {
+        check: (selectedRowKeys, selectedRows) => {
           if (!selectedRowKeys.length) {
             showWarnMsg('请选择记录');
           } else if (selectedRowKeys.length > 1) {
             showWarnMsg('请选择一条记录');
           } else {
-            this.props.history.push(`/loanstools/take/enter?code=${selectedRowKeys[0]}`);
+            this.props.history.push(`/loanstools/takeEstimate/certain?code=${selectedRowKeys[0]}`);
           }
         }
       }

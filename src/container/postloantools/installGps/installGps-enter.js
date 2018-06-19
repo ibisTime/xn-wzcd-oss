@@ -91,7 +91,7 @@ class InstallGpsEnter extends React.Component {
                     type: 'select',
                     listCode: 632707,
                     params: {
-                        applyStatus: '2',
+                        applyStatus: '1',
                         applyUser: getUserId(),
                         useStatus: '0'
                     },

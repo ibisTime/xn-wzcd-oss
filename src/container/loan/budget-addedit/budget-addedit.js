@@ -220,7 +220,7 @@ class BudgetAddedit extends React.Component {
                 }],
                 [{
                     title: '汽车经销商',
-                    field: 'carDealer',
+                    field: 'carDealerCode',
                     type: 'select',
                     pageCode: 632065,
                     keyName: 'code',

@@ -66,7 +66,7 @@ class MoneyCheck extends React.Component {
             amount: true
         }, {
             title: '是否垫资',
-            filed: 'isAdvanceFund',
+            field: 'isAdvanceFund',
             type: 'select',
             data: [{
                 key: '1',

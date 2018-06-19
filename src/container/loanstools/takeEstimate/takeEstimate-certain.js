@@ -12,6 +12,7 @@ import {
   showSucMsg,
   getUserId
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
   DetailWrapper
 } from 'common/js/build-detail';
@@ -35,16 +36,16 @@ class TakeEstimateCertain extends React.Component {
     render() {
         const fields = [{
             title: '业务公司',
-            field: 'companyCode',
+            field: 'companyName',
             readonly: true
         }, {
             title: '打款金额',
-            field: 'receiptAccount',
+            field: 'payAmount',
             amount: true,
             readonly: true
         }, {
             title: '垫资总额',
-            field: 'receiptAccount',
+            field: 'dzAmount',
             amount: true,
             readonly: true
         }, {
@@ -55,30 +56,35 @@ class TakeEstimateCertain extends React.Component {
         }, {
             title: '应收金额',
             field: 'receiptAccount',
-            readonly: true,
-            amount: true,
-            required: true
+            formatter: (v, d) => {
+                return (d.payAmount - d.dzAmount) / 1000;
+            },
+            readonly: true
         }, {
             title: '收款金额',
-            field: 'receiptAccount',
+            field: 'collectionAmount',
             required: true,
             amount: true
         }, {
-            title: '11',
-            field: 'receiptAccount',
-            required: true,
-            amount: true
+            title: '收款款银行',
+            field: 'collectionBank',
+            type: 'select',
+            listCode: 632037,
+            keyName: 'bankCode',
+            valueName: 'bankName',
+            required: true
         }, {
             title: '收款账号',
-            field: 'receiptAccount'
+            field: 'collectionAccount',
+            required: true,
+            bankCard: true
         }, {
             title: '收款时间',
-            field: 'dzDatetime',
-            type: 'date',
-            amount: true
+            field: 'collectionDatetime',
+            type: 'date'
         }, {
             title: '备注',
-            field: 'receiptAccount'
+            field: 'collectionRemark'
         }];
         return this.props.buildDetail({
             fields,
@@ -90,7 +96,9 @@ class TakeEstimateCertain extends React.Component {
                 check: true,
                 handler: (params) => {
                     this.props.doFetching();
-                    fetch(632102, params).then(() => {
+                    params.code = this.code;
+                    params.operator = getUserId();
+                    fetch(632103, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {
