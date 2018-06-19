@@ -149,7 +149,7 @@ class BudgetAddedit extends React.Component {
             return;
         }
         let bankRate = this.props.form.getFieldValue('bankRate');
-        let fee = this.props.form.getFieldValue('fee') * 1000;
+        let fee = parseFloat(this.props.form.getFieldValue('fee')) * 1000;
         let feeWay = this.props.form.getFieldValue('feeWay');
         let fxAmount = this.state.sfData.fxAmount;
         let gpsFee = this.state.sfData.gpsFee;
@@ -159,6 +159,7 @@ class BudgetAddedit extends React.Component {
         let otherFee = this.state.sfData.otherFee;
         let rateType = this.props.form.getFieldValue('rateType');
         let list = {};
+        console.log(bankRate, fee, feeWay, fxAmount, gpsFee, gpsFeeWay, loanPeriods, lyAmount, otherFee, rateType);
         if (bankRate && fee && feeWay && fxAmount && gpsFee && gpsFeeWay && loanPeriods && lyAmount && otherFee && rateType) {
             this.props.doFetching();
             list = {
