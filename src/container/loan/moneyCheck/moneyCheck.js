@@ -83,7 +83,7 @@ class MoneyCheck extends React.Component {
         }, {
             title: '收款银行',
             field: 'bankReceiptName',
-            hidden: true
+            noVisible: true
         }, {
             title: '打款日期',
             field: 'advanceFundDatetime',

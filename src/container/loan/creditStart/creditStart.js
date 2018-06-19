@@ -110,6 +110,8 @@ class CreditStart extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '001_03') {
+                        showWarnMsg('当前不是征信初审的节点');
                     } else {
                         this.props.history.push(`/loan/creditStart/addedit?v=1&isCheckSalesman=1&code=${selectedRowKeys[0]}`);
                     }

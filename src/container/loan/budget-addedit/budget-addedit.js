@@ -1313,7 +1313,7 @@ class BudgetAddedit extends React.Component {
                             field: 'repointAmountL',
                             readonly: true,
                             required: true,
-                            hidden: true
+                            noVisible: true
                         }, {
                             title: '单位名称',
                             field: 'companyName',
@@ -1380,7 +1380,7 @@ class BudgetAddedit extends React.Component {
                             title: '金额大写',
                             field: 'repointAmountL',
                             required: true,
-                            hidden: true
+                            noVisible: true
                         }, {
                             title: '单位名称',
                             field: 'companyName',
@@ -1441,7 +1441,7 @@ class BudgetAddedit extends React.Component {
                             field: 'repointAmountL',
                             required: true,
                             readonly: true,
-                            hidden: true
+                            noVisible: true
                         }, {
                             title: '户名',
                             field: 'companyName',

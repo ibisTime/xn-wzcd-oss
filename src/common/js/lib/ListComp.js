@@ -108,7 +108,7 @@ export default class ListComponent extends React.Component {
           this.addRender(f, v => v);
         }
       }
-      if (!f.hidden) {
+      if (!f.noVisible) {
         columns.push(obj);
       }
     });

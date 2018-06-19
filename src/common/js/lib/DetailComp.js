@@ -701,7 +701,7 @@ export default class DetailComponent extends React.Component {
                 obj.fixed = f.fixed;
                 obj.width = f.width || 100;
             }
-            if (!f.hidden) {
+            if (!f.noVisible) {
                 result.push(obj);
             }
         });
@@ -1341,8 +1341,8 @@ export default class DetailComponent extends React.Component {
         }
         if (item.amount) {
             rules.push({
-                pattern: /^[1-9](,\d{3}|[0-9])*(\.\d{1,2})?$/,
-                message: '金额必须>0，且小数点后最多2位'
+                pattern: /(^[1-9](,\d{3}|[0-9])*(\.\d{1,2})?$)|([0])/,
+                message: '金额必须>=0，且小数点后最多2位'
             });
         }
         return rules;
