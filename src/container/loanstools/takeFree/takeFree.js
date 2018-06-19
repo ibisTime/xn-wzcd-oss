@@ -45,7 +45,7 @@ class takeFree extends React.Component {
             search: true
         }, {
             title: '业务公司',
-            field: 'companyCode'
+            field: 'companyName'
         }, {
             title: '客户姓名',
             field: 'customerName',
@@ -60,10 +60,10 @@ class takeFree extends React.Component {
             amount: true
         }, {
             title: '更新人',
-            field: 'useDatetime'
+            field: 'updater'
         }, {
-            title: '跟新时间',
-            field: 'useDatetime',
+            title: '更新时间',
+            field: 'updaterDatetime',
             search: true,
             type: 'date'
         }, {
