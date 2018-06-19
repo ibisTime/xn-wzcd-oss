@@ -337,16 +337,13 @@ class CreditStartAddedit extends React.Component {
         // 业务员初审
         if (this.isCheckSalesman) {
             this.buttons = [{
-                title: '通过',
+                title: '通过并发送一审',
                 check: true,
                 handler: (params) => {
-                    let data = {};
-                    data.code = this.code;
-                    data.approveNote = params.approveNote;
-                    data.approveResult = '1';
-                    data.operator = getUserId();
+                    params.approveResult = '1';
+                    params.operator = getUserId();
                     this.props.doFetching();
-                    fetch(632113, data).then(() => {
+                    fetch(632113, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {
@@ -355,16 +352,13 @@ class CreditStartAddedit extends React.Component {
                     }).catch(this.props.cancelFetching);
                 }
             }, {
-                title: '不通过',
+                title: '退回重新征信',
                 check: true,
                 handler: (params) => {
-                    let data = {};
-                    data.code = this.code;
-                    data.approveNote = params.approveNote;
-                    data.approveResult = '0';
-                    data.operator = getUserId();
+                    params.approveResult = '0';
+                    params.operator = getUserId();
                     this.props.doFetching();
-                    fetch(632113, data).then(() => {
+                    fetch(632113, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {
