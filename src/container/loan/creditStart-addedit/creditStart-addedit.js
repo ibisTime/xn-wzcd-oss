@@ -274,15 +274,10 @@ class CreditStartAddedit extends React.Component {
             title: '银行',
             field: 'loanBankCode',
             type: 'select',
-            listCode: 632037,
+            listCode: 632057,
             keyName: 'code',
-            valueName: '{{bankName.DATA}}{{subbranch.DATA}}',
-            required: true,
-            formatter: (value, data) => {
-                if (this.props.isLoaded) {
-                    return data.loanBankName;
-                }
-            }
+            valueName: '{{bankName.DATA}}-{{abbrName.DATA}}',
+            required: true
         }, {
             title: '业务种类',
             field: 'shopWay',
@@ -420,7 +415,7 @@ class CreditStartAddedit extends React.Component {
 
         if (this.isAddedit) {
             this.buttons = [{
-                title: '发送',
+                title: '确定',
                 check: true,
                 handler: (params) => {
                     params.creditCode = this.code;
