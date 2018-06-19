@@ -97,8 +97,7 @@ class CreditStartAddedit extends React.Component {
             field: 'interviewPic',
             type: 'img',
             single: true,
-            required: true,
-            hidden: true
+            required: true
         }];
         if (!this.isAddedit) {
             o2mFields = o2mFields.concat([{
@@ -279,7 +278,7 @@ class CreditStartAddedit extends React.Component {
             valueName: '{{bankName.DATA}}-{{abbrName.DATA}}',
             required: true
         }, {
-            title: '业务种类',
+            title: '购车途径',
             field: 'shopWay',
             type: 'select',
             key: 'budget_orde_biz_typer',
@@ -452,18 +451,18 @@ class CreditStartAddedit extends React.Component {
                 title: '确定',
                 check: true,
                 handler: (params) => {
+                    console.log(params);
                     params.creditCode = this.code;
-                    params.buttonCode = '1';
                     params.operator = getUserId();
                     this.props.doFetching();
                     let bizCode = this.code ? 632112 : 632110;
-                    fetch(bizCode, params).then(() => {
-                        showSucMsg('操作成功');
-                        this.props.cancelFetching();
-                        setTimeout(() => {
-                            this.props.history.go(-1);
-                        }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    // fetch(bizCode, params).then(() => {
+                    //     showSucMsg('操作成功');
+                    //     this.props.cancelFetching();
+                    //     setTimeout(() => {
+                    //         this.props.history.go(-1);
+                    //     }, 1000);
+                    // }).catch(this.props.cancelFetching);
                 }
             }, {
                 title: '返回',
@@ -472,28 +471,13 @@ class CreditStartAddedit extends React.Component {
                 }
             }];
         }
-        return (
-            <div>
-                {
-                    this.props.buildDetail({
-                        fields,
-                        code: this.code,
-                        view: this.view,
-                        detailCode: 632117,
-                        buttons: this.buttons,
-                        beforeSubmit: (param) => {
-                            if (!param.creditUserList) {
-                                showWarnMsg('至少新增一条征信列表');
-                                return false;
-                            } else {
-                                param.operator = getUserId();
-                                return param;
-                            }
-                        }
-                    })
-                }
-            </div>
-        );
+        return this.props.buildDetail({
+            fields,
+            code: this.code,
+            view: this.view,
+            detailCode: 632117,
+            buttons: this.buttons
+        });
     }
 }
 
