@@ -77,7 +77,7 @@ class AdvMoneyAreaCheck extends React.Component {
             }],
             keyName: 'key',
             valueName: 'value',
-            required: true
+            readonly: true
         }, {
             title: '收款单位名称',
             field: '111',
@@ -91,6 +91,9 @@ class AdvMoneyAreaCheck extends React.Component {
             title: '收款银行',
             field: 'bankReceiptName',
             readonly: true
+        }, {
+            title: '审核说明',
+            field: 'approveNote'
         }];
         return this.props.buildDetail({
             fields,
