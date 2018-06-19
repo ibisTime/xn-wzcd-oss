@@ -45,8 +45,12 @@ import {
 class MoneyCheck extends React.Component {
     render() {
         const fields = [{
+            title: '业务编号',
+            field: 'code',
+            search: true
+        }, {
             title: '业务公司',
-            field: 'companyCode',
+            field: 'bizCompanyName',
             search: true
         }, {
             title: '客户姓名',
@@ -54,51 +58,42 @@ class MoneyCheck extends React.Component {
             search: true
         }, {
             title: '贷款银行',
-            field: 'loanBankCode',
-            type: 'select',
-            listCode: 632037,
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            field: 'loanBankName',
             search: true
         }, {
             title: '用款小写',
-            field: 'loanAmount',
+            field: 'useAmount',
             amount: true
         }, {
             title: '是否垫资',
             filed: 'isAdvanceFund',
             type: 'select',
             data: [{
-                key: '0',
+                key: '1',
                 value: '是'
             }, {
-                key: '1',
+                key: '0',
                 value: '否'
             }],
             keyName: 'key',
             valueName: 'value'
         }, {
-            title: '收款单位名称',
-            filed: '1'
-        }, {
             title: '收款银行账号',
-            field: 'bankReceiptNumber'
+            field: 'collectionAccountNo'
         }, {
             title: '收款银行',
-            field: 'bankReceiptName'
+            field: 'bankReceiptName',
+            hidden: true
         }, {
             title: '打款日期',
-            field: '2',
+            field: 'advanceFundDatetime',
             type: 'date'
         }, {
             title: '汽车经销商',
             field: 'carDealerName'
         }, {
-            title: '申请人',
-            field: '3'
-        }, {
             title: '申请日期',
-            field: '4',
+            field: 'updateDatetime',
             type: 'date'
         }, {
             title: '当前节点',
@@ -112,6 +107,9 @@ class MoneyCheck extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632185,
+            searchParams: {
+              roleCode: getRoleCode()
+            },
             btnEvent: {
                 compBill: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {

@@ -44,14 +44,7 @@ class AdvMoneyApply extends React.Component {
             readonly: true
         }, {
             title: '业务公司',
-            field: 'companyCode',
-            listCode: 630106,
-            params: {
-                typeList: [1]
-            },
-            type: 'select',
-            keyName: 'code',
-            valueName: 'name',
+            field: 'bizCompanyName',
             readonly: true
         }, {
             title: '汽车经销商',
@@ -59,7 +52,7 @@ class AdvMoneyApply extends React.Component {
             readonly: true
         }, {
             title: '用款小写',
-            field: 'loanAmount',
+            field: 'useAmount',
             amount: true,
             readonly: true
         }, {
@@ -88,10 +81,11 @@ class AdvMoneyApply extends React.Component {
         }, {
             title: '收款单位名称',
             field: '111',
-            readonly: true
+            readonly: true,
+            hidden: true
         }, {
             title: '收款银行账号',
-            field: 'bankReceiptNumber',
+            field: 'collectionAccountNo',
             readonly: true
         }, {
             title: '收款银行',

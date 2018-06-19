@@ -29,7 +29,7 @@ class BudgetCheck extends React.Component {
             title: '业务编号',
             search: true
         }, {
-            field: 'company',
+            field: 'companyName',
             title: '业务公司',
             search: true
         }, {
@@ -41,10 +41,10 @@ class BudgetCheck extends React.Component {
             title: '汽车经销商',
             search: true
         }, {
-            field: 'car',
+            field: 'carModel',
             title: '车辆型号'
         }, {
-            field: 'price',
+            field: 'invoicePrice',
             title: '车辆价格',
             amount: true
         }, {
@@ -52,17 +52,17 @@ class BudgetCheck extends React.Component {
             title: '贷款金额',
             amount: true
         }, {
-            field: 'times',
+            field: 'loanPeriods',
             title: '期数'
         }, {
-            field: 'bank',
+            field: 'loanBankName',
             title: '贷款银行',
             search: true
         }, {
-            field: 'rate',
+            field: 'bankRate',
             title: '银行利率'
         }, {
-            field: 'dz',
+            field: 'isAdvanceFund',
             title: '是否垫资',
             type: 'select',
             data: [{
@@ -79,16 +79,18 @@ class BudgetCheck extends React.Component {
             field: 'saleUserName',
             title: '业务员'
         }, {
-            field: 'bankSub',
+            field: 'loanBankSubbranch',
             title: '银行经办支行'
         }, {
-            field: 'buyWay',
-            title: '购车途径'
+            field: 'shopWay',
+            title: '购车途径',
+            type: 'select',
+            key: 'budget_orde_biz_typer'
         }, {
-            field: 'updateDatetime',
+            field: 'applyDatetime',
             title: '申请时间',
             type: 'date',
-            rangedate: ['start_datetime', 'end_datetime'],
+            rangedate: ['applyDatetimeStart', 'applyDatetimeEnd'],
             render: dateTimeFormat,
             search: true
         }, {

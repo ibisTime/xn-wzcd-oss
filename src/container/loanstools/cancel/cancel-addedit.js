@@ -44,7 +44,7 @@ class CancelAddedit extends React.Component {
             readonly: true
         }, {
             title: '身份证',
-            field: 'idNo',
+            field: 'inNo',
             readonly: true
         }, {
             title: '贷款金额',

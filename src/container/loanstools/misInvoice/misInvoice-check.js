@@ -44,7 +44,7 @@ class MisInvoiceCheck extends React.Component {
       readonly: true
     }, {
       title: '身份证',
-      field: '22',
+      field: 'inNo',
       readonly: true
     }, {
       title: '贷款金额',

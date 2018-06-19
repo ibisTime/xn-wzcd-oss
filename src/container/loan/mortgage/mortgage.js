@@ -65,7 +65,8 @@ class Mortgage extends React.Component {
             search: true
         }, {
             title: '合同编号',
-            field: 'pledgeContractCode'
+            field: 'pledgeContractCode',
+            hidden: true
         }, {
             title: '贷款银行',
             field: 'loanBankName'
@@ -75,20 +76,13 @@ class Mortgage extends React.Component {
             amount: true
         }, {
             title: '贷款期限(月)',
-            filed: 'loanPeriods'
+            field: 'loanPeriods'
         }, {
             title: '业务员名称',
-            filed: 'saleUserName'
+            field: 'saleUserName'
         }, {
             title: '收款银行',
             field: 'bankReceiptName'
-        }, {
-            title: '更新人',
-            field: 'operator'
-        }, {
-            title: '更新时间',
-            field: 'operateDatetime',
-            type: 'date'
         }, {
             title: '当前节点',
             field: 'curNodeCode',

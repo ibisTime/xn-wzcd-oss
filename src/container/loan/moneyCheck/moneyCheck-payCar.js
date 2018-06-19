@@ -10,7 +10,8 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -44,12 +45,17 @@ class AdvMoneyPayCar extends React.Component {
             readonly: true
         }, {
             title: '身份证',
-            field: '22',
+            field: 'idNo',
+            formatter: (v, d) => {
+                return d.budgetOrder.idNo;
+            },
             readonly: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            amount: true,
+            formatter: (v, d) => {
+                return moneyFormat(d.budgetOrder.loanAmount);
+            },
             readonly: true
         }, {
             title: '贷款银行',
@@ -57,7 +63,7 @@ class AdvMoneyPayCar extends React.Component {
             readonly: true
         }, {
             title: '应退按揭款',
-            field: '3333',
+            field: 'useAmount',
             amount: true,
             readonly: true
         }, {

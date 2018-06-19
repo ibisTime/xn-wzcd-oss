@@ -46,7 +46,7 @@ class TakeEnter extends React.Component {
             readonly: true
         }, {
             title: '身份证',
-            field: '11',
+            field: 'inNo',
             readonly: true
         }, {
             title: '贷款金额',

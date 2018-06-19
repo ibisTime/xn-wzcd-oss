@@ -125,17 +125,48 @@ class ArchivesAddedit extends React.Component {
                 type: 'date'
             }, {
                 title: '月还款额',
-                field: 'monthAmount',
+                field: 'repayMonthAmount',
                 amount: true
             }],
             [{
+                title: ' 首期还款金额',
+                field: 'repayFirstMonthAmount',
+                amount: true,
+                required: 'true'
+            }, {
+                title: '首期还款日期',
+                field: 'repayFirstMonthDatetime',
+                type: 'date',
+                required: 'true'
+            }],
+            [{
+                title: '银行还款日',
+                field: 'repayBankDate',
+                number: true
+            }, {
                 title: '身份证',
-                field: 'idNo',
+                field: 'idNoPic',
                 type: 'img'
             }],
             [{
                 title: '已入档清单',
-                field: '11'
+                field: 'fileList',
+                type: 'checkbox',
+                data: [{
+                    key: '1',
+                    value: '身份证'
+                }, {
+                    key: '2',
+                    value: '户口本'
+                }, {
+                    key: '3',
+                    value: '结婚证'
+                }, {
+                    key: '4',
+                    value: '行驶证'
+                }],
+                keyName: 'key',
+                valueName: 'value'
             }],
             [{
                 title: '资料是否完善',
@@ -154,40 +185,11 @@ class ArchivesAddedit extends React.Component {
             }, {
                 title: '存放位置',
                 field: 'storePlace',
-                type: 'select',
-                listCode: 632827,
-                keyName: 'code',
-                valueName: 'name',
                 required: 'true'
             }],
             [{
                 title: '备注',
                 field: 'fileRemark'
-            }],
-            [{
-                title: '经办人',
-                field: 'operator',
-                readonly: true,
-                type: 'select',
-                listCode: 630066,
-                keyName: 'userId',
-                valueName: 'realName'
-            }, {
-                title: '经办日期',
-                field: 'operateDatetime',
-                type: 'date',
-                readonly: true
-            }, {
-                title: '经办部门',
-                field: 'operateDepartment',
-                type: 'select',
-                listCode: 630106,
-                params: {
-                    typeList: ['2']
-                },
-                keyName: 'code',
-                valueName: 'name',
-                readonly: true
             }]
         ]
     }];

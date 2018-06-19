@@ -51,14 +51,7 @@ class BankMoney extends React.Component {
             search: true
         }, {
             title: '业务公司',
-            field: 'companyCode',
-            listCode: 630106,
-            params: {
-                typeList: [1]
-            },
-            type: 'select',
-            keyName: 'code',
-            valueName: 'name',
+            field: 'companyName',
             required: true
         }, {
             title: '汽车经销商',
@@ -69,11 +62,7 @@ class BankMoney extends React.Component {
             search: true
         }, {
             title: '贷款银行',
-            field: 'loanBankCode',
-            type: 'select',
-            listCode: 632037,
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            field: 'loanBankName',
             search: true
         }, {
             title: '贷款金额',
@@ -90,14 +79,6 @@ class BankMoney extends React.Component {
         }, {
             title: '收款账号',
             field: 'bankReceiptNumber',
-            nowrap: true
-        }, {
-            title: '更新人',
-            field: 'operatorName'
-        }, {
-            title: '更新时间',
-            field: 'operateDatetime',
-            type: 'date',
             nowrap: true
         }, {
             title: '当前节点',

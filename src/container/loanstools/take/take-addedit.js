@@ -40,7 +40,7 @@ class TakeAddedit extends React.Component {
             field: 'code'
           }, {
             title: '身份证',
-            field: '22'
+            field: 'inNo'
           }, {
             title: '贷款金额',
             field: 'loanAmount',

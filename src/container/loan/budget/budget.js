@@ -29,7 +29,7 @@ class Budget extends React.Component {
             title: '业务编号',
             search: true
         }, {
-            field: 'company',
+            field: 'companyName',
             title: '业务公司',
             search: true
         }, {
@@ -57,7 +57,7 @@ class Budget extends React.Component {
             type: 'select',
             key: 'loan_period'
         }, {
-            field: 'bank',
+            field: 'loanBankName',
             title: '贷款银行',
             search: true
         }, {
@@ -86,10 +86,10 @@ class Budget extends React.Component {
             type: 'select',
             key: 'budget_orde_biz_typer'
         }, {
-            field: 'updateDatetime',
+            field: 'applyDatetime',
             title: '申请时间',
             type: 'date',
-            rangedate: ['start_datetime', 'end_datetime'],
+            rangedate: ['applyDatetimeStart', 'applyDatetimeEnd'],
             render: dateTimeFormat,
             search: true
         }, {

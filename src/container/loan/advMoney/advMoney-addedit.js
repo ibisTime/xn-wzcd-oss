@@ -42,7 +42,7 @@ class AdvMoneyAddedit extends React.Component {
             field: 'code'
         }, {
             title: '身份证',
-            field: '22'
+            field: 'idNo'
         }, {
             title: '贷款金额',
             field: 'loanAmount',

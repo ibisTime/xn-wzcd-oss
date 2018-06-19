@@ -68,7 +68,7 @@ class Archives extends React.Component {
             search: true
         }, {
             title: '手机号',
-            field: '1'
+            field: 'mobile'
         }, {
             title: '合同编号',
             field: 'pledgeContractCode'
@@ -84,14 +84,7 @@ class Archives extends React.Component {
             amount: true
         }, {
             title: '业务员名称',
-            filed: 'saleUserName'
-        }, {
-            title: '更新人',
-            field: 'operatorName'
-        }, {
-            title: '更新时间',
-            field: 'operateDatetime',
-            type: 'date'
+            field: 'saleUserName'
         }, {
             title: '当前节点',
             field: 'curNodeCode',

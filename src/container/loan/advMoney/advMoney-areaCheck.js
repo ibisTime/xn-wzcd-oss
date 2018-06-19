@@ -43,8 +43,21 @@ class AdvMoneyAreaCheck extends React.Component {
             field: 'code',
             readonly: true
         }, {
-            title: '贷款金额',
-            field: 'loanAmount',
+            title: '业务公司',
+            field: 'bizCompanyName',
+            readonly: true
+        }, {
+            title: '汽车经销商',
+            field: 'carDealerName',
+            readonly: true
+        }, {
+            title: '用款小写',
+            field: 'useAmount',
+            amount: true,
+            readonly: true
+        }, {
+            title: '用款大写',
+            field: '222',
             amount: true,
             readonly: true
         }, {
@@ -52,24 +65,32 @@ class AdvMoneyAreaCheck extends React.Component {
             field: 'loanBankName',
             readonly: true
         }, {
-            title: '申请撤销',
-            field: '1',
-            readonly: true
+            title: '是否垫资',
+            field: 'isAdvanceFund',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '是'
+            }, {
+                key: '1',
+                value: '否'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            required: true
         }, {
-            title: '征信结果',
-            field: '11',
-            readonly: true
-        }, {
-            title: '预算单信息',
+            title: '收款单位名称',
             field: '111',
+            readonly: true,
+            hidden: true
+        }, {
+            title: '收款银行账号',
+            field: 'collectionAccountNo',
             readonly: true
         }, {
-            title: '垫资单',
-            field: '1111',
+            title: '收款银行',
+            field: 'bankReceiptName',
             readonly: true
-        }, {
-            title: '审核说明',
-            field: 'approveNote'
         }];
         return this.props.buildDetail({
             fields,
