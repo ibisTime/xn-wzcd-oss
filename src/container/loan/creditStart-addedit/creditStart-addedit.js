@@ -420,23 +420,6 @@ class CreditStartAddedit extends React.Component {
 
         if (this.isAddedit) {
             this.buttons = [{
-                title: '保存',
-                check: true,
-                handler: (params) => {
-                    params.creditCode = this.code;
-                    params.buttonCode = '0';
-                    params.operator = getUserId();
-                    this.props.doFetching();
-                    let bizCode = this.code ? 632112 : 632110;
-                    fetch(bizCode, params).then((data) => {
-                        if (!this.code) {
-                            this.code = data.code;
-                        }
-                        showSucMsg('操作成功');
-                        this.props.cancelFetching();
-                    }).catch(this.props.cancelFetching);
-                }
-            }, {
                 title: '发送',
                 check: true,
                 handler: (params) => {
