@@ -131,13 +131,13 @@ class BudgetAddedit extends React.Component {
     // 应退按揭款合计 = 贷款金额 - 收客户手续费（按揭款扣）- GPS费（按揭款扣）- 厂家贴息
     getRefundAmount = (params) => {
         let loanAmount = moneyParse(params.loanAmount || 0) / 1000;
-        let cardealerSubsidy = moneyParse(params.cardealerSubsidy || 0) / 1000;
+        let carDealerSubsidy = moneyParse(params.carDealerSubsidy || 0) / 1000;
         let otherFee = moneyParse(params.otherFee || 0) / 1000;
         let gpsFee = moneyParse(params.gpsFee || 0) / 1000;
         let refund = 0;
 
-        if (loanAmount && cardealerSubsidy) {
-            refund = loanAmount - cardealerSubsidy - gpsFee - otherFee;
+        if (loanAmount && carDealerSubsidy) {
+            refund = loanAmount - carDealerSubsidy - gpsFee - otherFee;
         }
 
         return refund;
@@ -150,7 +150,7 @@ class BudgetAddedit extends React.Component {
         }
         let list = {
             bankRate: this.props.form.getFieldValue('bankRate'),
-            fee: parseFloat(this.props.form.getFieldValue('fee')) * 1000,
+            fee: moneyParse(this.props.form.getFieldValue('fee')),
             feeWay: this.props.form.getFieldValue('feeWay'),
             fxAmount: this.state.sfData.fxAmount,
             gpsFee: this.state.sfData.gpsFee,
@@ -159,15 +159,21 @@ class BudgetAddedit extends React.Component {
             lyAmount: this.state.sfData.lyAmount,
             otherFee: this.state.sfData.otherFee,
             rateType: this.props.form.getFieldValue('rateType'),
+            carDealerSubsidy: moneyParse(this.props.form.getFieldValue('carDealerSubsidy')),
             ...params
         };
-        console.log(params, list.bankRate, list.fee, list.feeWay, list.fxAmount, list.gpsFee, list.gpsFeeWay, list.loanPeriods, list.lyAmount, list.otherFee, list.rateType);
-        if (list.bankRate && list.fee && list.feeWay && list.fxAmount && list.gpsFee && list.gpsFeeWay && list.loanPeriods && list.lyAmount && list.otherFee && list.rateType) {
+        console.log(params, list.bankRate, list.fee, list.feeWay, list.fxAmount, list.gpsFee, list.gpsFeeWay, list.loanPeriods, list.lyAmount, list.otherFee, list.rateType, list.carDealerSubsidy);
+        if (list.bankRate && list.fee && list.feeWay && list.fxAmount && list.gpsFee && list.gpsFeeWay && list.loanPeriods && list.lyAmount && list.otherFee && list.rateType && list.carDealerSubsidy) {
             this.props.doFetching();
             return list;
         } else {
             return false;
         }
+    }
+
+    // 金额是否正确
+    getAmountRules = (v) => {
+        return /(^[1-9](,\d{3}|[0-9])*(\.\d{1,2})?$)|([0])/.test(v);
     }
 
     render() {
@@ -212,6 +218,9 @@ class BudgetAddedit extends React.Component {
                     field: 'carDealerCode',
                     type: 'select',
                     pageCode: 632065,
+                    params: {
+                        curNodeCode: '006_02'
+                    },
                     keyName: 'code',
                     valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
                     required: true,
@@ -440,10 +449,10 @@ class BudgetAddedit extends React.Component {
                         if (feeWay === '2') {
                             otherFee = this.props.pageData.otherFee;
                         }
-                        if (gpsFeeWay && feeWay && this.props.form.getFieldValue('cardealerSubsidy') && v) {
+                        if (gpsFeeWay && feeWay && this.props.form.getFieldValue('carDealerSubsidy') && v) {
                             let repointAmount = this.getRefundAmount({
                                 loanAmount: v,
-                                cardealerSubsidy: this.props.form.getFieldValue('cardealerSubsidy'),
+                                carDealerSubsidy: this.props.form.getFieldValue('carDealerSubsidy'),
                                 gpsFee: gpsFee,
                                 otherFee: otherFee
                             });
@@ -500,6 +509,15 @@ class BudgetAddedit extends React.Component {
                     valueName: '{{rate.DATA}}-{{period.DATA}}',
                     required: true,
                     onChange: (v) => {
+                        this.props.setPageData({
+                            ...this.props.pageData,
+                            globalRate: this.getGlobalRate({
+                                fee: this.props.form.getFieldValue('fee'),
+                                loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                bankRate: v
+                            })
+                        });
+
                         let rData = this.getRepointDetailList({bankRate: v});
                         if (!rData) {
                             return false;
@@ -530,12 +548,7 @@ class BudgetAddedit extends React.Component {
                                 ...this.props.pageData,
                                 repointDetailList1: detailList1,
                                 repointDetailList2: detailList2,
-                                repointDetailList3: detailList3,
-                                globalRate: this.getGlobalRate({
-                                    fee: this.props.form.getFieldValue('fee'),
-                                    loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                    bankRate: v
-                                })
+                                repointDetailList3: detailList3
                             });
                         }).catch(this.props.cancelFetching);
                     }
@@ -583,10 +596,10 @@ class BudgetAddedit extends React.Component {
                             if (feeWay === '2') {
                                 otherFee = this.props.pageData.otherFee;
                             }
-                            if (gpsFeeWay && feeWay && this.props.form.getFieldValue('loanAmount') && this.props.form.getFieldValue('cardealerSubsidy')) {
+                            if (gpsFeeWay && feeWay && this.props.form.getFieldValue('loanAmount') && this.props.form.getFieldValue('carDealerSubsidy')) {
                                 let repointAmount = this.getRefundAmount({
                                     loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                    cardealerSubsidy: this.props.form.getFieldValue('cardealerSubsidy'),
+                                    carDealerSubsidy: this.props.form.getFieldValue('carDealerSubsidy'),
                                     gpsFee: gpsFee,
                                     otherFee: otherFee
                                 });
@@ -618,8 +631,21 @@ class BudgetAddedit extends React.Component {
                     required: true,
                     value: 0,
                     onChange: (v) => {
-                        let rData = this.getRepointDetailList({fee: v});
-                        if (!rData) {
+                        this.props.setPageData({
+                            ...this.props.pageData,
+                            globalRate: this.getGlobalRate({
+                                fee: v,
+                                loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                bankRate: this.props.form.getFieldValue('bankRate')
+                            }),
+                            bankLoanCs: this.getBankLoanNum({
+                                fee: v,
+                                loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                invoicePrice: this.props.form.getFieldValue('invoicePrice')
+                            })
+                        });
+                        let rData = this.getRepointDetailList({fee: moneyParse(v)});
+                        if (!rData || !this.getAmountRules(v)) {
                             return false;
                         }
 
@@ -648,57 +674,50 @@ class BudgetAddedit extends React.Component {
                                 ...this.props.pageData,
                                 repointDetailList1: detailList1,
                                 repointDetailList2: detailList2,
-                                repointDetailList3: detailList3,
-                                globalRate: this.getGlobalRate({
-                                    fee: v,
-                                    loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                    bankRate: this.props.form.getFieldValue('bankRate')
-                                }),
-                                bankLoanCs: this.getBankLoanNum({
-                                    fee: v,
-                                    loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                    invoicePrice: this.props.form.getFieldValue('invoicePrice')
-                                })
+                                repointDetailList3: detailList3
                             });
                         }).catch(this.props.cancelFetching);
                     }
                 }],
                 [{
                     title: '厂家贴息',
-                    field: 'cardealerSubsidy',
+                    field: 'carDealerSubsidy',
                     required: true,
                     onChange: (v) => {
-                        let gpsFee = 0;
-                        let otherFee = 0;
-                        let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
-                        let feeWay = this.props.form.getFieldValue('fee_way');
-                        if (gpsFeeWay === '2') {
-                            gpsFee = this.props.pageData.gpsFee;
+                        let rData = this.getRepointDetailList({carDealerSubsidy: moneyParse(v)});
+                        if (!rData || !this.getAmountRules(v)) {
+                            return false;
                         }
-                        if (feeWay === '2') {
-                            otherFee = this.props.pageData.otherFee;
-                        }
-                        if (gpsFeeWay && feeWay && this.props.form.getFieldValue('loanAmount') && v) {
-                            let repointAmount = this.getRefundAmount({
-                                loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                cardealerSubsidy: v,
-                                gpsFee: gpsFee,
-                                otherFee: otherFee
+
+                        this.props.doFetching();
+                        fetch(632290, {
+                            budgetOrderCode: this.code,
+                            carDealerCode: this.carDealerSelectData.code,
+                            ...rData
+                        }).then((mxData) => {
+                            this.props.cancelFetching();
+                            let detailList1 = [];
+                            let detailList2 = [];
+                            let detailList3 = [];
+                            mxData.map((item) => {
+                                item.repointAmountL = moneyUppercase(moneyFormat(item.repointAmount));
+                                if (item.useMoneyPurpose === '1') {
+                                    detailList1.push(item);
+                                } else if (item.useMoneyPurpose === '2') {
+                                    detailList2.push(item);
+                                } else if (item.useMoneyPurpose === '3') {
+                                    detailList3.push(item);
+                                }
                             });
-                            let repointDetailList1 = [{
-                                useMoneyPurpose: '1',
-                                repointAmount: repointAmount,
-                                repointAmountL: moneyUppercase(repointAmount),
-                                companyName: this.receivables.companyCode,
-                                accountCode: this.receivables.bankcardNumber,
-                                subbranch: this.receivables.subbranch
-                            }];
+                            this.repointDetailList1 = detailList1;
 
                             this.props.setPageData({
                                 ...this.props.pageData,
-                                repointDetailList1: repointDetailList1
+                                repointDetailList1: detailList1,
+                                repointDetailList2: detailList2,
+                                repointDetailList3: detailList3
                             });
-                        }
+                        }).catch(this.props.cancelFetching);
                     }
                 }, {
                     // (贷款金额+服务费) / 发票价格
@@ -1155,38 +1174,6 @@ class BudgetAddedit extends React.Component {
                                 repointDetailList2: detailList2,
                                 repointDetailList3: detailList3
                             });
-
-                            let gpsFee = 0;
-                            let otherFee = 0;
-                            let gpsFeeWay = v;
-                            let feeWay = this.props.form.getFieldValue('fee_way');
-                            if (gpsFeeWay === '2') {
-                                gpsFee = this.props.pageData.gpsFee;
-                            }
-                            if (feeWay === '2') {
-                                otherFee = this.props.pageData.otherFee;
-                            }
-                            if (gpsFeeWay && feeWay && this.props.form.getFieldValue('cardealerSubsidy') && this.props.form.getFieldValue('loanAmount')) {
-                                let repointAmount = this.getRefundAmount({
-                                    loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                    cardealerSubsidy: this.props.form.getFieldValue('cardealerSubsidy'),
-                                    gpsFee: gpsFee,
-                                    otherFee: otherFee
-                                });
-                                let repointDetailList1 = [{
-                                    useMoneyPurpose: '1',
-                                    repointAmount: repointAmount,
-                                    repointAmountL: moneyUppercase(repointAmount),
-                                    companyName: this.receivables.companyCode,
-                                    accountCode: this.receivables.bankcardNumber,
-                                    subbranch: this.receivables.subbranch
-                                }];
-
-                                this.props.setPageData({
-                                    ...this.props.pageData,
-                                    repointDetailList1: repointDetailList1
-                                });
-                            }
                         }).catch(this.props.cancelFetching);
                     }
                 }],
@@ -1204,7 +1191,6 @@ class BudgetAddedit extends React.Component {
                     required: true,
                     onChange: (v) => {
                         let rData = this.getRepointDetailList({feeWay: v});
-                        console.log(v, rData);
                         if (!rData) {
                             return false;
                         }
@@ -1236,38 +1222,6 @@ class BudgetAddedit extends React.Component {
                                 repointDetailList2: detailList2,
                                 repointDetailList3: detailList3
                             });
-
-                            let gpsFee = 0;
-                            let otherFee = 0;
-                            let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
-                            let feeWay = v;
-                            if (gpsFeeWay === '2') {
-                                gpsFee = this.props.pageData.gpsFee;
-                            }
-                            if (feeWay === '2') {
-                                otherFee = this.props.pageData.otherFee;
-                            }
-                            if (gpsFeeWay && feeWay && this.props.form.getFieldValue('cardealerSubsidy') && this.props.form.getFieldValue('loanAmount')) {
-                                let repointAmount = this.getRefundAmount({
-                                    loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                    cardealerSubsidy: this.props.form.getFieldValue('cardealerSubsidy'),
-                                    gpsFee: gpsFee,
-                                    otherFee: otherFee
-                                });
-                                let repointDetailList1 = [{
-                                    useMoneyPurpose: '1',
-                                    repointAmount: repointAmount,
-                                    repointAmountL: moneyUppercase((repointAmount / 1000).toFixed(2)),
-                                    companyName: this.receivables.companyCode,
-                                    accountCode: this.receivables.bankcardNumber,
-                                    subbranch: this.receivables.subbranch
-                                }];
-
-                                this.props.setPageData({
-                                    ...this.props.pageData,
-                                    repointDetailList1: repointDetailList1
-                                });
-                            }
                         }).catch(this.props.cancelFetching);
                     }
                 }],
@@ -1351,7 +1305,7 @@ class BudgetAddedit extends React.Component {
                         fields: [{
                             title: 'id',
                             field: 'id',
-                            hidden: true
+                            noVisible: true
                         }, {
                             title: '用款用途',
                             field: 'useMoneyPurpose',
@@ -1756,45 +1710,109 @@ class BudgetAddedit extends React.Component {
             }];
         }
 
+        if (this.isApply) {
+            buttons = [{
+                title: '保存',
+                check: true,
+                handler: (data) => {
+                    data.dealType = '0';
+                    data.budgetOrderCode = this.code;
+                    data.operator = getUserId();
+                    let gpsList = [];
+                    if (data.gpsList) {
+                        data.gpsList.forEach((v) => {
+                            gpsList.push(v.code);
+                        });
+                    }
+                    data.gpsList = gpsList;
+                    let repointDetailList = [];
+                    if (data.repointDetailList1) {
+                        repointDetailList = repointDetailList.concat(data.repointDetailList1);
+                    }
+                    repointDetailList = repointDetailList.concat(data.repointDetailList2);
+                    if (data.repointDetailList3) {
+                        repointDetailList = repointDetailList.concat(data.repointDetailList3);
+                    }
+                    delete data.repointDetailList1;
+                    delete data.repointDetailList2;
+                    delete data.repointDetailList3;
+                    data.repointDetailList = repointDetailList;
+                    data.assureFee = this.props.pageData.assureFee;
+                    data.gpsFee = this.props.pageData.gpsFee;
+                    data.lyAmountFee = this.props.pageData.lyAmountFee;
+                    data.otherFee = this.props.pageData.otherFee;
+                    data.bankLoanCs = this.props.pageData.bankLoanCs;
+                    data.globalRate = this.props.pageData.globalRate;
+                    data.companyLoanCs = this.props.pageData.companyLoanCs;
+                    this.props.doFetching();
+                    fetch(632120, data).then(() => {
+                        this.props.cancelFetching();
+                        showSucMsg('操作成功');
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(() => {
+                        this.props.cancelFetching();
+                    });
+                }
+            }, {
+                title: '申请',
+                check: true,
+                handler: (data) => {
+                    data.dealType = '1';
+                    data.budgetOrderCode = this.code;
+                    data.operator = getUserId();
+                    let gpsList = [];
+                    if (data.gpsList) {
+                        data.gpsList.forEach((v) => {
+                            gpsList.push(v.code);
+                        });
+                    }
+                    data.gpsList = gpsList;
+                    let repointDetailList = [];
+                    if (data.repointDetailList1) {
+                        repointDetailList = repointDetailList.concat(data.repointDetailList1);
+                    }
+                    repointDetailList = repointDetailList.concat(data.repointDetailList2);
+                    if (data.repointDetailList3) {
+                        repointDetailList = repointDetailList.concat(data.repointDetailList3);
+                    }
+                    delete data.repointDetailList1;
+                    delete data.repointDetailList2;
+                    delete data.repointDetailList3;
+                    data.repointDetailList = repointDetailList;
+                    data.assureFee = this.props.pageData.assureFee;
+                    data.gpsFee = this.props.pageData.gpsFee;
+                    data.lyAmountFee = this.props.pageData.lyAmountFee;
+                    data.otherFee = this.props.pageData.otherFee;
+                    data.bankLoanCs = this.props.pageData.bankLoanCs;
+                    data.globalRate = this.props.pageData.globalRate;
+                    data.companyLoanCs = this.props.pageData.companyLoanCs;
+                    this.props.doFetching();
+                    fetch(632120, data).then(() => {
+                        this.props.cancelFetching();
+                        showSucMsg('操作成功');
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(() => {
+                        this.props.cancelFetching();
+                    });
+                }
+            }, {
+                title: '返回',
+                handler: () => {
+                    this.props.history.go(-1);
+                }
+            }];
+        }
+
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            editCode: 632120,
             detailCode: 632146,
-            buttons: buttons,
-            beforeSubmit: (data) => {
-                data.budgetOrderCode = this.code;
-                data.operator = getUserId();
-                let gpsList = [];
-                if (data.gpsList) {
-                    data.gpsList.forEach((v) => {
-                        gpsList.push(v.code);
-                    });
-                }
-                data.gpsList = gpsList;
-                let repointDetailList = [];
-                if (data.repointDetailList1) {
-                    repointDetailList = repointDetailList.concat(data.repointDetailList1);
-                }
-                repointDetailList = repointDetailList.concat(data.repointDetailList2);
-                if (data.repointDetailList3) {
-                    repointDetailList = repointDetailList.concat(data.repointDetailList3);
-                }
-                delete data.repointDetailList1;
-                delete data.repointDetailList2;
-                delete data.repointDetailList3;
-                data.repointDetailList = repointDetailList;
-                data.assureFee = this.props.pageData.assureFee;
-                data.gpsFee = this.props.pageData.gpsFee;
-                data.lyAmountFee = this.props.pageData.lyAmountFee;
-                data.otherFee = this.props.pageData.otherFee;
-                data.bankLoanCs = this.props.pageData.bankLoanCs;
-                data.globalRate = this.props.pageData.globalRate;
-                data.companyLoanCs = this.props.pageData.companyLoanCs;
-                data.dealType = '1';
-                return data;
-            }
+            buttons: buttons
         });
     }
 }

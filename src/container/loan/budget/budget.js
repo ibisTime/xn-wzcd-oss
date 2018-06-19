@@ -115,6 +115,8 @@ class Budget extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '002_01' && selectedRows[0].curNodeCode !== '002_05') {
+                        showWarnMsg('当前不是填写预算单或重新填写预算单的节点');
                     } else {
                         this.props.history.push(`/loan/budget/addedit?isApply=1&code=${selectedRowKeys[0]}&companyCode=${selectedRows[0].companyCode}&saleUserId=${selectedRows[0].saleUserId}`);
                     }
