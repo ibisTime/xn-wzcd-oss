@@ -277,7 +277,12 @@ class CreditStartAddedit extends React.Component {
             listCode: 632037,
             keyName: 'code',
             valueName: '{{bankName.DATA}}{{subbranch.DATA}}',
-            required: true
+            required: true,
+            formatter: (value, data) => {
+                if (this.props.isLoaded) {
+                    return data.loanBankName;
+                }
+            }
         }, {
             title: '业务种类',
             field: 'shopWay',
@@ -289,7 +294,9 @@ class CreditStartAddedit extends React.Component {
                 this.newCar = value === '1';
             },
             formatter: (value) => {
-                this.newCar = value === '1';
+                if (this.props.isLoaded) {
+                    this.newCar = value === '1';
+                }
                 return value;
             }
         }, {
