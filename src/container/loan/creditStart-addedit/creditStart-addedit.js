@@ -14,7 +14,6 @@ import {
     getUserId
 } from 'common/js/util';
 import {DetailWrapper} from 'common/js/build-detail';
-import {COMPANY_CODE} from 'common/js/config';
 import fetch from 'common/js/fetch';
 
 @DetailWrapper(
@@ -286,12 +285,6 @@ class CreditStartAddedit extends React.Component {
             required: true,
             onChange: (value) => {
                 this.newCar = value === '1';
-            },
-            formatter: (value) => {
-                if (this.props.isLoaded) {
-                    this.newCar = value === '1';
-                }
-                return value;
             }
         }, {
             title: '贷款金额',
