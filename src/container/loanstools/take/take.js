@@ -12,7 +12,8 @@ import {
 import {
   showWarnMsg,
   showSucMsg,
-  dateTimeFormat
+  dateTimeFormat,
+  dateFormat
 } from 'common/js/util';
 import {
   Button,
@@ -74,7 +75,7 @@ class take extends React.Component {
             field: 'zfSkReceiptDatetime',
             rangedate: ['zfSkReceiptDatetimeStart', 'zfSkReceiptDatetimeEnd'],
             type: 'date',
-            render: dateTimeFormat,
+            render: dateFormat,
             search: true
         }, {
             title: '是否提交作废申请',

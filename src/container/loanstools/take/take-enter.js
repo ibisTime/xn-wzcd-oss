@@ -11,7 +11,8 @@ import {
   getQueryString,
   showSucMsg,
   getUserId,
-  getCompanyCode
+  getCompanyCode,
+  moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -47,7 +48,7 @@ class TakeEnter extends React.Component {
             readonly: true
         }, {
             title: '身份证',
-            field: 'inNo',
+            field: 'idNo',
             readonly: true
         }, {
             title: '贷款金额',
@@ -63,7 +64,9 @@ class TakeEnter extends React.Component {
             field: 'receiptAccount',
             readonly: true,
             amount: true,
-            required: true
+            formatter: (v, data) => {
+                return moneyFormat(data.loanAmount);
+            }
         }, {
             title: '收款金额',
             field: 'zfSkAmount',
