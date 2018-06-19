@@ -135,8 +135,11 @@ class RefundCertain extends React.Component {
             field: 'shouldBackBankcardCode',
             type: 'select',
             listCode: 632007,
+            params: {
+                type: '1'
+            },
             keyName: 'code',
-            valueName: '{{bankCode.DATA}}-{{subbranch.DATA}}',
+            valueName: '{{bankName.DATA}}-{{bankcardNumber.DATA}}-{{realName.DATA}}',
             required: true
         }, {
             title: '付款凭证',

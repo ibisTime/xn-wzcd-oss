@@ -93,8 +93,17 @@ class CreditStart extends React.Component {
                 roleCode: getRoleCode()
             },
             btnEvent: {
-                add: (selectedRowKeys, selectedRows) => {
-                    this.props.history.push(`/loan/creditStart/addedit?isAddedit=1`);
+                apply: (selectedRowKeys, selectedRows) => {
+                    let code = selectedRowKeys ? selectedRowKeys[0] : '';
+                    if (code) {
+                        if (selectedRows[0].curNodeCode !== '001_01' && selectedRows[0].curNodeCode !== '001_05') {
+                            showWarnMsg('当前不是填写征信单的节点');
+                            return;
+                        }
+                        this.props.history.push(`/loan/creditStart/addedit?isAddedit=1&code=${code}`);
+                    } else {
+                        this.props.history.push(`/loan/creditStart/addedit?isAddedit=1`);
+                    }
                 },
                 checkSalesman: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
