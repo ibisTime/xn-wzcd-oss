@@ -64,7 +64,7 @@ class InstallGpsEnter extends React.Component {
               companyCode: getCompanyCode()
             },
             keyName: 'code',
-            valueName: 'gpsNo',
+            valueName: 'gpsDevNo',
             nowrap: true,
             required: true
         }, {
@@ -91,7 +91,7 @@ class InstallGpsEnter extends React.Component {
                     type: 'select',
                     listCode: 632707,
                     params: {
-                        applyStatus: '1',
+                        applyStatus: '2',
                         applyUser: getUserId(),
                         useStatus: '0'
                     },

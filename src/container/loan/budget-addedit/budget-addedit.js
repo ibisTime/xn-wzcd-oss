@@ -696,7 +696,7 @@ class BudgetAddedit extends React.Component {
                             type: 'select',
                             listCode: 632707,
                             params: {
-                                applyStatus: 1,
+                                applyStatus: '2',
                                 applyUser: this.saleUserId,
                                 useStatus: 0
                             },
