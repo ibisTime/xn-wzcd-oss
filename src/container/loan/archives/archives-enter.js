@@ -120,30 +120,29 @@ class ArchivesAddedit extends React.Component {
                 field: 'bankCardNumber',
                 bankCard: true
             }, {
-                title: '对账单日',
-                field: 'billDatetime',
-                type: 'date'
+                title: ' 首期还款金额',
+                field: 'repayFirstMonthAmount',
+                amount: true,
+                required: 'true'
             }, {
                 title: '月还款额',
                 field: 'repayMonthAmount',
                 amount: true
             }],
             [{
-                title: ' 首期还款金额',
-                field: 'repayFirstMonthAmount',
-                amount: true,
-                required: 'true'
+                title: '对账单日',
+                field: 'billDatetime'
             }, {
                 title: '首期还款日期',
                 field: 'repayFirstMonthDatetime',
                 type: 'date',
                 required: 'true'
-            }],
-            [{
+            }, {
                 title: '银行还款日',
                 field: 'repayBankDate',
                 number: true
-            }, {
+            }],
+            [{
                 title: '身份证',
                 field: 'idNoPic',
                 type: 'img'
