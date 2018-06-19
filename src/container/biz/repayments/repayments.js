@@ -76,7 +76,8 @@ class Repayments extends React.Component {
             }
         }, {
             title: '放款日期',
-            field: 'bankFkDatetime'
+            field: 'bankFkDatetime',
+            type: 'date'
         }, {
             title: '贷款金额',
             field: 'loanAmount'

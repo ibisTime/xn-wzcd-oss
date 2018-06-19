@@ -61,7 +61,7 @@ class EstimateCertain extends React.Component {
       type: 'datetime',
       required: true
     }, {
-      title: '银行名称',
+      title: '打款账号',
       field: 'payBank',
       type: 'select',
       listCode: '632007',
@@ -71,11 +71,6 @@ class EstimateCertain extends React.Component {
       },
       keyName: 'code',
       valueName: '{{bankName.DATA}} {{subbranch.DATA}} {{bankcardNumber.DATA}}'
-    }, {
-      title: '打款账号',
-      field: 'payAccount',
-      bankCard: true,
-      required: true
     }, {
       title: '打款金额',
       field: 'payAmount',
@@ -88,8 +83,7 @@ class EstimateCertain extends React.Component {
       required: true
     }, {
       title: '备注',
-      field: 'payRemark',
-      required: true
+      field: 'payRemark'
     }];
     return this.props.buildDetail({
       fields,

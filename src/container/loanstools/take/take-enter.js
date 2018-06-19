@@ -10,7 +10,8 @@ import {
 import {
   getQueryString,
   showSucMsg,
-  getUserId
+  getUserId,
+  getCompanyCode
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -73,6 +74,9 @@ class TakeEnter extends React.Component {
             field: 'zfSkBankcardCode',
             type: 'select',
             listCode: 632007,
+            params: {
+                companyCode: getCompanyCode()
+            },
             keyName: 'code',
             valueName: 'bankcardNumber',
             required: true
