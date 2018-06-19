@@ -52,11 +52,11 @@ class takeFree extends React.Component {
             search: true
         }, {
             title: '应收手续费总额',
-            field: 'budgetAmount',
+            field: 'shouldAmount',
             amount: true
         }, {
             title: '未收手续费总额',
-            field: 'receiptAccount',
+            field: 'realAmount',
             amount: true
         }, {
             title: '更新人',
