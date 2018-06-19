@@ -40,12 +40,12 @@ class TakeEstimate extends React.Component {
       field: 'companyName',
       search: true
     }, {
-      title: '打款金额',
+      title: '预算金额',
       field: 'budgetAmount',
       amount: true
     }, {
       title: '垫资总额',
-      field: 'dzAmount',
+      field: 'payAmount',
       amount: true
     }, {
       title: '垫资日期',
@@ -56,7 +56,7 @@ class TakeEstimate extends React.Component {
       title: '应收金额',
       field: 'receiptAccount',
       render: (v, d) => {
-          return (d.payAmount - d.dzAmount) / 1000;
+        return (d.budgetAmount - d.payAmount) / 1000;
       }
     }, {
       title: '实收金额',
