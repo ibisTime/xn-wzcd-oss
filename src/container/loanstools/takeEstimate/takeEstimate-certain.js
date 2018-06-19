@@ -39,13 +39,13 @@ class TakeEstimateCertain extends React.Component {
             field: 'companyName',
             readonly: true
         }, {
-            title: '打款金额',
-            field: 'payAmount',
+            title: '预算金额',
+            field: 'budgetAmount',
             amount: true,
             readonly: true
         }, {
             title: '垫资总额',
-            field: 'dzAmount',
+            field: 'payAmount',
             amount: true,
             readonly: true
         }, {
@@ -57,7 +57,7 @@ class TakeEstimateCertain extends React.Component {
             title: '应收金额',
             field: 'receiptAccount',
             formatter: (v, d) => {
-                return (d.payAmount - d.dzAmount) / 1000;
+                return (d.budgetAmount - d.payAmount) / 1000;
             },
             readonly: true
         }, {
