@@ -374,6 +374,46 @@ class CreditStartAddedit extends React.Component {
             }];
         }
 
+        // 准入审查
+        if (this.isCheckFirst) {
+            this.buttons = [{
+                title: '通过',
+                check: true,
+                handler: (params) => {
+                    params.approveResult = '1';
+                    params.operator = getUserId();
+                    this.props.doFetching();
+                    fetch(632114, params).then(() => {
+                        showSucMsg('操作成功');
+                        this.props.cancelFetching();
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(this.props.cancelFetching);
+                }
+            }, {
+                title: '不通过',
+                check: true,
+                handler: (params) => {
+                    params.approveResult = '0';
+                    params.operator = getUserId();
+                    this.props.doFetching();
+                    fetch(632114, params).then(() => {
+                        showSucMsg('操作成功');
+                        this.props.cancelFetching();
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(this.props.cancelFetching);
+                }
+            }, {
+                title: '返回',
+                handler: (param) => {
+                    this.props.history.go(-1);
+                }
+            }];
+        }
+
         // 录入征信结果
         if (this.isEntry) {
             this.buttons = [{

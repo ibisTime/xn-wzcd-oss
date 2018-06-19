@@ -97,7 +97,7 @@ class CreditStart extends React.Component {
                     let code = selectedRowKeys ? selectedRowKeys[0] : '';
                     if (code) {
                         if (selectedRows[0].curNodeCode !== '001_01' && selectedRows[0].curNodeCode !== '001_05') {
-                            showWarnMsg('当前不是填写征信单的节点');
+                            showWarnMsg('当前不是填写征信单或重新上传征信资料的节点');
                             return;
                         }
                         this.props.history.push(`/loan/creditStart/addedit?isAddedit=1&code=${code}`);
