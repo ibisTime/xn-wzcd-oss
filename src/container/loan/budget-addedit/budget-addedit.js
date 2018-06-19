@@ -33,6 +33,7 @@ class BudgetAddedit extends React.Component {
         };
         this.code = getQueryString('code', this.props.location.search);
         this.companyCode = getQueryString('companyCode', this.props.location.search);
+        this.saleUserId = getQueryString('saleUserId', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
         // 申请
         this.isApply = !!getQueryString('isApply', this.props.location.search);
@@ -695,7 +696,9 @@ class BudgetAddedit extends React.Component {
                             type: 'select',
                             listCode: 632707,
                             params: {
-                                applyStatus: 0
+                                applyStatus: 1,
+                                applyUser: this.saleUserId,
+                                useStatus: 0
                             },
                             keyName: 'code',
                             valueName: 'gpsDevNo',
