@@ -13,6 +13,7 @@ import {
     getUserId
 } from 'common/js/util';
 import {DetailWrapper} from 'common/js/build-detail';
+import fetch from 'common/js/fetch';
 
 @DetailWrapper(
     state => state.loanstoolsRebatesCertain, {
@@ -49,7 +50,7 @@ class RebatesCertain extends React.Component {
             readonly: true
         }, {
             title: '申请公司',
-            field: 'receiptAccount',
+            field: 'carDealerName',
             readonly: true
         }, {
             title: '申请人',
@@ -68,6 +69,13 @@ class RebatesCertain extends React.Component {
         }, {
             title: '付款账号',
             field: 'payBankcardCode',
+            type: 'select',
+            listCode: 632007,
+            params: {
+                type: '1'
+            },
+            keyName: 'code',
+            valueName: '{{bankName.DATA}}-{{bankcardNumber.DATA}}-{{realName.DATA}}',
             required: true
         }, {
             title: '水单',

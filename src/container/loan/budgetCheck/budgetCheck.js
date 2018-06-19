@@ -80,7 +80,10 @@ class BudgetCheck extends React.Component {
             title: '业务员'
         }, {
             field: 'loanBankSubbranch',
-            title: '银行经办支行'
+            title: '银行经办支行',
+            render: (v, data) => {
+                return data.bankSubbranch.abbrName;
+            }
         }, {
             field: 'shopWay',
             title: '购车途径',
