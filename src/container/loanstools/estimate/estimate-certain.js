@@ -10,7 +10,8 @@ import {
 import {
   getQueryString,
   showSucMsg,
-  getUserId
+  getUserId,
+  getCompanyCode
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import { DetailWrapper } from 'common/js/build-detail';
@@ -62,10 +63,14 @@ class EstimateCertain extends React.Component {
     }, {
       title: '银行名称',
       field: 'payBank',
-      pageCode: 802115,
-      keyName: 'bankCode',
-      valueName: 'bankName',
-      type: 'select'
+      type: 'select',
+      listCode: '632007',
+      params: {
+        companyCode: getCompanyCode(),
+        type: '1'
+      },
+      keyName: 'code',
+      valueName: '{{bankName.DATA}} {{subbranch.DATA}} {{bankcardNumber.DATA}}'
     }, {
       title: '打款账号',
       field: 'payAccount',
@@ -96,6 +101,9 @@ class EstimateCertain extends React.Component {
         check: true,
         handler: (params) => {
           this.props.doFetching();
+          let bank = this.props.selectData.payBank.find(v => v.code === params.payBank);
+          params.payAccount = bank.bankcardNumber;
+          params.payBank = bank.bankName;
           params.operator = getUserId();
           fetch(632102, params).then(() => {
             showSucMsg('操作成功');

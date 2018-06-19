@@ -45,7 +45,8 @@ class EstimateApply extends React.Component {
       type: 'select',
       listCode: '632007',
       params: {
-        companyCode: getCompanyCode()
+        companyCode: getCompanyCode(),
+        type: '1'
       },
       keyName: 'code',
       valueName: '{{bankName.DATA}} {{subbranch.DATA}} {{bankcardNumber.DATA}}'
@@ -71,7 +72,7 @@ class EstimateApply extends React.Component {
           this.props.doFetching();
           let bank = this.props.selectData.receiptBank.find(v => v.code === params.receiptBank);
           params.receiptAccount = bank.bankcardNumber;
-          params.receiptBank = bank.bankCode;
+          params.receiptBank = bank.bankName;
           params.buttonCode = 1;
           fetch(632100, params).then(() => {
             showSucMsg('操作成功');

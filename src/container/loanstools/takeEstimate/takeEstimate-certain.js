@@ -10,7 +10,8 @@ import {
 import {
   getQueryString,
   showSucMsg,
-  getUserId
+  getUserId,
+  getCompanyCode
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -69,9 +70,13 @@ class TakeEstimateCertain extends React.Component {
             title: '收款款银行',
             field: 'collectionBank',
             type: 'select',
-            listCode: 632037,
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            listCode: '632007',
+            params: {
+              companyCode: getCompanyCode(),
+              type: '1'
+            },
+            keyName: 'code',
+            valueName: '{{bankName.DATA}} {{subbranch.DATA}} {{bankcardNumber.DATA}}',
             required: true
         }, {
             title: '收款账号',
@@ -96,6 +101,9 @@ class TakeEstimateCertain extends React.Component {
                 check: true,
                 handler: (params) => {
                     this.props.doFetching();
+                    let bank = this.props.selectData.collectionBank.find(v => v.code === params.collectionBank);
+                    params.collectionAccount = bank.bankcardNumber;
+                    params.collectionBank = bank.bankName;
                     params.code = this.code;
                     params.operator = getUserId();
                     fetch(632103, params).then(() => {
