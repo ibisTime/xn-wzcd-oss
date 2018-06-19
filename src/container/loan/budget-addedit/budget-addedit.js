@@ -729,7 +729,7 @@ class BudgetAddedit extends React.Component {
                 }],
                 [{
                     title: 'GPS',
-                    field: 'gpsList',
+                    field: 'budgetOrderGpsList',
                     required: true,
                     type: 'o2m',
                     options: {
@@ -747,7 +747,32 @@ class BudgetAddedit extends React.Component {
                             },
                             keyName: 'code',
                             valueName: 'gpsDevNo',
-                            required: true
+                            required: true,
+                            noVisible: true,
+                            onChange: (v, data, props) => {
+                                props.setPageData({
+                                    gpsDevNo: data.gpsDevNo,
+                                    gpsType: data.gpsType
+                                });
+                            }
+                        }, {
+                            title: 'GPS设备号',
+                            field: 'gpsDevNo',
+                            readonly: true
+                        }, {
+                            title: 'GPS类型',
+                            field: 'gpsType',
+                            type: 'select',
+                            data: [{
+                                key: '1',
+                                value: '有线'
+                            }, {
+                                key: '0',
+                                value: '无线'
+                            }],
+                            keyName: 'key',
+                            valueName: 'value',
+                            readonly: true
                         }]
                     }
                 }]
@@ -1303,8 +1328,8 @@ class BudgetAddedit extends React.Component {
                     field: 'repointDetailList2',
                     required: true,
                     type: 'o2m',
-                    rowKey: 'id',
                     options: {
+                        rowKey: 'id',
                         fields: [{
                             title: 'id',
                             field: 'id',
@@ -1357,10 +1382,10 @@ class BudgetAddedit extends React.Component {
                     title: '协议外返点',
                     field: 'repointDetailList3',
                     type: 'o2m',
-                    rowKey: 'id',
                     options: {
                         add: true,
                         delete: true,
+                        rowKey: 'id',
                         fields: [{
                             title: '用款用途',
                             field: 'useMoneyPurpose',
@@ -1723,12 +1748,14 @@ class BudgetAddedit extends React.Component {
                     data.budgetOrderCode = this.code;
                     data.operator = getUserId();
                     let gpsList = [];
-                    if (data.gpsList) {
-                        data.gpsList.forEach((v) => {
+                    if (data.budgetOrderGpsList) {
+                        data.budgetOrderGpsList.forEach((v) => {
                             gpsList.push(v.code);
                         });
                     }
                     data.gpsList = gpsList;
+                    delete data.budgetOrderGpsList;
+
                     let repointDetailList = [];
                     if (data.repointDetailList1) {
                         repointDetailList = repointDetailList.concat(data.repointDetailList1);

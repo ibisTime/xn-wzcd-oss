@@ -449,13 +449,13 @@ class CreditStartAddedit extends React.Component {
                     params.operator = getUserId();
                     this.props.doFetching();
                     let bizCode = this.code ? 632112 : 632110;
-                    // fetch(bizCode, params).then(() => {
-                    //     showSucMsg('操作成功');
-                    //     this.props.cancelFetching();
-                    //     setTimeout(() => {
-                    //         this.props.history.go(-1);
-                    //     }, 1000);
-                    // }).catch(this.props.cancelFetching);
+                    fetch(bizCode, params).then(() => {
+                        showSucMsg('操作成功');
+                        this.props.cancelFetching();
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(this.props.cancelFetching);
                 }
             }, {
                 title: '返回',
