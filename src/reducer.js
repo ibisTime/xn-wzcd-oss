@@ -144,13 +144,11 @@ import { bizLitigation } from './redux/biz/litigation';
 import { bizLitigationAddEdit } from './redux/biz/litigation-addedit';
 import { bizLitigationDispose } from './redux/biz/litigation-dispose';
 
-//  结清审核 + 详情 + 清欠催收部审核 + 驻行人员审核 + 总经理审核 + 财务审核
+//  结清审核 + 结清申请单 + 审核 + 确认付款
 import { bizSettlement } from './redux/biz/settlement';
-import { bizSettlementAddEdit } from './redux/biz/settlement-addedit';
-import { bizSettlementCollection } from './redux/biz/settlement-collection';
-import { bizSettlementFinance } from './redux/biz/settlement-finance';
-import { bizSettlementManager } from './redux/biz/settlement-manager';
-import { bizSettlementStationed } from './redux/biz/settlement-stationed';
+import { bizSettlementApply } from './redux/biz/settlement-apply';
+import { bizSettlementCheck } from './redux/biz/settlement-check';
+import { bizSettlementCertain } from './redux/biz/settlement-certain';
 
 //  解除抵押 + 详情 + 解除抵押
 import { mortgages } from './redux/biz/mortgages/mortgages';
@@ -669,11 +667,9 @@ export default combineReducers({
   analysisProtect,
   bizHistoryBusinessManageAddeditAddedit,
   bizSettlement,
-  bizSettlementAddEdit,
-  bizSettlementCollection,
-  bizSettlementFinance,
-  bizSettlementManager,
-  bizSettlementStationed,
+  bizSettlementApply,
+  bizSettlementCheck,
+  bizSettlementCertain,
   postloantoolsImport,
   postloantoolsImportAddedit,
   postloantoolsImportImport,

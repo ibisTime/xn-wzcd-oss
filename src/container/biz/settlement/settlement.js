@@ -15,7 +15,8 @@ import {
 import {
     showWarnMsg,
     showSucMsg,
-    dateTimeFormat
+    dateTimeFormat,
+    getRoleCode
 } from 'common/js/util';
 import {
     Button,
@@ -42,45 +43,79 @@ import {
         setSearchData
     }
 )
-class settlement extends React.Component {
+class Settlement extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
             field: 'code',
             search: true
         }, {
-            title: '贷款人',
-            field: 'user',
-            search: true,
+            title: '银行',
+            field: 'bankcardCode',
+            type: 'select',
+            listCode: 632037,
+            keyName: 'bankCode',
+            valueName: 'bankName',
+            search: true
+        }, {
+            title: '客户姓名',
+            field: 'realName',
             render: (v, d) => {
                 return d.user.realName;
+            },
+            search: true
+        }, {
+            title: '证件号',
+            field: 'idNo',
+            render: (v, d) => {
+                return d.user.idNo;
             }
         }, {
-            title: '手机号',
-            field: 'mobile',
-            render: (v, d) => {
-                return d.user.mobile;
-            }
+            title: '放款日期',
+            field: 'bankFkDatetime',
+            type: 'date'
         }, {
             title: '贷款金额',
-            field: 'loanAmount',
-            amount: true
+            field: 'loanAmount'
         }, {
             title: '剩余欠款',
             field: 'restAmount',
             amount: true
         }, {
-            title: '未还清收成本',
-            field: 'restTotalCost',
+            title: '逾期日期',
+            field: 'repayDatetime',
+            type: 'date'
+        }, {
+            title: '月还款额',
+            field: 'monthAmount',
             amount: true
         }, {
-            title: '未还代偿金额',
-            field: 'unRepayTotalAmount',
+            title: '逾期金额',
+            field: 'overdueAmount',
             amount: true
         }, {
-            title: '扣除履约保证金',
-            field: 'cutLyDeposit',
-            amount: true
+            title: '实际逾期期数',
+            field: 'curOverdueCount'
+        }, {
+            title: '累计代偿次数',
+            field: 'totalReplaceRepayCount'
+        }, {
+            title: '实际代偿次数',
+            field: 'curReplaceRepayCount'
+        }, {
+            title: '账单日',
+            field: 'billDatetime',
+            type: 'date'
+        }, {
+            title: '还款日',
+            field: 'monthDatetime',
+            type: 'date'
+        }, {
+            title: '总期数',
+            field: 'periods'
+        }, {
+            title: '剩余期数',
+            field: 'restPeriods'
         }, {
             title: '当前节点',
             field: 'curNodeCode',
@@ -93,52 +128,34 @@ class settlement extends React.Component {
             fields,
             pageCode: 630520,
             searchParams: {
-              refType: '0',
-              curNodeCodeList: ['003_02', '003_03', '003_04', '003_05']
+                roleCode: getRoleCode()
             },
             btnEvent: {
-                collection: (selectedRowKeys, selectedRows) => {
+                apply: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '003_02') {
-                        showWarnMsg('当前节点不是清款催收部审核节点');
                     } else {
-                        this.props.history.push(`/biz/settlement/collection?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/biz/settlement/apply?code=${selectedRowKeys[0]}`);
                     }
                 },
-                finance: (selectedRowKeys, selectedRows) => {
+                check: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '003_05') {
-                        showWarnMsg('当前节点不是财务审核节点');
                     } else {
-                        this.props.history.push(`/biz/settlement/finance?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/biz/settlement/check?code=${selectedRowKeys[0]}`);
                     }
                 },
-                manager: (selectedRowKeys, selectedRows) => {
+                certain: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '003_04') {
-                        showWarnMsg('当前节点不是总经理审核节点');
                     } else {
-                        this.props.history.push(`/biz/settlement/manager?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                stationed: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '003_03') {
-                        showWarnMsg('当前节点不是驻行人员审核节点');
-                    } else {
-                        this.props.history.push(`/biz/settlement/stationed?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/biz/settlement/certain?code=${selectedRowKeys[0]}`);
                     }
                 }
             }
@@ -146,4 +163,4 @@ class settlement extends React.Component {
     }
 }
 
-export default settlement;
+export default Settlement;

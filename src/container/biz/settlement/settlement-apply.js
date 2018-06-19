@@ -6,9 +6,10 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/repayments/repayments-pay';
+} from '@redux/biz/settlement-apply';
 import {
     getQueryString,
+    dateTimeFormat,
     moneyFormat,
     getUserId,
     showSucMsg
@@ -20,7 +21,7 @@ import {
 // import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
-    state => state.repaymentsPay, {
+    state => state.bizSettlementApply, {
         initStates,
         doFetching,
         cancelFetching,
@@ -29,7 +30,7 @@ import {
         restore
     }
 )
-class RepaymentsPay extends React.Component {
+class settlementApply extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -152,7 +153,7 @@ class RepaymentsPay extends React.Component {
               handler: (param) => {
                 param.operator = getUserId();
                 this.props.doFetching();
-                fetch(630512, param).then(() => {
+                fetch(630570, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {
@@ -172,4 +173,4 @@ class RepaymentsPay extends React.Component {
     }
 }
 
-export default RepaymentsPay;
+export default settlementApply;

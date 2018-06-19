@@ -17,7 +17,7 @@ import {
 // import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
-    state => state.repaymentsAddEdit, {
+    state => state.repaymentsPlan, {
         initStates,
         doFetching,
         cancelFetching,
@@ -116,7 +116,13 @@ class RepaymentsPlan extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 630521
+            detailCode: 630521,
+            buttons: [{
+                title: '返回',
+                handler: (param) => {
+                    this.props.history.go(-1);
+                }
+            }]
         });
     }
 }
