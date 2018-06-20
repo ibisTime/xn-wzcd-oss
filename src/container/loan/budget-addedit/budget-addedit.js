@@ -1271,7 +1271,7 @@ class BudgetAddedit extends React.Component {
                     key: 'fee_way',
                     required: true,
                     onChange: (v) => {
-                        let rData = this.getRepointDetailList({serviceChargeWay: v});
+                        let rData = this.getRepointDetailList({feeWay: v});
                         if (!rData) {
                             return false;
                         }
