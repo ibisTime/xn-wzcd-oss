@@ -133,8 +133,8 @@ class InvoiceAddedit extends React.Component {
         }, {
             title: '交强险',
             field: 'forceInsurance',
-            required: true,
-            type: 'img'
+            amount: true,
+            required: true
         }, {
             title: '商业险',
             field: 'businessInsurance',

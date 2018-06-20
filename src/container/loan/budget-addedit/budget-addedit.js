@@ -1842,16 +1842,16 @@ class BudgetAddedit extends React.Component {
                     data.dealType = '1';
                     data.budgetOrderCode = this.code;
                     data.operator = getUserId();
+
                     let gpsList = [];
-                    if (data.gpsList) {
-                        data.gpsList.forEach((v) => {
+                    if (data.budgetOrderGpsList) {
+                        data.budgetOrderGpsList.forEach((v) => {
                             gpsList.push(v.code);
                         });
                     }
                     data.gpsList = gpsList;
-                    let repointDetailList = [{
-
-                    }];
+                    delete data.budgetOrderGpsList;
+                    let repointDetailList = [];
                     if (data.repointDetailList1) {
                         repointDetailList = repointDetailList.concat(data.repointDetailList1);
                     }

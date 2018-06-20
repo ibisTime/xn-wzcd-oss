@@ -130,6 +130,11 @@ class InvoiceEnter extends React.Component {
             field: 'number',
             readonly: true
         }, {
+            title: '交强险',
+            field: 'forceInsurance',
+            amount: true,
+            required: true
+        }, {
             title: '发票',
             field: 'invoice',
             required: true,
@@ -137,11 +142,6 @@ class InvoiceEnter extends React.Component {
         }, {
             title: '合格证',
             field: 'certification',
-            required: true,
-            type: 'img'
-        }, {
-            title: '交强险',
-            field: 'forceInsurance',
             required: true,
             type: 'img'
         }, {
