@@ -92,7 +92,9 @@ class subbranchAddedit extends React.Component {
             field: 'autherAddress'
         }, {
             title: '信用卡类型',
-            field: 'creditCardType'
+            field: 'creditCardType',
+            type: 'select',
+            key: 'credit_card_type'
         }, {
             title: '信用卡名称',
             field: 'creditCardName'
