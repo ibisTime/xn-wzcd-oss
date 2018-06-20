@@ -1289,6 +1289,7 @@ class BudgetAddedit extends React.Component {
                 [{
                     title: '收客户手续费合计',
                     field: 'serviceCharge',
+                    amount: true,
                     readonly: true,
                     required: true
                 }],
