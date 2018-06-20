@@ -8,7 +8,8 @@ import {
     restore
 } from '@redux/loanstools/takeFree-addedit';
 import {
-    getQueryString
+    getQueryString,
+    moneyFormat
 } from 'common/js/util';
 import {
     DetailWrapper
@@ -58,6 +59,27 @@ class TakeFreeAddedit extends React.Component {
             title: '实收金额',
             field: 'realAmount',
             amount: true,
+            readonly: true
+        }, {
+            title: '未收金额',
+            field: '11',
+            render: (v, d) => {
+                return moneyFormat(d.shouldAmount - d.realAmount);
+            },
+            readonly: true
+        }, {
+            title: '是否结清',
+            field: 'isSettled',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value',
             readonly: true
         }, {
             title: '服务费清单',

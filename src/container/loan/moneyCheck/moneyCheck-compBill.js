@@ -47,8 +47,12 @@ class AdvMoneyCompBill extends React.Component {
             required: true,
             onChange: (value) => {
                 this.props.doFetching();
-                fetch(632188, { companyCode: value }).then((data) => {
+                fetch(632188, { companyCode: value, curNodeCode: '004_04' }).then((data) => {
                     this.props.setPageData({
+                        totalAdvanceFund: data.totalAdvanceFund,
+                        hasAdvanceFund: data.hasAdvanceFund,
+                        unAdvanceFund: data.unAdvanceFund,
+                        advanceFundlist: data.advanceFundlist
                     });
                     this.props.cancelFetching();
                 }).catch(this.props.cancelFetching);
@@ -60,48 +64,48 @@ class AdvMoneyCompBill extends React.Component {
             readonly: true
         }, {
             title: '已垫资金额',
-            field: '22',
+            field: 'hasAdvanceFund',
             amount: true,
             readonly: true
         }, {
             title: '未垫资金额',
-            field: 'loanAmount',
+            field: 'unAdvanceFund',
             amount: true,
             readonly: true
         }, {
             title: '垫资客户',
-            field: 'loanBankName',
+            field: 'advanceFundlist',
             type: 'o2m',
             options: {
                 delete: true,
                 fields: [{
                     title: '客户姓名',
-                    field: '33'
+                    field: 'customerName'
                 }, {
                     title: '贷款金额',
-                    field: '44',
+                    field: 'loanAmount',
                     amount: true
                 }, {
                     title: '手续费',
-                    field: '44',
+                    field: 'serviceCharge',
                     amount: true
                 }, {
                     title: '手续费收取方式',
-                    field: '44',
+                    field: 'serviceChargeWay',
                     type: 'select',
-                    key: '444'
+                    key: 'service_charge_way'
                 }, {
                     title: 'GPS费',
-                    field: '44',
+                    field: 'gpsFee',
                     amount: true
                 }, {
                     title: 'GPS费收取方式',
-                    field: '44',
+                    field: 'gpsFeeWay',
                     type: 'select',
-                    key: '444'
+                    key: 'gps_fee_way'
                 }, {
                     title: '应退按揭款',
-                    field: '44',
+                    field: 'useAmount',
                     amount: true
                 }]
             }
@@ -118,12 +122,19 @@ class AdvMoneyCompBill extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632186,
             buttons: [{
               title: '确认',
               check: true,
               handler: (params) => {
                 this.props.doFetching();
+                params.totalAdvanceFund = this.props.pageData.totalAdvanceFund;
+                params.payAmount = this.props.pageData.payAmount;
+                params.codeList = [];
+                let item = params.advanceFundlist || [];
+                let len = params.advanceFundlist.length || 0;
+                for(let i = 0; i < len; i++) {
+                    params.codeList.push(item[i].code);
+                }
                 params.operator = getUserId();
                 fetch(632174, params).then(() => {
                   showSucMsg('操作成功');

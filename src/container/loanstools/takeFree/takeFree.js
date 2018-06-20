@@ -11,7 +11,8 @@ import {
 } from '@redux/loanstools/takeFree';
 import {
     showWarnMsg,
-    showSucMsg
+    showSucMsg,
+    moneyFormat
 } from 'common/js/util';
 import {
     listWrapper
@@ -55,9 +56,15 @@ class takeFree extends React.Component {
             field: 'shouldAmount',
             amount: true
         }, {
-            title: '未收手续费总额',
+            title: '实收手续费总额',
             field: 'realAmount',
             amount: true
+        }, {
+            title: '未收手续费总额',
+            field: 'amount',
+            render: (v, d) => {
+                return moneyFormat(d.shouldAmount - d.realAmount);
+            }
         }, {
             title: '更新人',
             field: 'updater'

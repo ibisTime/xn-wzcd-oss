@@ -10,7 +10,8 @@ import {
 import {
   getQueryString,
   showSucMsg,
-  getUserId
+  getUserId,
+  padLeftZero
 } from 'common/js/util';
 import {
   DetailWrapper
@@ -94,6 +95,12 @@ class InvoiceEnter extends React.Component {
             title: '发票价',
             field: 'invoicePrice',
             readonly: true,
+            onChange: (v) => {
+                let money = this.props.pageData.loanAmount;
+                this.props.setPageData({
+                    number: padLeftZero(money / v)
+                });
+            },
             amount: true
         }, {
             title: '发票是否正确',
@@ -116,11 +123,11 @@ class InvoiceEnter extends React.Component {
             amount: true
         }, {
             title: '准入贷款成数标准',
-            field: 'receiptAccount',
+            field: 'companyLoanCsSection',
             readonly: true
         }, {
             title: '新贷款成数',
-            field: 'receiptAccount1',
+            field: 'number',
             readonly: true
         }, {
             title: '发票',

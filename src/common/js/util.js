@@ -117,7 +117,7 @@ export function formatDate(date, fmt = 'yyyy-MM-dd') {
  * 获取两位格式化数字
  * @param str
  */
-function padLeftZero(str) {
+export function padLeftZero(str) {
     return ('00' + str).substr(str.length);
 }
 

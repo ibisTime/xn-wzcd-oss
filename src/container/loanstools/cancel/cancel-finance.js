@@ -89,7 +89,7 @@ class CancelFinance extends React.Component {
                 type: 1
             },
             keyName: 'code',
-            valueName: '{{bankCode.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
+            valueName: '{{bankName.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
             required: true
         }, {
             title: '收款时间',

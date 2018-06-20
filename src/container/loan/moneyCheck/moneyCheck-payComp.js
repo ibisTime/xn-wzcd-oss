@@ -10,7 +10,8 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    getCompanyCode
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -35,57 +36,109 @@ class AdvMoneyPayComp extends React.Component {
     }
     render() {
         const fields = [{
-            title: '客户姓名',
-            field: 'customerName',
-            readonly: true
+            title: '业务公司',
+            field: 'companyCode',
+            listCode: 630106,
+            params: {
+                typeList: [1]
+            },
+            type: 'select',
+            keyName: 'code',
+            valueName: 'name',
+            required: true,
+            onChange: (value) => {
+                this.props.doFetching();
+                fetch(632188, { companyCode: value, curNodeCode: '004_05' }).then((data) => {
+                    this.props.setPageData({
+                        totalAdvanceFund: data.totalAdvanceFund,
+                        hasAdvanceFund: data.hasAdvanceFund,
+                        unAdvanceFund: data.unAdvanceFund,
+                        advanceFundlist: data.advanceFundlist
+                    });
+                    this.props.cancelFetching();
+                }).catch(this.props.cancelFetching);
+            }
         }, {
-            title: '业务编号',
-            field: 'code',
-            readonly: true
-        }, {
-            title: '身份证',
-            field: 'inNo',
-            readonly: true
-        }, {
-            title: '贷款金额',
-            field: 'loanAmount',
+            title: '垫资总金额',
+            field: 'totalAdvanceFund',
             amount: true,
             readonly: true
         }, {
-            title: '贷款银行',
-            field: 'loanBankName',
-            readonly: true
-        }, {
-            title: '应退按揭款',
-            field: '3333',
+            title: '已垫资金额',
+            field: 'hasAdvanceFund',
             amount: true,
             readonly: true
+        }, {
+            title: '未垫资金额',
+            field: 'unAdvanceFund',
+            amount: true,
+            readonly: true
+        }, {
+            title: '垫资客户',
+            field: 'advanceFundlist',
+            type: 'o2m',
+            options: {
+                delete: true,
+                fields: [{
+                    title: '客户姓名',
+                    field: 'customerName'
+                }, {
+                    title: '贷款金额',
+                    field: 'loanAmount',
+                    amount: true
+                }, {
+                    title: '手续费',
+                    field: 'serviceCharge',
+                    amount: true
+                }, {
+                    title: '手续费收取方式',
+                    field: 'serviceChargeWay',
+                    type: 'select',
+                    key: 'service_charge_way'
+                }, {
+                    title: 'GPS费',
+                    field: 'gpsFee',
+                    amount: true
+                }, {
+                    title: 'GPS费收取方式',
+                    field: 'gpsFeeWay',
+                    type: 'select',
+                    key: 'gps_fee_way'
+                }, {
+                    title: '应退按揭款',
+                    field: 'useAmount',
+                    amount: true
+                }]
+            }
         }, {
             title: '垫资金额',
             field: 'payAmount',
             amount: true,
-            required: true
+            readonly: true
         }, {
             title: '垫资日期',
-            field: 'advanceFundDatetime',
+            field: 'payDatetime',
             type: 'date',
             required: true
         }, {
-            title: '付款银行',
-            field: '3333',
+            title: '付款账号',
+            field: 'payBankcardCode',
             type: 'select',
-            listCode: 632037,
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            listCode: 632007,
+            params: {
+                companyCode: getCompanyCode()
+            },
+            keyName: 'code',
+            valueName: 'bankcardNumber',
             required: true
         }, {
-            title: '付款凭证',
+            title: '打款凭证',
             field: 'billPdf',
             type: 'img',
             required: true
         }, {
             title: '意见说明',
-            field: 'note'
+            field: 'makeBillNote'
         }];
         return this.props.buildDetail({
             fields,
@@ -98,6 +151,12 @@ class AdvMoneyPayComp extends React.Component {
               handler: (params) => {
                 this.props.doFetching();
                 params.operator = getUserId();
+                params.codeList = [];
+                let item = params.advanceFundlist;
+                let len = params.advanceFundlist.length;
+                for(let i = 0; i < len; i++) {
+                    params.codeList.push(item[i].code);
+                }
                 fetch(632176, params).then(() => {
                   showSucMsg('操作成功');
                   setTimeout(() => {
