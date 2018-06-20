@@ -287,6 +287,26 @@ class BudgetAddedit extends React.Component {
                                 });
                             }).catch(this.props.cancelFetching);
                         });
+                    },
+                    formatter: (v, data) => {
+                        if (data.gpsFee && !this.setState.sfData.gpsFee) {
+                            this.setState({
+                                sfData: {
+                                    lyAmount: data.lyAmount,
+                                    fxAmount: data.fxAmount,
+                                    otherFee: data.otherFee,
+                                    gpsFee: data.gpsFee
+                                }
+                            });
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                lyAmountFee: data.lyAmount,
+                                assureFee: data.fxAmount,
+                                otherFee: data.otherFee,
+                                gpsFee: data.gpsFee
+                            });
+                        }
+                        return v;
                     }
                 }, {
                     title: '贷款银行',
@@ -1279,7 +1299,10 @@ class BudgetAddedit extends React.Component {
                             this.repointDetailList1 = detailList1;
                             this.props.setPageData({
                                 ...this.props.pageData,
-                                repointDetailList1: detailList1,
+                                repointAmount: detailList1[0].repointAmount,
+                                companyName: detailList1[0].companyName,
+                                accountCode: detailList1[0].accountCode,
+                                subbranch: detailList1[0].subbranch,
                                 repointDetailList2: detailList2,
                                 repointDetailList3: detailList3
                             });
@@ -1294,73 +1317,94 @@ class BudgetAddedit extends React.Component {
                     required: true
                 }],
                 [{
-                    title: '应退按揭款',
-                    field: 'repointDetailList1',
-                    required: true,
-                    type: 'o2m',
-                    options: {
-                        edit: !this.state.isAdvanceFund,
-                        rowKey: 'useMoneyPurpose',
-                        fields: [{
-                            title: '用款用途',
-                            field: 'useMoneyPurpose',
-                            type: 'select',
-                            data: [{
-                                key: '1',
-                                value: '应退按揭款'
-                            }, {
-                                key: '2',
-                                value: '协议内返点'
-                            }, {
-                                key: '3',
-                                value: '协议外返点'
-                            }],
-                            keyName: 'key',
-                            valueName: 'value',
-                            value: '1',
-                            readonly: true,
-                            required: true
-                        }, {
-                            title: '金额小写',
-                            field: 'repointAmount',
-                            amount: true,
-                            required: true
-                        }, {
-                            title: '金额大写',
-                            field: 'repointAmountL',
-                            readonly: true,
-                            required: true,
-                            noVisible: true
-                        }, {
-                            title: '单位名称',
-                            field: 'companyName',
-                            readonly: true,
-                            required: true
-                        }, {
-                            title: '账号',
-                            field: 'accountCode',
-                            type: 'select',
-                            listCode: 632007,
-                            params: {type: 3},
-                            keyName: 'bankcardNumber',
-                            valueName: '{{companyCode.DATA}}-{{bankName.DATA}}-{{subbranch.DATA}}',
-                            required: true,
-                            onChange: (v, data, props) => {
-                                props.setPageData({
-                                    companyName: data.companyCode,
-                                    subbranch: data.subbranch
-                                });
-                            }
-                        }, {
-                            title: '开户行',
-                            field: 'subbranch',
-                            readonly: true,
-                            required: true
-                        }]
-                    }
+                    title: '应退按揭款金额',
+                    field: 'repointAmount',
+                    amount: true,
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '单位名称',
+                    field: 'companyName',
+                    readonly: this.state.isAdvanceFund === '1',
+                    required: true
                 }],
                 [{
-                    title: '协议内返点',
+                    title: '账号',
+                    field: 'accountCode',
+                    readonly: this.state.isAdvanceFund === '1',
+                    required: true
+                }, {
+                    title: '开户行',
+                    field: 'subbranch',
+                    readonly: this.state.isAdvanceFund === '1',
+                    required: true
+                    // title: '应退按揭款',
+                    // field: 'repointDetailList1',
+                    // required: true,
+                    // type: 'o2m',
+                    // options: {
+                    //     edit: !this.state.isAdvanceFund,
+                    //     rowKey: 'useMoneyPurpose',
+                    //     fields: [{
+                    //         title: '用款用途',
+                    //         field: 'useMoneyPurpose',
+                    //         type: 'select',
+                    //         data: [{
+                    //             key: '1',
+                    //             value: '应退按揭款'
+                    //         }, {
+                    //             key: '2',
+                    //             value: '协议内返点'
+                    //         }, {
+                    //             key: '3',
+                    //             value: '协议外返点'
+                    //         }],
+                    //         keyName: 'key',
+                    //         valueName: 'value',
+                    //         value: '1',
+                    //         readonly: true,
+                    //         required: true
+                    //     }, {
+                    //         title: '金额小写',
+                    //         field: 'repointAmount',
+                    //         amount: true,
+                    //         required: true
+                    //     }, {
+                    //         title: '金额大写',
+                    //         field: 'repointAmountL',
+                    //         readonly: true,
+                    //         required: true,
+                    //         noVisible: true
+                    //     }, {
+                    //         title: '单位名称',
+                    //         field: 'companyName',
+                    //         readonly: true,
+                    //         required: true
+                    //     }, {
+                    //         title: '账号',
+                    //         field: 'accountCode',
+                    //         type: 'select',
+                    //         listCode: 632007,
+                    //         params: {type: 3},
+                    //         keyName: 'bankcardNumber',
+                    //         valueName: '{{companyCode.DATA}}-{{bankName.DATA}}-{{subbranch.DATA}}',
+                    //         required: true,
+                    //         onChange: (v, data, props) => {
+                    //             props.setPageData({
+                    //                 companyName: data.companyCode,
+                    //                 subbranch: data.subbranch
+                    //             });
+                    //         }
+                    //     }, {
+                    //         title: '开户行',
+                    //         field: 'subbranch',
+                    //         readonly: true,
+                    //         required: true
+                    //     }]
+                    // }
+                }],
+                [{
+                    title: '协议返点',
                     field: 'repointDetailList2',
                     required: true,
                     type: 'o2m',
@@ -1418,6 +1462,7 @@ class BudgetAddedit extends React.Component {
                     title: '协议外返点',
                     field: 'repointDetailList3',
                     type: 'o2m',
+                    hidden: true,
                     options: {
                         add: true,
                         delete: true,
@@ -1793,9 +1838,17 @@ class BudgetAddedit extends React.Component {
                     delete data.budgetOrderGpsList;
 
                     let repointDetailList = [];
-                    if (data.repointDetailList1) {
-                        repointDetailList = repointDetailList.concat(data.repointDetailList1);
-                    }
+                    let repointDetailList1 = {
+                        useMoneyPurpose: '1',
+                        repointAmount: this.props.pageData.repointAmount,
+                        companyName: this.props.pageData.companyName,
+                        accountCode: this.props.pageData.accountCode,
+                        subbranch: this.props.pageData.subbranch
+                    };
+                    // if (data.repointDetailList1) {
+                    //     repointDetailList = repointDetailList.concat(data.repointDetailList1);
+                    // }
+                    repointDetailList = repointDetailList.concat(repointDetailList1);
                     repointDetailList = repointDetailList.concat(data.repointDetailList2);
                     if (data.repointDetailList3) {
                         repointDetailList = repointDetailList.concat(data.repointDetailList3);
@@ -1836,7 +1889,9 @@ class BudgetAddedit extends React.Component {
                         });
                     }
                     data.gpsList = gpsList;
-                    let repointDetailList = [];
+                    let repointDetailList = [{
+
+                    }];
                     if (data.repointDetailList1) {
                         repointDetailList = repointDetailList.concat(data.repointDetailList1);
                     }
