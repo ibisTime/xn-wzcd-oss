@@ -131,7 +131,8 @@ class ArchivesAddedit extends React.Component {
             }],
             [{
                 title: '对账单日',
-                field: 'billDatetime'
+                field: 'billDatetime',
+                type: 'date'
             }, {
                 title: '首期还款日期',
                 field: 'repayFirstMonthDatetime',
