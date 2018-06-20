@@ -117,7 +117,7 @@ class CreditStartAddedit extends React.Component {
                 noVisible: true
             }, {
                 title: '贷款抵押近两年逾期次数',
-                field: 'dkdy2yearOverTimes',
+                field: 'dkdy2YearOverTimes',
                 number: true,
                 required: true,
                 readonly: !this.isEntry,
@@ -141,7 +141,7 @@ class CreditStartAddedit extends React.Component {
                 noVisible: true
             }, {
                 title: '贷款抵押近6个月平均月还款额',
-                field: 'dkdy6monthAvgAmount',
+                field: 'dkdy6MonthAvgAmount',
                 amount: true,
                 required: true,
                 readonly: !this.isEntry,
@@ -165,7 +165,7 @@ class CreditStartAddedit extends React.Component {
                 noVisible: true
             }, {
                 title: '贷款信用近两年逾期次数',
-                field: 'hkxy2yearOverTimes',
+                field: 'hkxy2YearOverTimes',
                 number: true,
                 required: true,
                 readonly: !this.isEntry,
@@ -189,7 +189,7 @@ class CreditStartAddedit extends React.Component {
                 noVisible: true
             }, {
                 title: '贷款信用近6个月平均月还款额',
-                field: 'hkxy6monthAvgAmount',
+                field: 'hkxy6MonthAvgAmount',
                 amount: true,
                 required: true,
                 readonly: !this.isEntry,
@@ -213,14 +213,14 @@ class CreditStartAddedit extends React.Component {
                 noVisible: true
             }, {
                 title: '信用卡近6个月使用额',
-                field: 'xyk6monthUseAmount',
+                field: 'xyk6MonthUseAmount',
                 amount: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
                 noVisible: true
             }, {
                 title: '信用卡近两年逾期次数',
-                field: 'xyk2yearOverTimes',
+                field: 'xyk2YearOverTimes',
                 number: true,
                 required: true,
                 readonly: !this.isEntry,

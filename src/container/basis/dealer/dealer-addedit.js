@@ -279,13 +279,13 @@ class DealerAddedit extends React.Component {
       fields1.forEach(f => {
         data[f + '_' + tab] = obj[f];
       });
-      data['assureFee_' + tab] = obj.assureFee || obj.assureRate;
-      data['dzFee_' + tab] = obj.dzFee || obj.dzRate;
-      data['lyAmountFee_' + tab] = obj.lyAmountFee || obj.lyAmountRate;
-      data['gpsFee_' + tab] = obj.gpsFee || obj.gpsRate;
-      data['otherFee_' + tab] = obj.otherFee || obj.otherRate;
-      data['introduceFee_' + tab] = obj.introduceFee || obj.introduceRate;
-      data['returnPointFee_' + tab] = obj.returnPointFee || obj.returnPointRate;
+      data['assureFee_' + tab] = obj.assureFee || obj.assureRate * 100;
+      data['dzFee_' + tab] = obj.dzFee || obj.dzRate * 100;
+      data['lyAmountFee_' + tab] = obj.lyAmountFee || obj.lyAmountRate * 100;
+      data['gpsFee_' + tab] = obj.gpsFee || obj.gpsRate * 100;
+      data['otherFee_' + tab] = obj.otherFee || obj.otherRate * 100;
+      data['introduceFee_' + tab] = obj.introduceFee || obj.introduceRate * 100;
+      data['returnPointFee_' + tab] = obj.returnPointFee || obj.returnPointRate * 100;
     }
   }
   // 新增table的tr
@@ -778,7 +778,7 @@ class DealerAddedit extends React.Component {
       if (values['assureType_' + tab] === '1') {
         result.obj['assureFee'] = moneyParse(values['assureFee_' + tab]);
       } else {
-        result.obj['assureRate'] = values['assureFee_' + tab];
+        result.obj['assureRate'] = (values['assureFee_' + tab] / 100).toFixed(2);
       }
     }
     if (values['dzType_' + tab]) {
@@ -791,7 +791,7 @@ class DealerAddedit extends React.Component {
       if (values['dzType_' + tab] === '1') {
         result.obj['dzFee'] = moneyParse(values['dzFee_' + tab]);
       } else {
-        result.obj['dzRate'] = values['dzFee_' + tab];
+        result.obj['dzRate'] = (values['dzFee_' + tab] / 100).toFixed(2);
       }
     }
     if (values['lyAmountType_' + tab]) {
@@ -804,7 +804,7 @@ class DealerAddedit extends React.Component {
       if (values['lyAmountType_' + tab] === '1') {
         result.obj['lyAmountFee'] = moneyParse(values['lyAmountFee_' + tab]);
       } else {
-        result.obj['lyAmountRate'] = values['lyAmountFee_' + tab];
+        result.obj['lyAmountRate'] = (values['lyAmountFee_' + tab] / 100).toFixed(2);
       }
     }
     if (values['gpsType_' + tab]) {
@@ -817,7 +817,7 @@ class DealerAddedit extends React.Component {
       if (values['gpsType_' + tab] === '1') {
         result.obj['gpsFee'] = moneyParse(values['gpsFee_' + tab]);
       } else {
-        result.obj['gpsRate'] = values['gpsFee_' + tab];
+        result.obj['gpsRate'] = (values['gpsFee_' + tab] / 100).toFixed(2);
       }
     }
     if (values['otherType_' + tab]) {
@@ -830,7 +830,7 @@ class DealerAddedit extends React.Component {
       if (values['otherType_' + tab] === '1') {
         result.obj['otherFee'] = moneyParse(values['otherFee_' + tab]);
       } else {
-        result.obj['otherRate'] = values['otherFee_' + tab];
+        result.obj['otherRate'] = (values['otherFee_' + tab] / 100).toFixed(2);
       }
     }
     if (values['introduceType_' + tab]) {
@@ -843,7 +843,7 @@ class DealerAddedit extends React.Component {
       if (values['introduceType_' + tab] === '1') {
         result.obj['introduceFee'] = moneyParse(values['introduceFee_' + tab]);
       } else {
-        result.obj['introduceRate'] = values['introduceFee_' + tab];
+        result.obj['introduceRate'] = (values['introduceFee_' + tab] / 100).toFixed(2);
       }
     }
     if (values['returnPointType_' + tab]) {
@@ -856,7 +856,7 @@ class DealerAddedit extends React.Component {
       if (values['returnPointType_' + tab] === '1') {
         result.obj['returnPointFee'] = moneyParse(values['returnPointFee_' + tab]);
       } else {
-        result.obj['returnPointRate'] = values['returnPointFee_' + tab];
+        result.obj['returnPointRate'] = (values['returnPointFee_' + tab] / 100).toFixed(2);
       }
     }
     ['isDz', 'platCtRate12', 'platCtRate24', 'platCtRate36', 'platZkRate12',

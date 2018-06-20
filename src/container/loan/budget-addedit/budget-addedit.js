@@ -151,7 +151,7 @@ class BudgetAddedit extends React.Component {
         let list = {
             bankRate: this.props.form.getFieldValue('bankRate'),
             fee: moneyParse(this.props.form.getFieldValue('fee')),
-            feeWay: this.props.form.getFieldValue('feeWay'),
+            feeWay: this.props.form.getFieldValue('serviceChargeWay'),
             fxAmount: this.state.sfData.fxAmount,
             gpsFee: this.state.sfData.gpsFee,
             gpsFeeWay: this.props.form.getFieldValue('gpsFeeWay'),
@@ -160,10 +160,11 @@ class BudgetAddedit extends React.Component {
             otherFee: this.state.sfData.otherFee,
             rateType: this.props.form.getFieldValue('rateType'),
             carDealerSubsidy: moneyParse(this.props.form.getFieldValue('carDealerSubsidy')),
+            loanAmount: moneyParse(this.props.form.getFieldValue('loanAmount')),
             ...params
         };
-        console.log(params, list.bankRate, list.fee, list.feeWay, list.fxAmount, list.gpsFee, list.gpsFeeWay, list.loanPeriods, list.lyAmount, list.otherFee, list.rateType, list.carDealerSubsidy);
-        if (list.bankRate && list.fee && list.feeWay && list.fxAmount && list.gpsFee && list.gpsFeeWay && list.loanPeriods && list.lyAmount && list.otherFee && list.rateType && list.carDealerSubsidy) {
+        console.log(params, list.bankRate, list.fee, list.feeWay, list.fxAmount, list.gpsFee, list.gpsFeeWay, list.loanPeriods, list.lyAmount, list.otherFee, list.rateType, list.carDealerSubsidy, list.loanAmount);
+        if (list.bankRate && list.fee && list.feeWay && list.fxAmount && list.gpsFee && list.gpsFeeWay && list.loanPeriods && list.lyAmount && list.otherFee && list.rateType && list.carDealerSubsidy && list.loanAmount) {
             this.props.doFetching();
             return list;
         } else {
@@ -242,14 +243,14 @@ class BudgetAddedit extends React.Component {
                             this.setState({
                                 sfData: sfData
                             });
-                            let customerFeeTotal = this.getCustomerFeeTotal(sfData);
+                            let serviceCharge = this.getCustomerFeeTotal(sfData);
                             this.props.setPageData({
                                 ...this.props.pageData,
                                 lyAmountFee: sfData.lyAmount,
                                 assureFee: sfData.fxAmount,
                                 otherFee: sfData.otherFee,
                                 gpsFee: sfData.gpsFee,
-                                customerFeeTotal: customerFeeTotal
+                                serviceCharge: serviceCharge
                             });
 
                             let rData = this.getRepointDetailList();
@@ -390,7 +391,7 @@ class BudgetAddedit extends React.Component {
                     type: 'select',
                     key: 'rate_type',
                     required: true,
-                    onChanege: (v, data) => {
+                    onChange: (v, data) => {
                         let rData = this.getRepointDetailList({rateType: v});
                         if (!rData) {
                             return false;
@@ -442,14 +443,14 @@ class BudgetAddedit extends React.Component {
                         let gpsFee = 0;
                         let otherFee = 0;
                         let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
-                        let feeWay = this.props.form.getFieldValue('fee_way');
+                        let serviceChargeWay = this.props.form.getFieldValue('fee_way');
                         if (gpsFeeWay === '2') {
                             gpsFee = this.props.pageData.gpsFee;
                         }
-                        if (feeWay === '2') {
+                        if (serviceChargeWay === '2') {
                             otherFee = this.props.pageData.otherFee;
                         }
-                        if (gpsFeeWay && feeWay && this.props.form.getFieldValue('carDealerSubsidy') && v) {
+                        if (gpsFeeWay && serviceChargeWay && this.props.form.getFieldValue('carDealerSubsidy') && v) {
                             let repointAmount = this.getRefundAmount({
                                 loanAmount: v,
                                 carDealerSubsidy: this.props.form.getFieldValue('carDealerSubsidy'),
@@ -484,6 +485,40 @@ class BudgetAddedit extends React.Component {
                                 repointDetailList1: repointDetailList1
                             });
                         }
+
+                        let rData = this.getRepointDetailList({loanAmount: moneyParse(v)});
+                        if (!rData || !this.getAmountRules(v)) {
+                            return false;
+                        }
+
+                        this.props.doFetching();
+                        fetch(632290, {
+                            budgetOrderCode: this.code,
+                            carDealerCode: this.carDealerSelectData.code,
+                            ...rData
+                        }).then((mxData) => {
+                            this.props.cancelFetching();
+                            let detailList1 = [];
+                            let detailList2 = [];
+                            let detailList3 = [];
+                            mxData.map((item) => {
+                                item.repointAmountL = moneyUppercase(moneyFormat(item.repointAmount));
+                                if (item.useMoneyPurpose === '1') {
+                                    detailList1.push(item);
+                                } else if (item.useMoneyPurpose === '2') {
+                                    detailList2.push(item);
+                                } else if (item.useMoneyPurpose === '3') {
+                                    detailList3.push(item);
+                                }
+                            });
+                            this.repointDetailList1 = detailList1;
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                repointDetailList1: detailList1,
+                                repointDetailList2: detailList2,
+                                repointDetailList3: detailList3
+                            });
+                        }).catch(this.props.cancelFetching);
                     }
                 }],
                 [{
@@ -589,14 +624,14 @@ class BudgetAddedit extends React.Component {
                             let gpsFee = 0;
                             let otherFee = 0;
                             let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
-                            let feeWay = this.props.form.getFieldValue('fee_way');
+                            let serviceChargeWay = this.props.form.getFieldValue('fee_way');
                             if (gpsFeeWay === '2') {
                                 gpsFee = this.props.pageData.gpsFee;
                             }
-                            if (feeWay === '2') {
+                            if (serviceChargeWay === '2') {
                                 otherFee = this.props.pageData.otherFee;
                             }
-                            if (gpsFeeWay && feeWay && this.props.form.getFieldValue('loanAmount') && this.props.form.getFieldValue('carDealerSubsidy')) {
+                            if (gpsFeeWay && serviceChargeWay && this.props.form.getFieldValue('loanAmount') && this.props.form.getFieldValue('carDealerSubsidy')) {
                                 let repointAmount = this.getRefundAmount({
                                     loanAmount: this.props.form.getFieldValue('loanAmount'),
                                     carDealerSubsidy: this.props.form.getFieldValue('carDealerSubsidy'),
@@ -758,7 +793,7 @@ class BudgetAddedit extends React.Component {
                         }, {
                             title: 'GPS设备号',
                             field: 'gpsDevNo',
-                            readonly: true
+                            hidden: true
                         }, {
                             title: 'GPS类型',
                             field: 'gpsType',
@@ -772,7 +807,7 @@ class BudgetAddedit extends React.Component {
                             }],
                             keyName: 'key',
                             valueName: 'value',
-                            readonly: true
+                            hidden: true
                         }]
                     }
                 }]
@@ -1024,7 +1059,7 @@ class BudgetAddedit extends React.Component {
                     required: true
                 }, {
                     title: '有无驾照',
-                    field: 'isDriveLicense',
+                    field: 'isDriceLicense',
                     type: 'select',
                     data: [{
                         key: '0',
@@ -1053,7 +1088,7 @@ class BudgetAddedit extends React.Component {
                 }],
                 [{
                     title: '驾照',
-                    field: 'driveLicense',
+                    field: 'driceLicense',
                     type: 'img'
                 }, {
                     title: '场地证明',
@@ -1211,12 +1246,12 @@ class BudgetAddedit extends React.Component {
                     readonly: true
                 }, {
                     title: '收客户手续费收取方式',
-                    field: 'feeWay',
+                    field: 'serviceChargeWay',
                     type: 'select',
                     key: 'fee_way',
                     required: true,
                     onChange: (v) => {
-                        let rData = this.getRepointDetailList({feeWay: v});
+                        let rData = this.getRepointDetailList({serviceChargeWay: v});
                         if (!rData) {
                             return false;
                         }
@@ -1253,7 +1288,7 @@ class BudgetAddedit extends React.Component {
                 }],
                 [{
                     title: '收客户手续费合计',
-                    field: 'customerFeeTotal',
+                    field: 'serviceCharge',
                     readonly: true,
                     required: true
                 }],
