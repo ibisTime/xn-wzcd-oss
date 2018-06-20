@@ -14,7 +14,6 @@ import {
     getUserId
 } from 'common/js/util';
 import {DetailWrapper} from 'common/js/build-detail';
-import {COMPANY_CODE} from 'common/js/config';
 import fetch from 'common/js/fetch';
 
 @DetailWrapper(
@@ -97,8 +96,7 @@ class CreditStartAddedit extends React.Component {
             field: 'interviewPic',
             type: 'img',
             single: true,
-            required: true,
-            hidden: true
+            required: true
         }];
         if (!this.isAddedit) {
             o2mFields = o2mFields.concat([{
@@ -119,7 +117,7 @@ class CreditStartAddedit extends React.Component {
                 noVisible: true
             }, {
                 title: '贷款抵押近两年逾期次数',
-                field: 'dkdy2yearOverTimes',
+                field: 'dkdy2YearOverTimes',
                 number: true,
                 required: true,
                 readonly: !this.isEntry,
@@ -143,7 +141,7 @@ class CreditStartAddedit extends React.Component {
                 noVisible: true
             }, {
                 title: '贷款抵押近6个月平均月还款额',
-                field: 'dkdy6monthAvgAmount',
+                field: 'dkdy6MonthAvgAmount',
                 amount: true,
                 required: true,
                 readonly: !this.isEntry,
@@ -167,7 +165,7 @@ class CreditStartAddedit extends React.Component {
                 noVisible: true
             }, {
                 title: '贷款信用近两年逾期次数',
-                field: 'hkxy2yearOverTimes',
+                field: 'hkxy2YearOverTimes',
                 number: true,
                 required: true,
                 readonly: !this.isEntry,
@@ -191,7 +189,7 @@ class CreditStartAddedit extends React.Component {
                 noVisible: true
             }, {
                 title: '贷款信用近6个月平均月还款额',
-                field: 'hkxy6monthAvgAmount',
+                field: 'hkxy6MonthAvgAmount',
                 amount: true,
                 required: true,
                 readonly: !this.isEntry,
@@ -215,14 +213,14 @@ class CreditStartAddedit extends React.Component {
                 noVisible: true
             }, {
                 title: '信用卡近6个月使用额',
-                field: 'xyk6monthUseAmount',
+                field: 'xyk6MonthUseAmount',
                 amount: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
                 noVisible: true
             }, {
                 title: '信用卡近两年逾期次数',
-                field: 'xyk2yearOverTimes',
+                field: 'xyk2YearOverTimes',
                 number: true,
                 required: true,
                 readonly: !this.isEntry,
@@ -279,7 +277,7 @@ class CreditStartAddedit extends React.Component {
             valueName: '{{bankName.DATA}}-{{abbrName.DATA}}',
             required: true
         }, {
-            title: '业务种类',
+            title: '购车途径',
             field: 'shopWay',
             type: 'select',
             key: 'budget_orde_biz_typer',
@@ -287,12 +285,6 @@ class CreditStartAddedit extends React.Component {
             required: true,
             onChange: (value) => {
                 this.newCar = value === '1';
-            },
-            formatter: (value) => {
-                if (this.props.isLoaded) {
-                    this.newCar = value === '1';
-                }
-                return value;
             }
         }, {
             title: '贷款金额',
@@ -452,8 +444,8 @@ class CreditStartAddedit extends React.Component {
                 title: '确定',
                 check: true,
                 handler: (params) => {
+                    console.log(params);
                     params.creditCode = this.code;
-                    params.buttonCode = '1';
                     params.operator = getUserId();
                     this.props.doFetching();
                     let bizCode = this.code ? 632112 : 632110;
@@ -472,28 +464,13 @@ class CreditStartAddedit extends React.Component {
                 }
             }];
         }
-        return (
-            <div>
-                {
-                    this.props.buildDetail({
-                        fields,
-                        code: this.code,
-                        view: this.view,
-                        detailCode: 632117,
-                        buttons: this.buttons,
-                        beforeSubmit: (param) => {
-                            if (!param.creditUserList) {
-                                showWarnMsg('至少新增一条征信列表');
-                                return false;
-                            } else {
-                                param.operator = getUserId();
-                                return param;
-                            }
-                        }
-                    })
-                }
-            </div>
-        );
+        return this.props.buildDetail({
+            fields,
+            code: this.code,
+            view: this.view,
+            detailCode: 632117,
+            buttons: this.buttons
+        });
     }
 }
 
