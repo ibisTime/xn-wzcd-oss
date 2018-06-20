@@ -11,7 +11,8 @@ import {
     getQueryString,
     getUserId,
     showSucMsg,
-    moneyFormat
+    moneyFormat,
+    getCompanyCode
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -81,6 +82,9 @@ class AdvMoneyPayCar extends React.Component {
             field: 'payBankcardCode',
             type: 'select',
             listCode: 632007,
+            params: {
+                companyCode: getCompanyCode()
+            },
             keyName: 'code',
             valueName: 'bankcardNumber',
             required: true

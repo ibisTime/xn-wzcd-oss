@@ -10,7 +10,8 @@ import {
 import {
   getQueryString,
   showSucMsg,
-  getUserId
+  getUserId,
+  moneyFormat
 } from 'common/js/util';
 import {
   DetailWrapper
@@ -57,10 +58,16 @@ class TakeFreeEnter extends React.Component {
             amount: true,
             readonly: true
         }, {
-
             title: '实收金额',
             field: 'realAmount',
             amount: true,
+            readonly: true
+        }, {
+            title: '未收金额',
+            field: '11',
+            render: (v, d) => {
+                return moneyFormat(d.shouldAmount - d.realAmount);
+            },
             readonly: true
         }, {
             title: '交款类型',

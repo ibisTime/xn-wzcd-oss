@@ -84,7 +84,8 @@ class cancel extends React.Component {
             fields,
             pageCode: 632148,
             searchParams: {
-                roleCode: getRoleCode()
+                roleCode: getRoleCode(),
+                isSubmitCancel: '1'
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {

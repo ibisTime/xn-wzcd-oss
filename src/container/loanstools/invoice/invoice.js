@@ -97,7 +97,7 @@ class invoice extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632148,
+            pageCode: 632145,
             searchParams: {
                 roleCode: getRoleCode()
             },

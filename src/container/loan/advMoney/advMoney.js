@@ -16,7 +16,8 @@ import {
     showWarnMsg,
     showSucMsg,
     getRoleCode,
-    dateTimeFormat
+    dateTimeFormat,
+    moneyUppercase
 } from 'common/js/util';
 import {
     Button,
@@ -65,6 +66,12 @@ class AdvMoney extends React.Component {
             field: 'useAmount',
             amount: true
         }, {
+            title: '用款大写',
+            field: 'money',
+            render: (v, d) => {
+                return moneyUppercase(d.useAmount);
+            }
+        }, {
             title: '是否垫资',
             field: 'isAdvanceFund',
             type: 'select',
@@ -82,8 +89,7 @@ class AdvMoney extends React.Component {
             field: 'collectionAccountNo'
         }, {
             title: '收款银行',
-            field: 'bankReceiptName',
-            noVisible: true
+            field: 'loanBankName'
         }, {
             title: '打款日期',
             field: 'advanceFundDatetime',

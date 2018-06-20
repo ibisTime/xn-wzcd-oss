@@ -55,16 +55,7 @@ class applyGpsPersonCheck extends React.Component {
           delete: true,
           fields: [{
             title: 'GPS设备号',
-            field: 'code',
-            type: 'select',
-            listCode: 632707,
-            params: {
-              applyStatus: '0',
-              companyApplyStatus: '1',
-              companyCode: getCompanyCode()
-            },
-            keyName: 'code',
-            valueName: 'gpsDevNo',
+            field: 'gpsDevNo',
             nowrap: true
           }]
         }
