@@ -549,17 +549,12 @@ const ROUTES = [
   //  解除抵押
   {
     path: '/biz/mortgages',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/mortgages'))
+    component: asyncComponent(() => import('container/biz/mortgages/mortgages'))
   },
   //  解除抵押 详情
   {
     path: '/biz/mortgages/addedit',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/mortgages-addedit'))
-  },
-  //  解除抵押 解除抵押
-  {
-    path: '/biz/mortgages/relieve',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/mortgages-relieve'))
+    component: asyncComponent(() => import('container/biz/mortgages/mortgages-addedit'))
   },
   //  历史业务管理
   {

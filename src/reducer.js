@@ -153,7 +153,6 @@ import { bizSettlementCertain } from './redux/biz/settlement-certain';
 //  解除抵押 + 详情 + 解除抵押
 import { mortgages } from './redux/biz/mortgages/mortgages';
 import { mortgagesAddEdit } from './redux/biz/mortgages/mortgages-addedit';
-import { mortgagesRelieve } from './redux/biz/mortgages/mortgages-relieve';
 
 //  历史业务管理 + 详情
 import { bizHistoryBusinessManage } from './redux/biz/historyBusinessManage';
@@ -676,7 +675,6 @@ export default combineReducers({
   postloantoolsImportDispose,
   mortgages,
   mortgagesAddEdit,
-  mortgagesRelieve,
   personalarchivesParchives,
   personalarchivesParchivesAddedit,
   loanarchivesLocationcode,
