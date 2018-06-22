@@ -118,6 +118,9 @@ class take extends React.Component {
                       return remind(key[0]).then(() => {
                         this.props.cancelFetching();
                         showWarnMsg('操作成功');
+                        setTimeout(() => {
+                            this.props.getPageData();
+                        }, 1000);
                       }).catch(() => {
                         this.props.cancelFetching();
                       });
