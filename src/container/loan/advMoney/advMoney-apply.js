@@ -56,11 +56,6 @@ class AdvMoneyApply extends React.Component {
             amount: true,
             readonly: true
         }, {
-            title: '用款大写',
-            field: '222',
-            amount: true,
-            readonly: true
-        }, {
             title: '贷款银行',
             field: 'loanBankName',
             readonly: true
