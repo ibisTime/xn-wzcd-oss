@@ -102,36 +102,7 @@ class RedListFinance extends React.Component {
             bankCard: true,
             readonly: true
         }, {
-            title: '付款日期',
-            field: 'remitDatetime',
-            type: 'date',
-            required: true
-        }, {
-            title: '付款银行',
-            field: 'remitBankCode',
-            type: 'select',
-            listCode: 632057,
-            keyName: 'bankCode',
-            valueName: 'fullName',
-            required: true
-        }, {
-            title: '付款人',
-            field: 'remark',
-            type: 'textarea',
-            normalArea: true,
-            readonly: true
-        }, {
-            title: '付款卡号',
-            field: 'remark',
-            bankCard: true,
-            readonly: true
-        }, {
-            title: '付款凭证',
-            field: 'remitBillPdf',
-            type: 'img',
-            required: true
-        }, {
-            title: '备注',
+            title: '申请说明',
             field: 'remark',
             type: 'textarea',
             normalArea: true

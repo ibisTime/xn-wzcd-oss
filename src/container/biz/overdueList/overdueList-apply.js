@@ -61,7 +61,7 @@ class OverdueListApply extends React.Component {
             }
         }, {
             title: '选择预算单',
-            field: '111',
+            field: 'replaceApplyCode',
             type: 'select',
             listCode: 632107,
             keyName: 'code',
@@ -161,7 +161,7 @@ class OverdueListApply extends React.Component {
                 buttons: [{
                     title: '确定',
                     handler: (param) => {
-                        param.code = this.code;
+                        param.bizCode = this.code;
                         param.operator = getUserId();
                         this.props.doFetching();
                         fetch(632330, param).then(() => {
