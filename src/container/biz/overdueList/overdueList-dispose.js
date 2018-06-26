@@ -29,7 +29,7 @@ import {
 class OverdueListDispose extends React.Component {
     constructor(props) {
         super(props);
-        this.code = getQueryString('staffCode', this.props.location.search);
+        this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
     }
     render() {
@@ -62,7 +62,7 @@ class OverdueListDispose extends React.Component {
             title: '贷款银行',
             field: 'loanBankName',
             formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanBank);
+                return d.repayBiz.loanBankName;
             },
             readonly: true
         }, {

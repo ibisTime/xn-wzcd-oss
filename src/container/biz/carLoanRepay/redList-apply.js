@@ -53,17 +53,35 @@ class redListApply extends React.Component {
             amount: true,
             readonly: true
         }, {
-            title: '申请金额',
+            title: '是否典当行赎回',
+            field: 'pawnshopIsRedeem',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value'
+        }, {
+            title: '典当行名称',
+            field: 'pawnshopName'
+        }, {
+            title: '赎金小写',
+            field: 'ransom',
+            amount: true
+        }, {
+            title: '拖车费用',
             field: 'tsCarAmount',
-            amount: true,
+            amount: true
+        }, {
+            title: '收款人名称',
+            field: 'tsUserName',
             required: true
         }, {
-            title: '收款账号',
-            field: 'tsBankcardNumber',
-            required: true,
-            bankCard: true
-        }, {
-            title: '开户行',
+            title: '收款人开户行',
             field: 'tsBankName',
             type: 'select',
             listCode: 632037,
@@ -71,13 +89,19 @@ class redListApply extends React.Component {
             valueName: 'bankName',
             required: true
         }, {
-            title: '开户支行',
+            title: '收款人开户支行',
             field: 'tsSubbranch',
+            required: true
+        }, {
+            title: '收款人账号',
+            field: 'tsBankcardNumber',
+            bankCard: true,
             required: true
         }, {
             title: '申请说明',
             field: 'tcApplyNote',
-            required: true
+            type: 'textarea',
+            normalArea: true
         }];
         return this
             .props
@@ -92,7 +116,7 @@ class redListApply extends React.Component {
                         param.code = this.code;
                         param.operator = getUserId();
                         this.props.doFetching();
-                        fetch(630555, param).then(() => {
+                        fetch(630550, param).then(() => {
                             showSucMsg('操作成功');
                             this.props.cancelFetching();
                             setTimeout(() => {

@@ -93,9 +93,6 @@ class budgetApply extends React.Component {
         }];
         return this.props.buildDetail({
             fields,
-            code: this.code,
-            view: this.view,
-            detailCode: 632326,
             buttons: [{
                 title: '保存',
                 check: true,

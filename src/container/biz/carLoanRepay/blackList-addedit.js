@@ -101,7 +101,7 @@ class blackListAddedit extends React.Component {
             readonly: true
         }, {
             title: '解除抵押时间',
-            field: '33',
+            field: 'releaseDatetime',
             type: 'date',
             readonly: true
         }, {

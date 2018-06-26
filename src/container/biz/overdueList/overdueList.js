@@ -72,13 +72,33 @@ class overdueList extends React.Component {
         curNodeCodeList: ['021_03', '021_04', '021_05', '021_06', '021_07', '021_08']
       },
       btnEvent: {
+        message: (key, item) => {
+          if (!key || !key.length || !item || !item.length) {
+            showWarnMsg('请选择记录');
+          } else {
+            Modal.confirm({
+              okText: '确认',
+              cancelText: '取消',
+              content: '确定发送？',
+              onOk: () => {
+                this.props.doFetching();
+                return sendMsg(key[0], '0').then(() => {
+                  this.props.cancelFetching();
+                  showWarnMsg('操作成功');
+                }).catch(() => {
+                  this.props.cancelFetching();
+                });
+              }
+            });
+          }
+        },
         overdue: (selectedRowKeys, selectedRows) => {
           if (!selectedRowKeys.length) {
             showWarnMsg('请选择记录');
           } else if (selectedRowKeys.length > 1) {
             showWarnMsg('请选择一条记录');
           } else {
-            this.props.history.push(`/biz/overdueList/dispose?staffCode=${selectedRowKeys[0]}`);
+            this.props.history.push(`/biz/overdueList/dispose?code=${selectedRowKeys[0]}`);
           }
         },
         apply: (selectedRowKeys, selectedRows) => {
@@ -87,7 +107,7 @@ class overdueList extends React.Component {
           } else if (selectedRowKeys.length > 1) {
             showWarnMsg('请选择一条记录');
           } else {
-            this.props.history.push(`/biz/overdueList/apply?staffCode=${selectedRowKeys[0]}`);
+            this.props.history.push(`/biz/overdueList/apply?code=${selectedRowKeys[0]}`);
           }
         }
       }

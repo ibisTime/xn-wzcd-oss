@@ -53,34 +53,59 @@ class RedListCheckDirector extends React.Component {
             amount: true,
             readonly: true
         }, {
-            title: '申请金额',
+            title: '是否典当行赎回',
+            field: 'pawnshopIsRedeem',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            readonly: true
+        }, {
+            title: '典当行名称',
+            field: 'pawnshopName',
+            readonly: true
+        }, {
+            title: '赎金小写',
+            field: 'ransom',
+            amount: true,
+            readonly: true
+        }, {
+            title: '拖车费用',
             field: 'tsCarAmount',
             amount: true,
-            required: true
+            readonly: true
         }, {
-            title: '收款账号',
-            field: 'tsBankcardNumber',
-            required: true,
-            bankCard: true
+            title: '收款人名称',
+            field: 'tsUserName',
+            readonly: true
         }, {
-            title: '开户行',
+            title: '收款人开户行',
             field: 'tsBankName',
             type: 'select',
             listCode: 632037,
             keyName: 'bankCode',
             valueName: 'bankName',
-            required: true
+            readonly: true
         }, {
-            title: '开户支行',
+            title: '收款人开户支行',
             field: 'tsSubbranch',
-            required: true
+            readonly: true
+        }, {
+            title: '收款人账号',
+            field: 'tsBankcardNumber',
+            bankCard: true,
+            readonly: true
         }, {
             title: '申请说明',
-            field: 'tcApplyNote',
-            required: true
-        }, {
-            title: '备注',
-            field: 'remark'
+            field: 'remark',
+            type: 'textarea',
+            normalArea: true
         }];
         return this
             .props

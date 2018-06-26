@@ -78,7 +78,7 @@ class redListAddedit extends React.Component {
             required: true
         }, {
             title: '申请说明',
-            field: 'tcApplyNote',
+            field: 'remark',
             required: true
         }];
         return this

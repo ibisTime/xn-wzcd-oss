@@ -30,7 +30,7 @@ import {
 class OverdueListApply extends React.Component {
     constructor(props) {
         super(props);
-        this.code = getQueryString('staffCode', this.props.location.search);
+        this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
         this.arr = [{
             key: '0',
@@ -42,8 +42,9 @@ class OverdueListApply extends React.Component {
     }
     render() {
         const fields = [{
-            field: '业务编号',
-            value: this.code
+            title: '业务编号',
+            field: 'code',
+            readonly: true
         }, {
             title: '客户姓名',
             field: 'name',
@@ -156,7 +157,29 @@ class OverdueListApply extends React.Component {
                 fields,
                 code: this.code,
                 view: this.view,
-                detailCode: 630541
+                detailCode: 630541,
+                buttons: [{
+                    title: '确定',
+                    handler: (param) => {
+                        param.code = this.code;
+                        param.operator = getUserId();
+                        this.props.doFetching();
+                        fetch(632330, param).then(() => {
+                            showSucMsg('操作成功');
+                            this.props.cancelFetching();
+                            setTimeout(() => {
+                                this.props.history.go(-1);
+                            }, 1000);
+                        }).catch(this.props.cancelFetching);
+                    },
+                    check: true,
+                    type: 'primary'
+                }, {
+                    title: '返回',
+                    handler: (param) => {
+                        this.props.history.go(-1);
+                    }
+                }]
             });
     }
 }
