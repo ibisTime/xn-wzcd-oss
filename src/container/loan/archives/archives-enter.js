@@ -118,7 +118,8 @@ class ArchivesAddedit extends React.Component {
             [{
                 title: '银行卡号',
                 field: 'bankCardNumber',
-                bankCard: true
+                bankCard: true,
+                required: true
             }, {
                 title: ' 首期还款金额',
                 field: 'repayFirstMonthAmount',
@@ -132,7 +133,8 @@ class ArchivesAddedit extends React.Component {
             [{
                 title: '对账单日',
                 field: 'billDatetime',
-                type: 'date'
+                type: 'date',
+                required: true
             }, {
                 title: '首期还款日期',
                 field: 'repayFirstMonthDatetime',
@@ -185,6 +187,10 @@ class ArchivesAddedit extends React.Component {
             }, {
                 title: '存放位置',
                 field: 'storePlace',
+                type: 'select',
+                listCode: 632827,
+                keyName: 'code',
+                valueName: 'name',
                 required: 'true'
             }],
             [{

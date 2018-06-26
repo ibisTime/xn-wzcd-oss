@@ -11,7 +11,7 @@ import {
 } from '@redux/biz/brand';
 import { listWrapper } from 'common/js/build-list';
 import { showWarnMsg, showSucMsg } from 'common/js/util';
-import { Button, Upload, Modal } from 'antd';
+import { Modal } from 'antd';
 import { lowerFrame, onShelf } from 'api/biz';
 
 @listWrapper(
@@ -149,7 +149,6 @@ class Brand extends React.Component {
               onOk: () => {
                 this.props.doFetching();
                 return lowerFrame(key[0]).then(() => {
-                  this.props.getPageData();
                   showWarnMsg('操作成功');
                   setTimeout(() => {
                       this.props.getPageData();
@@ -174,7 +173,6 @@ class Brand extends React.Component {
               onOk: () => {
                 this.props.doFetching();
                 return onShelf(key[0]).then(() => {
-                  this.props.getPageData();
                   showWarnMsg('操作成功');
                   setTimeout(() => {
                       this.props.getPageData();

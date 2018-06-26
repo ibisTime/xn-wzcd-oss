@@ -491,31 +491,6 @@ const ROUTES = [
     path: '/biz/trailer/dispose',
     component: asyncComponent(() => import('container/biz/carLoanRepay/trailer-dispose'))
   },
-  //  用户赎回
-  {
-    path: '/biz/userRedemption',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/userRedemption'))
-  },
-  //  用户赎回 详情
-  {
-    path: '/biz/userRedemption/addedit',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/userRedemption-addedit'))
-  },
-  //  用户赎回 申请赎回
-  {
-    path: '/biz/userRedemption/applyRedeem',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/userRedemption-applyRedeem'))
-  },
-  //  用户赎回 风控主管审核
-  {
-    path: '/biz/userRedemption/checkDirector',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/userRedemption-checkDirector'))
-  },
-  //  用户赎回 财务经理审核
-  {
-    path: '/biz/userRedemption/checkFinance',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/userRedemption-checkFinance'))
-  },
   //  司法诉讼
   {
     path: '/biz/litigation',

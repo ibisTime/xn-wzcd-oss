@@ -31,33 +31,66 @@ class trailerDispose extends React.Component {
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
         this.userId = getQueryString('userId', this.props.location.search);
+        this.dealResult = '';
     }
+
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'realName',
-            formatter: (v, d) => {
-                return d.user.realName;
-            },
-            readonly: true
+            field: 'customerName'
         }, {
             title: '业务编号',
-            field: 'code',
-            readonly: true
+            field: 'code'
         }, {
-            title: '贷款银行',
-            field: 'loanBank',
-            readonly: true
+            title: '身份证',
+            field: 'inNo'
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            amount: true,
-            readonly: true
+            amount: true
         }, {
-            title: '拖车成本',
-            field: 'remitAmount',
+            title: '贷款银行',
+            field: 'loanBankName'
+        }, {
+            title: '车辆型号',
+            field: 'carModel'
+        }, {
+            title: '车牌号',
+            field: 'carNo'
+        }, {
+            title: '银行欠款',
+            field: 'bankAmount'
+        }, {
+            title: '代偿欠款',
+            field: 'dcAmount'
+        }, {
+            title: '处理结果',
+            field: 'dealResult',
+            type: 'select',
+            key: 'deal_result',
+            required: true,
+            readonly: false,
+            onChange: (v, data) => {
+                this.dealResult = v;
+            }
+        }, {
+            title: '出售价格',
+            field: 'sellPrice',
             amount: true,
-            readonly: true
+            required: true,
+            readonly: false,
+            hidden: this.dealResult !== 2
+        }, {
+            title: '保证金',
+            field: 'deposit',
+            amount: true,
+            required: true,
+            readonly: false,
+            hidden: this.dealResult !== 3
+        }, {
+            title: '费用说明',
+            field: 'feeNote',
+            readonly: false
         }];
         return this
             .props
@@ -67,28 +100,12 @@ class trailerDispose extends React.Component {
                 view: this.view,
                 detailCode: 630521,
                 buttons: [{
-                    title: '用户赎回',
+                    title: '确定',
                     handler: (param) => {
-                        param.appoveResult = '0';
+                        param.code = this.code;
                         param.operator = getUserId();
                         this.props.doFetching();
-                        fetch(630564, param).then(() => {
-                            showSucMsg('操作成功');
-                            this.props.cancelFetching();
-                            setTimeout(() => {
-                                this.props.history.go(-1);
-                            }, 1000);
-                        }).catch(this.props.cancelFetching);
-                    },
-                    check: true,
-                    type: 'primary'
-                }, {
-                    title: '司法诉讼',
-                    handler: (param) => {
-                        param.appoveResult = '1';
-                        param.operator = getUserId();
-                        this.props.doFetching();
-                        fetch(630564, param).then(() => {
+                        fetch(632146, param).then(() => {
                             showSucMsg('操作成功');
                             this.props.cancelFetching();
                             setTimeout(() => {
