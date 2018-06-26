@@ -80,7 +80,7 @@ class importImport extends React.Component {
                 title: '贷款银行编号',
                 field: 'loanBankCode',
                 keyName: 'code',
-                valueName: '{{bankName.DATA}}-{{subbranch.DATA}}'
+                valueName: '{{bankName.DATA}}-{{abbrName.DATA}}'
             }],
             loanBankData: []
         };
@@ -88,7 +88,7 @@ class importImport extends React.Component {
 
     componentDidMount() {
         this.props.doFetching();
-        fetch(632037, {}).then((data) => {
+        fetch(632057, {}).then((data) => {
             this.setState({
                 loanBankData: data
             });

@@ -111,13 +111,6 @@ import { bizYellowListAddEdit } from './redux/biz/yellowList-addedit';
 import { bizYellowListPayCost } from './redux/biz/yellowList-payCost';
 import { bizYellowListPayCompensate } from './redux/biz/yellowList-payCompensate';
 
-//  用户赎回 + 详情 + 申请赎回 + 风控主管审核 + 财务经理审核
-import { bizUserRedemption } from './redux/biz/userRedemption';
-import { bizUserRedemptionAddEdit } from './redux/biz/userRedemption-addedit';
-import { bizUserRedemptionApplyRedeem } from './redux/biz/userRedemption-applyRedeem';
-import { bizUserRedemptionCheckDirector } from './redux/biz/userRedemption-checkDirector';
-import { bizUserRedemptionCheckFinance } from './redux/biz/userRedemption-checkFinance';
-
 //  黑名单 + 详情
 import { bizBlackList } from './redux/biz/blackList';
 import { bizBlackListAddedit } from './redux/biz/blackList-addedit';
@@ -755,11 +748,6 @@ export default combineReducers({
   bizYellowListAddEdit,
   bizYellowListPayCost,
   bizYellowListPayCompensate,
-  bizUserRedemption,
-  bizUserRedemptionAddEdit,
-  bizUserRedemptionApplyRedeem,
-  bizUserRedemptionCheckDirector,
-  bizUserRedemptionCheckFinance,
   carloanfinancePointreturn,
   carloanfinancePointreturnAddedit,
   carloanfinancePointreturnReturn,

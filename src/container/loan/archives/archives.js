@@ -1,5 +1,4 @@
 import React from 'react';
-import XLSX from 'xlsx';
 import {
     setTableData,
     setPagination,
@@ -22,8 +21,6 @@ import {
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
-    Button,
-    Upload,
     Modal
 } from 'antd';
 import {
@@ -105,6 +102,54 @@ class Archives extends React.Component {
                         showWarnMsg('请选择一条记录');
                     } else {
                         this.props.history.push(`/loan/archives/enter?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                print: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        Modal.confirm({
+                            okText: '确认',
+                            cancelText: '取消',
+                            content: '确认套打？',
+                            onOk: () => {
+                                this.props.doFetching();
+                                return fetch(632201, {code: selectedRowKeys[0]}).then(() => {
+                                    showWarnMsg('操作成功');
+                                    setTimeout(() => {
+                                        this.props.getPageData();
+                                    }, 500);
+                                }).catch(() => {
+                                    this.props.cancelFetching();
+                                });
+                            }
+                        });
+                    }
+                },
+                print1: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        Modal.confirm({
+                            okText: '确认',
+                            cancelText: '取消',
+                            content: '确认套打2？',
+                            onOk: () => {
+                                this.props.doFetching();
+                                return fetch(632202, {code: selectedRowKeys[0]}).then(() => {
+                                    showWarnMsg('操作成功');
+                                    setTimeout(() => {
+                                        this.props.getPageData();
+                                    }, 500);
+                                }).catch(() => {
+                                    this.props.cancelFetching();
+                                });
+                            }
+                        });
                     }
                 }
             }
