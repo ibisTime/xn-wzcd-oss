@@ -6,18 +6,17 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/litigation-addedit';
+} from '@redux/biz/litigation-litigation';
 import {
     getQueryString,
     getUserId,
     showSucMsg
 } from 'common/js/util';
-import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizLitigationAddEdit, {
+@DetailWrapper(state => state.bizLitigationLitigation, {
     initStates,
     doFetching,
     cancelFetching,
@@ -25,12 +24,11 @@ import {
     setPageData,
     restore
 })
-class litigationAddedit extends React.Component {
+class litigationLitigation extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.userId = getQueryString('userId', this.props.location.search);
     }
     render() {
         const fields = [{
@@ -94,15 +92,20 @@ class litigationAddedit extends React.Component {
             field: 'casePdf',
             type: 'img'
         }];
-        return this
-            .props
-            .buildDetail({
-                fields,
-                code: this.code,
-                view: this.view,
-                detailCode: 630521
-            });
+        return this.props.buildDetail({
+            fields,
+            code: this.code,
+            view: this.view,
+            editCode: 630560,
+            detailCode: 630521,
+            beforeSubmit: (params) => {
+                params.repayBizCode = this.code;
+                params.defendant = this.props.pageDate.userId;
+                params.operator = getUserId();
+                return params;
+            }
+        });
     }
 }
 
-export default litigationAddedit;
+export default litigationLitigation;

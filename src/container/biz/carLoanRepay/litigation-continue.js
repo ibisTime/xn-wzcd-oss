@@ -6,7 +6,7 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/litigation-addedit';
+} from '@redux/biz/litigation-continue';
 import {
     getQueryString,
     getUserId,
@@ -17,7 +17,7 @@ import {
     DetailWrapper
 } from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizLitigationAddEdit, {
+@DetailWrapper(state => state.bizLitigationContinue, {
     initStates,
     doFetching,
     cancelFetching,
@@ -25,13 +25,13 @@ import {
     setPageData,
     restore
 })
-class litigationAddedit extends React.Component {
+class litigationContinue extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.userId = getQueryString('userId', this.props.location.search);
     }
+
     render() {
         const fields = [{
             title: '客户姓名',
@@ -57,52 +57,82 @@ class litigationAddedit extends React.Component {
         }, {
             title: '案号',
             field: 'caseNumber',
-            required: true
+            required: true,
+            readonly: true
         }, {
             title: '原告',
             field: 'plaintiff',
-            required: true
+            required: true,
+            readonly: true
         }, {
             title: '被告',
             field: 'defendant',
-            readonly: true,
             formatter: (v, data) => {
                 return data.realName;
             },
-            required: true
+            required: true,
+            readonly: true
         }, {
             title: '诉讼标的',
             field: 'caseSubject',
-            amount: true,
-            required: true
+            required: true,
+            readonly: true
         }, {
             title: '涉案车辆',
             field: 'caseCar',
-            required: true
+            required: true,
+            readonly: true
+        }, {
+            title: '起诉日期',
+            field: 'caseStartDatetime',
+            type: 'date',
+            required: true,
+            readonly: true
+        }, {
+            title: '起诉附件',
+            field: 'casePdf',
+            type: 'img',
+            readonly: true
         }, {
             title: '诉讼费',
             field: 'caseFee',
             amount: true,
             required: true
         }, {
-            title: '起诉日期',
-            field: 'caseStartDatetime',
+            title: '诉讼状态',
+            field: 'caseStatus',
+            type: 'select',
+            key: 'case_status',
+            required: true
+        }, {
+            title: '开庭日期',
+            field: 'courtDatetime',
             type: 'date',
             required: true
         }, {
-            title: '起诉附件',
-            field: 'casePdf',
-            type: 'img'
+            title: '判决日期',
+            field: 'judgeDatetime',
+            type: 'date',
+            required: true
+        }, {
+            title: '判决书',
+            field: 'judgePdf',
+            type: 'img',
+            required: true
         }];
-        return this
-            .props
-            .buildDetail({
-                fields,
-                code: this.code,
-                view: this.view,
-                detailCode: 630521
-            });
+        return this.props.buildDetail({
+            fields,
+            code: this.code,
+            view: this.view,
+            editCode: 630560,
+            detailCode: 630521,
+            beforeSubmit: (params) => {
+                params.code = this.code;
+                params.operator = getUserId();
+                return params;
+            }
+        });
     }
 }
 
-export default litigationAddedit;
+export default litigationContinue;

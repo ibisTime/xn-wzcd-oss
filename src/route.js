@@ -501,10 +501,25 @@ const ROUTES = [
     path: '/biz/litigation/addedit',
     component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-addedit'))
   },
-  //  司法诉讼 处理结果
+  //  司法诉讼 司法诉讼
   {
-    path: '/biz/litigation/dispose',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-dispose'))
+      path: '/biz/litigation/litigation',
+      component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-litigation'))
+  },
+  //  司法诉讼 诉讼跟进
+  {
+      path: '/biz/litigation/continue',
+      component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-continue'))
+  },
+  //  司法诉讼 执行结果录入
+  {
+      path: '/biz/litigation/enter',
+      component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-enter'))
+  },
+  //  司法诉讼 财务确认收款
+  {
+      path: '/biz/litigation/certain',
+      component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-certain'))
   },
   //  结清审核
   {

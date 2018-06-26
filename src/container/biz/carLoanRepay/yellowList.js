@@ -18,11 +18,6 @@ import {
     moneyFormat
 } from 'common/js/util';
 import {
-    Button,
-    Upload,
-    Modal
-} from 'antd';
-import {
     lowerFrame,
     onShelf
 } from 'api/biz';
@@ -104,7 +99,7 @@ class yellowList extends React.Component {
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push(`/biz/yellowList/payCost?code=${selectedRowKeys[0]}&userId=${selectedRows[0].user.userId}`);
+                        this.props.history.push(`/biz/yellowList/payCost?code=${selectedRowKeys[0]}`);
                     }
                 },
                 payCompensate: (selectedRowKeys, selectedRows) => {
@@ -115,7 +110,7 @@ class yellowList extends React.Component {
                     } else if (selectedRows[0].isRepay !== '0') {
                         showWarnMsg('代偿已缴纳');
                     } else {
-                        this.props.history.push(`/biz/yellowList/payCompensate?code=${selectedRowKeys[0]}&userId=${selectedRows[0].user.userId}`);
+                        this.props.history.push(`/biz/yellowList/payCompensate?code=${selectedRowKeys[0]}`);
                     }
                 }
             }

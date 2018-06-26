@@ -31,7 +31,6 @@ class yellowListPayCompensate extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.userId = getQueryString('userId', this.props.location.search);
     }
     handleSubmit(param) {
       this.props.doFetching();
@@ -70,8 +69,8 @@ class yellowListPayCompensate extends React.Component {
             type: 'date',
             readonly: true
         }, {
-            title: '代偿金额(元)',
-            field: 'overdueAmount',
+            title: '实还金额(元)',
+            field: 'payAmount',
             amount: true,
             readonly: true
         }];
@@ -83,14 +82,6 @@ class yellowListPayCompensate extends React.Component {
                 view: this.view,
                 detailCode: 630541,
                 buttons: [{
-                    title: '线上代扣',
-                    handler: (param) => {
-                        param.payType = '1';
-                        this.handleSubmit(param);
-                    },
-                    check: true,
-                    type: 'primary'
-                }, {
                     title: '线下收取',
                     handler: (param) => {
                         param.payType = '2';
