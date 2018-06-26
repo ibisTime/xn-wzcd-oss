@@ -107,12 +107,10 @@ class Settlement extends React.Component {
             field: 'curReplaceRepayCount'
         }, {
             title: '账单日',
-            field: 'billDatetime',
-            type: 'date'
+            field: 'billDatetime'
         }, {
             title: '还款日',
-            field: 'monthDatetime',
-            type: 'date'
+            field: 'monthDatetime'
         }, {
             title: '总期数',
             field: 'periods'

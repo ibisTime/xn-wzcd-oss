@@ -58,12 +58,6 @@ class mortgagesAddedit extends React.Component {
                 return moneyFormat(d.repayBiz.loanAmount);
             }
         }, {
-            title: '征信结果',
-            field: '11'
-        }, {
-            title: '预算单信息',
-            field: '22'
-        }, {
             title: '逾期记录',
             field: '33'
         }, {
@@ -72,12 +66,12 @@ class mortgagesAddedit extends React.Component {
         }, {
             title: '解除日期',
             field: 'releaseDatetime',
-            type: 'date'
+            type: 'datetime'
         }, {
             title: '模板ID',
             field: 'releaseTemplateId',
             type: 'select',
-            key: 'release_template_id'
+            key: 'template_id'
         }];
         return this.props.buildDetail({
             fields,

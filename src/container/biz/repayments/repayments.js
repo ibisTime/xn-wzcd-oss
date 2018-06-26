@@ -55,14 +55,11 @@ class Repayments extends React.Component {
             search: true
         }, {
             title: '银行',
-            field: 'loanBankCode',
-            render: (v, d) => {
-                return d.budgetOrder.loanBankCode;
-            },
+            field: 'loanBank',
             type: 'select',
             listCode: 632057,
             keyName: 'code',
-            valueName: 'abbrName',
+            valueName: 'fullName',
             search: true
         }, {
             title: '客户姓名',
@@ -112,12 +109,10 @@ class Repayments extends React.Component {
             field: 'curReplaceRepayCount'
         }, {
             title: '账单日',
-            field: 'billDatetime',
-            type: 'date'
+            field: 'billDatetime'
         }, {
             title: '还款日',
-            field: 'monthDatetime',
-            type: 'date'
+            field: 'monthDatetime'
         }, {
             title: '总期数',
             field: 'periods'

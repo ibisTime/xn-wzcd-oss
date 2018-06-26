@@ -66,14 +66,6 @@ class MortgagesCheck extends React.Component {
             },
             readonly: true
         }, {
-            title: '征信结果',
-            field: '11',
-            readonly: true
-        }, {
-            title: '预算单信息',
-            field: '22',
-            readonly: true
-        }, {
             title: '逾期记录',
             field: '33',
             readonly: true

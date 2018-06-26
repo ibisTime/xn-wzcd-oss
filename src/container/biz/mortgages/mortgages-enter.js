@@ -68,13 +68,13 @@ class MortgagesEnter extends React.Component {
         }, {
             title: '解除日期',
             field: 'releaseDatetime',
-            type: 'date',
+            type: 'datetime',
             required: true
         }, {
             title: '模板ID',
             field: 'releaseTemplateId',
             type: 'select',
-            key: 'release_template_id',
+            key: 'template_id',
             required: true
         }, {
             title: '备注',
