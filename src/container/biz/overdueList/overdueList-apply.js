@@ -10,7 +10,9 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyFormat,
+    moneyUppercase
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -30,6 +32,13 @@ class OverdueListApply extends React.Component {
         super(props);
         this.code = getQueryString('staffCode', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.arr = [{
+            key: '0',
+            value: '否'
+        }, {
+            key: '1',
+            value: '是'
+        }];
     }
     render() {
         const fields = [{
@@ -53,56 +62,67 @@ class OverdueListApply extends React.Component {
             title: '选择预算单',
             field: '111',
             type: 'select',
-            key: '',
+            listCode: 632107,
+            keyName: 'code',
+            valueName: '{{code.DATA}}-{{applyUser.DATA}}',
             required: true
         }, {
             title: '代偿类型',
-            field: '99',
-            type: 'select',
-            key: '99',
+            field: 'type',
+            formatter: (v, d) => {
+                return d.replaceRepayApply.type;
+            },
             readonly: true
         }, {
             title: '预算金额',
-            field: '88',
-            amount: true,
+            field: 'amount',
+            formatter: (v, d) => {
+                return moneyFormat(d.replaceRepayApply.amount);
+            },
             readonly: true
         }, {
             title: '预算金额大写',
-            field: '77',
+            field: 'moneyUppercase',
+            formatter: (v, d) => {
+                return moneyUppercase(moneyFormat(d.replaceRepayApply.amount));
+            },
             readonly: true
         }, {
             title: '收款人姓名',
-            field: '66',
+            field: 'receiptRealName',
+            formatter: (v, d) => {
+                return d.replaceRepayApply.receiptRealName;
+            },
             readonly: true
         }, {
             title: '收款人开户行',
-            field: '55',
+            field: 'receiptBank',
+            formatter: (v, d) => {
+                return d.replaceRepayApply.receiptBankName;
+            },
             readonly: true
         }, {
             title: '收款人账号',
-            field: '44',
-            readonly: true
-        }, {
-            title: '典当行',
-            field: '33',
+            field: 'receiptAccount',
+            formatter: (v, d) => {
+                return d.replaceRepayApply.receiptAccount;
+            },
             readonly: true
         }, {
             title: '是否加急',
-            field: '22',
-            type: 'select',
-            data: [{
-                key: '0',
-                value: '否'
-            }, {
-                key: '1',
-                value: '是'
-            }],
-            keyName: 'key',
-            valueName: 'value',
+            field: 'isUrgent',
+            formatter: (v, d) => {
+                let index = d.replaceRepayApply.isUrgent;
+                let isUrgent = this.arr[index].value;
+                return isUrgent;
+            },
             readonly: true
         }, {
             title: '代偿说明',
-            field: '11',
+            field: 'remark',
+            formatter: (v, d) => {
+                return d.replaceRepayApply.remark;
+            },
             readonly: true
         }, {
             title: '与我司过往是否有纠纷',

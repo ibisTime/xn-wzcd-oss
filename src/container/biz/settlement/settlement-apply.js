@@ -71,12 +71,12 @@ class settlementApply extends React.Component {
             readonly: true
         }, {
             title: '银行欠款',
-            field: '11',
+            field: 'restAmount',
             amount: 'true',
             readonly: true
         }, {
             title: '代偿欠款',
-            field: '22',
+            field: 'restReplaceRepayAmount',
             amount: 'true',
             readonly: true
         }, {
