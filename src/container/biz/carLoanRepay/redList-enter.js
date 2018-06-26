@@ -86,7 +86,7 @@ class redListEnter extends React.Component {
                         param.code = this.code;
                         param.operator = getUserId();
                         this.props.doFetching();
-                        fetch(630557, param).then(() => {
+                        fetch(630556, param).then(() => {
                             showSucMsg('操作成功');
                             this.props.cancelFetching();
                             setTimeout(() => {
