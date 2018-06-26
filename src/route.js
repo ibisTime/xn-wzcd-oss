@@ -369,12 +369,17 @@ const ROUTES = [
   //  逾期名单
   {
     path: '/biz/overdueList',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/overdueList'))
+    component: asyncComponent(() => import('container/biz/overdueList/overdueList'))
   },
-  //  逾期处理
+  //  逾期名单 逾期处理
   {
     path: '/biz/overdueList/dispose',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/overdueList-dispose'))
+    component: asyncComponent(() => import('container/biz/overdueList/overdueList-dispose'))
+  },
+  //  逾期名单 申请代偿
+  {
+    path: '/biz/overdueList/apply',
+    component: asyncComponent(() => import('container/biz/overdueList/overdueList-apply'))
   },
   //  绿名单
   {
@@ -555,6 +560,26 @@ const ROUTES = [
   {
     path: '/biz/mortgages/addedit',
     component: asyncComponent(() => import('container/biz/mortgages/mortgages-addedit'))
+  },
+  //  解除抵押 申请
+  {
+    path: '/biz/mortgages/apply',
+    component: asyncComponent(() => import('container/biz/mortgages/mortgages-apply'))
+  },
+  //  解除抵押 风控内勤审核
+  {
+    path: '/biz/mortgages/internal',
+    component: asyncComponent(() => import('container/biz/mortgages/mortgages-internal'))
+  },
+  //  解除抵押 风控主管审核
+  {
+    path: '/biz/mortgages/check',
+    component: asyncComponent(() => import('container/biz/mortgages/mortgages-check'))
+  },
+  //  解除抵押 回录
+  {
+    path: '/biz/mortgages/enter',
+    component: asyncComponent(() => import('container/biz/mortgages/mortgages-enter'))
   },
   //  历史业务管理
   {

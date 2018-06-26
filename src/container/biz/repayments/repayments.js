@@ -55,11 +55,14 @@ class Repayments extends React.Component {
             search: true
         }, {
             title: '银行',
-            field: 'bankcardCode',
+            field: 'loanBankCode',
+            render: (v, d) => {
+                return d.budgetOrder.loanBankCode;
+            },
             type: 'select',
-            listCode: 632037,
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            listCode: 632057,
+            keyName: 'code',
+            valueName: 'abbrName',
             search: true
         }, {
             title: '客户姓名',
@@ -80,7 +83,8 @@ class Repayments extends React.Component {
             type: 'date'
         }, {
             title: '贷款金额',
-            field: 'loanAmount'
+            field: 'loanAmount',
+            amount: true
         }, {
             title: '剩余欠款',
             field: 'restAmount',

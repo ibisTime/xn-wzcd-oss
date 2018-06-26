@@ -8,7 +8,7 @@ import {
   doFetching,
   cancelFetching,
   setSearchData
-} from '@redux/biz/overdueList';
+} from '@redux/biz/overdueList/overdueList';
 import {
   listWrapper
 } from 'common/js/build-list';
@@ -42,15 +42,14 @@ class overdueList extends React.Component {
   render() {
     const fields = [{
       title: '业务编号',
-      field: 'code',
-      key: 'code'
+      field: 'code'
     }, {
-      title: '贷款人',
+      title: '客户姓名',
       field: 'realName',
-      search: true,
       render: (v, d) => {
         return d.user.realName;
-      }
+      },
+      search: true
     }, {
       title: '期数',
       field: 'periods'
@@ -63,15 +62,14 @@ class overdueList extends React.Component {
       amount: true
     }, {
       title: '逾期日期',
-      field: 'repayDatetime',
+      field: 'overdueDatetime',
       type: 'date'
     }];
     return this.props.buildList({
       fields,
       pageCode: 630540,
       searchParams: {
-        curNodeCode: '004_03',
-        refType: '0'
+        curNodeCodeList: ['021_03', '021_04', '021_05', '021_06', '021_07', '021_08']
       },
       btnEvent: {
         overdue: (selectedRowKeys, selectedRows) => {

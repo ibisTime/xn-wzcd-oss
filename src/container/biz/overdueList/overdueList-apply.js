@@ -6,7 +6,7 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/overdueList-apply';
+} from '@redux/biz/overdueList/overdueList-apply';
 import {
     getQueryString,
     getUserId,
@@ -98,7 +98,7 @@ class OverdueListApply extends React.Component {
                 value: '是'
             }],
             keyName: 'key',
-            valueName: 'value'
+            valueName: 'value',
             readonly: true
         }, {
             title: '代偿说明',

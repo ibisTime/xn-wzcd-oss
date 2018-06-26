@@ -96,9 +96,9 @@ import { bizRefundList } from './redux/biz/refundList';
 import { bizRefundListAddedit } from './redux/biz/refundList-addedit';
 
 //  逾期名单 + 详情 + 处理
-import { bizOverdueList } from './redux/biz/overdueList';
-import { bizOverdueListDispose } from './redux/biz/overdueList-dispose';
-import { bizOverdueListApply } from './redux/biz/overdueList-apply';
+import { bizOverdueList } from './redux/biz/overdueList/overdueList';
+import { bizOverdueListDispose } from './redux/biz/overdueList/overdueList-dispose';
+import { bizOverdueListApply } from './redux/biz/overdueList/overdueList-apply';
 
 //  绿名单 + 详情 + 缴纳清收成本
 import { bizGreenList } from './redux/biz/greenList';
@@ -150,9 +150,13 @@ import { bizSettlementApply } from './redux/biz/settlement-apply';
 import { bizSettlementCheck } from './redux/biz/settlement-check';
 import { bizSettlementCertain } from './redux/biz/settlement-certain';
 
-//  解除抵押 + 详情 + 解除抵押
+//  解除抵押 + 详情 + 申请 + 风控内勤审核 + 风控主管审核 + 回录
 import { mortgages } from './redux/biz/mortgages/mortgages';
 import { mortgagesAddEdit } from './redux/biz/mortgages/mortgages-addedit';
+import { mortgagesApply } from './redux/biz/mortgages/mortgages-apply';
+import { mortgagesInternal } from './redux/biz/mortgages/mortgages-internal';
+import { mortgagesCheck } from './redux/biz/mortgages/mortgages-check';
+import { mortgagesEnter } from './redux/biz/mortgages/mortgages-enter';
 
 //  历史业务管理 + 详情
 import { bizHistoryBusinessManage } from './redux/biz/historyBusinessManage';
@@ -675,6 +679,10 @@ export default combineReducers({
   postloantoolsImportDispose,
   mortgages,
   mortgagesAddEdit,
+  mortgagesApply,
+  mortgagesInternal,
+  mortgagesCheck,
+  mortgagesEnter,
   personalarchivesParchives,
   personalarchivesParchivesAddedit,
   loanarchivesLocationcode,

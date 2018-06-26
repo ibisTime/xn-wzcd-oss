@@ -85,6 +85,36 @@ class blackListAddedit extends React.Component {
             field: 'restTotalCost',
             amount: true
         }, {
+            title: '未还代偿款',
+            field: '66',
+            amount: true,
+            readonly: true
+        }, {
+            title: '实际退款金额',
+            field: 'actualRefunds',
+            amount: true,
+            readonly: true
+        }, {
+            title: '车辆抵押时间',
+            field: '44',
+            type: 'date',
+            readonly: true
+        }, {
+            title: '解除抵押时间',
+            field: '33',
+            type: 'date',
+            readonly: true
+        }, {
+            title: '结清时间',
+            field: '22',
+            type: 'date',
+            readonly: true
+        }, {
+            title: '结清证明',
+            field: '11',
+            type: 'img',
+            readonly: true
+        }, {
             title: '还款计划表',
             field: 'repayPlanList',
             type: 'o2m',
@@ -116,29 +146,6 @@ class blackListAddedit extends React.Component {
                     amount: true
                 }]
             }
-        }, {
-            title: '可退押金金额',
-            field: 'lyDeposit',
-            render: (v, d) => {
-                return moneyFormat(d.lyDeposit + d.overdueAmount);
-            },
-            amount: true
-        }, {
-            title: '扣除违约金金额',
-            field: 'cutLyDeposit',
-            amount: true
-        }, {
-            title: '实际退款金额',
-            field: 'actualRefunds',
-            amount: true
-        }, {
-            title: '结清时间',
-            field: 'settleDatetime',
-            type: 'datetime'
-        }, {
-            title: '结清证明',
-            field: 'settleAttach',
-            type: 'img'
         }];
         return this
             .props

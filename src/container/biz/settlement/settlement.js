@@ -51,11 +51,14 @@ class Settlement extends React.Component {
             search: true
         }, {
             title: '银行',
-            field: 'bankcardCode',
+            field: 'loanBankCode',
+            render: (v, d) => {
+                return d.budgetOrder.loanBankCode;
+            },
             type: 'select',
-            listCode: 632037,
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            listCode: 632057,
+            keyName: 'code',
+            valueName: 'abbrName',
             search: true
         }, {
             title: '客户姓名',

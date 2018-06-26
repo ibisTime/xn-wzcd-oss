@@ -52,22 +52,30 @@ class mortgages extends React.Component {
             field: 'code',
             search: true
         }, {
-            title: '贷款人',
+            title: '客户姓名',
             field: 'user',
             search: true,
             render: (v, d) => {
                 return d.user.realName;
             }
         }, {
-            title: '手机号',
-            field: 'mobile',
-            render: (v, d) => {
-                return d.user.mobile;
-            }
+            title: '车牌号',
+            field: '11'
         }, {
-            title: '贷款金额',
-            field: 'loanAmount',
-            amount: true
+            title: '解除日期',
+            field: '22',
+            type: 'date'
+        }, {
+            title: '业务员',
+            field: '33',
+            type: 'date'
+        }, {
+            title: '模板ID',
+            field: '44'
+        }, {
+            title: '申请日期',
+            field: '55',
+            type: 'date'
         }, {
             title: '当前节点',
             field: 'curNodeCode',
@@ -80,19 +88,43 @@ class mortgages extends React.Component {
             fields,
             pageCode: 630520,
             searchParams: {
-              refType: '0',
-              curNodeCode: '003_06'
+              roleCode: getRoleCode()
             },
             btnEvent: {
-              relieve: (selectedRowKeys, selectedRows) => {
+              apply: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
                   showWarnMsg('请选择记录');
                 } else if (selectedRowKeys.length > 1) {
                   showWarnMsg('请选择一条记录');
-                } else if (selectedRows[0].curNodeCode !== '003_06') {
-                    showWarnMsg('当前节点不是解除抵押节点');
                 } else {
-                  this.props.history.push(`/biz/mortgages/relieve?code=${selectedRowKeys[0]}`);
+                  this.props.history.push(`/biz/mortgages/apply?code=${selectedRowKeys[0]}`);
+                }
+              },
+              check: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys.length) {
+                  showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                  showWarnMsg('请选择一条记录');
+                } else {
+                  this.props.history.push(`/biz/mortgages/check?code=${selectedRowKeys[0]}`);
+                }
+              },
+              enter: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys.length) {
+                  showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                  showWarnMsg('请选择一条记录');
+                } else {
+                  this.props.history.push(`/biz/mortgages/enter?code=${selectedRowKeys[0]}`);
+                }
+              },
+              internal: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys.length) {
+                  showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                  showWarnMsg('请选择一条记录');
+                } else {
+                  this.props.history.push(`/biz/mortgages/internal?code=${selectedRowKeys[0]}`);
                 }
               }
             }

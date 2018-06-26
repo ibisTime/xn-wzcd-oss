@@ -42,10 +42,9 @@ class greenListAddedit extends React.Component {
       type: 'date',
       readonly: true
     }, {
-      title: '已缴纳清收成本(元)',
-      field: 'payedFee',
-      amount: true,
-      readonly: true
+      title: '未还清收成本(元)',
+      field: 'restTotalCost',
+      amount: true
     }, {
       title: '清收成本清单',
       field: 'costList',

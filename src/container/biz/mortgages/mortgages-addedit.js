@@ -8,7 +8,8 @@ import {
     restore
 } from '@redux/biz/mortgages/mortgages-addedit';
 import {
-    getQueryString
+    getQueryString,
+    moneyFormat
 } from 'common/js/util';
 import {
     DetailWrapper
@@ -34,27 +35,55 @@ class mortgagesAddedit extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'applyUserName'
+            field: 'realName',
+            formatter: (v, d) => {
+                return d.user.realName;
+            }
+        }, {
+            title: '身份证',
+            field: 'idNo',
+            formatter: (v, d) => {
+                return d.user.idNo;
+            }
         }, {
             title: '业务编号',
             field: 'code'
         }, {
             title: '贷款银行',
-            field: 'loanBankName'
+            field: 'bankcardCode'
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            amount: true
+            formatter: (v, d) => {
+                return moneyFormat(d.repayBiz.loanAmount);
+            }
+        }, {
+            title: '征信结果',
+            field: '11'
+        }, {
+            title: '预算单信息',
+            field: '22'
+        }, {
+            title: '逾期记录',
+            field: '33'
+        }, {
+            title: '代偿记录',
+            field: '44'
         }, {
             title: '解除日期',
-            field: 'bankFkDatetime',
+            field: 'releaseDatetime',
             type: 'date'
+        }, {
+            title: '模板ID',
+            field: 'releaseTemplateId',
+            type: 'select',
+            key: 'release_template_id'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632146
+            detailCode: 630521
         });
     }
 }

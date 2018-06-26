@@ -6,7 +6,7 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/mortgages/mortgages-enter';
+} from '@redux/biz/mortgages/mortgages-internal';
 import {
     getQueryString,
     moneyFormat,
@@ -20,7 +20,7 @@ import {
 // import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
-    state => state.mortgagesEnter, {
+    state => state.mortgagesInternal, {
         initStates,
         doFetching,
         cancelFetching,
@@ -29,7 +29,7 @@ import {
         restore
     }
 )
-class MortgagesEnter extends React.Component {
+class MortgagesInternal extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -66,19 +66,26 @@ class MortgagesEnter extends React.Component {
             },
             readonly: true
         }, {
-            title: '解除日期',
-            field: 'releaseDatetime',
-            type: 'date',
-            required: true
+            title: '征信结果',
+            field: '11',
+            readonly: true
         }, {
-            title: '模板ID',
-            field: 'releaseTemplateId',
-            type: 'select',
-            key: 'release_template_id',
-            required: true
+            title: '预算单信息',
+            field: '22',
+            readonly: true
         }, {
-            title: '备注',
-            field: 'releaseNote'
+            title: '逾期记录',
+            field: '33',
+            readonly: true
+        }, {
+            title: '代偿记录',
+            field: '44',
+            readonly: true
+        }, {
+            title: '申请说明',
+            field: 'approveNote',
+            type: 'textarea',
+            normalArea: true
         }];
         return this.props.buildDetail({
             fields,
@@ -86,11 +93,12 @@ class MortgagesEnter extends React.Component {
             view: this.view,
             detailCode: 630521,
             buttons: [{
-              title: '确认',
+              title: '通过',
               handler: (param) => {
+                param.approveResult = '1';
                 param.operator = getUserId();
                 this.props.doFetching();
-                fetch(630576, param).then(() => {
+                fetch(630574, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {
@@ -101,6 +109,21 @@ class MortgagesEnter extends React.Component {
               check: true,
               type: 'primary'
             }, {
+              title: '不通过',
+              handler: (param) => {
+                param.approveResult = '0';
+                param.operator = getUserId();
+                this.props.doFetching();
+                fetch(630574, param).then(() => {
+                  showSucMsg('操作成功');
+                  this.props.cancelFetching();
+                  setTimeout(() => {
+                    this.props.history.go(-1);
+                  }, 1000);
+                }).catch(this.props.cancelFetching);
+              },
+              check: true
+            }, {
               title: '返回',
               handler: (param) => {
                 this.props.history.go(-1);
@@ -110,4 +133,4 @@ class MortgagesEnter extends React.Component {
     }
 }
 
-export default MortgagesEnter;
+export default MortgagesInternal;

@@ -55,14 +55,14 @@ class RepaymentsPlan extends React.Component {
             title: '贷款银行',
             field: 'loanBank',
             formatter: (v, d) => {
-                return d.repayBiz.loanBankName;
+                return d.budgetOrder.loanBankName;
             },
             readonly: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
             formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanAmount);
+                return moneyFormat(d.budgetOrder.loanAmount);
             },
             readonly: true
         }, {

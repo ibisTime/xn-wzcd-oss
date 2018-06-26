@@ -1,4 +1,4 @@
-import { commListState } from '../common';
+import { commListState } from '../../common';
 
 const PREFIX = 'BIZ_OVERDUE_LIST_';
 const SET_BUTTON_LIST = PREFIX + 'SET_BUTTON_LIST';

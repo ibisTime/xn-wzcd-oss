@@ -55,7 +55,7 @@ class Summary extends React.Component {
             search: true
         }, {
             title: '银行',
-            field: 'code',
+            field: 'bankCode',
             type: 'select',
             listCode: 632037,
             keyName: 'bankCode',
@@ -76,10 +76,12 @@ class Summary extends React.Component {
             }
         }, {
             title: '放款日期',
-            field: 'bankFkDatetime'
+            field: 'bankFkDatetime',
+            type: 'date'
         }, {
             title: '贷款金额',
-            field: 'loanAmount'
+            field: 'loanAmount',
+            amount: true
         }, {
             title: '剩余金额',
             field: 'overplusAmount',
@@ -98,7 +100,8 @@ class Summary extends React.Component {
             amount: true
         }, {
             title: '剩余代偿金额',
-            field: '22'
+            field: '22',
+            amount: true
         }, {
             title: '实际逾期期数',
             field: 'curOverdueCount'
@@ -126,10 +129,6 @@ class Summary extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 630520,
-            searchParams: {
-              refType: '0',
-              curNodeCode: '003_06'
-            },
             btnEvent: {
               relieve: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {

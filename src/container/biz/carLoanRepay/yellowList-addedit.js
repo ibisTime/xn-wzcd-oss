@@ -66,8 +66,8 @@ class yellowListAddedit extends React.Component {
               keyName: 'key',
               valueName: 'value'
           }, {
-            title: '已缴纳清收成本(元)',
-            field: 'payedFee',
+            title: '未还清收成本(元)',
+            field: 'restTotalCost',
             amount: true
           }, {
             title: '清收成本清单',

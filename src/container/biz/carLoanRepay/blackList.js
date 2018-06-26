@@ -14,17 +14,14 @@ import {
 } from 'common/js/build-list';
 import {
   showWarnMsg,
-  showSucMsg
+  showSucMsg,
+  getRoleCode
 } from 'common/js/util';
 import {
   Button,
   Upload,
   Modal
 } from 'antd';
-import {
-  lowerFrame,
-  onShelf
-} from 'api/biz';
 
 @listWrapper(state => ({
   ...state.bizBlackList,
@@ -78,8 +75,7 @@ class blackList extends React.Component {
     return this.props.buildList({
       fields,
       searchParams: {
-        refType: '0',
-        curNodeCodeList: ['003_13', '003_14', '003_15', '003_16']
+        roleCode: getRoleCode()
       },
       pageCode: 630520
     });
