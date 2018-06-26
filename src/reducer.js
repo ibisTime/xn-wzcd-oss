@@ -135,7 +135,10 @@ import { bizTrailerDispose } from './redux/biz/trailer-dispose';
 //  司法诉讼 + 详情 + 处理结果
 import { bizLitigation } from './redux/biz/litigation';
 import { bizLitigationAddEdit } from './redux/biz/litigation-addedit';
-import { bizLitigationDispose } from './redux/biz/litigation-dispose';
+import { bizLitigationLitigation } from './redux/biz/litigation-litigation';
+import { bizLitigationContinue } from './redux/biz/litigation-continue';
+import { bizLitigationEnter } from './redux/biz/litigation-enter';
+import { bizLitigationCertain } from './redux/biz/litigation-certain';
 
 //  结清审核 + 结清申请单 + 审核 + 确认付款
 import { bizSettlement } from './redux/biz/settlement';
@@ -658,7 +661,10 @@ export default combineReducers({
   postloantoolsInstallGpsToVoid,
   bizLitigation,
   bizLitigationAddEdit,
-  bizLitigationDispose,
+  bizLitigationContinue,
+  bizLitigationEnter,
+  bizLitigationCertain,
+  bizLitigationLitigation,
   bizBalancedetail,
   analysisProtect,
   bizHistoryBusinessManageAddeditAddedit,

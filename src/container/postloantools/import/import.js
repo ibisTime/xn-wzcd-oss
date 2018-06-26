@@ -40,9 +40,9 @@ import {
 class imports extends React.Component {
     render() {
         const fields = [{
-            title: '业务编号',
-            field: 'code',
-            search: true
+            title: '导入日期',
+            field: 'importDatetime',
+            type: 'date'
         }, {
             title: '客户姓名',
             field: 'realName',
@@ -51,12 +51,19 @@ class imports extends React.Component {
             title: '身份证',
             field: 'idNo'
         }, {
+            title: '贷款银行',
+            field: 'loanBankName'
+        }, {
             title: '贷款金额',
             field: 'loanAmount',
             amount: true
         }, {
-            title: '贷款银行',
-            field: 'loanBankName'
+            title: '剩余金额',
+            field: 'remainAmount',
+            amount: true
+        }, {
+            title: '总期数',
+            field: 'periods'
         }, {
             title: '放款日期',
             field: 'fkDatetime',
@@ -65,10 +72,6 @@ class imports extends React.Component {
             title: '逾期金额',
             field: 'overdueAmount',
             amount: true
-        }, {
-            title: '逾期日期',
-            field: 'overdueDatetime',
-            type: 'date'
         }, {
             title: '状态',
             field: 'status',

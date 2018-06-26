@@ -64,12 +64,20 @@ class importImport extends React.Component {
             title: '总期数',
             dataIndex: 'periods'
         }, {
+            title: '剩余金额',
+            dataIndex: 'remainAmount',
+            render: moneyFormat
+        }, {
             title: '逾期金额',
             dataIndex: 'overdueAmount',
             render: moneyFormat
         }, {
             title: '放款日期',
             dataIndex: 'fkDatetime',
+            type: 'date'
+        }, {
+            title: '批量日期',
+            dataIndex: 'batchDatetime',
             type: 'date'
         }];
         this.state = {
@@ -114,8 +122,10 @@ class importImport extends React.Component {
                     idNo: item[1],
                     loanAmount: item[2] * 1000,
                     periods: item[3],
-                    overdueAmount: item[4] * 1000,
-                    fkDatetime: item[5]
+                    remainAmount: item[4] * 1000,
+                    overdueAmount: item[5] * 1000,
+                    fkDatetime: item[6],
+                    batchDatetime: item[7]
                 });
             });
             this.setState({data: data});
@@ -175,7 +185,6 @@ class importImport extends React.Component {
             onChange(info) {
                 if (info.file.status !== 'uploading') {
                     _this.setState({ fileList: [info.file] });
-                    console.log(info.fileList);
                 }
                 if (info.file.status === 'done') {
                 } else if (info.file.status === 'error') {

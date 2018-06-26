@@ -39,12 +39,12 @@ import {
 class trailer extends React.Component {
     render() {
         const fields = [{
-            title: '客户姓名',
-            field: 'customerName',
+            title: '业务编号',
+            field: 'code',
             search: true
         }, {
-            title: '业务编号',
-            field: 'code'
+            title: '贷款人',
+            field: 'realName'
         }, {
             title: '手机号',
             field: 'mobile',
@@ -78,20 +78,20 @@ class trailer extends React.Component {
             fields,
             pageCode: 630520,
             searchParams: {
-                refType: '0',
-                curNodeCode: '003_11'
+                refType: '0'
+                // curNodeCode: '021_11'
             },
             btnEvent: {
                 dispose: (selectedRowKeys, selectedRows) => {
-                    // if (!selectedRowKeys.length) {
-                    //     showWarnMsg('请选择记录');
-                    // } else if (selectedRowKeys.length > 1) {
-                    //     showWarnMsg('请选择一条记录');
-                    // } else if (selectedRows[0].curNodeCode !== '003_11') {
-                    //     showWarnMsg('当前节点不是清款催收部拖车结果已录入节点');
-                    // } else {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '021_11') {
+                        showWarnMsg('当前节点不是录入拖车结果的节点');
+                    } else {
                         this.props.history.push(`/biz/trailer/dispose?v=1&code=${selectedRowKeys[0]}`);
-                    // }
+                    }
                 }
             }
         });

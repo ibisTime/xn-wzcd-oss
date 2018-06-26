@@ -1,6 +1,6 @@
 import { commListState } from '../common';
 
-const PREFIX = 'BIZ_MLITIGATION_';
+const PREFIX = 'BIZ_LITIGATION_';
 const SET_BUTTON_LIST = PREFIX + 'SET_BUTTON_LIST';
 const LOADING = PREFIX + 'LOADING';
 const CANCEL_LOADING = PREFIX + 'CANCEL_LOADING';
