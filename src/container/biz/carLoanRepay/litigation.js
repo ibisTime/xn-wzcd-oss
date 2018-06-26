@@ -102,7 +102,7 @@ class litigation extends React.Component {
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push(`/biz/litigation/continue?code=${selectedRowKeys[0]}&userId=${selectedRows[0].user.userId}`);
+                        this.props.history.push(`/biz/litigation/continue?code=${selectedRowKeys[0]}`);
                     }
                 },
                 enter: (selectedRowKeys, selectedRows) => {
@@ -111,7 +111,7 @@ class litigation extends React.Component {
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push(`/biz/litigation/enter?code=${selectedRowKeys[0]}&userId=${selectedRows[0].user.userId}`);
+                        this.props.history.push(`/biz/litigation/enter?code=${selectedRowKeys[0]}`);
                     }
                 },
                 certain: (selectedRowKeys, selectedRows) => {
@@ -120,7 +120,7 @@ class litigation extends React.Component {
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push(`/biz/litigation/certain?code=${selectedRowKeys[0]}&userId=${selectedRows[0].user.userId}`);
+                        this.props.history.push(`/biz/litigation/certain?code=${selectedRowKeys[0]}`);
                     }
                 }
             }

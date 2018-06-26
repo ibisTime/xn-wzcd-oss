@@ -15,11 +15,6 @@ import {
     getRoleCode
 } from 'common/js/util';
 import {
-    Button,
-    Upload,
-    Modal
-} from 'antd';
-import {
     listWrapper
 } from 'common/js/build-list';
 import {
@@ -47,65 +42,65 @@ class compensatory extends React.Component {
     render() {
         const fields = [{
             title: '预算单号',
-            field: 'code',
-            search: true
+            field: 'budgetCode'
         }, {
             title: '业务编号',
-            field: 'companyCode',
+            field: 'bizCode',
             search: true
         }, {
             title: '客户姓名',
-            field: 'budgetAmount',
-            search: true
+            field: 'customerUserName'
         }, {
             title: '证件号',
-            field: 'receiptAccount'
+            field: 'idNo'
         }, {
             title: '代偿性质',
-            field: 'payDatetime',
+            field: 'type',
+            type: 'select',
+            key: 'replace_repay_type',
             search: true
         }, {
             title: '预算金额',
-            field: 'budgetAmount',
+            field: 'loanAmount',
             amount: true
         }, {
             title: '月还款额',
-            field: 'budgetAmount',
+            field: 'monthLoanAmount',
             amount: true
         }, {
             title: '逾期金额',
-            field: 'payDatetime',
+            field: 'overdueAmount',
             amount: true
         }, {
             title: '剩余垫资金额',
-            field: 'budgetAmount',
+            field: 'dzAmount',
             amount: true
         }, {
             title: '累计逾期次数',
-            field: 'budgetAmount'
+            field: 'periods'
         }, {
             title: '实际预期次数',
-            field: 'budgetAmount'
+            field: 'periods1'
         }, {
             title: '累计代偿次数',
-            field: 'budgetAmount'
+            field: 'periods2'
         }, {
             title: '实际代偿次数',
-            field: 'budgetAmount'
+            field: 'periods3'
         }, {
-            title: '状态',
-            field: 'budgetAmount',
-            search: true
+            title: '当前节点',
+            field: 'curNodeCode',
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }, {
             title: '备注',
             field: 'remark'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632108,
-            searchParams: {
-                roleCode: getRoleCode()
-            },
+            pageCode: 632336,
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {

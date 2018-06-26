@@ -36,26 +36,63 @@ class litigationAddedit extends React.Component {
         const fields = [{
             title: '客户姓名',
             field: 'realName',
-            formatter: (v, d) => {
-                return d.user.realName;
-            }
+            readonly: true
         }, {
             title: '业务编号',
-            field: 'code'
+            field: 'code',
+            readonly: true
         }, {
-            title: '贷款银行',
-            field: 'loanBank'
+            title: '身份证',
+            field: 'idNo',
+            readonly: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            amount: true
+            amount: true,
+            readonly: true
         }, {
-            title: '业务团队',
-            field: 'loanAmount'
+            title: '贷款银行',
+            field: 'loanBank',
+            readonly: true
         }, {
-            title: '业务团队扣款金额',
-            field: 'buyOutAmount',
-            amount: true
+            title: '案号',
+            field: 'caseNumber',
+            required: true
+        }, {
+            title: '原告',
+            field: 'plaintiff',
+            required: true
+        }, {
+            title: '被告',
+            field: 'defendant',
+            readonly: true,
+            formatter: (v, data) => {
+                return data.realName;
+            },
+            required: true
+        }, {
+            title: '诉讼标的',
+            field: 'caseSubject',
+            amount: true,
+            required: true
+        }, {
+            title: '涉案车辆',
+            field: 'caseCar',
+            required: true
+        }, {
+            title: '诉讼费',
+            field: 'caseFee',
+            amount: true,
+            required: true
+        }, {
+            title: '起诉日期',
+            field: 'caseStartDatetime',
+            type: 'date',
+            required: true
+        }, {
+            title: '起诉附件',
+            field: 'casePdf',
+            type: 'img'
         }];
         return this
             .props
