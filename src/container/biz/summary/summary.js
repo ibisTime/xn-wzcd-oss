@@ -55,11 +55,11 @@ class Summary extends React.Component {
             search: true
         }, {
             title: '银行',
-            field: 'bankCode',
+            field: 'loanBank',
             type: 'select',
-            listCode: 632037,
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            listCode: 632057,
+            keyName: 'code',
+            valueName: 'fullName',
             search: true
         }, {
             title: '客户姓名',
@@ -104,17 +104,18 @@ class Summary extends React.Component {
             amount: true
         }, {
             title: '实际逾期期数',
-            field: 'curOverdueCount'
+            field: 'curOverdueCount',
+            search: true
         }, {
             title: '累计代偿次数',
             field: 'totalReplaceRepayCount'
         }, {
             title: '实际代偿次数',
-            field: 'curReplaceRepayCount'
+            field: 'curReplaceRepayCount',
+            search: true
         }, {
             title: '账单日',
-            field: 'billDatetime',
-            type: 'date'
+            field: 'billDatetime'
         }, {
             title: '还款日',
             field: 'monthDatetime',

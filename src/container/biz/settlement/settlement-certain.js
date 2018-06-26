@@ -140,9 +140,9 @@ class settlementCertain extends React.Component {
             title: '付款银行',
             field: 'settleBank',
             type: 'select',
-            listCode: 632037,
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            listCode: 632057,
+            keyName: 'code',
+            valueName: 'fullName',
             required: true
         }, {
             title: '付款账号',

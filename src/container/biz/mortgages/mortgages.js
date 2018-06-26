@@ -59,22 +59,20 @@ class mortgages extends React.Component {
                 return d.user.realName;
             }
         }, {
-            title: '车牌号',
-            field: '11'
-        }, {
             title: '解除日期',
-            field: '22',
-            type: 'date'
+            field: 'releaseDatetime',
+            type: 'datetime'
         }, {
             title: '业务员',
-            field: '33',
-            type: 'date'
+            field: 'updaterName'
         }, {
             title: '模板ID',
-            field: '44'
+            field: 'releaseTemplateId',
+            type: 'select',
+            key: 'template_id'
         }, {
             title: '申请日期',
-            field: '55',
+            field: 'applyDatetime',
             type: 'date'
         }, {
             title: '当前节点',

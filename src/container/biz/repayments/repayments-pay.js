@@ -70,12 +70,12 @@ class RepaymentsPay extends React.Component {
             readonly: true
         }, {
             title: '银行欠款',
-            field: '11',
+            field: 'restAmount',
             amount: 'true',
             readonly: true
         }, {
             title: '代偿欠款',
-            field: '22',
+            field: 'restReplaceRepayAmount',
             amount: 'true',
             readonly: true
         }, {
@@ -95,11 +95,19 @@ class RepaymentsPay extends React.Component {
             title: '扣除违约金额',
             field: 'cutLyDeposit',
             amount: 'true',
+            onChange: (v) => {
+                let lyDeposit = this.props.pageData.lyDeposit;
+                console.log('lyDeposit====' + lyDeposit);
+                console.log('v====' + v);
+                this.props.setPageData({
+                    ...this.props.pageData,
+                    actualRefunds: moneyFormat(lyDeposit - v * 1000)
+                });
+            },
             required: true
         }, {
             title: '实际退款金额',
             field: 'actualRefunds',
-            amount: 'true',
             readonly: true
         }, {
             title: '结清时间',
