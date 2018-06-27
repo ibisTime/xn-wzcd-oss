@@ -44,9 +44,10 @@ class budgetApply extends React.Component {
             title: '业务编号',
             field: 'bizCode',
             type: 'select',
-            listCode: 630542,
+            pageCode: 630520,
             params: {
-                repayBizCode: 'RB_TEST'
+                start: '0',
+                limit: '100'
             },
             keyName: 'code',
             valueName: 'code',
@@ -64,9 +65,9 @@ class budgetApply extends React.Component {
             title: '收款人开户行',
             field: 'receiptBank',
             type: 'select',
-            listCode: '632037',
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            listCode: 632057,
+            keyName: 'code',
+            valueName: '{{bankName.DATA}}-{{fullName.DATA}}',
             required: true
         }, {
             title: '收款人账号',

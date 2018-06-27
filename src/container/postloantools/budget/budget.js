@@ -69,11 +69,7 @@ class budget extends React.Component {
             field: 'receiptRealName'
         }, {
             title: '收款人开户行',
-            field: 'receiptBank',
-            type: 'select',
-            listCode: '632037',
-            keyName: 'bankCode',
-            valueName: 'bankName'
+            field: 'receiptBankName'
         }, {
             title: '收款人账号',
             field: 'receiptAccount'
@@ -104,7 +100,7 @@ class budget extends React.Component {
             pageCode: 632325,
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {
-                    this.props.history.push(`/postloantools/budget/apply?code=${selectedRowKeys[0]}`);
+                    this.props.history.push(`/postloantools/budget/apply`);
                 },
                 check: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {

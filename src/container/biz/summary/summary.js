@@ -131,15 +131,13 @@ class Summary extends React.Component {
             fields,
             pageCode: 630520,
             btnEvent: {
-              relieve: (selectedRowKeys, selectedRows) => {
+              plan: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
                   showWarnMsg('请选择记录');
                 } else if (selectedRowKeys.length > 1) {
                   showWarnMsg('请选择一条记录');
-                } else if (selectedRows[0].curNodeCode !== '003_06') {
-                    showWarnMsg('当前节点不是解除抵押节点');
                 } else {
-                  this.props.history.push(`/biz/summary/relieve?code=${selectedRowKeys[0]}`);
+                  this.props.history.push(`/biz/summary/plan?code=${selectedRowKeys[0]}`);
                 }
               }
             }

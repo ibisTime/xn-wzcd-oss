@@ -55,11 +55,7 @@ class budgetCheck extends React.Component {
             readonly: true
         }, {
             title: '收款人开户行',
-            field: 'receiptBank',
-            type: 'select',
-            listCode: '632037',
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            field: 'receiptBankName',
             readonly: true
         }, {
             title: '收款人账号',
