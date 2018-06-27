@@ -53,6 +53,20 @@ class redListEnter extends React.Component {
             maount: true,
             readonly: true
         }, {
+            title: '车辆型号',
+            field: 'carModel',
+            formatter: (v, d) => {
+                return d.budgetOrder.carModel;
+            },
+            readonly: true
+        }, {
+            title: '车牌号',
+            field: 'carNo',
+            formatter: (v, d) => {
+                return d.budgetOrder.carNo;
+            },
+            readonly: true
+        }, {
             title: '收车地点',
             field: 'takeCarAddress',
             required: true

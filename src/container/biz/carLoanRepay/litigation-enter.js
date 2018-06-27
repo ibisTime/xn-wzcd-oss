@@ -58,7 +58,7 @@ class litigationEnter extends React.Component {
             field: 'exeCaseNumber',
             required: true
         }, {
-            title: '申请人',
+            title: '申请人姓名',
             field: 'exeApplyUser',
             required: true
         }, {
@@ -97,7 +97,7 @@ class litigationEnter extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630560,
+            editCode: 630562,
             detailCode: 630521,
             beforeSubmit: (params) => {
                 params.code = this.code;

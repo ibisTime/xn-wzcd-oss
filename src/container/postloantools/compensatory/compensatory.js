@@ -12,7 +12,8 @@ import {
 import {
     showWarnMsg,
     showSucMsg,
-    getRoleCode
+    getRoleCode,
+    moneyFormat
 } from 'common/js/util';
 import {
     listWrapper
@@ -42,7 +43,7 @@ class compensatory extends React.Component {
     render() {
         const fields = [{
             title: '预算单号',
-            field: 'budgetCode'
+            field: 'replaceApplyCode'
         }, {
             title: '业务编号',
             field: 'bizCode',
@@ -62,31 +63,17 @@ class compensatory extends React.Component {
         }, {
             title: '预算金额',
             field: 'loanAmount',
-            amount: true
+            render: (v, d) => {
+                return moneyFormat(d.replaceRepayApply.amount);
+            }
         }, {
-            title: '月还款额',
-            field: 'monthLoanAmount',
-            amount: true
+            title: '代偿后采取方式',
+            field: 'takeWay',
+            type: 'select',
+            key: 'take_way'
         }, {
-            title: '逾期金额',
-            field: 'overdueAmount',
-            amount: true
-        }, {
-            title: '剩余垫资金额',
-            field: 'dzAmount',
-            amount: true
-        }, {
-            title: '累计逾期次数',
-            field: 'periods'
-        }, {
-            title: '实际预期次数',
-            field: 'periods1'
-        }, {
-            title: '累计代偿次数',
-            field: 'periods2'
-        }, {
-            title: '实际代偿次数',
-            field: 'periods3'
+            title: '暂缓天数',
+            field: 'deferDays'
         }, {
             title: '当前节点',
             field: 'curNodeCode',

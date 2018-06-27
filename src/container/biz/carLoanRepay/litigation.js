@@ -14,7 +14,8 @@ import {
 } from 'common/js/build-list';
 import {
     showWarnMsg,
-    showSucMsg
+    showSucMsg,
+    formatDate
 } from 'common/js/util';
 import {
     lowerFrame,
@@ -64,11 +65,16 @@ class litigation extends React.Component {
             amount: true
         }, {
             title: '剩余银行欠款',
-            field: 'restTotalCost',
+            field: 'restAmount',
             amount: true
         }, {
             title: '申请时间',
-            field: 'takeDatetime'
+            field: 'time',
+            render: (v, d) => {
+                if(d.judgeList[0]) {
+                    return formatDate(d.judgeList[0].caseStartDatetime);
+                }
+            }
         }, {
             title: '当前节点',
             field: 'curNodeCode',

@@ -37,32 +37,42 @@ class trailerDispose extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'customerName'
+            field: 'realName',
+            formatter: (v, d) => {
+                return d.user.realName;
+            },
+            readonly: true
         }, {
             title: '业务编号',
-            field: 'code'
+            field: 'code',
+            readonly: true
         }, {
-            title: '身份证',
-            field: 'inNo'
+            title: '贷款银行',
+            field: 'loanBankName',
+            readonly: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            amount: true
-        }, {
-            title: '贷款银行',
-            field: 'loanBankName'
+            amount: true,
+            readonly: true
         }, {
             title: '车辆型号',
-            field: 'carModel'
+            field: 'carModel',
+            formatter: (v, d) => {
+                return d.budgetOrder.carModel;
+            }
         }, {
             title: '车牌号',
-            field: 'carNo'
+            field: 'carNo',
+            formatter: (v, d) => {
+                return d.budgetOrder.carNo;
+            }
         }, {
             title: '银行欠款',
-            field: 'bankAmount'
+            field: 'restAmount'
         }, {
             title: '代偿欠款',
-            field: 'dcAmount'
+            field: '11'
         }, {
             title: '处理结果',
             field: 'dealResult',
@@ -105,7 +115,7 @@ class trailerDispose extends React.Component {
                         param.code = this.code;
                         param.operator = getUserId();
                         this.props.doFetching();
-                        fetch(632146, param).then(() => {
+                        fetch(630557, param).then(() => {
                             showSucMsg('操作成功');
                             this.props.cancelFetching();
                             setTimeout(() => {

@@ -10,7 +10,8 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -30,6 +31,13 @@ class RedListCheckDirectorTwo extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.arr = [{
+            key: '0',
+            value: '否'
+        }, {
+            key: '1',
+            value: '是'
+        }];
     }
     render() {
         const fields = [{
@@ -45,7 +53,7 @@ class RedListCheckDirectorTwo extends React.Component {
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '贷款金额',
@@ -55,51 +63,59 @@ class RedListCheckDirectorTwo extends React.Component {
         }, {
             title: '是否典当行赎回',
             field: 'pawnshopIsRedeem',
-            type: 'select',
-            data: [{
-                key: '0',
-                value: '否'
-            }, {
-                key: '1',
-                value: '是'
-            }],
-            keyName: 'key',
-            valueName: 'value',
+            formatter: (v, d) => {
+                let index = d.curMonthRepayPlan.pawnshopIsRedeem;
+                return this.arr[index].value;
+            },
             readonly: true
         }, {
             title: '典当行名称',
             field: 'pawnshopName',
+            formatter: (v, d) => {
+                return d.curMonthRepayPlan.pawnshopName;
+            },
             readonly: true
         }, {
             title: '赎金小写',
             field: 'ransom',
-            amount: true,
+            formatter: (v, d) => {
+                return moneyFormat(d.curMonthRepayPlan.ransom);
+            },
             readonly: true
         }, {
             title: '拖车费用',
             field: 'tsCarAmount',
-            amount: true,
+            formatter: (v, d) => {
+                return moneyFormat(d.curMonthRepayPlan.tsCarAmount);
+            },
             readonly: true
         }, {
             title: '收款人名称',
             field: 'tsUserName',
+            formatter: (v, d) => {
+                return d.curMonthRepayPlan.tsUserName;
+            },
             readonly: true
         }, {
             title: '收款人开户行',
             field: 'tsBankName',
-            type: 'select',
-            listCode: 632037,
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            formatter: (v, d) => {
+                return d.curMonthRepayPlan.tsBankName;
+            },
             readonly: true
         }, {
             title: '收款人开户支行',
             field: 'tsSubbranch',
+            formatter: (v, d) => {
+                return d.curMonthRepayPlan.tsSubbranch;
+            },
             readonly: true
         }, {
             title: '收款人账号',
             field: 'tsBankcardNumber',
-            bankCard: true,
+            formatter: (v, d) => {
+                return d.curMonthRepayPlan.tsBankcardNumber;
+            },
             readonly: true
         }, {
             title: '申请说明',

@@ -10,7 +10,8 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    formatDate
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -57,42 +58,59 @@ class litigationAddedit extends React.Component {
         }, {
             title: '案号',
             field: 'caseNumber',
-            required: true
+            formatter: (v, d) => {
+                return d.judgeList[0].caseNumber;
+            },
+            required: true,
+            readonly: true
         }, {
             title: '原告',
             field: 'plaintiff',
-            required: true
+            formatter: (v, d) => {
+                return d.judgeList[0].plaintiff;
+            },
+            required: true,
+            readonly: true
         }, {
             title: '被告',
             field: 'defendant',
-            readonly: true,
             formatter: (v, data) => {
                 return data.realName;
             },
-            required: true
+            required: true,
+            readonly: true
         }, {
             title: '诉讼标的',
             field: 'caseSubject',
-            amount: true,
-            required: true
+            formatter: (v, d) => {
+                return d.judgeList[0].caseSubject;
+            },
+            required: true,
+            readonly: true
         }, {
             title: '涉案车辆',
             field: 'caseCar',
-            required: true
-        }, {
-            title: '诉讼费',
-            field: 'caseFee',
-            amount: true,
-            required: true
+            formatter: (v, d) => {
+                return d.judgeList[0].caseCar;
+            },
+            required: true,
+            readonly: true
         }, {
             title: '起诉日期',
             field: 'caseStartDatetime',
-            type: 'date',
-            required: true
+            formatter: (v, d) => {
+                return formatDate(d.judgeList[0].caseStartDatetime);
+            },
+            required: true,
+            readonly: true
         }, {
             title: '起诉附件',
             field: 'casePdf',
-            type: 'img'
+            formatter: (v, d) => {
+                return d.judgeList[0].casePdf;
+            },
+            type: 'img',
+            readonly: true
         }];
         return this
             .props

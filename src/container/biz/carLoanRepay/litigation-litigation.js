@@ -34,6 +34,9 @@ class litigationLitigation extends React.Component {
         const fields = [{
             title: '客户姓名',
             field: 'realName',
+            formatter: (v, d) => {
+                return d.user.realName;
+            },
             readonly: true
         }, {
             title: '业务编号',
@@ -42,6 +45,9 @@ class litigationLitigation extends React.Component {
         }, {
             title: '身份证',
             field: 'idNo',
+            formatter: (v, d) => {
+                return d.user.idNo;
+            },
             readonly: true
         }, {
             title: '贷款金额',
@@ -50,7 +56,7 @@ class litigationLitigation extends React.Component {
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '案号',
@@ -65,13 +71,19 @@ class litigationLitigation extends React.Component {
             field: 'defendant',
             readonly: true,
             formatter: (v, data) => {
-                return data.realName;
+                return data.user.realName;
             },
             required: true
         }, {
+            title: '被告人',
+            field: 'userId',
+            formatter: (v, data) => {
+                return data.user.userId;
+            },
+            hidden: true
+        }, {
             title: '诉讼标的',
             field: 'caseSubject',
-            amount: true,
             required: true
         }, {
             title: '涉案车辆',
@@ -99,8 +111,9 @@ class litigationLitigation extends React.Component {
             editCode: 630560,
             detailCode: 630521,
             beforeSubmit: (params) => {
+                console.log(this.props.pageDate);
                 params.repayBizCode = this.code;
-                params.defendant = this.props.pageDate.userId;
+                params.defendant = params.userId;
                 params.operator = getUserId();
                 return params;
             }

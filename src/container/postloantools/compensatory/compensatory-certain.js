@@ -11,8 +11,10 @@ import {CollapseWrapper} from 'component/collapse-detail/collapse-detail';
 import {
     getQueryString,
     showSucMsg,
-    getUserId
+    getUserId,
+    moneyFormat
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 
 @CollapseWrapper(
     state => state.postloantoolsCompensatoryCertain, {
@@ -38,14 +40,20 @@ class compensatoryCertain extends React.Component {
                 [{
                     title: '客户姓名',
                     field: 'customerUserName',
+                    formatter: (v, d) => {
+                        return d.user.realName;
+                    },
                     readonly: true
                 }, {
                     title: '业务编号',
-                    field: 'bizCode',
+                    field: 'code',
                     readonly: true
                 }, {
                     title: '身份证',
                     field: 'idNo',
+                    formatter: (v, d) => {
+                        return d.user.idNo;
+                    },
                     readonly: true
                 }]
             ]
@@ -57,41 +65,49 @@ class compensatoryCertain extends React.Component {
                     title: '代偿性质',
                     field: 'type',
                     type: 'select',
+                    formatter: (v, d) => {
+                        return d.replaceRepayApply.type;
+                    },
                     key: 'replace_repay_type',
                     readonly: true
                 }, {
                     title: '预算金额',
                     field: 'budgetAmount',
-                    amount: true,
+                    formatter: (v, d) => {
+                        return moneyFormat(d.replaceRepayApply.amount);
+                    },
                     readonly: true
                 }],
                 [{
                     title: '收款人姓名',
-                    field: 'useDatetime',
+                    field: 'repayUserName',
+                    formatter: (v, d) => {
+                        return d.replaceRepayApply.receiptRealName;
+                    },
                     readonly: true
                 }, {
                     title: '收款人开户行',
                     field: 'repayBankName',
+                    formatter: (v, d) => {
+                        return d.replaceRepayApply.receiptBankName;
+                    },
                     readonly: true
                 }, {
                     title: '收款人账号',
-                    field: 'useDatetime',
-                    type: 'date',
+                    field: 'repayBankcard',
+                    formatter: (v, d) => {
+                        return d.replaceRepayApply.receiptAccount;
+                    },
                     readonly: true
                 }],
                 [{
                     title: '是否加急',
-                    field: 'useDatetime',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '是'
-                    }, {
-                        key: '1',
-                        value: '否'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value',
+                    field: 'isUrgent',
+                    formatter: (v, d) => {
+                        let index = d.replaceRepayApply.isUrgent;
+                        let isUrgent = this.arr[index].value;
+                        return isUrgent;
+                    },
                     readonly: true
                 }, {
                     title: '已代偿金额',
@@ -100,7 +116,10 @@ class compensatoryCertain extends React.Component {
                     readonly: true
                 }, {
                     title: '代偿说明',
-                    field: 'useDatetime',
+                    field: 'remark1',
+                    formatter: (v, d) => {
+                        return d.replaceRepayApply.remark;
+                    },
                     readonly: true
                 }]
             ]
@@ -126,6 +145,8 @@ class compensatoryCertain extends React.Component {
                 [{
                     title: '垫款后采取的方式',
                     field: 'takeWay',
+                    type: 'select',
+                    key: 'take_way',
                     readonly: true
                 }, {
                     title: '暂缓起诉(天)',
@@ -134,21 +155,7 @@ class compensatoryCertain extends React.Component {
                 }],
                 [{
                     title: '申请垫款理由',
-                    field: 'useDatetime',
-                    readonly: true
-                }]
-            ]
-        }, {
-            title: '欠款人以及担保人相关财产状况信息',
-            items: [
-                [{
-                    title: '欠款人及配偶信息',
-                    field: 'useDatetime',
-                    readonly: true
-                }],
-                [{
-                    title: '担保人信息及其名下财产信息',
-                    field: 'useDatetime',
+                    field: 'applyReason',
                     readonly: true
                 }]
             ]
@@ -215,8 +222,7 @@ class compensatoryCertain extends React.Component {
                 [{
                     title: '付款凭证',
                     field: 'repayBill',
-                    type: 'img',
-                    required: true
+                    type: 'img'
                 }]
             ]
         }];
@@ -224,15 +230,15 @@ class compensatoryCertain extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632106,
+            detailCode: 632337,
             buttons: [{
                 title: '确认',
                 check: true,
                 handler: (params) => {
                     params.code = this.code;
                     params.operator = getUserId();
-                    params.repayUse = this.props.pageData.realName;
-                    params.repayBankcard = this.props.pageData.bankcardNumber;
+                    params.repayUser = this.props.pageData.repayUser;
+                    params.repayBankcard = this.props.pageData.repayBankcard;
                     this.props.doFetching();
                     fetch(632335, params).then(() => {
                         showSucMsg('操作成功');

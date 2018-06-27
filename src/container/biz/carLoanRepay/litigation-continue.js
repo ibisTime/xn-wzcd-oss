@@ -10,7 +10,8 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    formatDate
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -57,11 +58,17 @@ class litigationContinue extends React.Component {
         }, {
             title: '案号',
             field: 'caseNumber',
+            formatter: (v, d) => {
+                return d.judgeList[0].caseNumber;
+            },
             required: true,
             readonly: true
         }, {
             title: '原告',
             field: 'plaintiff',
+            formatter: (v, d) => {
+                return d.judgeList[0].plaintiff;
+            },
             required: true,
             readonly: true
         }, {
@@ -75,22 +82,33 @@ class litigationContinue extends React.Component {
         }, {
             title: '诉讼标的',
             field: 'caseSubject',
+            formatter: (v, d) => {
+                return d.judgeList[0].caseSubject;
+            },
             required: true,
             readonly: true
         }, {
             title: '涉案车辆',
             field: 'caseCar',
+            formatter: (v, d) => {
+                return d.judgeList[0].caseCar;
+            },
             required: true,
             readonly: true
         }, {
             title: '起诉日期',
             field: 'caseStartDatetime',
-            type: 'date',
+            formatter: (v, d) => {
+                return formatDate(d.judgeList[0].caseStartDatetime);
+            },
             required: true,
             readonly: true
         }, {
             title: '起诉附件',
             field: 'casePdf',
+            formatter: (v, d) => {
+                return d.judgeList[0].casePdf;
+            },
             type: 'img',
             readonly: true
         }, {
@@ -124,7 +142,7 @@ class litigationContinue extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630560,
+            editCode: 630561,
             detailCode: 630521,
             beforeSubmit: (params) => {
                 params.code = this.code;
