@@ -58,16 +58,16 @@ class MisInvoiceCertain extends React.Component {
             readonly: true
         }, {
             title: '原应退按揭款',
-            field: 'amount1',
-            readonly: true,
-            amount: true
+            field: 'preLoanAmount',
+            amount: true,
+            readonly: true
         }, {
             title: '新应退按揭款',
-            field: 'amount2',
-            readonly: true,
+            field: 'loanAmount',
             amount: true,
+            readonly: true,
             formatter: (v, data) => {
-                if (moneyFormat(data.amount1) > moneyFormat(data.amount2)) {
+                if (moneyFormat(data.preLoanAmount) > moneyFormat(data.loanAmount)) {
                     this.hiddenStatus = true;
                 } else {
                     this.hiddenStatus = false;

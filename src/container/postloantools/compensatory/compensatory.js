@@ -103,13 +103,40 @@ class compensatory extends React.Component {
             pageCode: 632336,
             btnEvent: {
                 check: (selectedRowKeys, selectedRows) => {
-                    // if (!selectedRowKeys.length) {
-                    //     showWarnMsg('请选择记录');
-                    // } else if (selectedRowKeys.length > 1) {
-                    //     showWarnMsg('请选择一条记录');
-                    // } else {
-                        this.props.history.push(`/postloantools/compensatory/check?code=${selectedRowKeys[0]}`);
-                    // }
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/postloantools/compensatory/check?isCheck=1&code=${selectedRowKeys[0]}`);
+                    }
+                },
+                compCheck: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                    this.props.history.push(`/postloantools/compensatory/check?isCompCheck=1&code=${selectedRowKeys[0]}`);
+                    }
+                },
+                directorCheck: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                    this.props.history.push(`/postloantools/compensatory/check?isDirectorCheck=1&code=${selectedRowKeys[0]}`);
+                    }
+                },
+                financeCheck: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                    this.props.history.push(`/postloantools/compensatory/check?isFinanceCheck=1&code=${selectedRowKeys[0]}`);
+                    }
                 },
                 certain: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {

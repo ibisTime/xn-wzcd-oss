@@ -13,9 +13,6 @@ import {
     showSucMsg,
     getUserId
 } from 'common/js/util';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
 
 @CollapseWrapper(
     state => state.postloantoolsCompensatoryCheck, {
@@ -32,6 +29,14 @@ class compensatoryCheck extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        // 风控经理审核
+        this.isCheck = !!getQueryString('isCheck', this.props.location.search);
+        // 分公司总经理审核
+        this.isCompCheck = !!getQueryString('isCompCheck', this.props.location.search);
+        // 风控总监审核
+        this.isDirectorCheck = !!getQueryString('isDirectorCheck', this.props.location.search);
+        // 财务经理审核
+        this.isFinanceCheck = !!getQueryString('isFinanceCheck', this.props.location.search);
     }
 
     render() {
@@ -162,15 +167,27 @@ class compensatoryCheck extends React.Component {
                 [{
                     title: '特殊情况说明',
                     field: 'riskNote',
-                    required: true
-                }],
-                [{
-                    title: '审核说明',
-                    field: 'useDatetime',
-                    required: true
+                    required: true,
+                    readonly: !this.isCheck
                 }]
             ]
+        }, {
+            title: '审核说明',
+            field: 'remark'
         }];
+        let bizCode = 632331;
+
+        // 分公司总经理审核
+        if (this.isCompCheck) {
+            bizCode = 632332;
+        // 风控总监审核
+        } else if (this.isDirectorCheck) {
+            bizCode = 632332;
+        // 财务经理审核
+        } else if (this.isFinanceCheck) {
+            bizCode = 632332;
+        }
+
         return this.props.buildDetail({
             fields,
             code: this.code,
@@ -179,10 +196,11 @@ class compensatoryCheck extends React.Component {
             buttons: [{
                 title: '通过',
                 handler: (param) => {
+                    param.code = this.code;
                     param.approveResult = '1';
                     param.operator = getUserId();
                     this.props.doFetching();
-                    fetch(632101, param).then(() => {
+                    fetch(bizCode, param).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {
@@ -195,11 +213,11 @@ class compensatoryCheck extends React.Component {
             }, {
                 title: '不通过',
                 handler: (param) => {
+                    param.code = this.code;
                     param.approveResult = '0';
-                    param.approveNote = this.projectCode;
                     param.operator = getUserId();
                     this.props.doFetching();
-                    fetch(632101, param).then(() => {
+                    fetch(bizCode, param).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {

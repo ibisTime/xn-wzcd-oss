@@ -336,7 +336,7 @@ import { postloantoolsBudgetMakebill } from './redux/postloantools/budget-makebi
 import { postloantoolsCompensatory } from './redux/postloantools/compensatory';
 import { postloantoolsCompensatoryAddEdit } from './redux/postloantools/compensatory-addedit';
 import { postloantoolsCompensatoryCheck } from './redux/postloantools/compensatory-check';
-import { postloantoolsBudgetCertain } from './redux/postloantools/compensatory-certain';
+import { postloantoolsCompensatoryCertain } from './redux/postloantools/compensatory-certain';
 
 //  GPS申领 + 详情 + 公司申领 + 个人申领 + 公司审核 + 个人审核
 import { postloantoolsApplyGps } from './redux/postloantools/applyGps';
@@ -647,6 +647,7 @@ export default combineReducers({
   postloantoolsCompensatory,
   postloantoolsCompensatoryAddEdit,
   postloantoolsCompensatoryCheck,
+  postloantoolsCompensatoryCertain,
   postloantoolsApplyGps,
   postloantoolsApplyGpsAddedit,
   postloantoolsApplyGpsCompany,
