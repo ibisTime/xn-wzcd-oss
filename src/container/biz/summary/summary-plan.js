@@ -17,7 +17,7 @@ import {
 // import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
-    state => state.summaryAddEdit, {
+    state => state.summaryPlan, {
         initStates,
         doFetching,
         cancelFetching,
@@ -87,28 +87,28 @@ class SummaryPlan extends React.Component {
                     amount: true
                 }, {
                     title: '催收回逾期金额',
-                    field: '22',
+                    field: 'payedFee',
                     amount: true
                 }, {
                     title: '清收成本',
-                    field: '33',
+                    field: 'totalFee',
                     amount: true
                 }, {
                     title: '代偿金额',
-                    field: '44',
+                    field: 'replaceRealRepayAmount',
                     amount: true
                 }, {
                     title: '代偿时间',
-                    field: '55',
-                    amount: true
+                    field: 'replaceRepayDatetime',
+                    type: 'date'
                 }, {
                     title: '收回代偿金额',
-                    field: '66',
+                    field: 'replaceBackRepayAmount',
                     amount: true
                 }, {
                     title: '收回代偿时间',
-                    field: '77',
-                    amount: true
+                    field: 'replaceBackRepayDatetime',
+                    type: 'date'
                 }]
             }
         }];

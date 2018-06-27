@@ -106,12 +106,12 @@ class blackListAddedit extends React.Component {
             readonly: true
         }, {
             title: '结清时间',
-            field: '22',
+            field: 'closeDatetime',
             type: 'date',
             readonly: true
         }, {
             title: '结清证明',
-            field: '11',
+            field: 'closeAttach',
             type: 'img',
             readonly: true
         }, {
