@@ -64,7 +64,7 @@ class trailer extends React.Component {
             field: 'restTotalCost',
             amount: true
         }, {
-            title: '拖车时间',
+            title: '手车时间',
             field: 'takeDatetime'
         }, {
             title: '当前节点',

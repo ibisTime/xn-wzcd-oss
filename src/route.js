@@ -441,12 +441,12 @@ const ROUTES = [
     path: '/biz/redList/addedit',
     component: asyncComponent(() => import('container/biz/carLoanRepay/redList-addedit'))
   },
-  //  红名单 拖车申请
+  //  红名单 手车申请
   {
     path: '/biz/redList/apply',
     component: asyncComponent(() => import('container/biz/carLoanRepay/redList-apply'))
   },
-  //  红名单 录入拖车结果
+  //  红名单 录入手车结果
   {
     path: '/biz/redList/enter',
     component: asyncComponent(() => import('container/biz/carLoanRepay/redList-enter'))
@@ -476,17 +476,17 @@ const ROUTES = [
     path: '/biz/redList/checkDirectorTwo',
     component: asyncComponent(() => import('container/biz/carLoanRepay/redList-checkDirectorTwo'))
   },
-  //  拖车管理
+  //  手车管理
   {
     path: '/biz/trailer',
     component: asyncComponent(() => import('container/biz/carLoanRepay/trailer'))
   },
-  //  拖车管理 详情
+  //  手车管理 详情
   {
     path: '/biz/trailer/addedit',
     component: asyncComponent(() => import('container/biz/carLoanRepay/trailer-addedit'))
   },
-  //  拖车管理 处理结果
+  //  手车管理 处理结果
   {
     path: '/biz/trailer/dispose',
     component: asyncComponent(() => import('container/biz/carLoanRepay/trailer-dispose'))
@@ -679,6 +679,30 @@ const ROUTES = [
   {
       path: '/basis/loanPercent/addedit',
       component: asyncComponent(() => import('container/basis/loanPercent/loanPercent-addedit'))
+  },
+
+  //  gps提成百分比
+  {
+      path: '/basis/gpsextract',
+      component: asyncComponent(() => import('container/basis/gpsextract/gpsextract'))
+  },
+
+  //  gps提成百分比 修改
+  {
+      path: '/basis/gpsextract/addedit',
+      component: asyncComponent(() => import('container/basis/gpsextract/gpsextract-addedit'))
+  },
+
+  //  油补百分比
+  {
+      path: '/basis/oilpercentage',
+      component: asyncComponent(() => import('container/basis/oilpercentage/oilpercentage'))
+  },
+
+  //  油补百分比 修改
+  {
+      path: '/basis/oilpercentage/addedit',
+      component: asyncComponent(() => import('container/basis/oilpercentage/oilpercentage-addedit'))
   },
     //  统计分析模块
   //  余额明细
@@ -1850,6 +1874,94 @@ const ROUTES = [
   {
       path: '/carloanfinance/pointreturn/return',
       component: asyncComponent(() => import('container/carloanfinance/pointreturn/pointreturn-return'))
+  },
+  //  合同打印
+  //  担保合同
+  {
+      path: '/printing/guarantee',
+      component: asyncComponent(() => import('container/printing/guarantee/guarantee'))
+  },
+  //  担保合同 合同制作
+  {
+    path: '/printing/guarantee/make',
+    component: asyncComponent(() => import('container/printing/guarantee/guarantee-make'))
+  },
+  //  抵押合同
+  {
+      path: '/printing/mortgage',
+      component: asyncComponent(() => import('container/printing/mortgage/mortgage'))
+  },
+  //  抵押合同 合同制作
+  {
+    path: '/printing/mortgage/make',
+    component: asyncComponent(() => import('container/printing/mortgage/mortgage-make'))
+  },
+  //  解除合同
+  {
+      path: '/printing/relieve',
+      component: asyncComponent(() => import('container/printing/relieve/relieve'))
+  },
+  //  解除合同 合同制作
+  {
+    path: '/printing/relieve/make',
+    component: asyncComponent(() => import('container/printing/relieve/relieve-make'))
+  },
+  //  合同模版管理
+  //  担保合同
+  {
+      path: '/contractTemplate/guarantee',
+      component: asyncComponent(() => import('container/contractTemplate/guarantee/guarantee'))
+  },
+  //  担保合同 详情
+  {
+    path: '/contractTemplate/guarantee/addedit',
+    component: asyncComponent(() => import('container/contractTemplate/guarantee/guarantee-addedit'))
+  },
+  //  抵押合同
+  {
+      path: '/contractTemplate/mortgage',
+      component: asyncComponent(() => import('container/contractTemplate/mortgage/mortgage'))
+  },
+  //  抵押合同 详情
+  {
+    path: '/contractTemplate/mortgage/addedit',
+    component: asyncComponent(() => import('container/contractTemplate/mortgage/mortgage-addedit'))
+  },
+  //  解除合同
+  {
+      path: '/contractTemplate/relieve',
+      component: asyncComponent(() => import('container/contractTemplate/relieve/relieve'))
+  },
+  //  解除合同 详情
+  {
+    path: '/contractTemplate/relieve/addedit',
+    component: asyncComponent(() => import('container/contractTemplate/relieve/relieve-addedit'))
+  },
+  //  测试
+  {
+    path: '/demo/export/import',
+    component: asyncComponent(() => import('container/demo/export_import'))
+  },
+  //  历史业务
+  //  历史业务（已结清）
+  {
+    path: '/history/historyBusiness',
+    component: asyncComponent(() => import('container/history/historyBusiness/historyBusiness'))
+  },
+  //  历史业务（已结清） 详情
+  {
+    path: '/history/historyBusiness/addedit',
+    component: asyncComponent(() => import('container/history/historyBusiness/historyBusiness-addedit'))
+  },
+  //  历史业务（进行中）
+  {
+    path: '/history/historying',
+    component: asyncComponent(() => import('container/history/historying/historying'))
+  },
+  //  历史业务（进行中） 详情
+  {
+    path: '/history/historying/addedit',
+    component: asyncComponent(() => import('container/history/historying/historying-addedit'))
   }
 ];
 

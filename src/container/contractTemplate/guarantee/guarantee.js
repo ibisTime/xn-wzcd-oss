@@ -8,28 +8,23 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/biz/archives';
+} from '@redux/contractTemplate/guarantee';
+import {
+    showWarnMsg,
+    showSucMsg
+} from 'common/js/util';
 import {
     listWrapper
 } from 'common/js/build-list';
 import {
-    showWarnMsg,
-    showSucMsg,
-    dateTimeFormat
-} from 'common/js/util';
-import {
-    Button,
-    Upload,
-    Modal
-} from 'antd';
-import {
     lowerFrame,
-    onShelf
+    onShelf,
+    sendMsg
 } from 'api/biz';
 
 @listWrapper(
     state => ({
-        ...state.bizArchives,
+        ...state.contractTemplateGuarantee,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -42,7 +37,7 @@ import {
         setSearchData
     }
 )
-class archives extends React.Component {
+class Guarantee extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
@@ -58,11 +53,20 @@ class archives extends React.Component {
             type: 'select',
             keyName: 'code',
             valueName: 'name',
-            search: true
+            required: true
         }, {
             title: '客户姓名',
-            field: 'applyUserName',
+            field: 'customerName',
             search: true
+        }, {
+            title: '手机号',
+            field: 'mobile'
+        }, {
+            title: '合同编号',
+            field: 'pledgeContractCode'
+        }, {
+            title: '品牌型号',
+            field: 'carBrand'
         }, {
             title: '贷款银行',
             field: 'loanBankName'
@@ -71,49 +75,22 @@ class archives extends React.Component {
             field: 'loanAmount',
             amount: true
         }, {
-            title: '贷款期数',
-            field: 'loanPeriod'
-        }, {
-            title: '业务种类',
-            field: 'bizType',
-            type: 'select',
-            key: 'budget_orde_biz_typer'
-        }, {
-            title: '业务员',
+            title: '业务员名称',
             field: 'saleUserName'
-        }, {
-            title: '申请日期',
-            field: 'applyDatetime',
-            rangedate: ['applyDatetimeStart', 'applyDatetimeEnd'],
-            type: 'date',
-            render: dateTimeFormat,
-            search: true
         }, {
             title: '当前节点',
             field: 'curNodeCode',
             type: 'select',
             listCode: 630147,
             keyName: 'code',
-            valueName: 'name'
+            valueName: 'name',
+            search: true
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632145,
-            btnEvent: {
-              certain: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else if (selectedRows[0].curNodeCode !== '002_22') {
-                  showWarnMsg('当前不是确认入档节点');
-                } else {
-                  this.props.history.push(`/biz/archives/certain?code=${selectedRowKeys[0]}`);
-                }
-              }
-            }
+            pageCode: 632145
         });
     }
 }
 
-export default archives;
+export default Guarantee;

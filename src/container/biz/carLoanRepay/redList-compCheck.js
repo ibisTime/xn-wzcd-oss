@@ -83,7 +83,7 @@ class RedListCompCheck extends React.Component {
             },
             readonly: true
         }, {
-            title: '拖车费用',
+            title: '手车费用',
             field: 'tsCarAmount',
             formatter: (v, d) => {
                 return moneyFormat(d.curMonthRepayPlan.tsCarAmount);
