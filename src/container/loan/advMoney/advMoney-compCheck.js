@@ -70,10 +70,10 @@ class AdvMoneyAreaCheck extends React.Component {
             type: 'select',
             data: [{
                 key: '0',
-                value: '是'
+                value: '否'
             }, {
                 key: '1',
-                value: '否'
+                value: '是'
             }],
             keyName: 'key',
             valueName: 'value',

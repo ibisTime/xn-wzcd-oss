@@ -26,13 +26,7 @@ class Post extends React.Component {
         this.state = {
             fetching: true,
             treeData: [],
-            roleData: [],
-            roleCode: [{
-                title: '角色',
-                field: 'roleCode',
-                keyName: 'code',
-                valueName: 'name'
-            }]
+            roleData: []
         };
     }
     componentDidMount() {
@@ -59,7 +53,7 @@ class Post extends React.Component {
         });
         this.result = result;
         let tree = [];
-        this.getTreeNode(result['ROOT'], tree);
+        data.length && this.getTreeNode(result['ROOT'], tree);
         this.setState({ treeData: tree });
     }
     getTreeNode(arr, children) {
@@ -102,8 +96,8 @@ class Post extends React.Component {
             }
         });
     }
-
-    getSelectProps = (item) => {
+    render() {
+        const { getFieldDecorator } = this.props.form;
         const props = {
             showSearch: true,
             allowClear: true,
@@ -112,15 +106,6 @@ class Post extends React.Component {
             style: {width: '100%'},
             placeholder: '请选择'
         };
-        if (item.onChange) {
-            props.onChange = (v) => {
-                item.onChange(v, this.props.selectData[item.field] ? this.props.selectData[item.field].find(v1 => v1.code === v) : {}, this.props);
-            };
-        }
-        return props;
-    }
-    render() {
-        const { getFieldDecorator } = this.props.form;
         return (
             <Spin spinning={this.state.fetching}>
                 <Form className="detail-form-wrapper" onSubmit={this.handleSubmit}>
@@ -158,7 +143,7 @@ class Post extends React.Component {
                         {getFieldDecorator('roleCode', {
                             rules,
                             initialValue: ''
-                        })(<Select {...this.getSelectProps(this.state.roleCode[0])}>
+                        })(<Select {...props}>
                             {this.state.roleData.map(d => (
                                 <Option key={d['code']}
                                         value={d['code']}>{d['name']}</Option>))}

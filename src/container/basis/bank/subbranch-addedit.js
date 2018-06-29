@@ -75,13 +75,13 @@ class subbranchAddedit extends React.Component {
         }, {
             title: '委托有效期',
             field: 'clientValidDate',
-            type: 'date'
+            type: 'datetime'
         }, {
             title: '授权人姓名',
             field: 'autherName'
         }, {
             title: '授权人电话',
-            field: 'autherPhone',
+            field: 'autherPhoneNumber',
             mobile: true
         }, {
             title: '授权人身份证',

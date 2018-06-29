@@ -1075,8 +1075,7 @@ class BudgetAddedit extends React.Component {
                         value: '租用'
                     }],
                     keyName: 'key',
-                    valueName: 'value',
-                    required: true
+                    valueName: 'value'
                 }, {
                     title: '有无驾照',
                     field: 'isDriceLicense',
@@ -1089,8 +1088,7 @@ class BudgetAddedit extends React.Component {
                         value: '有'
                     }],
                     keyName: 'key',
-                    valueName: 'value',
-                    required: true
+                    valueName: 'value'
                 }, {
                     title: '提供场地证明',
                     field: 'isSiteProve',
@@ -1103,8 +1101,7 @@ class BudgetAddedit extends React.Component {
                         value: '有'
                     }],
                     keyName: 'key',
-                    valueName: 'value',
-                    required: true
+                    valueName: 'value'
                 }],
                 [{
                     title: '驾照',
@@ -1842,7 +1839,7 @@ class BudgetAddedit extends React.Component {
                     data.dealType = '1';
                     data.budgetOrderCode = this.code;
                     data.operator = getUserId();
-
+                    console.log(1);
                     let gpsList = [];
                     if (data.budgetOrderGpsList) {
                         data.budgetOrderGpsList.forEach((v) => {

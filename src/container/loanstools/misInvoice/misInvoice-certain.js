@@ -133,7 +133,7 @@ class MisInvoiceCertain extends React.Component {
                 check: true,
                 handler: (params) => {
                     this.props.doFetching();
-                    fetch(632100, params).then(() => {
+                    fetch(632233, params).then(() => {
                         showSucMsg('操作成功');
                         setTimeout(() => {
                             this.props.history.go(-1);

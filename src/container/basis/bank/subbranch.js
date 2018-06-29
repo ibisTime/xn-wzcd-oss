@@ -64,13 +64,14 @@ class Subbranch extends React.Component {
             field: 'bankClient'
         }, {
             title: '委托有效期',
-            field: 'clientValidDate'
+            field: 'clientValidDate',
+            type: 'datetime'
         }, {
             title: '授权人姓名',
             field: 'autherName'
         }, {
             title: '授权人电话',
-            field: 'autherPhone'
+            field: 'autherPhoneNumber'
         }, {
             title: '更新人',
             field: 'updater'

@@ -76,11 +76,11 @@ class applyGps extends React.Component {
         }, {
             title: '发货时间',
             field: 'sendDatetime',
-            type: 'datetime'
+            type: 'date'
         }, {
             title: '收货时间',
             field: 'receiveDatetime',
-            type: 'datetime'
+            type: 'date'
         }, {
             title: '状态',
             field: 'status',
