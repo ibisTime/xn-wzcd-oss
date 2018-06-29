@@ -132,7 +132,7 @@ export default class DetailComponent extends React.Component {
             f.readonly = isUndefined(f.readonly) ? this.options.view : f.readonly;
             if (f.type === 'citySelect') {
                 f.cFields = f.cFields || ['province', 'city', 'area'];
-            } else if (f.type === 'select' || f.type === 'checkbox') {
+            } else if (f.type === 'select' || f.type === 'checkbox' || f.type === 'selectInput') {
                 if (f.key) {
                     f.keyName = f.keyName || 'dkey';
                     f.valueName = f.valueName || 'dvalue';
@@ -910,79 +910,17 @@ export default class DetailComponent extends React.Component {
             };
         }
         return (
-            <FormItem
-                className={item.hidden ? 'hidden' : ''}
+            <FormItem className={item.hidden ? 'hidden' : ''}
                 key={item.field}
                 {...this.getInputItemProps()}
-                label={this.getLabel(item)}>
+                label={item.title ? this.getLabel(item) : ''}>
+                {item.title ? '' : <samp>&nbsp;</samp>}
                 {
                     item.readonly ? <div className="readonly-text">{initVal}</div>
                         : getFieldDecorator(item.field, {
                             rules,
                             initialValue: initVal
                         })(<Input {...props}/>)
-                }
-            </FormItem>
-        );
-    }
-
-    getSelectInputComp(item, initVal, rules, getFieldDecorator) {
-        let data;
-        if (item.readonly && item.data) {
-            data = item.data.filter(v => v[item.keyName] === initVal);
-        }
-        let propsSelect = {
-            showSearch: true,
-            allowClear: true,
-            optionFilterProp: 'children',
-            filterOption: (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
-            style: {width: '100%'},
-            placeholder: '请选择'
-        };
-        let propsInput = {
-            type: item.type ? item.type : item.hidden ? 'hidden' : 'text'
-        };
-        let inputInitVal = '';
-        let selectInitVal = '';
-        if (item.isOnlySub && item.isOnlySub === 'input') {
-            inputInitVal = initVal;
-            selectInitVal = '';
-        } else if (item.isOnlySub && item.isOnlySub === 'select') {
-            selectInitVal = initVal;
-            inputInitVal = '';
-        }
-        // 是否关联
-        if (item.isRelation && item.valueInput && !item.readonly) {
-            propsSelect.onChange = (v) => {
-                let selectData = this.props.selectData[item.field] ? this.props.selectData[item.field].find(v1 => v1[item.keyName] === v) : {};
-                inputInitVal = selectData[item.valueInput];
-            };
-        }
-        return (
-            <FormItem className={item.hidden ? 'hidden' : ''} key={item.field} {...this.getInputItemProps()}
-                      label={this.getLabel(item)}>
-                {
-                    item.readonly ? <div
-                            className="readonly-text">{data && data.length ? data[0][item.valueName] || tempString(item.valueName, data[0]) : selectInitVal}</div>
-                        : getFieldDecorator(item.isOnlySub && item.isOnlySub === 'select' ? item.field : item.field + '_select', {
-                            rules,
-                            initialValue: item.data || selectInitVal ? selectInitVal : ''
-                        })(
-                        <Select className="selectInput" {...propsSelect}>
-                            {item.data ? item.data.map(d => (
-                                <Option key={d[item.keyName]} value={d[item.keyName]}>
-                                    {d[item.valueName] ? d[item.valueName] : tempString(item.valueName, d)}
-                                </Option>
-                            )) : null}
-                        </Select>
-                        )
-                }
-                {
-                    item.readonly ? <div className="readonly-text">{initVal}</div>
-                        : getFieldDecorator(item.isOnlySub && item.isOnlySub === 'input' ? item.field : item.field + '_input', {
-                            rules,
-                            initialValue: inputInitVal
-                        })(<Input className="selectInput" {...propsInput}/>)
                 }
             </FormItem>
         );
@@ -1231,13 +1169,13 @@ export default class DetailComponent extends React.Component {
     getLabel(item) {
         return (
             <span
-                className={item.required && ((item.type === 'textarea' && !item.normalArea) || (item.type === 'o2m')) ? 'ant-form-item-required' : ''}>
+            className={item.required && ((item.type === 'textarea' && !item.normalArea) || (item.type === 'o2m')) ? 'ant-form-item-required' : ''}>
         {item.title + (item.single ? '(单)' : '')}
-                {item.help
-                    ? <Tooltip title={item.help}>
-                        <Icon type="question-circle-o"/>
-                    </Tooltip> : null}
-      </span>
+            {item.help
+                ? <Tooltip title={item.help}>
+                    <Icon type="question-circle-o"/>
+                </Tooltip> : null}
+            </span>
         );
     }
 

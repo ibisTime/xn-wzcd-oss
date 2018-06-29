@@ -49,6 +49,7 @@ class BudgetAddedit extends React.Component {
         this.carDealerSelectData = [];
         // 银行利率明细列表
         this.bankRateList = null;
+        this.bankRateTypeList = null;
         // 收款账户
         this.receivables = {};
         // 应退按揭款
@@ -318,12 +319,6 @@ class BudgetAddedit extends React.Component {
                             if (!this.bankRateList && data.bankSubbranch) {
                                 this.bankRateList = data.bankSubbranch.bank.bankRateList;
                             }
-                            this.props.setSelectData({
-                                bankRate: data.bankSubbranch.bank.bankRateList
-                            });
-                            this.props.form.setFieldsValue({
-                                bankRate: data.bankSubbranch.bank.bankRateList[0].rate
-                            });
                         }
                         return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName);
                     }
@@ -338,12 +333,27 @@ class BudgetAddedit extends React.Component {
                     field: 'carModel',
                     required: true
                 }, {
+                    title: '车架号码',
+                    field: 'frameNo',
+                    required: true
+                }, {
                     title: '贷款周期(期)',
                     field: 'loanPeriods',
                     type: 'select',
                     key: 'loan_period',
                     required: true,
                     onChange: (v, data) => {
+                        let rateList = [];
+                        this.bankRateList.forEach(item => {
+                            if (String(item.period) === v) {
+                                rateList.push(item);
+                            }
+                        });
+                        this.bankRateTypeList = rateList;
+                        this.props.form.setFieldsValue({
+                            bankRate: 0,
+                            bankRateType: ''
+                        });
                         let rData = this.getRepointDetailList({loanPeriods: v});
                         if (!rData) {
                             return false;
@@ -412,6 +422,12 @@ class BudgetAddedit extends React.Component {
                     key: 'rate_type',
                     required: true,
                     onChange: (v, data) => {
+                        if (v === '1') {
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                carDealerSubsidy: 0
+                            });
+                        }
                         let rData = this.getRepointDetailList({rateType: v});
                         if (!rData) {
                             return false;
@@ -447,14 +463,6 @@ class BudgetAddedit extends React.Component {
                         }).catch(this.props.cancelFetching);
                     }
                 }, {
-                    //     title: '利率类型',
-                    //     field: 'rateType',
-                    //     type: 'selectInput',
-                    //     isRelation: true,
-                    //     isOnlySub: 'input',
-                    //     valueInput: 'key',
-                    //     required: true
-                    // }, {
                     title: '贷款金额',
                     field: 'loanAmount',
                     amount: true,
@@ -557,13 +565,15 @@ class BudgetAddedit extends React.Component {
                     required: true
                 }, {
                     title: '银行利率',
-                    field: 'bankRate',
+                    field: 'bankRateType',
                     type: 'select',
-                    data: this.bankRateList,
+                    data: this.bankRateTypeList,
                     keyName: 'rate',
-                    valueName: '{{rate.DATA}}-{{period.DATA}}',
-                    required: true,
+                    valueName: '{{rate.DATA}}-{{period.DATA}}期',
                     onChange: (v) => {
+                        this.props.form.setFieldsValue({
+                            bankRate: v
+                        });
                         this.props.setPageData({
                             ...this.props.pageData,
                             globalRate: this.getGlobalRate({
@@ -607,6 +617,9 @@ class BudgetAddedit extends React.Component {
                             });
                         }).catch(this.props.cancelFetching);
                     }
+                }, {
+                    field: 'bankRate',
+                    required: true
                 }, {
                     // 贷款金额 / 发票价格
                     title: '我司贷款成数',
@@ -684,7 +697,6 @@ class BudgetAddedit extends React.Component {
                     field: 'fee',
                     amount: true,
                     required: true,
-                    value: 0,
                     onChange: (v) => {
                         this.props.setPageData({
                             ...this.props.pageData,
@@ -783,9 +795,13 @@ class BudgetAddedit extends React.Component {
                     required: true
                 }],
                 [{
+                    title: 'GPS安装位置',
+                    field: 'gpsLocation',
+                    required: true
+                }],
+                [{
                     title: 'GPS',
                     field: 'budgetOrderGpsList',
-                    required: true,
                     type: 'o2m',
                     options: {
                         add: true,
@@ -896,7 +912,10 @@ class BudgetAddedit extends React.Component {
                         value: '是'
                     }],
                     keyName: 'key',
-                    valueName: 'value'
+                    valueName: 'value',
+                    value: '1',
+                    readonly: true,
+                    required: true
                 }],
                 [{
                     title: '共还人月收入',
@@ -1069,9 +1088,12 @@ class BudgetAddedit extends React.Component {
                     type: 'select',
                     data: [{
                         key: '0',
-                        value: '自有'
+                        value: '无'
                     }, {
                         key: '1',
+                        value: '自有'
+                    }, {
+                        key: '2',
                         value: '租用'
                     }],
                     keyName: 'key',
@@ -1167,12 +1189,12 @@ class BudgetAddedit extends React.Component {
             title: '费用情况',
             items: [
                 [{
-                    title: '油补',
-                    field: 'oilSubsidy',
-                    required: true
-                }, {
                     title: '油补公里数',
                     field: 'oilSubsidyKil',
+                    required: true
+                }, {
+                    title: '油补',
+                    field: 'oilSubsidy',
                     required: true
                 }],
                 [{
@@ -1839,7 +1861,6 @@ class BudgetAddedit extends React.Component {
                     data.dealType = '1';
                     data.budgetOrderCode = this.code;
                     data.operator = getUserId();
-                    console.log(1);
                     let gpsList = [];
                     if (data.budgetOrderGpsList) {
                         data.budgetOrderGpsList.forEach((v) => {
