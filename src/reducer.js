@@ -116,7 +116,7 @@ import { bizBlackList } from './redux/biz/blackList';
 import { bizBlackListAddedit } from './redux/biz/blackList-addedit';
 import { bizBlackListDispose } from './redux/biz/blackList-dispose';
 
-//  红名单 + 详情 + 风控经理审核 + 分公司总经理审核 + 风控总监审核 + 财务经理审核 + 申请拖车 + 财务打款 + 录入拖车结果
+//  红名单 + 详情 + 风控经理审核 + 分公司总经理审核 + 风控总监审核 + 财务经理审核 + 申请手车 + 财务打款 + 录入手车结果
 import { bizredList } from './redux/biz/redList';
 import { bizredListAddEdit } from './redux/biz/redList-addedit';
 import { bizredListApply } from './redux/biz/redList-apply';
@@ -127,7 +127,7 @@ import { bizredListFinance } from './redux/biz/redList-finance';
 import { bizredListPay } from './redux/biz/redList-pay';
 import { bizredListEnter } from './redux/biz/redList-enter';
 
-//  拖车管理 + 详情 + 处理结果
+//  手车管理 + 详情 + 处理结果
 import { bizTrailer } from './redux/biz/trailer';
 import { bizTrailerAddEdit } from './redux/biz/trailer-addedit';
 import { bizTrailerDispose } from './redux/biz/trailer-dispose';
@@ -191,6 +191,14 @@ import { basisDealerAddedit } from './redux/basis/dealer-addedit';
 //  我司贷款成数比例 + 修改
 import { basisLoanPercent } from './redux/basis/loanPercent';
 import { basisLoanPercentAddedit } from './redux/basis/loanPercent-addedit';
+
+//  gps提成百分比 + 修改
+import { basisGpsextract } from './redux/basis/gpsextract';
+import { basisGpsextractAddedit } from './redux/basis/gpsextract-addedit';
+
+//  油补 + 修改
+import { basisOilpercentage } from './redux/basis/oilpercentage';
+import { basisOilpercentageAddedit } from './redux/basis/oilpercentage-addedit';
 
 /**
  * 贷前管理
@@ -502,6 +510,41 @@ import { administrativeFixedAssetsAddedit } from './redux/administrative/fixedAs
 import { administrativeLeader } from './redux/administrative/leader';
 import { administrativeLeaderAddedit } from './redux/administrative/leader-addedit';
 
+// 合同打印
+// 担保合同
+import { printingGuarantee } from './redux/printing/guarantee';
+import { printingGuaranteeMake } from './redux/printing/guarantee-make';
+
+// 抵押合同
+import { printingMortgage } from './redux/printing/mortgage';
+import { printingMortgageMake } from './redux/printing/mortgage-make';
+
+// 解除抵押
+import { printingRelieve } from './redux/printing/relieve';
+import { printingRelieveMake } from './redux/printing/relieve-make';
+
+// 合同打印模板
+// 担保合同
+import { contractTemplateGuarantee } from './redux/contractTemplate/guarantee';
+import { contractTemplateGuaranteeAddedit } from './redux/contractTemplate/guarantee-addedit';
+
+// 抵押合同
+import { contractTemplateMortgage } from './redux/contractTemplate/mortgage';
+import { contractTemplateMortgageAddedit } from './redux/contractTemplate/mortgage-addedit';
+
+// 解除抵押
+import { contractTemplateRelieve } from './redux/contractTemplate/relieve';
+import { contractTemplateRelieveAddedit } from './redux/contractTemplate/relieve-addedit';
+
+// 历史业务
+// 历史业务(已结清)
+import { historyHistoryBusiness } from './redux/history/historyBusiness';
+import { historyHistoryBusinessAddedit } from './redux/history/historyBusiness-addedit';
+
+// 历史业务(进行中)
+import { historyHistorying } from './redux/history/historying';
+import { historyHistoryingAddedit } from './redux/history/historying-addedit';
+
 export default combineReducers({
   user,
   menu,
@@ -803,5 +846,25 @@ export default combineReducers({
   summaryAddEdit,
   summaryPlan,
   postloantoolsInsurance,
-  postloantoolsInsuranceContinue
+  postloantoolsInsuranceContinue,
+  printingGuarantee,
+  printingGuaranteeMake,
+  printingMortgage,
+  printingMortgageMake,
+  printingRelieve,
+  printingRelieveMake,
+  contractTemplateGuarantee,
+  contractTemplateGuaranteeAddedit,
+  contractTemplateMortgage,
+  contractTemplateMortgageAddedit,
+  contractTemplateRelieve,
+  contractTemplateRelieveAddedit,
+  historyHistoryBusiness,
+  historyHistoryBusinessAddedit,
+  historyHistorying,
+  historyHistoryingAddedit,
+  basisGpsextract,
+  basisGpsextractAddedit,
+  basisOilpercentage,
+  basisOilpercentageAddedit
 });

@@ -76,7 +76,7 @@ class redListCheck extends React.Component {
             amount: true,
             readonly: true
         }, {
-            title: '拖车费用',
+            title: '手车费用',
             field: 'tsCarAmount',
             amount: true,
             readonly: true
