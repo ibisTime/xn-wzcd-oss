@@ -381,12 +381,22 @@ const ROUTES = [
     path: '/biz/overdueList/apply',
     component: asyncComponent(() => import('container/biz/overdueList/overdueList-apply'))
   },
+  //  白名单
+  {
+    path: '/biz/whiteList',
+    component: asyncComponent(() => import('container/biz/whiteList/whiteList'))
+  },
+  //  白名单 详情
+  {
+    path: '/biz/whiteList/addedit',
+    component: asyncComponent(() => import('container/biz/whiteList/whiteList-addedit'))
+  },
   //  绿名单
   {
     path: '/biz/greenList',
     component: asyncComponent(() => import('container/biz/carLoanRepay/greenList'))
   },
-  //  绿名单详情
+  //  绿名单 详情
   {
     path: '/biz/greenList/addedit',
     component: asyncComponent(() => import('container/biz/carLoanRepay/greenList-addedit'))
@@ -1962,6 +1972,67 @@ const ROUTES = [
   {
     path: '/history/historying/addedit',
     component: asyncComponent(() => import('container/history/historying/historying-addedit'))
+  },
+  //  垃圾箱
+  {
+    path: '/history/dustbin',
+    component: asyncComponent(() => import('container/history/dustbin/dustbin'))
+  },
+  //  垃圾箱 详情
+  {
+    path: '/history/dustbin/addedit',
+    component: asyncComponent(() => import('container/history/dustbin/dustbin-addedit'))
+  },
+  //  风险名单管理
+  //  黄名单
+  {
+    path: '/risk/yellowList',
+    component: asyncComponent(() => import('container/risk/yellowList/yellowList'))
+  },
+  //  黄名单 详情
+  {
+    path: '/risk/yellowList/addedit',
+    component: asyncComponent(() => import('container/risk/yellowList/yellowList-addedit'))
+  },
+  //  黑名单
+  {
+    path: '/risk/blackList',
+    component: asyncComponent(() => import('container/risk/blackList/blackList'))
+  },
+  //  黑名单 详情
+  {
+    path: '/risk/blackList/addedit',
+    component: asyncComponent(() => import('container/risk/blackList/blackList-addedit'))
+  },
+  //  绿名单
+  {
+    path: '/risk/greenList',
+    component: asyncComponent(() => import('container/risk/greenList/greenList'))
+  },
+  //  绿名单 详情
+  {
+    path: '/risk/greenList/addedit',
+    component: asyncComponent(() => import('container/risk/greenList/greenList-addedit'))
+  },
+  //  红名单
+  {
+    path: '/risk/redList',
+    component: asyncComponent(() => import('container/risk/redList/redList'))
+  },
+  //  红名单 详情
+  {
+    path: '/risk/redList/addedit',
+    component: asyncComponent(() => import('container/risk/redList/redList-addedit'))
+  },
+  //  白名单
+  {
+    path: '/risk/whiteList',
+    component: asyncComponent(() => import('container/risk/whiteList/whiteList'))
+  },
+  //  白名单 详情
+  {
+    path: '/risk/whiteList/addedit',
+    component: asyncComponent(() => import('container/risk/whiteList/whiteList-addedit'))
   }
 ];
 

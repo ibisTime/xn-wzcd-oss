@@ -120,7 +120,7 @@ class ArchivesAddedit extends React.Component {
             }],
             [{
                 title: '身份证',
-                field: 'idNo',
+                field: 'idNoPic',
                 type: 'img'
             }],
             [{

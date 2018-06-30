@@ -49,7 +49,7 @@ class TakeEstimate extends React.Component {
       amount: true
     }, {
       title: '垫资日期',
-      field: 'useDatetime',
+      field: 'dzDatetime',
       search: true,
       type: 'date'
     }, {

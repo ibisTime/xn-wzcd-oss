@@ -100,6 +100,10 @@ import { bizOverdueList } from './redux/biz/overdueList/overdueList';
 import { bizOverdueListDispose } from './redux/biz/overdueList/overdueList-dispose';
 import { bizOverdueListApply } from './redux/biz/overdueList/overdueList-apply';
 
+//  白名单 + 详情
+import { bizWhiteList } from './redux/biz/whiteList/whiteList';
+import { bizWhiteListAddEdit } from './redux/biz/whiteList/whiteList-addedit';
+
 //  绿名单 + 详情 + 缴纳清收成本
 import { bizGreenList } from './redux/biz/greenList';
 import { bizGreenListAddedit } from './redux/biz/greenList-addedit';
@@ -545,6 +549,31 @@ import { historyHistoryBusinessAddedit } from './redux/history/historyBusiness-a
 import { historyHistorying } from './redux/history/historying';
 import { historyHistoryingAddedit } from './redux/history/historying-addedit';
 
+// 垃圾箱
+import { historyDustbin } from './redux/history/dustbin';
+import { historyDustbinAddedit } from './redux/history/dustbin-addedit';
+
+// 风险名单管理
+// 黑名单
+import { riskBlackList } from './redux/risk/blackList';
+import { riskBlackListAddedit } from './redux/risk/blackList-addedit';
+
+// 绿名单
+import { riskGreenList } from './redux/risk/greenList';
+import { riskGreenListAddedit } from './redux/risk/greenList-addedit';
+
+// 红名单
+import { riskredList } from './redux/risk/redList';
+import { riskredListAddedit } from './redux/risk/redList-addedit';
+
+// 黄名单
+import { riskYellowList } from './redux/risk/yellowList';
+import { riskYellowListAddedit } from './redux/risk/yellowList-addedit';
+
+// 白名单
+import { riskWhiteList } from './redux/risk/whiteList';
+import { riskWhiteListAddedit } from './redux/risk/whiteList-addedit';
+
 export default combineReducers({
   user,
   menu,
@@ -866,5 +895,19 @@ export default combineReducers({
   basisGpsextract,
   basisGpsextractAddedit,
   basisOilpercentage,
-  basisOilpercentageAddedit
+  basisOilpercentageAddedit,
+  bizWhiteList,
+  bizWhiteListAddEdit,
+  riskBlackList,
+  riskBlackListAddedit,
+  riskGreenList,
+  riskGreenListAddedit,
+  riskredList,
+  riskredListAddedit,
+  riskYellowList,
+  riskYellowListAddedit,
+  riskWhiteList,
+  riskWhiteListAddedit,
+  historyDustbin,
+  historyDustbinAddedit
 });

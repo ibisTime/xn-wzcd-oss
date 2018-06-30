@@ -105,6 +105,8 @@ class estimate extends React.Component {
             showWarnMsg('请选择记录');
           } else if (selectedRowKeys.length > 1) {
             showWarnMsg('请选择一条记录');
+          } else if (selectedRows[0].curNodeCode !== '005_02') {
+            showWarnMsg('当前节点不是财务经理审核');
           } else {
             this.props.history.push(`/loanstools/estimate/check?code=${selectedRowKeys[0]}`);
           }
@@ -114,6 +116,8 @@ class estimate extends React.Component {
             showWarnMsg('请选择记录');
           } else if (selectedRowKeys.length > 1) {
             showWarnMsg('请选择一条记录');
+          } else if (selectedRows[0].curNodeCode !== '005_03') {
+            showWarnMsg('当前节点不是确认放款');
           } else {
             this.props.history.push(`/loanstools/estimate/certain?code=${selectedRowKeys[0]}`);
           }
