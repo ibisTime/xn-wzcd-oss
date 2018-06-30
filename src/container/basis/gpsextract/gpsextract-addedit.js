@@ -32,18 +32,25 @@ class GpsextractAddedit extends React.Component {
   }
   render() {
     const fields = [{
-      title: '银行名称',
-      field: 'bankCode'
+        title: '参数名',
+        field: 'remark',
+        readonly: true
     }, {
-      title: '备注',
-      field: 'remark'
+        title: '参数值',
+        field: 'cvalue'
+    }, {
+        title: '更新时间',
+        field: 'updateDatetime',
+        type: 'datetime',
+        readonly: true
     }];
     return this.props.buildDetail({
       fields,
+      key: 'id',
       code: this.code,
       view: this.view,
-      editCode: 630042,
-      detailCode: 630046
+      editCode: '630042',
+      detailCode: '630046'
     });
   }
 }

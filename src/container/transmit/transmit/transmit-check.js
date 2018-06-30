@@ -111,6 +111,17 @@ class transmitAddedit extends React.Component {
     }, {
         title: '备注',
         field: 'remark'
+    }, {
+        title: '补件原因',
+        field: 'supplementReason',
+        type: 'select',
+        key: 'supplement_reason',
+        required: true
+    }, {
+        title: '补件说明',
+        field: 'supplementNote',
+        type: 'textarea',
+        normalArea: true
     }];
     return this
       .props

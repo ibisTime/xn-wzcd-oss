@@ -75,6 +75,15 @@ class redList extends React.Component {
           curNodeCodeList: ['021_01', '021_02', '021_03', '021_04', '021_05', '021_06', '021_07', '021_08', '021_09', '021_10', '021_11']
         },
         btnEvent: {
+          litigation: (selectedRowKeys, selectedRows) => {
+            if (!selectedRowKeys.length) {
+              showWarnMsg('请选择记录');
+            } else if (selectedRowKeys.length > 1) {
+              showWarnMsg('请选择一条记录');
+            } else {
+              this.props.history.push(`/biz/litigation/litigation?code=${selectedRowKeys[0]}`);
+            }
+          },
           apply: (selectedRowKeys, selectedRows) => {
             if (!selectedRowKeys.length) {
               showWarnMsg('请选择记录');

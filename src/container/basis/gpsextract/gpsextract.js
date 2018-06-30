@@ -40,7 +40,10 @@ import fetch from 'common/js/fetch';
 class Gpsextract extends React.Component {
     render() {
         const fields = [{
-            title: 'gps提成比例',
+            title: '参数名',
+            field: 'remark'
+        }, {
+            title: '参数值',
             field: 'cvalue'
         }, {
             title: '更新时间',
@@ -50,9 +53,9 @@ class Gpsextract extends React.Component {
         return this.props.buildList({
             fields,
             rowKey: 'id',
-            pageCode: 630047,
+            pageCode: 630045,
             searchParams: {
-                key: 'budget_gps_deduct_rate'
+                ckey: 'budget_gps_deduct_rate'
             }
         });
     }

@@ -59,7 +59,8 @@ class Historying extends React.Component {
             field: 'realName',
             render: (v, d) => {
                 return d.user.realName;
-            }
+            },
+            search: true
         }, {
             title: '身份证',
             field: 'idNo',
