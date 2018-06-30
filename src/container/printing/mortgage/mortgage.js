@@ -13,6 +13,7 @@ import {
     showWarnMsg,
     showSucMsg
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
     listWrapper
 } from 'common/js/build-list';
@@ -66,20 +67,20 @@ class Mortgage extends React.Component {
             field: 'loanAmount'
         }, {
             title: '利率',
-            field: '11'
+            field: 'bankRate'
         }, {
             title: '服务费',
             field: 'fee'
         }, {
             title: '品牌型号',
-            field: '22'
+            field: 'carBrandModel'
         }, {
             title: '打件日期',
-            field: '44',
+            field: 'guarantPrintDatetime',
             type: 'date'
         }, {
             title: '打件人',
-            field: '33'
+            field: 'guarantPrintUser'
         }, {
             title: '业务员名称',
             field: 'saleUserName'
@@ -94,7 +95,7 @@ class Mortgage extends React.Component {
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push(`/printing/guarantee/make?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/printing/mortgage/make?code=${selectedRowKeys[0]}`);
                     }
                 }
             }
