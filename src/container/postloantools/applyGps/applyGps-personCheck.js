@@ -11,7 +11,8 @@ import {
   getQueryString,
   showSucMsg,
   getUserId,
-  getCompanyCode
+  getCompanyCode,
+  showWarnMsg
 } from 'common/js/util';
 import { DetailWrapper } from 'common/js/build-detail';
 import fetch from 'common/js/fetch';
@@ -70,6 +71,10 @@ class applyGpsPersonCheck extends React.Component {
         handler: (param) => {
           param.approveResult = '1';
           param.approveUser = getUserId();
+          if(param.gpsList.length < 1) {
+              showWarnMsg('请新增GPS!');
+              return false;
+          }
           this.props.doFetching();
           fetch(632713, param).then(() => {
             showSucMsg('操作成功');

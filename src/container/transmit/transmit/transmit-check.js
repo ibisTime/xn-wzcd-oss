@@ -10,7 +10,8 @@ import {
 import {
   getQueryString,
   getUserId,
-  showSucMsg
+  showSucMsg,
+  showWarnMsg
 } from 'common/js/util';
 import { DetailWrapper } from 'common/js/build-detail';
 import fetch from 'common/js/fetch';
@@ -115,8 +116,7 @@ class transmitAddedit extends React.Component {
         title: '补件原因',
         field: 'supplementReason',
         type: 'select',
-        key: 'supplement_reason',
-        required: true
+        key: 'supplement_reason'
     }, {
         title: '补件说明',
         field: 'supplementNote',
@@ -133,6 +133,7 @@ class transmitAddedit extends React.Component {
         buttons: [{
             title: '收件并审核通过',
             handler: (param) => {
+                param.supplementReason = '';
                 fetch(632151, param).then(() => {
                     this.doSuccess();
                 }).catch(this.props.cancelFetching);
@@ -141,6 +142,10 @@ class transmitAddedit extends React.Component {
         }, {
             title: '收件待补件',
             handler: (param) => {
+                if (!param.supplementReason) {
+                    showWarnMsg('请选择补件原因');
+                    return false;
+                }
                 fetch(632152, param).then(() => {
                     this.doSuccess();
                 }).catch(this.props.cancelFetching);

@@ -210,6 +210,7 @@ import { basisOilpercentageAddedit } from './redux/basis/oilpercentage-addedit';
 // 预算单申请
 import { loanBudget } from './redux/loan/budget';
 import { loanBudgetAddedit } from './redux/loan/budget-addedit';
+import { loanBudgetDetail } from './redux/loan/budget-detail';
 
 // 贷款审查
 import { loanBudgetCheck } from './redux/loan/budgetCheck';
@@ -658,6 +659,7 @@ export default combineReducers({
   bizredListEnter,
   loanBudget,
   loanBudgetAddedit,
+  loanBudgetDetail,
   loanBudgetCheck,
   loanCreditStart,
   loanCreditStartAddedit,

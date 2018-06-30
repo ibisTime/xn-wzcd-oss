@@ -17,3 +17,19 @@ export function getDictList({ parentKey, bizType = 630036 }) {
     return data;
   });
 }
+/**
+ * 根据ckey查询系统参数
+ * @param key
+ * @param bizType
+ */
+export function getSystormParam({ key, bizType = 630047 }) {
+    if (getSystormParam[key]) {
+        return Promise.resolve(getSystormParam[key]);
+    }
+    return fetch(bizType, {
+        key
+    }).then(data => {
+        getSystormParam[key] = data;
+        return data;
+    });
+}

@@ -10,7 +10,8 @@ import {
 import {
   getQueryString,
   showSucMsg,
-  getUserId
+  getUserId,
+  showWarnMsg
 } from 'common/js/util';
 import {
   DetailWrapper
@@ -86,6 +87,11 @@ class applyGpsCompanyCheck extends React.Component {
         handler: (param) => {
           param.approveResult = '1';
           param.approveUser = getUserId();
+          console.log(param.gpsList.length);
+          if(param.gpsList.length < 1) {
+            showWarnMsg('请新增GPS!');
+            return false;
+          }
           this.props.doFetching();
           fetch(632712, param).then(() => {
             showSucMsg('操作成功');

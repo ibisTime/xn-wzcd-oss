@@ -14,11 +14,6 @@ import {
     showSucMsg
 } from 'common/js/util';
 import {
-    Button,
-    Upload,
-    Modal
-} from 'antd';
-import {
     listWrapper
 } from 'common/js/build-list';
 import {
@@ -106,6 +101,10 @@ class applyGps extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].type !== '1') {
+                        showWarnMsg('该记录不是公司申请记录');
+                    } else if (selectedRows[0].status !== '0') {
+                        showWarnMsg('该记录不是待审核的状态');
                     } else {
                         this.props.history.push(`/postloantools/applyGps/companyCheck?code=${selectedRowKeys[0]}`);
                     }
@@ -115,6 +114,10 @@ class applyGps extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].type !== '2') {
+                        showWarnMsg('该记录不是个人申请记录');
+                    } else if (selectedRows[0].status !== '0') {
+                        showWarnMsg('该记录不是待审核的状态');
                     } else {
                         this.props.history.push(`/postloantools/applyGps/personCheck?code=${selectedRowKeys[0]}`);
                     }
