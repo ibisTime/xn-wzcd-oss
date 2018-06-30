@@ -737,11 +737,17 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loan/budget/budget'))
   },
 
-  // 预算单申请 详情
+  // 预算单申请 申请 审核
   {
       path: '/loan/budget/addedit',
       component: asyncComponent(() => import('container/loan/budget-addedit/budget-addedit'))
   },
+
+    // 预算单申请 详情
+    {
+        path: '/loan/budget/detail',
+        component: asyncComponent(() => import('container/loan/budget-detail/budget-detail'))
+    },
 
   // 贷款审查
   {
@@ -1828,36 +1834,6 @@ const ROUTES = [
   {
       path: '/administrative/cost/detail',
       component: asyncComponent(() => import('container/administrative/cost/cost-detail'))
-  },
-  //  gps申领
-  {
-      path: '/administrative/applyGps',
-      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps'))
-  },
-  //  gps申领 公司申领
-  {
-      path: '/administrative/applyGps/company',
-      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-company'))
-  },
-  //  gps申领 个人申领
-  {
-      path: '/administrative/applyGps/person',
-      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-person'))
-  },
-  //  gps申领 详情
-  {
-      path: '/administrative/applyGps/addedit',
-      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-addedit'))
-  },
-  //  gps申领 公司审核
-  {
-      path: '/administrative/applyGps/companyCheck',
-      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-companyCheck'))
-  },
-  //  gps申领 个人审核
-  {
-      path: '/administrative/applyGps/personCheck',
-      component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-personCheck'))
   },
   //  gps库存管理
   {

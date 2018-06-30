@@ -7,7 +7,7 @@ import {
   setPageData,
   restore
 } from '@redux/postloantools/applyGps-company';
-import { getQueryString, getUserId, showSucMsg } from 'common/js/util';
+import { getQueryString, getUserId, showSucMsg, showWarnMsg } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import { DetailWrapper } from 'common/js/build-detail';
 
@@ -43,6 +43,10 @@ class applyGpsCompany extends React.Component {
         handler: (param) => {
           param.code = this.code;
           param.applyUser = getUserId();
+          if(param.gpsList.length < 1) {
+              showWarnMsg('请新增GPS!');
+              return false;
+          }
           this.props.doFetching();
           fetch(632710, param).then(() => {
             showSucMsg('操作成功');
