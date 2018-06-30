@@ -84,6 +84,13 @@ class Mortgage extends React.Component {
         }, {
             title: '业务员名称',
             field: 'saleUserName'
+        }, {
+            title: '当前节点',
+            field: 'curNodeCode',
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildList({
             fields,

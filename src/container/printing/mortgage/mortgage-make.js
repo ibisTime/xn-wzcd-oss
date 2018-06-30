@@ -163,6 +163,12 @@ class MortgageMake extends React.Component {
                         this.props.doFetching();
                         fetch(632192, param).then((data) => {
                             console.log(data);
+                            let arr = [];
+                            fields.forEach(f => {
+                                arr.push(
+
+                                );
+                            });
                             showSucMsg('操作成功');
                         }).catch(this.props.cancelFetching);
                     }
