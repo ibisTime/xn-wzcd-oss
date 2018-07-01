@@ -6,7 +6,7 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/whiteList/whiteList-addedit';
+} from '@redux/risk/whiteList-addedit';
 import {
     getQueryString,
     moneyFormat

@@ -8,7 +8,7 @@ import {
   doFetching,
   cancelFetching,
   setSearchData
-} from '@redux/biz/whiteList/whiteList';
+} from '@redux/risk/whiteList';
 import {
   listWrapper
 } from 'common/js/build-list';
