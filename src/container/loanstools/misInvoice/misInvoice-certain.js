@@ -63,7 +63,7 @@ class MisInvoiceCertain extends React.Component {
             readonly: true
         }, {
             title: '新应退按揭款',
-            field: 'loanAmount',
+            field: 'amount',
             amount: true,
             readonly: true,
             formatter: (v, data) => {
@@ -88,6 +88,10 @@ class MisInvoiceCertain extends React.Component {
         }, {
             title: '付款账号',
             field: 'payBankcardCode',
+            type: 'select',
+            listCode: 632007,
+            keyName: 'code',
+            valueName: '{{bankcardNumber.DATA}}-{{realName.DATA}}',
             required: true,
             hidden: this.hiddenStatus
         }, {
@@ -111,6 +115,10 @@ class MisInvoiceCertain extends React.Component {
         }, {
             title: '付款账号',
             field: 'collectionBankcardCode',
+            type: 'select',
+            listCode: 632007,
+            keyName: 'code',
+            valueName: '{{bankcardNumber.DATA}}-{{realName.DATA}}',
             required: true,
             hidden: !this.hiddenStatus
         }, {
@@ -119,6 +127,19 @@ class MisInvoiceCertain extends React.Component {
             required: true,
             type: 'img',
             hidden: !this.hiddenStatus
+        }, {
+            title: '类型',
+            field: 'type',
+            type: 'select',
+            data: [{
+                key: '2',
+                value: '发票不匹配补打款'
+            }, {
+                key: '3',
+                value: '发票不匹配收回款'
+            }],
+            keyName: 'key',
+            valueName: 'value'
         }, {
             title: '备注',
             field: 'remark'

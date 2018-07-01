@@ -33,50 +33,28 @@ class greenList extends React.Component {
       {
         title: '客户姓名',
         field: 'realName',
-        search: true,
-        render: (v, d) => {
-          return d.user.realName;
-        }
+        search: true
       }, {
         title: '证件号',
-        field: 'idNo',
-        search: true,
-        render: (v, d) => {
-          return d.user.idNo;
-        }
+        field: 'idNo'
       }, {
         title: '手机号',
-        field: 'mobile',
-        search: true,
-        render: (v, d) => {
-          return d.user.mobile;
-        }
+        field: 'mobile'
       }, {
         title: '标记日期',
-        field: 'repayDatetime',
+        field: 'signDatetime',
         type: 'date'
       }, {
-        title: '累计逾期期数(元)',
-        field: 'totalOverdueCount',
-        amount: true
+        title: '累计逾期次数',
+        field: 'totalGreenCount'
       }
     ];
     return this.props.buildList({
         fields,
-        pageCode: 630540,
+        rowKey: 'userId',
+        pageCode: 805120,
         searchParams: {
-          curNodeCodeList: ['021_04']
-        },
-        btnEvent: {
-          payment: (selectedRowKeys, selectedRows) => {
-            if (!selectedRowKeys.length) {
-              showWarnMsg('请选择记录');
-            } else if (selectedRowKeys.length > 1) {
-              showWarnMsg('请选择一条记录');
-            } else {
-              this.props.history.push(`/biz/greenList/payment?staffCode=${selectedRowKeys[0]}`);
-            }
-          }
+          sign: 'GREEN'
         }
       });
   }

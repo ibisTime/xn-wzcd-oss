@@ -1,74 +1,58 @@
 import React from 'react';
 import {
-  initStates,
+  setTableData,
+  setPagination,
+  setBtnList,
+  setSearchParam,
+  clearSearchParam,
   doFetching,
   cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
+  setSearchData
 } from '@redux/biz/greenList-addedit';
+import {listWrapper} from 'common/js/build-list';
 import {getQueryString} from 'common/js/util';
-import {DetailWrapper} from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizGreenListAddedit, {
-  initStates,
+@listWrapper(state => ({
+  ...state.riskGreenListAddedit,
+  parentCode: state.menu.subMenuCode
+}), {
+  setTableData,
+  clearSearchParam,
   doFetching,
+  setBtnList,
   cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
+  setPagination,
+  setSearchParam,
+  setSearchData
 })
 class greenListAddedit extends React.Component {
   constructor(props) {
     super(props);
-    this.code = getQueryString('code', this.props.location.search);
-    this.view = !!getQueryString('v', this.props.location.search);
+    this.userId = getQueryString('code', this.props.location.search);
   }
   render() {
     const fields = [{
-      title: '业务编号',
-      field: 'code',
-      readonly: true
-    }, {
-      field: 'user',
-      title: '贷款人',
-      formatter: (v, d) => {
-        return d.user.realName;
-      },
-      readonly: true
-    }, {
-      title: '逾期日期',
-      field: 'repayDatetime',
-      type: 'date',
-      readonly: true
-    }, {
-      title: '未还清收成本(元)',
-      field: 'restTotalCost',
-      amount: true
-    }, {
-      title: '清收成本清单',
-      field: 'costList',
+      title: '还款计划表',
+      field: 'list',
       type: 'o2m',
       options: {
         fields: [{
-          title: '费用项',
-          field: 'item'
+          title: '业务编号',
+          field: 'code'
         }, {
-          title: '金额（元）',
-          field: 'amount',
-          amount: true
+          title: '客户姓名',
+          field: 'realName',
+          formatter: (v, d) => {
+            return d.user.realName;
+          }
         }, {
-          title: '发生时间',
-          field: 'payDatetime',
+          title: '逾期日期',
+          field: 'repayDatetime',
           type: 'date'
         }, {
-          title: '状态',
-          field: 'status',
-          type: 'select',
-          key: 'cost_status'
-        }, {
-          title: '备注',
-          field: 'remark'
+          title: '逾期金额',
+          field: 'overdueAmount',
+          amount: true
         }]
       }
     }];
@@ -76,9 +60,12 @@ class greenListAddedit extends React.Component {
       .props
       .buildDetail({
         fields,
-        code: this.code,
-        view: this.view,
-        detailCode: 630541
+        pageCode: 630540,
+        searchParams: {
+          userId: this.code,
+          start: '0',
+          limit: '10'
+        }
       });
   }
 }

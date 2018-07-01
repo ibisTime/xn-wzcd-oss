@@ -41,6 +41,9 @@ import {
 class Dustbin extends React.Component {
     render() {
         const fields = [{
+            title: '银行',
+            field: 'loanBankName'
+        }, {
             title: '业务编号',
             field: 'code',
             search: true
@@ -60,6 +63,14 @@ class Dustbin extends React.Component {
             field: 'customerName',
             search: true
         }, {
+            title: '身份证',
+            field: 'idNo'
+        }, {
+            title: '购车途径',
+            field: 'shopWay',
+            type: 'select',
+            key: 'budget_orde_biz_typer'
+        }, {
             title: '汽车经销商',
             field: 'carDealerName'
         }, {
@@ -70,22 +81,22 @@ class Dustbin extends React.Component {
             keyName: 'code',
             valueName: 'name'
         }, {
-            field: 'invoicePrice',
             title: '车辆价格',
+            field: 'invoicePrice',
             amount: true
         }, {
-            field: 'loanAmount',
             title: '贷款金额',
+            field: 'loanAmount',
             amount: true
         }, {
-            title: '贷款期数',
+            title: '剩余欠款',
+            field: ''
+        }, {
+            title: '总期数',
             field: 'loanPeriod'
         }, {
-            title: '贷款银行',
-            field: 'loanBankName'
-        }, {
-            title: '银行利率',
-            field: 'bankRate'
+            title: '剩余期数',
+            field: ''
         }, {
             title: '是否垫资',
             field: 'isAdvanceFund',
@@ -100,20 +111,8 @@ class Dustbin extends React.Component {
             keyName: 'key',
             valueName: 'value'
         }, {
-            title: '业务员',
-            field: 'saleUserName'
-        }, {
-            title: '购车途径',
-            field: 'shopWay',
-            type: 'select',
-            key: 'budget_orde_biz_typer'
-        }, {
-            title: '申请人',
-            field: 'applyUser',
-            search: true
-        }, {
-            title: '申请日期',
-            field: 'applyDatetime',
+            title: '放款日期',
+            field: 'bankFkDatetime',
             type: 'date'
         }, {
             title: '当前节点',

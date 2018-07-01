@@ -267,6 +267,18 @@ class CreditStartAddedit extends React.Component {
                 noVisible: true
             }]);
         }
+        if (!this.isCheckFirst) {
+            o2mFields = o2mFields.concat([{
+                title: '法院网征信结果',
+                field: 'dkdyCount',
+                type: 'textarea',
+                normalArea: true,
+                required: true,
+                readonly: !this.isCheckFirst,
+                hidden: !this.view,
+                noVisible: true
+            }]);
+        }
 
         let fields = [{
             title: '银行',

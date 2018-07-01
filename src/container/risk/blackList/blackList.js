@@ -42,40 +42,28 @@ class blackList extends React.Component {
       {
         title: '客户姓名',
         field: 'realName',
-        search: true,
-        render: (v, d) => {
-          return d.user.realName;
-        }
+        search: true
       }, {
         title: '证件号',
-        field: 'idNo',
-        search: true,
-        render: (v, d) => {
-          return d.user.idNo;
-        }
+        field: 'idNo'
       }, {
         title: '手机号',
-        field: 'mobile',
-        search: true,
-        render: (v, d) => {
-          return d.user.mobile;
-        }
+        field: 'mobile'
       }, {
         title: '标记日期',
-        field: 'repayDatetime',
+        field: 'signDatetime',
         type: 'date'
       }, {
-        title: '累计逾期期数(元)',
-        field: 'totalOverdueCount',
-        amount: true
+        title: '累计逾期次数',
+        field: 'totalBlackCount'
       }
     ];
     return this.props.buildList({
       fields,
+      pageCode: 805120,
       searchParams: {
-        roleCode: getRoleCode()
-      },
-      pageCode: 630520
+        sign: 'BLACK'
+      }
     });
   }
 }

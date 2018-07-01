@@ -305,6 +305,9 @@ class GuaranteeMake extends React.Component {
                 }, {
                     title: '担保人单位地址',
                     field: 'guarantorCompanyAddress'
+                }, {
+                    title: '担保人现地址',
+                    field: 'guarantorNowAddress'
                 }]
             ]
         }, {
@@ -384,7 +387,7 @@ class GuaranteeMake extends React.Component {
                                 ['性别', sex[data.guarantor1Sex]],
                                 ['身份证号码', data.guarantor1IdNo],
                                 ['手机号码', data.guarantorMobile],
-                                ['现住址', data.a],
+                                ['现住址', data.guarantorNowAddress],
                                 ['总的首期还款金额', data.repayFirstMonthAmount],
                                 ['总的每期还款金额', data.repayMonthAmount],
                                 ['原车发票价格', data.invoicePrice],
