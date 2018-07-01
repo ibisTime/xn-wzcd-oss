@@ -97,12 +97,13 @@ class Mortgage extends React.Component {
             pageCode: 632145,
             btnEvent: {
                 make: (selectedRowKeys, selectedRows) => {
+                    console.log(selectedRows[0]);
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push(`/printing/mortgage/make?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/printing/mortgage/make?code=${selectedRowKeys[0]}&bankSubbranch=${selectedRowKeys[0].bankSubbranch}`);
                     }
                 }
             }

@@ -60,7 +60,7 @@ class Guarantee extends React.Component {
             search: true
         }, {
             title: '贷款银行',
-            field: 'loanbankName'
+            field: 'loanBankName'
         }, {
             title: '贷款金额',
             field: 'loanAmount'
@@ -83,6 +83,13 @@ class Guarantee extends React.Component {
         }, {
             title: '业务员名称',
             field: 'saleUserName'
+        }, {
+            title: '当前节点',
+            field: 'curNodeCode',
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildList({
             fields,
