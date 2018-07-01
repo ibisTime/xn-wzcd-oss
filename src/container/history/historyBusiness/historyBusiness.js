@@ -42,7 +42,8 @@ class HistoryBusiness extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
-            field: 'code'
+            field: 'code',
+            search: true
         }, {
             title: '业务公司',
             field: 'companyCode',
@@ -59,7 +60,8 @@ class HistoryBusiness extends React.Component {
             field: 'realName',
             render: (v, d) => {
                 return d.user.realName;
-            }
+            },
+            search: true
         }, {
             title: '身份证',
             field: 'idNo',
@@ -68,13 +70,35 @@ class HistoryBusiness extends React.Component {
             }
         }, {
             title: '汽车经销商',
-            field: 'carDealerName'
+            field: 'carDealerCode',
+            type: 'select',
+            pageCode: 632065,
+            keyName: 'code',
+            valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
+            required: true,
+            onChange: (v, data) => {
+                this.props.form.setFieldsValue({
+                    bankcardCode: ''
+                });
+                this.setState({
+                    bankcardCode: data ? data.jxsCollectBankcardList : []
+                });
+            },
+            search: true
         }, {
             title: '车辆型号',
             field: 'carModel',
             render: (v, d) => {
                 return d.budgetOrder.carModel;
             }
+        }, {
+            title: '贷款银行',
+            field: 'loanBank',
+            type: 'select',
+            listCode: 632057,
+            keyName: 'code',
+            valueName: '{{bankName.DATA}}-{{fullName.DATA}}',
+            search: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
@@ -117,7 +141,8 @@ class HistoryBusiness extends React.Component {
             type: 'select',
             listCode: 630147,
             keyName: 'code',
-            valueName: 'name'
+            valueName: 'name',
+            search: true
         }];
         return this.props.buildList({
             fields,

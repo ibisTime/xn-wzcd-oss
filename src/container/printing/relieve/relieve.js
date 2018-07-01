@@ -13,6 +13,7 @@ import {
     showWarnMsg,
     showSucMsg
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
     listWrapper
 } from 'common/js/build-list';
@@ -83,18 +84,26 @@ class Relieve extends React.Component {
         }, {
             title: '业务员名称',
             field: 'saleUserName'
+        }, {
+            title: '当前节点',
+            field: 'curNodeCode',
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632145,
+            pageCode: 630520,
             btnEvent: {
                 make: (selectedRowKeys, selectedRows) => {
+                    console.log(selectedRows[0]);
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push(`/printing/guarantee/make?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/printing/relieve/make?code=${selectedRowKeys[0]}`);
                     }
                 }
             }

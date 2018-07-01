@@ -1,4 +1,5 @@
 import React from 'react';
+import XLSX from 'xlsx';
 import {
     initStates,
     doFetching,
@@ -10,7 +11,11 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyFormat,
+    moneyUppercase,
+    dateFormat,
+    formatDate
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -36,141 +41,63 @@ class RelieveMake extends React.Component {
 
     render() {
         const fields = [{
-            title: '主贷人姓名',
-            field: 'customerName',
+            title: '客户姓名',
+            field: 'realName',
             readonly: true
         }, {
-            title: '身份证号码',
+            title: '业务编号',
+            field: 'code',
+            readonly: true
+        }, {
+            title: '身份证',
             field: 'idNo',
             readonly: true
         }, {
-            title: '配偶姓名',
-            field: 'ghRealName',
+            title: '贷款金额',
+            field: 'loanAmount',
+            amount: true,
             readonly: true
-        }, {
-            title: '身份证号码',
-            field: 'ghIdNo',
-            readonly: true
-        }, {
-            title: '家庭地址',
-            field: 'applyNowAddress',
-            readonly: true
-        }, {
-            title: '担保合同编号',
-            field: 'guaranteeContractCode',
-            readonly: true
-        }, {
-            title: '合同日期',
-            field: '1',
-            readonly: true
-        }, {
-            title: '账单日',
-            field: 'billDatetime',
-            readonly: true
-        }, {
-            title: '信用卡号',
-            field: 'customerName',
-            readonly: true
-        }, {
-            title: '车牌号',
-            field: 'carNumber'
-        }, {
-            title: '车架号',
-            field: 'frameNo'
-        }, {
-            title: '发动机号',
-            field: 'engineNo'
         }, {
             title: '贷款银行',
-            field: 'loanBankName',
+            field: 'loanBank',
             readonly: true
         }, {
-            title: '银行贷款额',
-            field: 'loanAmount',
-            readonly: true
-        }, {
-            title: '服务费',
-            field: 'fee',
-            readonly: true
-        }, {
-            title: '履约保证金',
-            field: 'lyAmount',
-            readonly: true
-        }, {
-            title: '贷款期限（年）',
-            field: 'guarantContractDeadline',
-            readonly: true
-        }, {
-            title: '银行开户行',
-            field: 'bankSubbranch',
-            readonly: true
-        }, {
-            title: '银行全称',
-            field: '1',
-            readonly: true
-        }, {
-            title: '银行委托人',
-            field: '1',
-            readonly: true
-        }, {
-            title: '银行地址',
-            field: '1',
-            readonly: true
-        }, {
-            title: '银行电话',
-            field: '1',
-            readonly: true
-        }, {
-            title: '委托数有效期',
-            field: '1',
-            readonly: true
-        }, {
-            title: '授权人姓名',
-            field: '1',
-            readonly: true
-        }, {
-            title: '授权人身份证',
-            field: '1',
-            readonly: true
-        }, {
-            title: '授权人电话',
-            field: '1',
-            readonly: true
-        }, {
-            title: '授权人地址',
-            field: '1',
-            readonly: true
-        }, {
-            title: '信用卡类型',
-            field: '1',
-            readonly: true
-        }, {
-            title: '信用卡名称',
-            field: '1',
-            readonly: true
-        }, {
-            title: '所属地区',
-            field: '1',
-            readonly: true
+            title: '解除日期',
+            field: 'releaseDatetime',
+            type: 'date'
         }, {
             title: '套打模版',
-            field: 'guarantPrintTemplateId',
+            field: 'releaseTemplateId',
             type: 'select',
             key: 'guarant_print_template_id'
+        }, {
+            title: '备注',
+            field: 'releaseNote',
+            type: 'textarea',
+            normalArea: true
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632146,
+            detailCode: 630521,
             buttons: [{
                     title: '打印',
                     check: true,
                     handler: (param) => {
-                        param.operater = getUserId();
+                        param.operator = getUserId();
+                        let pageData = this.props.pageData;
                         this.props.doFetching();
-                        fetch(630192, param).then((data) => {
+                        fetch(630576, param).then((data) => {
                             console.log(data);
+                            let arr = [
+                                ['主贷人姓名', data.realName],
+                                ['车牌号', data.carNumber]
+                            ];
+                            const ws = XLSX.utils.aoa_to_sheet(arr);
+                            const wb = XLSX.utils.book_new();
+                            XLSX.utils.book_append_sheet(wb, ws, 'SheetJS');
+                            XLSX.writeFile(wb, 'sheetjs.xlsx');
                             showSucMsg('操作成功');
                         }).catch(this.props.cancelFetching);
                     }

@@ -11,21 +11,26 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyFormat,
+    moneyUppercase,
+    dateFormat,
+    formatDate
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
-  CollapseWrapper
+    CollapseWrapper
 } from 'component/collapse-detail/collapse-detail';
 
 @CollapseWrapper(
-  state => state.printingGuaranteeMake, {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-  }
+    state => state.printingGuaranteeMake, {
+        initStates,
+        doFetching,
+        cancelFetching,
+        setSelectData,
+        setPageData,
+        restore
+    }
 )
 class GuaranteeMake extends React.Component {
     constructor(props) {
@@ -110,7 +115,7 @@ class GuaranteeMake extends React.Component {
                 [{
                     title: '手机电话',
                     field: 'ghMobile',
-                    readonly: true
+                    mobile: true
                 }, {
                     title: '共还人公司名称',
                     field: 'ghCompanyName'
@@ -190,7 +195,10 @@ class GuaranteeMake extends React.Component {
                     readonly: true
                 }, {
                     title: '银行名称（支行）',
-                    field: 'bankSubbranch',
+                    field: 'fullName',
+                    render: (v, d) => {
+                        return d.bankSubbranch.fullName;
+                    },
                     readonly: true
                 }],
                 [{
@@ -212,7 +220,9 @@ class GuaranteeMake extends React.Component {
                     readonly: true
                 }, {
                     title: '期限',
-                    field: 'guarantContractDeadline'
+                    field: 'guarantContractDeadline',
+                    type: 'select',
+                    key: 'loan_period'
                 }, {
                     title: '分期',
                     field: 'loanPeriods',
@@ -254,7 +264,8 @@ class GuaranteeMake extends React.Component {
                     readonly: true
                 }, {
                     title: '月费率',
-                    field: 'guarantMonthFeeRate'
+                    field: 'guarantMonthFeeRate',
+                    help: '请输入0-1的数字'
                 }]
             ]
         }, {
@@ -305,8 +316,7 @@ class GuaranteeMake extends React.Component {
                 }, {
                     title: '客户分类',
                     field: 'customerType',
-                    type: 'select',
-                    key: 'customer_type'
+                    readonly: true
                 }],
                 [{
                     title: '客户具体情况说明',
@@ -318,7 +328,8 @@ class GuaranteeMake extends React.Component {
                     title: '套打模板',
                     field: 'guarantPrintTemplateId',
                     type: 'select',
-                    key: 'guarant_print_template_id'
+                    key: 'guarant_print_template_id',
+                    required: true
                 }]
             ]
         }];
@@ -331,28 +342,62 @@ class GuaranteeMake extends React.Component {
                     title: '打印',
                     check: true,
                     handler: (param) => {
-                      param.operater = getUserId();
-                      this.props.doFetching();
-                      fetch(632142, param).then((data) => {
-                        console.log(data);
-                        showSucMsg('操作成功');
-                      }).catch(this.props.cancelFetching);
+                        param.code = this.code;
+                        param.operater = getUserId();
+                        this.props.doFetching();
+                        let sex = ['', '男', '女'];
+                        fetch(632142, param).then((data) => {
+                            console.log(data);
+                            let arr = [
+                                ['工行姓名', data.customerName],
+                                ['出生年月', formatDate(data.customerBirth)],
+                                ['性别', sex[data.customerSex]],
+                                ['身份证号码', data.idNo],
+                                ['手机号码', data.mobile],
+                                ['工作单位', data.applyUserCompany],
+                                ['现住址', data.applyNowAddress],
+                                ['配偶姓名', data.ghRealName],
+                                ['身份证号码', data.ghIdNo],
+                                ['工作单位', data.ghCompanyName],
+                                ['手机号码', data.ghMobile],
+                                ['费利率（银行利率）', data.bankRate],
+                                ['贷款额', moneyFormat(data.loanAmount)],
+                                ['服务费', moneyFormat(data.fee)],
+                                ['总贷款额（包含服务费）', moneyFormat(data.loanAmount + data.fee)],
+                                ['贷款额（大写）', moneyUppercase(moneyFormat(data.loanAmount))],
+                                ['服务费（大写）', moneyUppercase(moneyFormat(data.fee))],
+                                ['总贷款额（大写）', moneyUppercase(moneyFormat(data.loanAmount + data.fee))],
+                                ['分期期数', data.loanPeriods],
+                                ['分期期数大写', moneyUppercase(data.loanPeriods)],
+                                ['手续费总额', moneyFormat(data.serviceCharge)],
+                                ['手续费总额大写', moneyUppercase(moneyFormat(data.serviceCharge))],
+                                ['总贷款额和手续费总额', moneyFormat(data.loanAmount + data.fee + data.serviceCharge)],
+                                ['车辆总价', moneyFormat(data.originalPrice)],
+                                ['车辆总价大写', moneyUppercase(moneyFormat(data.originalPrice))],
+                                ['首付额', moneyFormat(data.originalPrice - data.loanAmount)],
+                                ['首付额（大写）', moneyUppercase(moneyFormat(data.originalPrice - data.loanAmount))],
+                                ['经销商', data.carDealerName],
+                                ['发动机号', data.engineNo],
+                                ['车架号', data.frameNo],
+                                ['品牌型号', data.carBrandModel],
+                                ['担保人姓名', data.guarantorName],
+                                ['性别', sex[data.guarantor1Sex]],
+                                ['身份证号码', data.guarantor1IdNo],
+                                ['手机号码', data.guarantorMobile],
+                                ['现住址', data.a],
+                                ['总的首期还款金额', data.repayFirstMonthAmount],
+                                ['总的每期还款金额', data.repayMonthAmount],
+                                ['原车发票价格', data.invoicePrice],
+                                ['原车发票价格大写', moneyUppercase(moneyFormat(data.invoicePrice))]
+                            ];
+                            showSucMsg('操作成功');
+                            const ws = XLSX.utils.aoa_to_sheet(arr);
+                            const wb = XLSX.utils.book_new();
+                            XLSX.utils.book_append_sheet(wb, ws, 'SheetJS');
+                            XLSX.writeFile(wb, 'sheetjs.xlsx');
+                            this.props.cancelFetching();
+                        }).catch(this.props.cancelFetching());
                     }
-                    // handler: (selectedRowKeys, selectedRows) => {
-                    //     let data = [];
-                    //     console.log(fields);
-                    //     console.log(this.props.pageData);
-                    //     let pageData = this.props.pageData;
-                    //     fields.forEach(f => {
-                    //         let arr = [f.title, pageData[f.field]];
-                    //         data.push(arr);
-                    //     });
-                    //     console.log(data);
-                    //     const ws = XLSX.utils.aoa_to_sheet(data);
-                    //     const wb = XLSX.utils.book_new();
-                    //     XLSX.utils.book_append_sheet(wb, ws, 'SheetJS');
-                    //     XLSX.writeFile(wb, 'sheetjs.xlsx');
-                    // }
                 },
                 {
                     title: '返回',
