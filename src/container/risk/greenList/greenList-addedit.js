@@ -13,8 +13,7 @@ import {listWrapper} from 'common/js/build-list';
 import {getQueryString} from 'common/js/util';
 
 @listWrapper(state => ({
-  ...state.riskGreenListAddedit,
-  parentCode: state.menu.subMenuCode
+  ...state.riskGreenListAddedit
 }), {
   setTableData,
   clearSearchParam,
@@ -25,10 +24,10 @@ import {getQueryString} from 'common/js/util';
   setSearchParam,
   setSearchData
 })
-class greenListAddedit extends React.Component {
+class GreenListAddedit extends React.Component {
   constructor(props) {
     super(props);
-    this.userId = getQueryString('code', this.props.location.search);
+    this.code = getQueryString('code', this.props.location.search);
   }
   render() {
     const fields = [{
@@ -36,10 +35,7 @@ class greenListAddedit extends React.Component {
       field: 'code'
     }, {
       title: '客户姓名',
-      field: 'realName',
-      formatter: (v, d) => {
-        return d.user.realName;
-      }
+      field: 'realName'
     }, {
       title: '逾期日期',
       field: 'repayDatetime',
@@ -55,12 +51,10 @@ class greenListAddedit extends React.Component {
         fields,
         pageCode: 630540,
         searchParams: {
-          userId: this.code,
-          start: '0',
-          limit: '10'
+          userId: this.code
         }
       });
   }
 }
 
-export default greenListAddedit;
+export default GreenListAddedit;

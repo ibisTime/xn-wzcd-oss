@@ -1,25 +1,28 @@
-import { commDetailState } from '../common';
+import { commListState } from '../common';
 
-const PREFIX = 'RISK_YELLOWLIST_ADDEDIT_';
-const SET_SELECT_DATA = PREFIX + 'SET_SELECT_DATA';
+const PREFIX = 'RISK_YELLOWLIST_ADDEDIT';
+const SET_BUTTON_LIST = PREFIX + 'SET_BUTTON_LIST';
 const LOADING = PREFIX + 'LOADING';
 const CANCEL_LOADING = PREFIX + 'CANCEL_LOADING';
-const INIT_STATE = PREFIX + 'INIT_STATE';
-const SET_PAGE_DATA = PREFIX + 'SET_PAGE_DATA';
-const RESTORE = PREFIX + 'RESTORE';
+const SET_TABLE_DATA = PREFIX + 'SET_TABLE_DATA';
+const SET_SEARCH_DATA = PREFIX + 'SET_SEARCH_DATA';
+const SET_PAGINATION = PREFIX + 'SET_PAGINATION';
+const SET_SEARCH_PARAM = PREFIX + 'SET_SEARCH_PARAM';
 
-const initState = { ...commDetailState };
+const initState = { ...commListState };
 
 export function riskYellowListAddedit(state = initState, action) {
   switch(action.type) {
-    case INIT_STATE:
-      return {...state, ...action.payload};
-    case SET_SELECT_DATA:
-      return {...state, selectData: {...state.selectData, [action.payload.key]: action.payload.data}};
-    case SET_PAGE_DATA:
-      return {...state, pageData: action.payload, isLoaded: true};
-    case RESTORE:
-      return {...initState};
+    case SET_BUTTON_LIST:
+      return {...state, btnList: action.payload};
+    case SET_TABLE_DATA:
+      return {...state, msg: '', tableList: action.payload};
+    case SET_SEARCH_DATA:
+      return {...state, searchData: {...state.searchData, [action.payload.key]: action.payload.data}};
+    case SET_PAGINATION:
+      return {...state, pagination: action.payload};
+    case SET_SEARCH_PARAM:
+      return {...state, searchParam: action.payload};
     case LOADING:
       return {...state, fetching: true};
     case CANCEL_LOADING:
@@ -29,26 +32,42 @@ export function riskYellowListAddedit(state = initState, action) {
   }
 }
 
-export function restore() {
-  return { type: RESTORE };
-}
-
+// 显示loading
 export function doFetching() {
   return { type: LOADING };
 }
 
+// 隐藏loading
 export function cancelFetching() {
   return { type: CANCEL_LOADING };
 }
 
-export function setSelectData(data) {
-  return { type: SET_SELECT_DATA, payload: data };
+// 设置页面的按钮
+export function setBtnList(data) {
+  return { type: SET_BUTTON_LIST, payload: data };
 }
 
-export function initStates(data) {
-  return { type: INIT_STATE, payload: data };
+// 设置table的数据
+export function setTableData(data) {
+  return { type: SET_TABLE_DATA, payload: data };
 }
 
-export function setPageData(data) {
-  return { type: SET_PAGE_DATA, payload: data };
+// 设置select框的数据
+export function setSearchData(data) {
+  return { type: SET_SEARCH_DATA, payload: data };
+}
+
+// 设置table的分页信息
+export function setPagination(data) {
+  return { type: SET_PAGINATION, payload: data };
+}
+
+// 设置搜索框的值
+export function setSearchParam(data) {
+  return { type: SET_SEARCH_PARAM, payload: data };
+}
+
+// 清空搜索框的值
+export function clearSearchParam() {
+  return setSearchParam({});
 }

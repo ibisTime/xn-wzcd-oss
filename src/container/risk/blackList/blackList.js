@@ -55,11 +55,12 @@ class blackList extends React.Component {
         type: 'date'
       }, {
         title: '累计逾期次数',
-        field: 'totalBlackCount'
+        field: 'totalGreenCount'
       }
     ];
     return this.props.buildList({
-      fields,
+        fields,
+        rowKey: 'userId',
       pageCode: 805120,
       searchParams: {
         sign: 'BLACK'

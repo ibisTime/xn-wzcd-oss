@@ -8,14 +8,11 @@ import {
   doFetching,
   cancelFetching,
   setSearchData
-} from '@redux/biz/greenList';
+} from '@redux/risk/greenList';
 import {listWrapper} from 'common/js/build-list';
-import {showWarnMsg, showSucMsg} from 'common/js/util';
-import {Button, Upload, Modal} from 'antd';
-import {lowerFrame, onShelf} from 'api/biz';
 
 @listWrapper(state => ({
-  ...state.bizGreenList,
+  ...state.riskGreenList,
   parentCode: state.menu.subMenuCode
 }), {
   setTableData,
@@ -27,7 +24,7 @@ import {lowerFrame, onShelf} from 'api/biz';
   setSearchParam,
   setSearchData
 })
-class greenList extends React.Component {
+class GreenList extends React.Component {
   render() {
     const fields = [
       {
@@ -60,4 +57,4 @@ class greenList extends React.Component {
   }
 }
 
-export default greenList;
+export default GreenList;

@@ -8,7 +8,7 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/biz/yellowList';
+} from '@redux/risk/yellowList';
 import {
     listWrapper
 } from 'common/js/build-list';
@@ -39,28 +39,29 @@ import {
 )
 class yellowList extends React.Component {
     render() {
-        const fields = [
-          {
-            title: '客户姓名',
-            field: 'realName',
-            search: true
-          }, {
-            title: '证件号',
-            field: 'idNo'
-          }, {
-            title: '手机号',
-            field: 'mobile'
-          }, {
-            title: '标记日期',
-            field: 'signDatetime',
-            type: 'date'
-          }, {
-            title: '累计逾期次数',
-            field: 'totalYellowCount'
-          }
-        ];
-        return this.props.buildList({
-            fields,
+      const fields = [
+        {
+          title: '客户姓名',
+          field: 'realName',
+          search: true
+        }, {
+          title: '证件号',
+          field: 'idNo'
+        }, {
+          title: '手机号',
+          field: 'mobile'
+        }, {
+          title: '标记日期',
+          field: 'signDatetime',
+          type: 'date'
+        }, {
+          title: '累计逾期次数',
+          field: 'totalGreenCount'
+        }
+      ];
+      return this.props.buildList({
+          fields,
+          rowKey: 'userId',
             pageCode: 805120,
             searchParams: {
               sign: 'YELLOW'

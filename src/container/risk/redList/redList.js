@@ -8,7 +8,7 @@ import {
   doFetching,
   cancelFetching,
   setSearchData
-} from '@redux/biz/redList';
+} from '@redux/risk/redList';
 import {listWrapper} from 'common/js/build-list';
 import {showWarnMsg, showSucMsg} from 'common/js/util';
 import {Button, Upload, Modal} from 'antd';
@@ -46,11 +46,12 @@ class redList extends React.Component {
         type: 'date'
       }, {
         title: '累计逾期次数',
-        field: 'totalRedCount'
+        field: 'totalGreenCount'
       }
     ];
     return this.props.buildList({
         fields,
+        rowKey: 'userId',
         pageCode: 805120,
         searchParams: {
           sign: 'RED'
