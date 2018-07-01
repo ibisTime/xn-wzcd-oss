@@ -42,3 +42,7 @@ export function setUserPost(params) {
     updater: getUserId()
   });
 }
+// 列表查询平台用户
+export function getSysUsers() {
+  return fetch(630066, { status: '0' });
+}

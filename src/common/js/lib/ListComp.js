@@ -10,6 +10,7 @@ import { getOwnerBtns } from 'api/menu';
 import { getDictList } from 'api/dict';
 import fetch from 'common/js/fetch';
 import locale from './date-locale';
+import cityData from './city';
 
 moment.locale('zh-cn');
 const FormItem = Form.Item;
@@ -73,10 +74,17 @@ export default class ListComponent extends React.Component {
           };
           this.addRender(f, dateFormat);
         }
-      } else if (f.type === 'select') {
+      } else if (f.type === 'select' || f.type === 'provSelect') {
         if (f.key) {
           f.keyName = f.keyName || 'dkey';
           f.valueName = f.valueName || 'dvalue';
+        } else if (f.type === 'provSelect') {
+            f.keyName = 'value';
+            f.valueName = 'label';
+            f.data = cityData.map(c => ({
+              value: c.value,
+              label: c.label
+            }));
         }
         if (!f.data) {
           f.data = this.props.searchData[f.field];
@@ -428,6 +436,7 @@ export default class ListComponent extends React.Component {
   }
   getItemByType(type, item) {
     switch(type) {
+      case 'provSelect':
       case 'select':
         return item.pageCode ? this.getSearchSelectItem(item) : this.getSelectItem(item);
       case 'date':

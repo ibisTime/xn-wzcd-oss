@@ -79,10 +79,8 @@ class Post extends React.Component {
   }
   // 新增岗位
   addPost() {
-    if (!this.props.selectedKeys.length) {
-      showWarnMsg('请先选择部门');
-    } else if (this.props.compInfo[this.props.selectedKeys[0]].type !== '2') {
-      showWarnMsg('请选择部门');
+    if (this.props.selectedKeys.length && this.props.compInfo[this.props.selectedKeys[0]].type === '3') {
+      showWarnMsg('请选择公司或者部门');
     } else {
       this.setPostVisible(true);
     }

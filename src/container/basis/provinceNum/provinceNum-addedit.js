@@ -39,6 +39,7 @@ class ProvinceNumAddedit extends React.Component {
         }, {
             title: '省份名称',
             field: 'name',
+            type: 'provSelect',
             required: true
         }];
         return this.props.buildDetail({
