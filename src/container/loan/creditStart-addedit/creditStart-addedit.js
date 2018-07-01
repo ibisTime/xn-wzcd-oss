@@ -266,6 +266,19 @@ class CreditStartAddedit extends React.Component {
                 hidden: !this.view,
                 noVisible: true
             }]);
+
+            if(this.isCheckFirst) {
+                o2mFields = o2mFields.concat([{
+                    title: '法院网查询结果',
+                    field: 'courtNetworkResults',
+                    type: 'textarea',
+                    normalArea: true,
+                    required: true,
+                    readonly: !this.isCheckFirst,
+                    hidden: !this.view,
+                    noVisible: true
+                }]);
+            }
         }
 
         let fields = [{
@@ -313,8 +326,8 @@ class CreditStartAddedit extends React.Component {
                 add: true,
                 edit: true,
                 delete: true,
-                detail: !(this.isEntry || !this.view),
-                check: this.isEntry,
+                detail: !(this.isEntry || this.isCheckFirst || !this.view),
+                check: (this.isEntry || this.isCheckFirst),
                 checkName: '录入',
                 scroll: {x: 1300},
                 fields: o2mFields
@@ -372,6 +385,15 @@ class CreditStartAddedit extends React.Component {
                 title: '通过',
                 check: true,
                 handler: (params) => {
+                    let courtNetworkResultsList = [];
+                    params.creditUserList.map(v => {
+                        courtNetworkResultsList.push({
+                            code: v.code,
+                            courtNetworkResults: v.courtNetworkResults
+                        });
+                    });
+                    params.courtNetworkResultsList = courtNetworkResultsList;
+                    delete params.creditUserList;
                     params.approveResult = '1';
                     params.operator = getUserId();
                     this.props.doFetching();
@@ -387,6 +409,15 @@ class CreditStartAddedit extends React.Component {
                 title: '不通过',
                 check: true,
                 handler: (params) => {
+                    let courtNetworkResultsList = [];
+                    params.creditUserList.map(v => {
+                        courtNetworkResultsList.push({
+                            code: v.code,
+                            courtNetworkResults: v.courtNetworkResults
+                        });
+                    });
+                    params.courtNetworkResultsList = courtNetworkResultsList;
+                    delete params.creditUserList;
                     params.approveResult = '0';
                     params.operator = getUserId();
                     this.props.doFetching();

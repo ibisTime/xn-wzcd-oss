@@ -42,14 +42,6 @@ class BudgetAddedit extends React.Component {
         this.view = !!getQueryString('v', this.props.location.search);
         // 申请
         this.isApply = !!getQueryString('isApply', this.props.location.search);
-        // 撤销
-        this.isRevoke = !!getQueryString('isRevoke', this.props.location.search);
-        // 区域总经理审查
-        this.isAreaCheck = !!getQueryString('isAreaCheck', this.props.location.search);
-        // 分公司总经理审查
-        this.isCompCheck = !!getQueryString('isCompCheck', this.props.location.search);
-        // 二审
-        this.isCheck = !!getQueryString('isCheck', this.props.location.search);
         // 银行利率明细列表
         this.bankRateList = null;
         this.bankRateTypeList = null;

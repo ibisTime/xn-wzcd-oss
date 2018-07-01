@@ -138,7 +138,7 @@ class Budget extends React.Component {
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push(`/loan/budget/addedit?isRevoke=1&v=1&code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/loan/budget/detail?isRevoke=1&v=1&code=${selectedRowKeys[0]}`);
                     }
                 },
                 detail: (selectedRowKeys, selectedRows) => {
