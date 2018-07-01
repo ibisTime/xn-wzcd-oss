@@ -8,7 +8,7 @@ import {
   doFetching,
   cancelFetching,
   setSearchData
-} from '@redux/biz/greenList-addedit';
+} from '@redux/risk/greenList-addedit';
 import {listWrapper} from 'common/js/build-list';
 import {getQueryString} from 'common/js/util';
 
