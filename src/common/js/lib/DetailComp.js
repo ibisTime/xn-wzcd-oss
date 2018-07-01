@@ -193,7 +193,8 @@ export default class DetailComponent extends React.Component {
     }
 
     customSubmit = (handler) => {
-        this.props.form.validateFieldsAndScroll((err, values) => {
+        let fieldsList = this.options.fields.map(v => v.field);
+        this.props.form.validateFieldsAndScroll(fieldsList, (err, values) => {
             let params = this.beforeSubmit(err, values);
             if (!params) {
                 return;
