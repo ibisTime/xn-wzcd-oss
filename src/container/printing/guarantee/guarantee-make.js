@@ -381,7 +381,7 @@ class GuaranteeMake extends React.Component {
                                 ['车架号', data.frameNo],
                                 ['品牌型号', data.carBrandModel],
                                 ['担保人姓名', data.guarantorName],
-                                ['性别', sex[data.a]],
+                                ['性别', sex[data.guarantor1Sex]],
                                 ['身份证号码', data.guarantor1IdNo],
                                 ['手机号码', data.guarantorMobile],
                                 ['现住址', data.a],
