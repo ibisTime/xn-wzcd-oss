@@ -1,84 +1,64 @@
 import React from 'react';
 import {
-  initStates,
+  setTableData,
+  setPagination,
+  setBtnList,
+  setSearchParam,
+  clearSearchParam,
   doFetching,
   cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
-} from '@redux/biz/greenList-addedit';
+  setSearchData
+} from '@redux/risk/greenList-addedit';
+import {listWrapper} from 'common/js/build-list';
 import {getQueryString} from 'common/js/util';
-import {DetailWrapper} from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizGreenListAddedit, {
-  initStates,
+@listWrapper(state => ({
+  ...state.riskGreenListAddedit,
+  parentCode: state.menu.subMenuCode
+}), {
+  setTableData,
+  clearSearchParam,
   doFetching,
+  setBtnList,
   cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
+  setPagination,
+  setSearchParam,
+  setSearchData
 })
 class greenListAddedit extends React.Component {
   constructor(props) {
     super(props);
-    this.code = getQueryString('code', this.props.location.search);
-    this.view = !!getQueryString('v', this.props.location.search);
+    this.userId = getQueryString('code', this.props.location.search);
   }
   render() {
     const fields = [{
       title: '业务编号',
-      field: 'code',
-      readonly: true
+      field: 'code'
     }, {
-      field: 'user',
-      title: '贷款人',
+      title: '客户姓名',
+      field: 'realName',
       formatter: (v, d) => {
         return d.user.realName;
-      },
-      readonly: true
+      }
     }, {
       title: '逾期日期',
       field: 'repayDatetime',
-      type: 'date',
-      readonly: true
+      type: 'date'
     }, {
-      title: '未还清收成本(元)',
-      field: 'restTotalCost',
+      title: '逾期金额',
+      field: 'overdueAmount',
       amount: true
-    }, {
-      title: '清收成本清单',
-      field: 'costList',
-      type: 'o2m',
-      options: {
-        fields: [{
-          title: '费用项',
-          field: 'item'
-        }, {
-          title: '金额（元）',
-          field: 'amount',
-          amount: true
-        }, {
-          title: '发生时间',
-          field: 'payDatetime',
-          type: 'date'
-        }, {
-          title: '状态',
-          field: 'status',
-          type: 'select',
-          key: 'cost_status'
-        }, {
-          title: '备注',
-          field: 'remark'
-        }]
-      }
     }];
     return this
       .props
-      .buildDetail({
+      .buildList({
         fields,
-        code: this.code,
-        view: this.view,
-        detailCode: 630541
+        pageCode: 630540,
+        searchParams: {
+          userId: this.code,
+          start: '0',
+          limit: '10'
+        }
       });
   }
 }

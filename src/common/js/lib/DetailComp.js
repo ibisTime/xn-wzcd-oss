@@ -182,6 +182,7 @@ export default class DetailComponent extends React.Component {
         this.options.fields.forEach(v => {
             if (v.amount) {
                 values[v.field] = moneyParse(values[v.field], v.amountRate);
+                console.log(values);
             } else if (v.type === 'citySelect') {
                 let mid = values[v.field].map(a => a === '全部' ? '' : a);
                 v.cFields.forEach((f, i) => {
@@ -210,7 +211,18 @@ export default class DetailComponent extends React.Component {
     }
 
     customSubmit = (handler) => {
-        let fieldsList = this.options.fields.map(v => v.field);
+        let fieldsList = [];
+        this.options.fields.map(v => {
+            if (v.items) {
+                v.items.map(v1 => {
+                    v1.map(v2 => {
+                        fieldsList.push(v2.field);
+                    });
+                });
+            } else {
+                fieldsList.push(v.field);
+            }
+        });
         this.props.form.validateFieldsAndScroll(fieldsList, (err, values) => {
             let params = this.beforeSubmit(err, values);
             if (!params) {

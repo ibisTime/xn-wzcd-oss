@@ -596,7 +596,7 @@ class BudgetAddedit extends React.Component {
                             hidden: true
                         }, {
                             title: 'GPS安装位置',
-                            field: 'gpsLocation',
+                            field: 'azLocation',
                             required: true
                         }]
                     }

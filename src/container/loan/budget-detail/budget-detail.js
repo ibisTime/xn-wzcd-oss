@@ -423,8 +423,7 @@ class BudgetDetail extends React.Component {
                                     gpsType: data.gpsType
                                 });
                             }
-                        }, {
-                            title: 'GPS设备号',
+                        }, {title: 'GPS设备号',
                             field: 'gpsDevNo',
                             hidden: true
                         }, {
@@ -441,6 +440,10 @@ class BudgetDetail extends React.Component {
                             keyName: 'key',
                             valueName: 'value',
                             hidden: true
+                        }, {
+                            title: 'GPS安装位置',
+                            field: 'azLocation',
+                            required: true
                         }]
                     }
                 }]
@@ -835,7 +838,6 @@ class BudgetDetail extends React.Component {
                     type: 'o2m',
                     options: {
                         detail: true,
-                        rowKey: 'useMoneyPurpose',
                         fields: [{
                             title: '用款用途',
                             field: 'useMoneyPurpose',
@@ -883,69 +885,12 @@ class BudgetDetail extends React.Component {
                     }
                 }],
                 [{
-                    title: '协议内返点',
-                    field: 'repointDetailList2',
-                    required: true,
-                    type: 'o2m',
-                    options: {
-                        detail: true,
-                        rowKey: 'id',
-                        fields: [{
-                            title: 'id',
-                            field: 'id',
-                            noVisible: true
-                        }, {
-                            title: '用款用途',
-                            field: 'useMoneyPurpose',
-                            type: 'select',
-                            data: [{
-                                key: '1',
-                                value: '应退按揭款'
-                            }, {
-                                key: '2',
-                                value: '协议内返点'
-                            }, {
-                                key: '3',
-                                value: '协议外返点'
-                            }],
-                            keyName: 'key',
-                            valueName: 'value',
-                            value: '2',
-                            readonly: true,
-                            required: true
-                        }, {
-                            title: '金额小写',
-                            field: 'repointAmount',
-                            amount: true,
-                            required: true
-                        }, {
-                            title: '金额大写',
-                            field: 'repointAmountL',
-                            required: true,
-                            noVisible: true
-                        }, {
-                            title: '单位名称',
-                            field: 'companyName',
-                            required: true
-                        }, {
-                            title: '账号',
-                            field: 'accountCode',
-                            required: true
-                        }, {
-                            title: '开户行',
-                            field: 'subbranch',
-                            required: true
-                        }]
-                    }
-                }],
-                [{
                     title: '协议外返点',
                     field: 'repointDetailList3',
                     type: 'o2m',
                     options: {
                         add: true,
                         delete: true,
-                        rowKey: 'id',
                         fields: [{
                             title: '用款用途',
                             field: 'useMoneyPurpose',

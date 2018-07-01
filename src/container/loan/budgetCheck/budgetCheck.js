@@ -119,8 +119,8 @@ class BudgetCheck extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '002_02') {
-                        showWarnMsg('当前不是区域总经理准入审核的节点');
+                    // } else if (selectedRows[0].curNodeCode !== '002_02') {
+                    //     showWarnMsg('当前不是区域总经理准入审核的节点');
                     } else {
                         this.props.history.push(`/loan/budget/detail?isAreaCheck=1&v=1&code=${selectedRowKeys[0]}`);
                     }
@@ -130,8 +130,8 @@ class BudgetCheck extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '002_03') {
-                        showWarnMsg('当前不是省分公司总经理审核的节点');
+                    // } else if (selectedRows[0].curNodeCode !== '002_03') {
+                    //     showWarnMsg('当前不是省分公司总经理审核的节点');
                     } else {
                         this.props.history.push(`/loan/budget/detail?isCompCheck=1&v=1&code=${selectedRowKeys[0]}`);
                     }
@@ -141,8 +141,8 @@ class BudgetCheck extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '002_04') {
-                        showWarnMsg('当前不是准入审核二审的节点');
+                    // } else if (selectedRows[0].curNodeCode !== '002_04') {
+                    //     showWarnMsg('当前不是准入审核二审的节点');
                     } else {
                         this.props.history.push(`/loan/budget/detail?isCheck=1&v=1&code=${selectedRowKeys[0]}`);
                     }

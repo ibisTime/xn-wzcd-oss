@@ -69,29 +69,6 @@ class HistoryBusiness extends React.Component {
                 return d.user.idNo;
             }
         }, {
-            title: '汽车经销商',
-            field: 'carDealerCode',
-            type: 'select',
-            pageCode: 632065,
-            keyName: 'code',
-            valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
-            required: true,
-            onChange: (v, data) => {
-                this.props.form.setFieldsValue({
-                    bankcardCode: ''
-                });
-                this.setState({
-                    bankcardCode: data ? data.jxsCollectBankcardList : []
-                });
-            },
-            search: true
-        }, {
-            title: '车辆型号',
-            field: 'carModel',
-            render: (v, d) => {
-                return d.budgetOrder.carModel;
-            }
-        }, {
             title: '贷款银行',
             field: 'loanBank',
             type: 'select',
@@ -110,31 +87,9 @@ class HistoryBusiness extends React.Component {
             title: '剩余期数',
             field: 'restPeriods'
         }, {
-            title: '是否垫资',
-            field: 'isAdvanceFund',
-            type: 'select',
-            data: [{
-                key: '0',
-                value: '否'
-            }, {
-                key: '1',
-                value: '是'
-            }],
-            keyName: 'key',
-            valueName: 'value'
-        }, {
             title: '放款日期',
             field: 'fkDatetime',
             type: 'date'
-        }, {
-            title: '垫资日期',
-            field: 'advanceFundDatetime',
-            type: 'date',
-            required: true
-        }, {
-            title: '利差',
-            field: 'advanceFundDatetime',
-            amount: true
         }, {
             title: '当前节点',
             field: 'curNodeCode',
