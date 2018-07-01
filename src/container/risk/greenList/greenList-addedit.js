@@ -58,7 +58,7 @@ class greenListAddedit extends React.Component {
     }];
     return this
       .props
-      .buildDetail({
+      .buildList({
         fields,
         pageCode: 630540,
         searchParams: {
