@@ -32,29 +32,22 @@ class greenListAddedit extends React.Component {
   }
   render() {
     const fields = [{
-      title: '还款计划表',
-      field: 'list',
-      type: 'o2m',
-      options: {
-        fields: [{
-          title: '业务编号',
-          field: 'code'
-        }, {
-          title: '客户姓名',
-          field: 'realName',
-          formatter: (v, d) => {
-            return d.user.realName;
-          }
-        }, {
-          title: '逾期日期',
-          field: 'repayDatetime',
-          type: 'date'
-        }, {
-          title: '逾期金额',
-          field: 'overdueAmount',
-          amount: true
-        }]
+      title: '业务编号',
+      field: 'code'
+    }, {
+      title: '客户姓名',
+      field: 'realName',
+      formatter: (v, d) => {
+        return d.user.realName;
       }
+    }, {
+      title: '逾期日期',
+      field: 'repayDatetime',
+      type: 'date'
+    }, {
+      title: '逾期金额',
+      field: 'overdueAmount',
+      amount: true
     }];
     return this
       .props
