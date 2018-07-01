@@ -66,20 +66,20 @@ class Relieve extends React.Component {
             field: 'loanAmount'
         }, {
             title: '利率',
-            field: '11'
+            field: 'bankRate'
         }, {
             title: '服务费',
             field: 'fee'
         }, {
             title: '品牌型号',
-            field: '22'
+            field: 'carBrandModel'
         }, {
             title: '打件日期',
-            field: '44',
+            field: 'guarantPrintDatetime',
             type: 'date'
         }, {
             title: '打件人',
-            field: '33'
+            field: 'guarantPrintUser'
         }, {
             title: '业务员名称',
             field: 'saleUserName'
