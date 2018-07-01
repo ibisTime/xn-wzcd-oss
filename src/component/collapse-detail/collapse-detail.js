@@ -49,7 +49,7 @@ class CollapseDetail extends DetailComp {
                                             f.readonly = isUndefined(f.readonly) ? this.options.view : f.readonly;
                                             if (f.type === 'citySelect') {
                                                 f.cFields = f.cFields || ['province', 'city', 'area'];
-                                            } else if (f.type === 'select') {
+                                            } else if (f.type === 'select' || f.type === 'checkbox') {
                                                 if (f.key) {
                                                     f.keyName = f.keyName || 'dkey';
                                                     f.valueName = f.valueName || 'dvalue';
@@ -90,7 +90,7 @@ class CollapseDetail extends DetailComp {
                 field.readonly = isUndefined(field.readonly) ? this.options.view : field.readonly;
                 if (field.type === 'citySelect') {
                     field.cFields = field.cFields || ['province', 'city', 'area'];
-                } else if (field.type === 'select') {
+                } else if (field.type === 'select' || field.type === 'checkbox') {
                     if (field.key) {
                         field.keyName = field.keyName || 'dkey';
                         field.valueName = field.valueName || 'dvalue';

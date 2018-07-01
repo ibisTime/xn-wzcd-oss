@@ -63,7 +63,7 @@ class blackList extends React.Component {
         rowKey: 'userId',
       pageCode: 805120,
       searchParams: {
-        sign: 'BLACK'
+        sign: '4'
       }
     });
   }

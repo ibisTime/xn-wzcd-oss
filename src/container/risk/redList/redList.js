@@ -54,7 +54,7 @@ class redList extends React.Component {
         rowKey: 'userId',
         pageCode: 805120,
         searchParams: {
-          sign: 'RED'
+          sign: '3'
         }
       });
   }

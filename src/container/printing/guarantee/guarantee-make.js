@@ -353,8 +353,8 @@ class GuaranteeMake extends React.Component {
                             console.log(data);
                             let arr = [
                                 ['工行姓名', data.customerName],
-                                ['出生年月', formatDate(data.customerBirth)],
-                                ['性别', sex[data.customerSex]],
+                                ['出生年月', data.customerBirth],
+                                ['性别', data.customerSex],
                                 ['身份证号码', data.idNo],
                                 ['手机号码', data.mobile],
                                 ['工作单位', data.applyUserCompany],
@@ -384,7 +384,7 @@ class GuaranteeMake extends React.Component {
                                 ['车架号', data.frameNo],
                                 ['品牌型号', data.carBrandModel],
                                 ['担保人姓名', data.guarantorName],
-                                ['性别', sex[data.guarantor1Sex]],
+                                ['性别', data.guarantor1Sex],
                                 ['身份证号码', data.guarantor1IdNo],
                                 ['手机号码', data.guarantorMobile],
                                 ['现住址', data.guarantorNowAddress],
