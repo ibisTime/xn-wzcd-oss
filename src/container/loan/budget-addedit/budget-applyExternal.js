@@ -16,15 +16,15 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/loan/budget-addedit';
+} from '@redux/loan/budget-applyExternal';
 import { getSystormParam } from 'api/dict';
 import fetch from 'common/js/fetch';
 
 @CollapseWrapper(
-    state => state.loanBudgetAddedit,
+    state => state.loanBudgetApplyExternal,
     {initStates, doFetching, cancelFetching, setSelectData, setPageData, restore}
 )
-class BudgetAddedit extends React.Component {
+class BudgetApplyExternal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -149,8 +149,8 @@ class BudgetAddedit extends React.Component {
     getRefundAmount = (params) => {
         let loanAmount = moneyParse(params.loanAmount || this.props.form.getFieldValue('loanAmount') || 0) / 1000;
         let carDealerSubsidy = moneyParse(params.carDealerSubsidy || this.props.form.getFieldValue('carDealerSubsidy') || 0) / 1000;
-        let otherFee = moneyParse(this.state.sfData.otherFee || 0) / 1000;
-        let gpsFee = moneyParse(this.state.sfData.gpsFee || 0) / 1000;
+        let otherFee = moneyParse(params.otherFee || this.props.form.getFieldValue('otherFee') || 0) / 1000;
+        let gpsFee = moneyParse(params.gpsFee || this.props.form.getFieldValue('gpsFee') || 0) / 1000;
         let refund = 0;
 
         let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
@@ -203,29 +203,8 @@ class BudgetAddedit extends React.Component {
                 }],
                 [{
                     title: '汽车经销商',
-                    field: 'carDealerCode',
-                    type: 'select',
-                    pageCode: 632065,
-                    params: {
-                        curNodeCode: '006_02'
-                    },
-                    keyName: 'code',
-                    valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
-                    required: true,
-                    onChange: (v, data) => {
-                        if (!data) {
-                            return;
-                        }
-                        this.props.doFetching();
-                        data.carDealerProtocolList.forEach(d => {
-                            if (d.bankCode === this.props.pageData.bankSubbranch.bank.bankCode) {
-                                this.setState({
-                                    sfData: d,
-                                    serviceCharge: this.getCustomerFeeTotal(d)
-                                });
-                            }
-                        });
-                    }
+                    field: 'outCarDealerName',
+                    required: true
                 }, {
                     title: '贷款银行',
                     field: 'loanBankName',
@@ -990,6 +969,42 @@ class BudgetAddedit extends React.Component {
                     valueName: 'value',
                     required: true
                 }, {
+                    title: 'GPS收费',
+                    field: 'gpsFee',
+                    amount: true,
+                    required: true,
+                    onChange: (v, data) => {
+                        if(!this.getAmountRules(v)) {
+                            return false;
+                        }
+                        let gpsFeeWay = this.props.form.getFieldValue('gpsFeeWay');
+                        let serviceChargeWay = this.props.form.getFieldValue('fee_way');
+                        if (gpsFeeWay && serviceChargeWay && this.props.form.getFieldValue('loanAmount') && v) {
+                            let repointAmount = this.getRefundAmount({
+                                carDealerSubsidy: v
+                            });
+                            let repointDetailList1 = [{
+                                useMoneyPurpose: '1',
+                                repointAmount: repointAmount,
+                                repointAmountL: moneyUppercase(repointAmount),
+                                companyName: this.receivables.companyCode,
+                                accountCode: this.receivables.bankcardNumber,
+                                subbranch: this.receivables.subbranch
+                            }];
+
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                repointDetailList1: repointDetailList1
+                            });
+                        }
+                    }
+                }],
+                [{
+                    title: '履约保证金',
+                    field: 'lyAmountFee',
+                    amount: true,
+                    required: true
+                }, {
                     title: 'GPS提成',
                     field: 'gpsDeduct',
                     amount: true,
@@ -1010,6 +1025,11 @@ class BudgetAddedit extends React.Component {
                     required: true
                 }],
                 [{
+                    title: '担保风险金',
+                    field: 'assureFee',
+                    amount: true,
+                    required: true
+                }, {
                     title: 'GPS收费方式',
                     field: 'gpsFeeWay',
                     type: 'select',
@@ -1035,6 +1055,12 @@ class BudgetAddedit extends React.Component {
                             });
                         }
                     }
+                }],
+                [{
+                    title: '杂费',
+                    field: 'otherFee',
+                    amount: true,
+                    required: true
                 }, {
                     title: '手续费收取方式',
                     field: 'serviceChargeWay',
@@ -1514,7 +1540,7 @@ class BudgetAddedit extends React.Component {
                 title: '保存',
                 check: true,
                 handler: (data) => {
-                    data.type = '1';
+                    data.type = '2';
                     data.dealType = '0';
                     data.budgetOrderCode = this.code;
                     data.operator = getUserId();
@@ -1550,7 +1576,7 @@ class BudgetAddedit extends React.Component {
                 title: '申请',
                 check: true,
                 handler: (data) => {
-                    data.type = '1';
+                    data.type = '2';
                     data.dealType = '1';
                     data.budgetOrderCode = this.code;
                     data.operator = getUserId();
@@ -1601,4 +1627,4 @@ class BudgetAddedit extends React.Component {
     }
 }
 
-export default BudgetAddedit;
+export default BudgetApplyExternal;

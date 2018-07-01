@@ -36,47 +36,198 @@ class BudgetDetail extends React.Component {
         };
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        // 当前选中汽车经销商
-        this.carDealerSelectData = [];
         // 银行利率明细列表
         this.bankRateList = null;
-        this.bankRateTypeList = null;
-        // 收款账户
-        this.receivables = {};
-        // 应退按揭款
-        this.repointDetailList1 = [];
+        // 购车途径
+        this.shopWay = true;
     }
 
-    // componentDidMount() {
-    //     if (this.isApply) {
-    //         this.props.doFetching();
-    //         Promise.all([
-    //             fetch(632007, {
-    //                 companyCode: this.companyCode,
-    //                 type: 1
-    //             }),
-    //             getSystormParam({key: 'budget_oil_subsidy_rate'}),
-    //             getSystormParam({key: 'budget_gps_deduct_rate'})
-    //         ]).then(([receivablesData, oilSubsidyData, gpsDeductData]) => {
-    //             this.receivables = receivablesData[0];
-    //             this.setState({
-    //                 oilSubsidyValue: oilSubsidyData.cvalue,
-    //                 gpsDeductValue: gpsDeductData.cvalue
-    //             });
-    //             this.props.cancelFetching();
-    //         }).catch(this.props.cancelFetching);
-    //     }
-    // }
-
     render() {
-        if (this.props.pageData.gpsList) {
-            let gpsList = [];
-            this.props.pageData.gpsList.forEach((v) => {
-                gpsList.push({
-                    code: v.code
-                });
-            });
-        }
+        let o2mFields = [{
+            title: '姓名',
+            field: 'userName',
+            nowrap: true,
+            required: true,
+            width: 80
+        }, {
+            title: '与借款人关系',
+            field: 'relation',
+            type: 'select',
+            key: 'credit_user_relation',
+            required: true
+        }, {
+            title: '贷款角色',
+            field: 'loanRole',
+            type: 'select',
+            key: 'credit_user_loan_role',
+            required: true
+        }, {
+            title: '手机号',
+            field: 'mobile',
+            required: true,
+            render: (v) => {
+                let val = (v && v.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2')) || '';
+                return <span style={{whiteSpace: 'nowrap'}}>{val}</span>;
+            }
+        }, {
+            title: '身份证号',
+            field: 'idNo',
+            idCard: true,
+            required: true,
+            render: (v) => {
+                let val = (v && v.replace(/^(\d{6}).+(\d{4})$/, '$1****$2')) || '';
+                return <span style={{whiteSpace: 'nowrap'}}>{val}</span>;
+            }
+        }, {
+            title: '身份证正面',
+            field: 'idNoFront',
+            type: 'img',
+            single: true,
+            required: true
+        }, {
+            title: '身份证反面',
+            field: 'idNoReverse',
+            type: 'img',
+            single: true,
+            required: true
+        }, {
+            title: '征信查询授权书',
+            field: 'authPdf',
+            type: 'img',
+            single: true,
+            required: true
+        }, {
+            title: '面签照片',
+            field: 'interviewPic',
+            type: 'img',
+            single: true,
+            required: true
+        }, {
+            title: '贷款抵押笔数',
+            field: 'dkdyCount',
+            number: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '贷款抵押贷款余额',
+            field: 'dkdyAmount',
+            amount: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '贷款抵押近两年逾期次数',
+            field: 'dkdy2YearOverTimes',
+            number: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '贷款抵押最高逾期金额',
+            field: 'dkdyMaxOverAmount',
+            amount: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '贷款抵押当前逾期金额',
+            field: 'dkdyCurrentOverAmount',
+            amount: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '贷款抵押近6个月平均月还款额',
+            field: 'dkdy6MonthAvgAmount',
+            amount: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '贷款信用未结清贷款笔数',
+            field: 'hkxyUnsettleCount',
+            number: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '贷款信用未结清贷款余额',
+            field: 'hkxyUnsettleAmount',
+            amount: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '贷款信用近两年逾期次数',
+            field: 'hkxy2YearOverTimes',
+            number: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '贷款信用单月最高逾期金额',
+            field: 'hkxyMonthMaxOverAmount',
+            amount: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '贷款信用当前逾期金额',
+            field: 'hkxyCurrentOverAmount',
+            amount: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '贷款信用近6个月平均月还款额',
+            field: 'hkxy6MonthAvgAmount',
+            amount: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '信用卡张数',
+            field: 'xykCount',
+            number: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '信用卡授信总额',
+            field: 'xykCreditAmount',
+            amount: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '信用卡近6个月使用额',
+            field: 'xyk6MonthUseAmount',
+            amount: true,
+            noVisible: true
+        }, {
+            title: '信用卡近两年逾期次数',
+            field: 'xyk2YearOverTimes',
+            number: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '信用卡单月最高逾期金额',
+            field: 'xykMonthMaxOverAmount',
+            amount: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '信用卡当前逾期金额',
+            field: 'xykCurrentOverAmount',
+            amount: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '对外担保笔数',
+            field: 'outGuaranteesCount',
+            number: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '对外担保余额',
+            field: 'outGuaranteesAmount',
+            amount: true,
+            required: true,
+            noVisible: true
+        }, {
+            title: '对外担保备注',
+            field: 'outGuaranteesRemark',
+            required: true,
+            noVisible: true
+        }];
+
         let fields = [{
             title: '预算单信息',
             items: [
@@ -131,11 +282,6 @@ class BudgetDetail extends React.Component {
                     type: 'select',
                     key: 'loan_period',
                     required: true
-                }, {
-                    title: '发票价格',
-                    field: 'invoicePrice',
-                    amount: true,
-                    required: true
                 }],
                 [{
                     title: '购车途径',
@@ -143,12 +289,17 @@ class BudgetDetail extends React.Component {
                     type: 'select',
                     key: 'budget_orde_biz_typer',
                     readonly: true,
-                    required: true
+                    required: true,
+                    formatter: (v, data) => {
+                        if(v === '2') {
+                            this.shopWay = false;
+                        }
+                        return v;
+                    }
                 }, {
-                    title: '利率类型',
-                    field: 'rateType',
-                    type: 'select',
-                    key: 'rate_type',
+                    title: '发票价格',
+                    field: 'invoicePrice',
+                    amount: true,
                     required: true
                 }, {
                     title: '贷款金额',
@@ -169,6 +320,12 @@ class BudgetDetail extends React.Component {
                     }],
                     keyName: 'key',
                     valueName: 'value',
+                    required: true
+                }, {
+                    title: '利率类型',
+                    field: 'rateType',
+                    type: 'select',
+                    key: 'rate_type',
                     required: true
                 }, {
                     title: '银行利率',
@@ -955,6 +1112,7 @@ class BudgetDetail extends React.Component {
             ]
         }, {
             title: '二手车照片',
+            hidden: this.shopWay,
             items: [
                 [{
                     title: '合格证',
@@ -1008,229 +1166,36 @@ class BudgetDetail extends React.Component {
                     normalArea: true
                 }]
             ]
+        }, {
+            title: '征信信息',
+            items: [
+                [{
+                    title: '征信列表',
+                    field: 'creditUserList',
+                    type: 'o2m',
+                    formatter: (v, data) => {
+                        if (!this.props.pageData.creditUserList) {
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                creditUserList: data.credit.creditUserList
+                            });
+                        }
+                        return data.credit.creditUserList;
+                    },
+                    options: {
+                        detail: true,
+                        scroll: {x: 1300},
+                        fields: o2mFields
+                    }
+                }]
+            ]
         }];
-
-        let buttons = [];
-
-        if (this.isRevoke) {
-            let revokeFields = [{
-                title: '撤销理由',
-                field: 'cancelReason',
-                type: 'textarea',
-                normalArea: true,
-                readonly: false,
-                required: true
-            }];
-            fields = fields.concat(revokeFields);
-            buttons = [{
-                title: '撤销',
-                check: true,
-                handler: (params) => {
-                    let data = {};
-                    data.code = this.code;
-                    data.cancelReason = params.cancelReason;
-                    data.operator = getUserId();
-                    let bizCode = 632125;
-                    this.props.doFetching();
-                    fetch(bizCode, data).then(() => {
-                        this.props.cancelFetching();
-                        showSucMsg('操作成功');
-                        setTimeout(() => {
-                            this.props.history.go(-1);
-                        }, 1000);
-                    }).catch(() => {
-                        this.props.cancelFetching();
-                    });
-                }
-            }, {
-                title: '返回',
-                handler: () => {
-                    this.props.history.go(-1);
-                }
-            }];
-        }
-
-        let checkFields = [{
-            field: 'approveNote',
-            title: '审核说明',
-            type: 'textarea',
-            normalArea: true,
-            readonly: false
-        }];
-
-        if (this.isAreaCheck || this.isCompCheck || this.isCheck) {
-            fields = fields.concat(checkFields);
-
-            buttons = [{
-                title: '通过',
-                check: true,
-                handler: (params) => {
-                    let data = {};
-                    data.code = this.code;
-                    data.approveNote = params.approveNote;
-                    data.approveResult = '1';
-                    data.operator = getUserId();
-                    let bizCode;
-                    if (this.isAreaCheck) {
-                        bizCode = 632122;
-                    } else if (this.isCompCheck) {
-                        bizCode = 632123;
-                    } else if (this.isCheck) {
-                        bizCode = 632124;
-                    }
-                    this.props.doFetching();
-                    fetch(bizCode, data).then(() => {
-                        this.props.cancelFetching();
-                        showSucMsg('操作成功');
-                        setTimeout(() => {
-                            this.props.history.go(-1);
-                        }, 1000);
-                    }).catch(() => {
-                        this.props.cancelFetching();
-                    });
-                }
-            }, {
-                title: '不通过',
-                check: true,
-                handler: (params) => {
-                    let data = {};
-                    data.code = this.code;
-                    data.approveNote = params.approveNote;
-                    data.approveResult = '0';
-                    data.operator = getUserId();
-                    let bizCode;
-                    if (this.isAreaCheck) {
-                        bizCode = 632122;
-                    } else if (this.isCompCheck) {
-                        bizCode = 632123;
-                    } else if (this.isCheck) {
-                        bizCode = 632124;
-                    }
-                    this.props.doFetching();
-                    fetch(bizCode, data).then(() => {
-                        this.props.cancelFetching();
-                        showSucMsg('操作成功');
-                        setTimeout(() => {
-                            this.props.history.go(-1);
-                        }, 1000);
-                    }).catch(() => {
-                        this.props.cancelFetching();
-                    });
-                }
-            }, {
-                title: '返回',
-                handler: () => {
-                    this.props.history.go(-1);
-                }
-            }];
-        }
-
-        if (this.isApply) {
-            buttons = [{
-                title: '保存',
-                check: true,
-                handler: (data) => {
-                    data.dealType = '0';
-                    data.budgetOrderCode = this.code;
-                    data.operator = getUserId();
-                    let gpsList = [];
-                    if (data.budgetOrderGpsList) {
-                        data.budgetOrderGpsList.forEach((v) => {
-                            gpsList.push(v.code);
-                        });
-                    }
-                    data.gpsList = gpsList;
-                    delete data.budgetOrderGpsList;
-
-                    let repointDetailList = [];
-                    if (data.repointDetailList1) {
-                        repointDetailList = repointDetailList.concat(data.repointDetailList1);
-                    }
-                    repointDetailList = repointDetailList.concat(data.repointDetailList2);
-                    if (data.repointDetailList3) {
-                        repointDetailList = repointDetailList.concat(data.repointDetailList3);
-                    }
-                    delete data.repointDetailList1;
-                    delete data.repointDetailList2;
-                    delete data.repointDetailList3;
-                    data.repointDetailList = repointDetailList;
-                    data.assureFee = this.props.pageData.assureFee;
-                    data.gpsFee = this.props.pageData.gpsFee;
-                    data.lyAmountFee = this.props.pageData.lyAmountFee;
-                    data.otherFee = this.props.pageData.otherFee;
-                    data.bankLoanCs = this.props.pageData.bankLoanCs;
-                    data.globalRate = this.props.pageData.globalRate;
-                    data.companyLoanCs = this.props.pageData.companyLoanCs;
-                    this.props.doFetching();
-                    fetch(632120, data).then(() => {
-                        this.props.cancelFetching();
-                        showSucMsg('操作成功');
-                        setTimeout(() => {
-                            this.props.history.go(-1);
-                        }, 1000);
-                    }).catch(() => {
-                        this.props.cancelFetching();
-                    });
-                }
-            }, {
-                title: '申请',
-                check: true,
-                handler: (data) => {
-                    data.dealType = '1';
-                    data.budgetOrderCode = this.code;
-                    data.operator = getUserId();
-                    let gpsList = [];
-                    if (data.budgetOrderGpsList) {
-                        data.budgetOrderGpsList.forEach((v) => {
-                            gpsList.push(v.code);
-                        });
-                    }
-                    data.gpsList = gpsList;
-                    delete data.budgetOrderGpsList;
-                    let repointDetailList = [];
-                    if (data.repointDetailList1) {
-                        repointDetailList = repointDetailList.concat(data.repointDetailList1);
-                    }
-                    repointDetailList = repointDetailList.concat(data.repointDetailList2);
-                    if (data.repointDetailList3) {
-                        repointDetailList = repointDetailList.concat(data.repointDetailList3);
-                    }
-                    delete data.repointDetailList1;
-                    delete data.repointDetailList2;
-                    delete data.repointDetailList3;
-                    data.repointDetailList = repointDetailList;
-                    data.assureFee = this.props.pageData.assureFee;
-                    data.gpsFee = this.props.pageData.gpsFee;
-                    data.lyAmountFee = this.props.pageData.lyAmountFee;
-                    data.otherFee = this.props.pageData.otherFee;
-                    data.bankLoanCs = this.props.pageData.bankLoanCs;
-                    data.globalRate = this.props.pageData.globalRate;
-                    data.companyLoanCs = this.props.pageData.companyLoanCs;
-                    this.props.doFetching();
-                    fetch(632120, data).then(() => {
-                        this.props.cancelFetching();
-                        showSucMsg('操作成功');
-                        setTimeout(() => {
-                            this.props.history.go(-1);
-                        }, 1000);
-                    }).catch(() => {
-                        this.props.cancelFetching();
-                    });
-                }
-            }, {
-                title: '返回',
-                handler: () => {
-                    this.props.history.go(-1);
-                }
-            }];
-        }
 
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632146,
-            buttons: buttons
+            detailCode: 632146
         });
     }
 }

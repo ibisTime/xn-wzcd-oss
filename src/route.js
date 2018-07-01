@@ -743,11 +743,17 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loan/budget-addedit/budget-addedit'))
   },
 
-    // 预算单申请 详情
-    {
-        path: '/loan/budget/detail',
-        component: asyncComponent(() => import('container/loan/budget-detail/budget-detail'))
-    },
+  // 预算单申请 外单申请
+  {
+      path: '/loan/budget/applyExternal',
+      component: asyncComponent(() => import('container/loan/budget-addedit/budget-applyExternal'))
+  },
+
+  // 预算单申请 详情
+  {
+      path: '/loan/budget/detail',
+      component: asyncComponent(() => import('container/loan/budget-detail/budget-detail'))
+  },
 
   // 贷款审查
   {
