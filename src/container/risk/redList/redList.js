@@ -15,7 +15,7 @@ import {Button, Upload, Modal} from 'antd';
 import {lowerFrame, onShelf} from 'api/biz';
 
 @listWrapper(state => ({
-  ...state.bizredList,
+  ...state.riskredList,
   parentCode: state.menu.subMenuCode
 }), {
   setTableData,

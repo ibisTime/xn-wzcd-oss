@@ -46,55 +46,55 @@ class Historying extends React.Component {
             search: true
         }, {
             title: '业务公司',
-            field: 'companyCode',
-            listCode: 630106,
-            params: {
-                typeList: [1]
-            },
-            type: 'select',
-            keyName: 'code',
-            valueName: 'name',
-            search: true
+            field: 'companyName',
+            required: true
+        }, {
+            title: '汽车经销商',
+            field: 'carDealerName'
         }, {
             title: '客户姓名',
-            field: 'realName',
-            render: (v, d) => {
-                return d.user.realName;
-            },
+            field: 'customerName',
             search: true
         }, {
-            title: '身份证',
-            field: 'idNo',
-            render: (v, d) => {
-                return d.user.idNo;
-            }
-        }, {
-            title: '车辆型号',
-            field: 'carModel',
-            render: (v, d) => {
-                return d.budgetOrder.carModel;
-            }
-        }, {
             title: '贷款银行',
-            field: 'loanBank',
-            type: 'select',
-            listCode: 632057,
-            keyName: 'code',
-            valueName: '{{bankName.DATA}}-{{fullName.DATA}}',
+            field: 'loanBankName',
             search: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
             amount: true
         }, {
-            title: '总期数',
-            field: 'periods'
+            field: 'shopWay',
+            title: '购车途径',
+            type: 'select',
+            key: 'budget_orde_biz_typer'
         }, {
-            title: '剩余期数',
-            field: 'restPeriods'
+            field: 'carModel',
+            title: '车辆型号'
+        }, {
+            title: '车辆价格',
+            field: 'originalPrice',
+            amount: true
+        }, {
+            title: '是否垫资',
+            field: 'isAdvanceFund',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '是'
+            }, {
+                key: '1',
+                value: '否'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            required: true
+        }, {
+            title: '总期数',
+            field: 'loanPeriods'
         }, {
             title: '放款日期',
-            field: 'fkDatetime',
+            field: 'bankFkDatetime',
             type: 'date'
         }, {
             title: '当前节点',
@@ -107,9 +107,34 @@ class Historying extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 630520,
+            pageCode: 632145,
             searchParams: {
-                curNodeCode: 'ing'
+                curNodeCodeList: [
+                    '002_01',
+                    '002_02',
+                    '002_03',
+                    '002_04',
+                    '002_05',
+                    '002_06',
+                    '007_01',
+                    '007_02',
+                    '007_03',
+                    '007_04',
+                    '007_05',
+                    '008_01',
+                    '008_02',
+                    '008_03',
+                    '008_04',
+                    '008_05',
+                    '009_01',
+                    '009_02',
+                    '009_03',
+                    '009_04',
+                    '009_05',
+                    '009_06',
+                    '010_01',
+                    '010_02'
+                ]
             }
         });
     }

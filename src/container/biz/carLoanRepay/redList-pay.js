@@ -128,7 +128,7 @@ class redListaPay extends React.Component {
             type: 'select',
             listCode: 632007,
             keyName: 'code',
-            valueName: '{{bankName.DATA}}-{{subbranch.DATA}}',
+            valueName: '{{bankcardNumber.DATA}}-{{realName.DATA}}',
             required: true
         }, {
             title: '付款凭证',

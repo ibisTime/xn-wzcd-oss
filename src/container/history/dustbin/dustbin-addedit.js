@@ -37,20 +37,18 @@ class DustbinAddedit extends React.Component {
             field: 'code',
             readonly: true
         }, {
-            title: '作废原因',
-            field: 'zfReason',
-            type: 'textarea',
-            normalArea: true
-        }, {
             title: '身份证',
-            field: 'idNo'
+            field: 'idNo',
+            readonly: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            amount: true
+            amount: true,
+            readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBankName'
+            field: 'loanBankName',
+            readonly: true
         }];
         return this.props.buildDetail({
             fields,
