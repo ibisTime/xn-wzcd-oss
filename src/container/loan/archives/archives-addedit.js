@@ -125,7 +125,9 @@ class ArchivesAddedit extends React.Component {
             }],
             [{
                 title: '已入档清单',
-                field: '11'
+                field: 'fileList',
+                type: 'checkbox',
+                key: 'file_list'
             }],
             [{
                 title: '资料是否完善',

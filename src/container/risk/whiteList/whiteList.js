@@ -64,7 +64,7 @@ class WhiteList extends React.Component {
       fields,
       pageCode: 805120,
       searchParams: {
-        sign: 'WHITE'
+        sign: '0'
       }
     });
   }

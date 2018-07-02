@@ -199,7 +199,7 @@ class compensatoryCertain extends React.Component {
                     params: {
                         type: 1
                     },
-                    keyName: 'bankcardNumber',
+                    keyName: 'code',
                     valueName: '{{bankName.DATA}}-{{bankcardNumber.DATA}}',
                     required: true,
                     onChange: (v, data) => {

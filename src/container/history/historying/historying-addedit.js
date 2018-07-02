@@ -33,46 +33,24 @@ class HistoryingAddedit extends React.Component {
   }
   render() {
     const fields = [{
+      title: '客户姓名',
+      field: 'applyUserName',
+      readonly: true
+    }, {
       title: '业务编号',
-      field: 'code'
-    }, {
-      title: '贷款人',
-      field: 'realName',
-      formatter: (v, d) => {
-        return d.user.realName;
-      }
-    }, {
-      title: '当前节点',
-      field: 'curNodeCode',
-      type: 'select',
-      listCode: 630147,
-      keyName: 'code',
-      valueName: 'name'
-    }, {
-      title: '身份证号',
-      field: 'idNo',
-      formatter: (v, d) => {
-        return d.user.idNo;
-      }
-    }, {
-      title: '贷款期数',
-      field: 'periods'
+      field: 'code',
+      readonly: true
     }, {
       title: '贷款金额',
       field: 'loanAmount',
-      amount: true
+      amount: true,
+      readonly: true
     }, {
-      title: '剩余欠债',
-      field: 'restAmount',
-      amount: true
+      title: '贷款银行',
+      field: 'loanBankName'
     }, {
-      title: '未还清收总成本',
-      field: 'restTotalCost',
-      amount: true
-    }, {
-      title: '实际退款金额',
-      field: 'actualRefunds',
-      amount: true
+      title: '贷款期数',
+      field: 'loanPeriods'
     }, {
       title: '还款计划表',
       field: 'repayPlanList',
@@ -112,7 +90,7 @@ class HistoryingAddedit extends React.Component {
         fields,
         code: this.code,
         view: this.view,
-        detailCode: 630521
+        detailCode: 632146
       });
   }
 }

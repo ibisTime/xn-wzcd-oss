@@ -51,7 +51,8 @@ class BlackListAddedit extends React.Component {
         fields,
         pageCode: 630540,
         searchParams: {
-          userId: this.code
+          userId: this.code,
+          curNodeCodeList: ['021_04', '021_05', '021_06', '021_07', '021_08']
         }
       });
   }
