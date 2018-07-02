@@ -17,16 +17,9 @@ import {
     showSucMsg,
     getRoleCode,
     dateTimeFormat,
-    moneyUppercase
+    moneyUppercase,
+    moneyFormat
 } from 'common/js/util';
-import {
-    Button,
-    Upload,
-    Modal
-} from 'antd';
-import {
-    done
-} from 'api/biz';
 
 @listWrapper(
     state => ({
@@ -69,7 +62,7 @@ class AdvMoney extends React.Component {
             title: '用款大写',
             field: 'money',
             render: (v, d) => {
-                return moneyUppercase(d.useAmount);
+                return moneyUppercase(moneyFormat(d.useAmount));
             }
         }, {
             title: '是否垫资',

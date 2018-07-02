@@ -133,7 +133,7 @@ class InvoiceEnter extends React.Component {
         }, {
             title: '交强险',
             field: 'forceInsurance',
-            amount: true,
+            type: 'img',
             required: true
         }, {
             title: '发票',

@@ -91,8 +91,7 @@ class GuaranteeMake extends React.Component {
                     readonly: true
                 }, {
                     title: '单位电话',
-                    field: 'applyUserCompanyPhone',
-                    mobile: true
+                    field: 'applyUserCompanyPhone'
                 }]
             ]
         }, {

@@ -72,7 +72,7 @@ class invoice extends React.Component {
             amount: true
         }, {
             title: '状态',
-            field: 'fbhstatus',
+            field: 'fbhStatus',
             type: 'select',
             data: [{
                 key: '1',

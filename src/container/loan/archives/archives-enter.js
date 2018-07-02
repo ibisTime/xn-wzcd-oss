@@ -91,7 +91,7 @@ class ArchivesAddedit extends React.Component {
                 field: 'saleUserName'
             }],
             [{
-                title: '抵押合同编号',
+                title: '合同编号',
                 field: 'pledgeContractCode'
             }],
             [{

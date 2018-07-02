@@ -10,7 +10,9 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyUppercase,
+    moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -57,8 +59,10 @@ class AdvMoneyAreaCheck extends React.Component {
             readonly: true
         }, {
             title: '用款大写',
-            field: '222',
-            amount: true,
+            field: 'money',
+            render: (v, d) => {
+                return moneyUppercase(moneyFormat(d.useAmount));
+            },
             readonly: true
         }, {
             title: '贷款银行',
