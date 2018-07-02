@@ -65,14 +65,10 @@ class misInvoice extends React.Component {
             search: true
         }, {
             title: '车辆型号',
-            field: 'carModel',
-            type: 'select',
-            listCode: 630426,
-            keyName: 'code',
-            valueName: 'name'
+            field: 'carModel'
         }, {
             title: '车辆价格',
-            field: '11',
+            field: 'originalPrice',
             amount: true
         }, {
             title: '贷款金额',
@@ -80,15 +76,10 @@ class misInvoice extends React.Component {
             amount: true
         }, {
             title: '期数',
-            field: '22'
+            field: 'loanPeriods'
         }, {
             title: '贷款银行',
-            field: 'loanBankCode',
-            type: 'select',
-            listCode: 632037,
-            keyName: 'bankCode',
-            valueName: 'bankName',
-            search: true
+            field: 'loanBankName'
         }, {
             title: '银行利率',
             field: 'bankRate'
@@ -114,7 +105,9 @@ class misInvoice extends React.Component {
             field: 'insuranceBank'
         }, {
             title: '购车途径',
-            field: 'shopWay'
+            field: 'shopWay',
+            type: 'select',
+            key: 'budget_orde_biz_typer'
         }, {
             title: '申请时间',
             field: 'applyDatetime',

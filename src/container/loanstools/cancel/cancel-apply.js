@@ -10,7 +10,9 @@ import {
 import {
     getQueryString,
     showSucMsg,
-    getUserId
+    getUserId,
+    moneyFormat,
+    dateFormat
 } from 'common/js/util';
 import {DetailWrapper} from 'common/js/build-detail';
 import fetch from 'common/js/fetch';
@@ -44,11 +46,26 @@ class CancelApply extends React.Component {
             required: true,
             onChange: (v, data) => {
                 this.props.setPageData({bcode: data.code});
+                fetch(632146, data.code).then(info => {
+                    this.props.setPageData({
+                        loanAmount: moneyFormat(info.loanAmount),
+                        idNo: info.idNo
+                    });
+                });
             }
         }, {
             title: '预算单',
             field: 'bcode',
             readonly: true
+        }, {
+            title: '贷款金额',
+            field: 'loanAmount'
+        }, {
+            title: '身份证号',
+            field: 'idNo'
+        }, {
+            title: '垫资日期',
+            field: '11'
         }, {
             title: '作废原因',
             field: 'zfReason',
