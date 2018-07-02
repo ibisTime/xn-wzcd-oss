@@ -159,7 +159,7 @@ class CompConstruct extends React.Component {
                       initialValue: getUserName()
                     })(<Input type='hidden'/>)}
                   </Item>
-                  <Item
+                  {/* <Item
                     key='parentCode'
                     {...formItemLayout}
                     label='上级'
@@ -180,6 +180,11 @@ class CompConstruct extends React.Component {
                             {this.renderCompNodes(this.props.compList)}
                           </TreeSelect>
                     )}
+                  </Item> */}
+                  <Item key='parentCode' {...formItemLayout} className='hidden'>
+                    {getFieldDecorator('parentCode', {
+                      rules: [rule1]
+                    })(<Input type='hidden'/>)}
                   </Item>
                   <Item key='code' {...formItemLayout} className='hidden'>
                     {getFieldDecorator('code', {
@@ -191,7 +196,7 @@ class CompConstruct extends React.Component {
                       rules: rule0
                     })(<Input style={{minWidth: 300}} />)}
                   </Item>
-                  <Item key='leadUserId' {...formItemLayout} label='负责人'>
+                  {/* <Item key='leadUserId' {...formItemLayout} label='负责人'>
                     {
                       getFieldDecorator('leadUserId', {
                         rules: rule0
@@ -208,8 +213,13 @@ class CompConstruct extends React.Component {
                           ))}
                         </Select>)
                       }
+                  </Item> */}
+                  <Item key='leadName' {...formItemLayout} label='负责人'>
+                    {getFieldDecorator('leadName', {
+                      rules: rule0
+                    })(<Input />)}
                   </Item>
-                  <Item key='orderNo' {...formItemLayout} label={(
+                  {/* <Item key='orderNo' {...formItemLayout} label={(
                     <span>顺序<Tooltip title='数字越小，排序越靠前'>
                         <Icon type="question-circle-o"/>
                     </Tooltip></span>
@@ -217,6 +227,11 @@ class CompConstruct extends React.Component {
                     {getFieldDecorator('orderNo', {
                       rules: [rule1, rule2]
                     })(<Input style={{minWidth: 300}} />)}
+                  </Item> */}
+                  <Item key='mobile' {...formItemLayout} label='负责人手机号'>
+                    {getFieldDecorator('mobile', {
+                      rules: rule0
+                    })(<Input />)}
                   </Item>
                   <Item key='type' {...formItemLayout} label='类型'>
                     {getFieldDecorator('type', {
@@ -227,17 +242,15 @@ class CompConstruct extends React.Component {
                     </Select>)}
                   </Item>
                   {
-                    getFieldValue('type') === '1'
-                      ? (
-                        <Item
-                          key='provinceNo'
-                          {...formItemLayout}
-                          label='区域'>
-                          {getFieldDecorator('provinceNo', {
-                            rules: [rule1]
-                          })(<Cascader placeholder="请选择" options={cityData}/>)}
-                        </Item>
-                      ) : null
+                    <Item
+                      key='provinceNo'
+                      {...formItemLayout}
+                      className={getFieldValue('type') === '1' ? '' : 'hidden'}
+                      label='区域'>
+                      {getFieldDecorator('provinceNo', {
+                        rules: getFieldValue('type') === '1' ? [rule1] : null
+                      })(<Cascader style={{minWidth: 300}} placeholder="请选择" options={cityData}/>)}
+                    </Item>
                   }
                   <Item key='btns' {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">保存</Button>

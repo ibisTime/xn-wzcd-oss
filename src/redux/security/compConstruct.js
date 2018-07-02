@@ -119,9 +119,11 @@ export function setSelectedKeys(keys, setFieldsValue) {
       code: current.code,
       parentCode: current.parentCode === 'ROOT' ? '0' : current.parentCode,
       name: current.name || '',
+      leadName: current.leadName || '',
+      mobile: current.mobile || '',
       type: current.type || '',
-      leadUserId: current.leadUserId || '',
-      orderNo: current.orderNo || 1,
+      // leadUserId: current.leadUserId || '',
+      // orderNo: current.orderNo || 1,
       provinceNo: getCityVal(current)
     });
   };

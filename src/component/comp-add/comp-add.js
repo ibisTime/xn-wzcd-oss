@@ -8,37 +8,45 @@ class CompAdd extends React.Component {
       fields: [{
         field: 'parentCode',
         title: '上级',
-        type: 'treeSelect',
-        listCode: 630106,
-        keyName: 'code',
-        valueName: 'name',
-        bParams: ['type'],
-        params: {
-          status: 1,
-          typeList: [1, 2]
-        },
-        value: this.props.parentCode
+        hidden: true
+        // type: 'treeSelect',
+        // listCode: 630106,
+        // keyName: 'code',
+        // valueName: 'name',
+        // bParams: ['type'],
+        // params: {
+        //   status: 1,
+        //   typeList: [1, 2]
+        // },
+        // value: this.props.parentCode
       }, {
         field: 'name',
         title: '名称',
         required: true,
         maxlength: 30
       }, {
-        field: 'leadUserId',
+        field: 'leadName',
+        // field: 'leadUserId',
+        // maxlength: 30
+        // type: 'select',
+        // listCode: 630066,
+        // keyName: 'userId',
+        // valueName: '{{realName.DATA}}-{{mobile.DATA}}',
+        // searchName: 'keyword',
+        // required: true
         title: '负责人',
-        type: 'select',
-        listCode: 630066,
-        keyName: 'userId',
-        valueName: '{{realName.DATA}}-{{mobile.DATA}}',
-        searchName: 'keyword',
-        required: true
-      }, {
-        field: 'orderNo',
-        title: 'UI次序',
         required: true,
-        help: '数字越小，排序越靠前',
-        integer: true,
         maxlength: 30
+      }, {
+        field: 'mobile',
+        // field: 'orderNo',
+        // title: 'UI次序',
+        // help: '数字越小，排序越靠前',
+        // integer: true,
+        // maxlength: 30
+        title: '负责人手机号',
+        required: true,
+        mobile: true
       }, {
         field: 'type',
         title: '类型',
