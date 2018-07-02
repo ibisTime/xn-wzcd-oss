@@ -50,9 +50,6 @@ class BankMoneyAddedit extends React.Component {
         }, {
             title: '贷款银行',
             field: 'loanBankName'
-        }, {
-            title: '征信结果',
-            field: '33'
         }];
         return this.props.buildDetail({
             fields,

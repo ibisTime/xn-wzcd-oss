@@ -43,10 +43,6 @@ class applyGpsCompany extends React.Component {
         handler: (param) => {
           param.code = this.code;
           param.applyUser = getUserId();
-          if(param.gpsList.length < 1) {
-              showWarnMsg('请新增GPS!');
-              return false;
-          }
           this.props.doFetching();
           fetch(632710, param).then(() => {
             showSucMsg('操作成功');

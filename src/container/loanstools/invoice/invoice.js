@@ -57,7 +57,7 @@ class invoice extends React.Component {
             amount: true
         }, {
             title: '垫资日期',
-            field: 'useDatetime',
+            field: '11',
             type: 'datetime'
         }, {
             title: '发保合预警天数',

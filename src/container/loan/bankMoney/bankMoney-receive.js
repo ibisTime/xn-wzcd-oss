@@ -74,7 +74,7 @@ class BankMoneyReceive extends React.Component {
             readonly: true
         }, {
             title: '放款金额',
-            field: 'bankFkAmount',
+            field: 'loanAmount',
             amount: true,
             required: true
         }, {

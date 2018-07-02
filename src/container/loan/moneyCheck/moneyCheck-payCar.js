@@ -69,7 +69,7 @@ class AdvMoneyPayCar extends React.Component {
             readonly: true
         }, {
             title: '垫资金额',
-            field: 'advanceFundAmount',
+            field: 'useAmount',
             amount: true,
             required: true
         }, {
