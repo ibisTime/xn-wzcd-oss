@@ -194,6 +194,14 @@ export function moneyParse(money, rate = 1000) {
 }
 
 /**
+ * 把格式化金额去掉逗号
+ * @param money
+ */
+export function moneyReplaceComma(money) {
+    return ('' + money).replace(/,/g, '');
+}
+
+/**
  * 大数相乘
  * @param a
  * @param b
