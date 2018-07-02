@@ -67,8 +67,8 @@ class estimate extends React.Component {
       type: 'date'
     }, {
       title: '打款金额',
-      field: 'payDatetime',
-      type: 'date'
+      field: 'payAmount',
+      amount: true
     }, {
       title: '申请人',
       field: 'applyUserName',
