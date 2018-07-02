@@ -1004,31 +1004,36 @@ class BudgetAddedit extends React.Component {
                     field: 'gpsFee',
                     amount: true,
                     required: true,
-                    readonly: true
+                    readonly: true,
+                    hidden: true
                 }, {
                     title: '履约保证金',
                     field: 'lyAmount',
                     amount: true,
                     required: true,
-                    readonly: true
+                    readonly: true,
+                    hidden: true
                 }, {
                     title: '担保风险金',
                     field: 'fxAmount',
                     amount: true,
                     required: true,
-                    readonly: true
+                    readonly: true,
+                    hidden: true
                 }, {
                     title: '杂费',
                     field: 'otherFee',
                     amount: true,
                     required: true,
-                    readonly: true
+                    readonly: true,
+                    hidden: true
                 }, {
                     title: '收客户手续费合计',
                     field: 'serviceCharge',
                     amount: true,
                     required: true,
-                    readonly: true
+                    readonly: true,
+                    hidden: true
                 }],
                 [{
                     title: '油补公里数',
