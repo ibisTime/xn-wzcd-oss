@@ -217,7 +217,14 @@ class BudgetAddedit extends React.Component {
         let repointDetailList = [];
         if (data.repointDetailList1 && data.isAdvanceFund === '0') {
             delete data.repointDetailList1[0].useMoneyPurpose1;
-            repointDetailList = repointDetailList.concat({...data.repointDetailList1[0], useMoneyPurpose: '1'});
+            repointDetailList = repointDetailList.concat({
+                useMoneyPurpose: '1',
+                repointAmount: data.repointDetailList1[0].repointAmount,
+                accountName: data.repointDetailList1[0].accountName,
+                carDealerName: data.repointDetailList1[0].carDealerName,
+                accountNO: data.repointDetailList1[0].accountNO,
+                openBankName: data.repointDetailList1[0].openBankName
+            });
         }
         if (data.repointDetailList3) {
             let repointDetailList3 = [];
@@ -473,7 +480,16 @@ class BudgetAddedit extends React.Component {
                             ...this.props.pageData,
                             oilSubsidy: oilSubsidy,
                             gpsDeduct: gpsDeduct,
-                            repointDetailList1: repointDetailList1
+                            repointDetailList1: repointDetailList1,
+                            companyLoanCs: this.getCompanyLoanNum({
+                                invoicePrice: this.props.form.getFieldValue('invoicePrice'),
+                                loanAmount: v
+                            }),
+                            bankLoanCs: this.getBankLoanNum({
+                                fee: this.props.form.getFieldValue('fee'),
+                                loanAmount: v,
+                                invoicePrice: this.props.form.getFieldValue('invoicePrice')
+                            })
                         });
                     }
                 }],
@@ -1108,7 +1124,7 @@ class BudgetAddedit extends React.Component {
                             gpsFee = 0;
                         }
                         // 应退按揭款列表
-                        let result = this.getRepointDetailList1();
+                        let result = this.getRepointDetailList1({gpsFee});
                         let repointDetailList1 = result.repointDetailList1;
                         this.props.setPageData({
                             ...this.props.pageData,
@@ -1132,7 +1148,7 @@ class BudgetAddedit extends React.Component {
                             serviceCharge = 0;
                         }
                         // 应退按揭款列表
-                        let result = this.getRepointDetailList1();
+                        let result = this.getRepointDetailList1({serviceCharge});
                         let repointDetailList1 = result.repointDetailList1;
                         this.props.setPageData({
                             ...this.props.pageData,
@@ -1170,8 +1186,21 @@ class BudgetAddedit extends React.Component {
                             title: '金额小写',
                             field: 'repointAmount',
                             amount: true,
+                            required: true,
+                            hidden: true,
+                            formatter: (v, data) => {
+                                return moneyFormat(data.repointAmount);
+                            }
+                        }, {
+                            title: '金额小写',
+                            field: 'repointAmountTab',
+                            amount: true,
                             readonly: true,
-                            required: true
+                            required: true,
+                            noVisible: true,
+                            formatter: (v, data) => {
+                                return moneyFormat(data.repointAmount);
+                            }
                         }, {
                             title: '金额大写',
                             field: 'repointAmountL',
