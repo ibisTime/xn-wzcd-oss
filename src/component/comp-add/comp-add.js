@@ -54,9 +54,10 @@ class CompAdd extends React.Component {
         valueName: 'dvalue',
         required: true
       }, {
-        field: 'province',
+        field: 'provinceNo',
         title: '区域',
-        type: 'citySelect'
+        type: 'citySelect',
+        cFields: ['provinceNo', 'cityNo', 'areaNo']
       }],
       addCode: 630100,
       onOk: (data, params) => {

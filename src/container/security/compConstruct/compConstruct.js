@@ -61,6 +61,10 @@ class CompConstruct extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        let mid = values['provinceNo'].map(a => a === '全部' ? '' : a);
+        ['provinceNo', 'cityNo', 'areaNo'].forEach((f, i) => {
+            values[f] = mid[i];
+        });
         values.parentCode = values.parentCode === 'ROOT' ? '0' : values.parentCode;
         this.props.updateCompany(values);
       }
@@ -226,10 +230,10 @@ class CompConstruct extends React.Component {
                     getFieldValue('type') === '1'
                       ? (
                         <Item
-                          key='province'
+                          key='provinceNo'
                           {...formItemLayout}
                           label='区域'>
-                          {getFieldDecorator('province', {
+                          {getFieldDecorator('provinceNo', {
                             rules: [rule1]
                           })(<Cascader placeholder="请选择" options={cityData}/>)}
                         </Item>
