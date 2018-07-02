@@ -119,19 +119,21 @@ export function setSelectedKeys(keys, setFieldsValue) {
       code: current.code,
       parentCode: current.parentCode === 'ROOT' ? '0' : current.parentCode,
       name: current.name || '',
+      leadName: current.leadName || '',
+      mobile: current.mobile || '',
       type: current.type || '',
-      leadUserId: current.leadUserId || '',
-      orderNo: current.orderNo || 1,
-      province: getCityVal(current)
+      // leadUserId: current.leadUserId || '',
+      // orderNo: current.orderNo || 1,
+      provinceNo: getCityVal(current)
     });
   };
 }
 function getCityVal(current) {
-  let prov = current.province;
+  let prov = current.provinceNo;
   let result = [];
   if (prov) {
-    let city = current.city ? current.city : '全部';
-    let area = current.area ? current.area : '全部';
+    let city = current.cityNo ? current.cityNo : '全部';
+    let area = current.areaNo ? current.areaNo : '全部';
     result = [prov, city, area];
   }
   return result;
