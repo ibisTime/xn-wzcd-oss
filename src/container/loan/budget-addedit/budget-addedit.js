@@ -185,7 +185,7 @@ class BudgetAddedit extends React.Component {
                 repointAmount: this.getRefundAmount(),
                 repointAmountL: moneyUppercase(this.getRefundAmount()),
                 accountName: this.receivables.realName,
-                carDealerName: this.props.form.getFieldValue('carDealerCode'),
+                carDealerName: data.isAdvanceFund === '1' ? data.carDealerName : '',
                 accountNO: this.receivables.bankcardNumber,
                 openBankName: this.receivables.subbranch
             };
@@ -318,7 +318,7 @@ class BudgetAddedit extends React.Component {
                                     fxAmount,
                                     otherFee
                                 }) * 1000);
-                                let result = this.getRepointDetailList1({gpsFee, serviceCharge});
+                                let result = this.getRepointDetailList1({gpsFee, serviceCharge, carDealerName: d.abbrName});
                                 let repointDetailList1 = result.repointDetailList1;
                                 this.props.setPageData({
                                     ...this.props.pageData,
