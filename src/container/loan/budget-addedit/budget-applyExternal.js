@@ -35,7 +35,6 @@ class BudgetApplyExternal extends React.Component {
             loanPeriodsData: null
         };
         this.code = getQueryString('code', this.props.location.search);
-        this.carCompanyCode = getQueryString('carDealerCode', this.props.location.search);
         this.saleUserId = getQueryString('saleUserId', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
         // 申请
@@ -57,10 +56,6 @@ class BudgetApplyExternal extends React.Component {
         if (this.isApply) {
             this.props.doFetching();
             Promise.all([
-                fetch(632007, {
-                    companyCode: this.carCompanyCode,
-                    type: 2
-                }),
                 getSystormParam({key: 'budget_oil_subsidy_rate'}),
                 getSystormParam({key: 'budget_gps_deduct_rate'})
             ]).then(([receivablesData, oilSubsidyData, gpsDeductData]) => {
@@ -94,11 +89,12 @@ class BudgetApplyExternal extends React.Component {
     getGlobalRate = (params) => {
         let fee = moneyParse(params.fee) / 1000;
         let loanAmount = moneyParse(params.loanAmount) / 1000;
-        let bankRate = params.bankRate;
+        let bankRate = Number(params.bankRate);
         let rate = 0;
 
         if (fee && loanAmount && bankRate) {
-            rate = ((fee / loanAmount) + bankRate).toFixed(2);
+            rate = (fee / loanAmount) + bankRate;
+            rate = rate.toFixed(2);
         } else {
             rate = 0;
         }
@@ -145,8 +141,8 @@ class BudgetApplyExternal extends React.Component {
         let data = {
             loanAmount: moneyParse(this.props.form.getFieldValue('loanAmount')),
             carDealerSubsidy: this.rateType === '1' ? 0 : moneyParse(this.props.form.getFieldValue('carDealerSubsidy')),
-            serviceCharge: this.props.pageData.serviceCharge,
-            gpsFee: this.props.pageData.gpsFee,
+            serviceCharge: this.getCustomerFeeTotal(),
+            gpsFee: this.props.form.getFieldValue('gpsFee'),
             ...params
         };
         let refund = 0;
@@ -189,10 +185,10 @@ class BudgetApplyExternal extends React.Component {
                 useMoneyPurpose: '1',
                 repointAmount: this.getRefundAmount(),
                 repointAmountL: moneyUppercase(this.getRefundAmount()),
-                accountName: this.props.pageData.repointDetailList1[0].accountName ? this.props.pageData.repointDetailList1[0].accountName : '',
-                carDealerName: this.props.pageData.repointDetailList1[0].carDealerName ? this.props.pageData.repointDetailList1[0].carDealerName : '',
-                accountNo: this.props.pageData.repointDetailList1[0].accountNo ? this.props.pageData.repointDetailList1[0].accountNo : '',
-                openBankName: this.props.pageData.repointDetailList1[0].openBankName ? this.props.pageData.repointDetailList1[0].openBankName : ''
+                accountName: this.props.pageData.repointDetailList1[0] ? this.props.pageData.repointDetailList1[0].accountName : '',
+                carDealerName: this.props.pageData.repointDetailList1[0] ? this.props.pageData.repointDetailList1[0].carDealerName : '',
+                accountNo: this.props.pageData.repointDetailList1[0] ? this.props.pageData.repointDetailList1[0].accountNo : '',
+                openBankName: this.props.pageData.repointDetailList1[0] ? this.props.pageData.repointDetailList1[0].openBankName : ''
             };
             result.repointDetailList1.push(repointDetailList1);
         }
@@ -429,6 +425,15 @@ class BudgetApplyExternal extends React.Component {
                             ...this.props.pageData,
                             oilSubsidy: oilSubsidy,
                             gpsDeduct: gpsDeduct,
+                            companyLoanCs: this.getCompanyLoanNum({
+                                invoicePrice: this.props.form.getFieldValue('invoicePrice'),
+                                loanAmount: v
+                            }),
+                            bankLoanCs: this.getBankLoanNum({
+                                fee: this.props.form.getFieldValue('fee'),
+                                loanAmount: v,
+                                invoicePrice: this.props.form.getFieldValue('invoicePrice')
+                            }),
                             repointDetailList1: repointDetailList1
                         });
                     }
