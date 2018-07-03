@@ -10,7 +10,9 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyUppercase,
+    moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -42,7 +44,7 @@ class AdvMoneyAddedit extends React.Component {
             field: 'code'
         }, {
             title: '身份证',
-            field: 'idNo'
+            field: 'applyUserIdNo'
         }, {
             title: '贷款金额',
             field: 'loanAmount',
@@ -50,15 +52,6 @@ class AdvMoneyAddedit extends React.Component {
         }, {
             title: '贷款银行',
             field: 'loanBankName'
-        }, {
-            title: '征信结果',
-            field: '33'
-        }, {
-            title: '垫资单',
-            field: '44'
-        }, {
-            title: '预算单',
-            field: '55'
         }];
         return this.props.buildDetail({
             fields,

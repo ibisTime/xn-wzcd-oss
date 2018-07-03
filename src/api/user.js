@@ -46,3 +46,7 @@ export function setUserPost(params) {
 export function getSysUsers() {
   return fetch(630066, { status: '0' });
 }
+// 列表获取
+export function getListUserArchive(params) {
+    return fetch(632805, params);
+}

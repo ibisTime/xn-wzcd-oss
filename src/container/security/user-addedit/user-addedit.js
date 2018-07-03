@@ -3,7 +3,7 @@ import { TreeSelect, Form, Spin, Input, Button, Select } from 'antd';
 import { getQueryString, showSucMsg, tempString } from 'common/js/util';
 import { formItemLayout, tailFormItemLayout } from 'common/js/config';
 import { getPostList, getRoleList, addUser } from 'api/company';
-import { getUserById, setUserPost } from 'api/user';
+import { getUserById, setUserPost, getListUserArchive } from 'api/user';
 
 const { TreeNode } = TreeSelect;
 const { Item } = Form;
@@ -26,17 +26,50 @@ class Post extends React.Component {
         this.state = {
             fetching: true,
             treeData: [],
-            roleData: []
+            roleData: [],
+            fields: {
+                'roleCode': {
+                    title: '角色',
+                    field: 'roleCode',
+                    keyName: 'code',
+                    valueName: 'name'
+                },
+                'archiveCode': {
+                    title: '档案',
+                    field: 'archiveCode',
+                    keyName: 'code',
+                    valueName: '{{realName.DATA}}-{{entranceNo.DATA}}'
+                }
+            },
+            archiveData: []
         };
     }
     componentDidMount() {
         Promise.all([
             getRoleList(),
-            getPostList()
-        ]).then(([roleData, postData]) => {
+            getPostList(),
+            getListUserArchive({
+                start: 1,
+                limit: 1000,
+                workStatusList: ['1', '2']
+            })
+        ]).then(([roleData, postData, archiveData]) => {
             this.getTree(postData);
-            this.setState({ roleData: roleData, fetching: false });
+            this.setState({ roleData: roleData, archiveData: this.getArchiveData(archiveData.list), fetching: false });
         }).catch(() => this.setState({ fetching: false }));
+    }
+    getArchiveData = (d) => {
+        let data = [];
+        let genderData = {
+            '1': '男',
+            '0': '女'
+        };
+
+        d.map(v => {
+            v.gender = genderData[v.gender];
+            data.push(v);
+        });
+        return data;
     }
     getTree(data) {
         let result = {};
@@ -96,6 +129,23 @@ class Post extends React.Component {
             }
         });
     }
+
+    getSelectProps = (item) => {
+        const props = {
+            showSearch: true,
+            allowClear: true,
+            optionFilterProp: 'children',
+            filterOption: (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
+            style: {width: '100%'},
+            placeholder: '请选择'
+        };
+        if (item.onChange) {
+            props.onChange = (v) => {
+                item.onChange(v, this.props.selectData[item.field] ? this.props.selectData[item.field].find(v1 => v1.code === v) : {}, this.props);
+            };
+        }
+        return props;
+    }
     render() {
         const { getFieldDecorator } = this.props.form;
         const props = {
@@ -147,6 +197,16 @@ class Post extends React.Component {
                             {this.state.roleData.map(d => (
                                 <Option key={d['code']}
                                         value={d['code']}>{d['name']}</Option>))}
+                        </Select>)}
+                    </Item>
+                    <Item key='archiveCode' {...formItemLayout} label='档案'>
+                        {getFieldDecorator('archiveCode', {
+                            rules: [],
+                            initialValue: ''
+                        })(<Select {...this.getSelectProps(this.state.fields['archiveCode'])}>
+                            {this.state.archiveData.map(d => (
+                                <Option key={d['code']}
+                                        value={d['code']}>{d['entranceNo']}-{d['realName']}-{d['gender']}</Option>))}
                         </Select>)}
                     </Item>
                     <Item key='treeMenu' {...formItemLayout} label='岗位名称'>

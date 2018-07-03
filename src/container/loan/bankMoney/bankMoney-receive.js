@@ -10,7 +10,9 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyReplaceComma,
+    moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -75,6 +77,9 @@ class BankMoneyReceive extends React.Component {
         }, {
             title: '放款金额',
             field: 'bankFkAmount',
+            formatter: (v, d) => {
+                return moneyFormat(d.loanAmount);
+            },
             amount: true,
             required: true
         }, {
@@ -114,6 +119,10 @@ class BankMoneyReceive extends React.Component {
             code: this.code,
             view: this.view,
             detailCode: 632146,
+            beforeSubmit: (data) => {
+                data.bankFkAmount = moneyReplaceComma(data.bankFkAmount);
+                return data;
+            },
             buttons: [{
                 title: '确认',
                 check: true,

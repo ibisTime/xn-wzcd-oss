@@ -11,7 +11,8 @@ import {
     getQueryString,
     showSucMsg,
     getUserId,
-    moneyFormat
+    moneyFormat,
+    getCompanyCode
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {DetailWrapper} from 'common/js/build-detail';
@@ -90,6 +91,9 @@ class MisInvoiceCertain extends React.Component {
             field: 'payBankcardCode',
             type: 'select',
             listCode: 632007,
+            params: {
+                companyCode: getCompanyCode()
+            },
             keyName: 'code',
             valueName: '{{bankcardNumber.DATA}}-{{realName.DATA}}',
             required: true,
@@ -117,6 +121,9 @@ class MisInvoiceCertain extends React.Component {
             field: 'collectionBankcardCode',
             type: 'select',
             listCode: 632007,
+            params: {
+                companyCode: getCompanyCode()
+            },
             keyName: 'code',
             valueName: '{{bankcardNumber.DATA}}-{{realName.DATA}}',
             required: true,

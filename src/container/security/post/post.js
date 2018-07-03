@@ -145,7 +145,7 @@ class Post extends React.Component {
                   <Item key='type' {...formItemLayout} className='hidden'>
                     {getFieldDecorator('type', {
                       rules: rule1,
-                      initialValue: 1
+                      initialValue: 3
                     })(<Input type='hidden'/>)}
                   </Item>
                   <Item key='parentCode' {...formItemLayout} className='hidden'>

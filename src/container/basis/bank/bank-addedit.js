@@ -78,6 +78,7 @@ class bankAddedit extends React.Component {
         }, {
           title: '利率',
           field: 'rate',
+          help: '请输入0-1的数字',
           required: true
         }, {
           title: '说明',

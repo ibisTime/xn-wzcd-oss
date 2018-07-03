@@ -12,7 +12,8 @@ import {
     getUserId,
     showSucMsg,
     moneyFormat,
-    getCompanyCode
+    getCompanyCode,
+    moneyReplaceComma
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -70,7 +71,9 @@ class AdvMoneyPayCar extends React.Component {
         }, {
             title: '垫资金额',
             field: 'advanceFundAmount',
-            amount: true,
+            formatter: (v, d) => {
+                return moneyFormat(d.useAmount);
+            },
             required: true
         }, {
             title: '垫资日期',
@@ -102,6 +105,10 @@ class AdvMoneyPayCar extends React.Component {
             code: this.code,
             view: this.view,
             detailCode: 632186,
+            beforeSubmit: (data) => {
+                data.advanceFundAmount = moneyFormat(moneyReplaceComma(data.advanceFundAmount));
+                return data;
+            },
             buttons: [{
               title: '确认',
               check: true,

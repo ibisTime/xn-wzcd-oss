@@ -22,9 +22,9 @@ class Protect extends React.Component {
       <div>
           <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
             <Col span={8} style={{marginBottom: '20px'}}>
-              <Card title="未结清贷款总额" extra={
+              <Card title="平台积分账户" extra={
                 <Button onClick={() => this.goFlow()} type="primary">详情</Button>
-              }>{moneyFormat(this.props.unsettledLoan)}</Card>
+              }>{moneyFormat()}</Card>
             </Col>
           </Row>
       </div>

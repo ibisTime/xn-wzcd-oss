@@ -45,11 +45,12 @@ class CancelApply extends React.Component {
             searchName: 'customerName',
             required: true,
             onChange: (v, data) => {
-                this.props.setPageData({bcode: data.code});
-                fetch(632146, data.code).then(info => {
+                fetch(632146, {code: data.code}).then(info => {
                     this.props.setPageData({
+                        ...this.props.pageData,
                         loanAmount: moneyFormat(info.loanAmount),
-                        idNo: info.idNo
+                        idNo: info.idNo,
+                        bcode: data.code
                     });
                 });
             }
@@ -59,13 +60,16 @@ class CancelApply extends React.Component {
             readonly: true
         }, {
             title: '贷款金额',
-            field: 'loanAmount'
+            field: 'loanAmount',
+            readonly: true
         }, {
             title: '身份证号',
-            field: 'idNo'
+            field: 'idNo',
+            readonly: true
         }, {
             title: '垫资日期',
-            field: '11'
+            field: '11',
+            readonly: true
         }, {
             title: '作废原因',
             field: 'zfReason',
