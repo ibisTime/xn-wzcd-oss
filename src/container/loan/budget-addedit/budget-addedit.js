@@ -49,6 +49,8 @@ class BudgetAddedit extends React.Component {
         this.receivables = {};
         // 购车途径
         this.shopWay = true;
+        this.carDealerName = null;
+        this.rateType = false;
     }
 
     componentDidMount() {
@@ -139,17 +141,16 @@ class BudgetAddedit extends React.Component {
     getRefundAmount = (params) => {
         let data = {
             loanAmount: moneyParse(this.props.form.getFieldValue('loanAmount')),
-            carDealerSubsidy: moneyParse(this.props.form.getFieldValue('carDealerSubsidy')),
+            carDealerSubsidy: this.rateType === '1' ? 0 : moneyParse(this.props.form.getFieldValue('carDealerSubsidy')),
             serviceCharge: this.props.pageData.serviceCharge,
             gpsFee: this.props.pageData.gpsFee,
             ...params
         };
         let refund = 0;
 
-        if (data.loanAmount && data.carDealerSubsidy) {
+        if (data.loanAmount && (data.carDealerSubsidy || data.carDealerSubsidy === 0)) {
             refund = data.loanAmount - data.serviceCharge - data.gpsFee - data.carDealerSubsidy;
         }
-        console.log(refund);
         return refund;
     }
 
@@ -169,35 +170,27 @@ class BudgetAddedit extends React.Component {
         };
         let data = {
             loanAmount: this.props.form.getFieldValue('loanAmount'),
-            carDealerSubsidy: this.props.form.getFieldValue('carDealerSubsidy'),
+            carDealerSubsidy: this.rateType === '1' ? 0 : this.props.form.getFieldValue('carDealerSubsidy'),
             serviceCharge: this.props.pageData.serviceCharge,
             gpsFee: this.props.pageData.gpsFee,
             isAdvanceFund: this.props.form.getFieldValue('isAdvanceFund'),
             ...params
         };
-        if (data.loanAmount && data.carDealerSubsidy && data.serviceCharge && data.gpsFee && data.isAdvanceFund) {
+        if (data.loanAmount && (data.carDealerSubsidy || data.carDealerSubsidy === 0) && (data.serviceCharge || data.serviceCharge === '0') && (data.gpsFee || data.gpsFee === '0') && data.isAdvanceFund) {
             result.isVaild = true;
         }
         if (result.isVaild) {
             let repointDetailList1 = {
                 code: this.props.pageData.repointDetailList1[0] ? this.props.pageData.repointDetailList1[0].code : '0',
                 useMoneyPurpose1: '1',
+                useMoneyPurpose: '1',
                 repointAmount: this.getRefundAmount(),
                 repointAmountL: moneyUppercase(this.getRefundAmount()),
-                accountName: this.receivables.realName,
-                carDealerName: data.isAdvanceFund === '1' ? data.carDealerName : '',
-                accountNO: this.receivables.bankcardNumber,
-                openBankName: this.receivables.subbranch
+                accountName: data.isAdvanceFund === '1' ? this.receivables.realName : '',
+                carDealerName: data.isAdvanceFund === '1' ? this.carDealerName : '',
+                accountNo: data.isAdvanceFund === '1' ? this.receivables.bankcardNumber : '',
+                openBankName: data.isAdvanceFund === '1' ? this.receivables.subbranch : ''
             };
-            // 不垫资，则需要手动输入应退按揭款的收款账号
-            if (data.isAdvanceFund === '0') {
-                repointDetailList1 = {
-                    ...repointDetailList1,
-                    companyName: '',
-                    accountCode: '',
-                    subbranch: ''
-                };
-            }
             result.repointDetailList1.push(repointDetailList1);
         }
         return result;
@@ -216,13 +209,12 @@ class BudgetAddedit extends React.Component {
 
         let repointDetailList = [];
         if (data.repointDetailList1 && data.isAdvanceFund === '0') {
-            delete data.repointDetailList1[0].useMoneyPurpose1;
             repointDetailList = repointDetailList.concat({
                 useMoneyPurpose: '1',
                 repointAmount: data.repointDetailList1[0].repointAmount,
                 accountName: data.repointDetailList1[0].accountName,
                 carDealerName: data.repointDetailList1[0].carDealerName,
-                accountNO: data.repointDetailList1[0].accountNO,
+                accountNo: data.repointDetailList1[0].accountNo,
                 openBankName: data.repointDetailList1[0].openBankName
             });
         }
@@ -234,25 +226,21 @@ class BudgetAddedit extends React.Component {
                     repointAmount: v.repointAmount1,
                     accountName: v.accountName1,
                     carDealerName: v.carDealerName1,
-                    accountNO: v.accountNO1,
+                    accountNo: v.accountNo1,
                     openBankName: v.openBankName1
                 });
             });
             repointDetailList = repointDetailList.concat(repointDetailList3);
         }
-        delete data.repointDetailList1;
-        delete data.repointDetailList3;
         data.repointDetailList = repointDetailList;
         data.bankLoanCs = this.props.pageData.bankLoanCs;
         data.globalRate = this.props.pageData.globalRate;
         data.companyLoanCs = this.props.pageData.companyLoanCs;
         data.gpsDeduct = this.props.pageData.gpsDeduct;
         data.oilSubsidy = this.props.pageData.oilSubsidy;
-        delete data.gpsFee;
-        delete data.lyAmount;
-        delete data.fxAmount;
-        delete data.otherFee;
-        delete data.serviceCharge;
+        if (data.rateType === '1') {
+            data.carDealerSubsidy = 0;
+        }
 
         this.props.doFetching();
         fetch(632120, data).then(() => {
@@ -313,6 +301,7 @@ class BudgetAddedit extends React.Component {
                         this.receivables = data.jxsCollectBankcardList[0];
                         data.carDealerProtocolList.forEach(d => {
                             if (d.bankCode === this.props.pageData.bankSubbranch.bank.bankCode) {
+                                this.carDealerName = d.abbrName;
                                 // 设置 收客户手续费合计 履约保证金 担保风险金 GPS收费 杂费
                                 let loanAmount = moneyReplaceComma(this.props.form.getFieldValue('loanAmount'));
                                 let gpsFee = d.gpsFee ? moneyFormat(d.gpsFee) : moneyFormat(d.gpsRate * loanAmount * 1000);
@@ -325,7 +314,7 @@ class BudgetAddedit extends React.Component {
                                     fxAmount,
                                     otherFee
                                 }) * 1000);
-                                let result = this.getRepointDetailList1({gpsFee, serviceCharge, carDealerName: d.abbrName});
+                                let result = this.getRepointDetailList1({gpsFee, serviceCharge});
                                 let repointDetailList1 = result.repointDetailList1;
                                 this.props.setPageData({
                                     ...this.props.pageData,
@@ -338,6 +327,9 @@ class BudgetAddedit extends React.Component {
                                 });
                             }
                         });
+                    },
+                    formatter: (v, data) => {
+                        return v;
                     }
                 }, {
                     title: '贷款银行',
@@ -449,12 +441,17 @@ class BudgetAddedit extends React.Component {
                     key: 'rate_type',
                     required: true,
                     onChange: (v, data) => {
+                        this.rateType = v;
                         if (v === '1') {
                             this.props.setPageData({
                                 ...this.props.pageData,
                                 carDealerSubsidy: 0
                             });
                         }
+                    },
+                    formatter: (v, data) => {
+                        this.rateType = data.rateType;
+                        return v;
                     }
                 }, {
                     title: '贷款金额',
@@ -562,7 +559,7 @@ class BudgetAddedit extends React.Component {
                                 isAdvanceFund: false
                             });
                         }
-                        let result = this.getRepointDetailList1();
+                        let result = this.getRepointDetailList1({isAdvanceFund: v});
                         let repointDetailList1 = result.repointDetailList1;
                         this.props.setPageData({
                             ...this.props.pageData,
@@ -600,6 +597,7 @@ class BudgetAddedit extends React.Component {
                     field: 'carDealerSubsidy',
                     amount: true,
                     required: true,
+                    readonly: this.rateType === '1',
                     onChange: (v) => {
                         if (!this.getAmountRules(v)) {
                             return false;
@@ -1121,7 +1119,7 @@ class BudgetAddedit extends React.Component {
                         }
                         let gpsFee = this.props.pageData.gpsFee;
                         if (v !== '2') {
-                            gpsFee = 0;
+                            gpsFee = '0';
                         }
                         // 应退按揭款列表
                         let result = this.getRepointDetailList1({gpsFee});
@@ -1145,7 +1143,7 @@ class BudgetAddedit extends React.Component {
                         // 应退按揭款列表
                         let serviceCharge = this.props.pageData.serviceCharge;
                         if (v !== '2') {
-                            serviceCharge = 0;
+                            serviceCharge = '0';
                         }
                         // 应退按揭款列表
                         let result = this.getRepointDetailList1({serviceCharge});
@@ -1165,6 +1163,29 @@ class BudgetAddedit extends React.Component {
                     options: {
                         edit: !this.state.isAdvanceFund,
                         fields: [{
+                            title: 'code',
+                            field: 'code',
+                            hidden: true,
+                            noVisible: true
+                        }, {
+                            title: '用款用途',
+                            field: 'useMoneyPurpose',
+                            type: 'select',
+                            data: [{
+                                key: '1',
+                                value: '应退按揭款'
+                            }, {
+                                key: '2',
+                                value: '协议内返点'
+                            }, {
+                                key: '3',
+                                value: '协议外返点'
+                            }],
+                            keyName: 'key',
+                            valueName: 'value',
+                            value: '1',
+                            hidden: true
+                        }, {
                             title: '用款用途',
                             field: 'useMoneyPurpose1',
                             type: 'select',
@@ -1181,32 +1202,24 @@ class BudgetAddedit extends React.Component {
                             keyName: 'key',
                             valueName: 'value',
                             value: '1',
-                            readonly: true
+                            readonly: true,
+                            required: true,
+                            noVisible: true
                         }, {
                             title: '金额小写',
                             field: 'repointAmount',
                             amount: true,
                             required: true,
-                            hidden: true,
-                            formatter: (v, data) => {
-                                return moneyFormat(data.repointAmount);
-                            }
+                            hidden: true
                         }, {
                             title: '金额小写',
                             field: 'repointAmountTab',
                             amount: true,
                             readonly: true,
                             required: true,
-                            noVisible: true,
                             formatter: (v, data) => {
                                 return moneyFormat(data.repointAmount);
                             }
-                        }, {
-                            title: '金额大写',
-                            field: 'repointAmountL',
-                            readonly: true,
-                            noVisible: true,
-                            required: true
                         }, {
                             title: '单位名称',
                             field: 'carDealerName',
@@ -1217,7 +1230,7 @@ class BudgetAddedit extends React.Component {
                             required: true
                         }, {
                             title: '账号',
-                            field: 'accountNO',
+                            field: 'accountNo',
                             required: true
                         }, {
                             title: '开户行',
@@ -1234,6 +1247,11 @@ class BudgetAddedit extends React.Component {
                         add: true,
                         delete: true,
                         fields: [{
+                            title: 'code',
+                            field: 'code',
+                            hidden: true,
+                            noVisible: true
+                        }, {
                             title: '用款用途',
                             field: 'useMoneyPurpose3',
                             type: 'select',
@@ -1250,55 +1268,78 @@ class BudgetAddedit extends React.Component {
                             keyName: 'key',
                             valueName: 'value',
                             value: '3',
+                            hidden: true
+                        }, {
+                            title: '用款用途',
+                            field: 'useMoneyPurpose3tab',
+                            type: 'select',
+                            data: [{
+                                key: '1',
+                                value: '应退按揭款'
+                            }, {
+                                key: '2',
+                                value: '协议内返点'
+                            }, {
+                                key: '3',
+                                value: '协议外返点'
+                            }],
+                            keyName: 'key',
+                            valueName: 'value',
+                            value: '3',
                             readonly: true,
-                            required: true
+                            required: true,
+                            noVisible: true
                         }, {
                             title: '金额小写',
                             field: 'repointAmount1',
                             amount: true,
                             required: true,
-                            onChange: (v, data, props) => {
+                            formatter: (v, data) => {
+                                return moneyFormat(data.repointAmount || data.repointAmount1);
                             },
-                            formatter: (v, data) => {
-                                return data.repointAmount;
-                            }
-                        }, {
-                            title: '金额大写',
-                            field: 'repointAmountL1',
-                            required: true,
-                            readonly: true,
-                            noVisible: true,
-                            formatter: (v, data) => {
-                                return data.repointAmountL;
+                            render: (v, data) => {
+                                return moneyFormat(data.repointAmount || data.repointAmount1);
                             }
                         }, {
                             title: '单位名称',
                             field: 'carDealerName1',
                             required: true,
                             formatter: (v, data) => {
-                                return data.carDealerName;
+                                return data.carDealerName || data.carDealerName1;
+                            },
+                            render: (v, data) => {
+                                return data.carDealerName || data.carDealerName1;
                             }
                         }, {
                             title: '户名',
                             field: 'accountName1',
                             required: true,
                             formatter: (v, data) => {
-                                return data.accountName;
+                                return data.accountName || data.accountName1;
+                            },
+                            render: (v, data) => {
+                                return data.accountName || data.accountName1;
                             }
                         }, {
                             title: '账号',
-                            field: 'accountNO1',
+                            field: 'accountNo1',
                             bankCard: true,
                             required: true,
                             formatter: (v, data) => {
-                                return data.accountNO;
+                                return data.accountNo || data.accountNo1;
+                            },
+                            render: (v, data) => {
+                                return data.accountNo || data.accountNo1;
                             }
                         }, {
                             title: '开户行',
                             field: 'openBankName1',
                             required: true,
                             formatter: (v, data) => {
-                                return data.openBankName;
+                                return data.openBankName || data.openBankName1;
+                            },
+                            render: (v, data) => {
+                                return data.openBankName || data.openBankName1;
                             }
                         }]
                     }

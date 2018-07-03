@@ -362,25 +362,25 @@ export function moneyUppercase(Num) {
                 tmpnewchar = tmpnewchar + '元';
                 break;
             case 1:
-                if (perchar !== 0) tmpnewchar = tmpnewchar + '拾';
+                if (perchar !== '0') tmpnewchar = tmpnewchar + '拾';
                 break;
             case 2:
-                if (perchar !== 0) tmpnewchar = tmpnewchar + '佰';
+                if (perchar !== '0') tmpnewchar = tmpnewchar + '佰';
                 break;
             case 3:
-                if (perchar !== 0) tmpnewchar = tmpnewchar + '仟';
+                if (perchar !== '0') tmpnewchar = tmpnewchar + '仟';
                 break;
             case 4:
                 tmpnewchar = tmpnewchar + '万';
                 break;
             case 5:
-                if (perchar !== 0) tmpnewchar = tmpnewchar + '拾';
+                if (perchar !== '0') tmpnewchar = tmpnewchar + '拾';
                 break;
             case 6:
-                if (perchar !== 0) tmpnewchar = tmpnewchar + '佰';
+                if (perchar !== '0') tmpnewchar = tmpnewchar + '佰';
                 break;
             case 7:
-                if (perchar !== 0) tmpnewchar = tmpnewchar + '仟';
+                if (perchar !== '0') tmpnewchar = tmpnewchar + '仟';
                 break;
             case 8:
                 tmpnewchar = tmpnewchar + '亿';
