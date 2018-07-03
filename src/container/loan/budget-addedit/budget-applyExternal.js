@@ -1019,7 +1019,7 @@ class BudgetApplyExternal extends React.Component {
                 }],
                 [{
                     title: '履约保证金',
-                    field: 'lyAmountFee',
+                    field: 'lyAmount',
                     amount: true,
                     required: true
                 }, {
@@ -1044,7 +1044,7 @@ class BudgetApplyExternal extends React.Component {
                 }],
                 [{
                     title: '担保风险金',
-                    field: 'assureFee',
+                    field: 'fxAmount',
                     amount: true,
                     required: true
                 }, {
@@ -1072,13 +1072,6 @@ class BudgetApplyExternal extends React.Component {
                     }
                 }],
                 [{
-                    title: '收客户手续费合计',
-                    field: 'serviceCharge',
-                    amount: true,
-                    required: true,
-                    readonly: true,
-                    hidden: true
-                }, {
                     title: '手续费收取方式',
                     field: 'serviceChargeWay',
                     type: 'select',
@@ -1102,6 +1095,13 @@ class BudgetApplyExternal extends React.Component {
                             repointDetailList1
                         });
                     }
+                }, {
+                    title: '收客户手续费合计',
+                    field: 'serviceCharge',
+                    amount: true,
+                    required: true,
+                    readonly: true,
+                    hidden: true
                 }],
                 [{
                     title: '应退按揭款',

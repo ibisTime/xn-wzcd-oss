@@ -299,9 +299,9 @@ class BudgetAddedit extends React.Component {
                             return;
                         }
                         this.receivables = data.jxsCollectBankcardList[0];
+                        this.carDealerName = data.abbrName;
                         data.carDealerProtocolList.forEach(d => {
                             if (d.bankCode === this.props.pageData.bankSubbranch.bank.bankCode) {
-                                this.carDealerName = d.abbrName;
                                 // 设置 收客户手续费合计 履约保证金 担保风险金 GPS收费 杂费
                                 let loanAmount = moneyReplaceComma(this.props.form.getFieldValue('loanAmount'));
                                 let gpsFee = d.gpsFee ? moneyFormat(d.gpsFee) : moneyFormat(d.gpsRate * loanAmount * 1000);
@@ -1217,6 +1217,7 @@ class BudgetAddedit extends React.Component {
                             amount: true,
                             readonly: true,
                             required: true,
+                            noVisible: true,
                             formatter: (v, data) => {
                                 return moneyFormat(data.repointAmount);
                             }
