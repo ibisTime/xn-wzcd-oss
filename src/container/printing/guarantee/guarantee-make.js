@@ -14,6 +14,7 @@ import {
     showSucMsg,
     moneyFormat,
     moneyUppercase,
+    numUppercase,
     dateFormat,
     formatDate
 } from 'common/js/util';
@@ -366,18 +367,18 @@ class GuaranteeMake extends React.Component {
                                 ['贷款额', moneyFormat(data.loanAmount)],
                                 ['服务费', moneyFormat(data.fee)],
                                 ['总贷款额（包含服务费）', moneyFormat(data.loanAmount + data.fee)],
-                                ['贷款额（大写）', moneyUppercase(moneyFormat(data.loanAmount))],
-                                ['服务费（大写）', moneyUppercase(moneyFormat(data.fee))],
-                                ['总贷款额（大写）', moneyUppercase(moneyFormat(data.loanAmount + data.fee))],
+                                ['贷款额（大写）', numUppercase(moneyFormat(data.loanAmount))],
+                                ['服务费（大写）', numUppercase(moneyFormat(data.fee))],
+                                ['总贷款额（大写）', numUppercase(moneyFormat(data.loanAmount + data.fee))],
                                 ['分期期数', data.loanPeriods],
-                                ['分期期数大写', moneyUppercase(data.loanPeriods)],
+                                ['分期期数大写', numUppercase(data.loanPeriods)],
                                 ['手续费总额', moneyFormat(data.serviceCharge)],
-                                ['手续费总额大写', moneyUppercase(moneyFormat(data.serviceCharge))],
+                                ['手续费总额大写', numUppercase(moneyFormat(data.serviceCharge))],
                                 ['总贷款额和手续费总额', moneyFormat(data.loanAmount + data.fee + data.serviceCharge)],
                                 ['车辆总价', moneyFormat(data.originalPrice)],
-                                ['车辆总价大写', moneyUppercase(moneyFormat(data.originalPrice))],
+                                ['车辆总价大写', numUppercase(moneyFormat(data.originalPrice))],
                                 ['首付额', moneyFormat(data.originalPrice - data.loanAmount)],
-                                ['首付额（大写）', moneyUppercase(moneyFormat(data.originalPrice - data.loanAmount))],
+                                ['首付额（大写）', numUppercase(moneyFormat(data.originalPrice - data.loanAmount))],
                                 ['经销商', data.carDealerName],
                                 ['发动机号', data.engineNo],
                                 ['车架号', data.frameNo],
@@ -387,17 +388,21 @@ class GuaranteeMake extends React.Component {
                                 ['身份证号码', data.guarantor1IdNo],
                                 ['手机号码', data.guarantorMobile],
                                 ['现住址', data.guarantorNowAddress],
+                                ['工作单位', data.guarantorCompanyName],
                                 ['总的首期还款金额', data.repayFirstMonthAmount],
                                 ['总的每期还款金额', data.repayMonthAmount],
                                 ['原车发票价格', data.invoicePrice],
-                                ['原车发票价格大写', moneyUppercase(moneyFormat(data.invoicePrice))]
+                                ['原车发票价格大写', numUppercase(moneyFormat(data.invoicePrice))]
                             ];
                             showSucMsg('操作成功');
                             const ws = XLSX.utils.aoa_to_sheet(arr);
                             const wb = XLSX.utils.book_new();
-                            XLSX.utils.book_append_sheet(wb, ws, 'SheetJS');
+                            XLSX.utils.book_append_sheet(wb, ws, '数据');
                             XLSX.writeFile(wb, 'sheetjs.xlsx');
                             this.props.cancelFetching();
+                            setTimeout(() => {
+                              this.props.history.go(-2);
+                            }, 1000);
                         }).catch(this.props.cancelFetching());
                     }
                 },
