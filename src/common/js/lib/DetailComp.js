@@ -182,7 +182,6 @@ export default class DetailComponent extends React.Component {
         this.options.fields.forEach(v => {
             if (v.amount) {
                 values[v.field] = moneyParse(values[v.field], v.amountRate);
-                console.log(values);
             } else if (v.type === 'citySelect') {
                 let mid = values[v.field].map(a => a === '全部' ? '' : a);
                 v.cFields.forEach((f, i) => {
