@@ -58,6 +58,13 @@ class AdvMoneyApply extends React.Component {
             amount: true,
             readonly: true
         }, {
+            title: '用款大写',
+            field: 'money',
+            formatter: (v, d) => {
+                return moneyUppercase(d.useAmount);
+            },
+            readonly: true
+        }, {
             title: '贷款银行',
             field: 'loanBankName',
             readonly: true

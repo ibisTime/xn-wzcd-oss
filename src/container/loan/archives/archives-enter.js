@@ -88,16 +88,15 @@ class ArchivesAddedit extends React.Component {
                 valueName: 'bankName'
             }, {
                 title: '业务员',
-                field: 'saleUserName'
+                field: 'saleUserName',
+                readonly: true
             }],
             [{
                 title: '合同编号',
                 field: 'pledgeContractCode'
-            }],
-            [{
+            }, {
                 title: '登记证书号',
-                field: 'regCertificateCode',
-                type: 'img'
+                field: 'regCertificateCode'
             }],
             [{
                 title: '其他联系人',

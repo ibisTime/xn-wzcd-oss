@@ -34,7 +34,7 @@ import fetch from 'common/js/fetch';
 
 @listWrapper(
   state => ({
-    ...state.bizWhiteList,
+    ...state.riskWhiteList,
     parentCode: state.menu.subMenuCode
   }), {
     setTableData,

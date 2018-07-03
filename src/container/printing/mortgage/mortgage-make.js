@@ -205,6 +205,8 @@ class MortgageMake extends React.Component {
                         fetch(632192, param).then((data) => {
                             let str = dateFormat(data.pledgePrintDatetime);
                             let date = str.split('-');
+                            data[1] = data[1] - 0;
+                            data[2] = data[2] - 0;
                             let arr = [
                                 ['主贷人姓名', data.customerName],
                                 ['身份证号码', data.idNo],
@@ -215,18 +217,18 @@ class MortgageMake extends React.Component {
                                 ['车牌号', data.carNumber],
                                 ['车架号', data.frameNo],
                                 ['发动机号', data.engineNo],
-                                ['贷款（大写）', moneyUppercase(data.loanAmount)],
+                                ['贷款（大写）', moneyUppercase(moneyFormat(data.loanAmount))],
                                 ['贷款（小写）', moneyFormat(data.loanAmount)],
-                                ['履约保证金（大写）', moneyUppercase(data.lyAmount)],
+                                ['履约保证金（大写）', moneyUppercase(moneyFormat(data.lyAmount))],
                                 ['履约保证金（小写）', moneyFormat(data.lyAmount)],
                                 ['年份', date[0]],
                                 ['月', date[1]],
                                 ['日', date[2]],
-                                ['贷款期限（年）', data.guarantContractDeadline],
+                                ['贷款期限（年）', data.guarantContractDeadline / 12],
                                 ['银行委托人', pageData.bankSubbranch.bankClient],
                                 ['银行名称', pageData.bankSubbranch.fullName],
                                 ['委托书有效期', pageData.bankSubbranch.clientValidDate],
-                                ['授权人姓名', pageData.bankSubbranch.clientValidDate],
+                                ['授权人姓名', pageData.bankSubbranch.autherName],
                                 ['授权人身份证', pageData.bankSubbranch.autherIdNo],
                                 ['授权人住址', pageData.bankSubbranch.autherAddress],
                                 ['授权人电话', pageData.bankSubbranch.autherPhone],
@@ -236,8 +238,8 @@ class MortgageMake extends React.Component {
                             ];
                             const ws = XLSX.utils.aoa_to_sheet(arr);
                             const wb = XLSX.utils.book_new();
-                            XLSX.utils.book_append_sheet(wb, ws, 'SheetJS');
-                            XLSX.writeFile(wb, 'sheetjs.xlsx');
+                            XLSX.utils.book_append_sheet(wb, ws, '内容');
+                            XLSX.writeFile(wb, '车辆抵押-工商银行.xlsx');
                             showSucMsg('操作成功');
                             this.props.cancelFetching();
                         }).catch(this.props.cancelFetching());

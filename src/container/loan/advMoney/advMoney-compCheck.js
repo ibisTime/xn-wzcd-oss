@@ -60,8 +60,8 @@ class AdvMoneyAreaCheck extends React.Component {
         }, {
             title: '用款大写',
             field: 'money',
-            render: (v, d) => {
-                return moneyUppercase(moneyFormat(d.useAmount));
+            formatter: (v, d) => {
+                return moneyUppercase(d.useAmount);
             },
             readonly: true
         }, {

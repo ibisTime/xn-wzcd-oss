@@ -95,20 +95,6 @@ class budgetApply extends React.Component {
         return this.props.buildDetail({
             fields,
             buttons: [{
-                title: '保存',
-                check: true,
-                handler: (params) => {
-                    params.applyUser = getUserId();
-                    this.props.doFetching();
-                    fetch(632320, params).then(() => {
-                        showSucMsg('操作成功');
-                        setTimeout(() => {
-                            this.props.history.go(-1);
-                        }, 500);
-                        this.props.cancelFetching();
-                    }).catch(this.props.cancelFetching);
-                }
-            }, {
                 title: '发送',
                 check: true,
                 handler: (params) => {

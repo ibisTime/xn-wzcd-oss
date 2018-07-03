@@ -64,8 +64,7 @@ class Subbranch extends React.Component {
             field: 'bankClient'
         }, {
             title: '委托有效期',
-            field: 'clientValidDate',
-            type: 'datetime'
+            field: 'clientValidDate'
         }, {
             title: '授权人姓名',
             field: 'autherName'

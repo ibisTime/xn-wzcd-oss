@@ -382,7 +382,7 @@ class GuaranteeMake extends React.Component {
                                 ['经销商', data.carDealerName],
                                 ['发动机号', data.engineNo],
                                 ['车架号', data.frameNo],
-                                ['品牌型号', data.carBrandModel],
+                                ['品牌型号', data.carBrand],
                                 ['担保人姓名', data.guarantorName],
                                 ['性别', data.guarantor1Sex],
                                 ['身份证号码', data.guarantor1IdNo],
@@ -398,7 +398,7 @@ class GuaranteeMake extends React.Component {
                             const ws = XLSX.utils.aoa_to_sheet(arr);
                             const wb = XLSX.utils.book_new();
                             XLSX.utils.book_append_sheet(wb, ws, '数据');
-                            XLSX.writeFile(wb, 'sheetjs.xlsx');
+                            XLSX.writeFile(wb, '担保合同-工商银行.xlsx');
                             this.props.cancelFetching();
                             setTimeout(() => {
                               this.props.history.go(-2);

@@ -52,12 +52,12 @@ class AdvMoneyAllBill extends React.Component {
             readonly: true
         }, {
             title: '已垫资金额',
-            field: '3344',
+            field: 'hasAdvanceFund',
             amount: true,
             readonly: true
         }, {
             title: '未垫资金额',
-            field: '4433',
+            field: 'unAdvanceFund',
             amount: true,
             readonly: true
         }, {

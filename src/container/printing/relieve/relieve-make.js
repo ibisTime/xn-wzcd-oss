@@ -96,8 +96,8 @@ class RelieveMake extends React.Component {
                             ];
                             const ws = XLSX.utils.aoa_to_sheet(arr);
                             const wb = XLSX.utils.book_new();
-                            XLSX.utils.book_append_sheet(wb, ws, 'SheetJS');
-                            XLSX.writeFile(wb, 'sheetjs.xlsx');
+                            XLSX.utils.book_append_sheet(wb, ws, '内容');
+                            XLSX.writeFile(wb, '解除抵押-' + data.realName + '.xlsx');
                             showSucMsg('操作成功');
                         }).catch(this.props.cancelFetching);
                     }
