@@ -8,7 +8,7 @@ class CompAdd extends React.Component {
       fields: [{
         field: 'parentCode',
         title: '上级',
-        hidden: true
+        hidden: true,
         // type: 'treeSelect',
         // listCode: 630106,
         // keyName: 'code',
@@ -18,7 +18,7 @@ class CompAdd extends React.Component {
         //   status: 1,
         //   typeList: [1, 2]
         // },
-        // value: this.props.parentCode
+        value: this.props.parentCode
       }, {
         field: 'name',
         title: '名称',
