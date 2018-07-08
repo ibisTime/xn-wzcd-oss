@@ -250,7 +250,9 @@ class GuaranteeMake extends React.Component {
                 }, {
                     title: '总手续费(大写)',
                     field: 'code',
-                    amount: true,
+                    formatter: (v, d) => {
+                        return moneyUppercase(moneyFormat(d.serviceCharge));
+                    },
                     readonly: true
                 }],
                 [{
