@@ -250,7 +250,9 @@ class GuaranteeMake extends React.Component {
                 }, {
                     title: '总手续费(大写)',
                     field: 'code',
-                    amount: true,
+                    formatter: (v, d) => {
+                        return moneyUppercase(moneyFormat(d.serviceCharge));
+                    },
                     readonly: true
                 }],
                 [{
@@ -351,6 +353,8 @@ class GuaranteeMake extends React.Component {
                         let sex = ['', '男', '女'];
                         fetch(632142, param).then((data) => {
                             console.log(data);
+                            let num1 = (data.loanAmount / data.loanPeriods + data.serviceCharge / data.loanPeriods) * (data.loanPeriods - 1) - data.loanAmount - data.serviceCharge;
+                            let num2 = data.loanAmount / data.loanPeriods + data.serviceCharge / data.loanPeriods;
                             let arr = [
                                 ['工行姓名', data.customerName],
                                 ['出生年月', data.customerBirth],
@@ -372,6 +376,7 @@ class GuaranteeMake extends React.Component {
                                 ['总贷款额（大写）', numUppercase(moneyFormat(data.loanAmount + data.fee))],
                                 ['分期期数', data.loanPeriods],
                                 ['分期期数大写', numUppercase(data.loanPeriods)],
+                                ['月还款额', moneyFormat(num1) + '/' + moneyFormat(num2)],
                                 ['手续费总额', moneyFormat(data.serviceCharge)],
                                 ['手续费总额大写', numUppercase(moneyFormat(data.serviceCharge))],
                                 ['总贷款额和手续费总额', moneyFormat(data.loanAmount + data.fee + data.serviceCharge)],
@@ -389,9 +394,9 @@ class GuaranteeMake extends React.Component {
                                 ['手机号码', data.guarantorMobile],
                                 ['现住址', data.guarantorNowAddress],
                                 ['工作单位', data.guarantorCompanyName],
-                                ['总的首期还款金额', data.repayFirstMonthAmount],
-                                ['总的每期还款金额', data.repayMonthAmount],
-                                ['原车发票价格', data.invoicePrice],
+                                ['总的首期还款金额', moneyFormat(num1)],
+                                ['总的每期还款金额', moneyFormat(num2)],
+                                ['原车发票价格', moneyFormat(data.invoicePrice)],
                                 ['原车发票价格大写', numUppercase(moneyFormat(data.invoicePrice))]
                             ];
                             showSucMsg('操作成功');
@@ -401,7 +406,7 @@ class GuaranteeMake extends React.Component {
                             XLSX.writeFile(wb, '担保合同-工商银行.xlsx');
                             this.props.cancelFetching();
                             setTimeout(() => {
-                              this.props.history.go(-2);
+                                this.props.history.go(-2);
                             }, 1000);
                         }).catch(this.props.cancelFetching());
                     }

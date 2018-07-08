@@ -61,7 +61,7 @@ class AdvMoneyApply extends React.Component {
             title: '用款大写',
             field: 'money',
             formatter: (v, d) => {
-                return moneyUppercase(d.useAmount);
+                return moneyUppercase(moneyFormat(d.useAmount));
             },
             readonly: true
         }, {
@@ -74,10 +74,10 @@ class AdvMoneyApply extends React.Component {
             type: 'select',
             data: [{
                 key: '0',
-                value: '是'
+                value: '否'
             }, {
                 key: '1',
-                value: '否'
+                value: '是'
             }],
             keyName: 'key',
             valueName: 'value',

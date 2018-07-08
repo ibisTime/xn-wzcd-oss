@@ -102,7 +102,7 @@ class AdvMoneyCompBill extends React.Component {
                     title: 'GPS费收取方式',
                     field: 'gpsFeeWay',
                     type: 'select',
-                    key: 'gps_fee_way'
+                    key: 'fee_way'
                 }, {
                     title: '应退按揭款',
                     field: 'useAmount',

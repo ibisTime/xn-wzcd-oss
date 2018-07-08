@@ -65,7 +65,13 @@ class transmitAddedit extends React.Component {
             readonly: true
         }, {
             title: '参考材料清单',
-            field: 'refFileList'
+            field: 'refFileList',
+            onChange: (v) => {
+                let sendFileList = this.props.pageData.sendFileList;
+                this.props.setPageData({
+                    sendFileList: v
+                });
+            }
         }, {
             field: 'sendFileList',
             hidden: true,

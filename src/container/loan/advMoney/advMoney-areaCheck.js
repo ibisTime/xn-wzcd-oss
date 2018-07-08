@@ -61,7 +61,7 @@ class AdvMoneyAreaCheck extends React.Component {
             title: '用款大写',
             field: 'money',
             formatter: (v, d) => {
-                return moneyUppercase(d.useAmount);
+                return moneyUppercase(moneyFormat(d.useAmount));
             },
             readonly: true
         }, {
@@ -93,7 +93,7 @@ class AdvMoneyAreaCheck extends React.Component {
             readonly: true
         }, {
             title: '收款银行',
-            field: 'bankReceiptName',
+            field: 'collectBankName',
             readonly: true
         }, {
             title: '审核说明',

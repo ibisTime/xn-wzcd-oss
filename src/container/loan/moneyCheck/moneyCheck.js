@@ -120,14 +120,22 @@ class MoneyCheck extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '003_05') {
-                        showWarnMsg('当前节点不是省分经理审核');
+                    } else if (selectedRows[0].curNodeCode !== '003_05' && selectedRows[0].curNodeCode !== '004_06') {
+                        showWarnMsg('当前节点不是确认打款给车行');
                     } else {
                         this.props.history.push(`/loan/moneyCheck/payCar?code=${selectedRowKeys[0]}`);
                     }
                 },
                 payComp: (selectedRowKeys, selectedRows) => {
-                    this.props.history.push(`/loan/moneyCheck/payComp`);
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '004_05') {
+                        showWarnMsg('当前节点不是确认打款给分公司');
+                    } else {
+                        this.props.history.push(`/loan/moneyCheck/payComp`);
+                    }
                 },
                 allBill: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {

@@ -78,7 +78,6 @@ class AdvMoneyPayComp extends React.Component {
             field: 'advanceFundlist',
             type: 'o2m',
             options: {
-                delete: true,
                 fields: [{
                     title: '客户姓名',
                     field: 'customerName'
@@ -103,7 +102,7 @@ class AdvMoneyPayComp extends React.Component {
                     title: 'GPS费收取方式',
                     field: 'gpsFeeWay',
                     type: 'select',
-                    key: 'gps_fee_way'
+                    key: 'fee_way'
                 }, {
                     title: '应退按揭款',
                     field: 'useAmount',
@@ -147,7 +146,6 @@ class AdvMoneyPayComp extends React.Component {
             detailCode: 632186,
             buttons: [{
               title: '确认',
-              check: true,
               handler: (params) => {
                 this.props.doFetching();
                 params.operator = getUserId();
@@ -157,6 +155,10 @@ class AdvMoneyPayComp extends React.Component {
                 for(let i = 0; i < len; i++) {
                     params.codeList.push(item[i].code);
                 }
+                params.totalAdvanceFund = this.props.pageData.totalAdvanceFund;
+                params.hasAdvanceFund = this.props.pageData.hasAdvanceFund;
+                params.unAdvanceFund = this.props.pageData.unAdvanceFund;
+                params.payAmount = this.props.pageData.payAmount;
                 fetch(632176, params).then(() => {
                   showSucMsg('操作成功');
                   setTimeout(() => {
