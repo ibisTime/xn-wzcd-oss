@@ -94,7 +94,8 @@ class estimate extends React.Component {
       fields,
       pageCode: 632108,
       searchParams: {
-        roleCode: getRoleCode()
+        roleCode: getRoleCode(),
+        curNodeCodeList: ['005_00', '005_01', '005_02', '005_03', '005_04', '005_05']
       },
       btnEvent: {
         apply: (selectedRowKeys, selectedRows) => {

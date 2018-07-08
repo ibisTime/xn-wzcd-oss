@@ -111,7 +111,8 @@ class BudgetCheck extends React.Component {
             fields,
             pageCode: 632148,
             searchParams: {
-                roleCode: getRoleCode()
+                roleCode: getRoleCode(),
+                curNodeCodeList: ['002_02', '002_03', '002_04', '002_06']
             },
             btnEvent: {
                 areaCheck: (selectedRowKeys, selectedRows) => {

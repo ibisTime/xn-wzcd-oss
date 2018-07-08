@@ -107,7 +107,8 @@ class Budget extends React.Component {
             fields,
             pageCode: 632148,
             searchParams: {
-                roleCode: getRoleCode()
+                roleCode: getRoleCode(),
+                curNodeCodeList: ['002_01', '002_05']
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {

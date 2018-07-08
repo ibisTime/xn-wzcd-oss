@@ -81,7 +81,8 @@ class TakeEstimate extends React.Component {
       fields,
       pageCode: 632108,
       searchParams: {
-        roleCode: getRoleCode()
+        roleCode: getRoleCode(),
+        curNodeCodeList: ['005_06']
       },
       btnEvent: {
         check: (selectedRowKeys, selectedRows) => {
