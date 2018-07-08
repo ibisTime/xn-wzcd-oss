@@ -186,6 +186,7 @@ class BudgetApplyExternal extends React.Component {
                 data.gpsFee = '0';
             }
         }
+        console.log(data);
         if (result.isVaild) {
             let repointDetailList1 = {
                 code: this.props.pageData.repointDetailList1[0] ? this.props.pageData.repointDetailList1[0].code : '0',
@@ -1038,10 +1039,12 @@ class BudgetApplyExternal extends React.Component {
                             return false;
                         }
                         // 应退按揭款列表
-                        let result = this.getRepointDetailList1({gpsFee: v});
+                        let serviceCharge = this.getCustomerFeeTotal({gpsFee: v});
+                        let result = this.getRepointDetailList1({gpsFee: v, serviceCharge});
                         let repointDetailList1 = result.repointDetailList1;
                         this.props.setPageData({
                             ...this.props.pageData,
+                            serviceCharge,
                             repointDetailList1
                         });
                     }
@@ -1050,7 +1053,21 @@ class BudgetApplyExternal extends React.Component {
                     title: '履约保证金',
                     field: 'lyAmount',
                     amount: true,
-                    required: true
+                    required: true,
+                    onChange: (v, data) => {
+                        if(!this.getAmountRules(v)) {
+                            return false;
+                        }
+                        // 应退按揭款列表
+                        let serviceCharge = this.getCustomerFeeTotal({lyAmount: v});
+                        let result = this.getRepointDetailList1({lyAmount: v, serviceCharge});
+                        let repointDetailList1 = result.repointDetailList1;
+                        this.props.setPageData({
+                            ...this.props.pageData,
+                            serviceCharge,
+                            repointDetailList1
+                        });
+                    }
                 }, {
                     title: 'GPS提成',
                     field: 'gpsDeduct',
@@ -1075,7 +1092,21 @@ class BudgetApplyExternal extends React.Component {
                     title: '担保风险金',
                     field: 'fxAmount',
                     amount: true,
-                    required: true
+                    required: true,
+                    onChange: (v, data) => {
+                        if(!this.getAmountRules(v)) {
+                            return false;
+                        }
+                        // 应退按揭款列表
+                        let serviceCharge = this.getCustomerFeeTotal({fxAmount: v});
+                        let result = this.getRepointDetailList1({fxAmount: v, serviceCharge});
+                        let repointDetailList1 = result.repointDetailList1;
+                        this.props.setPageData({
+                            ...this.props.pageData,
+                            serviceCharge,
+                            repointDetailList1
+                        });
+                    }
                 }, {
                     title: 'GPS收费方式',
                     field: 'gpsFeeWay',
@@ -1096,6 +1127,25 @@ class BudgetApplyExternal extends React.Component {
                     }
                 }],
                 [{
+                    title: '杂费',
+                    field: 'otherFee',
+                    amount: true,
+                    required: true,
+                    onChange: (v, data) => {
+                        if(!this.getAmountRules(v)) {
+                            return false;
+                        }
+                        // 应退按揭款列表
+                        let serviceCharge = this.getCustomerFeeTotal({otherFee: v});
+                        let result = this.getRepointDetailList1({otherFee: v, serviceCharge});
+                        let repointDetailList1 = result.repointDetailList1;
+                        this.props.setPageData({
+                            ...this.props.pageData,
+                            serviceCharge,
+                            repointDetailList1
+                        });
+                    }
+                }, {
                     title: '手续费收取方式',
                     field: 'serviceChargeWay',
                     type: 'select',
