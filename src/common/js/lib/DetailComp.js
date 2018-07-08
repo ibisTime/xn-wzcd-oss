@@ -57,6 +57,7 @@ export default class DetailComponent extends React.Component {
         };
         this.state = {
             previewVisible: false,
+            previewImageKey: '',
             previewImage: '',
             previewImageField: null,
             token: '',
@@ -299,9 +300,38 @@ export default class DetailComponent extends React.Component {
     handlePreview = (file, previewImageField) => {
         this.setState({
             previewImage: file.url || file.thumbUrl,
+            previewImageKey: file.key || file.response.key,
             previewVisible: true,
             previewImageField: previewImageField
         });
+        // 切换到点击图片
+        if (file.url && previewImageField) {
+            let ImageData = this.props.form.getFieldValue(previewImageField).split('||');
+            let imgIndex = 0;
+            for (let i in ImageData) {
+                if (file.key) {
+                    if(ImageData[i] === file.key) {
+                        imgIndex = i;
+                    }
+                } else {
+                    if(ImageData[i] === file.response.key) {
+                        imgIndex = i;
+                    }
+                }
+            }
+            setTimeout(() => {
+                if (this.carousel) {
+                    this.carousel.goTo(imgIndex);
+                } else {
+                    // 防止100毫秒this.carousel 未加载完成
+                    setTimeout(() => {
+                        if (this.carousel) {
+                            this.carousel.goTo(imgIndex);
+                        }
+                    }, 100);
+                }
+            }, 100);
+        }
     }
     handleFilePreview = (file) => {
         if (file.status === 'done') {
@@ -469,13 +499,13 @@ export default class DetailComponent extends React.Component {
     }
 
     getPageComponent = (children) => {
-        const {previewImage, previewVisible} = this.state;
+        const {previewImage, previewVisible, previewImageField} = this.state;
+        let imgIndex = 0;
         let imgUrl = '';
-        if (this.state.previewImageField && this.props.form.getFieldValue(this.state.previewImageField).split('||')) {
-            let url = this.props.form.getFieldValue(this.state.previewImageField).split('||')[0];
+        if (previewImageField && this.props.form.getFieldValue(previewImageField).split('||')) {
+            let url = this.props.form.getFieldValue(previewImageField).split('||')[0];
             imgUrl = PIC_PREFIX + '/' + url + '?attname=' + url + '.jpg';
         }
-
         return (
             <Spin spinning={this.props.fetching}>
                 <Form className="detail-form-wrapper" onSubmit={this.handleSubmit}>
@@ -484,11 +514,11 @@ export default class DetailComponent extends React.Component {
                 <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                     <div className="previewImg-wrap">
                         <Carousel ref={(carousel => this.carousel = carousel)} afterChange={(a) => {
-                            let url = this.props.form.getFieldValue(this.state.previewImageField).split('||')[a];
+                            let url = this.props.form.getFieldValue(previewImageField).split('||')[a];
                             imgUrl = PIC_PREFIX + '/' + url + '?attname=' + url + '.jpg';
                         }}>
                             {
-                                this.state.previewImageField && this.props.form.getFieldValue(this.state.previewImageField).split('||').map(v => {
+                                previewImageField && this.props.form.getFieldValue(previewImageField).split('||').map(v => {
                                     let url = PIC_PREFIX + '/' + v + PIC_BASEURL_L;
                                     return (<div className='img-wrap' key={v}><img alt="图片" style={{width: '100%'}} src={url}/></div>);
                                 })

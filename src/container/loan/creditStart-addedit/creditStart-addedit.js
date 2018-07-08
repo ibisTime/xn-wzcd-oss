@@ -385,6 +385,12 @@ class CreditStartAddedit extends React.Component {
                 title: '通过',
                 check: true,
                 handler: (params) => {
+                    for (let i = 0; i < params.creditUserList.length; i++) {
+                        if (!params.creditUserList[i].courtNetworkResults) {
+                            showWarnMsg('请录入' + params.creditUserList[i].userName + '的法院网查询结果！');
+                            return;
+                        }
+                    }
                     let courtNetworkResultsList = [];
                     params.creditUserList.map(v => {
                         courtNetworkResultsList.push({
