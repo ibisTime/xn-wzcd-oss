@@ -97,7 +97,8 @@ class BudgetAddedit extends React.Component {
         let bankRate = params.bankRate;
         let rate = 0;
 
-        if (fee && loanAmount && bankRate) {
+        if (fee && loanAmount && /^\d+(\.\d+)?$/.test(bankRate)) {
+            bankRate = +bankRate;
             rate = ((fee / loanAmount) + bankRate).toFixed(2);
         } else {
             rate = 0;
@@ -513,6 +514,7 @@ class BudgetAddedit extends React.Component {
                     }
                 }, {
                     field: 'bankRate',
+                    positive: true,
                     required: true
                 }],
                 [{
