@@ -90,7 +90,8 @@ class CreditCheck extends React.Component {
             fields,
             pageCode: 632115,
             searchParams: {
-                roleCode: getRoleCode()
+                roleCode: getRoleCode(),
+                curNodeCodeList: ['001_04', '001_06']
             },
             btnEvent: {
                 check: (selectedRowKeys, selectedRows) => {

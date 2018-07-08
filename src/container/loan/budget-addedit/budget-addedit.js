@@ -491,20 +491,6 @@ class BudgetAddedit extends React.Component {
                     }
                 }],
                 [{
-                    title: '是否需要贷前调查',
-                    field: 'isSurvey',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value',
-                    required: true
-                }, {
                     title: '银行利率',
                     field: 'bankRateType',
                     type: 'select',
@@ -935,7 +921,8 @@ class BudgetAddedit extends React.Component {
                         value: '有'
                     }],
                     keyName: 'key',
-                    valueName: 'value'
+                    valueName: 'value',
+                    required: true
                 }, {
                     title: '提供场地证明',
                     field: 'isSiteProve',
@@ -965,6 +952,39 @@ class BudgetAddedit extends React.Component {
                 }, {
                     title: '其他资产说明',
                     field: 'otherPropertyNote'
+                }]
+            ]
+        }, {
+            title: '紧急联系人',
+            items: [
+                [{
+                    field: 'emergencyName1',
+                    title: '联系人1姓名',
+                    required: true
+                }, {
+                    field: 'emergencyRelation1',
+                    title: '与申请人关系',
+                    type: 'select',
+                    key: 'credit_user_relation',
+                    required: true
+                }, {
+                    field: 'emergencyMobile1',
+                    title: '手机号码',
+                    mobile: true,
+                    required: true
+                }],
+                [{
+                    field: 'emergencyName2',
+                    title: '联系人2姓名'
+                }, {
+                    field: 'emergencyRelation2',
+                    title: '与申请人关系',
+                    type: 'select',
+                    key: 'credit_user_relation'
+                }, {
+                    field: 'emergencyMobile2',
+                    title: '手机号码',
+                    mobile: true
                 }]
             ]
         }, {

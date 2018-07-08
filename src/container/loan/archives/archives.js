@@ -94,6 +94,10 @@ class Archives extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632145,
+            searchParams: {
+              roleCode: getRoleCode(),
+              curNodeCodeList: ['010_01', '010_02']
+            },
             btnEvent: {
                 entering: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {

@@ -90,7 +90,8 @@ class CreditStart extends React.Component {
             fields,
             pageCode: 632115,
             searchParams: {
-                roleCode: getRoleCode()
+                roleCode: getRoleCode(),
+                curNodeCodeList: ['001_01', '001_03', '001_05']
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {

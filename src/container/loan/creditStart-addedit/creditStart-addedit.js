@@ -337,6 +337,12 @@ class CreditStartAddedit extends React.Component {
             field: 'approveNote',
             readonly: !this.isCheckSalesman,
             hidden: !this.isCheckSalesman
+        }, {
+            title: '审核意见',
+            field: '11',
+            type: 'textarea',
+            normalArea: true,
+            hidden: !this.isCheckFirst
         }];
 
         // 业务员初审

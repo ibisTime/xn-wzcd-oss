@@ -95,6 +95,10 @@ class Mortgage extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632145,
+            searchParams: {
+              roleCode: getRoleCode(),
+              curNodeCodeList: ['008_01', '008_02', '008_03', '008_04', '008_05', '009_01', '009_02', '009_03', '009_04', '009_05', '009_06']
+            },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {

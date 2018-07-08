@@ -12,7 +12,8 @@ import {
 import {
   showWarnMsg,
   showSucMsg,
-  dateTimeFormat
+  dateTimeFormat,
+  getRoleCode
 } from 'common/js/util';
 import {
     listWrapper
@@ -126,6 +127,10 @@ class misInvoice extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632145,
+            searchParams: {
+              roleCode: getRoleCode(),
+              curNodeCodeList: ['010_01', '010_02', '010_03', '010_04']
+            },
             btnEvent: {
               apply: (selectedRowKeys, selectedRows) => {
                   if (!selectedRowKeys.length) {

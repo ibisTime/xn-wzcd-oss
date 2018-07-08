@@ -107,7 +107,8 @@ class AdvMoney extends React.Component {
             fields,
             pageCode: 632185,
             searchParams: {
-              roleCode: getRoleCode()
+              roleCode: getRoleCode(),
+              curNodeCodeList: ['003_01', '003_02', '003_03', '003_06', '004_01', '004_02', '004_03', '004_07']
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {

@@ -108,7 +108,8 @@ class MoneyCheck extends React.Component {
             fields,
             pageCode: 632185,
             searchParams: {
-              roleCode: getRoleCode()
+              roleCode: getRoleCode(),
+              curNodeCodeList: ['003_04', '003_05', '003_07', '004_04', '004_05', '004_06', '004_08']
             },
             btnEvent: {
                 compBill: (selectedRowKeys, selectedRows) => {

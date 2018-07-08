@@ -90,7 +90,8 @@ class CreditEntering extends React.Component {
             fields,
             pageCode: 632115,
             searchParams: {
-                roleCode: getRoleCode()
+                roleCode: getRoleCode(),
+                curNodeCodeList: ['001_02']
             },
             btnEvent: {
                 edit: (selectedRowKeys, selectedRows) => {
