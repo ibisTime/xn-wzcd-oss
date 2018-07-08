@@ -113,7 +113,7 @@ class RebatesAddedit extends React.Component {
                     field: 'subbranch',
                     required: true
                 }, {
-                    title: '用户',
+                    title: '户名',
                     field: 'companyName',
                     required: true
                 }]
