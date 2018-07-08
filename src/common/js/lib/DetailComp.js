@@ -1,7 +1,8 @@
 import React from 'react';
 import {
     Form, Select, Input, Button, Tooltip, Icon, Spin, Upload,
-    Modal, Cascader, DatePicker, Table, Checkbox, TreeSelect
+    Modal, Cascader, DatePicker, Table, Checkbox, TreeSelect,
+    Carousel
 } from 'antd';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
@@ -10,10 +11,13 @@ import XLSX from 'xlsx';
 import { getDictList } from 'api/dict';
 import { getQiniuToken } from 'api/general';
 import {
-    formatFile, formatImg, isUndefined, dateTimeFormat, dateFormat,
+    formatFile, formatImg, isUndefined, dateTimeFormat, dateFormat, monthFormat,
     tempString, moneyFormat, moneyParse, showSucMsg, showErrMsg, showWarnMsg, getUserId
 } from 'common/js/util';
-import { UPLOAD_URL, PIC_PREFIX, formItemLayout, tailFormItemLayout, tailFormItemLayout1 } from '../config';
+import {
+    UPLOAD_URL, PIC_PREFIX, PIC_BASEURL_M, PIC_BASEURL_L, formItemLayout,
+    tailFormItemLayout, tailFormItemLayout1
+} from '../config';
 import fetch from 'common/js/fetch';
 import cityData from './city';
 import ModalDetail from 'common/js/build-modal-detail';
@@ -23,10 +27,11 @@ moment.locale('zh-cn');
 const {Item: FormItem} = Form;
 const {Option} = Select;
 const {TextArea} = Input;
-const {RangePicker} = DatePicker;
+const {RangePicker, MonthPicker} = DatePicker;
 const { TreeNode } = TreeSelect;
 const CheckboxGroup = Checkbox.Group;
 const DATE_FORMAT = 'YYYY-MM-DD';
+const MONTH_FORMAT = 'YYYY-MM';
 const DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 const imgUploadBtn = (
     <div>
@@ -53,6 +58,7 @@ export default class DetailComponent extends React.Component {
         this.state = {
             previewVisible: false,
             previewImage: '',
+            previewImageField: null,
             token: '',
             textareas: {},
             fetching: {},
@@ -134,11 +140,11 @@ export default class DetailComponent extends React.Component {
             f.readonly = isUndefined(f.readonly) ? this.options.view : f.readonly;
             if (f.type === 'citySelect') {
                 f.cFields = f.cFields || ['province', 'city', 'area'];
-            } else if (f.type === 'select' || f.type === 'checkbox' || f.type === 'selectInput' || f.type === 'provSelect') {
-                if (f.key) {
-                    f.keyName = f.keyName || 'dkey';
-                    f.valueName = f.valueName || 'dvalue';
-                } else if (f.type === 'provSelect') {
+            } else if (f.type === 'select' || f.type === 'checkbox' || f.type === 'provSelect') {
+                f.keyName = f.keyName || 'dkey';
+                f.valueName = f.valueName || 'dvalue';
+
+                if (f.type === 'provSelect') {
                     f.keyName = 'value';
                     f.valueName = 'label';
                     f.data = cityData.map(c => ({
@@ -167,6 +173,11 @@ export default class DetailComponent extends React.Component {
         return this.getPageComponent(children);
     }
 
+    getBuildDetail = (code) => {
+        this.first = true;
+        this.buildDetail({ code });
+    }
+
     beforeSubmit(err, values) {
         if (err) {
             return false;
@@ -186,8 +197,8 @@ export default class DetailComponent extends React.Component {
                 v.cFields.forEach((f, i) => {
                     values[f] = mid[i];
                 });
-            } else if (v.type === 'date' || v.type === 'datetime') {
-                let format = v.type === 'date' ? DATE_FORMAT : DATETIME_FORMAT;
+            } else if (v.type === 'date' || v.type === 'datetime' || v.type === 'month') {
+                let format = v.type === 'date' ? DATE_FORMAT : v.type === 'month' ? MONTH_FORMAT : DATETIME_FORMAT;
                 if (v.rangedate) {
                     let bDate = values[v.field] ? [...values[v.field]] : [];
                     if (bDate.length) {
@@ -201,7 +212,11 @@ export default class DetailComponent extends React.Component {
             } else if (v.type === 'o2m') {
                 values[v.field] = this.props.pageData[v.field];
             } else if (v.type === 'checkbox') {
-                values[v.field] = values[v.field].join(',');
+                if (values[v.field] !== '' && values[v.field].push) {
+                    values[v.field] = values[v.field].join(',');
+                } else {
+                    values[v.field] = values[v.field] || '';
+                }
             }
         });
         values.updater = values.updater || getUserId();
@@ -211,10 +226,12 @@ export default class DetailComponent extends React.Component {
     customSubmit = (handler) => {
         let fieldsList = [];
         this.options.fields.map(v => {
-            if (v.items) {
+            if (v.items && !v.hidden) {
                 v.items.map(v1 => {
                     v1.map(v2 => {
-                        fieldsList.push(v2.field);
+                        if (!v2.readonly) {
+                            fieldsList.push(v2.field);
+                        }
                     });
                 });
             } else {
@@ -228,6 +245,15 @@ export default class DetailComponent extends React.Component {
             }
             handler && handler(params);
         });
+    }
+
+    customSubmitSave = (handler) => {
+        let values = this.props.form.getFieldsValue();
+        let params = this.beforeSubmit('', values);
+        if (!params) {
+            return;
+        }
+        handler && handler(params);
     }
 
     handleSubmit = (e) => {
@@ -269,10 +295,12 @@ export default class DetailComponent extends React.Component {
         return '';
     }
     handleCancel = () => this.setState({previewVisible: false})
-    handlePreview = (file) => {
+
+    handlePreview = (file, previewImageField) => {
         this.setState({
             previewImage: file.url || file.thumbUrl,
-            previewVisible: true
+            previewVisible: true,
+            previewImageField: previewImageField
         });
     }
     handleFilePreview = (file) => {
@@ -442,13 +470,36 @@ export default class DetailComponent extends React.Component {
 
     getPageComponent = (children) => {
         const {previewImage, previewVisible} = this.state;
+        let imgUrl = '';
+        if (this.state.previewImageField && this.props.form.getFieldValue(this.state.previewImageField).split('||')) {
+            let url = this.props.form.getFieldValue(this.state.previewImageField).split('||')[0];
+            imgUrl = PIC_PREFIX + '/' + url + '?attname=' + url + '.jpg';
+        }
+
         return (
             <Spin spinning={this.props.fetching}>
                 <Form className="detail-form-wrapper" onSubmit={this.handleSubmit}>
                     {children}
                 </Form>
                 <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                    <img alt="图片" style={{width: '100%'}} src={previewImage}/>
+                    <div className="previewImg-wrap">
+                        <Carousel ref={(carousel => this.carousel = carousel)} afterChange={(a) => {
+                            let url = this.props.form.getFieldValue(this.state.previewImageField).split('||')[a];
+                            imgUrl = PIC_PREFIX + '/' + url + '?attname=' + url + '.jpg';
+                        }}>
+                            {
+                                this.state.previewImageField && this.props.form.getFieldValue(this.state.previewImageField).split('||').map(v => {
+                                    let url = PIC_PREFIX + '/' + v + PIC_BASEURL_L;
+                                    return (<div className='img-wrap' key={v}><img alt="图片" style={{width: '100%'}} src={url}/></div>);
+                                })
+                            }
+                        </Carousel>
+                    </div>
+                    <div className="down-wrap">
+                        <Button icon="left" onClick={() => this.carousel.prev()}></Button>
+                        <Button style={{marginLeft: 20}} icon="right" onClick={() => this.carousel.next()}></Button>
+                        <Button style={{marginLeft: 20}} onClick={() => { location.href = imgUrl; }} icon="download">下载</Button>
+                    </div>
                 </Modal>
             </Spin>
         );
@@ -476,6 +527,8 @@ export default class DetailComponent extends React.Component {
                 return item.rangedate
                     ? this.getRangeDateItem(item, initVal, rules, getFieldDecorator, type === 'datetime')
                     : this.getDateItem(item, initVal, rules, getFieldDecorator, type === 'datetime');
+            case 'month':
+                return this.getMonthItem(item, initVal, rules, getFieldDecorator);
             case 'img':
                 return this.getImgComp(item, initVal, rules, getFieldDecorator);
             case 'file':
@@ -488,8 +541,6 @@ export default class DetailComponent extends React.Component {
                 return this.getCitySelect(item, initVal, rules, getFieldDecorator);
             case 'checkbox':
                 return this.getCheckboxComp(item, initVal, rules, getFieldDecorator);
-            case 'selectInput':
-                return this.getSelectInputComp(item, initVal, rules, getFieldDecorator);
             case 'treeSelect':
                 return this.getTreeSelectComp(item, initVal, rules, getFieldDecorator);
             default:
@@ -683,7 +734,17 @@ export default class DetailComponent extends React.Component {
                                 if (i === 0) {
                                     titles.push(f.title);
                                 }
-                                temp.push(f.render ? f.render(d[f.field], d) : f.amount ? moneyFormat(d[f.field]) : d[f.field]);
+                                let value = '';
+                                if (f.render) {
+                                    value = f.render(d[f.field], d);
+                                } else if (f.amount) {
+                                    value = moneyFormat(d[f.field]);
+                                } else if (f.type === 'date' || f.type === 'datetime') {
+                                    value = f.type === 'date' ? dateFormat(d[f.field]) : dateTimeFormat(d[f.field]);
+                                } else {
+                                    value = d[f.field];
+                                }
+                                temp.push(value);
                             });
                             bodys.push(temp);
                         });
@@ -743,11 +804,13 @@ export default class DetailComponent extends React.Component {
                 obj.render = (v) => {
                     return f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{dateFormat(v)}</span> : dateFormat(v);
                 };
+            } else if (f.type === 'month' && !f.render) {
+                obj.render = (v) => {
+                    return f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{monthFormat(v)}</span> : monthFormat(v);
+                };
             } else if (f.type === 'select' || f.type === 'checkbox') {
-                if (f.key) {
-                    f.keyName = f.keyName || 'dkey';
-                    f.valueName = f.valueName || 'dvalue';
-                }
+                f.keyName = f.keyName || 'dkey';
+                f.valueName = f.valueName || 'dvalue';
                 if (!f.data) {
                     f.data = this.state.searchData[f.field];
                     first && this.getO2MSelectData(f);
@@ -781,7 +844,21 @@ export default class DetailComponent extends React.Component {
                     };
                 }
             } else if (f.type === 'img') {
-                obj.render = (value) => value ? <img style={{maxWidth: 25, maxHeight: 25}} src={PIC_PREFIX + value}/> : '';
+                if(f.single) {
+                    obj.render = (value) => value ? <img style={{maxWidth: 25, maxHeight: 25}} src={PIC_PREFIX + value}/> : '';
+                } else {
+                    obj.render = (value) => {
+                        if (value) {
+                            let imgStr = value.split('||');
+                            return (<div>
+                                { imgStr.map(pic => (
+                                    <img key={pic} style={{maxWidth: 25, maxHeight: 25, marginRight: 10}} src={PIC_PREFIX + pic}/>
+                                ))}
+                            </div>);
+                        }
+                        return '';
+                    };
+                }
             }
             if (f.amount && !f.render) {
                 obj.render = (v, d) => <span style={{whiteSpace: 'nowrap'}}>{moneyFormat(v, d)}</span>;
@@ -875,6 +952,29 @@ export default class DetailComponent extends React.Component {
                             placeholder={places}
                             format={format}
                             showTime={isTime}/>
+                        )
+                }
+            </FormItem>
+        );
+    }
+
+    getMonthItem(item, initVal, rules, getFieldDecorator) {
+        let format = MONTH_FORMAT;
+        let places = '选择日期';
+        return (
+            <FormItem className={item.hidden ? 'hidden' : ''} key={item.field} {...this.getInputItemProps()} label={this.getLabel(item)}>
+                {
+                    item.readonly ? <div className="readonly-text">{initVal}</div>
+                        : getFieldDecorator(item.field, {
+                            rules,
+                            initialValue: initVal || null
+                        })(
+                        <MonthPicker
+                            allowClear={false}
+                            locale={locale}
+                            placeholder={places}
+                            format={format}
+                            showTime={false}/>
                         )
                 }
             </FormItem>
@@ -979,16 +1079,16 @@ export default class DetailComponent extends React.Component {
             <FormItem className={item.hidden ? 'hidden' : ''} key={item.field} {...this.getInputItemProps()} label={this.getLabel(item)}>
                 {
                     item.readonly ? <div className='readonly-text'>{val}</div>
-                    : getFieldDecorator(item.field, {
-                        rules,
-                        initialValue: initVal
-                    })(
-                      <CheckboxGroup disabled={item.readonly}>
-                        {item.data && item.data.length
-                          ? item.data.map(d => <Checkbox key={d[item.keyName]} value={d[item.keyName]}>{d[item.valueName]}</Checkbox>)
-                          : null}
-                      </CheckboxGroup>
-                    )
+                        : getFieldDecorator(item.field, {
+                            rules,
+                            initialValue: initVal
+                        })(
+                        <CheckboxGroup disabled={item.readonly}>
+                            {item.data && item.data.length
+                                ? item.data.map(d => <Checkbox key={d[item.keyName]} value={d[item.keyName]}>{d[item.valueName]}</Checkbox>)
+                                : null}
+                        </CheckboxGroup>
+                        )
                 }
             </FormItem>
         );
@@ -1099,7 +1199,9 @@ export default class DetailComponent extends React.Component {
         const imgProps = {
             ...commProps,
             onChange: ({fileList}) => this.setUploadFileUrl(fileList, true),
-            onPreview: this.handlePreview,
+            onPreview: (file) => {
+                this.handlePreview(file, item.field);
+            },
             listType: 'picture-card',
             accept: 'image/*'
         };
@@ -1209,7 +1311,7 @@ export default class DetailComponent extends React.Component {
             }
             if (item.type === 'citySelect') {
                 result = this.getCityVal(item, result);
-            } else if (item.type === 'date' || item.type === 'datetime') {
+            } else if (item.type === 'date' || item.type === 'datetime' || item.type === 'month') {
                 result = this.getRealDateVal(item, result);
             } else if (item.type === 'checkbox') {
                 result = this.getRealCheckboxVal(item, result);
@@ -1229,8 +1331,8 @@ export default class DetailComponent extends React.Component {
     }
 
     getRealDateVal(item, result) {
-        let format = item.type === 'date' ? DATE_FORMAT : DATETIME_FORMAT;
-        let format1 = item.type === 'date' ? dateFormat : dateTimeFormat;
+        let format = item.type === 'date' ? DATE_FORMAT : item.type === 'month' ? MONTH_FORMAT : DATETIME_FORMAT;
+        let format1 = item.type === 'date' ? dateFormat : item.type === 'month' ? monthFormat : dateTimeFormat;
         let readonly = this.options.view || item.readonly;
         if (readonly) {
             return item.rangedate
@@ -1315,7 +1417,7 @@ export default class DetailComponent extends React.Component {
                             style={{marginRight: 20}}
                             key={i}
                             type={b.type || ''}
-                            onClick={() => b.check ? this.customSubmit(b.handler) : b.handler()}>
+                            onClick={() => b.check ? this.customSubmit(b.handler) : this.customSubmitSave(b.handler)}>
                             {b.title}
                         </Button>
                     ))
@@ -1347,13 +1449,6 @@ export default class DetailComponent extends React.Component {
             rules.push({
                 required: true,
                 message: '必填字段'
-            });
-        }
-        if (item.maxlength) {
-            rules.push({
-                min: 1,
-                max: item.maxlength,
-                message: `请输入一个长度最多是${item.maxlength}的字符串`
             });
         }
         if (item.email) {
@@ -1408,6 +1503,42 @@ export default class DetailComponent extends React.Component {
             rules.push({
                 pattern: /(^[1-9](,\d{3}|[0-9])*(\.\d{1,2})?$)|([0])/,
                 message: '金额必须>=0，且小数点后最多2位'
+            });
+        }
+
+        if (item.min) {
+            rules.push({
+                validator: (rule, value, callback) => {
+                    let reg = /^-?\d+(\.\d+)?$/.test(value);
+                    if (reg && value && value < item.min) {
+                        let error = `请输入一个最小为${item.min}的值`;
+                        callback(error);
+                    } else {
+                        callback();
+                    }
+                }
+            });
+        }
+
+        if (item.max) {
+            rules.push({
+                validator: (rule, value, callback) => {
+                    let reg = /^-?\d+(\.\d+)?$/.test(value);
+                    if (reg && value && value > item.max) {
+                        let error = `请输入一个最大为${item.max}的值`;
+                        callback(error);
+                    } else {
+                        callback();
+                    }
+                }
+            });
+        }
+
+        if (item.maxlength) {
+            rules.push({
+                min: 1,
+                max: item.maxlength,
+                message: `请输入一个长度最多是${item.maxlength}的字符串`
             });
         }
         return rules;

@@ -2015,6 +2015,16 @@ const ROUTES = [
   {
     path: '/risk/whiteList/addedit',
     component: asyncComponent(() => import('container/risk/whiteList/whiteList-addedit'))
+  },
+  //  home公告详情
+  {
+      path: '/home/noticeDetail',
+      component: asyncComponent(() => import('container/home/notice-detail'))
+  },
+  //  home制度详情
+  {
+      path: '/home/companysystemDetail',
+      component: asyncComponent(() => import('container/home/companysystem-detail'))
   }
 ];
 
