@@ -116,7 +116,7 @@ class AdvMoney extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '003_01') {
+                    } else if (selectedRows[0].curNodeCode !== '003_01' && selectedRows[0].curNodeCode !== '004_01') {
                         showWarnMsg('当前节点不是确认用款单');
                     } else {
                         this.props.history.push(`/loan/advMoney/apply?code=${selectedRowKeys[0]}`);
@@ -127,7 +127,7 @@ class AdvMoney extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '003_02') {
+                    } else if (selectedRows[0].curNodeCode !== '003_02' && selectedRows[0].curNodeCode !== '004_02') {
                         showWarnMsg('当前节点不是区域总经理审核');
                     } else {
                         this.props.history.push(`/loan/advMoney/areaCheck?code=${selectedRowKeys[0]}`);
@@ -138,7 +138,7 @@ class AdvMoney extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '003_03') {
+                    } else if (selectedRows[0].curNodeCode !== '003_03' && selectedRows[0].curNodeCode !== '004_03') {
                         showWarnMsg('当前节点不是省分经理审核');
                     } else {
                         this.props.history.push(`/loan/advMoney/compCheck?code=${selectedRowKeys[0]}`);
