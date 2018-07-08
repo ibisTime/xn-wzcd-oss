@@ -133,7 +133,7 @@ class BudgetApplyExternal extends React.Component {
             feeTotal = 0;
         }
 
-        return feeTotal.toFixed(2);
+        return feeTotal;
     }
 
     // 应退按揭款合计 = 贷款金额 - 收客户手续费（按揭款扣）- GPS费（按揭款扣）- 厂家贴息
@@ -173,17 +173,25 @@ class BudgetApplyExternal extends React.Component {
             serviceCharge: this.getCustomerFeeTotal(),
             gpsFee: this.props.form.getFieldValue('gpsFee'),
             isAdvanceFund: this.props.form.getFieldValue('isAdvanceFund'),
+            serviceChargeWay: this.props.form.getFieldValue('serviceChargeWay'),
+            gpsFeeWay: this.props.form.getFieldValue('gpsFeeWay'),
             ...params
         };
-        if (data.loanAmount && (data.carDealerSubsidy || data.carDealerSubsidy === 0) && (data.serviceCharge || data.serviceCharge === '0') && (data.gpsFee || data.gpsFee === '0') && data.isAdvanceFund) {
+        if (data.serviceChargeWay && data.gpsFeeWay && (data.loanAmount || data.loanAmount === 0) && (data.carDealerSubsidy || data.carDealerSubsidy === 0) && (data.serviceCharge || data.serviceCharge === '0') && (data.gpsFee || data.gpsFee === '0') && data.isAdvanceFund) {
             result.isVaild = true;
+            if (data.serviceChargeWay !== '2') {
+                data.serviceCharge = '0';
+            }
+            if (data.gpsFeeWay !== '2') {
+                data.gpsFee = '0';
+            }
         }
         if (result.isVaild) {
             let repointDetailList1 = {
                 code: this.props.pageData.repointDetailList1[0] ? this.props.pageData.repointDetailList1[0].code : '0',
                 useMoneyPurpose1: '1',
                 useMoneyPurpose: '1',
-                repointAmount: this.getRefundAmount(),
+                repointAmount: this.getRefundAmount(data),
                 repointAmountL: moneyUppercase(this.getRefundAmount()),
                 accountName: this.props.pageData.repointDetailList1[0] ? this.props.pageData.repointDetailList1[0].accountName : '',
                 carDealerName: this.props.pageData.repointDetailList1[0] ? this.props.pageData.repointDetailList1[0].carDealerName : '',
@@ -389,10 +397,11 @@ class BudgetApplyExternal extends React.Component {
                     key: 'rate_type',
                     required: true,
                     onChange: (v, data) => {
+                        this.rateType = v;
                         if (v === '1') {
-                            this.rateType = v;
                             this.props.setPageData({
                                 ...this.props.pageData,
+                                rateType: v,
                                 carDealerSubsidy: 0
                             });
                         }
@@ -418,7 +427,7 @@ class BudgetApplyExternal extends React.Component {
                             gpsDeduct = v * 1000 * this.state.gpsDeductValue;
                         }
                         // 应退按揭款列表
-                        let result = this.getRepointDetailList1({loanAmount: v});
+                        let result = this.getRepointDetailList1({loanAmount: moneyParse(v)});
                         let repointDetailList1 = result.repointDetailList1;
 
                         this.props.setPageData({
@@ -1077,16 +1086,11 @@ class BudgetApplyExternal extends React.Component {
                         if (!v) {
                             return;
                         }
-                        let gpsFee = this.props.pageData.gpsFee;
-                        if (v !== '2') {
-                            gpsFee = 0;
-                        }
                         // 应退按揭款列表
-                        let result = this.getRepointDetailList1();
+                        let result = this.getRepointDetailList1({gpsFeeWay: v});
                         let repointDetailList1 = result.repointDetailList1;
                         this.props.setPageData({
                             ...this.props.pageData,
-                            gpsFee,
                             repointDetailList1
                         });
                     }
@@ -1102,16 +1106,10 @@ class BudgetApplyExternal extends React.Component {
                             return;
                         }
                         // 应退按揭款列表
-                        let serviceCharge = this.props.pageData.serviceCharge;
-                        if (v !== '2') {
-                            serviceCharge = 0;
-                        }
-                        // 应退按揭款列表
-                        let result = this.getRepointDetailList1();
+                        let result = this.getRepointDetailList1({serviceChargeWay: v});
                         let repointDetailList1 = result.repointDetailList1;
                         this.props.setPageData({
                             ...this.props.pageData,
-                            serviceCharge,
                             repointDetailList1
                         });
                     }
