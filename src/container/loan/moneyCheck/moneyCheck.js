@@ -127,15 +127,7 @@ class MoneyCheck extends React.Component {
                     }
                 },
                 payComp: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '004_05') {
-                        showWarnMsg('当前节点不是确认打款给分公司');
-                    } else {
-                        this.props.history.push(`/loan/moneyCheck/payComp`);
-                    }
+                    this.props.history.push(`/loan/moneyCheck/payComp`);
                 },
                 allBill: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {

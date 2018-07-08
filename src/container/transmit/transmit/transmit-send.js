@@ -68,7 +68,8 @@ class transmitAddedit extends React.Component {
             field: 'refFileList',
             onChange: (v) => {
                 let sendFileList = this.props.pageData.sendFileList;
-                this.props.setPageData({
+                this.props.form.setFieldsValue({
+                    ...this.props.pageData,
                     sendFileList: v
                 });
             }

@@ -15,7 +15,8 @@ import {
     moneyFormat,
     moneyUppercase,
     dateFormat,
-    formatDate
+    formatDate,
+    numUppercase
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -203,10 +204,11 @@ class MortgageMake extends React.Component {
                         let pageData = this.props.pageData;
                         console.log(fields);
                         fetch(632192, param).then((data) => {
+                            console.log(data);
                             let str = dateFormat(data.pledgePrintDatetime);
                             let date = str.split('-');
-                            data[1] = data[1] - 0;
-                            data[2] = data[2] - 0;
+                            date[1] = date[1] - 0;
+                            date[2] = date[2] - 0;
                             let arr = [
                                 ['主贷人姓名', data.customerName],
                                 ['身份证号码', data.idNo],
@@ -217,10 +219,10 @@ class MortgageMake extends React.Component {
                                 ['车牌号', data.carNumber],
                                 ['车架号', data.frameNo],
                                 ['发动机号', data.engineNo],
-                                ['贷款（大写）', moneyUppercase(moneyFormat(data.loanAmount))],
-                                ['贷款（小写）', moneyFormat(data.loanAmount)],
-                                ['履约保证金（大写）', moneyUppercase(moneyFormat(data.lyAmount))],
-                                ['履约保证金（小写）', moneyFormat(data.lyAmount)],
+                                ['贷款（大写）', numUppercase(moneyFormat(data.loanAmount))],
+                                ['贷款（小写）', data.loanAmount / 1000],
+                                ['履约保证金（大写）', numUppercase(moneyFormat(data.lyAmount))],
+                                ['履约保证金（小写）', data.lyAmount / 1000],
                                 ['年份', date[0]],
                                 ['月', date[1]],
                                 ['日', date[2]],

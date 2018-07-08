@@ -16,7 +16,8 @@ import {
     moneyUppercase,
     numUppercase,
     dateFormat,
-    formatDate
+    formatDate,
+    moneyReplaceComma
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -368,21 +369,21 @@ class GuaranteeMake extends React.Component {
                                 ['工作单位', data.ghCompanyName],
                                 ['手机号码', data.ghMobile],
                                 ['费利率（银行利率）', data.bankRate],
-                                ['贷款额', moneyFormat(data.loanAmount)],
-                                ['服务费', moneyFormat(data.fee)],
-                                ['总贷款额（包含服务费）', moneyFormat(data.loanAmount + data.fee)],
+                                ['贷款额', moneyReplaceComma(moneyFormat(data.loanAmount))],
+                                ['服务费', moneyReplaceComma(moneyFormat(data.fee))],
+                                ['总贷款额（包含服务费）', moneyReplaceComma(moneyFormat(data.loanAmount + data.fee))],
                                 ['贷款额（大写）', numUppercase(moneyFormat(data.loanAmount))],
                                 ['服务费（大写）', numUppercase(moneyFormat(data.fee))],
                                 ['总贷款额（大写）', numUppercase(moneyFormat(data.loanAmount + data.fee))],
                                 ['分期期数', data.loanPeriods],
                                 ['分期期数大写', numUppercase(data.loanPeriods)],
-                                ['月还款额', moneyFormat(num1) + '/' + moneyFormat(num2)],
-                                ['手续费总额', moneyFormat(data.serviceCharge)],
+                                ['月还款额', moneyReplaceComma(moneyFormat(num1)) + '/' + moneyReplaceComma(moneyFormat(num2))],
+                                ['手续费总额', moneyReplaceComma(moneyFormat(data.serviceCharge))],
                                 ['手续费总额大写', numUppercase(moneyFormat(data.serviceCharge))],
-                                ['总贷款额和手续费总额', moneyFormat(data.loanAmount + data.fee + data.serviceCharge)],
-                                ['车辆总价', moneyFormat(data.originalPrice)],
+                                ['总贷款额和手续费总额', moneyReplaceComma(moneyFormat(data.loanAmount + data.fee + data.serviceCharge))],
+                                ['车辆总价', moneyReplaceComma(moneyFormat(data.originalPrice))],
                                 ['车辆总价大写', numUppercase(moneyFormat(data.originalPrice))],
-                                ['首付额', moneyFormat(data.originalPrice - data.loanAmount)],
+                                ['首付额', moneyReplaceComma(moneyFormat(data.originalPrice - data.loanAmount))],
                                 ['首付额（大写）', numUppercase(moneyFormat(data.originalPrice - data.loanAmount))],
                                 ['经销商', data.carDealerName],
                                 ['发动机号', data.engineNo],
@@ -394,9 +395,9 @@ class GuaranteeMake extends React.Component {
                                 ['手机号码', data.guarantorMobile],
                                 ['现住址', data.guarantorNowAddress],
                                 ['工作单位', data.guarantorCompanyName],
-                                ['总的首期还款金额', moneyFormat(num1)],
-                                ['总的每期还款金额', moneyFormat(num2)],
-                                ['原车发票价格', moneyFormat(data.invoicePrice)],
+                                ['总的首期还款金额', moneyReplaceComma(moneyFormat(num1))],
+                                ['总的每期还款金额', moneyReplaceComma(moneyFormat(num2))],
+                                ['原车发票价格', moneyReplaceComma(moneyFormat(data.invoicePrice))],
                                 ['原车发票价格大写', numUppercase(moneyFormat(data.invoicePrice))]
                             ];
                             showSucMsg('操作成功');
