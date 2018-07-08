@@ -8,16 +8,15 @@ class CompAdd extends React.Component {
       fields: [{
         field: 'parentCode',
         title: '上级',
-        hidden: true,
-        // type: 'treeSelect',
-        // listCode: 630106,
-        // keyName: 'code',
-        // valueName: 'name',
-        // bParams: ['type'],
-        // params: {
-        //   status: 1,
-        //   typeList: [1, 2]
-        // },
+        type: 'treeSelect',
+        listCode: 630106,
+        keyName: 'code',
+        valueName: 'name',
+        bParams: ['type'],
+        params: {
+          status: 1,
+          typeList: [1, 2]
+        },
         value: this.props.parentCode
       }, {
         field: 'name',
@@ -25,28 +24,21 @@ class CompAdd extends React.Component {
         required: true,
         maxlength: 30
       }, {
-        field: 'leadName',
-        // field: 'leadUserId',
-        // maxlength: 30
-        // type: 'select',
-        // listCode: 630066,
-        // keyName: 'userId',
-        // valueName: '{{realName.DATA}}-{{mobile.DATA}}',
-        // searchName: 'keyword',
-        // required: true
+        field: 'leadUserId',
+        type: 'select',
+        listCode: 630066,
+        keyName: 'userId',
+        valueName: '{{realName.DATA}}-{{mobile.DATA}}',
+        searchName: 'keyword',
         title: '负责人',
-        required: true,
-        maxlength: 30
+        required: true
       }, {
-        field: 'mobile',
-        // field: 'orderNo',
-        // title: 'UI次序',
-        // help: '数字越小，排序越靠前',
-        // integer: true,
-        // maxlength: 30
-        title: '负责人手机号',
+        field: 'orderNo',
+        title: 'UI次序',
         required: true,
-        mobile: true
+        help: '数字越小，排序越靠前',
+        integer: true,
+        maxlength: 30
       }, {
         field: 'type',
         title: '类型',

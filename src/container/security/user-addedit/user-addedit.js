@@ -199,7 +199,7 @@ class Post extends React.Component {
                                         value={d['code']}>{d['name']}</Option>))}
                         </Select>)}
                     </Item>
-                    <Item key='archiveCode' {...formItemLayout} label='档案'>
+                    {/* <Item key='archiveCode' {...formItemLayout} label='档案'>
                         {getFieldDecorator('archiveCode', {
                             rules: [],
                             initialValue: ''
@@ -208,7 +208,7 @@ class Post extends React.Component {
                                 <Option key={d['code']}
                                         value={d['code']}>{d['entranceNo']}-{d['realName']}-{d['gender']}</Option>))}
                         </Select>)}
-                    </Item>
+                    </Item> */}
                     <Item key='treeMenu' {...formItemLayout} label='岗位名称'>
                         {getFieldDecorator('postCode', {
                             rules,
