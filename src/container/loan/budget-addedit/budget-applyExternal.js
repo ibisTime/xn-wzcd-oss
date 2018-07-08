@@ -439,20 +439,6 @@ class BudgetApplyExternal extends React.Component {
                     }
                 }],
                 [{
-                    title: '是否需要贷前调查',
-                    field: 'isSurvey',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value',
-                    required: true
-                }, {
                     title: '银行利率',
                     field: 'bankRateType',
                     type: 'select',
@@ -883,7 +869,8 @@ class BudgetApplyExternal extends React.Component {
                         value: '有'
                     }],
                     keyName: 'key',
-                    valueName: 'value'
+                    valueName: 'value',
+                    required: true
                 }, {
                     title: '提供场地证明',
                     field: 'isSiteProve',

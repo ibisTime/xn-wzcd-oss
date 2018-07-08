@@ -325,20 +325,6 @@ class BudgetDetail extends React.Component {
                     required: true
                 }],
                 [{
-                    title: '是否需要贷前调查',
-                    field: 'isSurvey',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value',
-                    required: true
-                }, {
                     title: '利率类型',
                     field: 'rateType',
                     type: 'select',
@@ -710,7 +696,8 @@ class BudgetDetail extends React.Component {
                         value: '有'
                     }],
                     keyName: 'key',
-                    valueName: 'value'
+                    valueName: 'value',
+                    required: true
                 }, {
                     title: '提供场地证明',
                     field: 'isSiteProve',
