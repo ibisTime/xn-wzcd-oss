@@ -60,6 +60,7 @@ class CreditStartAddedit extends React.Component {
         }, {
             title: '手机号',
             field: 'mobile',
+            mobile: true,
             required: true,
             render: (v) => {
                 let val = (v && v.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2')) || '';
@@ -356,12 +357,6 @@ class CreditStartAddedit extends React.Component {
             field: 'approveNote',
             readonly: !this.isCheckSalesman,
             hidden: !this.isCheckSalesman
-        }, {
-            title: '审核意见',
-            field: '11',
-            type: 'textarea',
-            normalArea: true,
-            hidden: !this.isCheckFirst
         }];
 
         // 业务员初审
