@@ -339,7 +339,7 @@ class CreditStartAddedit extends React.Component {
             hidden: !this.isCheckSalesman
         }, {
             title: '审核意见',
-            field: '',
+            field: '11',
             type: 'textarea',
             normalArea: true,
             hidden: !this.isCheckFirst
