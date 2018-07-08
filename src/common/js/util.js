@@ -321,9 +321,10 @@ export function showDelConfirm({
  * @param money
  */
 export function moneyUppercase(Num) {
-    if (isNaN(Num)) {
+    if (isUndefined(Num)) {
         return '-';
     }
+    Num = moneyReplaceComma(Num);
     if (!/^[1-9](,\d{3}|[0-9])*(\.\d{1,2})?$/.test(Num)) {
         return '';
     }
