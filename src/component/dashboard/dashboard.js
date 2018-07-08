@@ -99,9 +99,12 @@ class Dashboard extends React.Component {
     );
     return (
       <Header className="header">
-        <div className="logo">
-          <img src={logo}/>
-        </div>
+          <div className="logo" onClick={() => {
+              this.props.setTopCode('');
+              this.props.history.push('/');
+          }}>
+              <img src={logo}/>
+          </div>
         <Menu
           theme="dark"
           mode="horizontal"

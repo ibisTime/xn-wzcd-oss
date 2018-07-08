@@ -134,8 +134,7 @@ export default class DetailComponent extends React.Component {
             f.readonly = isUndefined(f.readonly) ? this.options.view : f.readonly;
             if (f.type === 'citySelect') {
                 f.cFields = f.cFields || ['province', 'city', 'area'];
-            } else if (f.type === 'select' || f.type === 'checkbox' ||
-              f.type === 'selectInput' || f.type === 'provSelect') {
+            } else if (f.type === 'select' || f.type === 'checkbox' || f.type === 'selectInput' || f.type === 'provSelect') {
                 if (f.key) {
                     f.keyName = f.keyName || 'dkey';
                     f.valueName = f.valueName || 'dvalue';
@@ -143,8 +142,8 @@ export default class DetailComponent extends React.Component {
                     f.keyName = 'value';
                     f.valueName = 'label';
                     f.data = cityData.map(c => ({
-                      value: c.value,
-                      label: c.label
+                        value: c.value,
+                        label: c.label
                     }));
                 }
                 if (!f.data) {
@@ -230,6 +229,7 @@ export default class DetailComponent extends React.Component {
             handler && handler(params);
         });
     }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
