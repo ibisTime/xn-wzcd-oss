@@ -58,6 +58,8 @@ class bankAddedit extends React.Component {
       options: {
         add: true,
         edit: true,
+        delete: true,
+        rowKey: 'id',
         fields: [{
           title: '期数',
           field: 'period',

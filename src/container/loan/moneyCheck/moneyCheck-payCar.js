@@ -74,6 +74,7 @@ class AdvMoneyPayCar extends React.Component {
             formatter: (v, d) => {
                 return moneyFormat(d.useAmount);
             },
+            amount: true,
             required: true
         }, {
             title: '垫资日期',
@@ -105,10 +106,6 @@ class AdvMoneyPayCar extends React.Component {
             code: this.code,
             view: this.view,
             detailCode: 632186,
-            beforeSubmit: (data) => {
-                data.advanceFundAmount = moneyFormat(moneyReplaceComma(data.advanceFundAmount));
-                return data;
-            },
             buttons: [{
               title: '确认',
               check: true,
