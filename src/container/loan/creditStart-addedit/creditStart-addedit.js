@@ -475,7 +475,6 @@ class CreditStartAddedit extends React.Component {
                 title: '确定',
                 check: true,
                 handler: (params) => {
-                    console.log(params);
                     params.creditCode = this.code;
                     params.operator = getUserId();
                     this.props.doFetching();

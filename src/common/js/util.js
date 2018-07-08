@@ -131,6 +131,19 @@ export function dateFormat(date) {
 }
 
 /**
+ * 日期格式转化 yyyy-MM
+ * @param date
+ * @param format
+ */
+export function monthFormat(date) {
+    date = formatDate(date, 'yyyy-MM-dd');
+    let arr = date.split('-');
+    arr.length = 2;
+    date = arr.join('-');
+    return date;
+}
+
+/**
  * 日期格式转化 yyyy-MM-dd hh:mm:ss
  * @param date
  * @param format
@@ -241,7 +254,7 @@ export function formatFile(urls, suffix = '') {
  * @param imgs
  * @param suffix
  */
-export function formatImg(imgs, suffix = '?imageMogr2/auto-orient') {
+export function formatImg(imgs, suffix = '?imageMogr2/auto-orient/thumbnail/!300x300') {
     return formatFile(imgs, suffix);
 }
 
