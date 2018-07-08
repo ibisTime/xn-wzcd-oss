@@ -267,7 +267,7 @@ class CreditStartAddedit extends React.Component {
                 noVisible: true
             }]);
 
-            if(this.isCheckFirst) {
+            if((this.isCheckFirst || this.view) && !this.isCheckSalesman && !this.isEntry && !this.isAddedit) {
                 o2mFields = o2mFields.concat([{
                     title: '法院网查询结果',
                     field: 'courtNetworkResults',

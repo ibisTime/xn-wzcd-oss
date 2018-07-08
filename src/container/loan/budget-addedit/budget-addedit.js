@@ -123,10 +123,10 @@ class BudgetAddedit extends React.Component {
 
     // 收客户手续费合计：履约保证金+担保风险金+GPS收费+杂费
     getCustomerFeeTotal = (params) => {
-        let lyAmount = Number(moneyReplaceComma(params.lyAmount || 0));
-        let fxAmount = Number(moneyReplaceComma(params.fxAmount || 0));
-        let gpsFee = Number(moneyReplaceComma(params.gpsFee || 0));
-        let otherFee = Number(moneyReplaceComma(params.otherFee || 0));
+        let lyAmount = params.lyAmount || 0;
+        let fxAmount = params.fxAmount || 0;
+        let gpsFee = params.gpsFee || 0;
+        let otherFee = params.otherFee || 0;
         let feeTotal = 0;
 
         if (lyAmount && fxAmount && gpsFee && otherFee) {
@@ -135,7 +135,7 @@ class BudgetAddedit extends React.Component {
             feeTotal = 0;
         }
 
-        return feeTotal.toFixed(2);
+        return feeTotal;
     }
 
     // 应退按揭款合计 = 贷款金额 - 收客户手续费（按揭款扣）- GPS费（按揭款扣）- 厂家贴息
@@ -170,22 +170,30 @@ class BudgetAddedit extends React.Component {
             repointDetailList1: []
         };
         let data = {
-            loanAmount: this.props.form.getFieldValue('loanAmount'),
+            loanAmount: moneyParse(this.props.form.getFieldValue('loanAmount')),
             carDealerSubsidy: this.rateType === '1' ? 0 : this.props.form.getFieldValue('carDealerSubsidy'),
             serviceCharge: this.props.pageData.serviceCharge,
             gpsFee: this.props.pageData.gpsFee,
             isAdvanceFund: this.props.form.getFieldValue('isAdvanceFund'),
+            serviceChargeWay: this.props.form.getFieldValue('serviceChargeWay'),
+            gpsFeeWay: this.props.form.getFieldValue('gpsFeeWay'),
             ...params
         };
-        if (data.loanAmount && (data.carDealerSubsidy || data.carDealerSubsidy === 0) && (data.serviceCharge || data.serviceCharge === '0') && (data.gpsFee || data.gpsFee === '0') && data.isAdvanceFund) {
+        if (data.serviceChargeWay && data.gpsFeeWay && (data.loanAmount || data.loanAmount === 0) && (data.carDealerSubsidy || data.carDealerSubsidy === 0) && (data.serviceCharge || data.serviceCharge === '0') && (data.gpsFee || data.gpsFee === '0') && data.isAdvanceFund) {
             result.isVaild = true;
+            if (data.serviceChargeWay !== '2') {
+                data.serviceCharge = '0';
+            }
+            if (data.gpsFeeWay !== '2') {
+                data.gpsFee = '0';
+            }
         }
         if (result.isVaild) {
             let repointDetailList1 = {
                 code: this.props.pageData.repointDetailList1[0] ? this.props.pageData.repointDetailList1[0].code : '0',
                 useMoneyPurpose1: '1',
                 useMoneyPurpose: '1',
-                repointAmount: this.getRefundAmount(),
+                repointAmount: this.getRefundAmount(data),
                 repointAmountL: moneyUppercase(this.getRefundAmount()),
                 accountName: data.isAdvanceFund === '1' ? this.receivables.realName : '',
                 carDealerName: data.isAdvanceFund === '1' ? this.carDealerName : '',
@@ -305,25 +313,25 @@ class BudgetAddedit extends React.Component {
                             if (d.bankCode === this.props.pageData.bankSubbranch.bank.bankCode) {
                                 // 设置 收客户手续费合计 履约保证金 担保风险金 GPS收费 杂费
                                 let loanAmount = moneyReplaceComma(this.props.form.getFieldValue('loanAmount'));
-                                let gpsFee = d.gpsFee ? moneyFormat(d.gpsFee) : moneyFormat(d.gpsRate * loanAmount * 1000);
-                                let lyAmount = d.lyAmountFee ? moneyFormat(d.lyAmountFee) : moneyFormat(d.lyAmountRate * loanAmount * 1000);
-                                let fxAmount = d.assureFee ? moneyFormat(d.assureFee) : moneyFormat(d.assureRate * loanAmount * 1000);
-                                let otherFee = d.otherFee ? moneyFormat(d.otherFee) : moneyFormat(d.otherRate * loanAmount * 1000);
-                                let serviceCharge = moneyFormat(this.getCustomerFeeTotal({
+                                let gpsFee = d.gpsFee ? d.gpsFee : d.gpsRate * loanAmount * 1000;
+                                let lyAmount = d.lyAmountFee ? d.lyAmountFee : d.lyAmountRate * loanAmount * 1000;
+                                let fxAmount = d.assureFee ? d.assureFee : d.assureRate * loanAmount * 1000;
+                                let otherFee = d.otherFee ? d.otherFee : d.otherRate * loanAmount * 1000;
+                                let serviceCharge = this.getCustomerFeeTotal({
                                     gpsFee,
                                     lyAmount,
                                     fxAmount,
                                     otherFee
-                                }) * 1000);
+                                });
                                 let result = this.getRepointDetailList1({gpsFee, serviceCharge});
                                 let repointDetailList1 = result.repointDetailList1;
                                 this.props.setPageData({
                                     ...this.props.pageData,
-                                    gpsFee: moneyParse(gpsFee),
-                                    lyAmount: moneyParse(lyAmount),
-                                    fxAmount: moneyParse(fxAmount),
-                                    otherFee: moneyParse(otherFee),
-                                    serviceCharge: moneyParse(serviceCharge),
+                                    gpsFee: gpsFee,
+                                    lyAmount: lyAmount,
+                                    fxAmount: fxAmount,
+                                    otherFee: otherFee,
+                                    serviceCharge: serviceCharge,
                                     repointDetailList1
                                 });
                             }
@@ -446,6 +454,7 @@ class BudgetAddedit extends React.Component {
                         if (v === '1') {
                             this.props.setPageData({
                                 ...this.props.pageData,
+                                rateType: v,
                                 carDealerSubsidy: 0
                             });
                         }
@@ -471,7 +480,7 @@ class BudgetAddedit extends React.Component {
                             gpsDeduct = v * 1000 * this.state.gpsDeductValue;
                         }
                         // 应退按揭款列表
-                        let result = this.getRepointDetailList1({loanAmount: v});
+                        let result = this.getRepointDetailList1({loanAmount: moneyParse(v)});
                         let repointDetailList1 = result.repointDetailList1;
 
                         this.props.setPageData({
@@ -1139,16 +1148,11 @@ class BudgetAddedit extends React.Component {
                         if (!v) {
                             return;
                         }
-                        let gpsFee = this.props.pageData.gpsFee;
-                        if (v !== '2') {
-                            gpsFee = '0';
-                        }
                         // 应退按揭款列表
-                        let result = this.getRepointDetailList1({gpsFee});
+                        let result = this.getRepointDetailList1({gpsFeeWay: v});
                         let repointDetailList1 = result.repointDetailList1;
                         this.props.setPageData({
                             ...this.props.pageData,
-                            gpsFee,
                             repointDetailList1
                         });
                     }
@@ -1163,16 +1167,10 @@ class BudgetAddedit extends React.Component {
                             return;
                         }
                         // 应退按揭款列表
-                        let serviceCharge = this.props.pageData.serviceCharge;
-                        if (v !== '2') {
-                            serviceCharge = '0';
-                        }
-                        // 应退按揭款列表
-                        let result = this.getRepointDetailList1({serviceCharge});
+                        let result = this.getRepointDetailList1({serviceChargeWay: v});
                         let repointDetailList1 = result.repointDetailList1;
                         this.props.setPageData({
                             ...this.props.pageData,
-                            serviceCharge,
                             repointDetailList1
                         });
                     }
