@@ -516,6 +516,7 @@ export default class DetailComponent extends React.Component {
             selectedRowKeys,
             onChange: (selectedRowKeys) => this.onSelectChange(selectedRowKeys, item.field)
         };
+        item.options.key = item.options.rowKey || item.options.key || 'code';
         const hasSelected = selectedRowKeys.length > 0;
         return (
             <FormItem className={item.hidden ? 'hidden' : ''} key={item.field} {...this.getInputItemProps()} label={this.getLabel(item)}>
@@ -545,11 +546,11 @@ export default class DetailComponent extends React.Component {
             item.options.buttons = [{
                 title: '确认',
                 handler: (params, doFetching, cancelFetching, handleCancel) => {
-                    let key = item.rowKey || 'code';
+                    let key = item.options.rowKey || 'code';
                     let arr = _this.props.pageData[item.field] || [];
                     let flag = false;
                     params[key] && arr.forEach((v, i) => {
-                        if (v.code === params[key]) {
+                        if (v[key] === params[key]) {
                             arr[i] = {
                                 ...arr[i],
                                 ...params
@@ -604,7 +605,7 @@ export default class DetailComponent extends React.Component {
                             return;
                         }
                         let key = keys[0];
-                        let keyName = item.rowKey || 'code';
+                        let keyName = item.options.rowKey || 'code';
                         let useData = this.props.pageData[item.field].filter((v) => v[keyName] === key)[0];
                         this.setState({
                             modalOptions: {
@@ -631,7 +632,7 @@ export default class DetailComponent extends React.Component {
                             return;
                         }
                         let key = keys[0];
-                        let keyName = item.rowKey || 'code';
+                        let keyName = item.options.rowKey || 'code';
                         let arr = this.props.pageData[item.field].filter((v) => v[keyName] !== key);
                         this.props.setPageData({
                             ...this.props.pageData,
@@ -653,7 +654,7 @@ export default class DetailComponent extends React.Component {
                             return;
                         }
                         let key = keys[0];
-                        let keyName = item.rowKey || 'code';
+                        let keyName = item.options.rowKey || 'code';
                         let useData = this.props.pageData[item.field].filter((v) => v[keyName] === key)[0];
                         this.setState({
                             modalOptions: {
@@ -704,7 +705,7 @@ export default class DetailComponent extends React.Component {
                             return;
                         }
                         let key = keys[0];
-                        let keyName = item.rowKey || 'code';
+                        let keyName = item.options.rowKey || 'code';
                         let useData = this.props.pageData[item.field].filter((v) => v[keyName] === key)[0];
                         this.setState({
                             modalOptions: {
