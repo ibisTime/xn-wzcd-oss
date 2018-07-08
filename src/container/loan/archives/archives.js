@@ -96,7 +96,7 @@ class Archives extends React.Component {
             pageCode: 632145,
             searchParams: {
               roleCode: getRoleCode(),
-              curNodeCodeList: ['009_01', '009_02', '009_03', '009_04', '010_01', '010_02']
+              curNodeCodeList: ['010_01', '010_02']
             },
             btnEvent: {
                 entering: (selectedRowKeys, selectedRows) => {

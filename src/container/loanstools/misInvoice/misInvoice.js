@@ -12,7 +12,8 @@ import {
 import {
   showWarnMsg,
   showSucMsg,
-  dateTimeFormat
+  dateTimeFormat,
+  getRoleCode
 } from 'common/js/util';
 import {
     listWrapper
