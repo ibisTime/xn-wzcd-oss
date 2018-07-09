@@ -1228,7 +1228,9 @@ export default class DetailComponent extends React.Component {
         };
         const imgProps = {
             ...commProps,
-            onChange: ({fileList}) => this.setUploadFileUrl(fileList, true),
+            onChange: ({file, fileList, event}) => {
+                this.setUploadFileUrl(fileList, true, item.onChange);
+            },
             onPreview: (file) => {
                 this.handlePreview(file, item.field);
             },
@@ -1416,11 +1418,12 @@ export default class DetailComponent extends React.Component {
                 : btn;
     }
 
-    setUploadFileUrl(fileList, isImg) {
+    setUploadFileUrl(fileList, isImg, callback) {
         let format = isImg ? formatImg : formatFile;
         fileList.forEach(f => {
             if (!f.url && f.status === 'done' && f.response) {
                 f.url = format(f.response.key);
+                callback && callback(f.response.key, this.props);
             }
         });
     }

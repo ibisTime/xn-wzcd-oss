@@ -13,7 +13,8 @@ import {
     showSucMsg,
     getUserId
 } from 'common/js/util';
-import {DetailWrapper} from 'common/js/build-detail';
+import { DetailWrapper } from 'common/js/build-detail';
+import { getIdNoFront, getIdNoReverse } from 'api/user';
 import fetch from 'common/js/fetch';
 
 @DetailWrapper(
@@ -59,6 +60,7 @@ class CreditStartAddedit extends React.Component {
         }, {
             title: '手机号',
             field: 'mobile',
+            mobile: true,
             required: true,
             render: (v) => {
                 let val = (v && v.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2')) || '';
@@ -78,7 +80,25 @@ class CreditStartAddedit extends React.Component {
             field: 'idNoFront',
             type: 'img',
             single: true,
-            required: true
+            required: true,
+            onChange: (v, props) => {
+                if (v) {
+                    props.doFetching();
+                    getIdNoFront(v).then((data) => {
+                        if (data.success) {
+                            props.form.setFieldsValue({
+                                idNo: data.idNo,
+                                userName: data.realName
+                            });
+                        } else {
+                            showWarnMsg('识别失败，请手动输入');
+                        }
+                        props.cancelFetching();
+                    }).catch(() => {
+                        props.cancelFetching();
+                    });
+                }
+            }
         }, {
             title: '身份证反面',
             field: 'idNoReverse',

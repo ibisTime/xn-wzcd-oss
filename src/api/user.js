@@ -1,5 +1,6 @@
 import fetch from 'common/js/fetch';
 import { getUserName, getUserId } from 'common/js/util';
+import { PIC_PREFIX } from 'common/js/config';
 
 export function setRoleMenus(menuCodeList, roleCode) {
   return fetch(630020, {
@@ -49,4 +50,14 @@ export function getSysUsers() {
 // 列表获取
 export function getListUserArchive(params) {
     return fetch(632805, params);
+}
+
+// 读取身份证正面信息
+export function getIdNoFront(pic) {
+    return fetch(630092, {picUrl: PIC_PREFIX + pic});
+}
+
+// 读取身份证反面信息
+export function getIdNoReverse(pic) {
+    return fetch(630093, {picUrl: PIC_PREFIX + pic});
 }
