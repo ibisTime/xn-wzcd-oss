@@ -16,7 +16,9 @@ import {
     moneyUppercase,
     dateFormat,
     formatDate,
-    numUppercase
+    numUppercase,
+    moneyReplaceComma,
+    moneyParse
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -96,7 +98,10 @@ class MortgageMake extends React.Component {
             readonly: true
         }, {
             title: '贷款期限（年）',
-            field: 'guarantContractDeadline',
+            field: 'loanPeriods',
+            render: (v, d) => {
+                return d.loanPeriods / 12;
+            },
             readonly: true
         }, {
             title: '银行全称',
@@ -149,9 +154,9 @@ class MortgageMake extends React.Component {
             readonly: true
         }, {
             title: '授权人电话',
-            field: 'autherPhone',
+            field: 'autherPhoneNumber',
             formatter: (v, d) => {
-                return d.bankSubbranch.autherPhone;
+                return d.bankSubbranch.autherPhoneNumber;
             },
             readonly: true
         }, {
@@ -188,7 +193,8 @@ class MortgageMake extends React.Component {
             title: '套打模版',
             field: 'pledgePrintTemplateId',
             type: 'select',
-            key: 'guarant_print_template_id'
+            key: 'guarant_print_template_id',
+            required: true
         }];
         return this.props.buildDetail({
             fields,
@@ -202,6 +208,7 @@ class MortgageMake extends React.Component {
                         param.operator = getUserId();
                         this.props.doFetching();
                         let pageData = this.props.pageData;
+                        let arr01 = ['', '普通', '白金'];
                         console.log(fields);
                         fetch(632192, param).then((data) => {
                             console.log(data);
@@ -220,21 +227,23 @@ class MortgageMake extends React.Component {
                                 ['车架号', data.frameNo],
                                 ['发动机号', data.engineNo],
                                 ['贷款（大写）', numUppercase(moneyFormat(data.loanAmount))],
-                                ['贷款（小写）', data.loanAmount / 1000],
-                                ['履约保证金（大写）', numUppercase(moneyFormat(data.lyAmount))],
-                                ['履约保证金（小写）', data.lyAmount / 1000],
+                                ['贷款（小写）', moneyParse(moneyReplaceComma(moneyFormat(data.loanAmount)))],
+                                ['履约保证金（大写）', numUppercase(moneyFormat(data.loanAmount * 0.03))],
+                                ['履约保证金（小写）', moneyParse(moneyReplaceComma(moneyFormat(data.loanAmount * 0.03)))],
                                 ['年份', date[0]],
                                 ['月', date[1]],
                                 ['日', date[2]],
-                                ['贷款期限（年）', data.guarantContractDeadline / 12],
+                                ['贷款期限（年）', data.loanPeriods / 12],
                                 ['银行委托人', pageData.bankSubbranch.bankClient],
                                 ['银行名称', pageData.bankSubbranch.fullName],
+                                ['银行地址', pageData.bankSubbranch.address],
+                                ['银行电话', pageData.bankSubbranch.phoneNumber],
                                 ['委托书有效期', pageData.bankSubbranch.clientValidDate],
                                 ['授权人姓名', pageData.bankSubbranch.autherName],
                                 ['授权人身份证', pageData.bankSubbranch.autherIdNo],
                                 ['授权人住址', pageData.bankSubbranch.autherAddress],
-                                ['授权人电话', pageData.bankSubbranch.autherPhone],
-                                ['信用卡类型', pageData.bankSubbranch.creditCardType],
+                                ['授权人电话', pageData.bankSubbranch.autherPhoneNumber],
+                                ['信用卡类型', arr01[pageData.bankSubbranch.creditCardType]],
                                 ['信用卡名称', pageData.bankSubbranch.creditCardName],
                                 ['所属地区', pageData.bankSubbranch.belongArea]
                             ];

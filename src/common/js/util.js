@@ -477,9 +477,10 @@ export function moneyUppercase(Num) {
  * @param number
  */
 export function numUppercase(Num) {
-    if (isNaN(Num)) {
+    if (isUndefined(Num)) {
         return '-';
     }
+    Num = moneyReplaceComma(Num);
     if (!/^[1-9](,\d{3}|[0-9])*(\.\d{1,2})?$/.test(Num)) {
         return '';
     }

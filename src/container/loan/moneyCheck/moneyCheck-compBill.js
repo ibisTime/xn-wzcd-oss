@@ -52,6 +52,7 @@ class AdvMoneyCompBill extends React.Component {
                         totalAdvanceFund: data.totalAdvanceFund,
                         hasAdvanceFund: data.hasAdvanceFund,
                         unAdvanceFund: data.unAdvanceFund,
+                        advanceFund: data.advanceFund,
                         advanceFundlist: data.advanceFundlist
                     });
                     this.props.cancelFetching();
@@ -111,7 +112,7 @@ class AdvMoneyCompBill extends React.Component {
             }
         }, {
             title: '垫资金额',
-            field: 'payAmount',
+            field: 'advanceFund',
             amount: true,
             readonly: true
         }, {

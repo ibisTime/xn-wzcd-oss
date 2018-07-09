@@ -111,7 +111,7 @@ class AdvMoneyPayComp extends React.Component {
             }
         }, {
             title: '垫资金额',
-            field: 'payAmount',
+            field: 'advanceFund',
             amount: true,
             readonly: true
         }, {

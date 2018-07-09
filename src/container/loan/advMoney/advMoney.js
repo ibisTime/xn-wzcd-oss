@@ -82,7 +82,7 @@ class AdvMoney extends React.Component {
             field: 'collectionAccountNo'
         }, {
             title: '收款银行',
-            field: 'loanBankName'
+            field: 'collectBankName'
         }, {
             title: '打款日期',
             field: 'advanceFundDatetime',
