@@ -355,8 +355,8 @@ class CreditStartAddedit extends React.Component {
         }, {
             title: '审核说明',
             field: 'approveNote',
-            readonly: !this.isCheckSalesman,
-            hidden: !this.isCheckSalesman
+            readonly: !this.isCheckSalesman && !this.isCheckFirst,
+            hidden: !this.isCheckSalesman && !this.isCheckFirst
         }];
 
         // 业务员初审

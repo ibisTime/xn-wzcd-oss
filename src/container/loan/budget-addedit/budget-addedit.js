@@ -29,7 +29,8 @@ class BudgetAddedit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAdvanceFund: false,
+            isAdvanceFund: true,
+            isSetIsAdvanceFund: false,
             oilSubsidyValue: null,
             gpsDeductValue: null,
             loanPeriodsData: null
@@ -190,7 +191,7 @@ class BudgetAddedit extends React.Component {
         }
         if (result.isVaild) {
             let repointDetailList1 = {
-                code: this.props.pageData.repointDetailList1[0] ? this.props.pageData.repointDetailList1[0].code : '0',
+                code: this.props.pageData.repointDetailList1[0] ? this.props.pageData.repointDetailList1[0].code : new Date().getTime(),
                 useMoneyPurpose1: '1',
                 useMoneyPurpose: '1',
                 repointAmount: this.getRefundAmount(data),
@@ -219,6 +220,7 @@ class BudgetAddedit extends React.Component {
         let repointDetailList = [];
         if (data.repointDetailList1 && data.isAdvanceFund === '0') {
             repointDetailList = repointDetailList.concat({
+                code: data.repointDetailList1[0].code,
                 useMoneyPurpose: '1',
                 repointAmount: data.repointDetailList1[0].repointAmount,
                 accountName: data.repointDetailList1[0].accountName,
@@ -230,14 +232,27 @@ class BudgetAddedit extends React.Component {
         if (data.repointDetailList3) {
             let repointDetailList3 = [];
             data.repointDetailList3.map(v => {
-                repointDetailList3.push({
-                    useMoneyPurpose: '3',
-                    repointAmount: v.repointAmount1,
-                    accountName: v.accountName1,
-                    carDealerName: v.carDealerName1,
-                    accountNo: v.accountNo1,
-                    openBankName: v.openBankName1
-                });
+                if(!v.repointAmount1 && v.useMoneyPurpose === '3') {
+                    repointDetailList3.push({
+                        code: v.code,
+                        useMoneyPurpose: '3',
+                        repointAmount: v.repointAmount,
+                        accountName: v.accountName,
+                        carDealerName: v.carDealerName,
+                        accountNo: v.accountNo,
+                        openBankName: v.openBankName
+                    });
+                } else {
+                    repointDetailList3.push({
+                        code: v.code,
+                        useMoneyPurpose: '3',
+                        repointAmount: v.repointAmount1,
+                        accountName: v.accountName1,
+                        carDealerName: v.carDealerName1,
+                        accountNo: v.accountNo1,
+                        openBankName: v.openBankName1
+                    });
+                }
             });
             repointDetailList = repointDetailList.concat(repointDetailList3);
         }
@@ -251,6 +266,7 @@ class BudgetAddedit extends React.Component {
             data.carDealerSubsidy = 0;
         }
 
+        console.log(data);
         this.props.doFetching();
         fetch(632120, data).then(() => {
             this.props.cancelFetching();
@@ -338,6 +354,7 @@ class BudgetAddedit extends React.Component {
                         });
                     },
                     formatter: (v, data) => {
+                        this.carDealerName = data.carDealerName;
                         return v;
                     }
                 }, {
@@ -562,6 +579,22 @@ class BudgetAddedit extends React.Component {
                             ...this.props.pageData,
                             repointDetailList1: repointDetailList1
                         });
+                    },
+                    formatter: (v, data) => {
+                        if(v && !this.state.isSetIsAdvanceFund) {
+                            if (v === '1') {
+                                this.setState({
+                                    isAdvanceFund: true,
+                                    isSetIsAdvanceFund: true
+                                });
+                            } else {
+                                this.setState({
+                                    isAdvanceFund: false,
+                                    isSetIsAdvanceFund: true
+                                });
+                            }
+                        }
+                        return v;
                     }
                 }, {
                     title: '综合利率',
@@ -1274,7 +1307,7 @@ class BudgetAddedit extends React.Component {
                             noVisible: true
                         }, {
                             title: '用款用途',
-                            field: 'useMoneyPurpose3',
+                            field: 'useMoneyPurpose2',
                             type: 'select',
                             data: [{
                                 key: '1',
@@ -1292,7 +1325,7 @@ class BudgetAddedit extends React.Component {
                             hidden: true
                         }, {
                             title: '用款用途',
-                            field: 'useMoneyPurpose3tab',
+                            field: 'useMoneyPurpose1',
                             type: 'select',
                             data: [{
                                 key: '1',
