@@ -108,7 +108,7 @@ class RebatesBill extends React.Component {
                     field: 'idNo'
                 }, {
                     title: '车辆型号',
-                    field: 'carS'
+                    field: 'carType'
                 }, {
                     title: '贷款金额',
                     field: 'loanAmount',
@@ -119,7 +119,7 @@ class RebatesBill extends React.Component {
                     field: 'bankRate'
                 }, {
                     title: '基准利率',
-                    field: 'bankRate2'
+                    field: 'benchmarkRate'
                 }, {
                     title: '手续费',
                     field: 'fee',
@@ -151,7 +151,7 @@ class RebatesBill extends React.Component {
                     required: true
                 }, {
                     title: '开户行',
-                    field: 'subbranch',
+                    field: 'openBankName',
                     required: true
                 }, {
                     title: '户名',
