@@ -2025,6 +2025,77 @@ const ROUTES = [
   {
       path: '/home/companysystemDetail',
       component: asyncComponent(() => import('container/home/companysystem-detail'))
+  },
+  //  资料传送
+  //  发件
+  {
+    path: '/dataReceive/dataSend',
+    component: asyncComponent(() => import('container/dataReceive/dataSend/dataSend'))
+  },
+  //  发件 详情
+  {
+    path: '/dataReceive/dataSend/addedit',
+    component: asyncComponent(() => import('container/dataReceive/dataSend/dataSend-addedit'))
+  },
+  //  发件 发件
+  {
+    path: '/dataReceive/dataSend/send',
+    component: asyncComponent(() => import('container/dataReceive/dataSend/dataSend-send'))
+  },
+  //  发件 补件
+  {
+    path: '/dataReceive/dataSend/repair',
+    component: asyncComponent(() => import('container/dataReceive/dataSend/dataSend-repair'))
+  },
+  //  收件
+  {
+    path: '/dataReceive/dataCollect',
+    component: asyncComponent(() => import('container/dataReceive/dataCollect/dataCollect'))
+  },
+  //  收件 详情
+  {
+    path: '/dataReceive/dataCollect/addedit',
+    component: asyncComponent(() => import('container/dataReceive/dataCollect/dataCollect-addedit'))
+  },
+  //  收件 收件
+  {
+    path: '/dataReceive/dataCollect/collect',
+    component: asyncComponent(() => import('container/dataReceive/dataCollect/dataCollect-collect'))
+  },
+  //  gps发件
+  {
+    path: '/gpsReceive/gpsSend',
+    component: asyncComponent(() => import('container/gpsReceive/gpsSend/gpsSend'))
+  },
+  //  gps发件 详情
+  {
+    path: '/gpsReceive/gpsSend/addedit',
+    component: asyncComponent(() => import('container/gpsReceive/gpsSend/gpsSend-addedit'))
+  },
+  //  gps发件 gps发件
+  {
+    path: '/gpsReceive/gpsSend/send',
+    component: asyncComponent(() => import('container/gpsReceive/gpsSend/gpsSend-send'))
+  },
+  //  gps发件 补件
+  {
+    path: '/gpsReceive/gpsSend/repair',
+    component: asyncComponent(() => import('container/gpsReceive/gpsSend/gpsSend-repair'))
+  },
+  //  gps收件
+  {
+    path: '/gpsReceive/gpsCollect',
+    component: asyncComponent(() => import('container/gpsReceive/gpsCollect/gpsCollect'))
+  },
+  //  gps收件 详情
+  {
+    path: '/gpsReceive/gpsCollect/addedit',
+    component: asyncComponent(() => import('container/gpsReceive/gpsCollect/gpsCollect-addedit'))
+  },
+  //  gps收件 gps收件
+  {
+    path: '/gpsReceive/gpsCollect/collect',
+    component: asyncComponent(() => import('container/gpsReceive/gpsCollect/gpsCollect-collect'))
   }
 ];
 
