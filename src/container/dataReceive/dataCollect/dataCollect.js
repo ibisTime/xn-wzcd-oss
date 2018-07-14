@@ -44,17 +44,13 @@ import {
 class DataCollect extends React.Component {
     render() {
         const fields = [{
-            title: '业务编号',
-            field: 'bizCode',
-            search: true
-        }, {
             title: '类型',
             field: 'type',
             type: 'select',
             key: 'logistics_type'
         }, {
             title: '客户姓名',
-            field: 'customerName',
+            field: 'userName',
             search: true
         }, {
             title: '传递方式',
@@ -92,9 +88,6 @@ class DataCollect extends React.Component {
             keyName: 'code',
             valueName: 'name'
         }, {
-            title: '材料清单',
-            field: 'refFileList'
-        }, {
             title: '状态',
             field: 'status',
             type: 'select',
@@ -106,6 +99,9 @@ class DataCollect extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632155,
+            searchParams: {
+                type: '1'
+            },
             btnEvent: {
               collect: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {

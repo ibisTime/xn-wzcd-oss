@@ -38,48 +38,11 @@ class GpsSendSend extends React.Component {
             field: 'userName',
             readonly: true
         }, {
-            title: '业务编号',
-            field: 'bizCode',
-            readonly: true
-        }, {
             title: '类型',
             field: 'type',
             type: 'select',
             key: 'logistics_type',
             readonly: true
-        }, {
-            title: '发件节点',
-            field: 'fromNodeCode',
-            type: 'select',
-            listCode: 630147,
-            keyName: 'code',
-            valueName: 'name',
-            readonly: true
-        }, {
-            title: '收件节点',
-            field: 'toNodeCode',
-            type: 'select',
-            listCode: 630147,
-            keyName: 'code',
-            valueName: 'name',
-            readonly: true
-        }, {
-            title: '参考材料清单',
-            field: 'refFileList',
-            onChange: (v) => {
-                let sendFileList = this.props.pageData.sendFileList;
-                this.props.form.setFieldsValue({
-                    ...this.props.pageData,
-                    sendFileList: v
-                });
-            },
-            hidden: true
-        }, {
-            field: 'sendFileList',
-            hidden: true,
-            formatter: (v, d) => {
-                return d.refFileList;
-            }
         }, {
             title: '寄送方式',
             field: 'sendType',

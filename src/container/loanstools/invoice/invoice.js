@@ -107,6 +107,8 @@ class invoice extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].fbhStatus === '1') {
+                        showWarnMsg('已录入不能再次录入');
                     } else {
                         this.props.history.push(`/loanstools/invoice/enter?code=${selectedRowKeys[0]}`);
                     }

@@ -69,15 +69,6 @@ class DataCollectCollect extends React.Component {
         valueName: 'name',
         readonly: true
     }, {
-        title: '参考材料清单',
-        field: 'refFileList',
-        readonly: true,
-        hidden: true
-    }, {
-        title: '寄送材料清单',
-        field: 'sendFileList',
-        readonly: true
-    }, {
         title: '传递方式',
         field: 'sendType',
         type: 'select',
@@ -111,18 +102,21 @@ class DataCollectCollect extends React.Component {
         field: 'sendNote',
         readonly: true
     }, {
+        title: '补件原因',
+        field: 'supplementReasonList',
+        type: 'o2m',
+        options: {
+            add: true,
+            edit: true,
+            delete: true,
+            fields: [{
+                title: '原因',
+                field: 'reason'
+            }]
+        }
+    }, {
         title: '备注',
         field: 'remark'
-    }, {
-        title: '补件原因',
-        field: 'supplementReason',
-        type: 'select',
-        key: 'supplement_reason'
-    }, {
-        title: '补件说明',
-        field: 'supplementNote',
-        type: 'textarea',
-        normalArea: true
     }];
     return this
       .props

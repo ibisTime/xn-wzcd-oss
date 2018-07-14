@@ -44,17 +44,8 @@ import {
 class GpsCollect extends React.Component {
     render() {
         const fields = [{
-            title: '业务编号',
-            field: 'bizCode',
-            search: true
-        }, {
-            title: '类型',
-            field: 'type',
-            type: 'select',
-            key: 'logistics_type'
-        }, {
             title: '客户姓名',
-            field: 'customerName',
+            field: 'userName',
             search: true
         }, {
             title: '传递方式',
@@ -78,23 +69,6 @@ class GpsCollect extends React.Component {
             title: '单号',
             field: 'logisticsCode'
         }, {
-            title: '发件节点',
-            field: 'fromNodeCode',
-            type: 'select',
-            listCode: 630147,
-            keyName: 'code',
-            valueName: 'name'
-        }, {
-            title: '收件节点',
-            field: 'toNodeCode',
-            type: 'select',
-            listCode: 630147,
-            keyName: 'code',
-            valueName: 'name'
-        }, {
-            title: '材料清单',
-            field: 'refFileList'
-        }, {
             title: '状态',
             field: 'status',
             type: 'select',
@@ -106,6 +80,9 @@ class GpsCollect extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632155,
+            searchParams: {
+                type: '2'
+            },
             btnEvent: {
               collect: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {

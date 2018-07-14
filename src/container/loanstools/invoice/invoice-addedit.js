@@ -8,7 +8,8 @@ import {
     restore
 } from '@redux/loanstools/invoice-addedit';
 import {
-    getQueryString
+    getQueryString,
+    moneyReplaceComma
 } from 'common/js/util';
 import {
     DetailWrapper
@@ -114,11 +115,15 @@ class InvoiceAddedit extends React.Component {
             amount: true
         }, {
             title: '准入贷款成数标准',
-            field: 'receiptAccount',
+            field: 'companyLoanCs',
             readonly: true
         }, {
             title: '新贷款成数',
-            field: 'receiptAccount1',
+            field: 'PreCompanyLoanCs',
+            formatter: (v, d) => {
+                let currentInvoicePrice = this.props.pageData.currentInvoicePrice;
+                return (d.loanAmount / currentInvoicePrice).toFixed(2);
+            },
             readonly: true
         }, {
             title: '发票',

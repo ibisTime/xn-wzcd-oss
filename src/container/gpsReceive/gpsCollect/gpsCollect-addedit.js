@@ -29,34 +29,10 @@ class GpsCollectAddEdit extends React.Component {
         title: '客户姓名',
         field: 'userName'
     }, {
-        title: '业务编号',
-        field: 'bizCode'
-    }, {
         title: '类型',
         field: 'type',
         type: 'select',
         key: 'logistics_type'
-    }, {
-        title: '发件节点',
-        field: 'fromNodeCode',
-        type: 'select',
-        listCode: 630147,
-        keyName: 'code',
-        valueName: 'name'
-    }, {
-        title: '收件节点',
-        field: 'toNodeCode',
-        type: 'select',
-        listCode: 630147,
-        keyName: 'code',
-        valueName: 'name'
-    }, {
-        title: '参考材料清单',
-        field: 'refFileList',
-        hidden: true
-    }, {
-        title: '寄送材料清单',
-        field: 'sendFileList'
     }, {
         title: '传递方式',
         field: 'sendType',
@@ -89,8 +65,9 @@ class GpsCollectAddEdit extends React.Component {
         field: 'sendDatetime',
         type: 'datetime'
     }, {
-        title: '发货备注',
-        field: 'sendNote'
+        title: '补件原因',
+        field: 'supplementReason',
+        required: true
     }];
     return this
       .props

@@ -124,11 +124,11 @@ class InvoiceEnter extends React.Component {
             amount: true
         }, {
             title: '准入贷款成数标准',
-            field: 'companyLoanCsSection',
+            field: 'companyLoanCs',
             readonly: true
         }, {
             title: '新贷款成数',
-            field: 'number',
+            field: 'PreCompanyLoanCs',
             readonly: true
         }, {
             title: '交强险',

@@ -43,39 +43,10 @@ class GpsCollectCollect extends React.Component {
         field: 'userName',
         readonly: true
     }, {
-        title: '业务编号',
-        field: 'bizCode',
-        readonly: true
-    }, {
         title: '类型',
         field: 'type',
         type: 'select',
         key: 'logistics_type',
-        readonly: true
-    }, {
-        title: '发件节点',
-        field: 'fromNodeCode',
-        type: 'select',
-        listCode: 630147,
-        keyName: 'code',
-        valueName: 'name',
-        readonly: true
-    }, {
-        title: '收件节点',
-        field: 'toNodeCode',
-        type: 'select',
-        listCode: 630147,
-        keyName: 'code',
-        valueName: 'name',
-        readonly: true
-    }, {
-        title: '参考材料清单',
-        field: 'refFileList',
-        readonly: true,
-        hidden: true
-    }, {
-        title: '寄送材料清单',
-        field: 'sendFileList',
         readonly: true
     }, {
         title: '传递方式',
@@ -111,18 +82,9 @@ class GpsCollectCollect extends React.Component {
         field: 'sendNote',
         readonly: true
     }, {
-        title: '备注',
-        field: 'remark'
-    }, {
         title: '补件原因',
         field: 'supplementReason',
-        type: 'select',
-        key: 'supplement_reason'
-    }, {
-        title: '补件说明',
-        field: 'supplementNote',
-        type: 'textarea',
-        normalArea: true
+        required: true
     }];
     return this
       .props

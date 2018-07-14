@@ -54,7 +54,7 @@ class DataSend extends React.Component {
             key: 'logistics_type'
         }, {
             title: '客户姓名',
-            field: 'customerName',
+            field: 'userName',
             search: true
         }, {
             title: '传递方式',
@@ -103,6 +103,9 @@ class DataSend extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632155,
+            searchParams: {
+                type: '1'
+            },
             btnEvent: {
               send: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {

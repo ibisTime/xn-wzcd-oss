@@ -29,9 +29,6 @@ class DataCollectAddEdit extends React.Component {
         title: '客户姓名',
         field: 'userName'
     }, {
-        title: '业务编号',
-        field: 'bizCode'
-    }, {
         title: '类型',
         field: 'type',
         type: 'select',
@@ -50,13 +47,6 @@ class DataCollectAddEdit extends React.Component {
         listCode: 630147,
         keyName: 'code',
         valueName: 'name'
-    }, {
-        title: '参考材料清单',
-        field: 'refFileList',
-        hidden: true
-    }, {
-        title: '寄送材料清单',
-        field: 'sendFileList'
     }, {
         title: '传递方式',
         field: 'sendType',

@@ -64,23 +64,6 @@ class DataSendRepair extends React.Component {
             valueName: 'name',
             readonly: true
         }, {
-            title: '参考材料清单',
-            field: 'refFileList',
-            onChange: (v) => {
-                let sendFileList = this.props.pageData.sendFileList;
-                this.props.form.setFieldsValue({
-                    ...this.props.pageData,
-                    sendFileList: v
-                });
-            },
-            hidden: true
-        }, {
-            field: 'sendFileList',
-            hidden: true,
-            formatter: (v, d) => {
-                return d.refFileList;
-            }
-        }, {
             title: '寄送方式',
             field: 'sendType',
             type: 'select',
@@ -116,6 +99,19 @@ class DataSendRepair extends React.Component {
             type: 'datetime',
             required: true
         }, {
+            title: '补件原因',
+            field: 'supplementReasonList',
+            type: 'o2m',
+            options: {
+                add: true,
+                edit: true,
+                delete: true,
+                fields: [{
+                    title: '原因',
+                    field: 'reason'
+                }]
+            }
+        }, {
             title: '发货说明',
             field: 'sendNote'
         }];
@@ -127,6 +123,10 @@ class DataSendRepair extends React.Component {
             buttons: [{
                 title: '确认',
                 handler: (param) => {
+                    if(param.supplementReasonList === '') {
+                        showSucMsg('请添加补件原因');
+                        return;
+                    }
                     fetch(632150, param).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
