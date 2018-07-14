@@ -1320,6 +1320,9 @@ class BudgetAddedit extends React.Component {
                             }],
                             keyName: 'key',
                             valueName: 'value',
+                            render: (v) => {
+                                return '协议外返点';
+                            },
                             value: '3',
                             hidden: true
                         }, {

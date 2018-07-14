@@ -54,8 +54,9 @@ class Budget extends React.Component {
         }, {
             field: 'loanPeriods',
             title: '贷款周期',
-            type: 'select',
-            key: 'loan_period'
+            render: (v) => {
+              return v ? v + '期' : '-';
+            }
         }, {
             field: 'loanBankName',
             title: '贷款银行',
