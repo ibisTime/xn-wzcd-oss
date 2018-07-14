@@ -848,7 +848,8 @@ export default class DetailComponent extends React.Component {
                     this.setSearchData({data: f.data, key: f.field});
                 }
                 if (f.type === 'select') {
-                    if (this.props.code && f.pageC) {
+                    // if (this.props.code && f.pageC) {
+                    if (f.render) {
                         obj.render = f.render;
                     } else {
                         obj.render = (value) => {

@@ -12,7 +12,8 @@ import {
     getQueryString,
     showWarnMsg,
     showSucMsg,
-    getUserId
+    getUserId,
+    isUndefined
 } from 'common/js/util';
 import { DetailWrapper } from 'common/js/build-detail';
 import { getIdNoFront, getIdNoReverse } from 'api/user';
@@ -153,6 +154,7 @@ class CreditStartAddedit extends React.Component {
                 title: '贷款抵押笔数',
                 field: 'dkdyCount',
                 number: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -161,6 +163,7 @@ class CreditStartAddedit extends React.Component {
                 title: '贷款抵押贷款余额',
                 field: 'dkdyAmount',
                 amount: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -169,6 +172,7 @@ class CreditStartAddedit extends React.Component {
                 title: '贷款抵押近两年逾期次数',
                 field: 'dkdy2YearOverTimes',
                 number: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -177,6 +181,7 @@ class CreditStartAddedit extends React.Component {
                 title: '贷款抵押最高逾期金额',
                 field: 'dkdyMaxOverAmount',
                 amount: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -185,6 +190,7 @@ class CreditStartAddedit extends React.Component {
                 title: '贷款抵押当前逾期金额',
                 field: 'dkdyCurrentOverAmount',
                 amount: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -193,6 +199,7 @@ class CreditStartAddedit extends React.Component {
                 title: '贷款抵押近6个月平均月还款额',
                 field: 'dkdy6MonthAvgAmount',
                 amount: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -201,6 +208,7 @@ class CreditStartAddedit extends React.Component {
                 title: '贷款信用未结清贷款笔数',
                 field: 'hkxyUnsettleCount',
                 number: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -209,6 +217,7 @@ class CreditStartAddedit extends React.Component {
                 title: '贷款信用未结清贷款余额',
                 field: 'hkxyUnsettleAmount',
                 amount: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -217,6 +226,7 @@ class CreditStartAddedit extends React.Component {
                 title: '贷款信用近两年逾期次数',
                 field: 'hkxy2YearOverTimes',
                 number: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -225,6 +235,7 @@ class CreditStartAddedit extends React.Component {
                 title: '贷款信用单月最高逾期金额',
                 field: 'hkxyMonthMaxOverAmount',
                 amount: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -233,6 +244,7 @@ class CreditStartAddedit extends React.Component {
                 title: '贷款信用当前逾期金额',
                 field: 'hkxyCurrentOverAmount',
                 amount: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -241,6 +253,7 @@ class CreditStartAddedit extends React.Component {
                 title: '贷款信用近6个月平均月还款额',
                 field: 'hkxy6MonthAvgAmount',
                 amount: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -249,6 +262,7 @@ class CreditStartAddedit extends React.Component {
                 title: '信用卡张数',
                 field: 'xykCount',
                 number: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -257,6 +271,7 @@ class CreditStartAddedit extends React.Component {
                 title: '信用卡授信总额',
                 field: 'xykCreditAmount',
                 amount: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -265,6 +280,7 @@ class CreditStartAddedit extends React.Component {
                 title: '信用卡近6个月使用额',
                 field: 'xyk6MonthUseAmount',
                 amount: true,
+                value: 0,
                 readonly: !this.isEntry,
                 hidden: !this.view,
                 noVisible: true
@@ -272,6 +288,7 @@ class CreditStartAddedit extends React.Component {
                 title: '信用卡近两年逾期次数',
                 field: 'xyk2YearOverTimes',
                 number: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -280,6 +297,7 @@ class CreditStartAddedit extends React.Component {
                 title: '信用卡单月最高逾期金额',
                 field: 'xykMonthMaxOverAmount',
                 amount: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -288,6 +306,7 @@ class CreditStartAddedit extends React.Component {
                 title: '信用卡当前逾期金额',
                 field: 'xykCurrentOverAmount',
                 amount: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -296,6 +315,7 @@ class CreditStartAddedit extends React.Component {
                 title: '对外担保笔数',
                 field: 'outGuaranteesCount',
                 number: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -304,6 +324,7 @@ class CreditStartAddedit extends React.Component {
                 title: '对外担保余额',
                 field: 'outGuaranteesAmount',
                 amount: true,
+                value: 0,
                 required: true,
                 readonly: !this.isEntry,
                 hidden: !this.view,
@@ -502,7 +523,7 @@ class CreditStartAddedit extends React.Component {
                     let data = {};
                     data.creditCode = this.code;
                     for (let i = 0; i < params.creditUserList.length; i++) {
-                        if (!params.creditUserList[i].dkdyCount) {
+                        if (isUndefined(params.creditUserList[i].dkdyCount)) {
                             showWarnMsg('请录入' + params.creditUserList[i].userName + '的银行征信结果！');
                             return;
                         }

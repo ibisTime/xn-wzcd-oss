@@ -162,6 +162,9 @@ export function moneyFormat(money, format, isRe = true) {
     if (isNaN(money)) {
         return '-';
     }
+    if (isUndefined(money)) {
+        return '';
+    }
     if (money < 0) {
         money = -1 * money;
         flag = false;
