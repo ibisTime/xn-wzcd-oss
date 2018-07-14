@@ -172,3 +172,17 @@ export function makeAllbill(code) {
     operator: getUserId()
   });
 }
+// 银行放款 理件完成
+export function bankComplete(code) {
+  return fetch(632173, {
+    code,
+    operator: getUserId()
+  });
+}
+// 车辆抵押 理件完成
+export function carComplete(code) {
+  return fetch(632173, {
+    code,
+    operator: getUserId()
+  });
+}

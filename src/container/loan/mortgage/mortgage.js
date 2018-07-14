@@ -24,7 +24,8 @@ import {
     Modal
 } from 'antd';
 import {
-    done
+    done,
+    carComplete
 } from 'api/biz';
 
 @listWrapper(
@@ -126,6 +127,30 @@ class Mortgage extends React.Component {
                                 this.props.doFetching();
                                 return done(key[0]).then(() => {
                                     this.props.getPageData();
+                                    showWarnMsg('操作成功');
+                                    setTimeout(() => {
+                                        this.props.getPageData();
+                                    }, 500);
+                                }).catch(() => {
+                                    this.props.cancelFetching();
+                                });
+                            }
+                        });
+                    }
+                },
+                complete: (key, item) => {
+                    if (!key || !key.length || !item || !item.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (item[0].curNodeCode !== '1') {
+                        showWarnMsg('当前节点不是理件完成节点');
+                    } else {
+                        Modal.confirm({
+                            okText: '确认',
+                            cancelText: '取消',
+                            content: '确定理件完成？',
+                            onOk: () => {
+                                this.props.doFetching();
+                                return carComplete(key[0]).then(() => {
                                     showWarnMsg('操作成功');
                                     setTimeout(() => {
                                         this.props.getPageData();

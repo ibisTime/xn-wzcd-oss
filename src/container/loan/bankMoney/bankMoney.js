@@ -24,8 +24,7 @@ import {
     Modal
 } from 'antd';
 import {
-    lowerFrame,
-    onShelf
+    bankComplete
 } from 'api/biz';
 
 @listWrapper(
@@ -96,28 +95,52 @@ class BankMoney extends React.Component {
                 singleSelect: false
             },
             searchParams: {
-              roleCode: getRoleCode(),
-              curNodeCodeList: ['007_01', '007_02', '007_03', '007_04', '007_05']
+                roleCode: getRoleCode(),
+                curNodeCodeList: ['007_01', '007_02', '007_03', '007_04', '007_05']
             },
             btnEvent: {
-              apply: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loan/bankMoney/apply?code=${selectedRowKeys[0]}`);
+                apply: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loan/bankMoney/apply?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                receive: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loan/bankMoney/receive?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                complete: (key, item) => {
+                    if (!key || !key.length || !item || !item.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (item[0].curNodeCode !== '1') {
+                        showWarnMsg('当前节点不是理件完成节点');
+                    } else {
+                        Modal.confirm({
+                            okText: '确认',
+                            cancelText: '取消',
+                            content: '确定理件完成？',
+                            onOk: () => {
+                                this.props.doFetching();
+                                return bankComplete(key[0]).then(() => {
+                                    showWarnMsg('操作成功');
+                                    setTimeout(() => {
+                                        this.props.getPageData();
+                                    }, 500);
+                                }).catch(() => {
+                                    this.props.cancelFetching();
+                                });
+                            }
+                        });
+                    }
                 }
-              },
-              receive: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loan/bankMoney/receive?code=${selectedRowKeys[0]}`);
-                }
-              }
             }
         });
     }

@@ -576,6 +576,24 @@ import { riskYellowListAddedit } from './redux/risk/yellowList-addedit';
 import { riskWhiteList } from './redux/risk/whiteList';
 import { riskWhiteListAddedit } from './redux/risk/whiteList-addedit';
 
+// 资料传送
+import { dataReceiveDataSend } from './redux/dataReceive/dataSend';
+import { dataReceiveDataSendAddEdit } from './redux/dataReceive/dataSend-addedit';
+import { dataReceiveDataSendSend } from './redux/dataReceive/dataSend-send';
+import { dataReceiveDataSendRepair } from './redux/dataReceive/dataSend-repair';
+import { dataReceiveDataCollect } from './redux/dataReceive/dataCollect';
+import { dataReceiveDataCollectAddEdit } from './redux/dataReceive/dataCollect-addedit';
+import { dataReceiveDataCollectCollect } from './redux/dataReceive/dataCollect-collect';
+
+// gps传送
+import { gpsReceiveGpsSend } from './redux/gpsReceive/gpsSend';
+import { gpsReceiveGpsSendAddEdit } from './redux/gpsReceive/gpsSend-addedit';
+import { gpsReceiveGpsSendSend } from './redux/gpsReceive/gpsSend-send';
+import { gpsReceiveGpsSendRepair } from './redux/gpsReceive/gpsSend-repair';
+import { dataReceiveGpsCollect } from './redux/gpsReceive/gpsCollect';
+import { dataReceiveGpsCollectAddEdit } from './redux/gpsReceive/gpsCollect-addedit';
+import { dataReceiveGpsCollectCollect } from './redux/gpsReceive/gpsCollect-collect';
+
 export default combineReducers({
   user,
   menu,
@@ -913,5 +931,19 @@ export default combineReducers({
   riskWhiteList,
   riskWhiteListAddedit,
   historyDustbin,
-  historyDustbinAddedit
+  historyDustbinAddedit,
+  dataReceiveDataSend,
+  dataReceiveDataSendAddEdit,
+  dataReceiveDataSendSend,
+  dataReceiveDataSendRepair,
+  dataReceiveDataCollect,
+  dataReceiveDataCollectAddEdit,
+  dataReceiveDataCollectCollect,
+  gpsReceiveGpsSend,
+  gpsReceiveGpsSendAddEdit,
+  gpsReceiveGpsSendSend,
+  gpsReceiveGpsSendRepair,
+  dataReceiveGpsCollect,
+  dataReceiveGpsCollectAddEdit,
+  dataReceiveGpsCollectCollect
 });
