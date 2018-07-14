@@ -92,6 +92,9 @@ class BankMoney extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632145,
+            options: {
+                singleSelect: false
+            },
             searchParams: {
               roleCode: getRoleCode(),
               curNodeCodeList: ['007_01', '007_02', '007_03', '007_04', '007_05']

@@ -148,6 +148,18 @@ class CreditStartAddedit extends React.Component {
             type: 'img',
             single: true,
             required: true
+        }, {
+            title: '是否初审',
+            field: 'isFirstAudit',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            readonly: true
         }];
         if (!this.isAddedit) {
             o2mFields = o2mFields.concat([{
@@ -416,6 +428,30 @@ class CreditStartAddedit extends React.Component {
                 title: '通过并发送一审',
                 check: true,
                 handler: (params) => {
+                    let list = this.props.o2mSKeys.creditUserList;
+                    let length = list.length;
+                    let arr = [];
+                    let userList = params.creditUserList;
+                    for(let i = 0; i < length; i++) {
+                        if(list[i] === userList[i].code) {
+                            userList[i].isFirstAudit = '1';
+                            arr.push(userList[i]);
+                        }
+                    }
+                    params.creditUserList = arr;
+                    let flag = false;
+                    for(let i = 0, len = params.creditUserList.length; i < len; i++) {
+                        if(params.creditUserList.loanRole !== 1) {
+                            continue;
+                        }else {
+                            flag = true;
+                        }
+                    }
+                    if(!flag) {
+                        showSucMsg('请添加申请人');
+                        return;
+                    }
+                    console.log(list);
                     params.approveResult = '1';
                     params.operator = getUserId();
                     this.props.doFetching();
