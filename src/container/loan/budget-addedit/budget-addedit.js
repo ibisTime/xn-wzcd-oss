@@ -52,6 +52,8 @@ class BudgetAddedit extends React.Component {
         this.shopWay = true;
         this.carDealerName = null;
         this.rateType = false;
+        this.isGuarantor1IdPicz = false;
+        this.isGuarantor2IdPicz = false;
     }
 
     componentDidMount() {
@@ -405,7 +407,7 @@ class BudgetAddedit extends React.Component {
                 }, {
                     title: '车架号码',
                     field: 'frameNo',
-                    required: true
+                    required: !this.shopWay
                 }, {
                     title: '贷款周期(期)',
                     field: 'loanPeriods',
@@ -734,13 +736,11 @@ class BudgetAddedit extends React.Component {
                 }, {
                     title: '申请人结息',
                     field: 'applyUserSettleInterest',
-                    amount: true,
-                    required: true
+                    amount: true
                 }, {
                     title: '申请人余额',
                     field: 'applyUserBalance',
-                    amount: true,
-                    required: true
+                    amount: true
                 }, {
                     title: '申请人流水是否体现月收入',
                     field: 'applyUserJourShowIncome',
@@ -753,8 +753,7 @@ class BudgetAddedit extends React.Component {
                         value: '是'
                     }],
                     keyName: 'key',
-                    valueName: 'value',
-                    required: true
+                    valueName: 'value'
                 }, {
                     title: '申请人是否打件',
                     field: 'applyUserIsPrint',
@@ -1449,7 +1448,14 @@ class BudgetAddedit extends React.Component {
                 }],
                 [{
                     title: '担保人1身份证',
-                    field: 'guarantor1IdNo',
+                    field: 'guarantor1IdPicz',
+                    formatter: (v, d) => {
+                        if(d.guarantor1IdPicz) {
+                            this.isGuarantor1IdPicz = true;
+                        }
+                        return d.guarantor1IdPicz;
+                    },
+                    readonly: this.isGuarantor1IdPicz,
                     type: 'img'
                 }, {
                     title: '担保人1户口本',
@@ -1458,7 +1464,14 @@ class BudgetAddedit extends React.Component {
                 }],
                 [{
                     title: '担保人2身份证',
-                    field: 'guarantor2IdNo',
+                    field: 'guarantor2IdPicz',
+                    formatter: (v, d) => {
+                        if(d.guarantor2IdPicz) {
+                            this.isGuarantor2IdPicz = true;
+                        }
+                        return d.guarantor2IdPicz;
+                    },
+                    readonly: this.isGuarantor2IdPicz,
                     type: 'img'
                 }, {
                     title: '担保人2户口本',

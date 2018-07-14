@@ -72,7 +72,8 @@ class transmitAddedit extends React.Component {
                     ...this.props.pageData,
                     sendFileList: v
                 });
-            }
+            },
+            hidden: true
         }, {
             field: 'sendFileList',
             hidden: true,
