@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {
     initStates,
     doFetching,
@@ -104,7 +105,36 @@ class CreditStartAddedit extends React.Component {
             field: 'idNoReverse',
             type: 'img',
             single: true,
-            required: true
+            required: true,
+            onChange: (v, props) => {
+                if (v) {
+                    props.doFetching();
+                    getIdNoReverse(v).then((data) => {
+                        console.log(data);
+                        if (data.success) {
+                            let str = data.endDate;
+                            let str1 = str.substr(0, 4);
+                            let str2 = str.substr(4, 2);
+                            let str3 = str.substr(6, 2);
+                            let arr = [str1, str2, str3];
+                            let date = arr.join('/');
+                            var d = new Date('2019/09/09');
+                            var n = new Date();
+                            let days = (d.getTime() - n.getTime()).toFixed(0);
+                            if(days < 0) {
+                                showWarnMsg('身份证已经过期');
+                            }else if(days < 90) {
+                                showSucMsg('身份证有效期不足90天');
+                            }
+                        } else {
+                            showWarnMsg('识别失败，请手动输入');
+                        }
+                        props.cancelFetching();
+                    }).catch(() => {
+                        props.cancelFetching();
+                    });
+                }
+            }
         }, {
             title: '征信查询授权书',
             field: 'authPdf',
