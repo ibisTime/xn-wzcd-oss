@@ -46,7 +46,7 @@ class MoneyCheck extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
-            field: 'code',
+            field: 'budgetCode',
             search: true
         }, {
             title: '业务公司',
@@ -85,7 +85,7 @@ class MoneyCheck extends React.Component {
             field: 'bankReceiptName',
             noVisible: true
         }, {
-            title: '打款日期',
+            title: '垫资日期',
             field: 'advanceFundDatetime',
             type: 'date'
         }, {

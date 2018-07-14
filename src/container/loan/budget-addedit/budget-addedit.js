@@ -267,8 +267,6 @@ class BudgetAddedit extends React.Component {
         if (data.rateType === '1') {
             data.carDealerSubsidy = 0;
         }
-
-        console.log(data);
         this.props.doFetching();
         fetch(632120, data).then(() => {
             this.props.cancelFetching();
@@ -911,6 +909,9 @@ class BudgetAddedit extends React.Component {
                     }],
                     keyName: 'key',
                     valueName: 'value',
+                    onChange: (v, data) => {
+                        this.fczqk = v === '1';
+                    },
                     required: true
                 }, {
                     title: '营业执照',
@@ -925,15 +926,65 @@ class BudgetAddedit extends React.Component {
                     }],
                     keyName: 'key',
                     valueName: 'value',
+                    onChange: (v, data) => {
+                        this.yyzz = v === '1';
+                    },
                     required: true
                 }],
                 [{
                     title: '房产证',
                     field: 'houseProperty',
+                    hidden: !this.fczqk,
                     type: 'img'
                 }, {
                     title: '营业执照',
                     field: 'license',
+                    hidden: !this.yyzz,
+                    type: 'img'
+                }],
+                [{
+                    title: '有无驾照',
+                    field: 'isDriceLicense',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '无'
+                    }, {
+                        key: '1',
+                        value: '有'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    onChange: (v, data) => {
+                        this.ywjz = v === '1';
+                    },
+                    required: true
+                }, {
+                    title: '提供场地证明',
+                    field: 'isSiteProve',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '无'
+                    }, {
+                        key: '1',
+                        value: '有'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    onChange: (v, data) => {
+                        this.tgcdzm = v === '1';
+                    }
+                }],
+                [{
+                    title: '驾照',
+                    field: 'driceLicense',
+                    hidden: !this.ywjz,
+                    type: 'img'
+                }, {
+                    title: '场地证明',
+                    field: 'siteProve',
+                    hidden: !this.tgcdzm,
                     type: 'img'
                 }],
                 [{
@@ -953,43 +1004,6 @@ class BudgetAddedit extends React.Component {
                     keyName: 'key',
                     valueName: 'value'
                 }, {
-                    title: '有无驾照',
-                    field: 'isDriceLicense',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '无'
-                    }, {
-                        key: '1',
-                        value: '有'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value',
-                    required: true
-                }, {
-                    title: '提供场地证明',
-                    field: 'isSiteProve',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '无'
-                    }, {
-                        key: '1',
-                        value: '有'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value'
-                }],
-                [{
-                    title: '驾照',
-                    field: 'driceLicense',
-                    type: 'img'
-                }, {
-                    title: '场地证明',
-                    field: 'siteProve',
-                    type: 'img'
-                }],
-                [{
                     title: '经营场地面积',
                     field: 'siteArea'
                 }, {
@@ -1716,7 +1730,6 @@ class BudgetAddedit extends React.Component {
         if (this.isApply) {
             buttons = [{
                 title: '保存',
-                check: true,
                 handler: (data) => {
                     data.type = '1';
                     data.dealType = '0';

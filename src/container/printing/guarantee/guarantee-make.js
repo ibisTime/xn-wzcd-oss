@@ -56,8 +56,7 @@ class GuaranteeMake extends React.Component {
                     readonly: true
                 }, {
                     title: '性别',
-                    field: '1',
-                    type: 'select',
+                    field: 'customerSex',
                     readonly: true
                 }],
                 [{
@@ -82,7 +81,8 @@ class GuaranteeMake extends React.Component {
                     field: 'familyPhone'
                 }, {
                     title: '手机',
-                    field: 'mobile'
+                    field: 'mobile',
+                    readonly: true
                 }],
                 [{
                     title: '工作单位',
@@ -111,7 +111,6 @@ class GuaranteeMake extends React.Component {
                 }, {
                     title: '性别',
                     field: 'ghSex',
-                    type: 'select',
                     readonly: true
                 }],
                 [{
@@ -165,15 +164,18 @@ class GuaranteeMake extends React.Component {
                     field: 'carColor'
                 }, {
                     title: '品牌型号',
-                    field: 'carBrandModel'
+                    field: 'carModel',
+                    readonly: true
                 }],
                 [{
                     title: '汽车总价',
                     field: 'originalPrice',
+                    amount: true,
                     readonly: true
                 }, {
                     title: '汽车发票价',
                     field: 'invoicePrice',
+                    amount: true,
                     readonly: true
                 }],
                 [{
@@ -183,10 +185,6 @@ class GuaranteeMake extends React.Component {
                 }, {
                     title: '汽车经销商（联系电话）',
                     field: 'carDealerPhone',
-                    readonly: true
-                }, {
-                    title: '购车车行',
-                    field: 'code',
                     readonly: true
                 }]
             ]
@@ -200,7 +198,7 @@ class GuaranteeMake extends React.Component {
                 }, {
                     title: '银行名称（支行）',
                     field: 'fullName',
-                    render: (v, d) => {
+                    formatter: (v, d) => {
                         return d.bankSubbranch.fullName;
                     },
                     readonly: true
@@ -221,30 +219,35 @@ class GuaranteeMake extends React.Component {
                 [{
                     title: '档案编号',
                     field: 'customerName',
+                    formatter: (v, d) => {
+                        return d.code;
+                    },
                     readonly: true
-                }, {
-                    title: '期限',
-                    field: 'guarantContractDeadline',
-                    type: 'select',
-                    key: 'loan_period'
                 }, {
                     title: '分期',
                     field: 'loanPeriods',
+                    readonly: true
+                }, {
+                    title: '服务费',
+                    field: 'fee',
+                    amount: true,
                     readonly: true
                 }],
                 [{
                     title: '月还款额',
                     field: 'monthAmount',
-                    amount: true,
+                    amount: true
+                }, {
+                    title: '银行利率',
+                    field: 'bankRate',
                     readonly: true
                 }, {
                     title: '首付额',
                     field: 'repayFirstMonthAmount',
-                    amount: true,
+                    formatter: (v, d) => {
+                        return moneyFormat(d.invoicePrice - d.loanAmount);
+                    },
                     readonly: true
-                }, {
-                    title: '银行利率',
-                    field: 'bankRate'
                 }],
                 [{
                     title: '总手续费(小写)',
@@ -258,20 +261,6 @@ class GuaranteeMake extends React.Component {
                         return moneyUppercase(moneyFormat(d.serviceCharge));
                     },
                     readonly: true
-                }],
-                [{
-                    title: '服务费',
-                    field: 'fee',
-                    amount: true,
-                    readonly: true
-                }, {
-                    title: '合同编号',
-                    field: 'guaranteeContractCode',
-                    readonly: true
-                }, {
-                    title: '月费率',
-                    field: 'guarantMonthFeeRate',
-                    help: '请输入0-1的数字'
                 }]
             ]
         }, {
@@ -287,9 +276,7 @@ class GuaranteeMake extends React.Component {
                     readonly: true
                 }, {
                     title: '性别',
-                    field: '1',
-                    type: 'select',
-                    key: '2',
+                    field: 'guarantor1Sex',
                     readonly: true
                 }],
                 [{
@@ -321,7 +308,11 @@ class GuaranteeMake extends React.Component {
             items: [
                 [{
                     title: '承保公司',
-                    field: 'insuranceCompany'
+                    field: 'insuranceCompany',
+                    type: 'select',
+                    listCode: 632046,
+                    keyName: 'code',
+                    valueName: 'name'
                 }, {
                     title: '客户分类',
                     field: 'customerType',
@@ -366,7 +357,6 @@ class GuaranteeMake extends React.Component {
                         this.props.doFetching();
                         let sex = ['', '男', '女'];
                         fetch(632142, param).then((data) => {
-                            console.log(data);
                             let num2 = (data.loanAmount + data.fee) / data.loanPeriods + ((data.loanAmount + data.fee) * data.bankRate) / data.loanPeriods;
                             let num1 = num2 * (data.loanPeriods - 1) - (data.loanAmount + data.fee) - ((data.loanAmount + data.fee) * data.bankRate);
                             let arr = [
@@ -424,7 +414,7 @@ class GuaranteeMake extends React.Component {
                             setTimeout(() => {
                                 this.props.history.go(-2);
                             }, 1000);
-                        }).catch(this.props.cancelFetching());
+                        }).catch(this.props.cancelFetching);
                     }
                 },
                 {

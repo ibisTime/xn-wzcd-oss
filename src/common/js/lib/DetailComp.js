@@ -714,6 +714,7 @@ export default class DetailComponent extends React.Component {
                         }
                         let key = keys[0];
                         let keyName = item.options.rowKey || 'code';
+                        let deleteItem = this.props.pageData[item.field].filter((v) => v[keyName] === key)[0];
                         let arr = this.props.pageData[item.field].filter((v) => v[keyName] !== key);
                         this.props.setPageData({
                             ...this.props.pageData,
@@ -722,6 +723,9 @@ export default class DetailComponent extends React.Component {
                         this.setState((prevState, props) => ({
                             o2mSKeys: {...prevState.o2mSKeys, [item.field]: []}
                         }));
+                        setTimeout(() => {
+                          item.afterDelete && item.afterDelete(key, deleteItem);
+                        }, 100);
                     }}
                 >删除</Button> : null}
                 {item.options.detail ? <Button
@@ -1130,10 +1134,10 @@ export default class DetailComponent extends React.Component {
         if (item.readonly && item.data) {
             data = item.data.filter(v => v[item.keyName] === initVal);
         }
-        let value = '';
-        if (initVal) {
-            value = initVal;
+        if (item.initValue && item.data && item.data.length && isUndefined(initVal)) {
+            initVal = item.data[0][item.keyName];
         }
+        let value = isUndefined(initVal) ? '' : initVal;
         return (
             <FormItem className={item.hidden ? 'hidden' : ''} key={item.field} {...this.getInputItemProps()}
                       label={this.getLabel(item)}>
@@ -1254,6 +1258,15 @@ export default class DetailComponent extends React.Component {
             props.onChange = (v) => {
                 item.onChange(v, this.props.selectData[item.field] ? this.props.selectData[item.field].find(v1 => v1[item.keyName] === v) : {}, this.props);
             };
+            if (this.props.isLoaded && !this.getSelectProps[item.field]) {
+                let initVal = this.getRealValue(item);
+                if (!isUndefined(initVal)) {
+                    this.getSelectProps[item.field] = true;
+                    setTimeout(() => {
+                      props.onChange(initVal);
+                    }, 100);
+                }
+            }
         }
         return props;
     }

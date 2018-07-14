@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {
     initStates,
     doFetching,
@@ -53,6 +54,7 @@ class AdvMoneyPayComp extends React.Component {
                         totalAdvanceFund: data.totalAdvanceFund,
                         hasAdvanceFund: data.hasAdvanceFund,
                         unAdvanceFund: data.unAdvanceFund,
+                        advanceFund: data.advanceFund,
                         advanceFundlist: data.advanceFundlist
                     });
                     this.props.cancelFetching();
@@ -118,6 +120,7 @@ class AdvMoneyPayComp extends React.Component {
             title: '垫资日期',
             field: 'payDatetime',
             type: 'date',
+            value: moment(),
             required: true
         }, {
             title: '付款账号',
@@ -127,6 +130,7 @@ class AdvMoneyPayComp extends React.Component {
             params: {
                 companyCode: getCompanyCode()
             },
+            initValue: true,
             keyName: 'code',
             valueName: 'bankcardNumber',
             required: true

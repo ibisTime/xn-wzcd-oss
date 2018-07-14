@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {
     initStates,
     doFetching,
@@ -11,6 +12,7 @@ import {
     getQueryString,
     getUserId,
     showSucMsg,
+    dateFormat,
     moneyFormat,
     getCompanyCode,
     moneyReplaceComma
@@ -80,6 +82,9 @@ class AdvMoneyPayCar extends React.Component {
             title: '垫资日期',
             field: 'advanceFundDatetime',
             type: 'date',
+            formatter: (v) => {
+              return this.props.isLoaded && v ? moment(dateFormat(v)) : moment();
+            },
             required: true
         }, {
             title: '付款账号',
@@ -89,6 +94,7 @@ class AdvMoneyPayCar extends React.Component {
             params: {
                 companyCode: getCompanyCode()
             },
+            initValue: true,
             keyName: 'code',
             valueName: 'bankcardNumber',
             required: true

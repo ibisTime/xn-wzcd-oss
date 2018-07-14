@@ -42,7 +42,7 @@ class AdvMoneyAreaCheck extends React.Component {
             readonly: true
         }, {
             title: '业务编号',
-            field: 'code',
+            field: 'budgetCode',
             readonly: true
         }, {
             title: '业务公司',

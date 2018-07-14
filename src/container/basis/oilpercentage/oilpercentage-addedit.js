@@ -27,7 +27,7 @@ import { DetailWrapper } from 'common/js/build-detail';
 class OilpercentageAddedit extends React.Component {
   constructor(props) {
     super(props);
-    this.id = getQueryString('code', this.props.location.search);
+    this.code = getQueryString('code', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
   }
   render() {

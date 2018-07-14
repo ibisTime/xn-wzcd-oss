@@ -10,7 +10,8 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    showWarnMsg
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -109,6 +110,14 @@ class AdvMoneyCompBill extends React.Component {
                     field: 'useAmount',
                     amount: true
                 }]
+            },
+            afterDelete: (key, data) => {
+                let useAmount = data.useAmount;
+                let advanceFund = this.props.pageData.advanceFund - useAmount;
+                this.props.setPageData({
+                    ...this.props.pageData,
+                    advanceFund
+                });
             }
         }, {
             title: '垫资金额',
@@ -127,23 +136,27 @@ class AdvMoneyCompBill extends React.Component {
               title: '确认',
               check: true,
               handler: (params) => {
-                this.props.doFetching();
-                params.totalAdvanceFund = this.props.pageData.totalAdvanceFund;
-                params.payAmount = this.props.pageData.payAmount;
-                params.codeList = [];
-                let item = params.advanceFundlist || [];
-                let len = params.advanceFundlist.length || 0;
-                for(let i = 0; i < len; i++) {
-                    params.codeList.push(item[i].code);
+                if (params.advanceFundlist.length) {
+                    this.props.doFetching();
+                    params.totalAdvanceFund = this.props.pageData.totalAdvanceFund;
+                    params.payAmount = this.props.pageData.payAmount;
+                    params.codeList = [];
+                    let item = params.advanceFundlist || [];
+                    let len = params.advanceFundlist.length || 0;
+                    for(let i = 0; i < len; i++) {
+                        params.codeList.push(item[i].code);
+                    }
+                    params.operator = getUserId();
+                    fetch(632174, params).then(() => {
+                        showSucMsg('操作成功');
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                        this.props.cancelFetching();
+                    }).catch(this.props.cancelFetching);
+                } else {
+                    showWarnMsg('垫资列表不能为空');
                 }
-                params.operator = getUserId();
-                fetch(632174, params).then(() => {
-                  showSucMsg('操作成功');
-                  setTimeout(() => {
-                    this.props.history.go(-1);
-                  }, 1000);
-                  this.props.cancelFetching();
-                }).catch(this.props.cancelFetching);
               }
             }, {
               title: '返回',

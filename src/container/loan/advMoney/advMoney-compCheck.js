@@ -93,7 +93,7 @@ class AdvMoneyAreaCheck extends React.Component {
             readonly: true
         }, {
             title: '收款银行',
-            field: 'bankReceiptName',
+            field: 'collectBankName',
             readonly: true
         }, {
             title: '审核说明',

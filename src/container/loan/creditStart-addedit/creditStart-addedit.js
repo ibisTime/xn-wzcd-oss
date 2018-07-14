@@ -149,7 +149,7 @@ class CreditStartAddedit extends React.Component {
             single: true,
             required: true
         }, {
-            title: '是否初审',
+            title: '是否发送一审',
             field: 'isFirstAudit',
             type: 'select',
             data: [{
@@ -159,7 +159,11 @@ class CreditStartAddedit extends React.Component {
                 key: '1',
                 value: '是'
             }],
-            readonly: true
+            keyName: 'key',
+            valueName: 'value',
+            readonly: true,
+            hidden: !(this.isCheckSalesman || this.isCheckFirst),
+            noVisible: !(this.isCheckSalesman || this.isCheckFirst)
         }];
         if (!this.isAddedit) {
             o2mFields = o2mFields.concat([{
@@ -439,19 +443,21 @@ class CreditStartAddedit extends React.Component {
                         }
                     }
                     params.creditUserList = arr;
-                    let flag = false;
-                    for(let i = 0, len = params.creditUserList.length; i < len; i++) {
-                        if(params.creditUserList.loanRole !== 1) {
-                            continue;
-                        }else {
-                            flag = true;
-                        }
-                    }
-                    if(!flag) {
-                        showSucMsg('请添加申请人');
+                    if (!params.creditUserList.length) {
+                        showSucMsg('请选择发送一审的名单');
                         return;
                     }
-                    console.log(list);
+                    let mainRole = false;
+                    for (let i = 0, len = params.creditUserList.length; i < len; i++) {
+                        if (params.creditUserList[i].loanRole === '1') {
+                            mainRole = true;
+                            break;
+                        }
+                    }
+                    if (!mainRole) {
+                        showSucMsg('发送一审的名单中必须包含申请人');
+                        return;
+                    }
                     params.approveResult = '1';
                     params.operator = getUserId();
                     this.props.doFetching();

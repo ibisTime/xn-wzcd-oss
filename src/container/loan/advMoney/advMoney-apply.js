@@ -42,7 +42,7 @@ class AdvMoneyApply extends React.Component {
             readonly: true
         }, {
             title: '业务编号',
-            field: 'code',
+            field: 'budgetCode',
             readonly: true
         }, {
             title: '业务公司',
@@ -93,7 +93,7 @@ class AdvMoneyApply extends React.Component {
             readonly: true
         }, {
             title: '收款银行',
-            field: 'bankReceiptName',
+            field: 'collectBankName',
             readonly: true
         }];
         return this.props.buildDetail({

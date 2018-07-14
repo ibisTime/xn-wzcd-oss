@@ -275,7 +275,14 @@ class BudgetDetail extends React.Component {
                 }],
                 [{
                     title: '汽车经销商',
-                    field: 'carDealerCode'
+                    field: 'carDealerCode',
+                    type: 'select',
+                    pageCode: 632065,
+                    params: {
+                        curNodeCode: '006_02'
+                    },
+                    keyName: 'code',
+                    valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}'
                 }, {
                     title: '贷款银行',
                     field: 'loanBankName'
@@ -857,7 +864,6 @@ class BudgetDetail extends React.Component {
                     required: true,
                     type: 'o2m',
                     options: {
-                        detail: true,
                         fields: [{
                             title: '用款用途',
                             field: 'useMoneyPurpose',
@@ -874,9 +880,7 @@ class BudgetDetail extends React.Component {
                             }],
                             keyName: 'key',
                             valueName: 'value',
-                            value: '1',
-                            readonly: true,
-                            required: true
+                            value: '1'
                         }, {
                             title: '金额小写',
                             field: 'repointAmount',
@@ -890,17 +894,17 @@ class BudgetDetail extends React.Component {
                             noVisible: true
                         }, {
                             title: '单位名称',
-                            field: 'companyName',
-                            readonly: true,
-                            required: true
+                            field: 'carDealerName',
+                            readonly: true
+                        }, {
+                            title: '户名',
+                            field: 'accountName'
                         }, {
                             title: '账号',
-                            field: 'accountCode'
+                            field: 'accountNo'
                         }, {
                             title: '开户行',
-                            field: 'subbranch',
-                            readonly: true,
-                            required: true
+                            field: 'openBankName'
                         }]
                     }
                 }],
@@ -951,18 +955,46 @@ class BudgetDetail extends React.Component {
                             readonly: true,
                             noVisible: true
                         }, {
+                            title: '单位名称',
+                            field: 'carDealerName1',
+                            required: true,
+                            formatter: (v, data) => {
+                                return data.carDealerName || data.carDealerName1;
+                            },
+                            render: (v, data) => {
+                                return data.carDealerName || data.carDealerName1;
+                            }
+                        }, {
                             title: '户名',
-                            field: 'companyName',
-                            required: true
+                            field: 'accountName1',
+                            required: true,
+                            formatter: (v, data) => {
+                                return data.accountName || data.accountName1;
+                            },
+                            render: (v, data) => {
+                                return data.accountName || data.accountName1;
+                            }
                         }, {
                             title: '账号',
-                            field: 'accountCode',
+                            field: 'accountNo1',
                             bankCard: true,
-                            required: true
+                            required: true,
+                            formatter: (v, data) => {
+                                return data.accountNo || data.accountNo1;
+                            },
+                            render: (v, data) => {
+                                return data.accountNo || data.accountNo1;
+                            }
                         }, {
                             title: '开户行',
-                            field: 'subbranch',
-                            required: true
+                            field: 'openBankName1',
+                            required: true,
+                            formatter: (v, data) => {
+                                return data.openBankName || data.openBankName1;
+                            },
+                            render: (v, data) => {
+                                return data.openBankName || data.openBankName1;
+                            }
                         }]
                     }
                 }]

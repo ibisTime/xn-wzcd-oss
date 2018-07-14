@@ -159,10 +159,7 @@ export function dateTimeFormat(date) {
  */
 export function moneyFormat(money, format, isRe = true) {
     var flag = true;
-    if (isNaN(money)) {
-        return '-';
-    }
-    if (isUndefined(money)) {
+    if (isUndefined(money) || isNaN(money)) {
         return '';
     }
     if (money < 0) {

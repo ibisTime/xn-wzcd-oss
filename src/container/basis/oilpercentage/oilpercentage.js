@@ -55,7 +55,7 @@ class Oilpercentage extends React.Component {
             rowKey: 'id',
             pageCode: 630045,
             searchParams: {
-                ckey: 'budget_gps_deduct_rate'
+                ckey: 'budget_oil_subsidy_rate'
             }
         });
     }

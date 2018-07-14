@@ -40,7 +40,7 @@ class AdvMoney extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
-            field: 'code',
+            field: 'budgetCode',
             search: true
         }, {
             title: '业务公司',
