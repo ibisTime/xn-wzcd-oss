@@ -298,10 +298,13 @@ export function showDelConfirm({onOk, onCancel}) {
   });
 }
 export function convertCurrency(currencyDigits) {
-  if (isUndefined(currencyDigits) || isNaN(currencyDigits)) {
+  if (isUndefined(currencyDigits)) {
     return '';
   }
   currencyDigits = moneyReplaceComma(currencyDigits);
+  if (isNaN(currencyDigits)) {
+    return '';
+  }
   var MAXIMUM_NUMBER = 99999999999.99;
   // Predefine the radix characters and currency symbols for output:
   var CN_ZERO = '零';

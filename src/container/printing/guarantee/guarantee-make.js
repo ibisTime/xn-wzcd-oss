@@ -357,13 +357,14 @@ class GuaranteeMake extends React.Component {
                         this.props.doFetching();
                         let sex = ['', '男', '女'];
                         fetch(632142, param).then((data) => {
-                            let num2 = Math.floor((data.loanAmount + data.fee) / data.loanPeriods) + Math.floor(((data.loanAmount + data.fee) * data.bankRate) / data.loanPeriods);
+                            let num2 = Math.floor(((data.loanAmount + data.fee) / data.loanPeriods) / 1000) + Math.floor((((data.loanAmount + data.fee) * data.bankRate) / data.loanPeriods) / 1000);
+                            num2 = moneyParse(num2);
                             let num1 = num2 * (data.loanPeriods - 1) - (data.loanAmount + data.fee) - ((data.loanAmount + data.fee) * data.bankRate);
                             let str1 = data.customerBirth.substr(0, 4);
-                            let str2 = data.customerBirth.substr(5, 2) - 0;
+                            let str2 = data.customerBirth.substr(4, 2) - 0;
                             let arr = [
                                 ['工行姓名', data.customerName],
-                                ['出生年月', str1 + str2],
+                                ['出生年月', str1 + '.' + str2],
                                 ['性别', data.customerSex],
                                 ['身份证号码', data.idNo],
                                 ['手机号码', data.mobile],
@@ -374,7 +375,7 @@ class GuaranteeMake extends React.Component {
                                 ['工作单位', data.ghCompanyName],
                                 ['手机号码', data.ghMobile],
                                 ['费利率（银行利率）', (data.bankRate * 100).toFixed(2)],
-                                ['贷款额', moneyReplaceComma(moneyFormat(data.loanAmount))],
+                                ['贷款额', moneyFormat(data.loanAmount)],
                                 ['服务费', moneyReplaceComma(moneyFormat(data.fee))],
                                 ['总贷款额（包含服务费）', moneyReplaceComma(moneyFormat(data.loanAmount + data.fee))],
                                 ['贷款额（大写无元）', numUppercase(moneyFormat(data.loanAmount))],
@@ -383,7 +384,7 @@ class GuaranteeMake extends React.Component {
                                 ['分期期数', data.loanPeriods],
                                 ['分期期数大写', numUppercase(data.loanPeriods)],
                                 ['手续费总额', moneyReplaceComma(moneyFormat((data.loanAmount + data.fee) * data.bankRate))],
-                                ['手续费总额大写', numUppercase(moneyFormat((data.loanAmount + data.fee) * data.bankRate))],
+                                ['手续费总额大写', moneyUppercase(moneyFormat((data.loanAmount + data.fee) * data.bankRate))],
                                 ['月还款额', moneyReplaceComma(moneyFormat(-num1)) + '/' + moneyReplaceComma(moneyFormat(num2))],
                                 ['总贷款额和手续费总额', moneyReplaceComma(moneyFormat(data.loanAmount + data.fee + (data.loanAmount + data.fee) * data.bankRate))],
                                 ['车辆总价', moneyReplaceComma(moneyFormat(data.originalPrice))],

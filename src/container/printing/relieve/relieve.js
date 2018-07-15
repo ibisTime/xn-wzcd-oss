@@ -73,7 +73,7 @@ class Relieve extends React.Component {
             field: 'fee'
         }, {
             title: '品牌型号',
-            field: 'carBrandModel'
+            field: 'carModel'
         }, {
             title: '打件日期',
             field: 'guarantPrintDatetime',
