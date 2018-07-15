@@ -27,7 +27,7 @@ class DataSendAddEdit extends React.Component {
   render() {
     const fields = [{
         title: '客户姓名',
-        field: 'userName'
+        field: 'customerName'
     }, {
         title: '业务编号',
         field: 'bizCode'

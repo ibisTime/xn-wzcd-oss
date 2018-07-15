@@ -40,7 +40,7 @@ class DataCollectCollect extends React.Component {
   render() {
     const fields = [{
         title: '客户姓名',
-        field: 'userName',
+        field: 'customerName',
         readonly: true
     }, {
         title: '业务编号',
@@ -128,6 +128,7 @@ class DataCollectCollect extends React.Component {
         buttons: [{
             title: '收件并审核通过',
             handler: (param) => {
+                param.operator = getUserId();
                 param.supplementReasonList = [];
                 fetch(632151, param).then(() => {
                     this.doSuccess();
@@ -137,6 +138,9 @@ class DataCollectCollect extends React.Component {
         }, {
             title: '收件待补件',
             handler: (param) => {
+                param.operator = getUserId();
+                param.logisticsCode = param.code;
+                delete param.code;
                 if (!param.supplementReasonList.length) {
                     showWarnMsg('请填写补件原因');
                     return false;

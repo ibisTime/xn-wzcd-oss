@@ -40,7 +40,7 @@ class GpsCollectCollect extends React.Component {
   render() {
     const fields = [{
         title: '客户姓名',
-        field: 'userName',
+        field: 'customerName',
         readonly: true
     }, {
         title: '类型',
@@ -95,6 +95,7 @@ class GpsCollectCollect extends React.Component {
         buttons: [{
             title: '收件并审核通过',
             handler: (param) => {
+                param.operator = getUserId();
                 param.supplementReason = '';
                 fetch(632151, param).then(() => {
                     this.doSuccess();
@@ -104,6 +105,7 @@ class GpsCollectCollect extends React.Component {
         }, {
             title: '收件待补件',
             handler: (param) => {
+                param.operator = getUserId();
                 if (!param.supplementReason) {
                     showWarnMsg('请选择补件原因');
                     return false;

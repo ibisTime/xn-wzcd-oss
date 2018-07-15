@@ -35,7 +35,7 @@ class DataSendSend extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'userName',
+            field: 'customerName',
             readonly: true
         }, {
             title: '业务编号',
@@ -110,6 +110,7 @@ class DataSendSend extends React.Component {
             buttons: [{
                 title: '确认',
                 handler: (param) => {
+                    param.operator = getUserId();
                     fetch(632150, param).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();

@@ -35,7 +35,7 @@ class GpsSendSend extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'userName',
+            field: 'customerName',
             readonly: true
         }, {
             title: '寄送方式',
@@ -86,7 +86,11 @@ class GpsSendSend extends React.Component {
             view: this.view,
             detailCode: 632156,
             editCode: 632150,
-            okText: '确认'
+            okText: '确认',
+            beforeSubmit: (params) => {
+                params.operator = getUserId();
+                return params;
+            }
         });
     }
 }

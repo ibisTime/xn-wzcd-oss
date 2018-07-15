@@ -45,7 +45,7 @@ class GpsCollect extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'userName',
+            field: 'customerName',
             search: true
         }, {
             title: '传递方式',

@@ -35,7 +35,7 @@ class DataSendRepair extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'userName',
+            field: 'customerName',
             readonly: true
         }, {
             title: '业务编号',
@@ -127,7 +127,8 @@ class DataSendRepair extends React.Component {
                         showSucMsg('请添加补件原因');
                         return;
                     }
-                    fetch(632150, param).then(() => {
+                    param.operator = getUserId();
+                    fetch(632153, param).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {

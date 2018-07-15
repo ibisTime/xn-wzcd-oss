@@ -27,7 +27,7 @@ class DataCollectAddEdit extends React.Component {
   render() {
     const fields = [{
         title: '客户姓名',
-        field: 'userName'
+        field: 'customerName'
     }, {
         title: '类型',
         field: 'type',

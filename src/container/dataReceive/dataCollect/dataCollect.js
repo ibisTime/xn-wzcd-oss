@@ -50,7 +50,7 @@ class DataCollect extends React.Component {
             key: 'logistics_type'
         }, {
             title: '客户姓名',
-            field: 'userName',
+            field: 'customerName',
             search: true
         }, {
             title: '传递方式',
