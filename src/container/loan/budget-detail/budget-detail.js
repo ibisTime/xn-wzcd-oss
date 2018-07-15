@@ -386,11 +386,6 @@ class BudgetDetail extends React.Component {
                     required: true
                 }],
                 [{
-                    title: 'GPS安装位置',
-                    field: 'gpsLocation',
-                    required: true
-                }],
-                [{
                     title: 'GPS',
                     field: 'budgetOrderGpsList',
                     type: 'o2m',
