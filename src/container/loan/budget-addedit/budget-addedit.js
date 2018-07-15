@@ -1,4 +1,5 @@
 import React from 'react';
+import { Prompt } from 'react-router-dom';
 import {
     getQueryString,
     getUserId,
@@ -28,13 +29,6 @@ import fetch from 'common/js/fetch';
 class BudgetAddedit extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            isAdvanceFund: true,
-            isSetIsAdvanceFund: false,
-            oilSubsidyValue: null,
-            gpsDeductValue: null,
-            loanPeriodsData: null
-        };
         this.code = getQueryString('code', this.props.location.search);
         this.carCompanyCode = getQueryString('carDealerCode', this.props.location.search);
         this.saleUserId = getQueryString('saleUserId', this.props.location.search);
@@ -54,6 +48,14 @@ class BudgetAddedit extends React.Component {
         this.rateType = false;
         this.isGuarantor1IdPicz = false;
         this.isGuarantor2IdPicz = false;
+        this.state = {
+            isAdvanceFund: true,
+            isSetIsAdvanceFund: false,
+            oilSubsidyValue: null,
+            gpsDeductValue: null,
+            loanPeriodsData: null,
+            promptFlag: this.isApply
+        };
     }
 
     componentDidMount() {
@@ -271,6 +273,7 @@ class BudgetAddedit extends React.Component {
         fetch(632120, data).then(() => {
             this.props.cancelFetching();
             showSucMsg('操作成功');
+            this.state({ promptFlag: false });
             setTimeout(() => {
                 this.props.history.go(-1);
             }, 1000);
@@ -1751,13 +1754,21 @@ class BudgetAddedit extends React.Component {
             }];
         }
 
-        return this.props.buildDetail({
-            fields,
-            code: this.code,
-            view: this.view,
-            detailCode: 632146,
-            buttons: buttons
-        });
+        return (
+          <div>
+            {this.props.buildDetail({
+                fields,
+                code: this.code,
+                view: this.view,
+                detailCode: 632146,
+                buttons: buttons
+            })}
+            <Prompt
+                when={this.state.promptFlag}
+                message={location => '当前页面还未保存，确定要离开吗?'}
+            />
+          </div>
+        );
     }
 }
 
