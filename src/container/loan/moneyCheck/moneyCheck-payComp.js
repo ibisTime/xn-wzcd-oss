@@ -118,7 +118,7 @@ class AdvMoneyPayComp extends React.Component {
             readonly: true
         }, {
             title: '垫资日期',
-            field: 'payDatetime',
+            field: 'advanceFundDatetime',
             type: 'date',
             value: moment(),
             required: true

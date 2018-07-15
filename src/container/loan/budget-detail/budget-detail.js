@@ -1048,8 +1048,12 @@ class BudgetDetail extends React.Component {
                     type: 'img'
                 }],
                 [{
-                    title: '担保人1身份证',
-                    field: 'guarantor1IdNo',
+                    title: '担保人1身份证正面',
+                    field: 'guarantor1IdPicz',
+                    type: 'img'
+                }, {
+                    title: '担保人1身份证反面',
+                    field: 'guarantor1IdPicf',
                     type: 'img'
                 }, {
                     title: '担保人1户口本',
@@ -1057,8 +1061,12 @@ class BudgetDetail extends React.Component {
                     type: 'img'
                 }],
                 [{
-                    title: '担保人2身份证',
-                    field: 'guarantor2IdNo',
+                    title: '担保人2身份证正面',
+                    field: 'guarantor2IdPicz',
+                    type: 'img'
+                }, {
+                    title: '担保人2身份证反面',
+                    field: 'guarantor2IdPicf',
                     type: 'img'
                 }, {
                     title: '担保人2户口本',
@@ -1066,6 +1074,14 @@ class BudgetDetail extends React.Component {
                     type: 'img'
                 }],
                 [{
+                    title: '共还人身份证正面',
+                    field: 'ghIdPicz',
+                    type: 'img'
+                }, {
+                    title: '共还人身份证反面',
+                    field: 'ghIdPicf',
+                    type: 'img'
+                }, {
                     title: '共还人户口本',
                     field: 'ghHkb',
                     type: 'img'
