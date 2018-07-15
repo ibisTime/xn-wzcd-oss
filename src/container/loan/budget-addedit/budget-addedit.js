@@ -1467,7 +1467,7 @@ class BudgetAddedit extends React.Component {
                     type: 'img'
                 }],
                 [{
-                    title: '担保人1身份证',
+                    title: '担保人1身份证正面',
                     field: 'guarantor1IdPicz',
                     formatter: (v, d) => {
                         if(d.guarantor1IdPicz) {
@@ -1476,14 +1476,27 @@ class BudgetAddedit extends React.Component {
                         return d.guarantor1IdPicz;
                     },
                     readonly: this.isGuarantor1IdPicz,
-                    type: 'img'
+                    type: 'img',
+                    single: true
+                }, {
+                    title: '担保人1身份证反面',
+                    field: 'guarantor1IdPicf',
+                    formatter: (v, d) => {
+                        if(d.guarantor1IdPicf) {
+                            this.isGuarantor1IdPicf = true;
+                        }
+                        return d.guarantor1IdPicf;
+                    },
+                    readonly: this.isGuarantor1IdPicf,
+                    type: 'img',
+                    single: true
                 }, {
                     title: '担保人1户口本',
                     field: 'guarantor1Hkb',
                     type: 'img'
                 }],
                 [{
-                    title: '担保人2身份证',
+                    title: '担保人2身份证正面',
                     field: 'guarantor2IdPicz',
                     formatter: (v, d) => {
                         if(d.guarantor2IdPicz) {
@@ -1492,13 +1505,50 @@ class BudgetAddedit extends React.Component {
                         return d.guarantor2IdPicz;
                     },
                     readonly: this.isGuarantor2IdPicz,
-                    type: 'img'
+                    type: 'img',
+                    single: true
+                }, {
+                    title: '担保人2身份证反面',
+                    field: 'guarantor2IdPicf',
+                    formatter: (v, d) => {
+                        if(d.guarantor2IdPicf) {
+                            this.isGuarantor2IdPicf = true;
+                        }
+                        return d.guarantor2IdPicf;
+                    },
+                    readonly: this.isGuarantor2IdPicf,
+                    type: 'img',
+                    single: true
                 }, {
                     title: '担保人2户口本',
                     field: 'guarantor2Hkb',
                     type: 'img'
                 }],
                 [{
+                    title: '共还人身份证正面',
+                    field: 'ghIdPicz',
+                    formatter: (v, d) => {
+                        if(d.ghIdPicz) {
+                            this.isGhIdPicz = true;
+                        }
+                        return d.ghIdPicz;
+                    },
+                    readonly: this.isGhIdPicz,
+                    type: 'img',
+                    single: true
+                }, {
+                    title: '共还人身份证反面',
+                    field: 'ghIdPicf',
+                    formatter: (v, d) => {
+                        if(d.ghIdPicf) {
+                            this.isGhIdPicf = true;
+                        }
+                        return d.ghIdPicf;
+                    },
+                    readonly: this.isGhIdPicf,
+                    type: 'img',
+                    single: true
+                }, {
                     title: '共还人户口本',
                     field: 'ghHkb',
                     type: 'img'
