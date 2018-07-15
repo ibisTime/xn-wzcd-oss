@@ -35,7 +35,7 @@ class GpsSendSend extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'customerName',
+            field: 'userName',
             readonly: true
         }, {
             title: '寄送方式',

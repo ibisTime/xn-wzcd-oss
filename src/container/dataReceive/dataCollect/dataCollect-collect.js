@@ -139,7 +139,6 @@ class DataCollectCollect extends React.Component {
             title: '收件待补件',
             handler: (param) => {
                 param.operator = getUserId();
-                param.logisticsCode = param.code;
                 delete param.code;
                 if (!param.supplementReasonList.length) {
                     showWarnMsg('请填写补件原因');

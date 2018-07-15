@@ -90,7 +90,8 @@ class DataSend extends React.Component {
             type: 'select',
             listCode: 630147,
             keyName: 'code',
-            valueName: 'name'
+            valueName: 'name',
+            search: true
         }, {
             title: '状态',
             field: 'status',
