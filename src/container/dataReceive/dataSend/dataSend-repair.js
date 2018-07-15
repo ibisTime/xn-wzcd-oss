@@ -87,17 +87,20 @@ class DataSendRepair extends React.Component {
             type: 'select',
             key: 'kd_company',
             required: !this.sendTypeFalg,
-            hidden: this.sendTypeFalg
+            hidden: this.sendTypeFalg,
+            formatter: () => ''
         }, {
             title: '快递单号',
             field: 'logisticsCode',
             required: !this.sendTypeFalg,
-            hidden: this.sendTypeFalg
+            hidden: this.sendTypeFalg,
+            formatter: () => ''
         }, {
             title: '发货时间',
             field: 'sendDatetime',
             type: 'datetime',
-            required: true
+            required: true,
+            formatter: () => ''
         }, {
             title: '补件原因',
             field: 'supplementReasonList',

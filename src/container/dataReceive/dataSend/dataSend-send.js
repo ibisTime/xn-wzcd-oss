@@ -87,20 +87,24 @@ class DataSendSend extends React.Component {
             type: 'select',
             key: 'kd_company',
             required: !this.sendTypeFalg,
-            hidden: this.sendTypeFalg
+            hidden: this.sendTypeFalg,
+            formatter: () => ''
         }, {
             title: '快递单号',
             field: 'logisticsCode',
             required: !this.sendTypeFalg,
-            hidden: this.sendTypeFalg
+            hidden: this.sendTypeFalg,
+            formatter: () => ''
         }, {
             title: '发货时间',
             field: 'sendDatetime',
             type: 'datetime',
-            required: true
+            required: true,
+            formatter: () => ''
         }, {
             title: '发货说明',
-            field: 'sendNote'
+            field: 'sendNote',
+            formatter: () => ''
         }];
         return this.props.buildDetail({
             fields,
