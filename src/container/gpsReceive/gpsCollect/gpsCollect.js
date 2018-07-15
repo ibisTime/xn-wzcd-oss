@@ -74,14 +74,15 @@ class GpsCollect extends React.Component {
             type: 'select',
             key: 'logistics_status'
         }, {
-            title: '备注',
-            field: 'remark'
+            title: '发货说明',
+            field: 'sendNote'
         }];
         return this.props.buildList({
             fields,
             pageCode: 632155,
             searchParams: {
-                type: '2'
+                type: '2',
+                status: '1'
             },
             btnEvent: {
               collect: (selectedRowKeys, selectedRows) => {

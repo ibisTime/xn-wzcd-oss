@@ -83,8 +83,7 @@ class GpsCollectCollect extends React.Component {
         readonly: true
     }, {
         title: '补件原因',
-        field: 'supplementReason',
-        required: true
+        field: 'supplementReason'
     }];
     return this
       .props

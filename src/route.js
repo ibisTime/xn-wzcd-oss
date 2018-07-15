@@ -2087,11 +2087,6 @@ const ROUTES = [
     path: '/gpsReceive/gpsCollect',
     component: asyncComponent(() => import('container/gpsReceive/gpsCollect/gpsCollect'))
   },
-  //  gps收件 详情
-  {
-    path: '/gpsReceive/gpsCollect/addedit',
-    component: asyncComponent(() => import('container/gpsReceive/gpsCollect/gpsCollect-addedit'))
-  },
   //  gps收件 gps收件
   {
     path: '/gpsReceive/gpsCollect/collect',

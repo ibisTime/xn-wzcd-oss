@@ -6,9 +6,9 @@ import {
   setSelectData,
   setPageData,
   restore
-} from '@redux/gpsReceive/gpsSend-repair';
-import {getQueryString} from 'common/js/util';
-import {DetailWrapper} from 'common/js/build-detail';
+} from '@redux/gpsReceive/gpsSend-addedit';
+import { getQueryString } from 'common/js/util';
+import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(state => state.gpsReceiveGpsSendAddEdit, {
   initStates,
@@ -29,11 +29,6 @@ class GpsSendAddEdit extends React.Component {
         title: '客户姓名',
         field: 'userName'
     }, {
-        title: '类型',
-        field: 'type',
-        type: 'select',
-        key: 'logistics_type'
-    }, {
         title: '传递方式',
         field: 'sendType',
         type: 'select',
@@ -47,11 +42,6 @@ class GpsSendAddEdit extends React.Component {
         keyName: 'key',
         valueName: 'value',
         required: true
-    }, {
-        title: '类型',
-        field: 'type',
-        type: 'select',
-        key: 'logistics_type'
     }, {
         title: '快递公司',
         field: 'logisticsCompany',
@@ -69,7 +59,7 @@ class GpsSendAddEdit extends React.Component {
         field: 'supplementReason',
         required: true
     }, {
-        title: '发货备注',
+        title: '发货说明',
         field: 'sendNote'
     }];
     return this

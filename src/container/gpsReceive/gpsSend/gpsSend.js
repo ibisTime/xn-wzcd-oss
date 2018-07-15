@@ -9,22 +9,8 @@ import {
     cancelFetching,
     setSearchData
 } from '@redux/gpsReceive/gpsSend';
-import {
-    listWrapper
-} from 'common/js/build-list';
-import {
-    showWarnMsg,
-    showSucMsg
-} from 'common/js/util';
-import {
-    Button,
-    Upload,
-    Modal
-} from 'antd';
-import {
-    putaway,
-    soldOut
-} from 'api/biz';
+import { listWrapper } from 'common/js/build-list';
+import { showWarnMsg } from 'common/js/util';
 
 @listWrapper(
     state => ({
@@ -72,10 +58,14 @@ class GpsSend extends React.Component {
             title: '状态',
             field: 'status',
             type: 'select',
-            key: 'logistics_status'
+            key: 'logistics_status',
+            search: true
         }, {
-            title: '备注',
-            field: 'remark'
+            title: '发货说明',
+            field: 'sendNote'
+        }, {
+            title: '补件原因',
+            field: 'supplementReason'
         }];
         return this.props.buildList({
             fields,
@@ -89,8 +79,10 @@ class GpsSend extends React.Component {
                   showWarnMsg('请选择记录');
                 } else if (selectedRowKeys.length > 1) {
                   showWarnMsg('请选择一条记录');
+                } else if (selectedRows[0].status !== '0') {
+                  showWarnMsg('当前不是待发件状态');
                 } else {
-                  this.props.history.push(`/gpsReceive/gpsSend/send?code=${selectedRowKeys[0]}`);
+                  this.props.history.push(`/gpsReceive/gpsSend/send?code=${selectedRowKeys[0]}&n=${selectedRows[0].userName}`);
                 }
               },
               repair: (selectedRowKeys, selectedRows) => {
@@ -98,8 +90,10 @@ class GpsSend extends React.Component {
                   showWarnMsg('请选择记录');
                 } else if (selectedRowKeys.length > 1) {
                   showWarnMsg('请选择一条记录');
+                } else if (selectedRows[0].status !== '3') {
+                  showWarnMsg('当前不是待补件状态');
                 } else {
-                  this.props.history.push(`/gpsReceive/gpsSend/repair?code=${selectedRowKeys[0]}`);
+                  this.props.history.push(`/gpsReceive/gpsSend/repair?code=${selectedRowKeys[0]}&n=${selectedRows[0].userName}`);
                 }
               }
             }

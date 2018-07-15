@@ -38,12 +38,6 @@ class GpsSendSend extends React.Component {
             field: 'userName',
             readonly: true
         }, {
-            title: '类型',
-            field: 'type',
-            type: 'select',
-            key: 'logistics_type',
-            readonly: true
-        }, {
             title: '寄送方式',
             field: 'sendType',
             type: 'select',
@@ -67,45 +61,32 @@ class GpsSendSend extends React.Component {
             type: 'select',
             key: 'kd_company',
             required: !this.sendTypeFalg,
-            hidden: this.sendTypeFalg
+            hidden: this.sendTypeFalg,
+            formatter: () => ''
         }, {
             title: '快递单号',
             field: 'logisticsCode',
             required: !this.sendTypeFalg,
-            hidden: this.sendTypeFalg
+            hidden: this.sendTypeFalg,
+            formatter: () => ''
         }, {
             title: '发货时间',
             field: 'sendDatetime',
             type: 'datetime',
-            required: true
+            required: true,
+            formatter: () => ''
         }, {
             title: '发货说明',
-            field: 'sendNote'
+            field: 'sendNote',
+            formatter: () => ''
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
             detailCode: 632156,
-            buttons: [{
-                title: '确认',
-                handler: (param) => {
-                    fetch(632150, param).then(() => {
-                        showSucMsg('操作成功');
-                        this.props.cancelFetching();
-                        setTimeout(() => {
-                            this.props.history.go(-1);
-                        }, 1000);
-                    }).catch(this.props.cancelFetching);
-                },
-                check: true,
-                type: 'primary'
-            }, {
-                title: '返回',
-                handler: (param) => {
-                    this.props.history.go(-1);
-                }
-            }]
+            editCode: 632150,
+            okText: '确认'
         });
     }
 }
