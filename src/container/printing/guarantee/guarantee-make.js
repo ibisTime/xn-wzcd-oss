@@ -268,7 +268,7 @@ class GuaranteeMake extends React.Component {
             items: [
                 [{
                     title: '担保人姓名',
-                    field: 'guarantPrintName',
+                    field: 'guarantor1Name',
                     readonly: true
                 }, {
                     title: '身份证',

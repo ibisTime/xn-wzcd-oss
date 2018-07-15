@@ -273,7 +273,7 @@ class BudgetAddedit extends React.Component {
         fetch(632120, data).then(() => {
             this.props.cancelFetching();
             showSucMsg('操作成功');
-            this.state({ promptFlag: false });
+            this.setState({ promptFlag: false });
             setTimeout(() => {
                 this.props.history.go(-1);
             }, 1000);
