@@ -28,17 +28,40 @@ class applyGpsAddedit extends React.Component {
   }
   render() {
     const fields = [{
+        title: '申领类型',
+        field: 'type',
+        type: 'select',
+        data: [{
+            key: '1',
+            value: '公司'
+        }, {
+            key: '2',
+            value: '个人'
+        }],
+        keyName: 'key',
+        valueName: 'value'
+    }, {
+      title: '所属公司',
+      field: 'companyName'
+    }, {
       title: '申领个数',
       field: 'applyCount'
     }, {
       title: '申领人',
       field: 'applyUserName'
     }, {
+      title: 'GPS列表',
+      field: 'gpsList',
+      type: 'o2m',
+      options: {
+        fields: [{
+          title: 'GPS设备号',
+          field: 'gpsDevNo'
+        }]
+      }
+    }, {
       title: '申领原因',
       field: 'applyReason'
-    }, {
-      title: '备注',
-      field: 'remark'
     }];
     return this.props.buildDetail({
       fields,
