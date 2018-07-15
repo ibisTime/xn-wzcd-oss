@@ -364,7 +364,7 @@ export function convertCurrency(currencyDigits) {
   // Process the coversion from currency digits to characters:
   // Separate integral and decimal parts before processing coversion:
   parts = currencyDigits.split('.');
-  if (parts.length > 1) {
+  if (parts.length > 1 && !/^0+$/.test(parts[1])) {
     integral = parts[0];
     decimal = parts[1];
     // Cut down redundant decimal digits that are after the second.
