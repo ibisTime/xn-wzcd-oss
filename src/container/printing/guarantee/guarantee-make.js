@@ -164,7 +164,7 @@ class GuaranteeMake extends React.Component {
                     field: 'carColor'
                 }, {
                     title: '品牌型号',
-                    field: 'carModel',
+                    field: 'carBrandModel',
                     readonly: true
                 }],
                 [{
@@ -285,7 +285,7 @@ class GuaranteeMake extends React.Component {
                     mobile: true
                 }, {
                     title: '手机电话',
-                    field: 'guarantorMobile',
+                    field: 'guarantor1Mobile',
                     readonly: true
                 }, {
                     title: '工作单位',
@@ -357,11 +357,13 @@ class GuaranteeMake extends React.Component {
                         this.props.doFetching();
                         let sex = ['', '男', '女'];
                         fetch(632142, param).then((data) => {
-                            let num2 = (data.loanAmount + data.fee) / data.loanPeriods + ((data.loanAmount + data.fee) * data.bankRate) / data.loanPeriods;
+                            let num2 = Math.floor((data.loanAmount + data.fee) / data.loanPeriods) + Math.floor(((data.loanAmount + data.fee) * data.bankRate) / data.loanPeriods);
                             let num1 = num2 * (data.loanPeriods - 1) - (data.loanAmount + data.fee) - ((data.loanAmount + data.fee) * data.bankRate);
+                            let str1 = data.customerBirth.substr(0, 4);
+                            let str2 = data.customerBirth.substr(5, 2) - 0;
                             let arr = [
                                 ['工行姓名', data.customerName],
-                                ['出生年月', data.customerBirth],
+                                ['出生年月', str1 + str2],
                                 ['性别', data.customerSex],
                                 ['身份证号码', data.idNo],
                                 ['手机号码', data.mobile],
@@ -371,37 +373,37 @@ class GuaranteeMake extends React.Component {
                                 ['身份证号码', data.ghIdNo],
                                 ['工作单位', data.ghCompanyName],
                                 ['手机号码', data.ghMobile],
-                                ['费利率（银行利率）', data.bankRate],
+                                ['费利率（银行利率）', (data.bankRate * 100).toFixed(2)],
                                 ['贷款额', moneyReplaceComma(moneyFormat(data.loanAmount))],
                                 ['服务费', moneyReplaceComma(moneyFormat(data.fee))],
                                 ['总贷款额（包含服务费）', moneyReplaceComma(moneyFormat(data.loanAmount + data.fee))],
-                                ['贷款额（大写）', numUppercase(moneyFormat(data.loanAmount))],
-                                ['服务费（大写）', numUppercase(moneyFormat(data.fee))],
-                                ['总贷款额（大写）', numUppercase(moneyFormat(data.loanAmount + data.fee))],
+                                ['贷款额（大写无元）', numUppercase(moneyFormat(data.loanAmount))],
+                                ['服务费（大写无元）', numUppercase(moneyFormat(data.fee))],
+                                ['总贷款额（大写无元）', numUppercase(moneyFormat(data.loanAmount + data.fee))],
                                 ['分期期数', data.loanPeriods],
                                 ['分期期数大写', numUppercase(data.loanPeriods)],
                                 ['手续费总额', moneyReplaceComma(moneyFormat((data.loanAmount + data.fee) * data.bankRate))],
                                 ['手续费总额大写', numUppercase(moneyFormat((data.loanAmount + data.fee) * data.bankRate))],
-                                ['月还款额', moneyReplaceComma(moneyFormat(-num1)) + '/' + moneyParse(moneyReplaceComma(moneyFormat(num2)))],
+                                ['月还款额', moneyReplaceComma(moneyFormat(-num1)) + '/' + moneyReplaceComma(moneyFormat(num2))],
                                 ['总贷款额和手续费总额', moneyReplaceComma(moneyFormat(data.loanAmount + data.fee + (data.loanAmount + data.fee) * data.bankRate))],
                                 ['车辆总价', moneyReplaceComma(moneyFormat(data.originalPrice))],
-                                ['车辆总价大写', numUppercase(moneyFormat(data.originalPrice))],
-                                ['车辆总价大写(带元)', moneyUppercase(moneyFormat(data.originalPrice))],
+                                ['车辆总价大写不带元', numUppercase(moneyFormat(data.originalPrice))],
+                                ['车辆总价大写带元整', moneyUppercase(moneyFormat(data.originalPrice))],
                                 ['首付额', moneyReplaceComma(moneyFormat(data.originalPrice - data.loanAmount - data.fee))],
-                                ['首付额（大写）', numUppercase(moneyFormat(data.originalPrice - data.loanAmount - data.fee))],
+                                ['首付额（大写无元）', numUppercase(moneyFormat(data.originalPrice - data.loanAmount - data.fee))],
                                 ['车辆品牌', data.carBrand],
                                 ['经销商', data.carDealerName],
                                 ['发动机号', data.engineNo],
                                 ['车架号', data.frameNo],
                                 ['品牌型号', data.carBrandModel],
-                                ['担保人姓名', data.guarantPrintName],
+                                ['担保人姓名', data.guarantor1IdNo],
                                 ['性别', data.guarantor1Sex],
                                 ['身份证号码', data.guarantor1IdNo],
-                                ['手机号码', data.guarantorMobile],
+                                ['手机号码', data.guarantor1Mobile],
                                 ['现住址', data.guarantorNowAddress],
                                 ['工作单位', data.guarantorCompanyName],
                                 ['总的首期还款金额', moneyReplaceComma(moneyFormat(-num1))],
-                                ['总的每期还款金额', moneyParse(moneyReplaceComma(moneyFormat(num2)))],
+                                ['总的每期还款金额', moneyReplaceComma(moneyFormat(num2))],
                                 ['原车发票价格', moneyReplaceComma(moneyFormat(data.invoicePrice))],
                                 ['原车发票价格大写', numUppercase(moneyFormat(data.invoicePrice))]
                             ];

@@ -120,7 +120,7 @@ class BankMoney extends React.Component {
                 complete: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {
                         showWarnMsg('请选择记录');
-                    } else if (item[0].curNodeCode !== '1') {
+                    } else if (item[0].curNodeCode !== '007_04') {
                         showWarnMsg('当前节点不是理件完成节点');
                     } else {
                         Modal.confirm({
@@ -129,7 +129,11 @@ class BankMoney extends React.Component {
                             content: '确定理件完成？',
                             onOk: () => {
                                 this.props.doFetching();
-                                return bankComplete(key[0]).then(() => {
+                                let list = [];
+                                for(let i = 0, len = item.length; i < len; i++) {
+                                    list.push(item[i].code);
+                                }
+                                return bankComplete(list).then(() => {
                                     showWarnMsg('操作成功');
                                     setTimeout(() => {
                                         this.props.getPageData();

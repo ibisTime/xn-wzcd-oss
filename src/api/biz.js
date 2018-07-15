@@ -173,16 +173,16 @@ export function makeAllbill(code) {
   });
 }
 // 银行放款 理件完成
-export function bankComplete(code) {
-  return fetch(632193, {
-    code,
+export function bankComplete(list) {
+  return fetch(632143, {
+    list,
     operator: getUserId()
   });
 }
 // 车辆抵押 理件完成
-export function carComplete(code) {
-  return fetch(632143, {
-    code,
+export function carComplete(list) {
+  return fetch(632193, {
+    list,
     operator: getUserId()
   });
 }
