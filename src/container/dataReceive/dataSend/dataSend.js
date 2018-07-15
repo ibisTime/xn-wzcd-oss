@@ -90,16 +90,13 @@ class DataSend extends React.Component {
             type: 'select',
             listCode: 630147,
             keyName: 'code',
-            valueName: 'name',
-            search: true
+            valueName: 'name'
         }, {
             title: '状态',
             field: 'status',
             type: 'select',
-            key: 'logistics_status'
-        }, {
-            title: '备注',
-            field: 'remark'
+            key: 'logistics_status',
+            search: true
         }];
         return this.props.buildList({
             fields,
@@ -113,6 +110,8 @@ class DataSend extends React.Component {
                   showWarnMsg('请选择记录');
                 } else if (selectedRowKeys.length > 1) {
                   showWarnMsg('请选择一条记录');
+                } else if (selectedRows[0].status !== '0') {
+                  showWarnMsg('当前不是待发件的状态');
                 } else {
                   this.props.history.push(`/dataReceive/dataSend/send?code=${selectedRowKeys[0]}`);
                 }
@@ -122,6 +121,8 @@ class DataSend extends React.Component {
                   showWarnMsg('请选择记录');
                 } else if (selectedRowKeys.length > 1) {
                   showWarnMsg('请选择一条记录');
+                } else if (selectedRows[0].status !== '3') {
+                  showWarnMsg('当前不是待发件的状态');
                 } else {
                   this.props.history.push(`/dataReceive/dataSend/repair?code=${selectedRowKeys[0]}`);
                 }

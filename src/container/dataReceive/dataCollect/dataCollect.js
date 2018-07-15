@@ -93,9 +93,6 @@ class DataCollect extends React.Component {
             type: 'select',
             key: 'logistics_status',
             search: true
-        }, {
-            title: '备注',
-            field: 'remark'
         }];
         return this.props.buildList({
             fields,

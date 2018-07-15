@@ -111,9 +111,6 @@ class DataSendRepair extends React.Component {
                     field: 'reason'
                 }]
             }
-        }, {
-            title: '发货说明',
-            field: 'sendNote'
         }];
         return this.props.buildDetail({
             fields,
