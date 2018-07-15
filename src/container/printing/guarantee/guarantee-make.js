@@ -164,7 +164,7 @@ class GuaranteeMake extends React.Component {
                     field: 'carColor'
                 }, {
                     title: '品牌型号',
-                    field: 'carBrandModel',
+                    field: 'carModel',
                     readonly: true
                 }],
                 [{
@@ -395,7 +395,7 @@ class GuaranteeMake extends React.Component {
                                 ['经销商', data.carDealerName],
                                 ['发动机号', data.engineNo],
                                 ['车架号', data.frameNo],
-                                ['品牌型号', data.carBrandModel],
+                                ['品牌型号', data.carModel],
                                 ['担保人姓名', data.guarantor1IdNo],
                                 ['性别', data.guarantor1Sex],
                                 ['身份证号码', data.guarantor1IdNo],
