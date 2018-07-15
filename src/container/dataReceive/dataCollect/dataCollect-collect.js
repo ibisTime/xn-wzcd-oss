@@ -128,7 +128,7 @@ class DataCollectCollect extends React.Component {
         buttons: [{
             title: '收件并审核通过',
             handler: (param) => {
-                param.supplementReason = '';
+                param.supplementReasonList = [];
                 fetch(632151, param).then(() => {
                     this.doSuccess();
                 }).catch(this.props.cancelFetching);
@@ -137,8 +137,8 @@ class DataCollectCollect extends React.Component {
         }, {
             title: '收件待补件',
             handler: (param) => {
-                if (!param.supplementReason) {
-                    showWarnMsg('请选择补件原因');
+                if (!param.supplementReasonList.length) {
+                    showWarnMsg('请填写补件原因');
                     return false;
                 }
                 fetch(632152, param).then(() => {
