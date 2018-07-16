@@ -252,6 +252,9 @@ class MortgageMake extends React.Component {
                             XLSX.utils.book_append_sheet(wb, ws, '内容');
                             XLSX.writeFile(wb, '车辆抵押-工商银行.xlsx');
                             showSucMsg('操作成功');
+                            setTimeout(() => {
+                                this.props.history.go(-1);
+                            }, 1000);
                             this.props.cancelFetching();
                         }).catch(this.props.cancelFetching());
                     }
