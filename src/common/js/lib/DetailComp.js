@@ -1148,7 +1148,7 @@ export default class DetailComponent extends React.Component {
                             rules,
                             initialValue: item.data || initVal ? initVal : ''
                         })(
-                        <Select {...this.getSelectProps(item)}>
+                        <Select {...this.getSelectProps(item, initVal)}>
                             {item.data ? item.data.map(d => (
                                 <Option key={d[item.keyName]} value={d[item.keyName]}>
                                     {d[item.valueName] ? d[item.valueName] : tempString(item.valueName, d)}
@@ -1245,7 +1245,7 @@ export default class DetailComponent extends React.Component {
         return isImg ? imgProps : fileProps;
     }
 
-    getSelectProps(item) {
+    getSelectProps(item, initVal) {
         const props = {
             showSearch: true,
             allowClear: true,
@@ -1259,7 +1259,6 @@ export default class DetailComponent extends React.Component {
                 item.onChange(v, this.props.selectData[item.field] ? this.props.selectData[item.field].find(v1 => v1[item.keyName] === v) : {}, this.props);
             };
             if (this.props.isLoaded && !this.getSelectProps[item.field]) {
-                let initVal = this.getRealValue(item);
                 if (!isUndefined(initVal)) {
                     this.getSelectProps[item.field] = true;
                     setTimeout(() => {

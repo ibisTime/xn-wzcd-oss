@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {
     initStates,
     doFetching,
@@ -12,7 +13,8 @@ import {
     getUserId,
     showSucMsg,
     moneyReplaceComma,
-    moneyFormat
+    moneyFormat,
+    getCompanyCode
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -86,6 +88,7 @@ class BankMoneyReceive extends React.Component {
             title: '放款时间',
             field: 'bankFkDatetime',
             type: 'date',
+            formatter: () => moment(),
             required: true
         }, {
             title: '收款银行',
@@ -93,11 +96,13 @@ class BankMoneyReceive extends React.Component {
             type: 'select',
             listCode: 632007,
             params: {
-                type: '1'
+                type: '1',
+                companyCode: getCompanyCode()
             },
             keyName: 'code',
             valueName: '{{bankName.DATA}}-{{bankcardNumber.DATA}}',
             required: true,
+            initValue: true,
             onChange: (value, data) => {
                 this.props.form.setFieldsValue({
                     bankReceiptNumber: data.bankcardNumber

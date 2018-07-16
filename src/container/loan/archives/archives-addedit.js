@@ -86,12 +86,11 @@ class ArchivesAddedit extends React.Component {
                 field: 'saleUserName'
             }],
             [{
-                title: '抵押合同编号',
+                title: '合同编号',
                 field: 'pledgeContractCode'
             }, {
                 title: '登记证书号',
-                field: 'regCertificateCode',
-                type: 'img'
+                field: 'regCertificateCode'
             }],
             [{
                 title: '其他联系人',
@@ -111,17 +110,27 @@ class ArchivesAddedit extends React.Component {
                 title: '银行卡号',
                 field: 'bankCardNumber'
             }, {
-                title: '对账单日',
-                field: 'billDatetime'
+                title: ' 首期还款金额',
+                field: 'repayFirstMonthAmount',
+                amount: true,
+                required: 'true'
             }, {
-                title: '月还款额',
+                title: '每期还款额',
                 field: 'monthAmount',
                 amount: true
             }],
             [{
-                title: '身份证',
-                field: 'idNoPic',
-                type: 'img'
+                title: '对账单日',
+                field: 'billDatetime'
+            }, {
+                title: '首期还款日期',
+                field: 'repayFirstMonthDatetime',
+                type: 'date',
+                required: 'true'
+            }, {
+                title: '银行还款日',
+                field: 'repayBankDate',
+                number: true
             }],
             [{
                 title: '已入档清单',

@@ -101,7 +101,7 @@ class Archives extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].status === '2') {
+                    } else if (selectedRows[0].enterFileStatus === '2') {
                         showWarnMsg('当前状态不可以补录');
                     } else {
                         this.props.history.push(`/loan/archives/enter?code=${selectedRowKeys[0]}`);
