@@ -186,3 +186,10 @@ export function carComplete(list) {
     operator: getUserId()
   });
 }
+// 车辆抵押 抵押开始
+export function mortgageStart(list) {
+  return fetch(632194, {
+    list,
+    operator: getUserId()
+  });
+}

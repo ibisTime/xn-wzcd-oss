@@ -251,6 +251,7 @@ import { loanBankMoneyReceive } from './redux/loan/bankMoney-receive';
 import { loanMortgage } from './redux/loan/mortgage';
 import { loanMortgageAddedit } from './redux/loan/mortgage-addedit';
 import { loanMortgageApply } from './redux/loan/mortgage-apply';
+import { loanMortgageDone } from './redux/loan/mortgage-done';
 
 //  车贷入档 + 详情 + 入档补录
 import { loaNarchives } from './redux/loan/archives';
@@ -872,6 +873,7 @@ export default combineReducers({
   loanMortgage,
   loanMortgageAddedit,
   loanMortgageApply,
+  loanMortgageDone,
   loaNarchives,
   loaNarchivesAddedit,
   loaNarchivesEnter,

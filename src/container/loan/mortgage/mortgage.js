@@ -25,7 +25,8 @@ import {
 } from 'antd';
 import {
     done,
-    carComplete
+    carComplete,
+    mortgageStart
 } from 'api/biz';
 
 @listWrapper(
@@ -107,6 +108,8 @@ class Mortgage extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].pledgeCurNodeCode !== '008_04' && selectedRows[0].pledgeCurNodeCode !== '009_08') {
+                        showWarnMsg('当前不是确认提交银行节点');
                     } else {
                         this.props.history.push(`/loan/mortgage/apply?code=${selectedRowKeys[0]}`);
                     }
@@ -114,8 +117,10 @@ class Mortgage extends React.Component {
                 done: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {
                         showWarnMsg('请选择记录');
-                    } else if (item[0].status === '1') {
-                        showWarnMsg('该状态不可抵押');
+                    } else if (item[0].pledgeCurNodeCode === '009_09') {
+                        this.props.history.push(`/loan/mortgage/done?code=${item[0]}`);
+                    } else if (item[0].pledgeCurNodeCode !== '008_05') {
+                        showWarnMsg('当前不是确认提交银行节点');
                     } else {
                         Modal.confirm({
                             okText: '确认',
@@ -139,7 +144,7 @@ class Mortgage extends React.Component {
                 complete: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {
                         showWarnMsg('请选择记录');
-                    } else if (item[0].curNodeCode !== '1') {
+                    } else if (item[0].pledgeCurNodeCode !== '1') {
                         showWarnMsg('当前节点不是理件完成节点');
                     } else {
                         Modal.confirm({
@@ -148,7 +153,35 @@ class Mortgage extends React.Component {
                             content: '确定理件完成？',
                             onOk: () => {
                                 this.props.doFetching();
-                                return carComplete(key[0]).then(() => {
+                                let list = [];
+                                for(let i = 0, len = item.length; i < len; i++) {
+                                    list.push(item[i].code);
+                                }
+                                return carComplete(list).then(() => {
+                                    showWarnMsg('操作成功');
+                                    setTimeout(() => {
+                                        this.props.getPageData();
+                                    }, 500);
+                                }).catch(() => {
+                                    this.props.cancelFetching();
+                                });
+                            }
+                        });
+                    }
+                },
+                begin: (key, item) => {
+                    if (!key || !key.length || !item || !item.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (item[0].curNodeCode !== '009_03') {
+                        showWarnMsg('当前节点不是抵押开始');
+                    } else {
+                        Modal.confirm({
+                            okText: '确认',
+                            cancelText: '取消',
+                            content: '抵押开始？',
+                            onOk: () => {
+                                this.props.doFetching();
+                                return mortgageStart(key[0]).then(() => {
                                     showWarnMsg('操作成功');
                                     setTimeout(() => {
                                         this.props.getPageData();
