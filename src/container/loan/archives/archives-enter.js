@@ -125,7 +125,7 @@ class ArchivesAddedit extends React.Component {
                 amount: true,
                 required: 'true'
             }, {
-                title: '月还款额',
+                title: '每期还款额',
                 field: 'repayMonthAmount',
                 amount: true,
                 required: true
@@ -143,11 +143,6 @@ class ArchivesAddedit extends React.Component {
                 title: '银行还款日',
                 field: 'repayBankDate',
                 number: true
-            }],
-            [{
-                title: '身份证',
-                field: 'idNoPic',
-                type: 'img'
             }],
             [{
                 title: '已入档清单',

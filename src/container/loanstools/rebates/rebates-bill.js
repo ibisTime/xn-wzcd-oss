@@ -47,9 +47,13 @@ class RebatesBill extends React.Component {
                 this.props.form.setFieldsValue({
                     bankcardCode: ''
                 });
-                this.setState({
-                    bankcardCode: data ? data.jxsCollectBankcardList : []
-                });
+                if (data) {
+                  let list = [].concat(data.jxsCollectBankcardList).concat(data.gsCollectBankcardList)
+                    .concat(data.jhCollectBankcardList).concat(data.zhCollectBankcardList);
+                  this.setState({
+                      bankcardCode: list
+                  });
+                }
             }
         }, {
             title: '收款账号',

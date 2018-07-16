@@ -406,7 +406,7 @@ class GuaranteeMake extends React.Component {
                                 ['总的首期还款金额', moneyReplaceComma(moneyFormat(-num1))],
                                 ['总的每期还款金额', moneyReplaceComma(moneyFormat(num2))],
                                 ['原车发票价格', moneyReplaceComma(moneyFormat(data.invoicePrice))],
-                                ['原车发票价格大写', numUppercase(moneyFormat(data.invoicePrice))]
+                                ['原车发票价格大写', moneyUppercase(moneyFormat(data.invoicePrice))]
                             ];
                             showSucMsg('操作成功');
                             const ws = XLSX.utils.aoa_to_sheet(arr);
