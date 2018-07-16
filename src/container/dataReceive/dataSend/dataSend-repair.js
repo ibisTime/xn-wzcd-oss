@@ -123,8 +123,9 @@ class DataSendRepair extends React.Component {
             buttons: [{
                 title: '确认',
                 handler: (param) => {
-                    if(param.supplementReasonList === '') {
-                        showSucMsg('请添加补件原因');
+                    let list = this.props.o2mSKeys.supplementReasonList;
+                    if(!list.length) {
+                        showSucMsg('请勾选补件原因');
                         return;
                     }
                     param.operator = getUserId();

@@ -11,7 +11,8 @@ import {
 } from '@redux/printing/mortgage';
 import {
     showWarnMsg,
-    showSucMsg
+    showSucMsg,
+    getRoleCode
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -94,7 +95,11 @@ class Mortgage extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632145,
+            pageCode: 632148,
+            searchParams: {
+              roleCode: getRoleCode(),
+              pledgeCurNodeCodeList: ['008_01']
+            },
             btnEvent: {
                 make: (selectedRowKeys, selectedRows) => {
                     console.log(selectedRows[0]);
