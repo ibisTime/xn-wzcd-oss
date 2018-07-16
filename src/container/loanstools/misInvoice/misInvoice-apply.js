@@ -56,14 +56,6 @@ class MisInvoiceApply extends React.Component {
             title: '贷款银行',
             field: 'loanBankName',
             readonly: true
-        }, {
-            title: '征信结果',
-            field: '33',
-            readonly: true
-        }, {
-            title: '预算单',
-            field: '44',
-            readonly: true
         }];
         return this.props.buildDetail({
             fields,

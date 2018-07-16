@@ -126,10 +126,10 @@ class misInvoice extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632145,
+            pageCode: 632148,
             searchParams: {
               roleCode: getRoleCode(),
-              curNodeCodeList: ['010_01', '010_02', '010_03', '010_04']
+              curNodeCodeList: ['011_01', '011_02', '011_03', '011_04']
             },
             btnEvent: {
               apply: (selectedRowKeys, selectedRows) => {

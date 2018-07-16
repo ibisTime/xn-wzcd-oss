@@ -56,14 +56,6 @@ class MisInvoiceCheckTwo extends React.Component {
       field: 'loanBankName',
       readonly: true
     }, {
-      title: '征信结果',
-      field: '33',
-      readonly: true
-    }, {
-      title: '预算单',
-      field: '44',
-      readonly: true
-    }, {
       title: '备注',
       field: 'approveNote'
     }];
