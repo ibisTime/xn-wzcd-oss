@@ -98,6 +98,7 @@ class BankMoneyReceive extends React.Component {
             keyName: 'code',
             valueName: '{{bankName.DATA}}-{{bankcardNumber.DATA}}',
             required: true,
+            initValue: true,
             onChange: (value, data) => {
                 this.props.form.setFieldsValue({
                     bankReceiptNumber: data.bankcardNumber
