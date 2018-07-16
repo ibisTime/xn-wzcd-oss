@@ -83,20 +83,17 @@ class Archives extends React.Component {
             title: '业务员名称',
             field: 'saleUserName'
         }, {
-            title: '当前节点',
-            field: 'pledgeCurNodeCode',
+            title: '状态',
+            field: 'enterFileStatus',
             type: 'select',
-            listCode: 630147,
-            keyName: 'code',
-            valueName: 'name',
-            search: true
+            key: 'enter_file_status'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632145,
+            pageCode: 632148,
             searchParams: {
               roleCode: getRoleCode(),
-              curNodeCodeList: ['010_01', '010_02']
+              enterFileStatus: ['0', '1', '2']
             },
             btnEvent: {
                 entering: (selectedRowKeys, selectedRows) => {
@@ -104,6 +101,8 @@ class Archives extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].status !== '0' && selectedRows[0].status !== '1') {
+                        showWarnMsg('当前状态不可以补录');
                     } else {
                         this.props.history.push(`/loan/archives/enter?code=${selectedRowKeys[0]}`);
                     }

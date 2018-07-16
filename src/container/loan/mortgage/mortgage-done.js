@@ -68,7 +68,7 @@ class MortgageDone extends React.Component {
               handler: (params) => {
                 this.props.doFetching();
                 params.operator = getUserId();
-                fetch(632190, params).then(() => {
+                fetch(632191, params).then(() => {
                   showSucMsg('操作成功');
                   setTimeout(() => {
                     this.props.history.go(-1);
