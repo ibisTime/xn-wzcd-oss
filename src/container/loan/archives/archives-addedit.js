@@ -146,26 +146,6 @@ class ArchivesAddedit extends React.Component {
             [{
                 title: '备注',
                 field: 'fileRemark'
-            }],
-            [{
-                title: '经办人',
-                field: 'operatorName'
-            }, {
-                title: '经办日期',
-                field: 'operateDatetime',
-                type: 'date'
-            }, {
-                title: '经办部门',
-                field: 'operateDepartmentName',
-                type: 'select',
-                listCode: 630106,
-                params: {
-                    typeList: ['2']
-                },
-                keyName: 'code',
-                valueName: 'name',
-                readonly: true,
-                value: '333'
             }]
         ]
     }];

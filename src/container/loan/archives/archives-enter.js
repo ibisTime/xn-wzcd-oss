@@ -196,7 +196,6 @@ class ArchivesAddedit extends React.Component {
             this.props.doFetching();
             params.operator = this.props.pageData.operator;
             params.operateDatetime = this.props.pageData.operateDatetime;
-            params.operateDepartment = this.props.pageData.operateDepartment;
             params.operator = getUserId();
             fetch(632200, params).then(() => {
               showSucMsg('操作成功');
