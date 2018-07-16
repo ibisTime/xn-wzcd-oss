@@ -181,7 +181,12 @@ class Mortgage extends React.Component {
                             content: '抵押开始？',
                             onOk: () => {
                                 this.props.doFetching();
-                                return mortgageStart(key[0]).then(() => {
+                                this.props.doFetching();
+                                let list = [];
+                                for(let i = 0, len = item.length; i < len; i++) {
+                                    list.push(item[i].code);
+                                }
+                                return mortgageStart(list).then(() => {
                                     showWarnMsg('操作成功');
                                     setTimeout(() => {
                                         this.props.getPageData();

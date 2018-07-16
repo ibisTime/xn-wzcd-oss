@@ -53,7 +53,7 @@ class MortgageDone extends React.Component {
             readonly: true
         }, {
             title: '绿大本',
-            field: 'pledgeCommitDatetime',
+            field: 'greenBigSmj',
             type: 'img',
             required: true
         }];
