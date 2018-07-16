@@ -120,7 +120,7 @@ class Mortgage extends React.Component {
                     } else if (item[0].pledgeCurNodeCode === '009_09') {
                         this.props.history.push(`/loan/mortgage/done?code=${item[0]}`);
                     } else if (item[0].pledgeCurNodeCode !== '008_05') {
-                        showWarnMsg('当前不是确认提交银行节点');
+                        showWarnMsg('当前不是抵押完成节点');
                     } else {
                         Modal.confirm({
                             okText: '确认',
