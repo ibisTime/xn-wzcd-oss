@@ -778,6 +778,12 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loan/creditEntering/creditEntering'))
   },
 
+  // 征信录入  录入银行征信结果/详情
+  {
+      path: '/loan/creditEntering/addedit',
+      component: asyncComponent(() => import('container/loan/creditStart-addedit/creditStart-addedit'))
+  },
+
   // 准入审查
   {
       path: '/loan/creditCheck',

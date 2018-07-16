@@ -1,7 +1,7 @@
 import cookies from 'browser-cookies';
 import { message, Modal } from 'antd';
 import { PIC_PREFIX } from './config';
-import './lib/BigDecimal';
+// import './lib/BigDecimal';
 
 /**
  * 保存用户登录信息
@@ -171,18 +171,6 @@ export function moneyFormat(money, format, isRe = true) {
     money = '-' + money;
   }
   return money;
-// var unit = coin === 'SC' ? '1e24' : '1e18';
-// if (isUndefined(money)) {
-//   return '-';
-// }
-// format = typeof format === 'object' ? 8 : format;
-// money = new BigDecimal(money);
-// money = money.divide(new BigDecimal(unit), format, MathContext.ROUND_DOWN).toString();
-// // money = money.replace(/^(.+\..*[^0])0+$/, '$1').replace(/^(.+)\.0+$/, '$1');
-// // 千分位转化
-// var re = /\d{1,3}(?=(\d{3})+$)/g;
-// money = money.replace(/^(\d+)((\.\d+)?)$/, (s, s1, s2) => (s1.replace(re, '$&,') + s2));
-// return money;
 }
 
 /**
@@ -207,14 +195,14 @@ export function moneyReplaceComma(money) {
  * @param a
  * @param b
  */
-export function multiply(a, b) {
-  if (a && b) {
-    let _a = new BigDecimal(a);
-    var _b = new BigDecimal(b);
-    return _a.multiply(_b).toString();
-  }
-  return '';
-}
+// export function multiply(a, b) {
+//   if (a && b) {
+//     let _a = new BigDecimal(a);
+//     var _b = new BigDecimal(b);
+//     return _a.multiply(_b).toString();
+//   }
+//   return '';
+// }
 
 /**
  * 格式化文件地址

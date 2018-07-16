@@ -109,14 +109,12 @@ class DataCollectCollect extends React.Component {
             add: true,
             edit: true,
             delete: true,
+            rowKey: 'id',
             fields: [{
                 title: '原因',
                 field: 'reason'
             }]
         }
-    }, {
-        title: '备注',
-        field: 'remark'
     }];
     return this
       .props

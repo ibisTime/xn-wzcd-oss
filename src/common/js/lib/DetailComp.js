@@ -1189,7 +1189,7 @@ export default class DetailComponent extends React.Component {
     }
 
     getFileComp(item, initVal, rules, getFieldDecorator, isImg) {
-        let initValue = this.getFileInitVal(initVal);
+        let initValue = this.getFileInitVal(initVal, isImg);
         return (
             item.hidden ? null : (
                 <FormItem key={item.field} {...this.getInputItemProps()} label={this.getLabel(item)}>

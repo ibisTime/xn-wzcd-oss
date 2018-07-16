@@ -102,7 +102,7 @@ class CreditEntering extends React.Component {
                     } else if (selectedRows[0].curNodeCode !== '001_02') {
                         showWarnMsg('当前不是录入征信源结果的节点');
                     } else {
-                        this.props.history.push(`/loan/creditStart/addedit?v=1&isEntry=1&code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/loan/creditEntering/addedit?v=1&isEntry=1&code=${selectedRowKeys[0]}`);
                     }
                 },
                 detail: (selectedRowKeys, selectedRows) => {
@@ -111,7 +111,7 @@ class CreditEntering extends React.Component {
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push(`/loan/creditStart/addedit?v=1&code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/loan/creditEntering/addedit?v=1&code=${selectedRowKeys[0]}`);
                     }
                 }
             }

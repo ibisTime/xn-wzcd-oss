@@ -106,9 +106,7 @@ class DataSendRepair extends React.Component {
             field: 'supplementReasonList',
             type: 'o2m',
             options: {
-                add: true,
-                edit: true,
-                delete: true,
+                rowKey: 'id',
                 fields: [{
                     title: '原因',
                     field: 'reason'
@@ -124,9 +122,13 @@ class DataSendRepair extends React.Component {
                 title: '确认',
                 handler: (param) => {
                     let list = this.props.o2mSKeys.supplementReasonList;
-                    if(!list.length) {
+                    if (!list.length) {
                         showSucMsg('请勾选补件原因');
                         return;
+                    }
+                    if (param.supplementReasonList.length !== list.length) {
+                      showSucMsg('补件原因还未勾选完全，无法发件');
+                      return;
                     }
                     param.operator = getUserId();
                     fetch(632153, param).then(() => {

@@ -11,7 +11,8 @@ import {
     getQueryString,
     showSucMsg,
     getUserId,
-    padLeftZero
+    padLeftZero,
+    moneyFormat
 } from 'common/js/util';
 import {
     DetailWrapper
@@ -118,7 +119,7 @@ class InvoiceEnter extends React.Component {
                 let money = this.props.pageData.loanAmount;
                 this.props.setPageData({
                     ...this.props.pageData,
-                    number: (money / v / 1000).toFixed(2)
+                    PreCompanyLoanCs: moneyFormat((money / (v * 1000)) * 1000)
                 });
             },
             amount: true
