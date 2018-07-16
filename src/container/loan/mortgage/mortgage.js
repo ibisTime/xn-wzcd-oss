@@ -86,7 +86,7 @@ class Mortgage extends React.Component {
             field: 'bankReceiptName'
         }, {
             title: '当前节点',
-            field: 'curNodeCode',
+            field: 'pledgeCurNodeCode',
             type: 'select',
             listCode: 630147,
             keyName: 'code',

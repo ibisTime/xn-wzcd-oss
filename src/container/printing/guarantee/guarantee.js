@@ -11,7 +11,8 @@ import {
 } from '@redux/printing/guarantee';
 import {
     showWarnMsg,
-    showSucMsg
+    showSucMsg,
+    getRoleCode
 } from 'common/js/util';
 import {
     listWrapper
@@ -93,7 +94,11 @@ class Guarantee extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632145,
+            pageCode: 632148,
+            searchParams: {
+              roleCode: getRoleCode(),
+              curNodeCodeList: ['007_03']
+            },
             btnEvent: {
                 make: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
