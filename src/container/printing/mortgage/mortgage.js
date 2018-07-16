@@ -107,7 +107,7 @@ class Mortgage extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '009_01' && selectedRows[0].curNodeCode !== '008_02') {
+                    } else if (selectedRows[0].pledgeCurNodeCode !== '008_01') {
                         showWarnMsg('当前节点不是打印岗打印');
                     } else {
                         this.props.history.push(`/printing/mortgage/make?code=${selectedRowKeys[0]}&bankSubbranch=${selectedRowKeys[0].bankSubbranch}`);
