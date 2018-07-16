@@ -172,7 +172,7 @@ class Mortgage extends React.Component {
                 begin: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {
                         showWarnMsg('请选择记录');
-                    } else if (item[0].curNodeCode !== '009_03') {
+                    } else if (item[0].pledgeCurNodeCode !== '009_03') {
                         showWarnMsg('当前节点不是抵押开始');
                     } else {
                         Modal.confirm({
