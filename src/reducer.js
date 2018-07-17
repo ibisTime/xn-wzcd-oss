@@ -400,6 +400,7 @@ import { loanarchivesLocationcodeAddedit } from './redux/loanarchives/locationco
 
 // 车贷档案查询
 import { loanarchivesArchivesquery } from './redux/loanarchives/archivesquery';
+import { loanarchivesArchivesqueryAddedit } from './redux/loanarchives/archivesquery-addedit';
 
 //  离职档案 + 详情
 import { personalarchivesQuitarchives } from './redux/personalarchives/quitarchives';
@@ -782,6 +783,7 @@ export default combineReducers({
   loanarchivesLocationcode,
   loanarchivesLocationcodeAddedit,
   loanarchivesArchivesquery,
+  loanarchivesArchivesqueryAddedit,
   recruitRegister,
   recruitRegisterAddedit,
   recruitRegisterEnter,

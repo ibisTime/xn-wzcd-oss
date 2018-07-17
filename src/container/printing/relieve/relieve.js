@@ -11,7 +11,9 @@ import {
 } from '@redux/printing/relieve';
 import {
     showWarnMsg,
-    showSucMsg
+    showSucMsg,
+    moneyFormat,
+    formatDate
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -47,43 +49,64 @@ class Relieve extends React.Component {
         }, {
             title: '业务公司',
             field: 'companyCode',
-            listCode: 630106,
-            params: {
-                typeList: [1]
-            },
-            type: 'select',
-            keyName: 'code',
-            valueName: 'name',
-            required: true
+            render: (v, d) => {
+                return d.budgetOrder.companyName;
+            }
         }, {
             title: '客户姓名',
             field: 'customerName',
+            render: (v, d) => {
+                return d.budgetOrder.customerName;
+            },
             search: true
         }, {
             title: '贷款银行',
-            field: 'loanbankName'
+            field: 'loanbankName',
+            render: (v, d) => {
+                return d.budgetOrder.loanBankName;
+            }
         }, {
             title: '贷款金额',
-            field: 'loanAmount'
+            field: 'loanAmount',
+            render: (v, d) => {
+                return moneyFormat(d.budgetOrder.loanAmount);
+            }
         }, {
             title: '利率',
-            field: 'bankRate'
+            field: 'bankRate',
+            render: (v, d) => {
+                return d.budgetOrder.bankRate;
+            }
         }, {
             title: '服务费',
-            field: 'fee'
+            field: 'fee',
+            render: (v, d) => {
+                return moneyFormat(d.budgetOrder.fee);
+            }
         }, {
             title: '品牌型号',
-            field: 'carModel'
+            field: 'carModel',
+            render: (v, d) => {
+                return d.budgetOrder.carModel;
+            }
         }, {
             title: '打件日期',
             field: 'guarantPrintDatetime',
-            type: 'date'
+            render: (v, d) => {
+                return formatDate(d.budgetOrder.guarantPrintDatetime);
+            }
         }, {
             title: '打件人',
-            field: 'guarantPrintUser'
+            field: 'guarantPrintUser',
+            render: (v, d) => {
+                return d.budgetOrder.guarantPrintName;
+            }
         }, {
             title: '业务员名称',
-            field: 'saleUserName'
+            field: 'saleUserName',
+            render: (v, d) => {
+                return d.budgetOrder.operatorName;
+            }
         }, {
             title: '当前节点',
             field: 'curNodeCode',

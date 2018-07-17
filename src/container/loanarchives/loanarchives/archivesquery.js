@@ -11,7 +11,8 @@ import {
 } from '@redux/loanarchives/archivesquery';
 import {
     dateTimeFormat,
-    showWarnMsg
+    showWarnMsg,
+    getRoleCode
 } from 'common/js/util';
 import {
     listWrapper
@@ -56,8 +57,17 @@ class Archivesquery extends React.Component {
             required: true
         }, {
             title: '客户姓名',
-            field: 'applyUserName',
+            field: 'customerName',
             search: true
+        }, {
+            title: '手机号',
+            field: 'mobile'
+        }, {
+            title: '合同编号',
+            field: 'pledgeContractCode'
+        }, {
+            title: '品牌型号',
+            field: 'carBrand'
         }, {
             title: '贷款银行',
             field: 'loanBankName'
@@ -66,47 +76,20 @@ class Archivesquery extends React.Component {
             field: 'loanAmount',
             amount: true
         }, {
-            title: '贷款期数',
-            field: 'loanPeriod'
-        }, {
-            title: '业务种类',
-            field: 'bizType',
-            type: 'select',
-            key: 'budget_orde_biz_typer'
-        }, {
-            title: '业务员',
+            title: '业务员名称',
             field: 'saleUserName'
         }, {
-            title: '申请日期',
-            field: 'applyDatetime',
-            rangedate: ['applyDatetimeStart', 'applyDatetimeEnd'],
-            type: 'date',
-            render: dateTimeFormat,
-            search: true
-        }, {
-            title: '当前节点',
-            field: 'curNodeCode',
+            title: '状态',
+            field: 'enterFileStatus',
             type: 'select',
-            listCode: 630147,
-            keyName: 'code',
-            valueName: 'name'
+            key: 'enter_file_status'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632145,
+            pageCode: 632148,
             searchParams: {
-                curNodeCode: '002_23'
-            },
-            btnEvent: {
-                detail: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push(`/biz/archives/addedit?v=1&code=${selectedRowKeys[0]}`);
-                    }
-                }
+              roleCode: getRoleCode(),
+              enterFileStatusList: ['2']
             }
         });
     }

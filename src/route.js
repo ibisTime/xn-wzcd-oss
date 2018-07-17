@@ -1529,6 +1529,11 @@ const ROUTES = [
       path: '/loanarchives/archivesquery',
       component: asyncComponent(() => import('container/loanarchives/loanarchives/archivesquery'))
   },
+  //  车贷档案查询 详情
+  {
+      path: '/loanarchives/archivesquery/addedit',
+      component: asyncComponent(() => import('container/loanarchives/loanarchives/archivesquery-addedit'))
+  },
   //  离职档案
   {
     path: '/personalarchives/quitarchives',
