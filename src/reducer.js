@@ -586,6 +586,7 @@ import { dataReceiveDataSendRepair } from './redux/dataReceive/dataSend-repair';
 import { dataReceiveDataCollect } from './redux/dataReceive/dataCollect';
 import { dataReceiveDataCollectAddEdit } from './redux/dataReceive/dataCollect-addedit';
 import { dataReceiveDataCollectCollect } from './redux/dataReceive/dataCollect-collect';
+import { dataReceiveDataCollectCheck } from './redux/dataReceive/dataCollect-check';
 
 // gps传送
 import { gpsReceiveGpsSend } from './redux/gpsReceive/gpsSend';
@@ -942,6 +943,7 @@ export default combineReducers({
   dataReceiveDataCollect,
   dataReceiveDataCollectAddEdit,
   dataReceiveDataCollectCollect,
+  dataReceiveDataCollectCheck,
   gpsReceiveGpsSend,
   gpsReceiveGpsSendAddEdit,
   gpsReceiveGpsSendSend,
