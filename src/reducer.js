@@ -595,6 +595,7 @@ import { gpsReceiveGpsSendSend } from './redux/gpsReceive/gpsSend-send';
 import { gpsReceiveGpsSendRepair } from './redux/gpsReceive/gpsSend-repair';
 import { dataReceiveGpsCollect } from './redux/gpsReceive/gpsCollect';
 import { dataReceiveGpsCollectCollect } from './redux/gpsReceive/gpsCollect-collect';
+import { dataReceiveGpsCollectCheck } from './redux/gpsReceive/gpsCollect-check';
 
 export default combineReducers({
   user,
@@ -949,5 +950,6 @@ export default combineReducers({
   gpsReceiveGpsSendSend,
   gpsReceiveGpsSendRepair,
   dataReceiveGpsCollect,
-  dataReceiveGpsCollectCollect
+  dataReceiveGpsCollectCollect,
+  dataReceiveGpsCollectCheck
 });

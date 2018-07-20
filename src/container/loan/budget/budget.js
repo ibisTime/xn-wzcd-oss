@@ -63,7 +63,10 @@ class Budget extends React.Component {
             search: true
         }, {
             field: 'bankRate',
-            title: '银行利率'
+            title: '银行利率',
+            return: (v, d) => {
+              return (d.bankRate * 100).toFixed(4) + '%';
+            }
         }, {
             field: 'isAdvanceFund',
             title: '是否垫资',

@@ -111,6 +111,17 @@ class DataCollect extends React.Component {
                     } else {
                         this.props.history.push(`/dataReceive/dataCollect/collect?code=${selectedRowKeys[0]}`);
                     }
+                },
+                check: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].status !== '1') {
+                        showWarnMsg('不是待收件状态');
+                    } else {
+                        this.props.history.push(`/dataReceive/dataCollect/check?code=${selectedRowKeys[0]}`);
+                    }
                 }
             }
         });

@@ -2113,6 +2113,11 @@ const ROUTES = [
   {
     path: '/gpsReceive/gpsCollect/collect',
     component: asyncComponent(() => import('container/gpsReceive/gpsCollect/gpsCollect-collect'))
+  },
+  //  gps收件 gps收件审核
+  {
+    path: '/gpsReceive/gpsCollect/check',
+    component: asyncComponent(() => import('container/gpsReceive/gpsCollect/gpsCollect-check'))
   }
 ];
 

@@ -88,6 +88,14 @@ class CreditStartAddedit extends React.Component {
                     props.doFetching();
                     getIdNoFront(v).then((data) => {
                         if (data.success) {
+                            let birthYear = data.birth.substr(0, 4);
+                            let date = new Date();
+                            let nowYear = date.getFullYear();
+                            let num = nowYear - birthYear;
+                            if(num < 18) {
+                                showWarnMsg('18周岁以下征信不能提交');
+                                return;
+                            }
                             props.form.setFieldsValue({
                                 idNo: data.idNo,
                                 userName: data.realName

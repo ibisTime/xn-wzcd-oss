@@ -61,7 +61,10 @@ class Brand extends React.Component {
         amount: true
       }, {
         title: '银行利率(%)',
-        field: 'bankRate'
+        field: 'bankRate',
+        return: (v, d) => {
+          return (d.bankRate * 100).toFixed(4) + '%';
+        }
       }, {
         title: '期数',
         field: 'periods'
