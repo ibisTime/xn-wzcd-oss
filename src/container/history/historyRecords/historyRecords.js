@@ -65,17 +65,11 @@ class HistoryBusiness extends React.Component {
             search: true
         }, {
             title: '客户姓名',
-            field: 'realName',
-            render: (v, d) => {
-                return d.user.realName;
-            },
+            field: 'customerName',
             search: true
         }, {
             title: '身份证号',
             field: 'idNo',
-            render: (v, d) => {
-                return d.user.idNo;
-            },
             search: true
         }, {
             title: '购车途径',
@@ -114,7 +108,7 @@ class HistoryBusiness extends React.Component {
             field: 'restPeriods'
         }, {
             title: '是否垫资',
-            field: 'loanAmount',
+            field: 'isAdvanceFund',
             amount: true
         }, {
             title: '放款日期',
@@ -132,9 +126,9 @@ class HistoryBusiness extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 630520,
+            pageCode: 632145,
             searchParams: {
-                curNodeCodeList: ['021_20', '021_19', '005_02', '005_04']
+                enterFileStatus: '2'
             }
         });
     }

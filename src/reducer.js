@@ -389,6 +389,7 @@ import { analysisProtect } from './redux/analysis/protect';
 import { analysisReplaceRepay } from './redux/analysis/replaceRepay';
 import { analysisOverdueCollection } from './redux/analysis/overdueCollection';
 import { analysisRiskCustomers } from './redux/analysis/riskCustomers';
+import { analysisSchedule } from './redux/analysis/schedule';
 
 /**
  * 人事
@@ -774,6 +775,7 @@ export default combineReducers({
   analysisReplaceRepay,
   analysisOverdueCollection,
   analysisRiskCustomers,
+  analysisSchedule,
   bizHistoryBusinessManageAddeditAddedit,
   bizSettlement,
   bizSettlementApply,

@@ -745,6 +745,11 @@ const ROUTES = [
     path: '/statistics/riskCustomers',
     component: asyncComponent(() => import('container/analysis/statistics/riskCustomers/riskCustomers'))
   },
+  //  查询分析-进度表
+  {
+    path: '/statisticQuery/schedule',
+    component: asyncComponent(() => import('container/analysis/statisticQuery/schedule/schedule'))
+  },
   // 贷前管理
   // 预算单申请
   {
