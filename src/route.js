@@ -718,17 +718,27 @@ const ROUTES = [
   //  余额明细
   {
     path: '/statistics/balance',
-    component: asyncComponent(() => import('container/analysis/statistic/balancedetail'))
+    component: asyncComponent(() => import('container/analysis/statistics/balancedetail'))
   },
   //  在保余额
   {
-    path: '/statistic/protect',
-    component: asyncComponent(() => import('container/analysis/statistic/protect'))
+    path: '/statistics/protect',
+    component: asyncComponent(() => import('container/analysis/statistics/protect'))
   },
   //  在保余额
   {
-    path: '/statistic/protect/addedit',
-    component: asyncComponent(() => import('container/analysis/statistic/protect-addedit'))
+    path: '/statistics/protect/addedit',
+    component: asyncComponent(() => import('container/analysis/statistics/protect-addedit'))
+  },
+  //  代偿明细表
+  {
+    path: '/statistics/replaceRepay',
+    component: asyncComponent(() => import('container/analysis/statistics/replaceRepay/replaceRepay'))
+  },
+  //  逾期客户清收进度表
+  {
+    path: '/statistics/overdueCollection',
+    component: asyncComponent(() => import('container/analysis/statistics/overdueCollection/overdueCollection'))
   },
   // 贷前管理
   // 预算单申请

@@ -386,6 +386,8 @@ import { postloantoolsInsuranceContinue } from './redux/postloantools/insurance-
  */
 import { bizBalancedetail } from './redux/analysis/balancedetail';
 import { analysisProtect } from './redux/analysis/protect';
+import { analysisReplaceRepay } from './redux/analysis/replaceRepay';
+import { analysisOverdueCollection } from './redux/analysis/overdueCollection';
 
 /**
  * 人事
@@ -766,6 +768,8 @@ export default combineReducers({
   bizLitigationLitigation,
   bizBalancedetail,
   analysisProtect,
+  analysisReplaceRepay,
+  analysisOverdueCollection,
   bizHistoryBusinessManageAddeditAddedit,
   bizSettlement,
   bizSettlementApply,

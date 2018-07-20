@@ -54,7 +54,6 @@ class MortgageDone extends React.Component {
         }, {
             title: '车牌号',
             field: 'greenBigSmj',
-            type: 'img',
             required: true
         }, {
             title: '绿大本',
@@ -64,7 +63,6 @@ class MortgageDone extends React.Component {
         }, {
             title: '绿大本编号',
             field: 'greenBigSmj',
-            type: 'img',
             required: true
         }];
         return this.props.buildDetail({
