@@ -58,7 +58,8 @@ class BankMoneyApply extends React.Component {
             required: true
         }, {
             title: '提交说明',
-            field: 'bankCommitNote'
+            field: 'bankCommitNote',
+            required: true
         }];
         return this.props.buildDetail({
             fields,

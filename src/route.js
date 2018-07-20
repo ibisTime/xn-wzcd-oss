@@ -717,18 +717,33 @@ const ROUTES = [
     //  统计分析模块
   //  余额明细
   {
-    path: '/statistic/balancedetail',
-    component: asyncComponent(() => import('container/analysis/statistic/balancedetail'))
+    path: '/statistics/balance',
+    component: asyncComponent(() => import('container/analysis/statistics/balancedetail'))
   },
   //  在保余额
   {
-    path: '/statistic/protect',
-    component: asyncComponent(() => import('container/analysis/statistic/protect'))
+    path: '/statistics/protect',
+    component: asyncComponent(() => import('container/analysis/statistics/protect'))
   },
   //  在保余额
   {
-    path: '/statistic/protect/addedit',
-    component: asyncComponent(() => import('container/analysis/statistic/protect-addedit'))
+    path: '/statistics/protect/addedit',
+    component: asyncComponent(() => import('container/analysis/statistics/protect-addedit'))
+  },
+  //  代偿明细表
+  {
+    path: '/statistics/replaceRepay',
+    component: asyncComponent(() => import('container/analysis/statistics/replaceRepay/replaceRepay'))
+  },
+  //  逾期客户清收进度表
+  {
+    path: '/statistics/overdueCollection',
+    component: asyncComponent(() => import('container/analysis/statistics/overdueCollection/overdueCollection'))
+  },
+  //  风险客户四级分类表
+  {
+    path: '/statistics/riskCustomers',
+    component: asyncComponent(() => import('container/analysis/statistics/riskCustomers/riskCustomers'))
   },
   // 贷前管理
   // 预算单申请
@@ -1981,6 +1996,11 @@ const ROUTES = [
   {
     path: '/history/dustbin/addedit',
     component: asyncComponent(() => import('container/history/dustbin/dustbin-addedit'))
+  },
+  //  业务管理-历史业务
+  {
+    path: '/history/historyRecords',
+    component: asyncComponent(() => import('container/history/historyRecords/historyRecords'))
   },
   //  风险名单管理
   //  黄名单

@@ -54,6 +54,9 @@ class Summary extends React.Component {
             field: 'code',
             search: true
         }, {
+            title: '业务公司',
+            field: 'code'
+        }, {
             title: '银行',
             field: 'loanBank',
             type: 'select',
@@ -69,11 +72,17 @@ class Summary extends React.Component {
             },
             search: true
         }, {
+            title: '电话',
+            field: 'idNo'
+        }, {
             title: '证件号',
             field: 'idNo',
             render: (v, d) => {
                 return d.user.idNo;
             }
+        }, {
+            title: '车牌号',
+            field: 'idNo'
         }, {
             title: '放款日期',
             field: 'bankFkDatetime',
@@ -107,12 +116,11 @@ class Summary extends React.Component {
             field: 'curOverdueCount',
             search: true
         }, {
+            title: '连续逾期期数',
+            field: 'curOverdueCount'
+        }, {
             title: '累计代偿次数',
             field: 'totalReplaceRepayCount'
-        }, {
-            title: '实际代偿次数',
-            field: 'curReplaceRepayCount',
-            search: true
         }, {
             title: '账单日',
             field: 'billDatetime'
