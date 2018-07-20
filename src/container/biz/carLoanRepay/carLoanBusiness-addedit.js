@@ -90,6 +90,9 @@ class carLoanBusinessAddedit extends React.Component {
       }, {
         title: '银行利率',
         field: 'bankRate',
+        formatter: (v, d) => {
+          return (d.bankRate * 100).toFixed(4) + '%';
+        },
         required: true
       }, {
         title: '贷款开始时间',

@@ -85,17 +85,28 @@ class GpsCollect extends React.Component {
                 status: '1'
             },
             btnEvent: {
-              collect: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else if (selectedRows[0].status !== '1') {
-                    showWarnMsg('不是待收件状态');
-                } else {
-                  this.props.history.push(`/gpsReceive/gpsCollect/collect?code=${selectedRowKeys[0]}`);
+                collect: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].status !== '1') {
+                        showWarnMsg('不是待收件状态');
+                    } else {
+                        this.props.history.push(`/gpsReceive/gpsCollect/collect?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                check: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].status !== '1') {
+                        showWarnMsg('不是待收件状态');
+                    } else {
+                        this.props.history.push(`/gpsReceive/gpsCollect/check?code=${selectedRowKeys[0]}`);
+                    }
                 }
-              }
             }
         });
     }

@@ -83,7 +83,10 @@ class misInvoice extends React.Component {
             field: 'loanBankName'
         }, {
             title: '银行利率',
-            field: 'bankRate'
+            field: 'bankRate',
+            return: (v, d) => {
+              return (d.bankRate * 100).toFixed(4) + '%';
+            }
         }, {
             title: '是否垫资',
             field: 'isAdvanceFund',

@@ -237,6 +237,9 @@ class GuaranteeMake extends React.Component {
                 }, {
                     title: '银行利率',
                     field: 'bankRate',
+                    formatter: (v, d) => {
+                      return (d.bankRate * 100).toFixed(4) + '%';
+                    },
                     readonly: true
                 }, {
                     title: '首付额',

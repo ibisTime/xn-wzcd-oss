@@ -530,14 +530,14 @@ class BudgetAddedit extends React.Component {
                     required: true,
                     onChange: (v) => {
                         this.props.form.setFieldsValue({
-                            bankRate: v
+                            bankRate: (v * 100).toFixed(4) + '%'
                         });
                         this.props.setPageData({
                             ...this.props.pageData,
                             globalRate: this.getGlobalRate({
                                 fee: this.props.form.getFieldValue('fee'),
                                 loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                bankRate: v
+                                bankRate: (v * 100).toFixed(4) + '%'
                             })
                         });
                     }
