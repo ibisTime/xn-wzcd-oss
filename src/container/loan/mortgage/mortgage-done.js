@@ -52,7 +52,17 @@ class MortgageDone extends React.Component {
             field: 'loanBankName',
             readonly: true
         }, {
+            title: '车牌号',
+            field: 'greenBigSmj',
+            type: 'img',
+            required: true
+        }, {
             title: '绿大本',
+            field: 'greenBigSmj',
+            type: 'img',
+            required: true
+        }, {
+            title: '绿大本编号',
             field: 'greenBigSmj',
             type: 'img',
             required: true

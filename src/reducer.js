@@ -557,6 +557,9 @@ import { historyHistoryingAddedit } from './redux/history/historying-addedit';
 import { historyDustbin } from './redux/history/dustbin';
 import { historyDustbinAddedit } from './redux/history/dustbin-addedit';
 
+// 业务管理-历史业务
+import { historyHistoryRecords } from './redux/history/historyRecords';
+
 // 风险名单管理
 // 黑名单
 import { riskBlackList } from './redux/risk/blackList';
@@ -935,6 +938,7 @@ export default combineReducers({
   riskWhiteListAddedit,
   historyDustbin,
   historyDustbinAddedit,
+  historyHistoryRecords,
   dataReceiveDataSend,
   dataReceiveDataSendAddEdit,
   dataReceiveDataSendSend,

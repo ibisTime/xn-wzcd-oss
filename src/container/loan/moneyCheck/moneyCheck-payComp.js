@@ -141,7 +141,8 @@ class AdvMoneyPayComp extends React.Component {
             required: true
         }, {
             title: '意见说明',
-            field: 'makeBillNote'
+            field: 'makeBillNote',
+            required: true
         }];
         return this.props.buildDetail({
             fields,

@@ -717,7 +717,7 @@ const ROUTES = [
     //  统计分析模块
   //  余额明细
   {
-    path: '/statistic/balancedetail',
+    path: '/statistics/balance',
     component: asyncComponent(() => import('container/analysis/statistic/balancedetail'))
   },
   //  在保余额
@@ -1981,6 +1981,11 @@ const ROUTES = [
   {
     path: '/history/dustbin/addedit',
     component: asyncComponent(() => import('container/history/dustbin/dustbin-addedit'))
+  },
+  //  业务管理-历史业务
+  {
+    path: '/history/historyRecords',
+    component: asyncComponent(() => import('container/history/historyRecords/historyRecords'))
   },
   //  风险名单管理
   //  黄名单

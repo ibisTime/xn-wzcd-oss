@@ -187,7 +187,8 @@ class compensatoryCheck extends React.Component {
             ]
         }, {
             title: '审核说明',
-            field: 'remark'
+            field: 'remark',
+            required: true
         }];
         let bizCode = 632331;
 
