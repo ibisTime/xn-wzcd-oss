@@ -55,7 +55,11 @@ class overdueList extends React.Component {
       field: 'periods'
     }, {
       title: '逾期期数',
-      field: 'curPeriods'
+      field: 'curPeriods',
+      render: (v, d) => {
+        console.log('d', d);
+        return 1;
+      }
     }, {
       title: '逾期金额',
       field: 'overdueAmount',

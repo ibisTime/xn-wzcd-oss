@@ -386,6 +386,8 @@ import { postloantoolsInsuranceContinue } from './redux/postloantools/insurance-
  */
 import { bizBalancedetail } from './redux/analysis/balancedetail';
 import { analysisProtect } from './redux/analysis/protect';
+import { analysisReplaceRepay } from './redux/analysis/replaceRepay';
+import { analysisOverdueCollection } from './redux/analysis/overdueCollection';
 
 /**
  * 人事
@@ -556,6 +558,9 @@ import { historyHistoryingAddedit } from './redux/history/historying-addedit';
 // 垃圾箱
 import { historyDustbin } from './redux/history/dustbin';
 import { historyDustbinAddedit } from './redux/history/dustbin-addedit';
+
+// 业务管理-历史业务
+import { historyHistoryRecords } from './redux/history/historyRecords';
 
 // 风险名单管理
 // 黑名单
@@ -765,6 +770,8 @@ export default combineReducers({
   bizLitigationLitigation,
   bizBalancedetail,
   analysisProtect,
+  analysisReplaceRepay,
+  analysisOverdueCollection,
   bizHistoryBusinessManageAddeditAddedit,
   bizSettlement,
   bizSettlementApply,
@@ -937,6 +944,7 @@ export default combineReducers({
   riskWhiteListAddedit,
   historyDustbin,
   historyDustbinAddedit,
+  historyHistoryRecords,
   dataReceiveDataSend,
   dataReceiveDataSendAddEdit,
   dataReceiveDataSendSend,

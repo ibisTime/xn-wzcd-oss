@@ -11,10 +11,10 @@ import {
     getQueryString
 } from 'common/js/util';
 import {
-    DetailWrapper
-} from 'common/js/build-detail';
+    CollapseWrapper
+} from 'component/collapse-detail/collapse-detail';
 
-@DetailWrapper(
+@CollapseWrapper(
     state => state.postloantoolsCompensatoryAddEdit, {
         initStates,
         doFetching,
@@ -163,7 +163,8 @@ class compensatoryAddedit extends React.Component {
             ]
         }, {
             title: '审核说明',
-            field: 'remark'
+            field: 'remark',
+            required: true
         }];
         return this.props.buildDetail({
             fields,

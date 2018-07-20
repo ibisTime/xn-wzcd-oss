@@ -157,9 +157,6 @@ class GuaranteeMake extends React.Component {
                     field: 'engineNo'
                 }],
                 [{
-                    title: '车牌号码',
-                    field: 'carNumber'
-                }, {
                     title: '车辆颜色',
                     field: 'carColor'
                 }, {
