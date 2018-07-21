@@ -78,13 +78,12 @@ class DataSendSend extends React.Component {
         }];
         return this.props.buildDetail({
             fields,
-            code: this.code,
             view: this.view,
             buttons: [{
                 title: '确认',
                 handler: (param) => {
                     param.operator = getUserId();
-                    param.codeList = this.code;
+                    param.codeList = this.code.split(',');
                     delete param.code;
                     fetch(632150, param).then(() => {
                         showSucMsg('操作成功');

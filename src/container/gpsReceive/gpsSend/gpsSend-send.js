@@ -78,14 +78,29 @@ class GpsSendSend extends React.Component {
         }];
         return this.props.buildDetail({
             fields,
-            codeList: this.code,
             view: this.view,
-            editCode: 632150,
-            okText: '确认',
-            beforeSubmit: (params) => {
-                params.operator = getUserId();
-                return params;
-            }
+            buttons: [{
+                title: '确认',
+                handler: (param) => {
+                    param.operator = getUserId();
+                    param.codeList = this.code.split(',');
+                    delete param.code;
+                    fetch(632150, param).then(() => {
+                        showSucMsg('操作成功');
+                        this.props.cancelFetching();
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(this.props.cancelFetching);
+                },
+                check: true,
+                type: 'primary'
+            }, {
+                title: '返回',
+                handler: (param) => {
+                    this.props.history.go(-1);
+                }
+            }]
         });
     }
 }

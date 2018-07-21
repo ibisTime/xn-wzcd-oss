@@ -28,6 +28,10 @@ import { showWarnMsg } from 'common/js/util';
     }
 )
 class GpsSend extends React.Component {
+    constructor(props) {
+        super(props);
+        this.list = [];
+    }
     render() {
         const fields = [{
             title: '客户姓名',

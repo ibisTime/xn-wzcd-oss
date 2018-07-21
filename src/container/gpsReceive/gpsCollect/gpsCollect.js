@@ -41,6 +41,10 @@ import {
     }
 )
 class GpsCollect extends React.Component {
+    constructor(props) {
+        super(props);
+        this.codeList = [];
+    }
     render() {
         const fields = [{
             title: '客户姓名',
@@ -79,13 +83,12 @@ class GpsCollect extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632155,
-            singleSelect: false,
             searchParams: {
                 type: '2',
                 status: '1'
             },
             btnEvent: {
-                check: (selectedRowKeys, selectedRows) => {
+                collect: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
@@ -93,39 +96,39 @@ class GpsCollect extends React.Component {
                     } else if (selectedRows[0].status !== '1') {
                         showWarnMsg('不是待收件状态');
                     } else {
-                        this.props.history.push(`/gpsReceive/gpsCollect/check?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/gpsReceive/gpsCollect/collect?code=${selectedRowKeys[0]}`);
                     }
-                },
-                collect: (key, item) => {
-                  if (!key || !key.length || !item || !item.length) {
-                    showWarnMsg('请选择记录');
-                  } else {
-                    for(let i = 0, len = item.length; i < len; i++) {
-                        if(item[i].status !== '1') {
-                            showWarnMsg('不是待收件状态');
-                            this.codeList = [];
-                            return;
-                        }
-                        this.codeList.push(item[i].code);
-                    }
-                    Modal.confirm({
-                      okText: '确认',
-                      cancelText: '取消',
-                      content: '确定收件？',
-                      onOk: () => {
-                        this.props.doFetching();
-                        return dataCollect(this.codeList).then(() => {
-                          showWarnMsg('操作成功');
-                          setTimeout(() => {
-                              this.props.getPageData();
-                          }, 500);
-                        }).catch(() => {
-                          this.props.cancelFetching();
-                        });
-                      }
-                    });
-                  }
                 }
+                // collect: (key, item) => {
+                //   if (!key || !key.length || !item || !item.length) {
+                //     showWarnMsg('请选择记录');
+                //   } else {
+                //     for(let i = 0, len = item.length; i < len; i++) {
+                //         if(item[i].status !== '1') {
+                //             showWarnMsg('不是待收件状态');
+                //             this.codeList = [];
+                //             return;
+                //         }
+                //         this.codeList.push(item[i].code);
+                //     }
+                //     Modal.confirm({
+                //       okText: '确认',
+                //       cancelText: '取消',
+                //       content: '确定收件？',
+                //       onOk: () => {
+                //         this.props.doFetching();
+                //         return dataCollect(this.codeList).then(() => {
+                //           showWarnMsg('操作成功');
+                //           setTimeout(() => {
+                //               this.props.getPageData();
+                //           }, 500);
+                //         }).catch(() => {
+                //           this.props.cancelFetching();
+                //         });
+                //       }
+                //     });
+                //   }
+                // }
             }
         });
     }

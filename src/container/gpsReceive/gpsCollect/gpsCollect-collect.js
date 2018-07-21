@@ -95,7 +95,10 @@ class GpsCollectCollect extends React.Component {
         buttons: [{
             title: '收件并审核通过',
             handler: (param) => {
+                let codeList = [];
+                codeList.push(this.code);
                 param.operator = getUserId();
+                param.codeList = codeList;
                 param.supplementReason = '';
                 fetch(632151, param).then(() => {
                     this.doSuccess();
@@ -105,6 +108,9 @@ class GpsCollectCollect extends React.Component {
         }, {
             title: '收件待补件',
             handler: (param) => {
+                let codeList = [];
+                codeList.push(this.code);
+                param.codeList = codeList;
                 param.operator = getUserId();
                 if (!param.supplementReason) {
                     showWarnMsg('请选择补件原因');

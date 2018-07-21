@@ -293,6 +293,9 @@ export function convertCurrency(currencyDigits) {
   if (isNaN(currencyDigits)) {
     return '';
   }
+  if(currencyDigits < 0) {
+    currencyDigits = -currencyDigits;
+  }
   var MAXIMUM_NUMBER = 99999999999.99;
   // Predefine the radix characters and currency symbols for output:
   var CN_ZERO = '零';
