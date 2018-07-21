@@ -876,6 +876,12 @@ const ROUTES = [
     component: asyncComponent(() => import('container/loan/moneyCheck/moneyCheck-payComp'))
   },
 
+  //  放款审核 放款名单
+  {
+    path: '/loan/bankMoney/loanList',
+    component: asyncComponent(() => import('container/loan/bankMoney/bankMoney-loanList'))
+  },
+
   //  放款审核
   {
     path: '/loan/bankMoney',

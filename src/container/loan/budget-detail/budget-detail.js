@@ -443,6 +443,23 @@ class BudgetDetail extends React.Component {
             title: '职业及收入情况',
             items: [
                 [{
+                    title: '申请人',
+                    field: 'customerName',
+                    required: true
+                }, {
+                    title: '共还人',
+                    field: 'ghRealName',
+                    required: true
+                }, {
+                    title: '担保人1',
+                    field: 'guarantor1Name',
+                    required: true
+                }, {
+                    title: '担保人2',
+                    field: 'guarantor2Name',
+                    required: true
+                }],
+                [{
                     title: '申请人就职单位',
                     field: 'applyUserCompany',
                     required: true

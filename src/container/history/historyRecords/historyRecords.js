@@ -14,7 +14,8 @@ import {
 } from 'common/js/build-list';
 import {
     showWarnMsg,
-    showSucMsg
+    showSucMsg,
+    formatDate
 } from 'common/js/util';
 import {
     Button,
@@ -42,7 +43,7 @@ class HistoryBusiness extends React.Component {
     render() {
         const fields = [{
             title: '银行',
-            field: 'loanBank',
+            field: 'loanBankName',
             type: 'select',
             listCode: 632057,
             keyName: 'code',
@@ -73,31 +74,30 @@ class HistoryBusiness extends React.Component {
             search: true
         }, {
             title: '购车途径',
-            field: 'loanBank',
+            field: 'shopWay',
             type: 'select',
-            listCode: 632057,
-            keyName: 'code',
-            valueName: '{{bankName.DATA}}-{{fullName.DATA}}',
+            key: 'budget_orde_biz_typer',
             search: true
         }, {
             title: '汽车经销商',
-            field: 'loanAmount',
+            field: 'carDealerCode',
             type: 'select',
+            pageCode: 632065,
+            params: {
+                curNodeCode: '006_02'
+            },
+            keyName: 'code',
+            valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
             search: true
         }, {
             title: '车辆型号',
-            field: 'loanAmount',
-            amount: true
+            field: 'carModel'
         }, {
             title: '车辆价格',
-            field: 'loanAmount',
+            field: 'invoicePrice',
             amount: true
         }, {
             title: '贷款金额',
-            field: 'loanAmount',
-            amount: true
-        }, {
-            title: '剩余欠款',
             field: 'loanAmount',
             amount: true
         }, {
@@ -112,17 +112,27 @@ class HistoryBusiness extends React.Component {
             amount: true
         }, {
             title: '放款日期',
-            field: 'fkDatetime',
-            type: 'date'
+            field: 'updater',
+            render: (v, d) => {
+                if(d.loanOrder !== undefined) {
+                    return formatDate(d.loanOrder.fkDatetime);
+                }
+            }
         }, {
             title: '垫资日期',
-            field: 'fkDatetime'
+            field: 'updater',
+            render: (v, d) => {
+                if(d.loanOrder !== undefined) {
+                    return formatDate(d.loanOrder.fkDatetime);
+                }
+            }
         }, {
-            title: '状态',
-            field: 'loanAmount',
-            amount: true,
+            title: '当前节点',
+            field: 'curNodeCode',
             type: 'select',
-            search: true
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildList({
             fields,

@@ -240,6 +240,7 @@ import { loanMoneyCheckAllBill } from './redux/loan/moneyCheck-allBill';
 import { loanMoneyCheckCompBill } from './redux/loan/moneyCheck-compBill';
 import { loanMoneyCheckPayCar } from './redux/loan/moneyCheck-payCar';
 import { loanMoneyCheckPayComp } from './redux/loan/moneyCheck-payComp';
+import { loanBankMoneyLoanList } from './redux/loan/bankMoney-loanList';
 
 //  放款审核 + 详情 + 确认提交银行 + 确认收款
 import { loanBankMoney } from './redux/loan/bankMoney';
@@ -905,6 +906,7 @@ export default combineReducers({
   loanMoneyCheckCompBill,
   loanMoneyCheckPayCar,
   loanMoneyCheckPayComp,
+  loanBankMoneyLoanList,
   repayments,
   repaymentsAddEdit,
   repaymentsPlan,
