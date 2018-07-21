@@ -115,6 +115,15 @@ class BankMoney extends React.Component {
                         this.props.history.push(`/loan/bankMoney/receive?code=${selectedRowKeys[0]}`);
                     }
                 },
+                loanList: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loan/bankMoney/apply?code=${selectedRowKeys[0]}`);
+                    }
+                },
                 complete: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {
                         showWarnMsg('请选择记录');
