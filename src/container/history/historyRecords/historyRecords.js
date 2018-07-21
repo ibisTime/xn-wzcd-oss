@@ -108,8 +108,7 @@ class HistoryBusiness extends React.Component {
             field: 'restPeriods'
         }, {
             title: '是否垫资',
-            field: 'isAdvanceFund',
-            amount: true
+            field: 'isAdvanceFund'
         }, {
             title: '放款日期',
             field: 'updater',

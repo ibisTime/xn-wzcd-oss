@@ -50,10 +50,6 @@ class AdvMoneyCompBill extends React.Component {
                 this.props.doFetching();
                 fetch(632188, { companyCode: value, curNodeCode: '004_04' }).then((data) => {
                     this.props.setPageData({
-                        totalAdvanceFund: data.totalAdvanceFund,
-                        hasAdvanceFund: data.hasAdvanceFund,
-                        unAdvanceFund: data.unAdvanceFund,
-                        advanceFund: data.advanceFund,
                         advanceFundlist: data.advanceFundlist
                     });
                     this.props.cancelFetching();
