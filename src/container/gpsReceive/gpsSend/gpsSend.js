@@ -82,10 +82,12 @@ class GpsSend extends React.Component {
                     for(let i = 0, len = selectedRows.length; i < len; i++) {
                         if(selectedRows[i].status !== '0') {
                             showWarnMsg('当前不是待发件的状态');
+                            this.list = [];
                             return;
                         }
+                        this.list.push(selectedRows[i].code);
                     }
-                  this.props.history.push(`/gpsReceive/gpsSend/send?code=${selectedRowKeys[0]}&n=${selectedRows[0].userName}`);
+                  this.props.history.push(`/gpsReceive/gpsSend/send?code=${this.list}`);
                 }
               },
               repair: (selectedRowKeys, selectedRows) => {

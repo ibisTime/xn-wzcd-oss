@@ -22,8 +22,7 @@ import {
     Modal
 } from 'antd';
 import {
-    putaway,
-    soldOut
+    dataCollect
 } from 'api/biz';
 
 @listWrapper(
@@ -86,19 +85,6 @@ class GpsCollect extends React.Component {
                 status: '1'
             },
             btnEvent: {
-                collect: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else {
-                        for(let i = 0, len = selectedRows.length; i < len; i++) {
-                            if(selectedRows[i].status !== '1') {
-                                showWarnMsg('不是待收件状态');
-                                return;
-                            }
-                        }
-                        this.props.history.push(`/gpsReceive/gpsCollect/collect?code=${selectedRowKeys[0]}`);
-                    }
-                },
                 check: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
@@ -109,6 +95,36 @@ class GpsCollect extends React.Component {
                     } else {
                         this.props.history.push(`/gpsReceive/gpsCollect/check?code=${selectedRowKeys[0]}`);
                     }
+                },
+                collect: (key, item) => {
+                  if (!key || !key.length || !item || !item.length) {
+                    showWarnMsg('请选择记录');
+                  } else {
+                    for(let i = 0, len = item.length; i < len; i++) {
+                        if(item[i].status !== '1') {
+                            showWarnMsg('不是待收件状态');
+                            this.codeList = [];
+                            return;
+                        }
+                        this.codeList.push(item[i].code);
+                    }
+                    Modal.confirm({
+                      okText: '确认',
+                      cancelText: '取消',
+                      content: '确定收件？',
+                      onOk: () => {
+                        this.props.doFetching();
+                        return dataCollect(this.codeList).then(() => {
+                          showWarnMsg('操作成功');
+                          setTimeout(() => {
+                              this.props.getPageData();
+                          }, 500);
+                        }).catch(() => {
+                          this.props.cancelFetching();
+                        });
+                      }
+                    });
+                  }
                 }
             }
         });
