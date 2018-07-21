@@ -58,8 +58,7 @@ class GuaranteeMake extends React.Component {
                     title: '性别',
                     field: 'customerSex',
                     readonly: true
-                }],
-                [{
+                }, {
                     title: '身份证',
                     field: 'idNo',
                     readonly: true
@@ -71,8 +70,7 @@ class GuaranteeMake extends React.Component {
                     title: '住所',
                     field: 'applyNowAddress',
                     readonly: true
-                }],
-                [{
+                }, {
                     title: '邮政编码',
                     field: 'postcode',
                     required: true
@@ -83,8 +81,7 @@ class GuaranteeMake extends React.Component {
                     title: '手机',
                     field: 'mobile',
                     readonly: true
-                }],
-                [{
+                }, {
                     title: '工作单位',
                     field: 'applyUserCompany',
                     readonly: true
@@ -112,16 +109,14 @@ class GuaranteeMake extends React.Component {
                     title: '性别',
                     field: 'ghSex',
                     readonly: true
-                }],
-                [{
+                }, {
                     title: '手机电话',
                     field: 'ghMobile',
                     mobile: true
                 }, {
                     title: '共还人公司名称',
                     field: 'ghCompanyName'
-                }],
-                [{
+                }, {
                     title: '与客户关系',
                     field: 'applyUserGhrRelation',
                     type: 'select',
@@ -155,16 +150,14 @@ class GuaranteeMake extends React.Component {
                 }, {
                     title: '发动机号码',
                     field: 'engineNo'
-                }],
-                [{
+                }, {
                     title: '车辆颜色',
                     field: 'carColor'
                 }, {
                     title: '品牌型号',
                     field: 'carModel',
                     readonly: true
-                }],
-                [{
+                }, {
                     title: '汽车总价',
                     field: 'originalPrice',
                     amount: true,
@@ -174,8 +167,7 @@ class GuaranteeMake extends React.Component {
                     field: 'invoicePrice',
                     amount: true,
                     readonly: true
-                }],
-                [{
+                }, {
                     title: '汽车经销商名称',
                     field: 'carDealerName',
                     readonly: true
@@ -192,20 +184,19 @@ class GuaranteeMake extends React.Component {
                     title: '贷款银行',
                     field: 'loanBankName',
                     readonly: true
-                }, {
+                }], [{
                     title: '银行名称（支行）',
                     field: 'fullName',
                     formatter: (v, d) => {
                         return d.bankSubbranch.fullName;
                     },
                     readonly: true
-                }],
-                [{
+                }], [{
                     title: '贷款额(小写)',
                     field: 'loanAmount',
                     amount: true,
                     readonly: true
-                }, {
+                }], [{
                     title: '还款卡号',
                     field: 'bankCardNumber'
                 }]
@@ -229,8 +220,7 @@ class GuaranteeMake extends React.Component {
                     field: 'fee',
                     amount: true,
                     readonly: true
-                }],
-                [{
+                }, {
                     title: '月还款额',
                     field: 'monthAmount',
                     amount: true
@@ -248,8 +238,7 @@ class GuaranteeMake extends React.Component {
                         return moneyFormat(d.invoicePrice - d.loanAmount);
                     },
                     readonly: true
-                }],
-                [{
+                }, {
                     title: '总手续费(小写)',
                     field: 'serviceCharge',
                     amount: true,
@@ -278,8 +267,7 @@ class GuaranteeMake extends React.Component {
                     title: '性别',
                     field: 'guarantor1Sex',
                     readonly: true
-                }],
-                [{
+                }, {
                     title: '家庭电话',
                     field: 'guarantorFamilyPhone',
                     mobile: true
@@ -290,8 +278,7 @@ class GuaranteeMake extends React.Component {
                 }, {
                     title: '工作单位',
                     field: 'guarantorCompanyName'
-                }],
-                [{
+                }, {
                     title: '担保人单位电话',
                     field: 'guarantorCompanyPhone',
                     mobile: true
@@ -313,7 +300,7 @@ class GuaranteeMake extends React.Component {
                     listCode: 632046,
                     keyName: 'code',
                     valueName: 'name'
-                }, {
+                }], [{
                     title: '客户分类',
                     field: 'customerType',
                     type: 'select',
@@ -327,14 +314,12 @@ class GuaranteeMake extends React.Component {
                     keyName: 'key',
                     valueName: 'value',
                     readonly: true
-                }],
-                [{
+                }], [{
                     title: '客户具体情况说明',
                     field: 'guarantApplyUserNote',
                     type: 'textarea',
                     normalArea: true
-                }],
-                [{
+                }], [{
                     title: '套打模板',
                     field: 'guarantPrintTemplateId',
                     type: 'select',

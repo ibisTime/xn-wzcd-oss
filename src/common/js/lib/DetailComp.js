@@ -166,6 +166,8 @@ export default class DetailComponent extends React.Component {
                 } else if (!this.props.selectData[f.field]) {
                     this.props.setSelectData({data: f.data, key: f.field});
                 }
+            } else if (f.type === 'o2m' && f.listCode && this.first) {
+                this.getO2MDatas(f);
             }
             children.push(this.getItemByType(f.type, f));
         });
@@ -173,7 +175,15 @@ export default class DetailComponent extends React.Component {
         this.first = false;
         return this.getPageComponent(children);
     }
-
+    getO2MDatas(item) {
+        item.params = item.params || {};
+        fetch(item.listCode, item.params).then((data) => {
+            this.props.setPageData({
+                ...this.props.pageData,
+                [item.field]: data
+            });
+        });
+    }
     getBuildDetail = (code) => {
         this.first = true;
         this.buildDetail({ code });

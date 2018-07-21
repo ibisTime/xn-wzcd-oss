@@ -36,39 +36,39 @@ class yellowListAddedit extends React.Component {
         const fields = [{
             title: '业务编号',
             field: 'code'
-          }, {
+        }, {
             field: 'user',
             title: '贷款人',
             formatter: (v, d) => {
-              return d.user.realName;
+                return d.user.realName;
             }
-          }, {
+        }, {
             title: '逾期日期',
             field: 'repayDatetime',
             type: 'date'
-          }, {
-              title: '代偿金额(元)',
-              field: 'overdueAmount',
-              amount: true,
-              readonly: true
-          }, {
-              title: '代偿是否缴纳',
-              field: 'isRepay',
-              type: 'select',
-              data: [{
-                  key: '0',
-                  value: '否'
-              }, {
-                  key: '1',
-                  value: '是'
-              }],
-              keyName: 'key',
-              valueName: 'value'
-          }, {
+        }, {
+            title: '代偿金额(元)',
+            field: 'overdueAmount',
+            amount: true,
+            readonly: true
+        }, {
+            title: '代偿是否缴纳',
+            field: 'isRepay',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value'
+        }, {
             title: '未还清收成本(元)',
             field: 'restTotalCost',
             amount: true
-          }, {
+        }, {
             title: '清收成本清单',
             field: 'costList',
             type: 'o2m',
@@ -95,6 +95,41 @@ class yellowListAddedit extends React.Component {
                 }, {
                     title: '备注',
                     field: 'remark'
+                }]
+            }
+        }, {
+            title: '流程日志',
+            field: 'list',
+            type: 'o2m',
+            listCode: 630176,
+            params: {
+                refOrder: this.code
+            },
+            options: {
+                fields: [{
+                    title: '业务编号',
+                    field: 'refOrder'
+                }, {
+                    title: '操作人',
+                    field: 'operatorName'
+                }, {
+                    title: '开始时间',
+                    field: 'startDatetime',
+                    type: 'datetime'
+                }, {
+                    title: '结束时间',
+                    field: 'endDatetime',
+                    type: 'datetime'
+                }, {
+                    title: '花费时长',
+                    field: 'speedTime'
+                }, {
+                    title: '当前节点',
+                    field: 'dealNode',
+                    type: 'select',
+                    listCode: 630147,
+                    keyName: 'code',
+                    valueName: 'name'
                 }]
             }
         }];
