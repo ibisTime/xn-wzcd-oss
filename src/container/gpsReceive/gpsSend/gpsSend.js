@@ -70,6 +70,7 @@ class GpsSend extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632155,
+            singleSelect: false,
             searchParams: {
                 type: '2'
             },
@@ -77,11 +78,13 @@ class GpsSend extends React.Component {
               send: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
                   showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else if (selectedRows[0].status !== '0') {
-                  showWarnMsg('当前不是待发件状态');
                 } else {
+                    for(let i = 0, len = selectedRows.length; i < len; i++) {
+                        if(selectedRows[i].status !== '0') {
+                            showWarnMsg('当前不是待发件的状态');
+                            return;
+                        }
+                    }
                   this.props.history.push(`/gpsReceive/gpsSend/send?code=${selectedRowKeys[0]}&n=${selectedRows[0].userName}`);
                 }
               },

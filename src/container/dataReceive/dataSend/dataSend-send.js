@@ -34,36 +34,6 @@ class DataSendSend extends React.Component {
     }
     render() {
         const fields = [{
-            title: '客户姓名',
-            field: 'customerName',
-            readonly: true
-        }, {
-            title: '业务编号',
-            field: 'bizCode',
-            readonly: true
-        }, {
-            title: '类型',
-            field: 'type',
-            type: 'select',
-            key: 'logistics_type',
-            readonly: true
-        }, {
-            title: '发件节点',
-            field: 'fromNodeCode',
-            type: 'select',
-            listCode: 630147,
-            keyName: 'code',
-            valueName: 'name',
-            readonly: true
-        }, {
-            title: '收件节点',
-            field: 'toNodeCode',
-            type: 'select',
-            listCode: 630147,
-            keyName: 'code',
-            valueName: 'name',
-            readonly: true
-        }, {
             title: '寄送方式',
             field: 'sendType',
             type: 'select',
@@ -110,11 +80,12 @@ class DataSendSend extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632156,
             buttons: [{
                 title: '确认',
                 handler: (param) => {
                     param.operator = getUserId();
+                    param.codeList = this.code;
+                    delete param.code;
                     fetch(632150, param).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();

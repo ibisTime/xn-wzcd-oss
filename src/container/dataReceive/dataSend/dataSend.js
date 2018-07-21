@@ -42,6 +42,10 @@ import {
     }
 )
 class DataSend extends React.Component {
+    constructor(props) {
+        super(props);
+        this.list = [];
+    }
     render() {
         const fields = [{
             title: '业务编号',
@@ -101,6 +105,7 @@ class DataSend extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632155,
+            singleSelect: false,
             searchParams: {
                 type: '1'
             },
@@ -108,12 +113,16 @@ class DataSend extends React.Component {
               send: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
                   showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else if (selectedRows[0].status !== '0') {
-                  showWarnMsg('当前不是待发件的状态');
                 } else {
-                  this.props.history.push(`/dataReceive/dataSend/send?code=${selectedRowKeys[0]}`);
+                    for(let i = 0, len = selectedRows.length; i < len; i++) {
+                        if(selectedRows[i].status !== '0') {
+                            showWarnMsg('当前不是待发件的状态');
+                            this.list = [];
+                            return;
+                        }
+                        this.list.push(selectedRows[i].code);
+                    }
+                  this.props.history.push(`/dataReceive/dataSend/send?code=${this.list}`);
                 }
               },
               repair: (selectedRowKeys, selectedRows) => {
