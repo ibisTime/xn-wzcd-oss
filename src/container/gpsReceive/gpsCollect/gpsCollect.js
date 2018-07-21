@@ -80,6 +80,7 @@ class GpsCollect extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632155,
+            singleSelect: false,
             searchParams: {
                 type: '2',
                 status: '1'
@@ -88,11 +89,13 @@ class GpsCollect extends React.Component {
                 collect: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].status !== '1') {
-                        showWarnMsg('不是待收件状态');
                     } else {
+                        for(let i = 0, len = selectedRows.length; i < len; i++) {
+                            if(selectedRows[i].status !== '1') {
+                                showWarnMsg('不是待收件状态');
+                                return;
+                            }
+                        }
                         this.props.history.push(`/gpsReceive/gpsCollect/collect?code=${selectedRowKeys[0]}`);
                     }
                 },

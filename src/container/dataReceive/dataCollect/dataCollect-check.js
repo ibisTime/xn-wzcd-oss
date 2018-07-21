@@ -124,17 +124,7 @@ class DataCollectCheck extends React.Component {
         view: this.view,
         detailCode: 632156,
         buttons: [{
-            title: '收件并审核通过',
-            handler: (param) => {
-                param.operator = getUserId();
-                param.supplementReasonList = [];
-                fetch(632151, param).then(() => {
-                    this.doSuccess();
-                }).catch(this.props.cancelFetching);
-            },
-            check: true
-        }, {
-            title: '收件待补件',
+            title: '补件',
             handler: (param) => {
                 param.operator = getUserId();
                 if (!param.supplementReasonList || !param.supplementReasonList.length) {
@@ -142,6 +132,15 @@ class DataCollectCheck extends React.Component {
                     return false;
                 }
                 fetch(632152, param).then(() => {
+                    this.doSuccess();
+                }).catch(this.props.cancelFetching);
+            },
+            check: true
+        }, {
+            title: '补件',
+            handler: (param) => {
+                param.operator = getUserId();
+                fetch(632158, param).then(() => {
                     this.doSuccess();
                 }).catch(this.props.cancelFetching);
             },

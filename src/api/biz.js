@@ -193,3 +193,10 @@ export function mortgageStart(list) {
     operator: getUserId()
   });
 }
+// 资料传递 批量收件
+export function dataCollect(codeList) {
+  return fetch(632151, {
+    codeList,
+    operator: getUserId()
+  });
+}
