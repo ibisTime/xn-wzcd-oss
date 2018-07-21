@@ -100,6 +100,8 @@ class CollapseDetail extends DetailComp {
                     } else if (!this.props.selectData[field.field]) {
                         this.props.setSelectData({data: field.data, key: field.field});
                     }
+                } else if (field.type === 'o2m' && field.listCode && this.first) {
+                    this.getO2MDatas(field);
                 }
                 comp = this.getItemByType(field.type, field);
                 children1.push(comp);
@@ -107,6 +109,15 @@ class CollapseDetail extends DetailComp {
         });
         this.first = false;
         return this.getPageComponent(children, children1);
+    }
+    getO2MDatas(item) {
+        item.params = item.params || {};
+        fetch(item.listCode, item.params).then((data) => {
+            this.props.setPageData({
+                ...this.props.pageData,
+                [item.field]: data
+            });
+        });
     }
 
     beforeSubmit(err, values) {
