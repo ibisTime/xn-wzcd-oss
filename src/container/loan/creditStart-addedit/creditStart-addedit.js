@@ -435,6 +435,7 @@ class CreditStartAddedit extends React.Component {
             params: {
                 refOrder: this.code
             },
+            hidden: this.isEntry || this.isCheckFirst || this.isCheckSalesman || this.isAddedit,
             options: {
                 fields: [{
                     title: '业务编号',

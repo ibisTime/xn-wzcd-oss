@@ -5,7 +5,7 @@ import { isUndefined, moneyParse, getUserId } from 'common/js/util';
 import DetailComp from 'common/js/lib/DetailComp';
 import ModalDetail from 'common/js/build-modal-detail';
 import {PIC_PREFIX} from 'common/js/config';
-
+import fetch from 'common/js/fetch';
 const { Panel } = Collapse;
 const col1Props = {xs: 32, sm: 24, md: 24, lg: 24};
 const col2Props = {xs: 32, sm: 24, md: 12, lg: 12};
@@ -59,6 +59,8 @@ class CollapseDetail extends DetailComp {
                                                 } else if (!this.props.selectData[f.field]) {
                                                     this.props.setSelectData({data: f.data, key: f.field});
                                                 }
+                                            } else if (f.type === 'o2m' && f.listCode && this.first) {
+                                                this.getO2MDatas(f);
                                             }
                                             let props = fld.length === 1
                                                 ? col1Props
@@ -100,6 +102,8 @@ class CollapseDetail extends DetailComp {
                     } else if (!this.props.selectData[field.field]) {
                         this.props.setSelectData({data: field.data, key: field.field});
                     }
+                } else if (field.type === 'o2m' && field.listCode && this.first) {
+                    this.getO2MDatas(field);
                 }
                 comp = this.getItemByType(field.type, field);
                 children1.push(comp);

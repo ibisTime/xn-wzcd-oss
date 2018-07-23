@@ -6,7 +6,7 @@ import {
   setSelectData,
   setPageData,
   restore
-} from '@redux/gpsReceive/gpsCollect-collect';
+} from '@redux/gpsReceive/gpsCollect-check';
 import {
   getQueryString,
   getUserId,
@@ -24,7 +24,7 @@ import fetch from 'common/js/fetch';
   setPageData,
   restore
 })
-class GpsCollectCollect extends React.Component {
+class GpsCollectCheck extends React.Component {
   constructor(props) {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
@@ -125,4 +125,4 @@ class GpsCollectCollect extends React.Component {
   }
 }
 
-export default GpsCollectCollect;
+export default GpsCollectCheck;

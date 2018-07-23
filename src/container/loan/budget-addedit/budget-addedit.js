@@ -220,7 +220,7 @@ class BudgetAddedit extends React.Component {
         data.budgetOrderCode = this.code;
         data.operator = getUserId();
         data.gpsList = data.budgetOrderGpsList;
-
+        data.bankRate = data.bankRate.substr(0, data.bankRate.length - 1) / 100;
         let repointDetailList = [];
         if (data.repointDetailList1 && data.isAdvanceFund === '0') {
             repointDetailList = repointDetailList.concat({
@@ -543,7 +543,6 @@ class BudgetAddedit extends React.Component {
                     }
                 }, {
                     field: 'bankRate',
-                    positive: true,
                     required: true
                 }],
                 [{
@@ -1661,46 +1660,6 @@ class BudgetAddedit extends React.Component {
                     field: 'otherApplyNote',
                     type: 'textarea',
                     normalArea: true
-                }]
-            ]
-        }, {
-            title: '其他材料',
-            items: [
-                [{
-                    title: '流程日志',
-                    field: 'list',
-                    type: 'o2m',
-                    listCode: 630176,
-                    params: {
-                        refOrder: this.code
-                    },
-                    options: {
-                        fields: [{
-                            title: '业务编号',
-                            field: 'refOrder'
-                        }, {
-                            title: '操作人',
-                            field: 'operatorName'
-                        }, {
-                            title: '开始时间',
-                            field: 'startDatetime',
-                            type: 'datetime'
-                        }, {
-                            title: '结束时间',
-                            field: 'endDatetime',
-                            type: 'datetime'
-                        }, {
-                            title: '花费时长',
-                            field: 'speedTime'
-                        }, {
-                            title: '当前节点',
-                            field: 'dealNode',
-                            type: 'select',
-                            listCode: 630147,
-                            keyName: 'code',
-                            valueName: 'name'
-                        }]
-                    }
                 }]
             ]
         }];

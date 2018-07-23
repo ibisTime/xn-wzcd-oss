@@ -34,10 +34,6 @@ class GpsSendSend extends React.Component {
     }
     render() {
         const fields = [{
-            title: '客户姓名',
-            field: 'userName',
-            readonly: true
-        }, {
             title: '寄送方式',
             field: 'sendType',
             type: 'select',
@@ -82,9 +78,8 @@ class GpsSendSend extends React.Component {
         }];
         return this.props.buildDetail({
             fields,
-            code: this.code,
+            codeList: this.code,
             view: this.view,
-            detailCode: 632156,
             editCode: 632150,
             okText: '确认',
             beforeSubmit: (params) => {
