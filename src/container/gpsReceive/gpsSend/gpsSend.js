@@ -9,8 +9,12 @@ import {
     cancelFetching,
     setSearchData
 } from '@redux/gpsReceive/gpsSend';
-import { listWrapper } from 'common/js/build-list';
-import { showWarnMsg } from 'common/js/util';
+import {
+    listWrapper
+} from 'common/js/build-list';
+import {
+    showWarnMsg
+} from 'common/js/util';
 
 @listWrapper(
     state => ({
@@ -74,37 +78,38 @@ class GpsSend extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632155,
-            singleSelect: false,
             searchParams: {
                 type: '2'
             },
             btnEvent: {
-              send: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else {
-                    for(let i = 0, len = selectedRows.length; i < len; i++) {
-                        if(selectedRows[i].status !== '0') {
-                            showWarnMsg('当前不是待发件的状态');
-                            this.list = [];
-                            return;
-                        }
-                        this.list.push(selectedRows[i].code);
+                send: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        // for (let i = 0, len = selectedRows.length; i < len; i++) {
+                        //     if (selectedRows[i].status !== '0') {
+                        //         showWarnMsg('当前不是待发件的状态');
+                        //         this.list = [];
+                        //         return;
+                        //     }
+                        //     this.list.push(selectedRows[i].code);
+                        // }
+                        this.props.history.push(`/gpsReceive/gpsSend/send?code=${selectedRowKeys[0]}`);
                     }
-                  this.props.history.push(`/gpsReceive/gpsSend/send?code=${this.list}`);
+                },
+                repair: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].status !== '4') {
+                        showWarnMsg('当前不是待补件状态');
+                    } else {
+                        this.props.history.push(`/gpsReceive/gpsSend/repair?code=${selectedRowKeys[0]}&n=${selectedRows[0].userName}`);
+                    }
                 }
-              },
-              repair: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else if (selectedRows[0].status !== '3') {
-                  showWarnMsg('当前不是待补件状态');
-                } else {
-                  this.props.history.push(`/gpsReceive/gpsSend/repair?code=${selectedRowKeys[0]}&n=${selectedRows[0].userName}`);
-                }
-              }
             }
         });
     }

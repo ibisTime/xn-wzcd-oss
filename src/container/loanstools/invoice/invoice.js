@@ -75,7 +75,7 @@ class invoice extends React.Component {
             field: 'fbhStatus',
             type: 'select',
             data: [{
-                key: '1',
+                key: '2',
                 value: '已录入'
             }, {
                 key: '0',

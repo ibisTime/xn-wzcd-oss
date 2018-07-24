@@ -82,8 +82,10 @@ class GpsSendSend extends React.Component {
             buttons: [{
                 title: '确认',
                 handler: (param) => {
+                    let codeList = [];
+                    codeList.push(this.code);
                     param.operator = getUserId();
-                    param.codeList = this.code.split(',');
+                    param.codeList = codeList;
                     delete param.code;
                     fetch(632150, param).then(() => {
                         showSucMsg('操作成功');

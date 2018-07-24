@@ -115,13 +115,15 @@ class BankMoney extends React.Component {
                         this.props.history.push(`/loan/bankMoney/receive?code=${selectedRowKeys[0]}`);
                     }
                 },
-                loanList: (selectedRowKeys, selectedRows) => {
+                sendList: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
                     } else {
-                        this.props.history.push(`/loan/bankMoney/apply?code=${selectedRowKeys[0]}`);
+                        let list = [];
+                        for(let i = 0, len = selectedRows.length; i < len; i++) {
+                            list.push(selectedRows[i].code);
+                        }
+                        this.props.history.push(`/loan/bankMoney/sendList?code=${list}`);
                     }
                 },
                 complete: (key, item) => {

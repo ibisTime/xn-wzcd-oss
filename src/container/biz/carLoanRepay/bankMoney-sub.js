@@ -59,9 +59,6 @@ class bankMoneySub extends React.Component {
             field: 'bankCommitDatetime',
             type: 'date',
             required: true
-        }, {
-            title: '提交说明',
-            field: 'bankCommitNote'
         }];
         return this.props.buildDetail({
             fields,

@@ -92,6 +92,18 @@ class RebatesBill extends React.Component {
             field: 'repointDetailCodeList',
             required: true,
             type: 'o2m',
+            onChange: (data) => {
+                let totalAmount = this.props.pageData.totalAmount;
+                data.map(v => {
+                    if (v.useMoneyPurpose !== '1') {
+                        totalAmount += v.repointAmount;
+                    }
+                });
+                this.props.setPageData({
+                    ...this.props.pageData,
+                    totalAmount: totalAmount
+                });
+            },
             options: {
                 delete: true,
                 scroll: {

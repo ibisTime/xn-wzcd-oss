@@ -137,10 +137,19 @@ class DataCollectCheck extends React.Component {
             },
             check: true
         }, {
-            title: '补件',
+            title: '退件',
             handler: (param) => {
                 param.operator = getUserId();
                 fetch(632158, param).then(() => {
+                    this.doSuccess();
+                }).catch(this.props.cancelFetching);
+            },
+            check: true
+        }, {
+            title: '审核通过',
+            handler: (param) => {
+                param.operator = getUserId();
+                fetch(632154, param).then(() => {
                     this.doSuccess();
                 }).catch(this.props.cancelFetching);
             },

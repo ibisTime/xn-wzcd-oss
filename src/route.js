@@ -878,8 +878,8 @@ const ROUTES = [
 
   //  放款审核 放款名单
   {
-    path: '/loan/bankMoney/loanList',
-    component: asyncComponent(() => import('container/loan/bankMoney/bankMoney-loanList'))
+    path: '/loan/bankMoney/sendList',
+    component: asyncComponent(() => import('container/loan/bankMoney/bankMoney-sendList'))
   },
 
   //  放款审核

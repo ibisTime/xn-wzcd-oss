@@ -1,6 +1,6 @@
 import { commListState } from '../common';
 
-const PREFIX = 'LOANSTOLS_CONTRACT_IMPORT_';
+const PREFIX = 'FINANCE_REBATE_';
 const SET_BUTTON_LIST = PREFIX + 'SET_BUTTON_LIST';
 const LOADING = PREFIX + 'LOADING';
 const CANCEL_LOADING = PREFIX + 'CANCEL_LOADING';
@@ -11,7 +11,7 @@ const SET_SEARCH_PARAM = PREFIX + 'SET_SEARCH_PARAM';
 
 const initState = { ...commListState };
 
-export function loanstoolsContractImport(state = initState, action) {
+export function financeRebate(state = initState, action) {
   switch(action.type) {
     case SET_BUTTON_LIST:
       return {...state, btnList: action.payload};
@@ -32,42 +32,34 @@ export function loanstoolsContractImport(state = initState, action) {
   }
 }
 
-// 显示loading
-export function doFetching() {
-  return { type: LOADING };
-}
-
-// 隐藏loading
-export function cancelFetching() {
-  return { type: CANCEL_LOADING };
-}
-
-// 设置页面的按钮
 export function setBtnList(data) {
   return { type: SET_BUTTON_LIST, payload: data };
 }
 
-// 设置table的数据
+export function doFetching() {
+  return { type: LOADING };
+}
+
+export function cancelFetching() {
+  return { type: CANCEL_LOADING };
+}
+
 export function setTableData(data) {
   return { type: SET_TABLE_DATA, payload: data };
 }
 
-// 设置select框的数据
 export function setSearchData(data) {
   return { type: SET_SEARCH_DATA, payload: data };
 }
 
-// 设置table的分页信息
 export function setPagination(data) {
   return { type: SET_PAGINATION, payload: data };
 }
 
-// 设置搜索框的值
 export function setSearchParam(data) {
   return { type: SET_SEARCH_PARAM, payload: data };
 }
 
-// 清空搜索框的值
 export function clearSearchParam() {
   return setSearchParam({});
 }

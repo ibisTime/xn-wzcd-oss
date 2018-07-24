@@ -56,10 +56,6 @@ class BankMoneyApply extends React.Component {
             field: 'bankCommitDatetime',
             type: 'date',
             required: true
-        }, {
-            title: '提交说明',
-            field: 'bankCommitNote',
-            required: true
         }];
         return this.props.buildDetail({
             fields,

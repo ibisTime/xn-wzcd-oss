@@ -52,6 +52,9 @@ import { financeUnderEnchashmentCheck } from '@redux/finance/underEnchashment-ch
 import { financeEnchashments } from '@redux/finance/enchashments';
 import { financeEnchashmentsAddEdit } from '@redux/finance/enchashments-addedit';
 import { creditAddEdit } from '@redux/demo/credit-addedit';
+// 银行返点菜单
+import { financeRebate } from '@redux/finance/rebate';
+import { financeRebateAddEdit } from '@redux/finance/rebate-addedit';
 
 //  返点支付
 import { carloanfinancePointreturn } from './redux/carloanfinance/pointreturn';
@@ -247,6 +250,7 @@ import { loanBankMoney } from './redux/loan/bankMoney';
 import { loanBankMoneyAddedit } from './redux/loan/bankMoney-addedit';
 import { loanBankMoneyApply } from './redux/loan/bankMoney-apply';
 import { loanBankMoneyReceive } from './redux/loan/bankMoney-receive';
+import { loanBankMoneySendList } from './redux/loan/bankMoney-sendList';
 
 //  车辆抵押 + 详情 + 确认提交银行 + 抵押完成
 import { loanMortgage } from './redux/loan/mortgage';
@@ -886,6 +890,7 @@ export default combineReducers({
   loanBankMoneyAddedit,
   loanBankMoneyApply,
   loanBankMoneyReceive,
+  loanBankMoneySendList,
   loanMortgage,
   loanMortgageAddedit,
   loanMortgageApply,
@@ -965,5 +970,7 @@ export default combineReducers({
   gpsReceiveGpsSendRepair,
   dataReceiveGpsCollect,
   dataReceiveGpsCollectCollect,
-  dataReceiveGpsCollectCheck
+  dataReceiveGpsCollectCheck,
+  financeRebate,
+  financeRebateAddEdit
 });

@@ -62,9 +62,6 @@ class bankMoneyAddedit extends React.Component {
             field: 'receiptPdf',
             type: 'img',
             required: true
-        }, {
-            title: '备注',
-            field: 'remark'
         }];
         return this.props.buildDetail({
             fields,

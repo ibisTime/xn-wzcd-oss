@@ -338,7 +338,7 @@ class GuaranteeMake extends React.Component {
                     check: true,
                     handler: (param) => {
                         param.code = this.code;
-                        param.operater = getUserId();
+                        param.operator = getUserId();
                         this.props.doFetching();
                         let sex = ['', '男', '女'];
                         fetch(632142, param).then((data) => {
