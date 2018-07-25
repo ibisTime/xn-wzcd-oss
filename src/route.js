@@ -245,6 +245,11 @@ const ROUTES = [
     path: '/finance/enchashments/addedit',
     component: asyncComponent(() => import('container/finance/enchashments-addedit/enchashments-addedit'))
   },
+  //  银行返点菜单
+  {
+    path: '/finance/rebate',
+    component: asyncComponent(() => import('container/finance/rebate/rebate'))
+  },
   //  车辆贷后管理
   //  车贷业务管理
   {
@@ -1135,6 +1140,18 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loanstools/rebates/rebates-certain'))
   },
 
+  //  返点支付 分公司总经理审批
+  {
+      path: '/loanstools/rebates/companyCheck',
+      component: asyncComponent(() => import('container/loanstools/rebates/rebates-companyCheck'))
+  },
+
+  //  返点支付 财务审核
+  {
+      path: '/loanstools/rebates/finance',
+      component: asyncComponent(() => import('container/loanstools/rebates/rebates-finance'))
+  },
+
   //  银行合同导入
   {
       path: '/loanstools/contract',
@@ -1145,6 +1162,12 @@ const ROUTES = [
   {
       path: '/loanstools/contract/import',
       component: asyncComponent(() => import('container/loanstools/contract/contract-import'))
+  },
+
+  //  银行合同导入 处理
+  {
+      path: '/loanstools/contract/dispose',
+      component: asyncComponent(() => import('container/loanstools/contract/contract-dispose'))
   },
 
   //  应退按揭款

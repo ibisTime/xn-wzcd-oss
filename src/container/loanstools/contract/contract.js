@@ -10,21 +10,21 @@ import {
     setSearchData
 } from '@redux/loanstools/contract';
 import {
-  showWarnMsg,
-  showSucMsg
+    showWarnMsg,
+    showSucMsg
 } from 'common/js/util';
 import {
-  Button,
-  Upload,
-  Modal
+    Button,
+    Upload,
+    Modal
 } from 'antd';
 import {
     listWrapper
 } from 'common/js/build-list';
 import {
-  lowerFrame,
-  onShelf,
-  sendMsg
+    lowerFrame,
+    onShelf,
+    sendMsg
 } from 'api/biz';
 
 @listWrapper(
@@ -46,55 +46,73 @@ class contract extends React.Component {
     render() {
         const fields = [{
             title: '合同号',
-            field: 'code',
+            field: 'contractCode',
             search: true
         }, {
             title: '客户姓名',
-            field: 'companyCode',
+            field: 'customerName',
             search: true
         }, {
             title: '身份证号',
-            field: 'companyCode'
+            field: 'idNo'
         }, {
             title: '贷款金额',
-            field: 'budgetAmount',
+            field: 'loanAmount',
             amount: true
         }, {
             title: '银行',
-            field: 'receiptAccount',
+            field: 'bankName',
             search: true
         }, {
             title: '账单日',
-            field: 'status',
+            field: 'billDatetime',
             type: 'date'
         }, {
             title: '还款日',
-            field: 'status',
+            field: 'repayBankDate',
             type: 'date'
         }, {
             title: '信用卡号',
-            field: 'status'
+            field: 'bankCardNumber'
         }, {
             title: '合同签订日',
-            field: 'status',
-            type: 'date'
+            field: 'contractSignDate',
+            render: (v, d) => {
+                if (v) {
+                    return v.substr(0, 4) + '-' + v.substr(4, 2) + '-' + v.substr('6, 2');
+                } else {
+                    return '-';
+                }
+            }
         }, {
             title: '导入日期',
-            field: 'status',
-            search: true,
+            field: 'importDatetime',
             type: 'date'
         }, {
             title: '状态',
             field: 'status',
+            type: 'select',
+            key: 'contract_import_status',
             search: true
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632105,
+            pageCode: 632255,
             btnEvent: {
-              import: (selectedRowKeys, selectedRows) => {
-                this.props.history.push(`/loanstools/contract/import?code=${selectedRowKeys[0]}`);
-              }
+                import: (selectedRowKeys, selectedRows) => {
+                    this.props.history.push(`/loanstools/contract/import?code=${selectedRowKeys[0]}`);
+                },
+                dispose: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].status !== '2') {
+                        showWarnMsg('不是不匹配状态');
+                    } else {
+                        this.props.history.push(`/loanstools/contract/dispose?code=${selectedRowKeys[0]}`);
+                    }
+                }
             }
         });
     }

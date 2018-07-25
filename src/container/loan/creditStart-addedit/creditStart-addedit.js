@@ -480,6 +480,7 @@ class CreditStartAddedit extends React.Component {
                     let length = list.length;
                     let arr = [];
                     let userList = params.creditUserList;
+                    delete params.list;
                     for(let i = 0; i < length; i++) {
                         if(list[i] === userList[i].code) {
                             userList[i].isFirstAudit = '1';
@@ -517,6 +518,7 @@ class CreditStartAddedit extends React.Component {
                 title: '退回重新征信',
                 check: true,
                 handler: (params) => {
+                    delete params.list;
                     params.approveResult = '0';
                     params.operator = getUserId();
                     this.props.doFetching();
@@ -542,6 +544,7 @@ class CreditStartAddedit extends React.Component {
                 title: '通过',
                 check: true,
                 handler: (params) => {
+                    delete params.list;
                     for (let i = 0; i < params.creditUserList.length; i++) {
                         if (!params.creditUserList[i].courtNetworkResults) {
                             showWarnMsg('请录入' + params.creditUserList[i].userName + '的法院网查询结果！');
@@ -572,6 +575,7 @@ class CreditStartAddedit extends React.Component {
                 title: '不通过',
                 check: true,
                 handler: (params) => {
+                    delete params.list;
                     let courtNetworkResultsList = [];
                     params.creditUserList.map(v => {
                         courtNetworkResultsList.push({
@@ -606,6 +610,7 @@ class CreditStartAddedit extends React.Component {
                 title: '录入',
                 check: true,
                 handler: (params) => {
+                    delete params.list;
                     let data = {};
                     data.creditCode = this.code;
                     for (let i = 0; i < params.creditUserList.length; i++) {
@@ -635,11 +640,29 @@ class CreditStartAddedit extends React.Component {
 
         if (this.isAddedit) {
             this.buttons = [{
-                title: '确定',
-                check: true,
+                title: '保存',
                 handler: (params) => {
+                    delete params.list;
                     params.creditCode = this.code;
                     params.operator = getUserId();
+                    this.props.doFetching();
+                    let bizCode = this.code ? 632112 : 632110;
+                    fetch(bizCode, params).then(() => {
+                        showSucMsg('操作成功');
+                        this.props.cancelFetching();
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(this.props.cancelFetching);
+                }
+            }, {
+                title: '发送',
+                check: true,
+                handler: (params) => {
+                    delete params.list;
+                    params.creditCode = this.code;
+                    params.operator = getUserId();
+                    params.buttonCode = '1';
                     this.props.doFetching();
                     let bizCode = this.code ? 632112 : 632110;
                     fetch(bizCode, params).then(() => {

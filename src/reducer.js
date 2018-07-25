@@ -314,15 +314,18 @@ import { loanstoolsMisInvoiceCheck } from './redux/loanstools/misInvoice-check';
 import { loanstoolsMisInvoiceCheckTwo } from './redux/loanstools/misInvoice-checkTwo';
 import { loanstoolsMisInvoiceCertain } from './redux/loanstools/misInvoice-certain';
 
-//  返点支付 + 详情 + 制单 + 确认
+//  返点支付 + 详情 + 制单 + 确认 + 财务审核 + 分公司总经理审核
 import { loanstoolsRebates } from './redux/loanstools/rebates';
 import { loanstoolsRebatesAddedit } from './redux/loanstools/rebates-addedit';
 import { loanstoolsRebatesBill } from './redux/loanstools/rebates-bill';
 import { loanstoolsRebatesCertain } from './redux/loanstools/rebates-certain';
+import { loanstoolsRebatesFinance } from './redux/loanstools/rebates-finance';
+import { loanstoolsRebatesCompanyCheck } from './redux/loanstools/rebates-companyCheck';
 
 //  银行合同 + 导入
 import { loanstoolsContract } from './redux/loanstools/contract';
 import { loanstoolsContractImport } from './redux/loanstools/contract-import';
+import { loanstoolsContractDispose } from './redux/loanstools/contract-dispose';
 
 //  应退按揭款 + 详情 + 确认
 import { loanstoolsRefund } from './redux/loanstools/refund';
@@ -736,8 +739,11 @@ export default combineReducers({
   loanstoolsRebatesAddedit,
   loanstoolsRebatesBill,
   loanstoolsRebatesCertain,
+  loanstoolsRebatesFinance,
+  loanstoolsRebatesCompanyCheck,
   loanstoolsContract,
   loanstoolsContractImport,
+  loanstoolsContractDispose,
   loanstoolsRefund,
   loanstoolsRefundAddedit,
   loanstoolsRefundCertain,

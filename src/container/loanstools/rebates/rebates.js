@@ -87,6 +87,24 @@ class rebates extends React.Component {
                     } else {
                         this.props.history.push(`/loanstools/rebates/certain?code=${selectedRowKeys[0]}`);
                     }
+                },
+                companyCheck: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loanstools/rebates/companyCheck?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                finance: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/loanstools/rebates/finance?code=${selectedRowKeys[0]}`);
+                    }
                 }
             }
         });

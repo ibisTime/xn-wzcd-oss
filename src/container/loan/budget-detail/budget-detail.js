@@ -445,19 +445,19 @@ class BudgetDetail extends React.Component {
                 [{
                     title: '申请人',
                     field: 'customerName',
-                    required: true
+                    readonly: true
                 }, {
                     title: '共还人',
                     field: 'ghRealName',
-                    required: true
+                    readonly: true
                 }, {
                     title: '担保人1',
                     field: 'guarantor1Name',
-                    required: true
+                    readonly: true
                 }, {
                     title: '担保人2',
                     field: 'guarantor2Name',
-                    required: true
+                    readonly: true
                 }],
                 [{
                     title: '申请人就职单位',
