@@ -150,7 +150,8 @@ class RebatesCompanyCheck extends React.Component {
             title: '审核说明',
             field: 'approveNote',
             type: 'textarea',
-            normalArea: true
+            normalArea: true,
+            required: true
         }];
         return this.props.buildDetail({
             fields,

@@ -1320,7 +1320,8 @@ class BudgetDetail extends React.Component {
             title: '审核说明',
             type: 'textarea',
             normalArea: true,
-            readonly: false
+            readonly: false,
+            required: true
         }];
 
         if (this.isAreaCheck || this.isCompCheck || this.isCheck) {

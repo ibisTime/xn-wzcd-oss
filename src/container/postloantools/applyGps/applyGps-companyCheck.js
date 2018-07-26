@@ -75,7 +75,8 @@ class applyGpsCompanyCheck extends React.Component {
       }
     }, {
       title: '审核说明',
-      field: 'approveNote'
+      field: 'approveNote',
+      required: true
     }];
     return this.props.buildDetail({
       fields,

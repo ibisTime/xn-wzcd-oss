@@ -97,7 +97,8 @@ class AdvMoneyAreaCheck extends React.Component {
             readonly: true
         }, {
             title: '审核说明',
-            field: 'approveNote'
+            field: 'approveNote',
+            required: true
         }];
         return this.props.buildDetail({
             fields,

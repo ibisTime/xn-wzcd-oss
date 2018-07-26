@@ -126,11 +126,19 @@ class DataCollectCheck extends React.Component {
         buttons: [{
             title: '补件',
             handler: (param) => {
+                let list = this.props.o2mSKeys.supplementReasonList;
                 param.operator = getUserId();
-                if (!param.supplementReasonList || !param.supplementReasonList.length) {
+                if (!list || !list.length) {
                     showWarnMsg('请填写补件原因');
                     return false;
                 }
+                let supplementReasonList = [];
+                for(let i = 0, len = list.length; i < len; i++) {
+                    if(param.supplementReasonList[i].id === list[i]) {
+                        supplementReasonList.push(param.supplementReasonList[i]);
+                    }
+                }
+                param.supplementReasonList = supplementReasonList;
                 fetch(632152, param).then(() => {
                     this.doSuccess();
                 }).catch(this.props.cancelFetching);
