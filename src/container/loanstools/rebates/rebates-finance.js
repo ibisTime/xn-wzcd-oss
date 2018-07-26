@@ -12,6 +12,7 @@ import {
     showSucMsg,
     getUserId
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
@@ -36,21 +37,23 @@ class RebatesFinance extends React.Component {
     render() {
         const fields = [{
             title: '申请公司',
-            field: 'carDealerName'
+            field: 'carDealerName',
+            readonly: true
         }, {
             title: '申请人',
-            field: 'applyUserName'
+            field: 'applyUserName',
+            readonly: true
         }, {
             title: '申请日期',
             field: 'applyDatetime',
-            type: 'date'
+            type: 'date',
+            readonly: true
         }, {
             title: '返点列表',
             field: 'repointDetailCodeList',
             required: true,
             type: 'o2m',
             options: {
-                delete: true,
                 scroll: {
                     x: 1600
                 },
@@ -130,17 +133,19 @@ class RebatesFinance extends React.Component {
             field: 'reason',
             type: 'textarea',
             normalArea: true,
-            required: true
+            readonly: true
         }, {
             title: '结算方式',
             field: 'settleType',
             type: 'select',
-            key: 'settle_way'
+            key: 'settle_way',
+            readonly: true
         }, {
             title: '办理状态',
             field: 'curNodeCode',
             type: 'select',
-            key: 'repoint_status'
+            key: 'repoint_status',
+            readonly: true
         }, {
             title: '审核说明',
             field: 'approveNote',

@@ -50,7 +50,14 @@ class ContractImport extends React.Component {
             dataIndex: 'contractCode'
         }, {
             title: '合同时间',
-            dataIndex: 'contractSignDate'
+            dataIndex: 'contractSignDate',
+            render: (v, d) => {
+                if (v) {
+                    return v.substr(0, 4) + '-' + v.substr(4, 2) + '-' + v.substr('6, 2');
+                } else {
+                    return '-';
+                }
+            }
         }, {
             title: '生成日期',
             dataIndex: 'sctime',

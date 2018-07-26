@@ -21,8 +21,7 @@ import {
     Modal
 } from 'antd';
 import {
-    lowerFrame,
-    onShelf
+    rebateList
 } from 'api/biz';
 
 @listWrapper(
@@ -51,7 +50,7 @@ class Rebate extends React.Component {
             title: '业务公司',
             search: true
         }, {
-            field: 'userName',
+            field: 'customerName',
             title: '客户姓名',
             search: true
         }, {
@@ -72,42 +71,40 @@ class Rebate extends React.Component {
                 return (d.bankRate * 100).toFixed(4) + '%';
             }
         }, {
-            title: '返点金额',
-            field: 'repointAmount',
-            amount: true
-        }, {
             title: '手续费',
             field: 'fee',
             amount: true
         }, {
             title: '类型',
-            field: 'type',
+            field: 'bankRepointStatus',
             type: 'select',
             key: 'bank_repoint_status'
-        }, {
-            title: '用款用途',
-            field: 'useMoneyPurpose',
-            type: 'select',
-            key: 'use_money_purpose'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632295,
+            pageCode: 632145,
             singleSelect: false,
+            searchParams: {
+                bankRepointPage: '1'
+            },
             btnEvent: {
-                lower: (key, item) => {
+                apply: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {
                         showWarnMsg('请选择记录');
-                    } else if (item[0].status !== '1') {
-                        showWarnMsg('该状态不可下架');
+                    } else if (item[0].bankRepointStatus !== '0') {
+                        showWarnMsg('该状态不是未返点');
                     } else {
                         Modal.confirm({
                             okText: '确认',
                             cancelText: '取消',
-                            content: '确定下架？',
+                            content: '确定已返点？',
                             onOk: () => {
                                 this.props.doFetching();
-                                return lowerFrame(key[0]).then(() => {
+                                let list = [];
+                                for(let i = 0, len = item.length; i < len; i++) {
+                                    list.push(item[i].code);
+                                }
+                                return rebateList(list).then(() => {
                                     showWarnMsg('操作成功');
                                     setTimeout(() => {
                                         this.props.getPageData();

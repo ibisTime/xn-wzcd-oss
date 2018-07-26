@@ -77,13 +77,7 @@ class contract extends React.Component {
         }, {
             title: '合同签订日',
             field: 'contractSignDate',
-            render: (v, d) => {
-                if (v) {
-                    return v.substr(0, 4) + '-' + v.substr(4, 2) + '-' + v.substr('6, 2');
-                } else {
-                    return '-';
-                }
-            }
+            type: 'date'
         }, {
             title: '导入日期',
             field: 'importDatetime',

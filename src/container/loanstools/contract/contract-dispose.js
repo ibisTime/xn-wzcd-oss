@@ -79,6 +79,7 @@ class ContractDispose extends React.Component {
                 handler: (param) => {
                     param.code = this.code;
                     param.operator = getUserId();
+                    delete param.loanAmount;
                     this.props.doFetching();
                     fetch(632251, param).then(() => {
                         showSucMsg('操作成功');
