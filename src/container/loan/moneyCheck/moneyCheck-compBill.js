@@ -47,30 +47,38 @@ class AdvMoneyCompBill extends React.Component {
             valueName: 'name',
             required: true,
             onChange: (value) => {
-                this.props.doFetching();
-                fetch(632188, { companyCode: value, curNodeCode: '004_04' }).then((data) => {
+                if (value) {
+                    this.props.doFetching();
+                    fetch(632188, { companyCode: value, curNodeCode: '004_04' }).then((data) => {
+                        this.props.setPageData({
+                            totalAdvanceFund: data.totalAdvanceFund,
+                            hasAdvanceFund: data.hasAdvanceFund,
+                            unAdvanceFund: data.unAdvanceFund,
+                            advanceFundlist: data.advanceFundlist
+                        });
+                        this.props.cancelFetching();
+                    }).catch(this.props.cancelFetching);
+                } else {
                     this.props.setPageData({
-                        totalAdvanceFund: data.totalAdvanceFund,
-                        hasAdvanceFund: data.hasAdvanceFund,
-                        unAdvanceFund: data.unAdvanceFund,
-                        advanceFund: data.advanceFund,
-                        advanceFundlist: data.advanceFundlist
+                        totalAdvanceFund: 0,
+                        hasAdvanceFund: 0,
+                        unAdvanceFund: 0,
+                        advanceFundlist: []
                     });
-                    this.props.cancelFetching();
-                }).catch(this.props.cancelFetching);
+                }
             }
+        }, {
+            title: '请款预算单金额',
+            field: 'hasAdvanceFund',
+            amount: true,
+            readonly: true
         }, {
             title: '垫资总金额',
             field: 'totalAdvanceFund',
             amount: true,
             readonly: true
         }, {
-            title: '已垫资金额',
-            field: 'hasAdvanceFund',
-            amount: true,
-            readonly: true
-        }, {
-            title: '未垫资金额',
+            title: '待垫资金额',
             field: 'unAdvanceFund',
             amount: true,
             readonly: true
@@ -113,17 +121,13 @@ class AdvMoneyCompBill extends React.Component {
             },
             afterDelete: (key, data) => {
                 let useAmount = data.useAmount;
-                let advanceFund = this.props.pageData.advanceFund - useAmount;
+                let unAdvanceFund = this.props.pageData.unAdvanceFund - useAmount;
+                unAdvanceFund = Math.max(unAdvanceFund, 0);
                 this.props.setPageData({
                     ...this.props.pageData,
-                    advanceFund
+                    unAdvanceFund
                 });
             }
-        }, {
-            title: '垫资金额',
-            field: 'advanceFund',
-            amount: true,
-            readonly: true
         }, {
             title: '意见说明',
             field: 'makeBillNote',

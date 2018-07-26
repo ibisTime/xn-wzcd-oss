@@ -95,19 +95,18 @@ class take extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632145,
+            searchParams: {
+              backAdvanceFundPage: 1
+            },
             btnEvent: {
               entering: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/loanstools/take/enter?code=${selectedRowKeys[0]}`);
-                }
+                this.props.history.push(`/loanstools/take/enter`);
               },
-              remind: (key, item) => {
-                if (!key || !key.length || !item || !item.length) {
+              remind: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys || !selectedRowKeys.length || !selectedRows || !selectedRows.length) {
                   showWarnMsg('请选择记录');
+                } else if (selectedRows[0].isSubmitCancel !== '0') {
+                  showWarnMsg('当前业务已经提交作废申请');
                 } else {
                   Modal.confirm({
                     okText: '确认',
@@ -115,7 +114,7 @@ class take extends React.Component {
                     content: '确定发送？',
                     onOk: () => {
                       this.props.doFetching();
-                      return remind(key[0]).then(() => {
+                      return remind(selectedRowKeys[0]).then(() => {
                         this.props.cancelFetching();
                         showWarnMsg('操作成功');
                         setTimeout(() => {
