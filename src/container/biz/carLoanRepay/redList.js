@@ -84,40 +84,68 @@ class redList extends React.Component {
               this.props.history.push(`/biz/litigation/litigation?code=${selectedRowKeys[0]}`);
             }
           },
+          //  申请拖车
           apply: (selectedRowKeys, selectedRows) => {
             if (!selectedRowKeys.length) {
               showWarnMsg('请选择记录');
             } else if (selectedRowKeys.length > 1) {
               showWarnMsg('请选择一条记录');
             } else if (selectedRows[0].curNodeCode !== '021_01') {
-              showWarnMsg('当前节点不是财务打款节点');
+              showWarnMsg('当前节点不是申请拖车节点');
             } else {
               this.props.history.push(`/biz/redList/apply?code=${selectedRowKeys[0]}`);
             }
           },
+          //  风控经理审核
           checkDirector: (selectedRowKeys, selectedRows) => {
             if (!selectedRowKeys.length) {
               showWarnMsg('请选择记录');
             } else if (selectedRowKeys.length > 1) {
               showWarnMsg('请选择一条记录');
             } else if (selectedRows[0].curNodeCode !== '021_02') {
-              showWarnMsg('当前节点不是财务打款节点');
+              showWarnMsg('当前节点不是风控经理审核节点');
             } else {
               this.props.history.push(`/biz/redList/checkDirector?code=${selectedRowKeys[0]}`);
             }
           },
+          //  分公司总经理审查
           compCheck: (selectedRowKeys, selectedRows) => {
             if (!selectedRowKeys.length) {
               showWarnMsg('请选择记录');
             } else if (selectedRowKeys.length > 1) {
               showWarnMsg('请选择一条记录');
-            } else if (selectedRows[0].curNodeCode !== '021_04') {
-              showWarnMsg('当前节点不是财务打款节点');
+            } else if (selectedRows[0].curNodeCode !== '021_03') {
+              showWarnMsg('当前节点不是分公司总经理审查节点');
             } else {
               this.props.history.push(`/biz/redList/compCheck?code=${selectedRowKeys[0]}`);
             }
           },
+          //  风控总监审查
           checkDirectorTwo: (selectedRowKeys, selectedRows) => {
+            if (!selectedRowKeys.length) {
+              showWarnMsg('请选择记录');
+            } else if (selectedRowKeys.length > 1) {
+              showWarnMsg('请选择一条记录');
+            } else if (selectedRows[0].curNodeCode !== '021_04') {
+              showWarnMsg('当前节点不是风控总监审查节点');
+            } else {
+              this.props.history.push(`/biz/redList/checkDirectorTwo?code=${selectedRowKeys[0]}`);
+            }
+          },
+          //  财务经理审核
+          finance: (selectedRowKeys, selectedRows) => {
+            if (!selectedRowKeys.length) {
+              showWarnMsg('请选择记录');
+            } else if (selectedRowKeys.length > 1) {
+              showWarnMsg('请选择一条记录');
+            } else if (selectedRows[0].curNodeCode !== '021_05') {
+              showWarnMsg('当前节点不是财务经理审核节点');
+            } else {
+              this.props.history.push(`/biz/redList/finance?code=${selectedRowKeys[0]}`);
+            }
+          },
+          //  财务打款
+          pay: (selectedRowKeys, selectedRows) => {
             if (!selectedRowKeys.length) {
               showWarnMsg('请选择记录');
             } else if (selectedRowKeys.length > 1) {
@@ -125,38 +153,17 @@ class redList extends React.Component {
             } else if (selectedRows[0].curNodeCode !== '021_06') {
               showWarnMsg('当前节点不是财务打款节点');
             } else {
-              this.props.history.push(`/biz/redList/checkDirectorTwo?code=${selectedRowKeys[0]}`);
-            }
-          },
-          finance: (selectedRowKeys, selectedRows) => {
-            if (!selectedRowKeys.length) {
-              showWarnMsg('请选择记录');
-            } else if (selectedRowKeys.length > 1) {
-              showWarnMsg('请选择一条记录');
-            } else if (selectedRows[0].curNodeCode !== '021_08') {
-              showWarnMsg('当前节点不是财务打款节点');
-            } else {
-              this.props.history.push(`/biz/redList/finance?code=${selectedRowKeys[0]}`);
-            }
-          },
-          pay: (selectedRowKeys, selectedRows) => {
-            if (!selectedRowKeys.length) {
-              showWarnMsg('请选择记录');
-            } else if (selectedRowKeys.length > 1) {
-              showWarnMsg('请选择一条记录');
-            } else if (selectedRows[0].curNodeCode !== '021_10') {
-              showWarnMsg('当前节点不是财务打款节点');
-            } else {
               this.props.history.push(`/biz/redList/pay?code=${selectedRowKeys[0]}`);
             }
           },
+          //  录入拖车结果
           enter: (selectedRowKeys, selectedRows) => {
             if (!selectedRowKeys.length) {
               showWarnMsg('请选择记录');
             } else if (selectedRowKeys.length > 1) {
               showWarnMsg('请选择一条记录');
-            } else if (selectedRows[0].curNodeCode !== '021_11') {
-              showWarnMsg('当前节点不是财务打款节点');
+            } else if (selectedRows[0].curNodeCode !== '021_07') {
+              showWarnMsg('当前节点不是录入拖车结果节点');
             } else {
               this.props.history.push(`/biz/redList/enter?code=${selectedRowKeys[0]}`);
             }

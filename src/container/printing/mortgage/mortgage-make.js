@@ -64,8 +64,8 @@ class MortgageMake extends React.Component {
             field: 'applyNowAddress',
             readonly: true
         }, {
-            title: '担保合同编号',
-            field: 'guaranteeContractCode',
+            title: '合同编号',
+            field: 'bankContractCode',
             readonly: true
         }, {
             title: '账单日',
@@ -222,7 +222,7 @@ class MortgageMake extends React.Component {
                                 ['配偶姓名', data.ghRealName],
                                 ['身份证号码', data.ghIdNo],
                                 ['家庭住址', data.applyNowAddress],
-                                ['合同编号', data.pledgeContractCode],
+                                ['合同编号', data.bankContractCode],
                                 ['车牌号', data.carNumber],
                                 ['车架号', data.frameNo],
                                 ['发动机号', data.engineNo],

@@ -87,7 +87,7 @@ class trailer extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_12') {
+                    } else if (selectedRows[0].curNodeCode !== '021_08') {
                         showWarnMsg('当前节点不是已录入代处理');
                     } else {
                         this.props.history.push(`/biz/trailer/dispose?v=1&code=${selectedRowKeys[0]}`);

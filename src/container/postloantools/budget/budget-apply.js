@@ -44,7 +44,7 @@ class budgetApply extends React.Component {
             title: '业务编号',
             field: 'bizCode',
             type: 'select',
-            pageCode: 630540,
+            pageCode: 630520,
             params: {
                 start: '0',
                 limit: '100'

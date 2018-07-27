@@ -78,9 +78,12 @@ class bankAddedit extends React.Component {
           valueName: 'value',
           required: true
         }, {
-          title: '利率',
+          title: '利率(%)',
           field: 'rate',
           help: '请输入0-1的数字',
+          render: (v, d) => {
+            return (v * 100).toFixed(4) + '%';
+          },
           required: true
         }, {
           title: '说明',
@@ -103,6 +106,9 @@ class bankAddedit extends React.Component {
           showWarnMsg('至少新增一条利率明细！');
           return;
         }
+        // param.bankRateList.map(v => {
+        //   v.rate = v.rate / 100;
+        // });
         let bank = this.props.selectData.bankCode.find(v => v.bankCode === param.bankCode);
         param.bankName = bank.bankName;
         param.updater = getUserId();

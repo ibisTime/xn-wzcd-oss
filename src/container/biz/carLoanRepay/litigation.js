@@ -87,7 +87,7 @@ class litigation extends React.Component {
             fields,
             pageCode: 630520,
             searchParams: {
-              curNodeCodeList: ['021_15', '021_16', '021_17', '021_18', '021_19']
+              curNodeCodeList: ['021_10', '021_11', '021_12', '021_13', '021_14']
             },
             btnEvent: {
                 litigation: (selectedRowKeys, selectedRows) => {
@@ -95,7 +95,7 @@ class litigation extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_15') {
+                    } else if (selectedRows[0].curNodeCode !== '021_10') {
                         showWarnMsg('当前节点不是司法诉讼节点');
                     } else {
                         this.props.history.push(`/biz/litigation/litigation?code=${selectedRowKeys[0]}`);
@@ -106,7 +106,7 @@ class litigation extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_16') {
+                    } else if (selectedRows[0].curNodeCode !== '021_11') {
                         showWarnMsg('当前节点不是司法诉讼节点');
                     } else {
                         this.props.history.push(`/biz/litigation/continue?code=${selectedRowKeys[0]}`);
@@ -117,7 +117,7 @@ class litigation extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_17') {
+                    } else if (selectedRows[0].curNodeCode !== '021_12') {
                         showWarnMsg('当前节点不是司法诉讼节点');
                     } else {
                         this.props.history.push(`/biz/litigation/enter?code=${selectedRowKeys[0]}`);
@@ -128,7 +128,7 @@ class litigation extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_18') {
+                    } else if (selectedRows[0].curNodeCode !== '021_13') {
                         showWarnMsg('当前节点不是司法诉讼节点');
                     } else {
                         this.props.history.push(`/biz/litigation/certain?code=${selectedRowKeys[0]}`);

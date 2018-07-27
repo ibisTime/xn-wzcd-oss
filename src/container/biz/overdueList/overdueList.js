@@ -57,7 +57,7 @@ class overdueList extends React.Component {
       title: '逾期期数',
       field: 'curPeriods',
       render: (v, d) => {
-        return d.user.periods + '-' + v;
+        return d.periods + '-' + v;
       }
     }, {
       title: '逾期金额',
@@ -72,7 +72,7 @@ class overdueList extends React.Component {
       fields,
       pageCode: 630540,
       searchParams: {
-        curNodeCodeList: ['021_03', '021_04', '021_05', '021_06', '021_07', '021_08']
+        curNodeCodeList: ['022_03', '022_04', '022_05', '022_06', '022_07', '022_08']
       },
       btnEvent: {
         message: (key, item) => {

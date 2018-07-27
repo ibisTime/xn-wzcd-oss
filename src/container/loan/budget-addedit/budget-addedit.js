@@ -220,7 +220,7 @@ class BudgetAddedit extends React.Component {
         data.budgetOrderCode = this.code;
         data.operator = getUserId();
         data.gpsList = data.budgetOrderGpsList;
-        data.bankRate = data.bankRate.substr(0, data.bankRate.length - 1) / 100;
+        // data.bankRate = data.bankRate.substr(0, data.bankRate.length - 1) / 100;
         let repointDetailList = [];
         if (data.repointDetailList1 && data.isAdvanceFund === '0') {
             repointDetailList = repointDetailList.concat({
@@ -534,14 +534,14 @@ class BudgetAddedit extends React.Component {
                     required: true,
                     onChange: (v) => {
                         this.props.form.setFieldsValue({
-                            bankRate: (v * 100).toFixed(4) + '%'
+                            bankRate: v
                         });
                         this.props.setPageData({
                             ...this.props.pageData,
                             globalRate: this.getGlobalRate({
                                 fee: this.props.form.getFieldValue('fee'),
                                 loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                bankRate: (v * 100).toFixed(4) + '%'
+                                bankRate: v
                             })
                         });
                     }
