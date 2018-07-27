@@ -101,7 +101,7 @@ class CreditStart extends React.Component {
                             showWarnMsg('当前不是填写征信单或重新上传征信资料的节点');
                             return;
                         }
-                        this.props.history.push(`/loan/creditStart/addedit?isAddedit=1&code=${code}`);
+                        this.props.history.push(`/loan/creditStart/addedit?isAddedit=1&code=${code}&curNodeCode=${selectedRows[0].curNodeCode}`);
                     } else {
                         this.props.history.push(`/loan/creditStart/addedit?isAddedit=1`);
                     }

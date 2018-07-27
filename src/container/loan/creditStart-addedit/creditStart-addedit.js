@@ -35,6 +35,7 @@ class CreditStartAddedit extends React.Component {
         this.isCheckSalesman = !!getQueryString('isCheckSalesman', this.props.location.search);
         // 准入审查
         this.isCheckFirst = !!getQueryString('isCheckFirst', this.props.location.search);
+        this.curNodeCode = getQueryString('curNodeCode', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
         this.newCar = true;
         this.buttons = [];
@@ -646,8 +647,12 @@ class CreditStartAddedit extends React.Component {
                     delete params.list;
                     params.creditCode = this.code;
                     params.operator = getUserId();
+                    params.buttonCode = '0';
                     this.props.doFetching();
                     let bizCode = this.code ? 632112 : 632110;
+                    if(this.curNodeCode === '001_01') {
+                        bizCode = 632110;
+                    }
                     fetch(bizCode, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
@@ -666,6 +671,9 @@ class CreditStartAddedit extends React.Component {
                     params.buttonCode = '1';
                     this.props.doFetching();
                     let bizCode = this.code ? 632112 : 632110;
+                    if(this.curNodeCode === '001_01') {
+                        bizCode = 632110;
+                    }
                     fetch(bizCode, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
