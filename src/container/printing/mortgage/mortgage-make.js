@@ -1,5 +1,5 @@
 import React from 'react';
-import XLSX from 'xlsx';
+import { getWorkbook } from 'common/js/xlsx-util';
 import {
     initStates,
     doFetching,
@@ -247,11 +247,10 @@ class MortgageMake extends React.Component {
                                 ['信用卡名称', pageData.bankSubbranch.creditCardName],
                                 ['所属地区', pageData.bankSubbranch.belongArea]
                             ];
-                            const ws = XLSX.utils.aoa_to_sheet(arr);
-                            const wb = XLSX.utils.book_new();
-                            XLSX.utils.book_append_sheet(wb, ws, '内容');
-                            XLSX.writeFile(wb, '车辆抵押-工商银行.xlsx');
                             showSucMsg('操作成功');
+                            const wb = getWorkbook();
+                            wb.getSheet(arr, '内容');
+                            wb.downloadXls('车辆抵押-工商银行');
                             setTimeout(() => {
                                 this.props.history.go(-1);
                             }, 1000);

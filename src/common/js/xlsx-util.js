@@ -86,22 +86,26 @@ Workbook.prototype.downloadXls = function(name) {
 export function readXls(file) {
   return new Promise((resolve, reject) => {
     try {
-      const reader = new FileReader();
-      const rABS = !!reader.readAsBinaryString;
-      reader.onload = (e) => {
-        const bstr = e.target.result;
-        const wb = XLSX.read(bstr, {
-          type: rABS ? 'binary' : 'array'
-        });
-        const wsname = wb.SheetNames[0];
-        const ws = wb.Sheets[wsname];
-        let data = XLSX.utils.sheet_to_json(ws, { header: 1 });
-        resolve(data);
-      };
-      if (rABS) {
-        reader.readAsBinaryString(file);
+      if (!file) {
+        reject('未选择文件');
       } else {
-        reader.readAsArrayBuffer(file);
+        const reader = new FileReader();
+        const rABS = !!reader.readAsBinaryString;
+        reader.onload = (e) => {
+          const bstr = e.target.result;
+          const wb = XLSX.read(bstr, {
+            type: rABS ? 'binary' : 'array'
+          });
+          const wsname = wb.SheetNames[0];
+          const ws = wb.Sheets[wsname];
+          let data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+          resolve(data);
+        };
+        if (rABS) {
+          reader.readAsBinaryString(file);
+        } else {
+          reader.readAsArrayBuffer(file);
+        }
       }
     } catch(e) {
       reject('文件解析失败，请检查文件是否是excel');

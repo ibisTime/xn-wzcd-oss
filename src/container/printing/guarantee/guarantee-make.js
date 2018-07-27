@@ -1,5 +1,5 @@
 import React from 'react';
-import XLSX from 'xlsx';
+import { getWorkbook } from 'common/js/xlsx-util';
 import {
     initStates,
     doFetching,
@@ -393,11 +393,10 @@ class GuaranteeMake extends React.Component {
                                 ['原车发票价格', moneyReplaceComma(moneyFormat(data.invoicePrice))],
                                 ['原车发票价格大写', moneyUppercase(moneyFormat(data.invoicePrice))]
                             ];
+                            const wb = getWorkbook();
+                            wb.getSheet(arr, '数据');
+                            wb.downloadXls('担保合同-工商银行');
                             showSucMsg('操作成功');
-                            const ws = XLSX.utils.aoa_to_sheet(arr);
-                            const wb = XLSX.utils.book_new();
-                            XLSX.utils.book_append_sheet(wb, ws, '数据');
-                            XLSX.writeFile(wb, '担保合同-工商银行.xlsx');
                             this.props.cancelFetching();
                             setTimeout(() => {
                                 this.props.history.go(-2);

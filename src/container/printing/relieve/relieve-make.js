@@ -1,5 +1,5 @@
 import React from 'react';
-import XLSX from 'xlsx';
+import { getWorkbook } from 'common/js/xlsx-util';
 import {
     initStates,
     doFetching,
@@ -94,10 +94,9 @@ class RelieveMake extends React.Component {
                                 ['主贷人姓名', data.realName],
                                 ['车牌号', data.carNumber]
                             ];
-                            const ws = XLSX.utils.aoa_to_sheet(arr);
-                            const wb = XLSX.utils.book_new();
-                            XLSX.utils.book_append_sheet(wb, ws, '内容');
-                            XLSX.writeFile(wb, '解除抵押-' + data.realName + '.xlsx');
+                            const wb = getWorkbook();
+                            wb.getSheet(arr, '内容');
+                            wb.downloadXls('解除抵押-' + data.realName);
                             showSucMsg('操作成功');
                         }).catch(this.props.cancelFetching);
                     }
