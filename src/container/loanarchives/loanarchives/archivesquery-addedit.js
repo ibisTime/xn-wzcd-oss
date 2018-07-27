@@ -87,7 +87,7 @@ class ArchivesqueryAddedit extends React.Component {
             }],
             [{
                 title: '合同编号',
-                field: 'pledgeContractCode'
+                field: 'bankContractCode'
             }, {
                 title: '登记证书号',
                 field: 'regCertificateCode'

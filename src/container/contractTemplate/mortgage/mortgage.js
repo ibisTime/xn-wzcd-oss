@@ -63,7 +63,7 @@ class Mortgage extends React.Component {
             field: 'mobile'
         }, {
             title: '合同编号',
-            field: 'pledgeContractCode'
+            field: 'bankContractCode'
         }, {
             title: '品牌型号',
             field: 'carBrand'

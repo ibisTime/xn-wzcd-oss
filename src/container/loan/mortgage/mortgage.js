@@ -67,7 +67,7 @@ class Mortgage extends React.Component {
             search: true
         }, {
             title: '合同编号',
-            field: 'pledgeContractCode',
+            field: 'bankContractCode',
             hidden: true
         }, {
             title: '贷款银行',
