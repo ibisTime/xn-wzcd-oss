@@ -64,7 +64,7 @@
   "devDependencies": {
     "@antv/data-set": "^0.8.9",
     "bizcharts": "^3.1.8",
-    "xlsx": "^0.12.9"
+    "xlsx": "wlqsltz/js-xlsx"
   },
   "scripts": {
     "start": "node scripts/start.js",

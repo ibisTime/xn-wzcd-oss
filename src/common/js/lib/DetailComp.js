@@ -7,7 +7,7 @@ import {
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import E from 'wangeditor';
-import XLSX from 'xlsx';
+import { getWorkbook } from 'common/js/xlsx-util';
 import { getDictList } from 'api/dict';
 import { getQiniuToken } from 'api/general';
 import {
@@ -793,10 +793,9 @@ export default class DetailComponent extends React.Component {
                             bodys.push(temp);
                         });
                         let result = [titles].concat(bodys);
-                        const ws = XLSX.utils.aoa_to_sheet(result);
-                        const wb = XLSX.utils.book_new();
-                        XLSX.utils.book_append_sheet(wb, ws, 'SheetJS');
-                        XLSX.writeFile(wb, item.title + '-表格导出.xlsx');
+                        const wb = getWorkbook();
+                        wb.getSheet(this.state.data, 'SheetJS');
+                        wb.downloadXls(item.title);
                     }}
                 >导出</Button> : null}
                 {item.options.check ? <Button
