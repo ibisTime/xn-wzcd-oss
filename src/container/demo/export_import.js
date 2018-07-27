@@ -1,15 +1,6 @@
 import React from 'react';
-import XLSX from 'xlsx';
 import { Button } from 'antd';
-
-function makeCols(refstr) {
-  var o = [];
-  var range = XLSX.utils.decode_range(refstr);
-  for(var i = 0; i <= range.e.c; ++i) {
-    o.push({ name: XLSX.utils.encode_col(i), key: i });
-  }
-  return o;
-}
+import { getWorkbook, readXls } from 'common/js/xlsx-util';
 
 class ExportImport extends React.Component {
   constructor(props) {
@@ -17,38 +8,61 @@ class ExportImport extends React.Component {
     this.handleExport = this.handleExport.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      data: [],
-      cols: []
+      data: []
     };
   }
   handleExport() {
-    const ws = XLSX.utils.aoa_to_sheet(this.state.data);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'SheetJS');
-    XLSX.writeFile(wb, 'sheetjs.xlsx');
+    const wb = getWorkbook();
+    var ws = wb.getSheet(this.state.data, '数据');
+    var wscols = [{
+      wch: 20
+    }, {
+      wch: 20
+    }, {
+      wch: 20
+    }, {
+      wch: 20
+    }];
+    var wsrows = [{
+      hpx: 1
+    }, {
+      hpt: 100
+    }];
+    ws['!cols'] = wscols;
+    ws['!rows'] = wsrows;
+    ws['!merges'] = [{
+      s: {
+        c: 1,
+        r: 1
+      },
+      e: {
+        c: 2,
+        r: 1
+      }
+    }];
+    ws['B2'].s = {
+      fill: {
+        fgColor: {
+          rgb: 'FFFF00'
+        }
+      },
+      alignment: {
+        horizontal: 'center'
+      }
+    };
+    ws['B21'].f = '=B15*B12/100';
+    wb.downloadXls('担保合同');
   }
   handleChange(files) {
     files = files.target.files;
     if (!files || !files.length) {
       return;
     }
-    let file = files[0];
-    const reader = new FileReader();
-    const rABS = !!reader.readAsBinaryString;
-    reader.onload = (e) => {
-      const bstr = e.target.result;
-      const wb = XLSX.read(bstr, { type: rABS ? 'binary' : 'array' });
-      const wsname = wb.SheetNames[0];
-      const ws = wb.Sheets[wsname];
-      let data = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      this.setState({ data: data, cols: makeCols(ws['!ref']) });
-      console.log(data);
-    };
-    if (rABS) {
-      reader.readAsBinaryString(file);
-    } else {
-      reader.readAsArrayBuffer(file);
-    }
+    readXls(files[0]).then(data => {
+      this.setState({ data });
+    }).catch((msg) => {
+      alert(msg);
+    });
   }
   render() {
     return (
@@ -56,17 +70,14 @@ class ExportImport extends React.Component {
         <input type="file" onChange={this.handleChange}/>
         <Button onClick={this.handleExport}>导出</Button>
         <table className="table table-striped">
-          <thead>
-            <tr>{this.state.cols.map(c => <th key={c.key}>{c.name}</th>)}</tr>
-          </thead>
           <tbody>
             {this.state.data.map((r, i) => <tr key={i}>
-              {this.state.cols.map(c => <td key={c.key}>{ r[c.key] }</td>)}
+              {r.map((c, j) => <td key={j}>{c}</td>)}
             </tr>)}
           </tbody>
         </table>
       </div>
-    );
+      );
   }
 }
 

@@ -11,7 +11,7 @@ import {
     onShelf,
     sendMsg
 } from 'api/biz';
-import XLSX from 'xlsx';
+import { readXls } from 'common/js/xlsx-util';
 import {Form, Select, Upload, Button, Icon, Table} from 'antd';
 import fetch from 'common/js/fetch';
 import {tailFormItemLayout} from 'common/js/config';
@@ -192,18 +192,7 @@ class ContractImport extends React.Component {
     }
 
     handleChange = (file) => {
-        const reader = new FileReader();
-        const rABS = !!reader.readAsBinaryString;
-        reader.onload = (e) => {
-            const bstr = e.target.result;
-            const wb = XLSX.read(bstr, {
-                type: rABS ? 'binary' : 'array'
-            });
-            const wsname = wb.SheetNames[0];
-            const ws = wb.Sheets[wsname];
-            let XLSXData = XLSX.utils.sheet_to_json(ws, {
-                header: 1
-            });
+        readXls(file).then(XLSXData => {
             // for (let i = XLSXData.length; i > 0;) {
             //     if (XLSXData[--i].length) {
             //         break;
@@ -277,12 +266,7 @@ class ContractImport extends React.Component {
             this.setState({
                 data: data
             });
-        };
-        if (rABS) {
-            reader.readAsBinaryString(file);
-        } else {
-            reader.readAsArrayBuffer(file);
-        }
+        }).catch(msg => showWarnMsg(msg));
     }
 
     // 确认导入

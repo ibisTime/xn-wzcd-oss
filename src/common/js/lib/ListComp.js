@@ -1,5 +1,5 @@
 import React from 'react';
-import XLSX from 'xlsx';
+import { getWorkbook } from 'common/js/xlsx-util';
 import { Form, Select, DatePicker, Input, Button, Table } from 'antd';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
@@ -168,10 +168,9 @@ export default class ListComponent extends React.Component {
         bodys.push(temp);
       });
       let result = [titles].concat(bodys);
-      const ws = XLSX.utils.aoa_to_sheet(result);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'SheetJS');
-      XLSX.writeFile(wb, '表格导出.xlsx');
+      const wb = getWorkbook();
+      wb.getSheet(result, 'SheetJS');
+      wb.downloadXls('表格导出');
       this.props.cancelFetching();
     }).catch(this.props.cancelFetching);
   }
