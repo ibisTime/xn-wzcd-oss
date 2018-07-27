@@ -311,7 +311,7 @@ export default class ListComponent extends React.Component {
       default:
         btnEvent[url] && btnEvent[url](this.state.selectedRowKeys, this.state.selectedRows);
     }
-    this.setState({ selectedRowKeys: [] });
+    this.setState({ selectedRowKeys: [], selectedRows: [] });
   }
   handleTableChange = (pagination) => {
     this.getPageData(pagination.current);

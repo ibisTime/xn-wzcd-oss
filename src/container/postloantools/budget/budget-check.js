@@ -81,7 +81,8 @@ class budgetCheck extends React.Component {
             readonly: true
         }, {
             title: '审核说明',
-            field: 'financeCheckNote'
+            field: 'financeCheckNote',
+            required: true
         }];
         return this.props.buildDetail({
             fields,

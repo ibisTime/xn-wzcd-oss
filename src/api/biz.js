@@ -200,3 +200,10 @@ export function dataCollect(codeList) {
     operator: getUserId()
   });
 }
+// 银行返点菜单 已返点
+export function rebateList(codeList) {
+  return fetch(632292, {
+    codeList,
+    operator: getUserId()
+  });
+}

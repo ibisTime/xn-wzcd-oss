@@ -292,6 +292,10 @@ class BudgetAddedit extends React.Component {
                     readonly: true,
                     required: true
                 }, {
+                    title: '客户性别',
+                    field: 'customerSex',
+                    readonly: true
+                }, {
                     title: '业务编号',
                     field: 'code',
                     readonly: true,
@@ -707,6 +711,23 @@ class BudgetAddedit extends React.Component {
         }, {
             title: '职业及收入情况',
             items: [
+                [{
+                    title: '申请人',
+                    field: 'customerName',
+                    readonly: true
+                }, {
+                    title: '共还人',
+                    field: 'ghRealName',
+                    readonly: true
+                }, {
+                    title: '担保人1',
+                    field: 'guarantor1Name',
+                    readonly: true
+                }, {
+                    title: '担保人2',
+                    field: 'guarantor2Name',
+                    readonly: true
+                }],
                 [{
                     title: '申请人就职单位',
                     field: 'applyUserCompany',
@@ -1709,7 +1730,8 @@ class BudgetAddedit extends React.Component {
             title: '审核说明',
             type: 'textarea',
             normalArea: true,
-            readonly: false
+            readonly: false,
+            required: true
         }];
 
         if (this.isAreaCheck || this.isCompCheck || this.isCheck) {

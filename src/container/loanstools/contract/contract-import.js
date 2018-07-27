@@ -1,23 +1,11 @@
 import React from 'react';
 import {
-    setTableData,
-    setPagination,
-    setBtnList,
-    setSearchParam,
-    clearSearchParam,
-    doFetching,
-    cancelFetching,
-    setSearchData
-} from '@redux/loanstools/contract-import';
-import {
     showWarnMsg,
     showSucMsg,
     tempString,
-    moneyFormat
+    moneyFormat,
+    getUserId
 } from 'common/js/util';
-import {
-    listWrapper
-} from 'common/js/build-list';
 import {
     lowerFrame,
     onShelf,
@@ -31,116 +19,176 @@ import {tailFormItemLayout} from 'common/js/config';
 const {Item: FormItem} = Form;
 const {Option} = Select;
 
-@listWrapper(
-    state => ({
-        ...state.loanstoolsContractImport,
-        parentCode: state.menu.subMenuCode
-    }), {
-        setTableData,
-        clearSearchParam,
-        doFetching,
-        setBtnList,
-        cancelFetching,
-        setPagination,
-        setSearchParam,
-        setSearchData
-    }
-)
-
+@Form.create()
 class ContractImport extends React.Component {
     constructor(props) {
         super(props);
-        let cols = [{
+        let ICBCcols = [{
+            title: '序号',
+            dataIndex: 'id'
+        }, {
             title: '客户姓名',
-            dataIndex: 'realName'
+            dataIndex: 'customerName'
         }, {
-            title: '身份证',
-            dataIndex: 'idNo'
-        }, {
-            title: '贷款金额',
+            title: '贷款额',
             dataIndex: 'loanAmount',
             render: moneyFormat
         }, {
-            title: '总期数',
-            dataIndex: 'periods'
+            title: '卡号',
+            dataIndex: 'bankCardNumber'
         }, {
-            title: '剩余金额',
-            dataIndex: 'remainAmount',
-            render: moneyFormat
+            title: '账单日',
+            dataIndex: 'billDatetime'
         }, {
-            title: '逾期金额',
-            dataIndex: 'overdueAmount',
-            render: moneyFormat
+            title: '放款时间',
+            dataIndex: 'repayBankDate'
         }, {
-            title: '放款日期',
-            dataIndex: 'fkDatetime',
+            title: '利率',
+            dataIndex: 'bankRate'
+        }, {
+            title: '合同编号',
+            dataIndex: 'contractCode'
+        }, {
+            title: '合同时间',
+            dataIndex: 'contractSignDate',
+            render: (v, d) => {
+                if (v) {
+                    return v.substr(0, 4) + '-' + v.substr(4, 2) + '-' + v.substr('6, 2');
+                } else {
+                    return '-';
+                }
+            }
+        }, {
+            title: '生成日期',
+            dataIndex: 'sctime',
             type: 'date'
         }, {
-            title: '批量日期',
-            dataIndex: 'batchDatetime',
-            type: 'date'
+            title: '客户编号',
+            dataIndex: 'userCode'
+        }, {
+            title: '身份证号',
+            dataIndex: 'idNo'
         }];
-        // let ICBCcols = [{
-        //     title: '序号',
-        //     field: 'id'
-        // }, {
-        //     title: '客户姓名',
-        //     field: 'customerName'
-        // }, {
-        //     title: '贷款额',
-        //     field: 'loanAmount'
-        // }, {
-        //     title: '卡号',
-        //     field: 'bankCardNumber'
-        // }, {
-        //     title: '账单日',
-        //     field: 'billDatetime'
-        // }, {
-        //     title: '放款时间',
-        //     field: 'bankCard'
-        // }, {
-        //     title: '利率',
-        //     field: 'bankRate'
-        // }, {
-        //     title: '合同编号',
-        //     field: 'contractCode'
-        // }, {
-        //     title: '合同时间',
-        //     field: 'contractSignDate',
-        //     type: 'time'
-        // }, {
-        //     title: '生成日期',
-        //     field: 'bankCard',
-        //     type: 'date'
-        // }, {
-        //     title: '客户编号',
-        //     field: 'bankCard'
-        // }, {
-        //     title: '身份证号',
-        //     field: 'idNo'
-        // }]
+        let CCBcols = [{
+            title: '放款时间',
+            dataIndex: 'repayBankDate'
+        }, {
+            title: '客户姓名',
+            dataIndex: 'customerName'
+        }, {
+            title: '贷款额',
+            dataIndex: 'loanAmount',
+            render: moneyFormat
+        }, {
+            title: '卡号',
+            dataIndex: 'bankCardNumber'
+        }, {
+            title: '身份证号',
+            dataIndex: 'idNo'
+        }, {
+            title: '合同编号',
+            dataIndex: 'contractCode'
+        }, {
+            title: '合同时间',
+            dataIndex: 'contractSignDate'
+        }];
+        let BOCcols = [{
+            title: '经销商',
+            dataIndex: 'carDealerName'
+        }, {
+            title: '信用卡',
+            dataIndex: 'bankCardTime'
+        }, {
+            title: '受理时间',
+            dataIndex: 'receiveTime'
+        }, {
+            title: '合同编号',
+            dataIndex: 'contractCode'
+        }, {
+            title: '销售员',
+            dataIndex: 'sealName'
+        }, {
+            title: '客户姓名',
+            dataIndex: 'customerName'
+        }, {
+            title: '身份证号',
+            dataIndex: 'idNo'
+        }, {
+            title: '卡号',
+            dataIndex: 'bankCardNumber'
+        }, {
+            title: '账单日',
+            dataIndex: 'billDatetime'
+        }, {
+            title: '发票价格',
+            dataIndex: 'invoicePrice'
+        }, {
+            title: '贷款额',
+            dataIndex: 'loanAmount',
+            render: moneyFormat
+        }, {
+            title: '刷卡日期',
+            dataIndex: 'useTime'
+        }, {
+            title: '手续费',
+            dataIndex: 'fee'
+        }, {
+            title: '担保手续费',
+            dataIndex: 'dbFee'
+        }, {
+            title: '入账金额',
+            dataIndex: 'receiveMoney'
+        }, {
+            title: '手续费率',
+            dataIndex: 'feeRate'
+        }, {
+            title: '刷卡期数',
+            dataIndex: 'cardPeriods'
+        }, {
+            title: '合同签订日',
+            dataIndex: 'contractSignDate'
+        }, {
+            title: '抵押状态',
+            dataIndex: 'status'
+        }, {
+            title: '备注',
+            dataIndex: 'remark'
+        }, {
+            title: '结清时间',
+            dataIndex: 'closeDatetime'
+        }, {
+            title: '收款人',
+            dataIndex: 'receivePeople'
+        }, {
+            title: '备注',
+            dataIndex: 'remark1'
+        }, {
+            title: '征信未移入',
+            dataIndex: 'noRemove'
+        }];
         this.state = {
             data: [],
-            cols: cols,
+            ICBCcols: ICBCcols,
+            CCBcols: CCBcols,
+            BOCcols: BOCcols,
             fileList: [],
-            loanBank: [{
+            loanBank: {
                 title: '贷款银行编号',
                 field: 'loanBankCode',
                 keyName: 'code',
                 valueName: '{{bankName.DATA}}-{{abbrName.DATA}}'
-            }],
-            loanBankData: []
+            },
+            loanBankData: [],
+            bankType: ''
         };
     }
 
     componentDidMount() {
-        this.props.doFetching();
         fetch(632057, {}).then((data) => {
             this.setState({
                 loanBankData: data
             });
-            this.props.cancelFetching();
-        }).catch(this.props.cancelFetching);
+        });
     }
 
     handleChange = (file) => {
@@ -148,26 +196,87 @@ class ContractImport extends React.Component {
         const rABS = !!reader.readAsBinaryString;
         reader.onload = (e) => {
             const bstr = e.target.result;
-            const wb = XLSX.read(bstr, {type: rABS ? 'binary' : 'array'});
+            const wb = XLSX.read(bstr, {
+                type: rABS ? 'binary' : 'array'
+            });
             const wsname = wb.SheetNames[0];
             const ws = wb.Sheets[wsname];
-            let XLSXData = XLSX.utils.sheet_to_json(ws, {header: 1});
+            let XLSXData = XLSX.utils.sheet_to_json(ws, {
+                header: 1
+            });
+            // for (let i = XLSXData.length; i > 0;) {
+            //     if (XLSXData[--i].length) {
+            //         break;
+            //     } else {
+            //         XLSXData.splice(i, 1);
+            //     }
+            // }
             let data = [];
             delete XLSXData[0];
-            XLSXData.forEach((item, i) => {
-                data.push({
-                    code: i,
-                    realName: item[0],
-                    idNo: item[1],
-                    loanAmount: item[2] * 1000,
-                    periods: item[3],
-                    remainAmount: item[4] * 1000,
-                    overdueAmount: item[5] * 1000,
-                    fkDatetime: item[6],
-                    batchDatetime: item[7]
+            if (this.state.bankType === 'ICBC') {
+                XLSXData.forEach((item, i) => {
+                    data.push({
+                        id: i,
+                        customerName: item[0],
+                        loanAmount: item[1] * 1000,
+                        bankCardNumber: item[2],
+                        billDatetime: item[3],
+                        bankfktime: item[4],
+                        bankRate: item[5] * 1000,
+                        contractCode: item[6],
+                        contractSignDate: item[7],
+                        sctime: item[8],
+                        userCode: item[9],
+                        idNo: item[10]
+                    });
                 });
+            } else if (this.state.bankType === 'CCB') {
+                XLSXData.forEach((item, i) => {
+                    data.push({
+                        code: i,
+                        bankfktime: item[0],
+                        customerName: item[1],
+                        loanAmount: item[2] * 1000,
+                        bankCardNumber: item[3],
+                        idNo: item[4],
+                        contractCode: item[5] * 1000,
+                        contractSignDate: item[6]
+                    });
+                });
+            } else if (this.state.bankType === 'BOC') {
+                XLSXData.forEach((item, i) => {
+                    data.push({
+                        id: i,
+                        carDealerName: item[0],
+                        bankCardTime: item[1],
+                        receiveTime: item[2],
+                        contractCode: item[3],
+                        sealName: item[4],
+                        customerName: item[5],
+                        idNo: item[6],
+                        bankCardNumber: item[7],
+                        billDatetime: item[8],
+                        invoicePrice: item[9] * 1000,
+                        loanAmount: item[10] * 1000,
+                        useTime: item[11],
+                        fee: item[12] * 1000,
+                        dbFee: item[13] * 1000,
+                        receiveMoney: item[14] * 1000,
+                        feeRate: item[15],
+                        cardPeriods: item[16],
+                        contractSignDate: item[17],
+                        status: item[18],
+                        remark: item[19],
+                        closeDatetime: item[20],
+                        receivePeople: item[21],
+                        remark1: item[22],
+                        noRemove: item[23]
+                    });
+                });
+            }
+            this.setState({
+                data: data
             });
-            this.setState({data: data});
         };
         if (rABS) {
             reader.readAsBinaryString(file);
@@ -184,11 +293,10 @@ class ContractImport extends React.Component {
             }
             let param = {};
             param.loanBankCode = values.loanBankCode;
-            param.overdueList = this.state.data;
-            this.props.doFetching();
-            fetch(632300, param).then(() => {
+            param.contractList = this.state.data;
+            param.operator = getUserId();
+            fetch(632250, param).then(() => {
                 showSucMsg('导入成功');
-                this.props.cancelFetching();
                 setTimeout(() => {
                     this.props.history.go(-1);
                 }, 1000);
@@ -203,13 +311,19 @@ class ContractImport extends React.Component {
             optionFilterProp: 'children',
             filterOption: (input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0,
             style: {width: '100%'},
-            placeholder: '请选择'
+            placeholder: '请选择',
+            onChange: (v) => {
+                if (v) {
+                    this.state.loanBankData.forEach(l => {
+                        if (l.code === v) {
+                            this.setState({ bankType: l.bankType });
+                        }
+                    });
+                } else {
+                    this.setState({ bankType: '' });
+                }
+            }
         };
-        if (item.onChange) {
-            props.onChange = (v) => {
-                item.onChange(v, this.props.selectData[item.field] ? this.props.selectData[item.field].find(v1 => v1.code === v) : {}, this.props);
-            };
-        }
         return props;
     }
 
@@ -241,18 +355,19 @@ class ContractImport extends React.Component {
 
         return (
             <Form>
-                <FormItem key={this.state.loanBank[0].field}
-                          label={this.state.loanBank[0].title}>
-                    { getFieldDecorator(this.state.loanBank[0].field, {
+                <FormItem key={this.state.loanBank.field}
+                          label={this.state.loanBank.title}>
+                    { getFieldDecorator(this.state.loanBank.field, {
                         rules: [{
                             required: true,
                             message: '必填字段'
                         }],
-                        initialValue: ''})(
-                        <Select {...this.getSelectProps(this.state.loanBank[0])}>
+                        initialValue: ''
+                    })(
+                        <Select {...this.getSelectProps(this.state.loanBank)}>
                             {this.state.loanBankData.map(d => (
-                            <Option key={d[this.state.loanBank[0].keyName]}
-                                    value={d[this.state.loanBank[0].keyName]}>{tempString(this.state.loanBank[0].valueName, d)}</Option>))}
+                            <Option key={d[this.state.loanBank.keyName]}
+                                    value={d[this.state.loanBank.keyName]}>{tempString(this.state.loanBank.valueName, d)}</Option>))}
                         </Select>)}
                 </FormItem>
                 <FormItem label='逾期名单' >
@@ -263,13 +378,12 @@ class ContractImport extends React.Component {
                     </Upload>
                 </FormItem>
                 <div className="table-wrapper">
-                    <Table
-                        bordered
-                        rowKey={record => record['code']}
-                        dataSource={this.state.data}
-                        columns={this.state.cols}
-                        loading={this.props.fetching}
-                    />
+                {
+                    this.state.bankType === 'ICBC' ? <Table bordered rowKey={record => record['id']} dataSource={this.state.data} columns={this.state.ICBCcols} />
+                    : this.state.bankType === 'CCB' ? <Table bordered rowKey={record => record['code']} dataSource={this.state.data} columns={this.state.CCBcols} />
+                    : this.state.bankType === 'BOC' ? <Table bordered rowKey={record => record['id']} dataSource={this.state.data} columns={this.state.BOCcols} />
+                    : <Table bordered rowKey={record => record['id']} dataSource={this.state.data} columns={this.state.BOCcols} />
+                }
                 </div>
                 <FormItem style={{marginTop: 30}} {...tailFormItemLayout}>
                     <Button type="primary" key="importBtn" onClick={() => {

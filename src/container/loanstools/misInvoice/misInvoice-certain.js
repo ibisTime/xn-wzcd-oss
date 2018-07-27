@@ -64,7 +64,7 @@ class MisInvoiceCertain extends React.Component {
             readonly: true
         }, {
             title: '新应退按揭款',
-            field: 'amount',
+            field: 'amount1',
             amount: true,
             readonly: true,
             formatter: (v, data) => {
@@ -76,19 +76,19 @@ class MisInvoiceCertain extends React.Component {
             }
         }, {
             title: '付款金额',
-            field: 'payAmount',
+            field: 'amount',
             required: true,
             amount: true,
             hidden: this.hiddenStatus
         }, {
             title: '付款时间',
-            field: 'payDatetime',
+            field: 'datetime',
             required: true,
             type: 'datetime',
             hidden: this.hiddenStatus
         }, {
             title: '付款账号',
-            field: 'payBankcardCode',
+            field: 'bankcardCode',
             type: 'select',
             listCode: 632007,
             params: {
@@ -100,7 +100,7 @@ class MisInvoiceCertain extends React.Component {
             hidden: this.hiddenStatus
         }, {
             title: '付款凭证（水单）',
-            field: 'payBillPdf',
+            field: 'billPdf',
             required: true,
             type: 'img',
             hidden: this.hiddenStatus
