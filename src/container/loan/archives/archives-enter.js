@@ -47,7 +47,7 @@ class ArchivesAddedit extends React.Component {
                 readonly: true
             }, {
                 title: '保险公司',
-                field: 'insuranceCompanyName',
+                field: 'insuranceCompanyCode',
                 type: 'select',
                 listCode: 632046,
                 keyName: 'code',
@@ -92,9 +92,6 @@ class ArchivesAddedit extends React.Component {
                 readonly: true
             }],
             [{
-                title: '合同编号',
-                field: 'bankContractCode'
-            }, {
                 title: '登记证书号',
                 field: 'regCertificateCode'
             }],

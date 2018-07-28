@@ -86,15 +86,12 @@ class ArchivesAddedit extends React.Component {
                 field: 'saleUserName'
             }],
             [{
-                title: '合同编号',
-                field: 'bankContractCode'
-            }, {
                 title: '登记证书号',
                 field: 'regCertificateCode'
             }],
             [{
                 title: '担保人姓名',
-                field: 'guarantor1'
+                field: 'guarantor1Name'
             }, {
                 title: '担保人手机',
                 field: 'guarantor1Mobile'
