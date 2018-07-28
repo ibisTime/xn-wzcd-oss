@@ -87,9 +87,9 @@ class compensatoryCertain extends React.Component {
                     readonly: true
                 }, {
                     title: '收款人开户行',
-                    field: 'repayBankName',
+                    field: 'receiptBank',
                     formatter: (v, d) => {
-                        return d.replaceRepayApply.receiptBankName;
+                        return d.replaceRepayApply.receiptBank;
                     },
                     readonly: true
                 }, {
@@ -116,9 +116,9 @@ class compensatoryCertain extends React.Component {
                     readonly: true
                 }, {
                     title: '代偿说明',
-                    field: 'remark1',
+                    field: 'applyNote',
                     formatter: (v, d) => {
-                        return d.replaceRepayApply.remark;
+                        return d.replaceRepayApply.applyNote;
                     },
                     readonly: true
                 }]

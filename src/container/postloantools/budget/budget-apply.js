@@ -58,23 +58,6 @@ class budgetApply extends React.Component {
             amount: true,
             required: true
         }, {
-            title: '收款人姓名',
-            field: 'receiptRealName',
-            required: true
-        }, {
-            title: '收款人开户行',
-            field: 'receiptBank',
-            type: 'select',
-            listCode: 632057,
-            keyName: 'code',
-            valueName: '{{bankName.DATA}}-{{fullName.DATA}}',
-            required: true
-        }, {
-            title: '收款人账号',
-            field: 'receiptAccount',
-            bankCard: true,
-            required: true
-        }, {
             title: '是否加急',
             field: 'isUrgent',
             type: 'select',

@@ -207,3 +207,17 @@ export function rebateList(codeList) {
     operator: getUserId()
   });
 }
+// 经销商 上架
+export function dealerLower(code) {
+  return fetch(632064, {
+    code,
+    operator: getUserId()
+  });
+}
+// 经销商 下架
+export function dealerOnShelf(code) {
+  return fetch(632061, {
+    code,
+    operator: getUserId()
+  });
+}

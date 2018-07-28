@@ -177,6 +177,8 @@ class OverdueListDispose extends React.Component {
         }, {
             title: '催收情况说明',
             field: 'collectionNote',
+            type: 'textarea',
+            normalArea: true,
             required: true
         }];
         return this

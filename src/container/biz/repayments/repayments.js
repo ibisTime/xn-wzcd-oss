@@ -86,7 +86,9 @@ class Repayments extends React.Component {
         }, {
             title: '逾期日期',
             field: 'repayDatetime',
-            type: 'date'
+            render: (v, d) => {
+                return dateFormat(d.curMonthRepayPlan.repayDatetime);
+            }
         }, {
             title: '月还款额',
             field: 'monthAmount',
@@ -94,7 +96,9 @@ class Repayments extends React.Component {
         }, {
             title: '逾期金额',
             field: 'overdueAmount',
-            amount: true
+            render: (v, d) => {
+                return moneyFormat(d.curMonthRepayPlan.overdueAmount);
+            }
         }, {
             title: '实际逾期期数',
             field: 'curOverdueCount'

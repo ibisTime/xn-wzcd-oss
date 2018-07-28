@@ -68,7 +68,7 @@ class yellowList extends React.Component {
             amount: true
         }, {
             title: '代偿是否缴纳',
-            field: 'isRepay',
+            field: 'replaceIsRepay',
             type: 'select',
             data: [{
                 key: '0',
@@ -106,7 +106,7 @@ class yellowList extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].isRepay !== '0') {
+                    } else if (selectedRows[0].replaceIsRepay !== '0') {
                         showWarnMsg('代偿已缴纳');
                     } else {
                         this.props.history.push(`/biz/yellowList/payCompensate?code=${selectedRowKeys[0]}`);

@@ -69,7 +69,7 @@ class budget extends React.Component {
             field: 'receiptRealName'
         }, {
             title: '收款人开户行',
-            field: 'receiptBankName'
+            field: 'receiptBank'
         }, {
             title: '收款人账号',
             field: 'receiptAccount'

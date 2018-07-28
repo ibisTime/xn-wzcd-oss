@@ -108,6 +108,8 @@ class overdueList extends React.Component {
             showWarnMsg('请选择记录');
           } else if (selectedRowKeys.length > 1) {
             showWarnMsg('请选择一条记录');
+          } else if (selectedRows[0].curNodeCode !== '022_03') {
+            showWarnMsg('当前节点不是已逾期待处理');
           } else {
             this.props.history.push(`/biz/overdueList/dispose?code=${selectedRowKeys[0]}`);
           }

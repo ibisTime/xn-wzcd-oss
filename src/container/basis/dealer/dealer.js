@@ -17,10 +17,13 @@ import {
     listWrapper
 } from 'common/js/build-list';
 import {
-    lowerFrame,
-    onShelf,
+    dealerLower,
+    dealerOnShelf,
     sendMsg
 } from 'api/biz';
+import {
+    Modal
+} from 'antd';
 
 @listWrapper(
     state => ({
@@ -68,11 +71,11 @@ class Dealer extends React.Component {
             title: '车行经营性质',
             field: 'carDealerType',
             render: (v) => {
-              let dict = {
-                '0': '综合店',
-                '1': '4S店'
-              };
-              return dict[v];
+                let dict = {
+                    '0': '综合店',
+                    '1': '4S店'
+                };
+                return dict[v];
             }
         }, {
             title: '所属分公司',
@@ -80,8 +83,8 @@ class Dealer extends React.Component {
             type: 'select',
             listCode: 630106,
             params: {
-              typeList: [1],
-              status: 1
+                typeList: [1],
+                status: 1
             },
             keyName: 'code',
             valueName: 'name'
@@ -97,28 +100,76 @@ class Dealer extends React.Component {
             fields,
             pageCode: 632065,
             btnEvent: {
-              edit: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else if (selectedRows[0].curNodeCode !== '006_02' && selectedRows[0].curNodeCode !== '006_03') {
-                  showWarnMsg('当前节点不可修改');
-                } else {
-                  this.props.history.push(`/basis/dealer/addedit?code=${selectedRowKeys[0]}`);
+                edit: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '006_02' && selectedRows[0].curNodeCode !== '006_03') {
+                        showWarnMsg('当前节点不可修改');
+                    } else {
+                        this.props.history.push(`/basis/dealer/addedit?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                check: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '006_01') {
+                        showWarnMsg('当前不是审核节点');
+                    } else {
+                        this.props.history.push(`/basis/dealer/addedit?v=1&check=1&code=${selectedRowKeys[0]}`);
+                    }
+                },
+                lower: (key, item) => {
+                    if (!key || !key.length || !item || !item.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (item[0].status !== '1') {
+                        showWarnMsg('该状态不可下架');
+                    } else {
+                        Modal.confirm({
+                            okText: '确认',
+                            cancelText: '取消',
+                            content: '确定下架？',
+                            onOk: () => {
+                                this.props.doFetching();
+                                return dealerLower(key[0]).then(() => {
+                                    showWarnMsg('操作成功');
+                                    setTimeout(() => {
+                                        this.props.getPageData();
+                                    }, 500);
+                                }).catch(() => {
+                                    this.props.cancelFetching();
+                                });
+                            }
+                        });
+                    }
+                },
+                onShelf: (key, item) => {
+                    if (!key || !key.length || !item || !item.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (item[0].status === '1') {
+                        showWarnMsg('该状态不可上架');
+                    } else {
+                        Modal.confirm({
+                            okText: '确认',
+                            cancelText: '取消',
+                            content: '确定上架？',
+                            onOk: () => {
+                                this.props.doFetching();
+                                return dealerOnShelf(key[0]).then(() => {
+                                    showWarnMsg('操作成功');
+                                    setTimeout(() => {
+                                        this.props.getPageData();
+                                    }, 500);
+                                }).catch(() => {
+                                    this.props.cancelFetching();
+                                });
+                            }
+                        });
+                    }
                 }
-              },
-              check: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else if (selectedRows[0].curNodeCode !== '006_01') {
-                  showWarnMsg('当前不是审核节点');
-                } else {
-                  this.props.history.push(`/basis/dealer/addedit?v=1&check=1&code=${selectedRowKeys[0]}`);
-                }
-              }
             }
         });
     }

@@ -64,26 +64,6 @@ class litigationCertain extends React.Component {
             amount: true,
             required: true
         }, {
-            title: '收款账号',
-            field: 'judgeReceiptBankcard',
-            type: 'select',
-            listCode: 632007,
-            params: {
-                type: 1
-            },
-            keyName: 'bankcardNumber',
-            valueName: '{{bankName.DATA}}-{{bankcardNumber.DATA}}',
-            required: true,
-            onChange: (v, data) => {
-                this.props.form.setFieldsValue({
-                    judgeReceiptBank: data.bankCode
-                });
-            }
-        }, {
-            title: '收款银行',
-            field: 'judgeReceiptBank',
-            hidden: true
-        }, {
             title: '收款凭证',
             field: 'judgeBillPdf',
             type: 'img',

@@ -72,7 +72,7 @@ class yellowListPayCompensate extends React.Component {
             title: '实还金额(元)',
             field: 'payAmount',
             amount: true,
-            readonly: true
+            required: true
         }];
         return this
             .props

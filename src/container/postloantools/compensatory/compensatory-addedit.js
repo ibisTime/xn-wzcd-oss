@@ -8,7 +8,8 @@ import {
     restore
 } from '@redux/postloantools/compensatory-addedit';
 import {
-    getQueryString
+    getQueryString,
+    moneyFormat
 } from 'common/js/util';
 import {
     CollapseWrapper
@@ -56,41 +57,49 @@ class compensatoryAddedit extends React.Component {
                     title: '代偿性质',
                     field: 'type',
                     type: 'select',
+                    formatter: (v, d) => {
+                        return d.replaceRepayApply.type;
+                    },
                     key: 'replace_repay_type',
                     readonly: true
                 }, {
                     title: '预算金额',
                     field: 'budgetAmount',
-                    amount: true,
+                    formatter: (v, d) => {
+                        return moneyFormat(d.replaceRepayApply.amount);
+                    },
                     readonly: true
                 }],
                 [{
                     title: '收款人姓名',
-                    field: 'useDatetime',
+                    field: 'repayUserName',
+                    formatter: (v, d) => {
+                        return d.replaceRepayApply.receiptRealName;
+                    },
                     readonly: true
                 }, {
                     title: '收款人开户行',
-                    field: 'repayBankName',
+                    field: 'receiptBank',
+                    formatter: (v, d) => {
+                        return d.replaceRepayApply.receiptBank;
+                    },
                     readonly: true
                 }, {
                     title: '收款人账号',
-                    field: 'useDatetime',
-                    type: 'date',
+                    field: 'repayBankcard',
+                    formatter: (v, d) => {
+                        return d.replaceRepayApply.receiptAccount;
+                    },
                     readonly: true
                 }],
                 [{
                     title: '是否加急',
-                    field: 'useDatetime',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '是'
-                    }, {
-                        key: '1',
-                        value: '否'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value',
+                    field: 'isUrgent',
+                    formatter: (v, d) => {
+                        let index = d.replaceRepayApply.isUrgent;
+                        let isUrgent = this.arr[index].value;
+                        return isUrgent;
+                    },
                     readonly: true
                 }, {
                     title: '已代偿金额',
@@ -99,7 +108,10 @@ class compensatoryAddedit extends React.Component {
                     readonly: true
                 }, {
                     title: '代偿说明',
-                    field: 'useDatetime',
+                    field: 'applyNote',
+                    formatter: (v, d) => {
+                        return d.replaceRepayApply.applyNote;
+                    },
                     readonly: true
                 }]
             ]
