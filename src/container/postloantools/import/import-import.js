@@ -72,12 +72,12 @@ class importImport extends React.Component {
             dataIndex: 'overdueAmount',
             render: moneyFormat
         }, {
-            title: '放款日期',
-            dataIndex: 'fkDatetime',
+            title: '批单日期',
+            dataIndex: 'batchDatetime',
             type: 'date'
         }, {
-            title: '批量日期',
-            dataIndex: 'batchDatetime',
+            title: '放款日期',
+            dataIndex: 'fkDatetime',
             type: 'date'
         }];
         this.state = {
@@ -106,6 +106,13 @@ class importImport extends React.Component {
 
     handleChange = (file) => {
         readXls(file).then(XLSXData => {
+            for (let i = XLSXData.length; i > 0;) {
+                if (XLSXData[--i].length) {
+                    break;
+                } else {
+                    XLSXData.splice(i, 1);
+                }
+            }
             let data = [];
             delete XLSXData[0];
             XLSXData.forEach((item, i) => {
@@ -117,8 +124,8 @@ class importImport extends React.Component {
                     periods: item[3],
                     remainAmount: item[4] * 1000,
                     overdueAmount: item[5] * 1000,
-                    fkDatetime: item[6],
-                    batchDatetime: item[7]
+                    batchDatetime: item[6],
+                    fkDatetime: item[7]
                 });
             });
             this.setState({data: data});

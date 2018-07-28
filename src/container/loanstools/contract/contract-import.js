@@ -193,13 +193,13 @@ class ContractImport extends React.Component {
 
     handleChange = (file) => {
         readXls(file).then(XLSXData => {
-            // for (let i = XLSXData.length; i > 0;) {
-            //     if (XLSXData[--i].length) {
-            //         break;
-            //     } else {
-            //         XLSXData.splice(i, 1);
-            //     }
-            // }
+            for (let i = XLSXData.length; i > 0;) {
+                if (XLSXData[--i].length) {
+                    break;
+                } else {
+                    XLSXData.splice(i, 1);
+                }
+            }
             let data = [];
             delete XLSXData[0];
             if (this.state.bankType === 'ICBC') {

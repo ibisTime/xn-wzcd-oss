@@ -94,7 +94,7 @@ class BankMoney extends React.Component {
             singleSelect: false,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCodeList: ['007_01A', '007_01B', '007_02', '007_03', '007_04', '007_05', '007_06', '007_07', '007_08']
+                curNodeCodeList: ['005_05', '007_01A', '007_01B', '007_02', '007_03', '007_04', '007_05', '007_06', '007_07', '007_08', '007_09']
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {

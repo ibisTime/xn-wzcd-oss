@@ -64,9 +64,6 @@ class Repayments extends React.Component {
         }, {
             title: '客户姓名',
             field: 'realName',
-            render: (v, d) => {
-                return d.user.realName;
-            },
             search: true
         }, {
             title: '证件号',

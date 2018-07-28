@@ -546,12 +546,17 @@ const ROUTES = [
     path: '/biz/settlement/apply',
     component: asyncComponent(() => import('container/biz/settlement/settlement-apply'))
   },
-  //  结清审核 结算单申请
+  //  结清审核 财务审核
   {
     path: '/biz/settlement/check',
     component: asyncComponent(() => import('container/biz/settlement/settlement-check'))
   },
-  //  结清审核 结算单申请
+  //  结清审核 风控总监审核
+  {
+    path: '/biz/settlement/totalCheck',
+    component: asyncComponent(() => import('container/biz/settlement/settlement-totalCheck'))
+  },
+  //  结清审核 确认付款
   {
     path: '/biz/settlement/certain',
     component: asyncComponent(() => import('container/biz/settlement/settlement-certain'))

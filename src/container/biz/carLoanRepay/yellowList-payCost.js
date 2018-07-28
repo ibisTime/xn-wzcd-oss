@@ -11,6 +11,7 @@ import {
     getQueryString,
     getUserId,
     showSucMsg,
+    showWarnMsg,
     moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
@@ -94,6 +95,10 @@ class yellowListPayCost extends React.Component {
                 handler: (param) => {
                     param.operator = getUserId();
                     param.costList = this.props.o2mSKeys.costList;
+                    if(param.costList.length <= 0) {
+                        showWarnMsg('清收成本清单不能为空');
+                        return;
+                    }
                     param.payType = '2';
                     this.props.doFetching();
                     fetch(630533, param).then(() => {

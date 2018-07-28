@@ -67,7 +67,15 @@ class overdueList extends React.Component {
       title: '逾期日期',
       field: 'repayDatetime',
       type: 'date'
-    }];
+    }, {
+      title: '当前节点',
+      field: 'curNodeCode',
+      type: 'select',
+      listCode: 630147,
+      keyName: 'code',
+      valueName: 'name',
+      search: true
+  }];
     return this.props.buildList({
       fields,
       pageCode: 630540,
