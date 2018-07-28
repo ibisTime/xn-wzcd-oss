@@ -77,7 +77,8 @@ class MortgagesCheck extends React.Component {
             title: '申请说明',
             field: 'approveNote',
             type: 'textarea',
-            normalArea: true
+            normalArea: true,
+            required: true
         }];
         return this.props.buildDetail({
             fields,

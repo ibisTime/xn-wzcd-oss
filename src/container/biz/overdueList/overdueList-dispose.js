@@ -104,6 +104,7 @@ class OverdueListDispose extends React.Component {
             field: 'collectionTarget',
             type: 'select',
             key: 'collection_target',
+            multiple: true,
             required: true
         }, {
             title: '催收过程',

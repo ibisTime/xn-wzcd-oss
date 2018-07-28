@@ -64,7 +64,25 @@ class trailer extends React.Component {
             field: 'restTotalCost',
             amount: true
         }, {
-            title: '手车时间',
+            title: '车牌号',
+            field: 'carNumber',
+            render: (v, d) => {
+                return d.budgetOrder.carNumber;
+            }
+        }, {
+            title: '车型',
+            field: 'carModel',
+            render: (v, d) => {
+                return d.budgetOrder.carModel;
+            }
+        }, {
+            title: '拖车地点',
+            field: 'takeCarAddress',
+            render: (v, d) => {
+                return d.curMonthRepayPlan.takeCarAddress;
+            }
+        }, {
+            title: '收车时间',
             field: 'takeDatetime'
         }, {
             title: '当前节点',

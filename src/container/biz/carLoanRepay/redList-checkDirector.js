@@ -83,7 +83,7 @@ class RedListCheckDirector extends React.Component {
             },
             readonly: true
         }, {
-            title: '手车费用',
+            title: '收车费用',
             field: 'tsCarAmount',
             formatter: (v, d) => {
                 return moneyFormat(d.curMonthRepayPlan.tsCarAmount);
@@ -121,7 +121,8 @@ class RedListCheckDirector extends React.Component {
             title: '申请说明',
             field: 'remark',
             type: 'textarea',
-            normalArea: true
+            normalArea: true,
+            required: true
         }];
         return this
             .props

@@ -64,12 +64,14 @@ class RelieveMake extends React.Component {
         }, {
             title: '解除日期',
             field: 'releaseDatetime',
-            type: 'date'
+            type: 'date',
+            required: true
         }, {
             title: '套打模版',
             field: 'releaseTemplateId',
             type: 'select',
-            key: 'guarant_print_template_id'
+            key: 'guarant_print_template_id',
+            required: true
         }, {
             title: '备注',
             field: 'releaseNote',

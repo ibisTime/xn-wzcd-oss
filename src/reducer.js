@@ -123,7 +123,7 @@ import { bizBlackList } from './redux/biz/blackList';
 import { bizBlackListAddedit } from './redux/biz/blackList-addedit';
 import { bizBlackListDispose } from './redux/biz/blackList-dispose';
 
-//  红名单 + 详情 + 风控经理审核 + 分公司总经理审核 + 风控总监审核 + 财务经理审核 + 申请手车 + 财务打款 + 录入手车结果
+//  红名单 + 详情 + 风控经理审核 + 分公司总经理审核 + 风控总监审核 + 财务经理审核 + 申请收车 + 财务打款 + 录入收车结果
 import { bizredList } from './redux/biz/redList';
 import { bizredListAddEdit } from './redux/biz/redList-addedit';
 import { bizredListApply } from './redux/biz/redList-apply';
@@ -134,7 +134,7 @@ import { bizredListFinance } from './redux/biz/redList-finance';
 import { bizredListPay } from './redux/biz/redList-pay';
 import { bizredListEnter } from './redux/biz/redList-enter';
 
-//  手车管理 + 详情 + 处理结果
+//  收车管理 + 详情 + 处理结果
 import { bizTrailer } from './redux/biz/trailer';
 import { bizTrailerAddEdit } from './redux/biz/trailer-addedit';
 import { bizTrailerDispose } from './redux/biz/trailer-dispose';

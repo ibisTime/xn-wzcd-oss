@@ -73,7 +73,7 @@ class redListApply extends React.Component {
             field: 'ransom',
             amount: true
         }, {
-            title: '手车费用',
+            title: '收车费用',
             field: 'tsCarAmount',
             amount: true
         }, {

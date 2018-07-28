@@ -456,12 +456,12 @@ const ROUTES = [
     path: '/biz/redList/addedit',
     component: asyncComponent(() => import('container/biz/carLoanRepay/redList-addedit'))
   },
-  //  红名单 手车申请
+  //  红名单 收车申请
   {
     path: '/biz/redList/apply',
     component: asyncComponent(() => import('container/biz/carLoanRepay/redList-apply'))
   },
-  //  红名单 录入手车结果
+  //  红名单 录入收车结果
   {
     path: '/biz/redList/enter',
     component: asyncComponent(() => import('container/biz/carLoanRepay/redList-enter'))
@@ -491,17 +491,17 @@ const ROUTES = [
     path: '/biz/redList/checkDirectorTwo',
     component: asyncComponent(() => import('container/biz/carLoanRepay/redList-checkDirectorTwo'))
   },
-  //  手车管理
+  //  收车管理
   {
     path: '/biz/trailer',
     component: asyncComponent(() => import('container/biz/carLoanRepay/trailer'))
   },
-  //  手车管理 详情
+  //  收车管理 详情
   {
     path: '/biz/trailer/addedit',
     component: asyncComponent(() => import('container/biz/carLoanRepay/trailer-addedit'))
   },
-  //  手车管理 处理结果
+  //  收车管理 处理结果
   {
     path: '/biz/trailer/dispose',
     component: asyncComponent(() => import('container/biz/carLoanRepay/trailer-dispose'))

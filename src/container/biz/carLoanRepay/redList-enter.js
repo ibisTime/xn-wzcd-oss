@@ -71,12 +71,12 @@ class redListEnter extends React.Component {
             field: 'takeCarAddress',
             required: true
         }, {
-            title: '手车时间',
+            title: '收车时间',
             field: 'takeDatetime',
             type: 'date',
             required: true
         }, {
-            title: '手车人员',
+            title: '收车人员',
             field: 'takeName',
             required: true
         }, {

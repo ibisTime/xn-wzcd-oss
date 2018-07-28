@@ -76,7 +76,7 @@ class redListCheck extends React.Component {
             amount: true,
             readonly: true
         }, {
-            title: '手车费用',
+            title: '收车费用',
             field: 'tsCarAmount',
             amount: true,
             readonly: true
@@ -105,7 +105,8 @@ class redListCheck extends React.Component {
             title: '申请说明',
             field: 'remark',
             type: 'textarea',
-            normalArea: true
+            normalArea: true,
+            required: true
         }];
         return this
             .props

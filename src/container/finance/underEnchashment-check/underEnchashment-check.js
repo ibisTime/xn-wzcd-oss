@@ -72,7 +72,10 @@ class UnderEnchashmentCheck extends React.Component {
       type: 'datetime'
     }, {
       field: 'applyNote',
-      title: '申请说明'
+      title: '申请说明',
+      type: 'textarea',
+      normalArea: true,
+      required: true
     }];
     let buttons = [];
     if (this.check) {
