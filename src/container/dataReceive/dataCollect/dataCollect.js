@@ -135,7 +135,7 @@ class DataCollect extends React.Component {
                       onOk: () => {
                         this.props.doFetching();
                         return dataCollect(this.codeList).then(() => {
-                          showWarnMsg('操作成功');
+                            showSucMsg('操作成功');
                           setTimeout(() => {
                               this.props.getPageData();
                           }, 500);

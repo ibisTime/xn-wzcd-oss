@@ -591,6 +591,11 @@ const ROUTES = [
     path: '/biz/mortgages/enter',
     component: asyncComponent(() => import('container/biz/mortgages/mortgages-enter'))
   },
+  //  解除抵押 回录
+  {
+    path: '/biz/mortgages/submit',
+    component: asyncComponent(() => import('container/biz/mortgages/mortgages-submit'))
+  },
   //  历史业务管理
   {
     path: '/biz/historyBusinessManage',

@@ -229,15 +229,22 @@ export function litigationAgain(code) {
   });
 }
 // 银行放款 理件完成
-export function mortgagesComplete(list) {
+export function mortgagesComplete(codeList) {
   return fetch(630579, {
-    list,
+    codeList,
     operator: getUserId()
   });
 }
 // 银行放款 理件完成
 export function lastComplete(code) {
   return fetch(630579, {
+    code,
+    operator: getUserId()
+  });
+}
+// 银行放款 理件完成
+export function submitBank(code) {
+  return fetch(630577, {
     code,
     operator: getUserId()
   });

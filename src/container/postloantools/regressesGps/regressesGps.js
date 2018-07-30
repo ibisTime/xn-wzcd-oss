@@ -16,11 +16,6 @@ import {
 import {
     listWrapper
 } from 'common/js/build-list';
-import {
-    lowerFrame,
-    onShelf,
-    sendMsg
-} from 'api/biz';
 
 @listWrapper(
     state => ({
@@ -40,53 +35,89 @@ import {
 class RegressesGps extends React.Component {
     render() {
         const fields = [{
-            title: '申领类型',
-            field: 'type',
+            title: 'GPS编号',
+            field: 'gpsDevNo'
+        }, {
+            title: '归属公司',
+            field: 'companyCode',
+            listCode: 630106,
+            params: {
+                typeList: [1]
+            },
+            type: 'select',
+            keyName: 'code',
+            valueName: 'name',
+            search: true
+        }, {
+            title: '公司领用状态',
+            field: 'companyApplyStatus',
             type: 'select',
             data: [{
-                key: '1',
-                value: '公司'
+                key: '0',
+                value: '待申领'
             }, {
-                key: '2',
-                value: '个人'
+                key: '1',
+                value: '已申领'
             }],
             keyName: 'key',
             valueName: 'value',
             search: true
         }, {
-            title: '所属公司',
-            field: 'companyName'
+            title: '公司领用日期',
+            field: 'companyApplyDatetime',
+            type: 'date'
         }, {
-            title: '申领人',
+            title: 'GPS领用人',
             field: 'applyUserName'
         }, {
-            title: '申领时间',
+            title: 'GPS领用状态',
+            field: 'applyStatus',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '待申领'
+            }, {
+                key: '1',
+                value: '申领处理中'
+            }, {
+                key: '2',
+                value: '已申领'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            search: true
+        }, {
+            title: '领用日期',
             field: 'applyDatetime',
             type: 'datetime'
         }, {
-            title: '申领个数',
-            field: 'applyCount'
-        }, {
-            title: '发货时间',
-            field: 'sendDatetime',
-            type: 'date'
-        }, {
-            title: '收货时间',
-            field: 'receiveDatetime',
-            type: 'date'
-        }, {
-            title: '状态',
-            field: 'status',
+            title: 'GPS使用状态',
+            field: 'useStatus',
             type: 'select',
-            key: 'gps_apply_status',
+            data: [{
+                key: '1',
+                value: '已使用'
+            }, {
+                key: '0',
+                value: '未使用'
+            }, {
+                key: '2',
+                value: '已损坏'
+            }],
+            keyName: 'key',
+            valueName: 'value',
             search: true
         }, {
-            title: '备注',
-            field: 'remark'
+            title: '使用日期',
+            field: 'useDatetime',
+            type: 'datetime'
+        }, {
+            title: '业务编号',
+            field: 'bizCode'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632715,
+            pageCode: 632705,
             btnEvent: {
                 companyCheck: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {

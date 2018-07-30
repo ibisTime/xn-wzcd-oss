@@ -6,11 +6,12 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/loan/bankMoney-submit';
+} from '@redux/biz/mortgages/mortgages-submit';
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
