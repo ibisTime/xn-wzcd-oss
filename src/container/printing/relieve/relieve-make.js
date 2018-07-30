@@ -94,12 +94,16 @@ class RelieveMake extends React.Component {
                             console.log(data);
                             let arr = [
                                 ['主贷人姓名', data.realName],
-                                ['车牌号', data.carNumber]
+                                ['车牌号', data.budgetOrder.carNumber]
                             ];
                             const wb = getWorkbook();
                             wb.getSheet(arr, '内容');
                             wb.downloadXls('解除抵押-' + data.realName);
                             showSucMsg('操作成功');
+                            setTimeout(() => {
+                                this.props.history.go(-1);
+                            }, 1000);
+                            this.props.cancelFetching();
                         }).catch(this.props.cancelFetching);
                     }
                 },

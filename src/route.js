@@ -1492,6 +1492,18 @@ const ROUTES = [
       path: '/postloantools/applyGps/personCheck',
       component: asyncComponent(() => import('container/postloantools/applyGps/applyGps-personCheck'))
   },
+
+  //  gps退回
+  {
+    path: '/postloantools/regressesGps',
+    component: asyncComponent(() => import('container/postloantools/regressesGps/regressesGps'))
+  },
+  //  gps退回 申请
+  {
+    path: '/postloantools/regressesGps/apply',
+    component: asyncComponent(() => import('container/postloantools/regressesGps/regressesGps-apply'))
+  },
+
   //  gps设备管理
   {
     path: '/postloantools/manageGps',

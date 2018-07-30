@@ -58,12 +58,6 @@ class mortgagesAddedit extends React.Component {
                 return moneyFormat(d.repayBiz.loanAmount);
             }
         }, {
-            title: '逾期记录',
-            field: '33'
-        }, {
-            title: '代偿记录',
-            field: '44'
-        }, {
             title: '解除日期',
             field: 'releaseDatetime',
             type: 'datetime'

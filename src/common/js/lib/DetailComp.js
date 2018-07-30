@@ -228,6 +228,8 @@ export default class DetailComponent extends React.Component {
                 } else {
                     values[v.field] = values[v.field] || '';
                 }
+            } else if (v.multiple) {
+                values[v.field] = values[v.field] ? values[v.field].join(',') : '';
             }
         });
         values.updater = values.updater || getUserId();
@@ -1140,13 +1142,24 @@ export default class DetailComponent extends React.Component {
 
     getSelectComp(item, initVal, rules, getFieldDecorator) {
         let data;
+        let value;
         if (item.readonly && item.data) {
-            data = item.data.filter(v => v[item.keyName] === initVal);
+            if (item.multiple) {
+                value = initVal.map(i => {
+                  let obj = item.data.find(v => v[item.keyName] === i);
+                  return obj[item.valueName] || tempString(item.valueName, obj) || '';
+                }).join('、');
+            } else {
+                value = item.data.filter(v => v[item.keyName] === initVal);
+                value = value && value.length
+                  ? value[0][item.valueName] || tempString(item.valueName, value[0])
+                  : initVal;
+            }
         }
-        if (item.initValue && item.data && item.data.length && isUndefined(initVal)) {
-            initVal = item.data[0][item.keyName];
-        }
-        let value = isUndefined(initVal) ? '' : initVal;
+        // if (item.initValue && item.data && item.data.length && isUndefined(initVal)) {
+        //     initVal = item.data[0][item.keyName];
+        // }
+        // let value = isUndefined(initVal) ? '' : initVal;
         return (
             <FormItem className={item.hidden ? 'hidden' : ''} key={item.field} {...this.getInputItemProps()}
                       label={this.getLabel(item)}>
@@ -1256,6 +1269,7 @@ export default class DetailComponent extends React.Component {
 
     getSelectProps(item, initVal) {
         const props = {
+            mode: item.multiple ? 'multiple' : '',
             showSearch: true,
             allowClear: true,
             optionFilterProp: 'children',
@@ -1369,6 +1383,8 @@ export default class DetailComponent extends React.Component {
                 result = this.getRealDateVal(item, result);
             } else if (item.type === 'checkbox') {
                 result = this.getRealCheckboxVal(item, result);
+            } else if (item.multiple) {
+                result = result ? result.split(',') : [];
             }
             if (item.formatter) {
                 result = item.formatter(result, this.props.pageData);

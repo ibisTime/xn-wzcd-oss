@@ -118,6 +118,9 @@ class Relieve extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 630520,
+            searchParams: {
+                curNodeCodeList: ['020_09']
+            },
             btnEvent: {
                 make: (selectedRowKeys, selectedRows) => {
                     console.log(selectedRows[0]);

@@ -235,3 +235,10 @@ export function mortgagesComplete(list) {
     operator: getUserId()
   });
 }
+// 银行放款 理件完成
+export function lastComplete(code) {
+  return fetch(630579, {
+    code,
+    operator: getUserId()
+  });
+}

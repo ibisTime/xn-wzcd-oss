@@ -374,6 +374,10 @@ import { postloantoolsApplyGpsPersonCheck } from './redux/postloantools/applyGps
 import { postloantoolsManageGps } from './redux/postloantools/manageGps';
 import { postloantoolsManageGpsAddedit } from './redux/postloantools/manageGps-addedit';
 
+//  Gps退回 + 详情
+import { postloantoolsRegressesGps } from './redux/postloantools/regressesGps';
+import { postloantoolsRegressesGpsApply } from './redux/postloantools/regressesGps-apply';
+
 //  Gps安装 + 详情 + 安装回录 + 回收作废
 import { postloantoolsInstallGps } from './redux/postloantools/installGps';
 import { postloantoolsInstallGpsAddEdit } from './redux/postloantools/installGps-addedit';
@@ -980,5 +984,7 @@ export default combineReducers({
   dataReceiveGpsCollectCollect,
   dataReceiveGpsCollectCheck,
   financeRebate,
-  financeRebateAddEdit
+  financeRebateAddEdit,
+  postloantoolsRegressesGps,
+  postloantoolsRegressesGpsApply
 });

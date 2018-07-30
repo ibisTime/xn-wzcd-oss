@@ -107,7 +107,7 @@ class DataSend extends React.Component {
             pageCode: 632155,
             singleSelect: false,
             searchParams: {
-                type: '1'
+                typeList: ['1', '3']
             },
             btnEvent: {
               send: (selectedRowKeys, selectedRows) => {
