@@ -89,12 +89,25 @@ class Dealer extends React.Component {
             keyName: 'code',
             valueName: 'name'
         }, {
-            title: '办理状态',
+            title: '当前节点',
             field: 'curNodeCode',
             type: 'select',
             listCode: 630147,
             keyName: 'code',
             valueName: 'name'
+        }, {
+            title: '当前状态',
+            field: 'agreementStatus',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '下架'
+            }, {
+                key: '1',
+                value: '上架'
+            }],
+            keyName: 'key',
+            valueName: 'value'
         }];
         return this.props.buildList({
             fields,
@@ -105,7 +118,7 @@ class Dealer extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '006_02' && selectedRows[0].curNodeCode !== '006_03') {
+                    } else if (selectedRows[0].curNodeCode !== '006_02' && selectedRows[0].curNodeCode !== '006_03' && selectedRows[0].agreementStatus !== '0') {
                         showWarnMsg('当前节点不可修改');
                     } else {
                         this.props.history.push(`/basis/dealer/addedit?code=${selectedRowKeys[0]}`);
@@ -116,8 +129,8 @@ class Dealer extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '006_01') {
-                        showWarnMsg('当前不是审核节点');
+                    } else if (selectedRows[0].curNodeCode !== '006_02') {
+                        showWarnMsg('当前不是待审核节点');
                     } else {
                         this.props.history.push(`/basis/dealer/addedit?v=1&check=1&code=${selectedRowKeys[0]}`);
                     }
@@ -125,7 +138,7 @@ class Dealer extends React.Component {
                 lower: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {
                         showWarnMsg('请选择记录');
-                    } else if (item[0].status !== '1') {
+                    } else if (item[0].agreementStatus !== '1') {
                         showWarnMsg('该状态不可下架');
                     } else {
                         Modal.confirm({
@@ -149,7 +162,7 @@ class Dealer extends React.Component {
                 onShelf: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {
                         showWarnMsg('请选择记录');
-                    } else if (item[0].status === '1') {
+                    } else if (item[0].agreementStatus !== '0') {
                         showWarnMsg('该状态不可上架');
                     } else {
                         Modal.confirm({

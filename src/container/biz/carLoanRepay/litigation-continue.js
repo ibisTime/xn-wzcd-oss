@@ -94,7 +94,8 @@ class litigationContinue extends React.Component {
                 return d.judgeList[0].caseCar;
             },
             required: true,
-            readonly: true
+            readonly: true,
+            hidden: true
         }, {
             title: '起诉日期',
             field: 'caseStartDatetime',

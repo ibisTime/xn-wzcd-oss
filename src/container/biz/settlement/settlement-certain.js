@@ -70,16 +70,6 @@ class settlementCertain extends React.Component {
             },
             readonly: true
         }, {
-            title: '逾期记录',
-            field: '11',
-            amount: 'true',
-            readonly: true
-        }, {
-            title: '代偿记录',
-            field: '22',
-            amount: 'true',
-            readonly: true
-        }, {
             title: '扣除违约金额',
             field: 'cutLyDeposit',
             amount: 'true',
@@ -135,19 +125,6 @@ class settlementCertain extends React.Component {
             title: '付款时间',
             field: 'settlePayDatetime',
             type: 'date',
-            required: true
-        }, {
-            title: '付款银行',
-            field: 'settleBank',
-            type: 'select',
-            listCode: 632057,
-            keyName: 'code',
-            valueName: 'fullName',
-            required: true
-        }, {
-            title: '付款账号',
-            field: 'settleBankcard',
-            bankCard: true,
             required: true
         }, {
             title: '打款凭证',

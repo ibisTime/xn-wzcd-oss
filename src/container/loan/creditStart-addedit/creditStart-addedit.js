@@ -436,12 +436,9 @@ class CreditStartAddedit extends React.Component {
             params: {
                 refOrder: this.code
             },
-            hidden: this.isEntry || this.isCheckFirst || this.isCheckSalesman || this.isAddedit,
+            hidden: this.isEntry || this.isCheckFirst || this.isAddedit,
             options: {
                 fields: [{
-                    title: '业务编号',
-                    field: 'refOrder'
-                }, {
                     title: '操作人',
                     field: 'operatorName'
                 }, {
@@ -455,6 +452,9 @@ class CreditStartAddedit extends React.Component {
                 }, {
                     title: '花费时长',
                     field: 'speedTime'
+                }, {
+                    title: '审核说明',
+                    field: 'approveNote'
                 }, {
                     title: '当前节点',
                     field: 'dealNode',

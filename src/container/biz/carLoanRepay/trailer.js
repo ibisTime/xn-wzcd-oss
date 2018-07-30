@@ -98,7 +98,7 @@ class trailer extends React.Component {
             searchParams: {
                 refType: '0',
                 // curNodeCode: '021_11'，
-                curNodeCodeList: ['021_08']
+                curNodeCodeList: ['021_08', '021_09']
             },
             btnEvent: {
                 dispose: (selectedRowKeys, selectedRows) => {

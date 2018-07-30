@@ -61,10 +61,12 @@ class InstallGpstoVoid extends React.Component {
             params: {
               applyStatus: '2',
               companyApplyStatus: '1',
-              companyCode: getCompanyCode()
+              companyCode: getCompanyCode(),
+              useStatus: '1',
+              bizCode: this.code
             },
             keyName: 'code',
-            valueName: 'gpsNo',
+            valueName: 'gpsDevNo',
             nowrap: true,
             required: true
         }, {

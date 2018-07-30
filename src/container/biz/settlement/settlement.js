@@ -63,9 +63,6 @@ class Settlement extends React.Component {
         }, {
             title: '客户姓名',
             field: 'realName',
-            render: (v, d) => {
-                return d.user.realName;
-            },
             search: true
         }, {
             title: '证件号',
@@ -157,6 +154,15 @@ class Settlement extends React.Component {
                         showWarnMsg('请选择一条记录');
                     } else {
                         this.props.history.push(`/biz/settlement/certain?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                totalCheck: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/biz/settlement/totalCheck?code=${selectedRowKeys[0]}`);
                     }
                 }
             }

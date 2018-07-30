@@ -63,7 +63,7 @@ class redListEnter extends React.Component {
             title: '车牌号',
             field: 'carNo',
             formatter: (v, d) => {
-                return d.budgetOrder.carNo;
+                return d.budgetOrder.carNumber;
             },
             readonly: true
         }, {

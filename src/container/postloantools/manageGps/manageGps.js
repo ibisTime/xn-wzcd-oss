@@ -110,6 +110,9 @@ class manageGps extends React.Component {
             }, {
                 key: '0',
                 value: '未使用'
+            }, {
+                key: '2',
+                value: '已损坏'
             }],
             keyName: 'key',
             valueName: 'value',

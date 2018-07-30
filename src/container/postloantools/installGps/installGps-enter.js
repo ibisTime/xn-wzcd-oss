@@ -61,7 +61,8 @@ class InstallGpsEnter extends React.Component {
             params: {
               applyStatus: '2',
               companyApplyStatus: '1',
-              companyCode: getCompanyCode()
+              companyCode: getCompanyCode(),
+              bizCode: this.code
             },
             keyName: 'code',
             valueName: 'gpsDevNo',

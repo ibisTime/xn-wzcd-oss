@@ -82,7 +82,7 @@ class redListApply extends React.Component {
             required: true
         }, {
             title: '收款人开户行',
-            field: 'tsBankName',
+            field: 'tsBankCode',
             type: 'select',
             listCode: 632037,
             keyName: 'bankCode',

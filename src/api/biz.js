@@ -208,15 +208,22 @@ export function rebateList(codeList) {
   });
 }
 // 经销商 上架
-export function dealerLower(code) {
+export function dealerOnShelf(code) {
   return fetch(632064, {
     code,
     operator: getUserId()
   });
 }
 // 经销商 下架
-export function dealerOnShelf(code) {
+export function dealerLower(code) {
   return fetch(632061, {
+    code,
+    operator: getUserId()
+  });
+}
+//  重新申请执行
+export function litigationAgain(code) {
+  return fetch(630561, {
     code,
     operator: getUserId()
   });

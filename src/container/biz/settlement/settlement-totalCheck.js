@@ -65,19 +65,7 @@ class SettlementTotalCheck extends React.Component {
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanAmount);
-            },
-            readonly: true
-        }, {
-            title: '逾期记录',
-            field: '11',
-            amount: 'true',
-            readonly: true
-        }, {
-            title: '代偿记录',
-            field: '22',
-            amount: 'true',
+            amount: true,
             readonly: true
         }, {
             title: '扣除违约金额',
@@ -87,7 +75,9 @@ class SettlementTotalCheck extends React.Component {
         }, {
             title: '实际退款金额',
             field: 'actualRefunds',
-            amount: 'true',
+            formatter: (v, d) => {
+                return moneyFormat(d.loanAmount - d.cutLyDeposit);
+            },
             readonly: true
         }, {
             title: '结清时间',
@@ -136,6 +126,42 @@ class SettlementTotalCheck extends React.Component {
             field: 'remark',
             readonly: true
         }, {
+            title: '流程日志',
+            field: 'list',
+            type: 'o2m',
+            listCode: 630176,
+            params: {
+                refOrder: this.code
+            },
+            hidden: this.isEntry || this.isCheckFirst || this.isAddedit,
+            options: {
+                fields: [{
+                    title: '操作人',
+                    field: 'operatorName'
+                }, {
+                    title: '开始时间',
+                    field: 'startDatetime',
+                    type: 'datetime'
+                }, {
+                    title: '结束时间',
+                    field: 'endDatetime',
+                    type: 'datetime'
+                }, {
+                    title: '花费时长',
+                    field: 'speedTime'
+                }, {
+                    title: '审核说明',
+                    field: 'approveNote'
+                }, {
+                    title: '当前节点',
+                    field: 'dealNode',
+                    type: 'select',
+                    listCode: 630147,
+                    keyName: 'code',
+                    valueName: 'name'
+                }]
+            }
+        }, {
             title: '审核说明',
             field: 'approveNote',
             required: true
@@ -151,7 +177,7 @@ class SettlementTotalCheck extends React.Component {
                 param.approveResult = '1';
                 param.operator = getUserId();
                 this.props.doFetching();
-                fetch(630575, param).then(() => {
+                fetch(630578, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {
@@ -167,7 +193,7 @@ class SettlementTotalCheck extends React.Component {
                 param.approveResult = '0';
                 param.operator = getUserId();
                 this.props.doFetching();
-                fetch(630575, param).then(() => {
+                fetch(630578, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {

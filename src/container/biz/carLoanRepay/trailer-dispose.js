@@ -65,14 +65,11 @@ class trailerDispose extends React.Component {
             title: '车牌号',
             field: 'carNo',
             formatter: (v, d) => {
-                return d.budgetOrder.carNo;
+                return d.budgetOrder.carNumber;
             }
         }, {
             title: '银行欠款',
             field: 'restAmount'
-        }, {
-            title: '代偿欠款',
-            field: '11'
         }, {
             title: '处理结果',
             field: 'dealResult',
@@ -89,14 +86,14 @@ class trailerDispose extends React.Component {
             amount: true,
             required: true,
             readonly: false,
-            hidden: this.dealResult !== 2
+            hidden: this.dealResult !== '2'
         }, {
             title: '保证金',
             field: 'deposit',
             amount: true,
             required: true,
             readonly: false,
-            hidden: this.dealResult !== 3
+            hidden: this.dealResult !== '1'
         }, {
             title: '费用说明',
             field: 'feeNote',

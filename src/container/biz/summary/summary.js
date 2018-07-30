@@ -137,7 +137,7 @@ class Summary extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 630520,
+            pageCode: 630523,
             btnEvent: {
               plan: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {

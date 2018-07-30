@@ -88,7 +88,8 @@ class litigationLitigation extends React.Component {
         }, {
             title: '涉案车辆',
             field: 'caseCar',
-            required: true
+            required: true,
+            hidden: true
         }, {
             title: '诉讼费',
             field: 'caseFee',

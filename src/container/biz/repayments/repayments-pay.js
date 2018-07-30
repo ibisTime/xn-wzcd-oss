@@ -117,7 +117,7 @@ class RepaymentsPay extends React.Component {
             title: '退款开户行',
             field: 'refundBankSubbranch',
             type: 'select',
-            listCode: 802016,
+            listCode: 802116,
             keyName: 'bankCode',
             valueName: 'bankName',
             required: true
