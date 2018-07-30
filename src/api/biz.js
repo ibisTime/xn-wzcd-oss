@@ -228,3 +228,10 @@ export function litigationAgain(code) {
     operator: getUserId()
   });
 }
+// 银行放款 理件完成
+export function mortgagesComplete(list) {
+  return fetch(630579, {
+    list,
+    operator: getUserId()
+  });
+}

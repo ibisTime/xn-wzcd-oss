@@ -65,9 +65,7 @@ class settlementCertain extends React.Component {
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanAmount);
-            },
+            amount: true,
             readonly: true
         }, {
             title: '扣除违约金额',
@@ -77,7 +75,9 @@ class settlementCertain extends React.Component {
         }, {
             title: '实际退款金额',
             field: 'actualRefunds',
-            amount: 'true',
+            formatter: (v, d) => {
+                return moneyFormat(d.loanAmount - d.cutLyDeposit);
+            },
             readonly: true
         }, {
             title: '结清时间',

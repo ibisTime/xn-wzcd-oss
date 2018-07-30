@@ -66,14 +66,6 @@ class MortgagesApply extends React.Component {
             },
             readonly: true
         }, {
-            title: '逾期记录',
-            field: '33',
-            readonly: true
-        }, {
-            title: '代偿记录',
-            field: '44',
-            readonly: true
-        }, {
             title: '申请说明',
             field: 'releaseApplyNote',
             type: 'textarea',

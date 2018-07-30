@@ -66,14 +66,6 @@ class MortgagesCheck extends React.Component {
             },
             readonly: true
         }, {
-            title: '逾期记录',
-            field: '33',
-            readonly: true
-        }, {
-            title: '代偿记录',
-            field: '44',
-            readonly: true
-        }, {
             title: '流程日志',
             field: 'list',
             type: 'o2m',

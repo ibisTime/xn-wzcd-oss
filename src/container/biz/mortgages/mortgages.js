@@ -25,10 +25,8 @@ import {
     Modal
 } from 'antd';
 import {
-    lowerFrame,
-    onShelf
+    mortgagesComplete
 } from 'api/biz';
-import fetch from 'common/js/fetch';
 
 @listWrapper(
     state => ({
@@ -85,46 +83,83 @@ class mortgages extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 630520,
+            singleSelect: false,
             searchParams: {
-              roleCode: getRoleCode()
+                roleCode: getRoleCode()
             },
             btnEvent: {
-              apply: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/biz/mortgages/apply?code=${selectedRowKeys[0]}`);
+                apply: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '020_06') {
+                        showWarnMsg('当前节点不是解除抵押申请');
+                    } else {
+                        this.props.history.push(`/biz/mortgages/apply?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                internal: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '020_07') {
+                        showWarnMsg('当前节点不是风控内勤审核');
+                    } else {
+                        this.props.history.push(`/biz/mortgages/internal?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                check: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '020_08') {
+                        showWarnMsg('当前节点不是风控经理审核');
+                    } else {
+                        this.props.history.push(`/biz/mortgages/check?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                enter: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '020_08') {
+                        showWarnMsg('风控经理审核');
+                    } else {
+                        this.props.history.push(`/biz/mortgages/enter?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                complete: (key, item) => {
+                    if (!key || !key.length || !item || !item.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (item[0].curNodeCode !== '020_10') {
+                        showWarnMsg('当前节点不是理件完成节点');
+                    } else {
+                        Modal.confirm({
+                            okText: '确认',
+                            cancelText: '取消',
+                            content: '确定理件完成？',
+                            onOk: () => {
+                                this.props.doFetching();
+                                let list = [];
+                                for(let i = 0, len = item.length; i < len; i++) {
+                                    list.push(item[i].code);
+                                }
+                                return mortgagesComplete(list).then(() => {
+                                    showWarnMsg('操作成功');
+                                    setTimeout(() => {
+                                        this.props.getPageData();
+                                    }, 500);
+                                }).catch(() => {
+                                    this.props.cancelFetching();
+                                });
+                            }
+                        });
+                    }
                 }
-              },
-              check: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/biz/mortgages/check?code=${selectedRowKeys[0]}`);
-                }
-              },
-              enter: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/biz/mortgages/enter?code=${selectedRowKeys[0]}`);
-                }
-              },
-              internal: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/biz/mortgages/internal?code=${selectedRowKeys[0]}`);
-                }
-              }
             }
         });
     }
