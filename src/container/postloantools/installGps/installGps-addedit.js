@@ -35,17 +35,21 @@ class InstallGpsAddedit extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'applyUserName'
+            field: 'customerName',
+            readonly: true
         }, {
             title: '业务编号',
-            field: 'code'
+            field: 'code',
+            readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBankName'
+            field: 'loanBankName',
+            readonly: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            amount: true
+            amount: true,
+            readonly: true
         }, {
             title: 'GPS安装列表',
             field: 'budgetOrderGpsList',

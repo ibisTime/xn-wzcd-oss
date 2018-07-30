@@ -137,7 +137,7 @@ class mortgages extends React.Component {
                 submit: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {
                         showWarnMsg('请选择记录');
-                    } else if (item[0].curNodeCode !== '020_10') {
+                    } else if (item[0].curNodeCode !== '020_12') {
                         showWarnMsg('当前节点不是提交银行');
                     } else {
                         Modal.confirm({
