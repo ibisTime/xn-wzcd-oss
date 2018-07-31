@@ -56,7 +56,7 @@ class yellowListAddedit extends React.Component {
             readonly: true
         }, {
             title: '代偿是否缴纳',
-            field: 'isRepay',
+            field: 'replaceIsRepay',
             type: 'select',
             data: [{
                 key: '0',
@@ -70,7 +70,9 @@ class yellowListAddedit extends React.Component {
         }, {
             title: '未还清收成本(元)',
             field: 'restTotalCost',
-            amount: true
+            formatter: (v, d) => {
+                return moneyFormat(d.repayBiz.restTotalCost);
+            }
         }, {
             title: '清收成本清单',
             field: 'costList',

@@ -36,7 +36,7 @@ class trailerAddedit extends React.Component {
         const fields = [{
 
             title: '客户姓名',
-            field: 'customerName'
+            field: 'realName'
         }, {
             title: '业务编号',
             field: 'code',
@@ -55,13 +55,16 @@ class trailerAddedit extends React.Component {
             field: 'loanBankName'
         }, {
             title: '车辆型号',
-            field: 'carModel'
+            field: 'carModel',
+            formatter: (v, d) => {
+                return d.budgetOrder.carModel;
+            }
         }, {
             title: '车牌号',
-            field: 'carNo'
-        }, {
-            title: '银行欠款',
-            field: 'bankAmount'
+            field: 'carNo',
+            formatter: (v, d) => {
+                return d.budgetOrder.carNumber;
+            }
         }, {
             title: '代偿欠款',
             field: 'dcAmount'

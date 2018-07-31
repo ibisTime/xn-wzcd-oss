@@ -108,7 +108,7 @@ class budget extends React.Component {
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else if (selectedRows[0].status !== '1') {
-                        showWarnMsg('不是dai财务审核状态');
+                        showWarnMsg('不是待财务审核状态');
                     } else {
                         this.props.history.push(`/postloantools/budget/check?code=${selectedRowKeys[0]}`);
                     }

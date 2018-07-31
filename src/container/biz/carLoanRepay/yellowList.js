@@ -64,7 +64,9 @@ class yellowList extends React.Component {
         }, {
             title: '未还清收成本(元)',
             field: 'restTotalCost',
-            amount: true
+            render: (v, d) => {
+                return moneyFormat(d.repayBiz.restTotalCost);
+            }
         }, {
             title: '代偿款(元)',
             field: 'overdueAmount',
