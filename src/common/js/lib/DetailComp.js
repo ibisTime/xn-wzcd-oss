@@ -1165,10 +1165,10 @@ export default class DetailComponent extends React.Component {
                       label={this.getLabel(item)}>
                 {
                     item.readonly ? <div
-                            className="readonly-text">{data && data.length ? data[0][item.valueName] || tempString(item.valueName, data[0]) : value}</div>
+                            className="readonly-text">{value}</div>
                         : getFieldDecorator(item.field, {
                             rules,
-                            initialValue: item.data || initVal ? initVal : ''
+                            initialValue: initVal || ''
                         })(
                         <Select {...this.getSelectProps(item, initVal)}>
                             {item.data ? item.data.map(d => (
