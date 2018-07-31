@@ -48,7 +48,7 @@ import {
 class budget extends React.Component {
     render() {
         const fields = [{
-            title: '预算单号',
+            title: '代偿预算单号',
             field: 'code',
             search: true
         }, {
