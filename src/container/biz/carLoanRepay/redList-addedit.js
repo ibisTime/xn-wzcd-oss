@@ -39,6 +39,9 @@ class redListAddedit extends React.Component {
         }, {
             title: '业务编号',
             field: 'code',
+            formatter: (v, d) => {
+                return d.budgetOrder.code;
+            },
             readonly: true
         }, {
             title: '贷款银行',

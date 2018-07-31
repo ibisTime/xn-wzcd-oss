@@ -375,7 +375,15 @@ export default class DetailComponent extends React.Component {
         this.props.doFetching();
         fetch(this.options.detailCode, param).then(data => {
             this.props.cancelFetching();
-            this.props.setPageData(data);
+            let keys = Object.keys(this.props.pageData);
+            if (keys.length) {
+                this.props.setPageData({
+                    ...this.props.pageData,
+                    ...data
+                });
+            } else {
+                this.props.setPageData(data);
+            }
         }).catch(this.props.cancelFetching);
     }
 

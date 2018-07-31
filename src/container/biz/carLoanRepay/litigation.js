@@ -46,6 +46,9 @@ class litigation extends React.Component {
         const fields = [{
             title: '业务编号',
             field: 'code',
+            render: (v, d) => {
+                return d.budgetOrder.code;
+            },
             search: true
         }, {
             title: '被诉对象姓名',
