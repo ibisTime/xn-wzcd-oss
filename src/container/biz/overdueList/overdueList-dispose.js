@@ -37,7 +37,7 @@ class OverdueListDispose extends React.Component {
             title: '客户姓名',
             field: 'realName',
             formatter: (v, d) => {
-                return d.user.realName;
+                return d.repayBiz.budgetOrder.code;
             },
             readonly: true
         }, {

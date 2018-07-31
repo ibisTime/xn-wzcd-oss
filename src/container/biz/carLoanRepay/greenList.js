@@ -33,6 +33,9 @@ class greenList extends React.Component {
       {
         title: '业务编号',
         field: 'code',
+        render: (v, d) => {
+          return d.repayBiz.budgetOrder.code;
+        },
         search: true
       }, {
         title: '贷款人',

@@ -36,6 +36,9 @@ class greenListPayment extends React.Component {
         const fields = [{
             title: '业务编号',
             field: 'code',
+            formatter: (v, d) => {
+                return d.repayBiz.budgetOrder.code;
+            },
             readonly: true
         }, {
             field: 'user',

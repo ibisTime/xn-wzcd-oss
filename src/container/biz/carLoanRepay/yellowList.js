@@ -42,6 +42,9 @@ class yellowList extends React.Component {
         const fields = [{
             title: '业务编号',
             field: 'code',
+            render: (v, d) => {
+                return d.repayBiz.budgetOrder.code;
+            },
             search: true
         }, {
             title: '贷款人',
