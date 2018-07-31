@@ -49,7 +49,10 @@ class mortgages extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
-            field: 'code',
+            field: 'bizCode',
+            render: (v, d) => {
+                return d.budgetOrder.code;
+            },
             search: true
         }, {
             title: '客户姓名',

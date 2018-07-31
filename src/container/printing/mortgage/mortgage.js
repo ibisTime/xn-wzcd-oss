@@ -62,7 +62,7 @@ class Mortgage extends React.Component {
             search: true
         }, {
             title: '贷款银行',
-            field: 'loanbankName'
+            field: 'loanBankName'
         }, {
             title: '贷款金额',
             field: 'loanAmount'

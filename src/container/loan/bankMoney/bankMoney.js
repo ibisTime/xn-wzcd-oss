@@ -102,6 +102,8 @@ class BankMoney extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '007_06') {
+                        showWarnMsg('当前节点不是确认提交银行节点');
                     } else {
                         this.props.history.push(`/loan/bankMoney/apply?code=${selectedRowKeys[0]}`);
                     }
@@ -111,6 +113,8 @@ class BankMoney extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '007_08') {
+                        showWarnMsg('当前节点不是确认收款节点');
                     } else {
                         this.props.history.push(`/loan/bankMoney/receive?code=${selectedRowKeys[0]}`);
                     }
@@ -121,6 +125,10 @@ class BankMoney extends React.Component {
                     } else {
                         let list = [];
                         for(let i = 0, len = selectedRows.length; i < len; i++) {
+                            if(selectedRows[i].curNodeCode !== '007_07') {
+                                showWarnMsg(`业务编号为${selectedRows[i].code}的节点不为银行驻点推送已放款名单`);
+                                return;
+                            }
                             list.push(selectedRows[i].code);
                         }
                         this.props.history.push(`/loan/bankMoney/sendList?code=${list}`);
@@ -143,7 +151,7 @@ class BankMoney extends React.Component {
                                     list.push(item[i].code);
                                 }
                                 return bankComplete(list).then(() => {
-                                    showWarnMsg('操作成功');
+                                    showSucMsg('操作成功');
                                     setTimeout(() => {
                                         this.props.getPageData();
                                     }, 500);

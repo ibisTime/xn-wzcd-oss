@@ -130,7 +130,7 @@ class Mortgage extends React.Component {
                                 this.props.doFetching();
                                 return done(key[0]).then(() => {
                                     this.props.getPageData();
-                                    showWarnMsg('操作成功');
+                                    showSucMsg('操作成功');
                                     setTimeout(() => {
                                         this.props.getPageData();
                                     }, 500);
@@ -158,7 +158,7 @@ class Mortgage extends React.Component {
                                     list.push(item[i].code);
                                 }
                                 return carComplete(list).then(() => {
-                                    showWarnMsg('操作成功');
+                                    showSucMsg('操作成功');
                                     setTimeout(() => {
                                         this.props.getPageData();
                                     }, 500);
@@ -187,7 +187,7 @@ class Mortgage extends React.Component {
                                     list.push(item[i].code);
                                 }
                                 return mortgageStart(list).then(() => {
-                                    showWarnMsg('操作成功');
+                                    showSucMsg('操作成功');
                                     setTimeout(() => {
                                         this.props.getPageData();
                                     }, 500);

@@ -42,7 +42,10 @@ class overdueList extends React.Component {
   render() {
     const fields = [{
       title: '业务编号',
-      field: 'code'
+      field: 'code',
+      render: (v, d) => {
+        return d.repayBiz.budgetOrder.code;
+      }
     }, {
       title: '客户姓名',
       field: 'realName',

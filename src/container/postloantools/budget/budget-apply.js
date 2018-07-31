@@ -50,7 +50,7 @@ class budgetApply extends React.Component {
                 limit: '100'
             },
             keyName: 'code',
-            valueName: '{{code.DATA}}-{{realName.DATA}}',
+            valueName: '{{refCode.DATA}}-{{realName.DATA}}',
             required: true
         }, {
             title: '预算金额',

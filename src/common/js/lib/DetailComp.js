@@ -375,7 +375,15 @@ export default class DetailComponent extends React.Component {
         this.props.doFetching();
         fetch(this.options.detailCode, param).then(data => {
             this.props.cancelFetching();
-            this.props.setPageData(data);
+            let keys = Object.keys(this.props.pageData);
+            if (keys.length) {
+                this.props.setPageData({
+                    ...this.props.pageData,
+                    ...data
+                });
+            } else {
+                this.props.setPageData(data);
+            }
         }).catch(this.props.cancelFetching);
     }
 
@@ -1165,10 +1173,10 @@ export default class DetailComponent extends React.Component {
                       label={this.getLabel(item)}>
                 {
                     item.readonly ? <div
-                            className="readonly-text">{data && data.length ? data[0][item.valueName] || tempString(item.valueName, data[0]) : value}</div>
+                            className="readonly-text">{value}</div>
                         : getFieldDecorator(item.field, {
                             rules,
-                            initialValue: item.data || initVal ? initVal : ''
+                            initialValue: initVal || ''
                         })(
                         <Select {...this.getSelectProps(item, initVal)}>
                             {item.data ? item.data.map(d => (

@@ -39,7 +39,10 @@ class trailerAddedit extends React.Component {
             field: 'customerName'
         }, {
             title: '业务编号',
-            field: 'code'
+            field: 'code',
+            formatter: (v, d) => {
+                return d.budgetOrder.code;
+            }
         }, {
             title: '身份证',
             field: 'idNo'

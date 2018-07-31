@@ -54,7 +54,9 @@ class yellowListPayCompensate extends React.Component {
         }, {
             title: '业务编号',
             field: 'code1',
-            value: this.code,
+            formatter: (v, d) => {
+                return d.repayBiz.budgetOrder.code;
+            },
             readonly: true
         }, {
             field: 'user',

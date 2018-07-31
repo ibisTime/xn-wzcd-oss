@@ -54,6 +54,9 @@ class OverdueListApply extends React.Component {
         const fields = [{
             title: '业务编号',
             field: 'code',
+            formatter: (v, d) => {
+                return d.repayBiz.budgetOrder.code;
+            },
             readonly: true
         }, {
             title: '客户姓名',

@@ -17,7 +17,6 @@ import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
     state => state.mortgagesInternal, {
@@ -53,17 +52,18 @@ class MortgagesInternal extends React.Component {
         }, {
             title: '业务编号',
             field: 'code',
+            formatter: (v, d) => {
+                return d.budgetOrder.code;
+            },
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'bankcardCode',
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanAmount);
-            },
+            amount: true,
             readonly: true
         }, {
             title: '流程日志',
@@ -75,6 +75,7 @@ class MortgagesInternal extends React.Component {
             },
             hidden: this.isEntry || this.isCheckFirst || this.isAddedit,
             options: {
+                rowKey: 'id',
                 fields: [{
                     title: '操作人',
                     field: 'operatorName'

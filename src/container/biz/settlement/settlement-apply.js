@@ -54,6 +54,9 @@ class settlementApply extends React.Component {
         }, {
             title: '业务编号',
             field: 'code',
+            formatter: (v, d) => {
+                return d.budgetOrder.code;
+            },
             readonly: true
         }, {
             title: '贷款银行',
@@ -96,11 +99,19 @@ class settlementApply extends React.Component {
             title: '扣除违约金额',
             field: 'cutLyDeposit',
             amount: 'true',
+            onChange: (v) => {
+                let lyDeposit = this.props.pageData.lyDeposit;
+                console.log('lyDeposit====' + lyDeposit);
+                console.log('v====' + v);
+                this.props.setPageData({
+                    ...this.props.pageData,
+                    actualRefunds: moneyFormat(lyDeposit - v * 1000)
+                });
+            },
             required: true
         }, {
             title: '实际退款金额',
             field: 'actualRefunds',
-            amount: 'true',
             readonly: true
         }, {
             title: '结清时间',
@@ -110,7 +121,7 @@ class settlementApply extends React.Component {
             title: '退款开户行',
             field: 'refundBankSubbranch',
             type: 'select',
-            listCode: 632037,
+            listCode: 802116,
             keyName: 'bankCode',
             valueName: 'bankName',
             required: true

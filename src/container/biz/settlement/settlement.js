@@ -48,6 +48,9 @@ class Settlement extends React.Component {
         const fields = [{
             title: '业务编号',
             field: 'code',
+            render: (v, d) => {
+                return d.budgetOrder.code;
+            },
             search: true
         }, {
             title: '银行',
@@ -126,7 +129,8 @@ class Settlement extends React.Component {
             fields,
             pageCode: 630520,
             searchParams: {
-                roleCode: getRoleCode()
+                roleCode: getRoleCode(),
+                curNodeCodeList: ['020_02', '020_03', '020_03', '020_04', '020_05']
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {
@@ -134,6 +138,8 @@ class Settlement extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '020_02') {
+                        showWarnMsg('当前节点不是提交结算单');
                     } else {
                         this.props.history.push(`/biz/settlement/apply?code=${selectedRowKeys[0]}`);
                     }
@@ -143,6 +149,8 @@ class Settlement extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '020_04') {
+                        showWarnMsg('当前节点不是财务审核');
                     } else {
                         this.props.history.push(`/biz/settlement/check?code=${selectedRowKeys[0]}`);
                     }
@@ -152,6 +160,8 @@ class Settlement extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '020_05') {
+                        showWarnMsg('当前节点不是确认付款');
                     } else {
                         this.props.history.push(`/biz/settlement/certain?code=${selectedRowKeys[0]}`);
                     }
@@ -161,6 +171,8 @@ class Settlement extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '020_03') {
+                        showWarnMsg('当前节点不是风控总监理审核');
                     } else {
                         this.props.history.push(`/biz/settlement/totalCheck?code=${selectedRowKeys[0]}`);
                     }
