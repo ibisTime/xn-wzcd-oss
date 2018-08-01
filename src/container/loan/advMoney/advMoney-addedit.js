@@ -62,9 +62,6 @@ class AdvMoneyAddedit extends React.Component {
             },
             options: {
                 fields: [{
-                    title: '业务编号',
-                    field: 'refOrder'
-                }, {
                     title: '操作人',
                     field: 'operatorName'
                 }, {
@@ -78,6 +75,9 @@ class AdvMoneyAddedit extends React.Component {
                 }, {
                     title: '花费时长',
                     field: 'speedTime'
+                }, {
+                    title: '审核说明',
+                    field: 'dealNote'
                 }, {
                     title: '当前节点',
                     field: 'dealNode',

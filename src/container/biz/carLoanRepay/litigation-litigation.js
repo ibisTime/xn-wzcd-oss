@@ -53,7 +53,7 @@ class litigationLitigation extends React.Component {
             },
             readonly: true
         }, {
-            title: '贷款金额',
+            title: '收款金额',
             field: 'loanAmount',
             amount: true,
             readonly: true

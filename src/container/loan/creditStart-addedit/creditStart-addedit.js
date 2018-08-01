@@ -436,7 +436,7 @@ class CreditStartAddedit extends React.Component {
             params: {
                 refOrder: this.code
             },
-            hidden: this.isEntry || this.isCheckFirst || this.isAddedit,
+            hidden: this.isEntry || this.isAddedit,
             options: {
                 fields: [{
                     title: '操作人',
@@ -454,7 +454,7 @@ class CreditStartAddedit extends React.Component {
                     field: 'speedTime'
                 }, {
                     title: '审核说明',
-                    field: 'approveNote'
+                    field: 'dealNote'
                 }, {
                     title: '当前节点',
                     field: 'dealNode',
@@ -650,9 +650,9 @@ class CreditStartAddedit extends React.Component {
                     params.buttonCode = '0';
                     this.props.doFetching();
                     let bizCode = this.code ? 632112 : 632110;
-                    if(this.curNodeCode === '001_01') {
-                        bizCode = 632110;
-                    }
+                    // if(this.curNodeCode === '001_01') {
+                    //     bizCode = 632110;
+                    // }
                     fetch(bizCode, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
@@ -671,9 +671,9 @@ class CreditStartAddedit extends React.Component {
                     params.buttonCode = '1';
                     this.props.doFetching();
                     let bizCode = this.code ? 632112 : 632110;
-                    if(this.curNodeCode === '001_01') {
-                        bizCode = 632110;
-                    }
+                    // if(this.curNodeCode === '001_01') {
+                    //     bizCode = 632110;
+                    // }
                     fetch(bizCode, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();

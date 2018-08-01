@@ -90,7 +90,8 @@ class mortgages extends React.Component {
             pageCode: 630520,
             singleSelect: false,
             searchParams: {
-                roleCode: getRoleCode()
+                roleCode: getRoleCode(),
+                curNodeCodeList: ['020_06', '020_07', '020_08', '020_09', '020_10', '020_11', '020_12', '020_13']
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {

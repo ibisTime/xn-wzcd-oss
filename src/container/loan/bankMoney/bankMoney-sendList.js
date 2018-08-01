@@ -37,7 +37,7 @@ class BankMoneySendList extends React.Component {
     render() {
         const fields = [{
             title: '已放款名单',
-            field: 'overdueList',
+            field: 'codeList',
             type: 'o2m',
             listCode: 632149,
             params: {

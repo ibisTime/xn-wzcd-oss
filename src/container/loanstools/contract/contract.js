@@ -65,8 +65,7 @@ class contract extends React.Component {
             search: true
         }, {
             title: '账单日',
-            field: 'billDatetime',
-            type: 'date'
+            field: 'billDatetime'
         }, {
             title: '还款日',
             field: 'repayBankDate',

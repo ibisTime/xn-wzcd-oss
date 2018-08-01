@@ -142,10 +142,6 @@ class AdvMoneyPayComp extends React.Component {
             field: 'billPdf',
             type: 'img',
             required: true
-        }, {
-            title: '意见说明',
-            field: 'makeBillNote',
-            required: true
         }];
         return this.props.buildDetail({
             fields,

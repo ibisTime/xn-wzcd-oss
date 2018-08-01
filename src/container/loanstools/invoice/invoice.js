@@ -12,7 +12,8 @@ import {
 import {
     showWarnMsg,
     showSucMsg,
-    getRoleCode
+    getRoleCode,
+    formatDate
 } from 'common/js/util';
 import {
     listWrapper
@@ -57,11 +58,16 @@ class invoice extends React.Component {
             amount: true
         }, {
             title: '垫资日期',
-            field: '11',
-            type: 'datetime'
+            field: 'advanceFundDatetime',
+            render: (v, d) => {
+                return formatDate(d.advanceFund.advanceFundDatetime);
+            }
         }, {
             title: '发保合预警天数',
-            field: 'name'
+            field: 'fbhWarnDay',
+            render: (v, d) => {
+                return formatDate(d.advanceFund.fbhWarnDay);
+            }
         }, {
             title: '车辆发票价',
             field: 'invoicePrice',

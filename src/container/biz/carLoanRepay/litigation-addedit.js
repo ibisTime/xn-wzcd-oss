@@ -50,13 +50,13 @@ class litigationAddedit extends React.Component {
             field: 'idNo',
             readonly: true
         }, {
-            title: '贷款金额',
+            title: '收款金额',
             field: 'loanAmount',
             amount: true,
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '案号',
@@ -125,9 +125,6 @@ class litigationAddedit extends React.Component {
             },
             options: {
                 fields: [{
-                    title: '业务编号',
-                    field: 'refOrder'
-                }, {
                     title: '操作人',
                     field: 'operatorName'
                 }, {
@@ -141,6 +138,9 @@ class litigationAddedit extends React.Component {
                 }, {
                     title: '花费时长',
                     field: 'speedTime'
+                }, {
+                    title: '审核说明',
+                    field: 'dealNote'
                 }, {
                     title: '当前节点',
                     field: 'dealNode',

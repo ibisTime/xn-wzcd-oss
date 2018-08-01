@@ -53,7 +53,7 @@ class budget extends React.Component {
             search: true
         }, {
             title: '业务编号',
-            field: 'bizCode'
+            field: 'budgetOrderCode'
         }, {
             title: '预算金额',
             field: 'amount',

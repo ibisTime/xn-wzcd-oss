@@ -138,11 +138,6 @@ class redListaPay extends React.Component {
             field: 'remitBillPdf',
             type: 'img',
             required: true
-        }, {
-            title: '备注',
-            field: 'remark',
-            type: 'textarea',
-            normalArea: true
         }];
         return this
             .props

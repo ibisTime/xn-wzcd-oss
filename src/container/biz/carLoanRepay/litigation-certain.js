@@ -48,13 +48,13 @@ class litigationCertain extends React.Component {
             field: 'idNo',
             readonly: true
         }, {
-            title: '贷款金额',
+            title: '收款金额',
             field: 'loanAmount',
             amount: true,
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '收款时间',
@@ -71,9 +71,6 @@ class litigationCertain extends React.Component {
             field: 'judgeBillPdf',
             type: 'img',
             required: true
-        }, {
-            title: '备注',
-            field: 'judgeNote'
         }];
         return this.props.buildDetail({
             fields,

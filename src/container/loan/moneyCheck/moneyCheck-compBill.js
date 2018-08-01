@@ -128,10 +128,6 @@ class AdvMoneyCompBill extends React.Component {
                     unAdvanceFund
                 });
             }
-        }, {
-            title: '意见说明',
-            field: 'makeBillNote',
-            required: true
         }];
         return this.props.buildDetail({
             fields,

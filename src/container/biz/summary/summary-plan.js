@@ -72,43 +72,58 @@ class SummaryPlan extends React.Component {
             options: {
                 fields: [{
                     title: '当前期数',
-                    field: 'curPeriods'
+                    field: 'curPeriods',
+                    nowrap: true
+                }, {
+                    title: '还款日期',
+                    field: 'repayDatetime',
+                    type: 'date',
+                    nowrap: true
                 }, {
                     title: '月供金额',
                     field: 'repayCapital',
-                    amount: true
+                    amount: true,
+                    nowrap: true
                 }, {
                     title: '实还金额',
                     field: 'payedAmount',
-                    amount: true
+                    amount: true,
+                    nowrap: true
                 }, {
                     title: '逾期金额',
                     field: 'overdueAmount',
-                    amount: true
+                    amount: true,
+                    nowrap: true
                 }, {
                     title: '催收回逾期金额',
                     field: 'payedFee',
-                    amount: true
+                    amount: true,
+                    nowrap: true
                 }, {
                     title: '清收成本',
                     field: 'totalFee',
-                    amount: true
+                    amount: true,
+                    nowrap: true
                 }, {
                     title: '代偿金额',
                     field: 'replaceRealRepayAmount',
-                    amount: true
+                    amount: true,
+                    nowrap: true
                 }, {
                     title: '代偿时间',
                     field: 'replaceRepayDatetime',
-                    type: 'date'
+                    type: 'date',
+                    nowrap: true
                 }, {
                     title: '收回代偿金额',
                     field: 'replaceBackRepayAmount',
-                    amount: true
+                    amount: true,
+                    nowrap: true
                 }, {
                     title: '收回代偿时间',
                     field: 'replaceBackRepayDatetime',
-                    type: 'date'
+                    type: 'date',
+                    nowrap: true
                 }]
             }
         }];

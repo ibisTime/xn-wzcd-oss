@@ -52,10 +52,16 @@ class Summary extends React.Component {
         const fields = [{
             title: '业务编号',
             field: 'code',
+            render: (v, d) => {
+                return d.budgetOrder.code;
+            },
             search: true
         }, {
             title: '业务公司',
-            field: 'code'
+            field: 'companyName',
+            render: (v, d) => {
+                return d.budgetOrder.companyName;
+            }
         }, {
             title: '银行',
             field: 'loanBank',
@@ -73,7 +79,10 @@ class Summary extends React.Component {
             search: true
         }, {
             title: '电话',
-            field: 'idNo'
+            field: 'idNo',
+            render: (v, d) => {
+                return d.user.mobile;
+            }
         }, {
             title: '证件号',
             field: 'idNo',
@@ -82,7 +91,10 @@ class Summary extends React.Component {
             }
         }, {
             title: '车牌号',
-            field: 'idNo'
+            field: 'carNumber',
+            render: (v, d) => {
+                return d.budgetOrder.carNumber;
+            }
         }, {
             title: '放款日期',
             field: 'bankFkDatetime',
@@ -108,10 +120,6 @@ class Summary extends React.Component {
             field: 'overdueAmount',
             amount: true
         }, {
-            title: '剩余代偿金额',
-            field: '22',
-            amount: true
-        }, {
             title: '实际逾期期数',
             field: 'curOverdueCount',
             search: true
@@ -126,8 +134,7 @@ class Summary extends React.Component {
             field: 'billDatetime'
         }, {
             title: '还款日',
-            field: 'monthDatetime',
-            type: 'date'
+            field: 'monthDatetime'
         }, {
             title: '总期数',
             field: 'periods'

@@ -41,7 +41,7 @@ class ContractImport extends React.Component {
             dataIndex: 'billDatetime'
         }, {
             title: '放款时间',
-            dataIndex: 'repayBankDate'
+            dataIndex: 'bankfktime'
         }, {
             title: '利率',
             dataIndex: 'bankRate'
@@ -50,14 +50,7 @@ class ContractImport extends React.Component {
             dataIndex: 'contractCode'
         }, {
             title: '合同时间',
-            dataIndex: 'contractSignDate',
-            render: (v, d) => {
-                if (v) {
-                    return v.substr(0, 4) + '-' + v.substr(4, 2) + '-' + v.substr('6, 2');
-                } else {
-                    return '-';
-                }
-            }
+            dataIndex: 'contractSignDate'
         }, {
             title: '生成日期',
             dataIndex: 'sctime',
@@ -205,18 +198,18 @@ class ContractImport extends React.Component {
             if (this.state.bankType === 'ICBC') {
                 XLSXData.forEach((item, i) => {
                     data.push({
-                        id: i,
-                        customerName: item[0],
-                        loanAmount: item[1] * 1000,
-                        bankCardNumber: item[2],
-                        billDatetime: item[3],
-                        bankfktime: item[4],
-                        bankRate: item[5] * 1000,
-                        contractCode: item[6],
-                        contractSignDate: item[7],
-                        sctime: item[8],
-                        userCode: item[9],
-                        idNo: item[10]
+                        id: item[0],
+                        customerName: item[0 + 1],
+                        loanAmount: item[1 + 1] * 1000,
+                        bankCardNumber: item[2 + 1],
+                        billDatetime: item[3 + 1],
+                        bankfktime: item[4 + 1],
+                        bankRate: item[5 + 1],
+                        contractCode: item[6 + 1],
+                        contractSignDate: item[7 + 1],
+                        sctime: item[8 + 1],
+                        userCode: item[9 + 1],
+                        idNo: item[10 + 1]
                     });
                 });
             } else if (this.state.bankType === 'CCB') {

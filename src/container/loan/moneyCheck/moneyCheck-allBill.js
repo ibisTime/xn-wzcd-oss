@@ -65,10 +65,6 @@ class AdvMoneyAllBill extends React.Component {
             field: 'payAmount',
             amount: true,
             readonly: true
-        }, {
-            title: '意见说明',
-            field: 'makeBillNote',
-            required: true
         }];
         return this.props.buildDetail({
             fields,

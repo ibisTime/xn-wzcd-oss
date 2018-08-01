@@ -94,7 +94,7 @@ class MortgagesCheck extends React.Component {
                     field: 'speedTime'
                 }, {
                     title: '审核说明',
-                    field: 'approveNote'
+                    field: 'dealNote'
                 }, {
                     title: '当前节点',
                     field: 'dealNode',

@@ -81,9 +81,6 @@ class EstimateCertain extends React.Component {
       field: 'waterBill',
       type: 'img',
       required: true
-    }, {
-      title: '备注',
-      field: 'payRemark'
     }];
     return this.props.buildDetail({
       fields,

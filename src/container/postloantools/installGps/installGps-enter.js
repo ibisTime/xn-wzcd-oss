@@ -71,6 +71,8 @@ class InstallGpsEnter extends React.Component {
         }, {
             title: '安装位置',
             field: 'azLocation',
+            type: 'select',
+            key: 'az_location',
             required: true
         }, {
             title: '安装时间',
@@ -88,21 +90,14 @@ class InstallGpsEnter extends React.Component {
             options: {
                 fields: [{
                     title: 'GPS设备号',
-                    field: 'code',
-                    type: 'select',
-                    listCode: 632707,
-                    params: {
-                        applyStatus: '1',
-                        applyUser: getUserId(),
-                        useStatus: '0'
-                    },
-                    keyName: 'code',
-                    valueName: 'gpsDevNo',
+                    field: 'gpsDevNo',
                     nowrap: true,
                     required: true
                 }, {
                     title: '安装位置',
                     field: 'azLocation',
+                    type: 'select',
+                    key: 'az_location',
                     nowrap: true,
                     required: true
                 }, {

@@ -123,6 +123,9 @@ class AdvMoneyAreaCheck extends React.Component {
                 field: 'endDatetime',
                 type: 'datetime'
               }, {
+                title: '审核说明',
+                field: 'dealNote'
+            }, {
                 title: '花费时长',
                 field: 'speedTime'
               }, {

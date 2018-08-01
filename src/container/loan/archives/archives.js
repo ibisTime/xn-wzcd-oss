@@ -80,48 +80,13 @@ class Archives extends React.Component {
             field: 'loanAmount',
             amount: true
         }, {
-            title: '业务员名称',
+            title: '业务员',
             field: 'saleUserName'
         }, {
             title: '状态',
             field: 'enterFileStatus',
             type: 'select',
             key: 'enter_file_status'
-        }, {
-            title: '流程日志',
-            field: 'list',
-            type: 'o2m',
-            listCode: 630176,
-            params: {
-                refOrder: this.code
-            },
-            options: {
-                fields: [{
-                    title: '业务编号',
-                    field: 'refOrder'
-                }, {
-                    title: '操作人',
-                    field: 'operatorName'
-                }, {
-                    title: '开始时间',
-                    field: 'startDatetime',
-                    type: 'datetime'
-                }, {
-                    title: '结束时间',
-                    field: 'endDatetime',
-                    type: 'datetime'
-                }, {
-                    title: '花费时长',
-                    field: 'speedTime'
-                }, {
-                    title: '当前节点',
-                    field: 'dealNode',
-                    type: 'select',
-                    listCode: 630147,
-                    keyName: 'code',
-                    valueName: 'name'
-                }]
-            }
         }];
         return this.props.buildList({
             fields,
