@@ -114,7 +114,8 @@ class ContractImport extends React.Component {
             dataIndex: 'billDatetime'
         }, {
             title: '发票价格',
-            dataIndex: 'invoicePrice'
+            dataIndex: 'invoicePrice',
+            render: moneyFormat
         }, {
             title: '贷款额',
             dataIndex: 'loanAmount',
@@ -124,13 +125,16 @@ class ContractImport extends React.Component {
             dataIndex: 'useTime'
         }, {
             title: '手续费',
-            dataIndex: 'fee'
+            dataIndex: 'fee',
+            render: moneyFormat
         }, {
             title: '担保手续费',
-            dataIndex: 'dbFee'
+            dataIndex: 'dbFee',
+            render: moneyFormat
         }, {
             title: '入账金额',
-            dataIndex: 'receiveMoney'
+            dataIndex: 'receiveMoney',
+            render: moneyFormat
         }, {
             title: '手续费率',
             dataIndex: 'feeRate'
@@ -238,7 +242,7 @@ class ContractImport extends React.Component {
                         idNo: item[6],
                         bankCardNumber: item[7],
                         billDatetime: item[8],
-                        invoicePrice: item[9] * 1000,
+                        invoicePrice: item[9] * 1000 * 10000,
                         loanAmount: item[10] * 1000,
                         useTime: item[11],
                         fee: item[12] * 1000,

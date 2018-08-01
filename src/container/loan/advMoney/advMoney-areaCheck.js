@@ -109,9 +109,6 @@ class AdvMoneyAreaCheck extends React.Component {
             },
             options: {
               fields: [{
-                title: '业务编号',
-                field: 'refOrder'
-              }, {
                 title: '操作人',
                 field: 'operatorName'
               }, {
