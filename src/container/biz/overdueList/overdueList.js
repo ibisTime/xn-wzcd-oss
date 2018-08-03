@@ -106,7 +106,7 @@ class overdueList extends React.Component {
             });
           }
         },
-        overdue: (selectedRowKeys, selectedRows) => {
+        process: (selectedRowKeys, selectedRows) => {
           if (!selectedRowKeys.length) {
             showWarnMsg('请选择记录');
           } else if (selectedRowKeys.length > 1) {
@@ -114,7 +114,18 @@ class overdueList extends React.Component {
           } else if (selectedRows[0].curNodeCode !== '022_03') {
             showWarnMsg('当前节点不是已逾期待处理');
           } else {
-            this.props.history.push(`/biz/overdueList/dispose?code=${selectedRowKeys[0]}`);
+            this.props.history.push(`/biz/overdueList/process?code=${selectedRowKeys[0]}`);
+          }
+        },
+        result: (selectedRowKeys, selectedRows) => {
+          if (!selectedRowKeys.length) {
+            showWarnMsg('请选择记录');
+          } else if (selectedRowKeys.length > 1) {
+            showWarnMsg('请选择一条记录');
+          } else if (selectedRows[0].curNodeCode !== '022_03') {
+            showWarnMsg('当前节点不是已逾期待处理');
+          } else {
+            this.props.history.push(`/biz/overdueList/result?code=${selectedRowKeys[0]}`);
           }
         },
         apply: (selectedRowKeys, selectedRows) => {

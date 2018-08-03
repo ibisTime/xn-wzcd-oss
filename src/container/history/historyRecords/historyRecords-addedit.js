@@ -1,11 +1,6 @@
 import React from 'react';
 import {
     getQueryString,
-    getUserId,
-    showWarnMsg,
-    showSucMsg,
-    moneyParse,
-    moneyFormat,
     moneyUppercase
 } from 'common/js/util';
 import {CollapseWrapper} from 'component/collapse-detail/collapse-detail';
@@ -17,8 +12,6 @@ import {
     setPageData,
     restore
 } from '@redux/loan/budget-detail';
-import { getSystormParam } from 'api/dict';
-import fetch from 'common/js/fetch';
 
 @CollapseWrapper(
     state => state.loanBudgetDetail,
@@ -27,27 +20,8 @@ import fetch from 'common/js/fetch';
 class BudgetDetail extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            isAdvanceFund: false,
-            sfData: null,
-            sfDataFetch: false,
-            oilSubsidyValue: null,
-            gpsDeductValue: null
-        };
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        // 撤销
-        this.isRevoke = !!getQueryString('isRevoke', this.props.location.search);
-        // 区域总经理审查
-        this.isAreaCheck = !!getQueryString('isAreaCheck', this.props.location.search);
-        // 分公司总经理审查
-        this.isCompCheck = !!getQueryString('isCompCheck', this.props.location.search);
-        // 二审
-        this.isCheck = !!getQueryString('isCheck', this.props.location.search);
-        // 银行利率明细列表
-        this.bankRateList = null;
-        // 购车途径
-        this.shopWay = true;
     }
 
     render() {
@@ -1274,129 +1248,13 @@ class BudgetDetail extends React.Component {
                     }
                 }]
             ]
-        }];
-        let buttons = [];
-
-        if (this.isRevoke) {
-            let revokeFields = [{
-                title: '撤销理由',
-                field: 'cancelReason',
-                type: 'textarea',
-                normalArea: true,
-                readonly: false,
-                required: true
-            }];
-            fields = fields.concat(revokeFields);
-            buttons = [{
-                title: '撤销',
-                check: true,
-                handler: (params) => {
-                    let data = {};
-                    data.code = this.code;
-                    data.cancelReason = params.cancelReason;
-                    data.operator = getUserId();
-                    let bizCode = 632125;
-                    this.props.doFetching();
-                    fetch(bizCode, data).then(() => {
-                        this.props.cancelFetching();
-                        showSucMsg('操作成功');
-                        setTimeout(() => {
-                            this.props.history.go(-1);
-                        }, 1000);
-                    }).catch(() => {
-                        this.props.cancelFetching();
-                    });
-                }
-            }, {
-                title: '返回',
-                handler: () => {
-                    this.props.history.go(-1);
-                }
-            }];
-        }
-
-        let checkFields = [{
-            field: 'approveNote',
-            title: '审核说明',
-            type: 'textarea',
-            normalArea: true,
-            readonly: false,
-            required: true
-        }];
-
-        if (this.isAreaCheck || this.isCompCheck || this.isCheck) {
-            fields = fields.concat(checkFields);
-
-            buttons = [{
-                title: '通过',
-                check: true,
-                handler: (params) => {
-                    let data = {};
-                    data.code = this.code;
-                    data.approveNote = params.approveNote;
-                    data.approveResult = '1';
-                    data.operator = getUserId();
-                    let bizCode;
-                    if (this.isAreaCheck) {
-                        bizCode = 632122;
-                    } else if (this.isCompCheck) {
-                        bizCode = 632123;
-                    } else if (this.isCheck) {
-                        bizCode = 632124;
-                    }
-                    this.props.doFetching();
-                    fetch(bizCode, data).then(() => {
-                        this.props.cancelFetching();
-                        showSucMsg('操作成功');
-                        setTimeout(() => {
-                            this.props.history.go(-1);
-                        }, 1000);
-                    }).catch(() => {
-                        this.props.cancelFetching();
-                    });
-                }
-            }, {
-                title: '不通过',
-                check: true,
-                handler: (params) => {
-                    let data = {};
-                    data.code = this.code;
-                    data.approveNote = params.approveNote;
-                    data.approveResult = '0';
-                    data.operator = getUserId();
-                    let bizCode;
-                    if (this.isAreaCheck) {
-                        bizCode = 632122;
-                    } else if (this.isCompCheck) {
-                        bizCode = 632123;
-                    } else if (this.isCheck) {
-                        bizCode = 632124;
-                    }
-                    this.props.doFetching();
-                    fetch(bizCode, data).then(() => {
-                        this.props.cancelFetching();
-                        showSucMsg('操作成功');
-                        setTimeout(() => {
-                            this.props.history.go(-1);
-                        }, 1000);
-                    }).catch(() => {
-                        this.props.cancelFetching();
-                    });
-                }
-            }, {
-                title: '返回',
-                handler: () => {
-                    this.props.history.go(-1);
-                }
-            }];
-        }
+        }]
 
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632146,
-            buttons: buttons
+            detailCode: 632146
         });
     }
 }

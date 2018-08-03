@@ -355,7 +355,7 @@ class CreditStartAddedit extends React.Component {
                 hidden: !this.view,
                 noVisible: true
             }, {
-                title: '对外担保备注',
+                title: '备注',
                 field: 'outGuaranteesRemark',
                 required: true,
                 readonly: !this.isEntry,

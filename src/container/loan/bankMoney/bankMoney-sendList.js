@@ -63,13 +63,13 @@ class BankMoneySendList extends React.Component {
                 title: '确认',
                 check: true,
                 handler: (params) => {
-                    let codeList = [];
-                    let overdueList = this.props.o2mSKeys.overdueList;
-                    for(let i = 0, len = overdueList.length; i < len; i++) {
-                        codeList.push(overdueList[i]);
+                    let list = [];
+                    let codeList = params.codeList;
+                    for(let i = 0, len = codeList.length; i < len; i++) {
+                        list.push(codeList[i].code);
                     }
-                    params.codeList = codeList;
-                    delete params.overdueList;
+                    params.codeList = list;
+                    params.code = this.code;
                     this.props.doFetching();
                     params.operator = getUserId();
                     fetch(632144, params).then(() => {

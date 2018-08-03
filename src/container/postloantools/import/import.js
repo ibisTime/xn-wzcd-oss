@@ -78,10 +78,10 @@ class imports extends React.Component {
             type: 'select',
             data: [{
                 key: '0',
-                value: '待处理'
+                value: '不匹配'
             }, {
                 key: '1',
-                value: '已处理'
+                value: '已匹配'
             }],
             keyName: 'key',
             valueName: 'value',

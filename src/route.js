@@ -381,6 +381,16 @@ const ROUTES = [
     path: '/biz/overdueList/dispose',
     component: asyncComponent(() => import('container/biz/overdueList/overdueList-dispose'))
   },
+  //  逾期名单 催收过程
+  {
+    path: '/biz/overdueList/process',
+    component: asyncComponent(() => import('container/biz/overdueList/overdueList-process'))
+  },
+  //  逾期名单 催收结果
+  {
+    path: '/biz/overdueList/result',
+    component: asyncComponent(() => import('container/biz/overdueList/overdueList-result'))
+  },
   //  逾期名单 申请代偿
   {
     path: '/biz/overdueList/apply',

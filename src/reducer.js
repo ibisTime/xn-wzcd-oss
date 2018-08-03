@@ -101,6 +101,8 @@ import { bizRefundListAddedit } from './redux/biz/refundList-addedit';
 //  逾期名单 + 详情 + 处理
 import { bizOverdueList } from './redux/biz/overdueList/overdueList';
 import { bizOverdueListDispose } from './redux/biz/overdueList/overdueList-dispose';
+import { bizOverdueListProcess } from './redux/biz/overdueList/overdueList-process';
+import { bizOverdueListResult } from './redux/biz/overdueList/overdueList-result';
 import { bizOverdueListApply } from './redux/biz/overdueList/overdueList-apply';
 
 //  白名单 + 详情
@@ -802,6 +804,8 @@ export default combineReducers({
   postloantoolsImportAddedit,
   postloantoolsImportImport,
   postloantoolsImportDispose,
+  bizOverdueListProcess,
+  bizOverdueListResult,
   mortgages,
   mortgagesAddEdit,
   mortgagesApply,
