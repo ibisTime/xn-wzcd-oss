@@ -87,6 +87,13 @@ class redListEnter extends React.Component {
             field: 'takeLocation',
             required: true
         }, {
+            title: '最终收款人',
+            field: 'finalPayee'
+        }, {
+            title: '附件上传',
+            field: 'payeeEnclosure',
+            type: 'img'
+        }, {
             title: '备注',
             field: 'takeNote'
         }];

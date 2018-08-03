@@ -55,7 +55,7 @@ class EstimateCheck extends React.Component {
       type: 'date',
       readonly: true
     }, {
-      title: '审核说明',
+      title: '审核意见',
       field: 'financeCheckNote',
       required: true
     }];

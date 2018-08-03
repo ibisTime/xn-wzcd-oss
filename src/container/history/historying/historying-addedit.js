@@ -1246,7 +1246,7 @@ class HistoryingAddedit extends React.Component {
               title: '花费时长',
               field: 'speedTime'
             }, {
-              title: '审核说明',
+              title: '审核意见',
               field: 'dealNote'
           }, {
               title: '当前节点',

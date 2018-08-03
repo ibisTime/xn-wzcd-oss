@@ -1727,7 +1727,7 @@ class BudgetAddedit extends React.Component {
 
         let checkFields = [{
             field: 'approveNote',
-            title: '审核说明',
+            title: '审核意见',
             type: 'textarea',
             normalArea: true,
             readonly: false,

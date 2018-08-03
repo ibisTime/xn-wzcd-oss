@@ -147,7 +147,7 @@ class RebatesFinance extends React.Component {
             key: 'repoint_status',
             readonly: true
         }, {
-            title: '审核说明',
+            title: '审核意见',
             field: 'approveNote',
             type: 'textarea',
             normalArea: true,

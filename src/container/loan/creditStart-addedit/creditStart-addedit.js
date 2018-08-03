@@ -453,7 +453,7 @@ class CreditStartAddedit extends React.Component {
                     title: '花费时长',
                     field: 'speedTime'
                 }, {
-                    title: '审核说明',
+                    title: '审核意见',
                     field: 'dealNote'
                 }, {
                     title: '当前节点',
@@ -465,7 +465,7 @@ class CreditStartAddedit extends React.Component {
                 }]
             }
         }, {
-            title: '审核说明',
+            title: '审核意见',
             field: 'approveNote',
             readonly: !this.isCheckSalesman && !this.isCheckFirst,
             hidden: !this.isCheckSalesman && !this.isCheckFirst,

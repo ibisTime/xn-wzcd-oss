@@ -99,7 +99,7 @@ class MisInvoiceCertain extends React.Component {
             required: true,
             hidden: this.hiddenStatus
         }, {
-            title: '付款凭证（水单）',
+            title: '银行回单（水单）',
             field: 'billPdf',
             required: true,
             type: 'img',
@@ -129,7 +129,7 @@ class MisInvoiceCertain extends React.Component {
             required: true,
             hidden: !this.hiddenStatus
         }, {
-            title: '付款凭证（水单）',
+            title: '银行回单（水单）',
             field: 'collectionBillPdf',
             required: true,
             type: 'img',

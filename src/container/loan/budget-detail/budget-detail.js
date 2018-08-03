@@ -1261,7 +1261,7 @@ class BudgetDetail extends React.Component {
                             title: '花费时长',
                             field: 'speedTime'
                         }, {
-                            title: '审核说明',
+                            title: '审核意见',
                             field: 'dealNote'
                         }, {
                             title: '当前节点',
@@ -1317,7 +1317,7 @@ class BudgetDetail extends React.Component {
 
         let checkFields = [{
             field: 'approveNote',
-            title: '审核说明',
+            title: '审核意见',
             type: 'textarea',
             normalArea: true,
             readonly: false,

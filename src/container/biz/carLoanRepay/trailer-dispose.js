@@ -101,6 +101,11 @@ class trailerDispose extends React.Component {
             title: '费用说明',
             field: 'feeNote',
             readonly: false
+        }, {
+            title: '附件',
+            field: 'dealEnclosure',
+            type: 'img',
+            readonly: false
         }];
         return this
             .props

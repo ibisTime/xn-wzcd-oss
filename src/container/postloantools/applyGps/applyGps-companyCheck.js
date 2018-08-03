@@ -74,7 +74,7 @@ class applyGpsCompanyCheck extends React.Component {
         }]
       }
     }, {
-      title: '审核说明',
+      title: '审核意见',
       field: 'approveNote',
       required: true
     }];

@@ -48,7 +48,7 @@ class RebatesBill extends React.Component {
                     bankcardCode: ''
                 });
                 if (data) {
-                  let list = [].concat(data.jxsCollectBankcardList).concat(data.gsCollectBankcardList)
+                  let list = [].concat(data.gsCollectBankcardList)
                     .concat(data.jhCollectBankcardList).concat(data.zhCollectBankcardList);
                   this.setState({
                       bankcardCode: list
@@ -63,12 +63,20 @@ class RebatesBill extends React.Component {
             keyName: 'code',
             valueName: '{{realName.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
             searchName: 'customerName',
-            required: true,
+            required: true
+        }, {
+            title: '结算方式',
+            field: 'settleWay',
+            type: 'select',
+            key: 'settle_way',
             onChange: (v, data) => {
                 let carDealerCode = this.props.form.getFieldValue('carDealerCode');
-                if (carDealerCode && v) {
+                let bankcardCode = this.props.form.getFieldValue('bankcardCode');
+                if (carDealerCode && bankcardCode && v) {
                     fetch(632297, {
-                        carDealerCode: carDealerCode
+                        carDealerCode: carDealerCode,
+                        accountCode: bankcardCode,
+                        settleWay: v
                     }).then((data) => {
                         this.props.cancelFetching();
                         let list = [];

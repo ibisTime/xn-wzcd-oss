@@ -79,6 +79,22 @@ class Rebate extends React.Component {
             field: 'bankRepointStatus',
             type: 'select',
             key: 'bank_repoint_status'
+        }, {
+            title: '放款时间',
+            field: 'time2',
+            type: 'date',
+            rangedate: ['bankFkDatetimeStart', 'bankFkDatetimeEnd'],
+            render: dateTimeFormat,
+            noVisible: true,
+            search: true
+        }, {
+            title: '进件时间',
+            field: 'time1',
+            type: 'date',
+            rangedate: ['bankFkSendDatetimeStart', 'bankFkSendDatetimeEnd'],
+            render: dateTimeFormat,
+            noVisible: true,
+            search: true
         }];
         return this.props.buildList({
             fields,
@@ -101,7 +117,7 @@ class Rebate extends React.Component {
                             onOk: () => {
                                 this.props.doFetching();
                                 let list = [];
-                                for(let i = 0, len = item.length; i < len; i++) {
+                                for (let i = 0, len = item.length; i < len; i++) {
                                     list.push(item[i].code);
                                 }
                                 return rebateList(list).then(() => {

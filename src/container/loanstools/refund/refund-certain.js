@@ -142,7 +142,7 @@ class RefundCertain extends React.Component {
             valueName: '{{bankName.DATA}}-{{bankcardNumber.DATA}}-{{realName.DATA}}',
             required: true
         }, {
-            title: '付款凭证',
+            title: '银行回单',
             field: 'shouldBackBillPdf',
             type: 'img',
             required: true

@@ -137,7 +137,7 @@ class RefundAddedit extends React.Component {
             valueName: '{{bankCode.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
             required: true
         }, {
-            title: '付款凭证',
+            title: '银行回单',
             field: 'shouldBackBillPdf',
             type: 'img',
             required: true

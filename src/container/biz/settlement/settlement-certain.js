@@ -130,7 +130,7 @@ class settlementCertain extends React.Component {
             type: 'date',
             required: true
         }, {
-            title: '打款凭证',
+            title: '银行回单',
             field: 'settlePdf',
             type: 'img',
             required: true

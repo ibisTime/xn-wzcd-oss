@@ -1331,7 +1331,7 @@ class DealerAddedit extends React.Component {
           </Card>
           {this.check ? (
             <Card title="审核" style={{ marginTop: 16 }}>
-              <FormItem label="审核说明">
+              <FormItem label="审核意见">
                 {getFieldDecorator('approveNote', {
                   initialValue: pageData.approveNote
                 })(<TextArea />)}

@@ -47,6 +47,9 @@ class estimate extends React.Component {
       field: 'companyName',
       search: true
     }, {
+      title: '户名',
+      field: 'reaiName'
+    }, {
       title: '预算金额',
       field: 'budgetAmount',
       amount: true

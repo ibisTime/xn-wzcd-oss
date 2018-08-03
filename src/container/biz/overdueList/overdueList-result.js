@@ -31,6 +31,8 @@ class OverdueListResult extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.isOverdueDeposit = true;
+        this.isRealRepayAmount = true;
     }
     render() {
         const fields = [{
@@ -97,35 +99,17 @@ class OverdueListResult extends React.Component {
                 }]
             }
         }, {
-            title: '催收方式',
-            field: 'collectionWay',
-            type: 'select',
-            key: 'collection_way',
-            required: true
-        }, {
-            title: '催收对象',
-            field: 'collectionTarget',
-            type: 'select',
-            key: 'collection_target',
-            multiple: true,
-            required: true
-        }, {
-            title: '催收过程',
-            field: 'collectionProcess',
-            type: 'select',
-            key: 'collection_process',
-            required: true
-        }, {
-            title: '客户意愿',
-            field: 'collectionWish',
-            type: 'select',
-            key: 'collection_wish',
-            required: true
-        }, {
             title: '催收结果',
             field: 'collectionResult',
             type: 'select',
             key: 'collection_result',
+            onChange: (v) => {
+                if (v === 'part_repay') {
+                    this.isRealRepayAmount = false;
+                } else {
+                    this.isRealRepayAmount = true;
+                }
+            },
             required: true
         }, {
             title: '是否提供押金',
@@ -140,19 +124,28 @@ class OverdueListResult extends React.Component {
             }],
             keyName: 'key',
             valueName: 'value',
+            onChange: (v) => {
+                if (v === '1') {
+                    this.isOverdueDeposit = false;
+                } else {
+                    this.isOverdueDeposit = true;
+                }
+            },
             required: true
         }, {
             title: '违约押金',
             field: 'overdueDeposit',
             amount: true,
             number: true,
-            required: true
+            required: true,
+            hidden: this.isOverdueDeposit
         }, {
             title: '实际还款金额',
             field: 'realRepayAmount',
             amount: true,
             number: true,
-            required: true
+            required: true,
+            hidden: this.isRealRepayAmount
         }, {
             title: '清收成本清单',
             field: 'costList',
@@ -179,7 +172,7 @@ class OverdueListResult extends React.Component {
             }
         }, {
             title: '催收情况说明',
-            field: 'collectionNote',
+            field: 'collectionResultNote',
             type: 'textarea',
             normalArea: true,
             required: true

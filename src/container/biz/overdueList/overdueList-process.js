@@ -122,38 +122,6 @@ class OverdueListProcess extends React.Component {
             key: 'collection_wish',
             required: true
         }, {
-            title: '催收结果',
-            field: 'collectionResult',
-            type: 'select',
-            key: 'collection_result',
-            required: true
-        }, {
-            title: '是否提供押金',
-            field: 'depositIsProvide',
-            type: 'select',
-            data: [{
-                key: '0',
-                value: '否'
-            }, {
-                key: '1',
-                value: '是'
-            }],
-            keyName: 'key',
-            valueName: 'value',
-            required: true
-        }, {
-            title: '违约押金',
-            field: 'overdueDeposit',
-            amount: true,
-            number: true,
-            required: true
-        }, {
-            title: '实际还款金额',
-            field: 'realRepayAmount',
-            amount: true,
-            number: true,
-            required: true
-        }, {
             title: '清收成本清单',
             field: 'costList',
             type: 'o2m',
@@ -179,7 +147,7 @@ class OverdueListProcess extends React.Component {
             }
         }, {
             title: '催收情况说明',
-            field: 'collectionNote',
+            field: 'collectionProcessNote',
             type: 'textarea',
             normalArea: true,
             required: true
@@ -197,7 +165,7 @@ class OverdueListProcess extends React.Component {
                         param.code = this.code;
                         param.operator = getUserId();
                         this.props.doFetching();
-                        fetch(630532, param).then(() => {
+                        fetch(630537, param).then(() => {
                             showSucMsg('操作成功');
                             this.props.cancelFetching();
                             setTimeout(() => {

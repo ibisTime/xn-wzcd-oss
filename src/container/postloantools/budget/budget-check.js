@@ -80,7 +80,7 @@ class budgetCheck extends React.Component {
             field: 'applyNote',
             readonly: true
         }, {
-            title: '审核说明',
+            title: '审核意见',
             field: 'financeCheckNote',
             required: true
         }];

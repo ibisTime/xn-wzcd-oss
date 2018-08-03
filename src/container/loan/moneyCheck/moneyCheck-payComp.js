@@ -138,7 +138,7 @@ class AdvMoneyPayComp extends React.Component {
             valueName: 'bankcardNumber',
             required: true
         }, {
-            title: '打款凭证',
+            title: '银行回单',
             field: 'billPdf',
             type: 'img',
             required: true

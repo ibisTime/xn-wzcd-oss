@@ -102,7 +102,7 @@ class costDetail extends React.Component {
             required: true,
             hidden: !(this.status === '5' || this.status === '3')
         }, {
-            title: '付款凭证',
+            title: '银行回单',
             field: 'payPdf',
             type: 'img',
             required: true,

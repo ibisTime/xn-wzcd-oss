@@ -174,7 +174,7 @@ class compensatoryAddedit extends React.Component {
                 }]
             ]
         }, {
-            title: '审核说明',
+            title: '审核意见',
             field: 'remark',
             required: true
         }];

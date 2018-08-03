@@ -220,7 +220,7 @@ class compensatoryCertain extends React.Component {
                     readonly: true
                 }],
                 [{
-                    title: '付款凭证',
+                    title: '银行回单',
                     field: 'repayBill',
                     type: 'img'
                 }]

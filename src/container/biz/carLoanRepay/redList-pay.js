@@ -134,7 +134,7 @@ class redListaPay extends React.Component {
             valueName: '{{bankcardNumber.DATA}}-{{realName.DATA}}',
             required: true
         }, {
-            title: '付款凭证',
+            title: '银行回单',
             field: 'remitBillPdf',
             type: 'img',
             required: true
