@@ -62,7 +62,7 @@ class EstimateCertain extends React.Component {
       required: true
     }, {
       title: '打款账号',
-      field: 'payBank',
+      field: 'payAccount',
       type: 'select',
       listCode: '632007',
       params: {
@@ -92,9 +92,6 @@ class EstimateCertain extends React.Component {
         check: true,
         handler: (params) => {
           this.props.doFetching();
-          let bank = this.props.selectData.payBank.find(v => v.code === params.payBank);
-          params.payAccount = bank.bankcardNumber;
-          params.payBank = bank.bankName;
           params.operator = getUserId();
           fetch(632102, params).then(() => {
             showSucMsg('操作成功');

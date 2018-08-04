@@ -516,6 +516,11 @@ const ROUTES = [
     path: '/biz/trailer/dispose',
     component: asyncComponent(() => import('container/biz/carLoanRepay/trailer-dispose'))
   },
+  //  收车管理 财务审核
+  {
+    path: '/biz/trailer/finance',
+    component: asyncComponent(() => import('container/biz/carLoanRepay/trailer-finance'))
+  },
   //  司法诉讼
   {
     path: '/biz/litigation',

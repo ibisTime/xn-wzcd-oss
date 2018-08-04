@@ -59,14 +59,6 @@ class litigationContinue extends React.Component {
             field: 'loanBankName',
             readonly: true
         }, {
-            title: '案号',
-            field: 'caseNumber',
-            formatter: (v, d) => {
-                return d.judgeList[0].caseNumber;
-            },
-            required: true,
-            readonly: true
-        }, {
             title: '原告',
             field: 'plaintiff',
             formatter: (v, d) => {
@@ -130,6 +122,10 @@ class litigationContinue extends React.Component {
             title: '开庭日期',
             field: 'courtDatetime',
             type: 'date',
+            required: true
+        }, {
+            title: '案号',
+            field: 'caseNumber',
             required: true
         }, {
             title: '判决日期',

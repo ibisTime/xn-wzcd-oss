@@ -105,7 +105,7 @@ class litigation extends React.Component {
                     } else if (selectedRows[0].curNodeCode !== '021_10') {
                         showWarnMsg('当前节点不是司法诉讼节点');
                     } else {
-                        this.props.history.push(`/biz/litigation/litigation?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/biz/litigation/litigation?code=${selectedRowKeys[0]}&bizCode=${selectedRows[0].budgetOrder.code}`);
                     }
                 },
                 // continue: (selectedRowKeys, selectedRows) => {

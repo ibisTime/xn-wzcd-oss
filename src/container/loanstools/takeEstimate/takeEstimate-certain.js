@@ -67,8 +67,8 @@ class TakeEstimateCertain extends React.Component {
             required: true,
             amount: true
         }, {
-            title: '收款款银行',
-            field: 'collectionBank',
+            title: '收款账号',
+            field: 'collectionAccount',
             type: 'select',
             listCode: '632007',
             params: {
@@ -78,11 +78,6 @@ class TakeEstimateCertain extends React.Component {
             keyName: 'code',
             valueName: '{{bankName.DATA}} {{subbranch.DATA}} {{bankcardNumber.DATA}}',
             required: true
-        }, {
-            title: '收款账号',
-            field: 'collectionAccount',
-            required: true,
-            bankCard: true
         }, {
             title: '收款时间',
             field: 'collectionDatetime',
@@ -101,9 +96,6 @@ class TakeEstimateCertain extends React.Component {
                 check: true,
                 handler: (params) => {
                     this.props.doFetching();
-                    let bank = this.props.selectData.collectionBank.find(v => v.code === params.collectionBank);
-                    params.collectionAccount = bank.bankcardNumber;
-                    params.collectionBank = bank.bankName;
                     params.code = this.code;
                     params.operator = getUserId();
                     fetch(632103, params).then(() => {

@@ -105,7 +105,7 @@ class redList extends React.Component {
               showWarnMsg('请选择记录');
             } else if (selectedRowKeys.length > 1) {
               showWarnMsg('请选择一条记录');
-            } else if (selectedRows[0].curNodeCode !== '021_02') {
+            } else if (selectedRows[0].curNodeCode !== '021_03') {
               showWarnMsg('当前节点不是风控经理审核节点');
             } else {
               this.props.history.push(`/biz/redList/checkDirector?code=${selectedRowKeys[0]}`);
@@ -117,7 +117,7 @@ class redList extends React.Component {
               showWarnMsg('请选择记录');
             } else if (selectedRowKeys.length > 1) {
               showWarnMsg('请选择一条记录');
-            } else if (selectedRows[0].curNodeCode !== '021_03') {
+            } else if (selectedRows[0].curNodeCode !== '021_02') {
               showWarnMsg('当前节点不是分公司总经理审查节点');
             } else {
               this.props.history.push(`/biz/redList/compCheck?code=${selectedRowKeys[0]}`);

@@ -33,25 +33,22 @@ class RegressesGpsApply extends React.Component {
     constructor(props) {
         super(props);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.code = getQueryString('code', this.props.location.search);
     }
     render() {
         const fields = [{
-            title: 'GPS设备号',
-            field: 'code',
-            type: 'select',
-            listCode: 632707,
-            params: {
-                applyStatus: '0',
-                companyApplyStatus: '1',
-                companyCode: getCompanyCode()
-            },
-            keyName: 'code',
-            valueName: 'gpsDevNo',
-            nowrap: true,
-            required: true
-        }, {
             title: '回退原因',
-            field: 'reason'
+            field: 'reason',
+            type: 'select',
+            data: [{
+                key: '1',
+                value: 'gps损坏'
+            }, {
+                key: '2',
+                value: '员工离职'
+            }],
+            keyName: 'key',
+            valueName: 'value'
         }];
         return this.props.buildDetail({
             fields,
@@ -60,11 +57,7 @@ class RegressesGpsApply extends React.Component {
                 title: '确认',
                 handler: (param) => {
                     param.code = this.code;
-                    param.applyUser = getUserId();
-                    if (!param.gpsList) {
-                        showWarnMsg('请新增GPS!');
-                        return false;
-                    }
+                    param.operator = getUserId();
                     this.props.doFetching();
                     fetch(632701, param).then(() => {
                         showSucMsg('操作成功');

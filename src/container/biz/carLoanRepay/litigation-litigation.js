@@ -28,6 +28,7 @@ class litigationLitigation extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
+        this.bizCode = getQueryString('bizCode', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
     }
     render() {
@@ -62,28 +63,24 @@ class litigationLitigation extends React.Component {
             field: 'loanBankName',
             readonly: true
         }, {
-            title: '案号',
-            field: 'caseNumber',
-            required: true
-        }, {
             title: '原告',
             field: 'plaintiff',
+            type: 'select',
+            key: 'plaintiff',
             required: true
         }, {
             title: '被告',
             field: 'defendant',
-            readonly: true,
-            formatter: (v, data) => {
-                return data.user.realName;
+            type: 'select',
+            pageCode: 632119,
+            params: {
+                isFirstAudit: '1',
+                creditCode: this.bizCode
             },
+            keyName: 'userName',
+            valueName: 'userName',
+            multiple: true,
             required: true
-        }, {
-            title: '被告人',
-            field: 'userId',
-            formatter: (v, data) => {
-                return data.user.userId;
-            },
-            hidden: true
         }, {
             title: '诉讼标的',
             field: 'caseSubject',
@@ -115,9 +112,6 @@ class litigationLitigation extends React.Component {
             editCode: 630560,
             detailCode: 630521,
             beforeSubmit: (params) => {
-                console.log(this.props.pageDate);
-                params.repayBizCode = this.code;
-                params.defendant = params.userId;
                 params.operator = getUserId();
                 return params;
             }

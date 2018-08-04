@@ -100,7 +100,7 @@ class trailer extends React.Component {
             pageCode: 630520,
             searchParams: {
                 refType: '0',
-                curNodeCodeList: ['021_08', '021_09']
+                curNodeCodeList: ['021_08', '021_09', '021_18', '021_19']
             },
             btnEvent: {
                 dispose: (selectedRowKeys, selectedRows) => {
@@ -112,6 +112,17 @@ class trailer extends React.Component {
                         showWarnMsg('当前节点不是已录入代处理');
                     } else {
                         this.props.history.push(`/biz/trailer/dispose?v=1&code=${selectedRowKeys[0]}`);
+                    }
+                },
+                finance: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '021_18' && selectedRows[0].curNodeCode !== '021_19') {
+                        showWarnMsg('当前节点不是财务审核');
+                    } else {
+                        this.props.history.push(`/biz/trailer/finance?v=1&code=${selectedRowKeys[0]}`);
                     }
                 }
             }

@@ -140,6 +140,7 @@ import { bizredListEnter } from './redux/biz/redList-enter';
 import { bizTrailer } from './redux/biz/trailer';
 import { bizTrailerAddEdit } from './redux/biz/trailer-addedit';
 import { bizTrailerDispose } from './redux/biz/trailer-dispose';
+import { bizTrailerFinance } from './redux/biz/trailer-finance';
 
 //  司法诉讼 + 详情 + 处理结果
 import { bizLitigation } from './redux/biz/litigation';
@@ -757,6 +758,7 @@ export default combineReducers({
   bizTrailer,
   bizTrailerAddEdit,
   bizTrailerDispose,
+  bizTrailerFinance,
   transmit,
   transmitAddedit,
   transmitSend,
