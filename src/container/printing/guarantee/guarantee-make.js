@@ -2072,7 +2072,7 @@ class GuaranteeMake extends React.Component {
             this.props.cancelFetching();
             showSucMsg('操作成功');
             setTimeout(() => {
-              this.props.history.go(-2);
+              this.props.history.go(-1);
             }, 1000);
           }).catch(this.props.cancelFetching);
         }
