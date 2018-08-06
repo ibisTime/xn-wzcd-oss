@@ -345,9 +345,7 @@ class CredithistoryAddedit extends React.Component {
             field: 'creditUserList',
             type: 'o2m',
             options: {
-                add: true,
-                edit: true,
-                delete: true,
+                detail: true,
                 scroll: {
                     x: 1300
                 },
