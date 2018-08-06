@@ -289,6 +289,7 @@ import { loanstoolsCancelFinance } from './redux/loanstools/cancel-finance';
 import { loanstoolsTake } from './redux/loanstools/take';
 import { loanstoolsTakeAddedit } from './redux/loanstools/take-addedit';
 import { loanstoolsTakeEnter } from './redux/loanstools/take-enter';
+import { loanstoolsTakeFinance } from './redux/loanstools/take-finance';
 
 //  收回预算款 + 详情 + 申请 + 审核 + 确认
 import { loanstoolsTakeEstimate } from './redux/loanstools/takeEstimate';
@@ -625,6 +626,9 @@ import { dataReceiveGpsCollect } from './redux/gpsReceive/gpsCollect';
 import { dataReceiveGpsCollectCollect } from './redux/gpsReceive/gpsCollect-collect';
 import { dataReceiveGpsCollectCheck } from './redux/gpsReceive/gpsCollect-check';
 
+// 二维码制作
+import { erweimaErweima } from './redux/erweima/erweima';
+
 export default combineReducers({
   user,
   menu,
@@ -729,6 +733,7 @@ export default combineReducers({
   loanstoolsTake,
   loanstoolsTakeAddedit,
   loanstoolsTakeEnter,
+  loanstoolsTakeFinance,
   loanstoolsTakeEstimate,
   loanstoolsTakeEstimateAddedit,
   loanstoolsTakeEstimateCertain,
@@ -1000,5 +1005,6 @@ export default combineReducers({
   financeRebate,
   financeRebateAddEdit,
   postloantoolsRegressesGps,
-  postloantoolsRegressesGpsApply
+  postloantoolsRegressesGpsApply,
+  erweimaErweima
 });

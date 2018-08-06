@@ -1032,6 +1032,12 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loanstools/take/take-enter'))
   },
 
+  //  收回垫资款 财务审核
+  {
+      path: '/loanstools/take/finance',
+      component: asyncComponent(() => import('container/loanstools/take/take-finance'))
+  },
+
   //  收回预算款
   {
       path: '/loanstools/takeEstimate',
@@ -2224,6 +2230,12 @@ const ROUTES = [
   {
     path: '/gpsReceive/gpsCollect/check',
     component: asyncComponent(() => import('container/gpsReceive/gpsCollect/gpsCollect-check'))
+  },
+  //  二维码制作
+  //  发件
+  {
+    path: '/erweima/erweima',
+    component: asyncComponent(() => import('container/erweima/erweima'))
   }
 ];
 

@@ -103,7 +103,8 @@ class litigationLitigation extends React.Component {
         }, {
             title: '起诉附件',
             field: 'casePdf',
-            type: 'img'
+            type: 'file',
+            accept: 'image/pdf, file/word, file/excel'
         }];
         return this.props.buildDetail({
             fields,
