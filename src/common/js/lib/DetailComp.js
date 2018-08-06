@@ -1288,6 +1288,10 @@ export default class DetailComponent extends React.Component {
             listType: 'picture-card',
             accept: 'image/*'
         };
+        if (item.accept) {
+            fileProps.accept = item.accept;
+            imgProps.accept = item.accept;
+        }
         return isImg ? imgProps : fileProps;
     }
 
