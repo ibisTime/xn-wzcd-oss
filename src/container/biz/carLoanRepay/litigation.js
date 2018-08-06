@@ -94,7 +94,7 @@ class litigation extends React.Component {
             fields,
             pageCode: 630520,
             searchParams: {
-                curNodeCodeList: ['021_10', '021_11', '021_12', '021_13', '021_14']
+                curNodeCodeList: ['021_10', '021_11', '021_12', '021_13', '021_14', '021_15', '021_16']
             },
             btnEvent: {
                 litigation: (selectedRowKeys, selectedRows) => {
@@ -124,10 +124,21 @@ class litigation extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_11') {
+                    } else if (selectedRows[0].curNodeCode !== '021_13') {
                         showWarnMsg('当前节点不是诉讼结果录入节点');
                     } else {
                         this.props.history.push(`/biz/litigation/enter?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                finance: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '021_11') {
+                        showWarnMsg('当前节点不是诉讼结果录入节点');
+                    } else {
+                        this.props.history.push(`/biz/litigation/finance?code=${selectedRowKeys[0]}`);
                     }
                 },
                 certain: (selectedRowKeys, selectedRows) => {
@@ -135,7 +146,7 @@ class litigation extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_13') {
+                    } else if (selectedRows[0].curNodeCode !== '021_15') {
                         showWarnMsg('当前节点不是财务确认收款节点');
                     } else {
                         this.props.history.push(`/biz/litigation/certain?code=${selectedRowKeys[0]}`);
@@ -144,7 +155,7 @@ class litigation extends React.Component {
                 again: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {
                         showWarnMsg('请选择记录');
-                    } else if(item[0].curNodeCode !== '021_12') {
+                    } else if(item[0].curNodeCode !== '021_14') {
                         showWarnMsg('当前节点不是重新申请执行节点');
                     } else {
                         Modal.confirm({

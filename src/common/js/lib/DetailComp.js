@@ -1068,13 +1068,28 @@ export default class DetailComponent extends React.Component {
 
     getSearchSelectItem(item, initVal, rules, getFieldDecorator) {
         let data;
+        let value;
         if (item.readonly && item.data) {
-            data = item.data.filter(v => v[item.keyName] === initVal);
+            if (item.multiple) {
+                value = initVal.map(i => {
+                  let obj = item.data.find(v => v[item.keyName] === i);
+                  return obj[item.valueName] || tempString(item.valueName, obj) || '';
+                }).join('、');
+            } else {
+                value = item.data.filter(v => v[item.keyName] === initVal);
+                value = value && value.length
+                  ? value[0][item.valueName] || tempString(item.valueName, value[0])
+                  : initVal;
+            }
         }
-        let value = '';
-        if (initVal) {
-            value = initVal;
-        }
+        // let data;
+        // if (item.readonly && item.data) {
+        //     data = item.data.filter(v => v[item.keyName] === initVal);
+        // }
+        // let value = '';
+        // if (initVal) {
+        //     value = initVal;
+        // }
         return (
             <FormItem key={item.field} {...this.getInputItemProps()} label={this.getLabel(item)}>
                 {
@@ -1097,7 +1112,8 @@ export default class DetailComponent extends React.Component {
                                 if (item.onChange && this.state.selectFetch[item.field]) {
                                     item.onChange(v, this.props.selectData[item.field] ? this.props.selectData[item.field].find(v1 => v1.code === v) : {}, this.props);
                                 }
-                            }}>
+                            }}
+                            {...this.getSelectProps(item, initVal)}>
                             {item.data ? item.data.map(d => (
                                 <Option key={d[item.keyName]} value={d[item.keyName]}>
                                     {d[item.valueName] ? d[item.valueName] : tempString(item.valueName, d)}

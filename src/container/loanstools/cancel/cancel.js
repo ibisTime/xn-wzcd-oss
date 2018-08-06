@@ -85,7 +85,6 @@ class cancel extends React.Component {
             pageCode: 632148,
             searchParams: {
                 roleCode: getRoleCode(),
-                isSubmitCancel: '1',
                 curNodeCodeList: ['012_01', '012_02', '012_03', '012_04']
             },
             btnEvent: {

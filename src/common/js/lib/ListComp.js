@@ -4,7 +4,7 @@ import { Form, Select, DatePicker, Input, Button, Table } from 'antd';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import { moneyFormat, dateTimeFormat, dateFormat, tempString,
-  showWarnMsg, showSucMsg, showDelConfirm } from 'common/js/util';
+  showWarnMsg, showSucMsg, showDelConfirm, getUserId } from 'common/js/util';
 import { PIC_PREFIX } from 'common/js/config';
 import { getOwnerBtns } from 'api/menu';
 import { getDictList } from 'api/dict';
@@ -144,6 +144,7 @@ export default class ListComponent extends React.Component {
   // 导出表单
   handleExport() {
     this.props.doFetching();
+    let url = window.location.pathname;
     fetch(this.options.pageCode, {
       start: 1,
       limit: 1000000,
@@ -154,6 +155,14 @@ export default class ListComponent extends React.Component {
         this.props.cancelFetching();
         showWarnMsg('暂无数据');
         return;
+      } else {
+        let operator = getUserId();
+        fetch(632090, {
+          url,
+          operator
+        }).then(info => {
+          console.log(info);
+        });
       }
       let titles = [];
       let bodys = [];

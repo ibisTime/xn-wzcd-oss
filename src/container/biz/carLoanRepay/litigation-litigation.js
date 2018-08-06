@@ -113,6 +113,8 @@ class litigationLitigation extends React.Component {
             detailCode: 630521,
             beforeSubmit: (params) => {
                 params.operator = getUserId();
+                params.repayBizCode = params.code;
+                delete params.code;
                 return params;
             }
         });

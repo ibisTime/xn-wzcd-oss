@@ -56,18 +56,6 @@ class parchivesAddedit extends React.Component {
                 field: 'entryDatetime',
                 required: true,
                 type: 'date'
-            }, {
-                title: '部门',
-                field: 'departmentCode',
-                type: 'select',
-                required: true,
-                listCode: 630106,
-                params: {
-                  typeList: ['2']
-                },
-                keyName: 'code',
-                valueName: 'name',
-                search: true
             }], [{
                 title: '岗位',
                 field: 'postCode',

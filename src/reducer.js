@@ -149,6 +149,7 @@ import { bizLitigationLitigation } from './redux/biz/litigation-litigation';
 import { bizLitigationContinue } from './redux/biz/litigation-continue';
 import { bizLitigationEnter } from './redux/biz/litigation-enter';
 import { bizLitigationCertain } from './redux/biz/litigation-certain';
+import { bizLitigationFinance } from './redux/biz/litigation-finance';
 
 //  结清审核 + 结清申请单 + 审核 + 确认付款
 import { bizSettlement } from './redux/biz/settlement';
@@ -569,9 +570,13 @@ import { contractTemplateRelieveAddedit } from './redux/contractTemplate/relieve
 import { historyHistoryBusiness } from './redux/history/historyBusiness';
 import { historyHistoryBusinessAddedit } from './redux/history/historyBusiness-addedit';
 
-// 历史业务(进行中)
+// 历史业务(预算单进行中)
 import { historyHistorying } from './redux/history/historying';
 import { historyHistoryingAddedit } from './redux/history/historying-addedit';
+
+// 历史业务(征信单进行中)
+import { historyCredithistory } from './redux/history/credithistory';
+import { historyCredithistoryAddedit } from './redux/history/credithistory-addedit';
 
 // 垃圾箱
 import { historyDustbin } from './redux/history/dustbin';
@@ -789,6 +794,7 @@ export default combineReducers({
   bizLitigationContinue,
   bizLitigationEnter,
   bizLitigationCertain,
+  bizLitigationFinance,
   bizLitigationLitigation,
   bizBalancedetail,
   analysisProtect,
@@ -955,6 +961,8 @@ export default combineReducers({
   historyHistoryBusinessAddedit,
   historyHistorying,
   historyHistoryingAddedit,
+  historyCredithistory,
+  historyCredithistoryAddedit,
   basisGpsextract,
   basisGpsextractAddedit,
   basisOilpercentage,

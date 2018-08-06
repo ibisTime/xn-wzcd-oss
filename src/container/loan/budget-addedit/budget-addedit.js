@@ -538,6 +538,9 @@ class BudgetAddedit extends React.Component {
                         if (!v) {
                             return;
                         }
+                        if (!data) {
+                            return;
+                        }
                         this.receivables = data.jxsCollectBankcardList[0];
                         this.carDealerName = data.abbrName;
                         data.carDealerProtocolList.forEach(d => {

@@ -551,6 +551,11 @@ const ROUTES = [
       path: '/biz/litigation/certain',
       component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-certain'))
   },
+  //  司法诉讼 财务审核
+  {
+      path: '/biz/litigation/finance',
+      component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-finance'))
+  },
   //  结清审核
   {
     path: '/biz/settlement',
@@ -2048,15 +2053,25 @@ const ROUTES = [
     path: '/history/historyBusiness/addedit',
     component: asyncComponent(() => import('container/history/historyBusiness/historyBusiness-addedit'))
   },
-  //  历史业务（进行中）
+  //  历史业务（预算单进行中）
   {
     path: '/history/historying',
     component: asyncComponent(() => import('container/history/historying/historying'))
   },
-  //  历史业务（进行中） 详情
+  //  历史业务（预算单进行中） 详情
   {
     path: '/history/historying/addedit',
     component: asyncComponent(() => import('container/history/historying/historying-addedit'))
+  },
+  //  历史业务（征信单进行中）
+  {
+    path: '/history/credithistory',
+    component: asyncComponent(() => import('container/history/credithistory/credithistory'))
+  },
+  //  历史业务（征信单进行中） 详情
+  {
+    path: '/history/credithistory/addedit',
+    component: asyncComponent(() => import('container/history/credithistory/credithistory-addedit'))
   },
   //  垃圾箱
   {

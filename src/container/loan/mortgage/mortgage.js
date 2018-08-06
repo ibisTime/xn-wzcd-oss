@@ -100,7 +100,7 @@ class Mortgage extends React.Component {
             singleSelect: false,
             searchParams: {
               roleCode: getRoleCode(),
-              pledgeCurNodeCodeList: ['008_01', '008_02', '008_03', '008_04', '008_05', '008_06', '009_01', '009_02', '009_03', '009_04', '009_05', '009_06', '009_07', '009_08', '009_09']
+              pledgeCurNodeCodeList: ['008_01', '008_02', '008_03', '008_04', '008_05', '008_06', '009_01', '009_02', '009_03', '009_04', '009_05', '009_06', '009_07', '009_08', '009_09', '009_10']
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {
@@ -108,7 +108,7 @@ class Mortgage extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].pledgeCurNodeCode !== '008_04' && selectedRows[0].pledgeCurNodeCode !== '009_08') {
+                    } else if (selectedRows[0].pledgeCurNodeCode !== '008_04' && selectedRows[0].pledgeCurNodeCode !== '009_09') {
                         showWarnMsg('当前不是确认提交银行节点');
                     } else {
                         this.props.history.push(`/loan/mortgage/apply?code=${selectedRowKeys[0]}`);
@@ -144,7 +144,7 @@ class Mortgage extends React.Component {
                 complete: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {
                         showWarnMsg('请选择记录');
-                    } else if (item[0].pledgeCurNodeCode !== '008_02' && item[0].pledgeCurNodeCode !== '009_06') {
+                    } else if (item[0].pledgeCurNodeCode !== '008_02' && item[0].pledgeCurNodeCode !== '009_07') {
                         showWarnMsg('当前节点不是理件完成节点');
                     } else {
                         Modal.confirm({
