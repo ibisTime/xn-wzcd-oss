@@ -24,7 +24,12 @@ class TakeEnter extends React.Component {
     const fields = [{
       title: '业务编号',
       field: 'code',
-      readonly: true
+      type: 'select',
+      pageCode: 632145,
+      keyName: 'code',
+      valueName: '{{customerName.DATA}}-{{code.DATA}}',
+      searchName: 'customerName',
+      required: true
     }, {
       title: '业务类型',
       field: 'type',

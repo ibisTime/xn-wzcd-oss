@@ -102,6 +102,17 @@ class take extends React.Component {
               entering: (selectedRowKeys, selectedRows) => {
                 this.props.history.push(`/loanstools/take/enter`);
               },
+              finance: (selectedRowKeys, selectedRows) => {
+                  if (!selectedRowKeys.length) {
+                      showWarnMsg('请选择记录');
+                  } else if (selectedRowKeys.length > 1) {
+                      showWarnMsg('请选择一条记录');
+                  } else if (selectedRows[0].curNodeCode !== '021_13') {
+                      showWarnMsg('当前节点不是诉讼结果录入节点');
+                  } else {
+                      this.props.history.push(`/loanstools/take/finance?code=${selectedRowKeys[0]}`);
+                  }
+              },
               remind: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys || !selectedRowKeys.length || !selectedRows || !selectedRows.length) {
                   showWarnMsg('请选择记录');
