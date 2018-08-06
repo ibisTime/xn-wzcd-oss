@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Form, Select, Input, Button, Tooltip, Icon, Spin, Upload,
     Modal, Cascader, DatePicker, Table, Checkbox, TreeSelect,
-    Carousel
+    Carousel, Row, Col
 } from 'antd';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
@@ -44,38 +44,55 @@ const fileUploadBtn = (
         <Icon type="upload"/> 上传
     </Button>
 );
-
+// 详情页基础构造类
 export default class DetailComponent extends React.Component {
     constructor(props, context) {
         super(props, context);
+        // 用于判断第一次加载页面
         this.first = true;
+        // 页面调用该构造类时的入参的初始值
         this.options = {
             fields: [],
             buttons: {},
             code: '',
             view: false
         };
+        // 构造类内部使用的state
         this.state = {
+            // 图片预览框是否显示
             previewVisible: false,
-            previewImageKey: '',
+            // 当前预览的图片
             previewImage: '',
+            // 当前预览的图片对应的field
             previewImageField: null,
+            // 图片上传需要的token
             token: '',
+            // 保存页面里的富文本框
             textareas: {},
+            // 下拉框是否显示loading
             fetching: {},
+            // o2m类型的表格当前选中的项
             o2mSKeys: {},
+            // 用于存储o2m类型里面type为select或checkbox的列表数据
             searchData: {},
+            // 控制o2m的弹出框是否显示
             modalVisible: false,
+            // 用于存储o2m类型的options
             modalOptions: {},
+            // 用于控制搜索框当前只请求一次数据
             selectFetch: {},
+            // 用于存储类型为treeSelect的数据
             treeData: {}
         };
+        // 用于判断类型为o2m的是否是第一次请求
         this.o2mFirst = {};
+        // 辅助存储页面里的富文本框
         this.textareas = {};
     }
-
+    // 页面第一次渲染完后，初始化字段
     componentDidMount() {
         let _this = this;
+        // 对页面的富文本进行处理，添加config
         Object.keys(this.textareas).forEach(v => {
             let elem = document.getElementById(v);
             if (!elem) {
@@ -95,6 +112,7 @@ export default class DetailComponent extends React.Component {
                 }
             };
             _this.textareas[v].editor.customConfig.uploadImgServer = UPLOAD_URL;
+            // 给富文本添加change事件，用于校验必填
             _this.textareas[v].editor.customConfig.onchange = html => {
                 let result = {};
                 if (!html) {
@@ -119,11 +137,11 @@ export default class DetailComponent extends React.Component {
             _this.textareas[v].editor.create();
         });
     }
-
+    // 页面卸载时调用的方法
     componentWillUnmount() {
         this.props.restore();
     }
-
+    // 构建详情页的方法
     buildDetail = (options) => {
         this.options = {
             ...this.options,
@@ -312,7 +330,6 @@ export default class DetailComponent extends React.Component {
     handlePreview = (file, previewImageField) => {
         this.setState({
             previewImage: file.url || file.thumbUrl,
-            previewImageKey: file.key || file.response.key,
             previewVisible: true,
             previewImageField: previewImageField
         });
@@ -1155,7 +1172,7 @@ export default class DetailComponent extends React.Component {
                         })(
                         <CheckboxGroup disabled={item.readonly}>
                             {item.data && item.data.length
-                                ? item.data.map(d => <Checkbox key={d[item.keyName]} value={d[item.keyName]}>{d[item.valueName]}</Checkbox>)
+                                ? <Row>{item.data.map(d => <Col key={d[item.keyName]} span={6}><Checkbox value={d[item.keyName]}>{d[item.valueName]}</Checkbox></Col>)}</Row>
                                 : null}
                         </CheckboxGroup>
                         )
