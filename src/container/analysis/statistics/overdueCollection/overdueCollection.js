@@ -17,10 +17,6 @@ import {
     showSucMsg,
     formatDate
 } from 'common/js/util';
-import {
-    lowerFrame,
-    onShelf
-} from 'api/biz';
 
 @listWrapper(
     state => ({

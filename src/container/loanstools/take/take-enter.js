@@ -19,6 +19,7 @@ class TakeEnter extends React.Component {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
+    this.isZfReason = true;
   }
   render() {
     const fields = [{
@@ -43,6 +44,11 @@ class TakeEnter extends React.Component {
       }],
       keyName: 'key',
       valueName: 'value',
+      onChange: (v) => {
+        if(v === '1') {
+          this.isZfReason = false;
+        }
+      },
       required: true
     }, {
       title: '付款金额',
@@ -50,19 +56,9 @@ class TakeEnter extends React.Component {
       amount: true,
       required: true
     }, {
-      title: '付款账号',
-      field: 'zfSkBankcardCode',
-      required: true
-    }, {
-      title: '付款时间',
-      field: 'zfSkReceiptDatetime',
-      type: 'date',
-      required: true
-    }, {
-      title: '备注',
-      field: 'zfFinanceRemark',
-      type: 'textarea',
-      normalArea: true,
+      title: '作废原因',
+      field: 'zfReason',
+      hidden: this.isZfReason,
       required: true
     }];
     return this.props.buildDetail({
@@ -76,6 +72,7 @@ class TakeEnter extends React.Component {
         handler: (params) => {
           if (params.code) {
             this.props.doFetching();
+            params.operator = getUserId();
             fetch(632280, params).then(() => {
               showSucMsg('操作成功');
               this.props.cancelFetching();
@@ -84,7 +81,7 @@ class TakeEnter extends React.Component {
               }, 1000);
             }).catch(this.props.cancelFetching);
           } else {
-            showWarnMsg('未选择用户');
+            showWarnMsg('未选择预算单');
           }
         }
       }, {

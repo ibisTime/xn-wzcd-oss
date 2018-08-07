@@ -260,6 +260,23 @@ class BudgetApplyExternal extends React.Component {
             title: '预算单信息',
             items: [
                 [{
+                    title: '申请人',
+                    field: 'customerName',
+                    readonly: true
+                }, {
+                    title: '共还人',
+                    field: 'ghRealName',
+                    readonly: true
+                }, {
+                    title: '担保人1',
+                    field: 'guarantor1Name',
+                    readonly: true
+                }, {
+                    title: '担保人2',
+                    field: 'guarantor2Name',
+                    readonly: true
+                }],
+                [{
                     title: '客户姓名',
                     field: 'customerName',
                     readonly: true,

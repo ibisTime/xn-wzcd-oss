@@ -408,6 +408,8 @@ import { analysisReplaceRepay } from './redux/analysis/replaceRepay';
 import { analysisOverdueCollection } from './redux/analysis/overdueCollection';
 import { analysisRiskCustomers } from './redux/analysis/riskCustomers';
 import { analysisSchedule } from './redux/analysis/schedule';
+import { analysisTablehistory } from './redux/analysis/tablehistory';
+import { analysisCarLoanInstallment } from './redux/analysis/carLoanInstallment';
 
 /**
  * 人事
@@ -807,6 +809,8 @@ export default combineReducers({
   analysisOverdueCollection,
   analysisRiskCustomers,
   analysisSchedule,
+  analysisTablehistory,
+  analysisCarLoanInstallment,
   bizHistoryBusinessManageAddeditAddedit,
   bizSettlement,
   bizSettlementApply,

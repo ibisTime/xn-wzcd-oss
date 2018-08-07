@@ -246,7 +246,7 @@ class BudgetDetail extends React.Component {
         }];
 
         let fields = [{
-            title: '职业及收入情况',
+            title: '预算单信息',
             items: [
                 [{
                     title: '申请人',
@@ -265,199 +265,6 @@ class BudgetDetail extends React.Component {
                     field: 'guarantor2Name',
                     readonly: true
                 }],
-                [{
-                    title: '申请人就职单位',
-                    field: 'applyUserCompany',
-                    required: true
-                }, {
-                    title: '申请人职位',
-                    field: 'applyUserDuty',
-                    required: true
-                }, {
-                    title: '申请人共还人关系',
-                    field: 'applyUserGhrRelation',
-                    type: 'select',
-                    key: 'credit_user_relation'
-                }, {
-                    title: '婚姻状况',
-                    field: 'marryState',
-                    type: 'select',
-                    key: 'marry_state',
-                    required: true
-                }],
-                [{
-                    title: '申请人月收入',
-                    field: 'applyUserMonthIncome',
-                    amount: true,
-                    required: true
-                }, {
-                    title: '申请人结息',
-                    field: 'applyUserSettleInterest',
-                    amount: true,
-                    required: true
-                }, {
-                    title: '申请人余额',
-                    field: 'applyUserBalance',
-                    amount: true,
-                    required: true
-                }, {
-                    title: '申请人流水是否体现月收入',
-                    field: 'applyUserJourShowIncome',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value',
-                    required: true
-                }, {
-                    title: '申请人是否打件',
-                    field: 'applyUserIsPrint',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value',
-                    value: '1',
-                    readonly: true,
-                    required: true
-                }],
-                [{
-                    title: '共还人月收入',
-                    field: 'ghMonthIncome',
-                    amount: true
-                }, {
-                    title: '共还人结息',
-                    field: 'ghSettleInterest',
-                    amount: true
-                }, {
-                    title: '共还人余额',
-                    field: 'ghBalance',
-                    amount: true
-                }, {
-                    title: '共还人流水是否体现月收入',
-                    field: 'ghJourShowIncome',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value'
-                }, {
-                    title: '共还人是否打件',
-                    field: 'ghIsPrint',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value'
-                }],
-                [{
-                    title: '担保人1月收入',
-                    field: 'guarantor1MonthIncome',
-                    amount: true
-                }, {
-                    title: '担保人1结息',
-                    field: 'guarantor1SettleInterest',
-                    amount: true
-                }, {
-                    title: '担保人1余额',
-                    field: 'guarantor1Balance',
-                    amount: true
-                }, {
-                    title: '担保人1流水是否体现月收入',
-                    field: 'guarantor1JourShowIncome',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value'
-                }, {
-                    title: '担保人1是否打件',
-                    field: 'guarantor1IsPrint',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value'
-                }],
-                [{
-                    title: '担保人2月收入',
-                    field: 'guarantor2MonthIncome',
-                    amount: true
-                }, {
-                    title: '担保人2结息',
-                    field: 'guarantor2SettleInterest',
-                    amount: true
-                }, {
-                    title: '担保人2余额',
-                    field: 'guarantor2Balance',
-                    amount: true
-                }, {
-                    title: '担保人2流水是否体现月收入',
-                    field: 'guarantor2JourShowIncome',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value'
-                }, {
-                    title: '担保人2是否打件',
-                    field: 'guarantor2IsPrint',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value'
-                }],
-                [{
-                    title: '其他收入备注',
-                    field: 'otherIncomeNote',
-                    type: 'textarea',
-                    normalArea: true
-                }]
-            ]
-        }, {
-            title: '预算单信息',
-            items: [
                 [{
                     title: '客户姓名',
                     field: 'customerName',
@@ -647,6 +454,199 @@ class BudgetDetail extends React.Component {
                             required: true
                         }]
                     }
+                }]
+            ]
+        }, {
+            title: '职业及收入情况',
+            items: [
+                [{
+                    title: '申请人就职单位',
+                    field: 'applyUserCompany',
+                    required: true
+                }, {
+                    title: '申请人职位',
+                    field: 'applyUserDuty',
+                    required: true
+                }, {
+                    title: '申请人共还人关系',
+                    field: 'applyUserGhrRelation',
+                    type: 'select',
+                    key: 'credit_user_relation'
+                }, {
+                    title: '婚姻状况',
+                    field: 'marryState',
+                    type: 'select',
+                    key: 'marry_state',
+                    required: true
+                }],
+                [{
+                    title: '申请人月收入',
+                    field: 'applyUserMonthIncome',
+                    amount: true,
+                    required: true
+                }, {
+                    title: '申请人结息',
+                    field: 'applyUserSettleInterest',
+                    amount: true,
+                    required: true
+                }, {
+                    title: '申请人余额',
+                    field: 'applyUserBalance',
+                    amount: true,
+                    required: true
+                }, {
+                    title: '申请人流水是否体现月收入',
+                    field: 'applyUserJourShowIncome',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }, {
+                    title: '申请人是否打件',
+                    field: 'applyUserIsPrint',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    value: '1',
+                    readonly: true,
+                    required: true
+                }],
+                [{
+                    title: '共还人月收入',
+                    field: 'ghMonthIncome',
+                    amount: true
+                }, {
+                    title: '共还人结息',
+                    field: 'ghSettleInterest',
+                    amount: true
+                }, {
+                    title: '共还人余额',
+                    field: 'ghBalance',
+                    amount: true
+                }, {
+                    title: '共还人流水是否体现月收入',
+                    field: 'ghJourShowIncome',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value'
+                }, {
+                    title: '共还人是否打件',
+                    field: 'ghIsPrint',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value'
+                }],
+                [{
+                    title: '担保人1月收入',
+                    field: 'guarantor1MonthIncome',
+                    amount: true
+                }, {
+                    title: '担保人1结息',
+                    field: 'guarantor1SettleInterest',
+                    amount: true
+                }, {
+                    title: '担保人1余额',
+                    field: 'guarantor1Balance',
+                    amount: true
+                }, {
+                    title: '担保人1流水是否体现月收入',
+                    field: 'guarantor1JourShowIncome',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value'
+                }, {
+                    title: '担保人1是否打件',
+                    field: 'guarantor1IsPrint',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value'
+                }],
+                [{
+                    title: '担保人2月收入',
+                    field: 'guarantor2MonthIncome',
+                    amount: true
+                }, {
+                    title: '担保人2结息',
+                    field: 'guarantor2SettleInterest',
+                    amount: true
+                }, {
+                    title: '担保人2余额',
+                    field: 'guarantor2Balance',
+                    amount: true
+                }, {
+                    title: '担保人2流水是否体现月收入',
+                    field: 'guarantor2JourShowIncome',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value'
+                }, {
+                    title: '担保人2是否打件',
+                    field: 'guarantor2IsPrint',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value'
+                }],
+                [{
+                    title: '其他收入备注',
+                    field: 'otherIncomeNote',
+                    type: 'textarea',
+                    normalArea: true
                 }]
             ]
         }, {

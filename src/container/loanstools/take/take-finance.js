@@ -42,35 +42,23 @@ class TakeFinance extends React.Component {
             field: 'code',
             readonly: true
         }, {
-            title: '业务类型',
-            field: 'type',
-            type: 'select',
-            data: [{
-                key: '1',
-                value: '客户作废'
-            }, {
-                key: '2',
-                value: '垫资款退回'
-            }],
-            keyName: 'key',
-            valueName: 'value',
-            readonly: true
-        }, {
-            title: '付款金额',
-            field: 'zfSkAmount',
-            amount: true,
-            readonly: true
-        }, {
-            title: '付款账号',
+            title: '收款账号',
             field: 'zfSkBankcardCode',
-            readonly: true
+            listCode: 632007,
+            params: {
+                companyCode: getCompanyCode()
+            },
+            type: 'select',
+            keyName: 'code',
+            valueName: '{{bankName.DATA}}-{{bankcardNumber.DATA}}',
+            required: true
         }, {
-            title: '付款时间',
+            title: '收款时间',
             field: 'zfSkReceiptDatetime',
             type: 'date',
-            readonly: true
+            required: true
         }, {
-            title: '附件',
+            title: '付款水单',
             field: 'billPdf',
             type: 'img',
             required: true

@@ -714,6 +714,12 @@ const ROUTES = [
       component: asyncComponent(() => import('container/basis/dealer/dealer-addedit'))
   },
 
+  //  经销商协议到期预警
+  {
+      path: '/basis/dealerWarning',
+      component: asyncComponent(() => import('container/basis/dealerWarning/dealerWarning'))
+  },
+
   //  我司贷款成数比例
   {
       path: '/basis/loanPercent',
@@ -750,6 +756,11 @@ const ROUTES = [
       component: asyncComponent(() => import('container/basis/oilpercentage/oilpercentage-addedit'))
   },
     //  统计分析模块
+  //  车贷分期业务统计表
+  {
+    path: '/statistics/carLoanInstallment',
+    component: asyncComponent(() => import('container/analysis/statistics/carLoanInstallment/carLoanInstallment'))
+  },
   //  余额明细
   {
     path: '/statistics/balance',
@@ -784,6 +795,11 @@ const ROUTES = [
   {
     path: '/statisticQuery/schedule',
     component: asyncComponent(() => import('container/analysis/statisticQuery/schedule/schedule'))
+  },
+  //  查询分析-导出表格历史
+  {
+    path: '/statisticQuery/tablehistory',
+    component: asyncComponent(() => import('container/analysis/statisticQuery/tablehistory/tablehistory'))
   },
   // 贷前管理
   // 预算单申请
