@@ -1,46 +1,69 @@
-import { Select, Radio } from 'antd';
+import React from 'react';
+import {
+  Select,
+  Radio
+} from 'antd';
+import fetch from 'common/js/fetch';
+import './erweima.css';
 var QRCode = require('qrcode.react');
 
 const Option = Select.Option;
+export default class SelectSizesDemo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      children: [],
+      str: ''
+    };
+  }
 
-const children = [];
-for (let i = 10; i < 36; i++) {
-  children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-}
+  componentDidMount() {
+    fetch(632155, {
+      start: 0,
+      limit: 100,
+      status: '1'
+    }).then(data => {
+      let len = data.list.length;
+      let arr = [];
+      for (let i = 0; i < len; i++) {
+        arr.push(<Option key={data.list[i].bizCode}>{`${data.list[i].bizCode}-${data.list[i].customerName}`}</Option>);
+      }
+      console.log(arr);
+      this.setState({
+        children: arr
+      });
+    });
+  }
 
-function handleChange(value) {
-  console.log(`Selected: ${value}`);
-}
-
-class SelectSizesDemo extends React.Component {
-  state = {
-    size: 'default',
-  };
-
-  handleSizeChange = (e) => {
-    this.setState({ size: e.target.value });
+  handleChange = (value) => {
+    let codeList = [].concat(value);
+    console.log(value);
+    this.setState({
+      str: codeList
+    });
   }
 
   render() {
-    const { size } = this.state;
-    return [
+    const {
+      size
+    } = this.state;
+    return (
+      <div>
         <div>
             <Select
             mode="multiple"
             size={size}
             placeholder="Please select"
-            defaultValue={['a10', 'c12']}
-            onChange={handleChange}
+            onChange={this.handleChange}
             style={{ width: '100%' }}
-            >
-            {children}
-            </Select>
-        </div>,
-        <div>
-            <QRCode size={150} value={'1234567890'}/>
+          >
+            {this.state.children}
+          </Select>
         </div>
-    ];
+        <div class="erweima">
+          <QRCode size={150} value={`[${this.state.str}]`}/>
+        </div>
+      </div>
+    );
   }
 }
-
-ReactDOM.render(<SelectSizesDemo />, mountNode);

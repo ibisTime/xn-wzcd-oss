@@ -37,36 +37,33 @@ class CarLoanInstallment extends React.Component {
     render() {
         const fields = [{
             title: '分公司名称',
-            field: 'name'
-        }, {
-            title: '科目名称',
-            field: 'code'
+            field: 'companyName'
         }, {
             title: '上日余额',
-            field: 'loanAmount',
+            field: 'preBalance',
             amount: true
         }, {
             title: '上日逾期率',
-            field: 'loanBalance'
+            field: 'preOverdueRate'
         }, {
             title: '借方发生额',
-            field: 'loanBalance',
+            field: 'debitAmount',
             amount: true
         }, {
             title: '贷方发生额',
-            field: 'restTotalCost',
+            field: 'loanAmount',
             amount: true
         }, {
             title: '当日余额',
-            field: 'updater',
+            field: 'balance',
             amount: true
         }, {
             title: '当日逾期率',
-            field: 'restTotalCost'
+            field: 'overdueRate'
         }];
         return this.props.buildList({
             fields,
-            pageCode: 630520
+            pageCode: 630901
         });
     }
 }
