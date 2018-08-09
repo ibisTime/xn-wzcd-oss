@@ -37,12 +37,7 @@ class Balancedetail extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'name',
-            render: (v, d) => {
-                if(d.user !== undefined) {
-                    return d.user.realName;
-                }
-            },
+            field: 'realName',
             search: true
         }, {
             title: '业务编号',
@@ -54,11 +49,11 @@ class Balancedetail extends React.Component {
             amount: true
         }, {
             title: '借款余额',
-            field: 'loanBalance',
+            field: 'remainAmount',
             amount: true
         }, {
             title: '代偿金额',
-            field: 'loanBalance',
+            field: 'restReplaceRepayAmount',
             amount: true
         }, {
             title: '其他欠款',
@@ -66,12 +61,8 @@ class Balancedetail extends React.Component {
             amount: true
         }, {
             title: '逾期日期',
-            field: 'updater',
-            render: (v, d) => {
-                if(d.loanOrder !== undefined) {
-                    return formatDate(d.loanOrder.fkDatetime);
-                }
-            }
+            field: 'overdueDatetime',
+            type: 'date'
         }, {
             title: '电话清收',
             field: 'restTotalCost'
@@ -88,15 +79,25 @@ class Balancedetail extends React.Component {
             amount: true
         }, {
             title: '法院诉讼',
-            field: 'overdueAmount',
+            field: 'caseStartDatetime',
+            render: (v, d) => {
+                if(d.judge) {
+                    return formatDate(d.judge.caseStartDatetime);
+                }
+            },
             amount: true
         }, {
             title: '法院判决',
-            field: 'overdueAmount'
+            field: 'judgeDatetime',
+            render: (v, d) => {
+                if(d.judge) {
+                    return formatDate(d.judge.judgeDatetime);
+                }
+            }
         }];
         return this.props.buildList({
             fields,
-            pageCode: 630520
+            pageCode: 630904
         });
     }
 }

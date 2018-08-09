@@ -524,37 +524,52 @@ const ROUTES = [
   //  司法诉讼
   {
     path: '/biz/litigation',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/litigation'))
+    component: asyncComponent(() => import('container/biz/litigation/litigation'))
   },
   //  司法诉讼 详情
   {
     path: '/biz/litigation/addedit',
-    component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-addedit'))
+    component: asyncComponent(() => import('container/biz/litigation/litigation-addedit'))
   },
   //  司法诉讼 司法诉讼
   {
       path: '/biz/litigation/litigation',
-      component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-litigation'))
+      component: asyncComponent(() => import('container/biz/litigation/litigation-litigation'))
   },
-  //  司法诉讼 诉讼跟进
+  //  司法诉讼 出纳打款
   {
-      path: '/biz/litigation/continue',
-      component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-continue'))
+      path: '/biz/litigation/cashier',
+      component: asyncComponent(() => import('container/biz/litigation/litigation-cashier'))
+  },
+  //  司法诉讼 受理
+  {
+      path: '/biz/litigation/accept',
+      component: asyncComponent(() => import('container/biz/litigation/litigation-accept'))
+  },
+  //  司法诉讼 开庭
+  {
+      path: '/biz/litigation/court',
+      component: asyncComponent(() => import('container/biz/litigation/litigation-court'))
+  },
+  //  司法诉讼 判决
+  {
+      path: '/biz/litigation/judgment',
+      component: asyncComponent(() => import('container/biz/litigation/litigation-judgment'))
   },
   //  司法诉讼 执行结果录入
   {
       path: '/biz/litigation/enter',
-      component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-enter'))
+      component: asyncComponent(() => import('container/biz/litigation/litigation-enter'))
   },
   //  司法诉讼 财务确认收款
   {
       path: '/biz/litigation/certain',
-      component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-certain'))
+      component: asyncComponent(() => import('container/biz/litigation/litigation-certain'))
   },
   //  司法诉讼 财务审核
   {
       path: '/biz/litigation/finance',
-      component: asyncComponent(() => import('container/biz/carLoanRepay/litigation-finance'))
+      component: asyncComponent(() => import('container/biz/litigation/litigation-finance'))
   },
   //  结清审核
   {
@@ -755,6 +770,18 @@ const ROUTES = [
       path: '/basis/oilpercentage/addedit',
       component: asyncComponent(() => import('container/basis/oilpercentage/oilpercentage-addedit'))
   },
+
+  //  车贷期数管理
+  {
+      path: '/basis/carloan',
+      component: asyncComponent(() => import('container/basis/carloan/carloan'))
+  },
+
+  //  车贷期数管理 修改
+  {
+      path: '/basis/carloan/addedit',
+      component: asyncComponent(() => import('container/basis/carloan/carloan-addedit'))
+  },
     //  统计分析模块
   //  车贷分期业务统计表
   {
@@ -785,6 +812,11 @@ const ROUTES = [
   {
     path: '/statistics/overdueCollection',
     component: asyncComponent(() => import('container/analysis/statistics/overdueCollection/overdueCollection'))
+  },
+  //  逾期客户清收进度表
+  {
+    path: '/statistics/advance',
+    component: asyncComponent(() => import('container/analysis/statistics/advance/advance'))
   },
   //  风险客户四级分类表
   {

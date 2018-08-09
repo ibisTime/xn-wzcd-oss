@@ -78,7 +78,8 @@ class blackList extends React.Component {
     return this.props.buildList({
       fields,
       searchParams: {
-        roleCode: getRoleCode()
+        roleCode: getRoleCode(),
+        codeList: ['021_10', '021_11', '021_12', '021_13', '021_14', '021_15', '021_16', '021_17']
       },
       pageCode: 630520
     });

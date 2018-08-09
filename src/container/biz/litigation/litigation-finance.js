@@ -6,7 +6,7 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/litigation-addedit';
+} from '@redux/biz/litigation/litigation-finance';
 import {
     getQueryString,
     getUserId,
@@ -18,7 +18,7 @@ import {
     DetailWrapper
 } from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizLitigationAddEdit, {
+@DetailWrapper(state => state.bizLitigationFinance, {
     initStates,
     doFetching,
     cancelFetching,
@@ -26,7 +26,7 @@ import {
     setPageData,
     restore
 })
-class litigationAddedit extends React.Component {
+class LitigationFinance extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -59,26 +59,20 @@ class litigationAddedit extends React.Component {
             field: 'loanBankName',
             readonly: true
         }, {
-            title: '案号',
-            field: 'caseNumber',
-            formatter: (v, d) => {
-                return d.judgeList[0].caseNumber;
-            },
-            required: true,
-            readonly: true
-        }, {
             title: '原告',
             field: 'plaintiff',
+            type: 'select',
+            key: 'plaintiff',
             formatter: (v, d) => {
-                return d.judgeList[0].plaintiff;
+                return d.judge.plaintiff;
             },
             required: true,
             readonly: true
         }, {
             title: '被告',
             field: 'defendant',
-            formatter: (v, data) => {
-                return data.realName;
+            formatter: (v, d) => {
+                return d.judge.defendant;
             },
             required: true,
             readonly: true
@@ -86,7 +80,7 @@ class litigationAddedit extends React.Component {
             title: '诉讼标的',
             field: 'caseSubject',
             formatter: (v, d) => {
-                return d.judgeList[0].caseSubject;
+                return d.judge.caseSubject;
             },
             required: true,
             readonly: true
@@ -94,7 +88,7 @@ class litigationAddedit extends React.Component {
             title: '涉案车辆',
             field: 'caseCar',
             formatter: (v, d) => {
-                return d.judgeList[0].caseCar;
+                return d.judge.caseCar;
             },
             required: true,
             readonly: true,
@@ -103,7 +97,7 @@ class litigationAddedit extends React.Component {
             title: '起诉日期',
             field: 'caseStartDatetime',
             formatter: (v, d) => {
-                return formatDate(d.judgeList[0].caseStartDatetime);
+                return formatDate(d.judge.caseStartDatetime);
             },
             required: true,
             readonly: true
@@ -111,9 +105,9 @@ class litigationAddedit extends React.Component {
             title: '起诉附件',
             field: 'casePdf',
             formatter: (v, d) => {
-                return d.judgeList[0].casePdf;
+                return d.judge.casePdf;
             },
-            type: 'img',
+            type: 'file',
             readonly: true
         }, {
             title: '流程日志',
@@ -157,9 +151,48 @@ class litigationAddedit extends React.Component {
                 fields,
                 code: this.code,
                 view: this.view,
-                detailCode: 630521
+                detailCode: 630521,
+                buttons: [{
+                    title: '通过',
+                    handler: (param) => {
+                        param.repayBizCode = param.code;
+                        param.approveResult = '1';
+                        param.operator = getUserId();
+                        this.props.doFetching();
+                        fetch(630564, param).then(() => {
+                            showSucMsg('操作成功');
+                            this.props.cancelFetching();
+                            setTimeout(() => {
+                                this.props.history.go(-1);
+                            }, 1000);
+                        }).catch(this.props.cancelFetching);
+                    },
+                    check: true,
+                    type: 'primary'
+                }, {
+                    title: '不通过',
+                    handler: (param) => {
+                        param.repayBizCode = param.code;
+                        param.approveResult = '0';
+                        param.operator = getUserId();
+                        this.props.doFetching();
+                        fetch(630564, param).then(() => {
+                            showSucMsg('操作成功');
+                            this.props.cancelFetching();
+                            setTimeout(() => {
+                                this.props.history.go(-1);
+                            }, 1000);
+                        }).catch(this.props.cancelFetching);
+                    },
+                    check: true
+                }, {
+                    title: '返回',
+                    handler: (param) => {
+                        this.props.history.go(-1);
+                    }
+                }]
             });
     }
 }
 
-export default litigationAddedit;
+export default LitigationFinance;

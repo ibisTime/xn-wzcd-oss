@@ -136,7 +136,8 @@ class settlementCertain extends React.Component {
             required: true
         }, {
             title: '备注',
-            field: 'settleNote'
+            field: 'settleNote',
+            required: true
         }];
         return this.props.buildDetail({
             fields,

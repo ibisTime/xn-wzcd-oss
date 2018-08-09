@@ -63,7 +63,7 @@ class TakeFinance extends React.Component {
             type: 'img',
             required: true
         }, {
-            title: '审核说明',
+            title: '审核意见',
             field: 'approveNote',
             type: 'textarea',
             normalArea: true,

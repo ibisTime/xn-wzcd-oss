@@ -6,18 +6,16 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/litigation-enter';
+} from '@redux/biz/litigation/litigation-court';
 import {
     getQueryString,
-    getUserId,
-    showSucMsg
+    getUserId
 } from 'common/js/util';
-import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizLitigationEnter, {
+@DetailWrapper(state => state.bizLitigationCourt, {
     initStates,
     doFetching,
     cancelFetching,
@@ -25,7 +23,7 @@ import {
     setPageData,
     restore
 })
-class litigationEnter extends React.Component {
+class LitigationCourt extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -57,53 +55,31 @@ class litigationEnter extends React.Component {
             field: 'loanBankName',
             readonly: true
         }, {
-            title: '案号',
-            field: 'exeCaseNumber',
-            required: true
-        }, {
-            title: '申请人姓名',
-            field: 'exeApplyUser',
-            required: true
-        }, {
-            title: '被执行人',
-            field: 'exeUserName',
-            required: true,
-            formatter: (v, data) => {
-                return data.realName;
-            }
-        }, {
-            title: '执行标的额',
-            field: 'executeMarkAmount',
-            amount: true,
-            required: true
-        }, {
-            title: '执行日期',
-            field: 'exeDatetime',
+            title: '开庭日期',
+            field: 'courtDatetime',
             type: 'date',
             required: true
         }, {
-            title: '执行结果',
-            field: 'exeResult',
-            type: 'select',
-            key: 'exe_result',
+            title: '开庭地点',
+            field: 'courtAddress',
             required: true
         }, {
-            title: '执行日期',
-            field: 'saleDatetime',
-            type: 'date'
+            title: '经办法官',
+            field: 'handleJudge',
+            required: true
         }, {
-            title: '附件',
-            field: 'exePdf',
-            type: 'img'
+            title: '审理案号',
+            field: 'hearCaseNumber',
+            required: true
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630562,
+            editCode: 630567,
             detailCode: 630521,
             beforeSubmit: (params) => {
-                params.code = this.code;
+                params.repayBizCode = this.code;
                 params.operator = getUserId();
                 return params;
             }
@@ -111,4 +87,4 @@ class litigationEnter extends React.Component {
     }
 }
 
-export default litigationEnter;
+export default LitigationCourt;

@@ -6,7 +6,7 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/litigation-litigation';
+} from '@redux/biz/litigation/litigation-litigation';
 import {
     getQueryString,
     getUserId,
@@ -104,7 +104,8 @@ class litigationLitigation extends React.Component {
             title: '起诉附件',
             field: 'casePdf',
             type: 'file',
-            accept: 'application/pdf,application/vnd.ms-excel,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            accept: 'application/pdf,application/vnd.ms-excel,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            required: true
         }];
         return this.props.buildDetail({
             fields,

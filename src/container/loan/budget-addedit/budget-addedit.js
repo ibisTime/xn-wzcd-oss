@@ -56,6 +56,9 @@ class BudgetAddedit extends React.Component {
             loanPeriodsData: null,
             promptFlag: this.isApply
         };
+        this.isRateType = true;
+        this.surcharge = true;
+        this.isBankType = false;
     }
 
     componentDidMount() {
@@ -338,7 +341,7 @@ class BudgetAddedit extends React.Component {
                     type: 'select',
                     pageCode: 632065,
                     params: {
-                        curNodeCode: '006_02'
+                        agreementStatus: '1'
                     },
                     keyName: 'code',
                     valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
@@ -415,6 +418,9 @@ class BudgetAddedit extends React.Component {
                                         bankRateType: data.bankRate
                                     });
                                 }
+                            }
+                            if(data.bankSubbranch.bankType === 'BOC') {
+                                this.isBankType = true;
                             }
                         }
                         return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName);
@@ -494,6 +500,7 @@ class BudgetAddedit extends React.Component {
                     key: 'rate_type',
                     required: true,
                     onChange: (v, data) => {
+                        console.log(data);
                         this.rateType = v;
                         if (v === '1') {
                             this.props.setPageData({
@@ -502,12 +509,39 @@ class BudgetAddedit extends React.Component {
                                 carDealerSubsidy: 0
                             });
                         }
+                        if(v === '2') {
+                            this.isRateType = false;
+                        } else {
+                            this.isRateType = true;
+                        }
                     },
                     formatter: (v, data) => {
                         this.rateType = data.rateType;
                         return v;
                     }
                 }, {
+                    title: '手续费收取方式',
+                    field: 'bocFeeWay',
+                    type: 'select',
+                    key: 'boc_fee_way',
+                    hidden: this.isRateType,
+                    required: true,
+                    onChange: (v) => {
+                        if(v === '3' && this.isBankType) {
+                            this.surcharge = false;
+                        } else {
+                            this.surcharge = true;
+                        }
+                    }
+                }, {
+                    title: '附加费',
+                    field: 'surcharge',
+                    type: 'select',
+                    key: 'surcharge',
+                    required: true,
+                    hidden: this.surcharge || this.isRateType
+                }],
+                [{
                     title: '贷款金额',
                     field: 'loanAmount',
                     amount: true,
@@ -543,8 +577,7 @@ class BudgetAddedit extends React.Component {
                             })
                         });
                     }
-                }],
-                [{
+                }, {
                     title: '银行利率',
                     field: 'bankRateType',
                     type: 'select',
@@ -623,10 +656,29 @@ class BudgetAddedit extends React.Component {
                         return v;
                     }
                 }, {
+                    title: '厂家贴息',
+                    field: 'carDealerSubsidy',
+                    amount: true,
+                    required: true,
+                    readonly: this.rateType === '1',
+                    onChange: (v) => {
+                        if (!this.getAmountRules(v)) {
+                            return false;
+                        }
+                        // 应退按揭款列表
+                        let result = this.getRepointDetailList1({carDealerSubsidy: v});
+                        let repointDetailList1 = result.repointDetailList1;
+                        this.props.setPageData({
+                            ...this.props.pageData,
+                            repointDetailList1: repointDetailList1
+                        });
+                    }
+                }, {
                     title: '综合利率',
                     field: 'globalRate',
                     readonly: true,
-                    required: true
+                    required: true,
+                    hidden: true
                 }],
                 [{
                     title: '服务费',
@@ -647,31 +699,15 @@ class BudgetAddedit extends React.Component {
                                 invoicePrice: this.props.form.getFieldValue('invoicePrice')
                             })
                         });
-                    }
-                }, {
-                    title: '厂家贴息',
-                    field: 'carDealerSubsidy',
-                    amount: true,
-                    required: true,
-                    readonly: this.rateType === '1',
-                    onChange: (v) => {
-                        if (!this.getAmountRules(v)) {
-                            return false;
-                        }
-                        // 应退按揭款列表
-                        let result = this.getRepointDetailList1({carDealerSubsidy: v});
-                        let repointDetailList1 = result.repointDetailList1;
-                        this.props.setPageData({
-                            ...this.props.pageData,
-                            repointDetailList1: repointDetailList1
-                        });
-                    }
+                    },
+                    hidden: true
                 }, {
                     // (贷款金额+服务费) / 发票价格
                     title: '银行贷款成数',
                     field: 'bankLoanCs',
                     readonly: true,
-                    required: true
+                    required: true,
+                    hidden: true
                 }],
                 [{
                     title: 'GPS',

@@ -162,6 +162,7 @@ class OverdueListProcess extends React.Component {
                 buttons: [{
                     title: '确定',
                     handler: (param) => {
+                        let list = this.props.o2mSKeys.costList;
                         param.code = this.code;
                         param.operator = getUserId();
                         this.props.doFetching();

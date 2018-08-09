@@ -70,7 +70,10 @@ class rebates extends React.Component {
             title: '办理状态',
             field: 'curNodeCode',
             type: 'select',
-            key: 'repoint_status'
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name',
+            search: true
         }];
         return this.props.buildList({
             fields,

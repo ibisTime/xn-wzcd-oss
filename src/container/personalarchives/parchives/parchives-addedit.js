@@ -63,7 +63,8 @@ class parchivesAddedit extends React.Component {
                 required: true,
                 listCode: 630106,
                 params: {
-                  typeList: ['3']
+                    status: '1',
+                    typeList: ['3']
                 },
                 keyName: 'code',
                 valueName: 'name'

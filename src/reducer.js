@@ -142,14 +142,17 @@ import { bizTrailerAddEdit } from './redux/biz/trailer-addedit';
 import { bizTrailerDispose } from './redux/biz/trailer-dispose';
 import { bizTrailerFinance } from './redux/biz/trailer-finance';
 
-//  司法诉讼 + 详情 + 处理结果
-import { bizLitigation } from './redux/biz/litigation';
-import { bizLitigationAddEdit } from './redux/biz/litigation-addedit';
-import { bizLitigationLitigation } from './redux/biz/litigation-litigation';
-import { bizLitigationContinue } from './redux/biz/litigation-continue';
-import { bizLitigationEnter } from './redux/biz/litigation-enter';
-import { bizLitigationCertain } from './redux/biz/litigation-certain';
-import { bizLitigationFinance } from './redux/biz/litigation-finance';
+//  司法诉讼 + 详情 + 司法诉讼 + 财务审核 + 出纳打款 + 受理 + 开庭 + 判决 + 执行结果  + 财务确认收款
+import { bizLitigation } from './redux/biz/litigation/litigation';
+import { bizLitigationAddEdit } from './redux/biz/litigation/litigation-addedit';
+import { bizLitigationLitigation } from './redux/biz/litigation/litigation-litigation';
+import { bizLitigationFinance } from './redux/biz/litigation/litigation-finance';
+import { bizLitigationCashier } from './redux/biz/litigation/litigation-cashier';
+import { bizLitigationAccept } from './redux/biz/litigation/litigation-accept';
+import { bizLitigationCourt } from './redux/biz/litigation/litigation-court';
+import { bizLitigationJudgment } from './redux/biz/litigation/litigation-judgment';
+import { bizLitigationEnter } from './redux/biz/litigation/litigation-enter';
+import { bizLitigationCertain } from './redux/biz/litigation/litigation-certain';
 
 //  结清审核 + 结清申请单 + 审核 + 确认付款
 import { bizSettlement } from './redux/biz/settlement';
@@ -211,6 +214,10 @@ import { basisGpsextractAddedit } from './redux/basis/gpsextract-addedit';
 //  油补 + 修改
 import { basisOilpercentage } from './redux/basis/oilpercentage';
 import { basisOilpercentageAddedit } from './redux/basis/oilpercentage-addedit';
+
+//  车贷期数管理 + 修改
+import { basisCarloan } from './redux/basis/carloan';
+import { basisCarloanAddEdit } from './redux/basis/carloan-addedit';
 
 /**
  * 贷前管理
@@ -410,6 +417,7 @@ import { analysisRiskCustomers } from './redux/analysis/riskCustomers';
 import { analysisSchedule } from './redux/analysis/schedule';
 import { analysisTablehistory } from './redux/analysis/tablehistory';
 import { analysisCarLoanInstallment } from './redux/analysis/carLoanInstallment';
+import { analysisAdvance } from './redux/analysis/advance';
 
 /**
  * 人事
@@ -798,11 +806,14 @@ export default combineReducers({
   postloantoolsInstallGpsToVoid,
   bizLitigation,
   bizLitigationAddEdit,
-  bizLitigationContinue,
-  bizLitigationEnter,
   bizLitigationCertain,
   bizLitigationFinance,
   bizLitigationLitigation,
+  bizLitigationEnter,
+  bizLitigationJudgment,
+  bizLitigationCourt,
+  bizLitigationCashier,
+  bizLitigationAccept,
   bizBalancedetail,
   analysisProtect,
   analysisReplaceRepay,
@@ -811,6 +822,7 @@ export default combineReducers({
   analysisSchedule,
   analysisTablehistory,
   analysisCarLoanInstallment,
+  analysisAdvance,
   bizHistoryBusinessManageAddeditAddedit,
   bizSettlement,
   bizSettlementApply,
@@ -976,6 +988,8 @@ export default combineReducers({
   basisGpsextractAddedit,
   basisOilpercentage,
   basisOilpercentageAddedit,
+  basisCarloan,
+  basisCarloanAddEdit,
   bizWhiteList,
   bizWhiteListAddEdit,
   riskBlackList,

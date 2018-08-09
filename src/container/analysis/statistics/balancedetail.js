@@ -40,13 +40,8 @@ import {
 class Balancedetail extends React.Component {
     render() {
         const fields = [{
-            title: '客户姓名',
-            field: 'name',
-            render: (v, d) => {
-                if(d.user !== undefined) {
-                    return d.user.realName;
-                }
-            },
+            title: '借款人',
+            field: 'customerName',
             search: true
         }, {
             title: '业务编号',
@@ -54,40 +49,43 @@ class Balancedetail extends React.Component {
             search: true
         }, {
             title: '借款金额',
-            field: 'loanAmount',
+            field: 'shouldBackAmount',
             amount: true
         }, {
-            title: '放款日期',
-            field: 'updater',
-            render: (v, d) => {
-                if(d.loanOrder !== undefined) {
-                    return formatDate(d.loanOrder.fkDatetime);
-                }
-            }
-        }, {
-            title: '月供还款日',
-            field: 'monthDatetime',
+            title: '垫资日期',
+            field: 'advanceFundDatetime',
             type: 'date'
         }, {
+            title: '放款日期',
+            field: 'bankFkDatetime',
+            type: 'date'
+        }, {
+            title: '月供还款日',
+            field: 'repayMonthDatetime'
+        }, {
             title: '月供金额',
-            field: 'monthAmount',
+            field: 'repayMonthAmount',
             amount: true
         }, {
             title: '当期欠款',
-            field: 'overdueAmount',
+            field: 'overplusAmount',
             amount: true
         }, {
             title: '借款余额',
-            field: 'loanBalance',
+            field: 'debtBalance',
+            amount: true
+        }, {
+            title: '代偿金额',
+            field: 'replaceRealRepayAmount',
             amount: true
         }, {
             title: '其他欠款',
-            field: 'restTotalCost',
+            field: 'otherDebt',
             amount: true
         }];
         return this.props.buildList({
             fields,
-            pageCode: 630520
+            pageCode: 630902
         });
     }
 }

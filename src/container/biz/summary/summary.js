@@ -141,11 +141,6 @@ class Summary extends React.Component {
         }, {
             title: '剩余期数',
             field: 'restPeriods'
-        }, {
-            title: '实际逾期期数',
-            field: 'curOverdueCount',
-            hidden: true,
-            search: true
         }];
         return this.props.buildList({
             fields,

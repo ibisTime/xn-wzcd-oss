@@ -151,9 +151,6 @@ class OverdueListResult extends React.Component {
             field: 'costList',
             type: 'o2m',
             options: {
-                add: true,
-                edit: true,
-                delete: true,
                 fields: [{
                     title: '费用项',
                     field: 'item'

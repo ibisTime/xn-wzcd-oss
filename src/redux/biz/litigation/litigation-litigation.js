@@ -1,4 +1,4 @@
-import { commDetailState } from '../common';
+import { commDetailState } from '../../common';
 
 const PREFIX = 'BIZ_LITIGATION_LITIGATION_';
 const SET_SELECT_DATA = PREFIX + 'SET_SELECT_DATA';
