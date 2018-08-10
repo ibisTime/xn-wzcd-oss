@@ -17,6 +17,7 @@ class CompAdd extends React.Component {
           status: 1,
           typeList: [1, 2]
         },
+        required: true,
         value: this.props.parentCode
       }, {
         field: 'name',

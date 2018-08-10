@@ -119,7 +119,7 @@ class CarShape extends React.Component {
               this.props.doFetching();
               return lowerFrameShape(key[0]).then(() => {
                 this.props.getPageData();
-                showWarnMsg('操作成功');
+                showSucMsg('操作成功');
                 setTimeout(() => {
                     this.props.getPageData();
                 }, 500);

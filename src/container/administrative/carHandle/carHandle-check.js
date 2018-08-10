@@ -35,7 +35,7 @@ class carHandleCheck extends React.Component {
     const fields = [{
       title: '违章人',
       field: 'userId',
-      listCode: 630066,
+      listCode: 632807,
       type: 'select',
       keyName: 'userId',
       valueName: 'realName',

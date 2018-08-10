@@ -132,6 +132,7 @@ class officeSuppliesAddedit extends React.Component {
                 }, {
                     title: '出库价格',
                     field: 'price',
+                    amount: true,
                     readonly: true,
                     required: true
                 }, {

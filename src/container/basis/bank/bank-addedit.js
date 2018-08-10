@@ -40,16 +40,19 @@ class bankAddedit extends React.Component {
       valueName: '{{bankName.DATA}}-{{bankCode.DATA}}',
       required: true
     },
-    // {
-    //   title: '12期',
-    //   field: 'rate12'
-    // }, {
-    //   title: '24期',
-    //   field: 'rate24'
-    // }, {
-    //   title: '36期',
-    //   field: 'rate36'
-    // },
+    {
+      title: '12期',
+      field: 'rate12',
+      required: true
+    }, {
+      title: '24期',
+      field: 'rate24',
+      required: true
+    }, {
+      title: '36期',
+      field: 'rate36',
+      required: true
+    },
     {
       title: '利率明细',
       field: 'bankRateList',

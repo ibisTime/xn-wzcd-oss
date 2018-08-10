@@ -149,7 +149,7 @@ class Brand extends React.Component {
               onOk: () => {
                 this.props.doFetching();
                 return lowerFrame(key[0]).then(() => {
-                  showWarnMsg('操作成功');
+                  showSucMsg('操作成功');
                   setTimeout(() => {
                       this.props.getPageData();
                   }, 500);
@@ -173,7 +173,7 @@ class Brand extends React.Component {
               onOk: () => {
                 this.props.doFetching();
                 return onShelf(key[0]).then(() => {
-                  showWarnMsg('操作成功');
+                  showSucMsg('操作成功');
                   setTimeout(() => {
                       this.props.getPageData();
                   }, 500);
