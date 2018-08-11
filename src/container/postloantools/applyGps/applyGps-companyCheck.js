@@ -64,7 +64,6 @@ class applyGpsCompanyCheck extends React.Component {
           type: 'select',
           listCode: 632707,
           params: {
-            applyStatus: '0',
             useStatus: '0'
           },
           keyName: 'code',

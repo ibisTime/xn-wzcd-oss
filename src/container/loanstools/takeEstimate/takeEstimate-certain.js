@@ -11,7 +11,9 @@ import {
   getQueryString,
   showSucMsg,
   getUserId,
-  getCompanyCode
+  getCompanyCode,
+  moneyFormat,
+  moneyReplaceComma
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -58,7 +60,7 @@ class TakeEstimateCertain extends React.Component {
             title: '应收金额',
             field: 'receiptAccount',
             formatter: (v, d) => {
-                return (d.budgetAmount - d.payAmount) / 1000;
+                return moneyReplaceComma(moneyFormat(d.budgetAmount)) - moneyReplaceComma(moneyFormat(d.payAmount));
             },
             readonly: true
         }, {

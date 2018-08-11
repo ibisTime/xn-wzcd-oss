@@ -47,7 +47,7 @@ class invoice extends React.Component {
             search: true
         }, {
             title: '业务公司',
-            field: 'companyCode'
+            field: 'companyName'
         }, {
             title: '客户姓名',
             field: 'customerName',

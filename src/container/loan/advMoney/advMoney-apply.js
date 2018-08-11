@@ -88,12 +88,12 @@ class AdvMoneyApply extends React.Component {
             readonly: true,
             hidden: true
         }, {
-            title: '收款银行账号',
-            field: 'collectionAccountNo',
-            readonly: true
-        }, {
             title: '收款银行',
             field: 'collectBankName',
+            readonly: true
+        }, {
+            title: '收款银行账号',
+            field: 'collectionAccountNo',
             readonly: true
         }];
         return this.props.buildDetail({

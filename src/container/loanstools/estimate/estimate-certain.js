@@ -34,16 +34,20 @@ class EstimateCertain extends React.Component {
   }
   render() {
     const fields = [{
+      title: '预算单号',
+      field: 'code',
+      readonly: true
+    }, {
       title: '业务公司',
-      field: 'companyCode',
+      field: 'companyName',
       readonly: true
     }, {
       title: '收款银行',
-      field: 'receiptBank',
+      field: 'bankName',
       readonly: true
     }, {
       title: '收款账号',
-      field: 'receiptAccount',
+      field: 'bankcardNumber',
       readonly: true
     }, {
       title: '预算金额',

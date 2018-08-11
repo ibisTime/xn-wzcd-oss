@@ -85,7 +85,7 @@ class GpsCollect extends React.Component {
             pageCode: 632155,
             searchParams: {
                 type: '2',
-                status: '1'
+                statusList: ['1', '6']
             },
             btnEvent: {
                 collect: (selectedRowKeys, selectedRows) => {

@@ -79,7 +79,8 @@ class GpsSend extends React.Component {
             fields,
             pageCode: 632155,
             searchParams: {
-                type: '2'
+                type: '2',
+                statusList: ['0', '4']
             },
             btnEvent: {
                 send: (selectedRowKeys, selectedRows) => {

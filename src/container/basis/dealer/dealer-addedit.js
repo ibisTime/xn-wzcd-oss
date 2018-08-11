@@ -1050,6 +1050,7 @@ class DealerAddedit extends React.Component {
                   {
                     this.view ? <div className="readonly-text">{pageData.address}</div>
                       : getFieldDecorator('address', {
+                        rules: [ruleRequired],
                         initialValue: pageData.address
                       })(<TextArea />)
                   }
@@ -1076,6 +1077,7 @@ class DealerAddedit extends React.Component {
                   {
                     this.view ? <div className="readonly-text">{pageData.mainBrand}</div>
                       : getFieldDecorator('mainBrand', {
+                        rules: [ruleRequired],
                         initialValue: pageData.mainBrand
                       })(<Input />)
                   }
@@ -1088,6 +1090,7 @@ class DealerAddedit extends React.Component {
                   {
                     this.view ? <div className="readonly-text">{pageData.mainContact}</div>
                       : getFieldDecorator('mainContact', {
+                        rules: [ruleRequired],
                         initialValue: pageData.mainContact
                       })(<Input />)
                   }
@@ -1098,6 +1101,7 @@ class DealerAddedit extends React.Component {
                   {
                     this.view ? <div className="readonly-text">{pageData.contactPhone}</div>
                       : getFieldDecorator('contactPhone', {
+                        rules: [ruleRequired],
                         initialValue: pageData.contactPhone
                       })(<Input />)
                   }
@@ -1108,6 +1112,7 @@ class DealerAddedit extends React.Component {
                   {
                     this.view ? <div className="readonly-text">{pageData.parentGroup}</div>
                       : getFieldDecorator('parentGroup', {
+                        rules: [ruleRequired],
                         initialValue: pageData.parentGroup
                       })(<Input />)
                   }
@@ -1166,6 +1171,7 @@ class DealerAddedit extends React.Component {
                   {
                     this.code && !this.state.loaded ? null : (
                       getFieldDecorator('agreementPic', {
+                          rules: [ruleRequired],
                           initialValue: agreementPic,
                           getValueFromEvent: this.normFile
                       })(

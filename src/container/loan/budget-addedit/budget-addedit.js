@@ -731,7 +731,7 @@ class BudgetAddedit extends React.Component {
                             required: true,
                             onChange: (v, data, props) => {
                                 props.setPageData({
-                                    gpsDevNo: data.code,
+                                    gpsDevNo: data.gpsDevNo,
                                     gpsType: data.gpsType
                                 });
                             },
@@ -1312,43 +1312,12 @@ class BudgetAddedit extends React.Component {
                             keyName: 'key',
                             valueName: 'value',
                             value: '1',
-                            hidden: true
-                        }, {
-                            title: '用款用途',
-                            field: 'useMoneyPurpose1',
-                            type: 'select',
-                            data: [{
-                                key: '1',
-                                value: '应退按揭款'
-                            }, {
-                                key: '2',
-                                value: '协议内返点'
-                            }, {
-                                key: '3',
-                                value: '协议外返点'
-                            }],
-                            keyName: 'key',
-                            valueName: 'value',
-                            value: '1',
-                            readonly: true,
-                            required: true,
-                            noVisible: true
+                            readonly: true
                         }, {
                             title: '金额小写',
                             field: 'repointAmount',
                             amount: true,
-                            required: true,
-                            hidden: true
-                        }, {
-                            title: '金额小写',
-                            field: 'repointAmountTab',
-                            amount: true,
-                            readonly: true,
-                            required: true,
-                            noVisible: true,
-                            formatter: (v, data) => {
-                                return moneyFormat(data.repointAmount);
-                            }
+                            readonly: true
                         }, {
                             title: '单位名称',
                             field: 'carDealerName',

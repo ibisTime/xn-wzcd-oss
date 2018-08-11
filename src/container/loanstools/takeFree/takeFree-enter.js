@@ -65,7 +65,7 @@ class TakeFreeEnter extends React.Component {
         }, {
             title: '未收金额',
             field: '11',
-            render: (v, d) => {
+            formatter: (v, d) => {
                 return moneyFormat(d.shouldAmount - d.realAmount);
             },
             readonly: true
@@ -174,7 +174,12 @@ class TakeFreeEnter extends React.Component {
             code: this.code,
             view: this.view,
             detailCode: 632166,
-            editCode: 632160
+            editCode: 632160,
+            beforeSubmit: (params) => {
+                params.operator = getUserId();
+                params.feeCode = this.code;
+                return params;
+            }
         });
     };
 }

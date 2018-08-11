@@ -63,7 +63,7 @@ class TakeFreeAddedit extends React.Component {
         }, {
             title: '未收金额',
             field: '11',
-            render: (v, d) => {
+            formatter: (v, d) => {
                 return moneyFormat(d.shouldAmount - d.realAmount);
             },
             readonly: true

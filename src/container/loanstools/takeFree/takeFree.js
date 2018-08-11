@@ -70,16 +70,9 @@ class takeFree extends React.Component {
             field: 'updater'
         }, {
             title: '更新时间',
-            field: 'updaterDatetime',
+            field: 'updateDatetime',
             search: true,
             type: 'date'
-        }, {
-            title: '当前节点',
-            field: 'curNodeCode',
-            type: 'select',
-            listCode: 630147,
-            keyName: 'code',
-            valueName: 'name'
         }];
         return this.props.buildList({
             fields,
