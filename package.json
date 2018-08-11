@@ -64,6 +64,7 @@
   "devDependencies": {
     "@antv/data-set": "^0.8.9",
     "bizcharts": "^3.1.8",
+    "qrcode.react": "^0.8.0",
     "xlsx": "wlqsltz/js-xlsx"
   },
   "scripts": {
