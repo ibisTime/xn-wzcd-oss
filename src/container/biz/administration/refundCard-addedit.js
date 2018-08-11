@@ -40,7 +40,7 @@ class refundCardAddedit extends React.Component {
       required: true
     }, {
       title: '开户支行',
-      field: 'subbranch',
+      field: 'bankName',
       required: true
     }, {
       title: '户名',

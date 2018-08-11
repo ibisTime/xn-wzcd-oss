@@ -1,6 +1,6 @@
 import { commDetailState } from '../common';
 
-const PREFIX = 'BASIS_CREDITSTART_ADDEDIT_';
+const PREFIX = 'LOAN_CREDITSTART_ADDEDIT_';
 const SET_SELECT_DATA = PREFIX + 'SET_SELECT_DATA';
 const LOADING = PREFIX + 'LOADING';
 const CANCEL_LOADING = PREFIX + 'CANCEL_LOADING';

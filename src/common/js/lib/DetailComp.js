@@ -82,7 +82,9 @@ export default class DetailComponent extends React.Component {
             // 用于控制搜索框当前只请求一次数据
             selectFetch: {},
             // 用于存储类型为treeSelect的数据
-            treeData: {}
+            treeData: {},
+            // 用于控制全选按钮当前的状态 {indeterminate, checkAll}
+            checkAll: {}
         };
         // 用于判断类型为o2m的是否是第一次请求
         this.o2mFirst = {};
@@ -1158,7 +1160,32 @@ export default class DetailComponent extends React.Component {
     }
 
     getCheckboxComp(item, initVal, rules, getFieldDecorator) {
+        // 初始化checkAll的值
+        if (item.checkAll) {
+          if (!this.state.checkAll[item.field]) {
+            this.setState({
+              checkAll: {
+                  ...this.state.checkAll,
+                  [item.field]: { indeterminate: false, checkAll: false }
+              }
+            });
+          } else if (item.data && item.data.length && initVal && initVal.length) {
+            let checkAll = this.state.checkAll[item.field].checkAll;
+            if (initVal.length === item.data.length && !this.getCheckboxComp[item.field] && !checkAll) {
+              this.getCheckboxComp[item.field] = true;
+              this.setState({
+                checkAll: {
+                    ...this.state.checkAll,
+                    [item.field]: { indeterminate: false, checkAll: true }
+                }
+              });
+            }
+          }
+        }
+        let indeterminate = this.state.checkAll[item.field] ? this.state.checkAll[item.field].indeterminate : false;
+        let checkAll = this.state.checkAll[item.field] ? this.state.checkAll[item.field].checkAll : false;
         let val = '';
+        // 生成只读时需要显示的数据
         if (item.readonly && initVal && item.data && item.data.length) {
             val = initVal.map(v => item.data.find(d => d[item.keyName] === v)[item.valueName]).join('、');
         }
@@ -1166,21 +1193,46 @@ export default class DetailComponent extends React.Component {
             <FormItem className={item.hidden ? 'hidden' : ''} key={item.field} {...this.getInputItemProps()} label={this.getLabel(item)}>
                 {
                     item.readonly ? <div className='readonly-text'>{val}</div>
-                        : getFieldDecorator(item.field, {
-                            rules,
-                            initialValue: initVal
-                        })(
-                        <CheckboxGroup disabled={item.readonly}>
-                            {item.data && item.data.length
-                                ? <Row>{item.data.map(d => <Col key={d[item.keyName]} span={6}><Checkbox value={d[item.keyName]}>{d[item.valueName]}</Checkbox></Col>)}</Row>
-                                : null}
-                        </CheckboxGroup>
+                        : (
+                          <div>
+                            <div style={{ borderBottom: '1px solid #E9E9E9' }}>
+                                <Checkbox
+                                    indeterminate={indeterminate}
+                                    onChange={(e) => this.onCheckAllChange(e, item)}
+                                    checked={checkAll}
+                                >全选</Checkbox>
+                            </div>
+                            <br/>
+                            {
+                                getFieldDecorator(item.field, {
+                                    rules,
+                                    initialValue: initVal
+                                })(
+                                  <CheckboxGroup onChange={(list) => this.checkboxChange(list, item)} disabled={item.readonly}>
+                                      {item.data && item.data.length
+                                          ? <Row>{item.data.map(d => <Col key={d[item.keyName]} span={6}><Checkbox value={d[item.keyName]}>{d[item.valueName]}</Checkbox></Col>)}</Row>
+                                          : null}
+                                  </CheckboxGroup>
+                                )
+                            }
+                            </div>
                         )
                 }
             </FormItem>
         );
     }
-
+    checkboxChange = (checkedList, item) => {
+        let allList = this.props.selectData[item.field].map(v => v[item.keyName]);
+        this.setState({
+            checkAll: {
+                ...this.state.checkAll,
+                [item.field]: {
+                    indeterminate: !!checkedList.length && (checkedList.length < allList.length),
+                    checkAll: checkedList.length === allList.length
+                }
+            }
+        });
+    }
     getSelectComp(item, initVal, rules, getFieldDecorator) {
         let data;
         let value;
@@ -1658,5 +1710,21 @@ export default class DetailComponent extends React.Component {
             });
         }
         return rules;
+    }
+    // 全选按钮的change事件
+    onCheckAllChange(e, item) {
+        let allList = this.props.selectData[item.field].map(v => v[item.keyName]);
+        this.setState({
+            checkAll: {
+                ...this.state.checkAll,
+                [item.field]: {
+                    indeterminate: false,
+                    checkAll: e.target.checked
+                }
+            }
+        });
+        this.props.form.setFieldsValue({
+          [item.field]: e.target.checked ? allList : []
+        });
     }
 }

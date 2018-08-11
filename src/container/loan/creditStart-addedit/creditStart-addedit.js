@@ -404,14 +404,16 @@ class CreditStartAddedit extends React.Component {
             title: '行驶证正面',
             field: 'xszFront',
             type: 'img',
-            required: true,
+            required: !this.view,
+            readonly: this.view,
             single: true,
             hidden: this.newCar
         }, {
             title: '行驶证反面',
             field: 'xszReverse',
             type: 'img',
-            required: true,
+            required: !this.view,
+            readonly: this.view,
             single: true,
             hidden: this.newCar
         }, {
@@ -470,6 +472,12 @@ class CreditStartAddedit extends React.Component {
             readonly: !this.isCheckSalesman && !this.isCheckFirst,
             hidden: !this.isCheckSalesman && !this.isCheckFirst,
             required: true
+        }, {
+            title: '附件',
+            field: 'accessory',
+            type: 'img',
+            hidden: !this.isCheckSalesman,
+            readonly: !this.isCheckSalesman
         }];
 
         // 业务员初审
