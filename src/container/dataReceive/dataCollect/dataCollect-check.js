@@ -126,6 +126,9 @@ class DataCollectCheck extends React.Component {
         buttons: [{
             title: '补件',
             handler: (param) => {
+                let codeList = [].concat(param.code.split(','));
+                delete param.code;
+                param.codeList = codeList;
                 let list = this.props.o2mSKeys.supplementReasonList;
                 param.operator = getUserId();
                 if (!list || !list.length) {

@@ -95,6 +95,10 @@ class AdvMoneyApply extends React.Component {
             title: '收款银行账号',
             field: 'collectionAccountNo',
             readonly: true
+        }, {
+            title: '撤销理由',
+            field: 'cancelReason',
+            readonly: true
         }];
         return this.props.buildDetail({
             fields,

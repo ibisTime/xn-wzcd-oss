@@ -71,8 +71,7 @@ class handleApplyCheck extends React.Component {
             readonly: true
         }, {
             title: '备注',
-            field: 'remark',
-            readonly: true
+            field: 'remark'
         }];
         let buttons = [{
             title: '返回',

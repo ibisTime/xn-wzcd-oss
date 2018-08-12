@@ -48,12 +48,6 @@ class TakeAddedit extends React.Component {
           }, {
             title: '贷款银行',
             field: 'loanBankName'
-          }, {
-            title: '征信结果',
-            field: '33'
-          }, {
-            title: '预算单',
-            field: '44'
           }];
         return this.props.buildDetail({
             fields,

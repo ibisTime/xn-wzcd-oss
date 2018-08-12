@@ -55,7 +55,10 @@ class importAddedit extends React.Component {
         type: 'date'
     }, {
         title: '对应业务',
-        field: 'repayBizCode'
+        field: 'repayBizCode',
+        formatter: (v, d) => {
+            return d.repayBiz.code + '-' + d.repayBiz.realName;
+        }
     }, {
         title: '状态',
         field: 'status',

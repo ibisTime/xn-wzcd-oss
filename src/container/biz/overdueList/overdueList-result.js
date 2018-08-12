@@ -39,14 +39,14 @@ class OverdueListResult extends React.Component {
             title: '客户姓名',
             field: 'realName',
             formatter: (v, d) => {
-                return d.repayBiz.budgetOrder.code;
+                return d.repayBiz.budgetOrder.customerName;
             },
             readonly: true
         }, {
             title: '业务编号',
             field: 'code',
             formatter: (v, d) => {
-                return d.budgetOrder.code;
+                return d.repayBiz.budgetOrder.code;
             },
             readonly: true
         }, {

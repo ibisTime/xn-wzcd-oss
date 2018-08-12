@@ -14,9 +14,9 @@ import {
 } from 'common/js/build-list';
 import {
     showWarnMsg,
-    showSucMsg,
-    dateTimeFormat,
-    getRoleCode
+    formatDate,
+    getRoleCode,
+    moneyFormat
 } from 'common/js/util';
 import {
     Button,
@@ -54,15 +54,7 @@ class Settlement extends React.Component {
             search: true
         }, {
             title: '银行',
-            field: 'loanBankCode',
-            render: (v, d) => {
-                return d.budgetOrder.loanBankCode;
-            },
-            type: 'select',
-            listCode: 632057,
-            keyName: 'code',
-            valueName: 'abbrName',
-            search: true
+            field: 'loanBankName'
         }, {
             title: '客户姓名',
             field: 'realName',
@@ -79,7 +71,8 @@ class Settlement extends React.Component {
             type: 'date'
         }, {
             title: '贷款金额',
-            field: 'loanAmount'
+            field: 'loanAmount',
+            amount: true
         }, {
             title: '剩余欠款',
             field: 'restAmount',
@@ -87,7 +80,9 @@ class Settlement extends React.Component {
         }, {
             title: '逾期日期',
             field: 'repayDatetime',
-            type: 'date'
+            render: (v, d) => {
+                return formatDate(d.curMonthRepayPlan.repayDatetime);
+            }
         }, {
             title: '月还款额',
             field: 'monthAmount',
@@ -95,7 +90,9 @@ class Settlement extends React.Component {
         }, {
             title: '逾期金额',
             field: 'overdueAmount',
-            amount: true
+            render: (v, d) => {
+                return moneyFormat(d.curMonthRepayPlan.overdueAmount);
+            }
         }, {
             title: '实际逾期期数',
             field: 'curOverdueCount'

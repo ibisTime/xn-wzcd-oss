@@ -9,10 +9,8 @@ import {
 } from '@redux/postloantools/applyGps-person';
 import {
   getQueryString,
-  getCompanyCode,
   getUserId,
-  showSucMsg,
-  showWarnMsg
+  showSucMsg
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {

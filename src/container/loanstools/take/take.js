@@ -78,6 +78,11 @@ class take extends React.Component {
             render: dateFormat,
             search: true
         }, {
+            title: '类型',
+            field: 'BackAdvanceFundType',
+            type: 'select',
+            key: 'back_advance_fund_type'
+        }, {
             title: '当前节点',
             field: 'backAdvanceFundNodeCode',
             type: 'select',

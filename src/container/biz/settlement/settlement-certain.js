@@ -91,7 +91,7 @@ class settlementCertain extends React.Component {
             title: '退款开户行',
             field: 'refundBankSubbranch',
             type: 'select',
-            listCode: 632037,
+            listCode: 802116,
             keyName: 'bankCode',
             valueName: 'bankName',
             readonly: true

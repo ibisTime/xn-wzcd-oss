@@ -64,7 +64,7 @@ class mortgages extends React.Component {
         }, {
             title: '解除日期',
             field: 'releaseDatetime',
-            type: 'datetime'
+            type: 'date'
         }, {
             title: '业务员',
             field: 'updaterName'
@@ -75,7 +75,7 @@ class mortgages extends React.Component {
             key: 'template_id'
         }, {
             title: '申请日期',
-            field: 'applyDatetime',
+            field: 'releaseApplyDatetime',
             type: 'date'
         }, {
             title: '当前节点',

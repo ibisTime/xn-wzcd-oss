@@ -47,6 +47,8 @@ class TakeEnter extends React.Component {
       onChange: (v) => {
         if(v === '1') {
           this.isZfReason = false;
+        } else {
+          this.isZfReason = true;
         }
       },
       required: true

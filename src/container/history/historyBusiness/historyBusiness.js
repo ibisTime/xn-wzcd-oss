@@ -14,7 +14,8 @@ import {
 } from 'common/js/build-list';
 import {
     showWarnMsg,
-    showSucMsg
+    showSucMsg,
+    formatDate
 } from 'common/js/util';
 import {
     Button,
@@ -46,15 +47,10 @@ class HistoryBusiness extends React.Component {
             search: true
         }, {
             title: '业务公司',
-            field: 'companyCode',
-            listCode: 630106,
-            params: {
-                typeList: [1]
-            },
-            type: 'select',
-            keyName: 'code',
-            valueName: 'name',
-            search: true
+            field: 'companyName',
+            render: (v, d) => {
+                return d.budgetOrder.companyName;
+            }
         }, {
             title: '客户姓名',
             field: 'realName',
@@ -89,7 +85,9 @@ class HistoryBusiness extends React.Component {
         }, {
             title: '放款日期',
             field: 'fkDatetime',
-            type: 'date'
+            render: (v, d) => {
+                return formatDate(d.budgetOrder.bankFkDatetime);
+            }
         }, {
             title: '当前节点',
             field: 'curNodeCode',
@@ -103,7 +101,7 @@ class HistoryBusiness extends React.Component {
             fields,
             pageCode: 630520,
             searchParams: {
-                curNodeCodeList: ['021_20', '021_19', '005_02', '005_04']
+                curNodeCodeList: ['020_13']
             }
         });
     }

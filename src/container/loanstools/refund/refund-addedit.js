@@ -58,12 +58,12 @@ class RefundAddedit extends React.Component {
             }
         }, {
             title: '履约保证金',
-            field: 'lyAmountFee',
+            field: 'lyAmount',
             amount: true,
             readonly: true
         }, {
             title: '担保风险金',
-            field: 'assureFee',
+            field: 'fxAmount',
             amount: true,
             readonly: true
         }, {
@@ -84,40 +84,18 @@ class RefundAddedit extends React.Component {
             readonly: true
         }, {
             title: '手续费收取方式',
-            field: 'feeWay',
+            field: 'serviceChargeWay',
             type: 'select',
             key: 'fee_way',
             readonly: true
         }, {
             title: '厂家贴息',
-            field: 'cardealerSubsidy',
+            field: 'carDealerSubsidy',
             amount: true,
             readonly: true
         }, {
             title: '应退按揭款',
-            field: 'receiptAccount',
-            readonly: true,
-            formatter: (v, data) => {
-                let loanAmount = data.loanAmount;
-                let cardealerSubsidy = data.cardealerSubsidy;
-                let otherFee = data.otherFee;
-                let gpsFee = data.gpsFee;
-                let refund = 0;
-
-                if (data.gpsFeeWay !== '2') {
-                    gpsFee = 0;
-                }
-                if (data.feeWay !== '2') {
-                    otherFee = 0;
-                }
-
-                refund = moneyFormat(loanAmount - cardealerSubsidy - gpsFee - otherFee);
-
-                return refund;
-            }
-        }, {
-            title: '手续费到账清单',
-            field: 'receiptAccount',
+            field: 'shouldBackAmount',
             amount: true,
             readonly: true
         }, {
