@@ -154,33 +154,31 @@ export default class ListComponent extends React.Component {
       if (!data.list.length) {
         this.props.cancelFetching();
         showWarnMsg('暂无数据');
-        return;
       } else {
         let operator = getUserId();
         fetch(632090, {
           url,
           operator
         }).then(info => {
-          console.log(info);
+          let titles = [];
+          let bodys = [];
+          data.list.forEach((d, i) => {
+            let temp = [];
+            this.options.fields.forEach(f => {
+              if (i === 0) {
+                titles.push(f.title);
+              }
+              temp.push(f.render(d[f.field], d));
+            });
+            bodys.push(temp);
+          });
+          let result = [titles].concat(bodys);
+          const wb = getWorkbook();
+          wb.getSheet(result, 'SheetJS');
+          wb.downloadXls(info);
+          this.props.cancelFetching();
         });
       }
-      let titles = [];
-      let bodys = [];
-      data.list.forEach((d, i) => {
-        let temp = [];
-        this.options.fields.forEach(f => {
-          if (i === 0) {
-            titles.push(f.title);
-          }
-          temp.push(f.render(d[f.field], d));
-        });
-        bodys.push(temp);
-      });
-      let result = [titles].concat(bodys);
-      const wb = getWorkbook();
-      wb.getSheet(result, 'SheetJS');
-      wb.downloadXls('表格导出');
-      this.props.cancelFetching();
     }).catch(this.props.cancelFetching);
   }
   onSelectChange = (selectedRowKeys, selectedRows) => {
