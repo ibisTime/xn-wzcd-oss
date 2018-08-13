@@ -79,7 +79,7 @@ class blackList extends React.Component {
       fields,
       searchParams: {
         roleCode: getRoleCode(),
-        codeList: ['021_10', '021_11', '021_12', '021_13', '021_14', '021_15', '021_16', '021_17']
+        codeList: ['021_09', '021_10', '021_11', '021_12', '021_13', '021_14', '021_15', '021_16', '021_17', '021_18', '021_19', '021_20']
       },
       pageCode: 630520
     });

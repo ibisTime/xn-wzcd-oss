@@ -66,12 +66,7 @@ class invoice extends React.Component {
             }
         }, {
             title: '发保合预警天数',
-            field: 'fbhWarnDay',
-            render: (v, d) => {
-                if(d.advanceFund) {
-                    return formatDate(d.advanceFund.fbhWarnDay);
-                }
-            }
+            field: 'fbhWarnDay'
         }, {
             title: '车辆发票价',
             field: 'invoicePrice',
@@ -109,7 +104,7 @@ class invoice extends React.Component {
             fields,
             pageCode: 632145,
             searchParams: {
-                roleCode: getRoleCode()
+                fbhPage: 1
             },
             btnEvent: {
                 entering: (selectedRowKeys, selectedRows) => {

@@ -508,17 +508,17 @@ class BudgetAddedit extends React.Component {
                                 rateType: v,
                                 carDealerSubsidy: 0
                             });
-                        }
-                        if(v === '2') {
-                            this.isRateType = false;
-                        } else {
                             this.isRateType = true;
+                        } else {
+                            if(this.isBankType) {
+                                this.isRateType = false;
+                            }
                         }
-                    },
-                    formatter: (v, data) => {
-                        this.rateType = data.rateType;
-                        return v;
                     }
+                    // formatter: (v, data) => {
+                    //     this.rateType = data.rateType;
+                    //     return v;
+                    // }
                 }, {
                     title: '手续费收取方式',
                     field: 'bocFeeWay',

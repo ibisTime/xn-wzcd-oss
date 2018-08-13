@@ -74,7 +74,7 @@ class registerAddedit extends React.Component {
             }, {
                 title: '身份证号码',
                 field: 'idNo',
-                number: true,
+                idNo: true,
                 idCard: true
             }, {
                 title: '联系电话',

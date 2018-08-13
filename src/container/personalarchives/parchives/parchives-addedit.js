@@ -46,6 +46,7 @@ class parchivesAddedit extends React.Component {
             }, {
                 title: '手机号码',
                 field: 'mobile',
+                mobile: true,
                 required: true
             }], [{
                 title: '工号',
@@ -220,6 +221,7 @@ class parchivesAddedit extends React.Component {
             }], [{
                 title: '社会关系',
                 field: 'socialRelationList',
+                required: true,
                 type: 'o2m',
                 options: {
                     add: true,

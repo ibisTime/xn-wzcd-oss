@@ -113,7 +113,8 @@ class applyAddedit extends React.Component {
                 title: '性别',
                 field: 'gender',
                 type: 'select',
-                key: 'gender'
+                key: 'gender',
+                required: true
             }, {
                 title: '年龄',
                 field: 'age'
