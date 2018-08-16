@@ -30,7 +30,8 @@ class CarShape extends React.Component {
     super(props);
     this.state = {
       shelfVisible: false,
-      selectKey: ''
+      selectKey: '',
+      locationList: ['首页推荐', '普通']
     };
   }
   setShelfVisible = (shelfVisible) => {
@@ -71,17 +72,9 @@ class CarShape extends React.Component {
     }, {
       title: 'UI位置',
       field: 'location',
-      search: true,
-      type: 'select',
-      data: [{
-        key: 0,
-        value: '首页推荐'
-      }, {
-        key: 1,
-        value: '普通'
-      }],
-      keyName: 'key',
-      valueName: 'value'
+      render: (v, d) => {
+        return this.state.locationList[v];
+      }
     }, {
       title: 'UI次序',
       field: 'orderNo',

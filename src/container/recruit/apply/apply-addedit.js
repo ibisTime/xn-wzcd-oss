@@ -142,6 +142,14 @@ class applyAddedit extends React.Component {
                 field: 'experience'
             }]
         ]
+    }, {
+        title: '审核意见',
+        items: [
+            [{
+                title: '备注',
+                field: 'remark'
+            }]
+        ]
     }];
     return this
       .props

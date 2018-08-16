@@ -61,7 +61,7 @@ class formal extends React.Component {
             field: 'departmentCode',
             type: 'select',
             render: (v, d) => {
-                return d.user.departmentCode;
+                return d.user.departmentName;
             },
             listCode: 630106,
             params: {
@@ -83,7 +83,7 @@ class formal extends React.Component {
             field: 'postCode',
             required: true,
             render: (v, d) => {
-                return d.user.postCode;
+                return d.user.postName;
             },
             type: 'select',
             listCode: 630106,
@@ -117,12 +117,7 @@ class formal extends React.Component {
             type: 'date'
         }, {
             title: '总分数',
-            field: 'requireDatetime',
-            render: (v, d) => {
-                if(d.probationAssessesList[0]) {
-                    return d.probationAssessesList[0].grade;
-                }
-            }
+            field: 'totalGrade'
         }, {
             title: '状态',
             field: 'status',

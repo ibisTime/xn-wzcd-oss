@@ -110,6 +110,9 @@ class formalCheck extends React.Component {
             [{
                 title: '入职时间',
                 field: 'entryDatetime',
+                formatter: (v, d) => {
+                    return formatDate(d.entryApply.entryDatetime);
+                },
                 type: 'date',
                 readonly: true
             }, {

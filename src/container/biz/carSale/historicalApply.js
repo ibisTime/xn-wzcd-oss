@@ -56,7 +56,25 @@ class HistoricalApply extends React.Component {
       valueName: 'realName',
       search: true,
       render: (v, data) => {
-          return data.user ? data.user.realName : '-';
+          return data.user ? data.user.loginName : '-';
+      }
+    }, {
+      title: '品牌',
+      field: 'brandName',
+      render: (v, d) => {
+        return d.car.brandName;
+      }
+    }, {
+      title: '车系',
+      field: 'seriesName',
+      render: (v, d) => {
+        return d.car.seriesName;
+      }
+    }, {
+      title: '车型',
+      field: 'name',
+      render: (v, d) => {
+        return d.car.name;
       }
     }, {
       title: '车辆总价',
@@ -89,10 +107,7 @@ class HistoricalApply extends React.Component {
     }];
     return this.props.buildList({
       fields,
-      pageCode: 630435,
-      searchParams: {
-        status: '1'
-      }
+      pageCode: 630435
     });
   }
 }

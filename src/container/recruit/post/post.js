@@ -66,7 +66,7 @@ class post extends React.Component {
             listCode: 630106,
             render: (v, d) => {
                 if(d && d.user) {
-                    return d.user.departmentCode;
+                    return d.user.departmentName;
                 }
             },
             params: {
@@ -81,7 +81,7 @@ class post extends React.Component {
             required: true,
             render: (v, d) => {
                 if(d && d.user) {
-                    return d.user.postCode;
+                    return d.user.postName;
                 }
             },
             listCode: 630106,
@@ -92,10 +92,10 @@ class post extends React.Component {
             valueName: 'name'
         }, {
             title: '新岗位',
-            field: 'newPosition'
+            field: 'newPositionName'
         }, {
             title: '新部门',
-            field: 'newDepartment'
+            field: 'newDepartmentName'
         }, {
             title: '申请日期',
             field: 'applyDatetime',

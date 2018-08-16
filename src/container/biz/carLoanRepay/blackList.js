@@ -36,7 +36,7 @@ import {
   setSearchParam,
   setSearchData
 })
-class blackList extends React.Component {
+class BlackList extends React.Component {
   render() {
     const fields = [{
       title: '业务编号',
@@ -79,11 +79,11 @@ class blackList extends React.Component {
       fields,
       searchParams: {
         roleCode: getRoleCode(),
-        codeList: ['021_09', '021_10', '021_11', '021_12', '021_13', '021_14', '021_15', '021_16', '021_17', '021_18', '021_19', '021_20']
+        curNodeCodeList: ['021_09', '021_10', '021_11', '021_12', '021_13', '021_14', '021_15', '021_16', '021_17', '021_18', '021_19', '021_20']
       },
       pageCode: 630520
     });
   }
 }
 
-export default blackList;
+export default BlackList;

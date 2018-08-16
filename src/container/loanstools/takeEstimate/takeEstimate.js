@@ -11,7 +11,7 @@ import {
 } from '@redux/loanstools/takeEstimate';
 import {
   showWarnMsg,
-  showSucMsg,
+  moneyFormat,
   getRoleCode
 } from 'common/js/util';
 import { listWrapper } from 'common/js/build-list';
@@ -40,12 +40,12 @@ class TakeEstimate extends React.Component {
       field: 'companyName',
       search: true
     }, {
-      title: '预算金额',
-      field: 'budgetAmount',
+      title: '打款金额',
+      field: 'payAmount',
       amount: true
     }, {
       title: '垫资总额',
-      field: 'payAmount',
+      field: 'dzAmount',
       amount: true
     }, {
       title: '垫资日期',
@@ -56,7 +56,7 @@ class TakeEstimate extends React.Component {
       title: '应收金额',
       field: 'receiptAccount',
       render: (v, d) => {
-        return (d.budgetAmount - d.payAmount) / 1000;
+        return moneyFormat(d.payAmount - d.dzAmount);
       }
     }, {
       title: '实收金额',
@@ -82,7 +82,7 @@ class TakeEstimate extends React.Component {
       pageCode: 632108,
       searchParams: {
         roleCode: getRoleCode(),
-        curNodeCodeList: ['005_06']
+        curNodeCodeList: ['005_04', '005_05']
       },
       btnEvent: {
         check: (selectedRowKeys, selectedRows) => {

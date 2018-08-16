@@ -42,13 +42,13 @@ class TakeEstimateCertain extends React.Component {
             field: 'companyName',
             readonly: true
         }, {
-            title: '预算金额',
-            field: 'budgetAmount',
+            title: '打款金额',
+            field: 'payAmount',
             amount: true,
             readonly: true
         }, {
             title: '垫资总额',
-            field: 'payAmount',
+            field: 'dzAmount',
             amount: true,
             readonly: true
         }, {
@@ -60,7 +60,7 @@ class TakeEstimateCertain extends React.Component {
             title: '应收金额',
             field: 'receiptAccount',
             formatter: (v, d) => {
-                return moneyReplaceComma(moneyFormat(d.budgetAmount)) - moneyReplaceComma(moneyFormat(d.payAmount));
+                return moneyReplaceComma(moneyFormat(d.payAmount)) - moneyReplaceComma(moneyFormat(d.dzAmount));
             },
             readonly: true
         }, {

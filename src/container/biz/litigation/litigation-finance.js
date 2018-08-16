@@ -108,6 +108,7 @@ class LitigationFinance extends React.Component {
                 return d.judge.casePdf;
             },
             type: 'file',
+            accept: 'application/pdf,application/vnd.ms-excel,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             readonly: true
         }, {
             title: '流程日志',

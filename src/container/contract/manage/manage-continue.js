@@ -65,7 +65,7 @@ class manageContinue extends React.Component {
     }, {
         title: '合同附件',
         field: 'pdf',
-        type: 'img'
+        type: 'file'
     }, {
         title: '说明',
         field: 'remark'
