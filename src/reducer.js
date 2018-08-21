@@ -386,6 +386,9 @@ import { postloantoolsApplyGpsPersonCheck } from './redux/postloantools/applyGps
 import { postloantoolsManageGps } from './redux/postloantools/manageGps';
 import { postloantoolsManageGpsAddedit } from './redux/postloantools/manageGps-addedit';
 
+//   gps个人申领上限
+import { postloantoolsManageGpsUpperLimit } from './redux/postloantools/manageGps-UpperLimit';
+
 //  Gps退回 + 详情
 import { postloantoolsRegressesGps } from './redux/postloantools/regressesGps';
 import { postloantoolsRegressesGpsApply } from './redux/postloantools/regressesGps-apply';
@@ -414,10 +417,12 @@ import { analysisProtect } from './redux/analysis/protect';
 import { analysisReplaceRepay } from './redux/analysis/replaceRepay';
 import { analysisOverdueCollection } from './redux/analysis/overdueCollection';
 import { analysisRiskCustomers } from './redux/analysis/riskCustomers';
-import { analysisSchedule } from './redux/analysis/schedule';
-import { analysisTablehistory } from './redux/analysis/tablehistory';
 import { analysisCarLoanInstallment } from './redux/analysis/carLoanInstallment';
 import { analysisAdvance } from './redux/analysis/advance';
+// 查询分析
+import { analysisSchedule } from './redux/analysis/schedule';
+import { analysisAdvMoney } from './redux/analysis/advMoney';
+import { analysisTablehistory } from './redux/analysis/tablehistory';
 
 /**
  * 人事
@@ -549,6 +554,10 @@ import { administrativeFixedAssetsAddedit } from './redux/administrative/fixedAs
 // 领导请示申请
 import { administrativeLeader } from './redux/administrative/leader';
 import { administrativeLeaderAddedit } from './redux/administrative/leader-addedit';
+
+// 费用预支申请
+import { administrativeGpsSupplier } from './redux/administrative/gpsSupplier';
+import { administrativeGpsSupplierAddedit } from './redux/administrative/gpsSupplier-addedit';
 
 // 合同打印
 // 担保合同
@@ -800,6 +809,7 @@ export default combineReducers({
   postloantoolsApplyGpsPersonCheck,
   postloantoolsManageGps,
   postloantoolsManageGpsAddedit,
+  postloantoolsManageGpsUpperLimit,
   postloantoolsInstallGps,
   postloantoolsInstallGpsAddEdit,
   postloantoolsInstallGpsEnter,
@@ -820,6 +830,7 @@ export default combineReducers({
   analysisOverdueCollection,
   analysisRiskCustomers,
   analysisSchedule,
+  analysisAdvMoney,
   analysisTablehistory,
   analysisCarLoanInstallment,
   analysisAdvance,
@@ -910,6 +921,8 @@ export default combineReducers({
   administrativeFixedAssetsAddedit,
   administrativeLeader,
   administrativeLeaderAddedit,
+  administrativeGpsSupplier,
+  administrativeGpsSupplierAddedit,
   bizYellowList,
   bizYellowListAddEdit,
   bizYellowListPayCost,

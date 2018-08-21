@@ -791,7 +791,7 @@ const ROUTES = [
   //  余额明细
   {
     path: '/statistics/balance',
-    component: asyncComponent(() => import('container/analysis/statistics/balancedetail'))
+    component: asyncComponent(() => import('container/analysis/statistics/balancedetail/balancedetail'))
   },
   //  在保余额
   {
@@ -827,6 +827,11 @@ const ROUTES = [
   {
     path: '/statisticQuery/schedule',
     component: asyncComponent(() => import('container/analysis/statisticQuery/schedule/schedule'))
+  },
+  //  查询分析-进度表
+  {
+      path: '/statisticQuery/advMoney',
+      component: asyncComponent(() => import('container/analysis/statisticQuery/advMoney/advMoney'))
   },
   //  查询分析-导出表格历史
   {
@@ -2013,6 +2018,23 @@ const ROUTES = [
       path: '/administrative/manageGps/addedit',
       component: asyncComponent(() => import('container/postloantools/manageGps/manageGps-addedit'))
   },
+  //  gps个人申领上限
+  {
+      path: '/administrative/manageGpsUpperLimit',
+      component: asyncComponent(() => import('container/postloantools/manageGps/manageGps-UpperLimit'))
+  },
+
+  //  gps供应商管理
+  {
+      path: '/administrative/gpsSupplier',
+      component: asyncComponent(() => import('container/administrative/gpsSupplier/gpsSupplier'))
+  },
+  //  gps供应商管理 详情
+  {
+      path: '/administrative/gpsSupplier/addedit',
+      component: asyncComponent(() => import('container/administrative/gpsSupplier/gpsSupplier-addedit'))
+  },
+
   //  财务管理
   //  返点支付
   {

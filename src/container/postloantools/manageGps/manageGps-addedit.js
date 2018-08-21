@@ -28,6 +28,15 @@ class manageGpsAddedit extends React.Component {
   }
   render() {
     const fields = [{
+        title: '供应商',
+        field: 'supplierCode',
+        type: 'select',
+        listCode: 632787,
+        keyName: 'code',
+        valueName: 'name',
+        searchName: 'name',
+        required: true
+    }, {
       title: 'GPS设备号',
       field: 'gpsDevNo',
       required: true
