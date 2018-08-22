@@ -89,11 +89,7 @@ class AdvMoney extends React.Component {
             amount: true
         }, {
             title: '应退按揭合计',
-            field: 'loanBalance',
-            amount: true
-        }, {
-            title: '代偿金额',
-            field: 'loanBalance2',
+            field: 'shouldBackAmount',
             amount: true
         }, {
             title: '利率类型',
@@ -126,7 +122,7 @@ class AdvMoney extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632910
+            pageCode: 630911
         });
     }
 }

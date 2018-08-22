@@ -1,6 +1,6 @@
 import { gettotalAcount } from 'api/account';
 
-const PREFIX = 'ANALYSIS_PROTECT_';
+const PREFIX = 'ANALYSIS_INSURANCEAMOUNT_';
 const SET_UNSEETTLEDLOAN = PREFIX + 'SET_UNSEETTLEDLOAN';
 const LOADING = PREFIX + 'LOADING';
 const CANCEL_LOADING = PREFIX + 'CANCEL_LOADING';
@@ -10,7 +10,7 @@ const initState = {
   fetching: true
 };
 
-export function analysisProtect(state = initState, action) {
+export function analysisInsuranceAmount(state = initState, action) {
   switch(action.type) {
     case SET_UNSEETTLEDLOAN:
       return {...state, unsettledLoan: action.payload};

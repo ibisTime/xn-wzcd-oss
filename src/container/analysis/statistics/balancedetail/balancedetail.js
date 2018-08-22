@@ -24,7 +24,7 @@ import {
 
 @listWrapper(
     state => ({
-        ...state.bizBalancedetail,
+        ...state.analysisBalancedetail,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,

@@ -250,6 +250,12 @@ const ROUTES = [
     path: '/finance/rebate',
     component: asyncComponent(() => import('container/finance/rebate/rebate'))
   },
+
+  //  预打款统计
+  {
+      path: '/finance/prepayment',
+      component: asyncComponent(() => import('container/finance/prepayment/prepayment'))
+  },
   //  车辆贷后管理
   //  车贷业务管理
   {
@@ -782,7 +788,20 @@ const ROUTES = [
       path: '/basis/carloan/addedit',
       component: asyncComponent(() => import('container/basis/carloan/carloan-addedit'))
   },
-    //  统计分析模块
+
+  // 奖金提成配置
+  {
+      path: '/basis/bonusesConfigure',
+      component: asyncComponent(() => import('container/basis/bonusesConfigure/bonusesConfigure'))
+  },
+
+  // 奖金提成配置 新增修改
+  {
+      path: '/basis/bonusesConfigure/addedit',
+      component: asyncComponent(() => import('container/basis/bonusesConfigure/bonusesConfigure-addedit'))
+  },
+
+  //  统计分析模块
   //  车贷分期业务统计表
   {
     path: '/statistics/carLoanInstallment',
@@ -795,13 +814,13 @@ const ROUTES = [
   },
   //  在保余额
   {
-    path: '/statistics/protect',
-    component: asyncComponent(() => import('container/analysis/statistics/protect'))
+    path: '/statistics/insuranceAmount',
+    component: asyncComponent(() => import('container/analysis/statistics/insuranceAmount/insuranceAmount'))
   },
   //  在保余额
   {
-    path: '/statistics/protect/addedit',
-    component: asyncComponent(() => import('container/analysis/statistics/protect-addedit'))
+    path: '/statistics/insuranceAmount/addedit',
+    component: asyncComponent(() => import('container/analysis/statistics/insuranceAmount/insuranceAmount-addedit'))
   },
   //  代偿明细表
   {
@@ -822,6 +841,12 @@ const ROUTES = [
   {
     path: '/statistics/riskCustomers',
     component: asyncComponent(() => import('container/analysis/statistics/riskCustomers/riskCustomers'))
+  },
+
+  //  奖金提成
+  {
+      path: '/statistics/bonuses',
+      component: asyncComponent(() => import('container/analysis/statistics/bonuses/bonuses'))
   },
   //  查询分析-进度表
   {

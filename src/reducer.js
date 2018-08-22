@@ -55,6 +55,8 @@ import { creditAddEdit } from '@redux/demo/credit-addedit';
 // 银行返点菜单
 import { financeRebate } from '@redux/finance/rebate';
 import { financeRebateAddEdit } from '@redux/finance/rebate-addedit';
+// 预打款统计
+import { financePrepayment } from '@redux/finance/prepayment';
 
 //  返点支付
 import { carloanfinancePointreturn } from './redux/carloanfinance/pointreturn';
@@ -218,6 +220,10 @@ import { basisOilpercentageAddedit } from './redux/basis/oilpercentage-addedit';
 //  车贷期数管理 + 修改
 import { basisCarloan } from './redux/basis/carloan';
 import { basisCarloanAddEdit } from './redux/basis/carloan-addedit';
+
+//  奖金提成配置 + 新增 + 修改 + 删除
+import { basisBonusesConfigure } from './redux/basis/bonusesConfigure';
+import { basisBonusesConfigureAddedit } from './redux/basis/bonusesConfigure-addedit';
 
 /**
  * 贷前管理
@@ -412,13 +418,15 @@ import { postloantoolsInsuranceContinue } from './redux/postloantools/insurance-
 /**
  * 统计分析
  */
-import { bizBalancedetail } from './redux/analysis/balancedetail';
-import { analysisProtect } from './redux/analysis/protect';
+import { analysisBalancedetail } from './redux/analysis/balancedetail';
+import { analysisInsuranceAmount } from './redux/analysis/insuranceAmount';
+import { analysisInsuranceAmountAddedit } from './redux/analysis/insuranceAmount-addedit';
 import { analysisReplaceRepay } from './redux/analysis/replaceRepay';
 import { analysisOverdueCollection } from './redux/analysis/overdueCollection';
 import { analysisRiskCustomers } from './redux/analysis/riskCustomers';
 import { analysisCarLoanInstallment } from './redux/analysis/carLoanInstallment';
 import { analysisAdvance } from './redux/analysis/advance';
+import { analysisBonuses } from './redux/analysis/bonuses';
 // 查询分析
 import { analysisSchedule } from './redux/analysis/schedule';
 import { analysisAdvMoney } from './redux/analysis/advMoney';
@@ -824,8 +832,10 @@ export default combineReducers({
   bizLitigationCourt,
   bizLitigationCashier,
   bizLitigationAccept,
-  bizBalancedetail,
-  analysisProtect,
+  analysisBalancedetail,
+  analysisBonuses,
+  analysisInsuranceAmount,
+  analysisInsuranceAmountAddedit,
   analysisReplaceRepay,
   analysisOverdueCollection,
   analysisRiskCustomers,
@@ -1003,6 +1013,8 @@ export default combineReducers({
   basisOilpercentageAddedit,
   basisCarloan,
   basisCarloanAddEdit,
+  basisBonusesConfigure,
+  basisBonusesConfigureAddedit,
   bizWhiteList,
   bizWhiteListAddEdit,
   riskBlackList,
@@ -1035,6 +1047,7 @@ export default combineReducers({
   dataReceiveGpsCollectCheck,
   financeRebate,
   financeRebateAddEdit,
+  financePrepayment,
   postloantoolsRegressesGps,
   postloantoolsRegressesGpsApply,
   erweimaErweima

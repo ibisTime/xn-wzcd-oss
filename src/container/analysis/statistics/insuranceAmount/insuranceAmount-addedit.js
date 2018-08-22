@@ -8,7 +8,7 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/biz/repayments/repayments';
+} from '@redux/analysis/insuranceAmount-addedit';
 import {
     listWrapper
 } from 'common/js/build-list';
@@ -31,11 +31,10 @@ import {
     lowerFrame,
     onShelf
 } from 'api/biz';
-import fetch from 'common/js/fetch';
 
 @listWrapper(
     state => ({
-        ...state.repayments,
+        ...state.analysisInsuranceAmountAddedit,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -48,56 +47,22 @@ import fetch from 'common/js/fetch';
         setSearchData
     }
 )
-class Repayments extends React.Component {
-    constructor(props) {
-        super(props);
-        // 统计分析-在保余额-详情
-        this.isStatistics = !!getQueryString('isStatistics', this.props.location.search);
-        this.buttons = [];
-
-        if (this.isStatistics) {
-            this.buttons = [{
-                code: 'plan',
-                name: '还款计划',
-                handler: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push(`/biz/repayments/plan?code=${selectedRowKeys[0]}`);
-                    }
-                }
-            }, {
-                code: 'detail',
-                name: '详情',
-                handler: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push(`/biz/repayments-addedit?code=${selectedRowKeys[0]}`);
-                    }
-                }
-            }];
-        }
-    }
+class InsuranceAmountAddedit extends React.Component {
     render() {
         const fields = [{
-            title: '业务编号',
-            field: 'code',
-            render: (v, d) => {
-                return d.budgetOrder.code;
-            },
-            search: true
-        }, {
             title: '银行',
             field: 'loanBank',
             type: 'select',
             listCode: 632057,
             keyName: 'code',
             valueName: 'fullName',
+            search: true
+        }, {
+            title: '业务编号',
+            field: 'code',
+            render: (v, d) => {
+                return d.budgetOrder.code;
+            },
             search: true
         }, {
             title: '客户姓名',
@@ -173,29 +138,33 @@ class Repayments extends React.Component {
             searchParams: {
                 roleCode: getRoleCode()
             },
-            buttons: this.buttons,
-            btnEvent: {
-              plan: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/biz/repayments/plan?code=${selectedRowKeys[0]}`);
+            buttons: [{
+                code: 'plan',
+                name: '还款计划',
+                handler: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/biz/repayments/plan?code=${selectedRowKeys[0]}`);
+                    }
                 }
-              },
-              pay: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/biz/repayments/pay?code=${selectedRowKeys[0]}`);
+            }, {
+                code: 'detail',
+                name: '详情',
+                handler: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/biz/repayments-addedit?code=${selectedRowKeys[0]}`);
+                    }
                 }
-              }
-            }
+            }]
         });
     }
 }
 
-export default Repayments;
+export default InsuranceAmountAddedit;
