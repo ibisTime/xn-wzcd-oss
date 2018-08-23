@@ -49,40 +49,6 @@ import fetch from 'common/js/fetch';
     }
 )
 class Repayments extends React.Component {
-    constructor(props) {
-        super(props);
-        // 统计分析-在保余额-详情
-        this.isStatistics = !!getQueryString('isStatistics', this.props.location.search);
-        this.buttons = [];
-
-        if (this.isStatistics) {
-            this.buttons = [{
-                code: 'plan',
-                name: '还款计划',
-                handler: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push(`/biz/repayments/plan?code=${selectedRowKeys[0]}`);
-                    }
-                }
-            }, {
-                code: 'detail',
-                name: '详情',
-                handler: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push(`/biz/repayments-addedit?code=${selectedRowKeys[0]}`);
-                    }
-                }
-            }];
-        }
-    }
     render() {
         const fields = [{
             title: '业务编号',
@@ -173,7 +139,6 @@ class Repayments extends React.Component {
             searchParams: {
                 roleCode: getRoleCode()
             },
-            buttons: this.buttons,
             btnEvent: {
               plan: (selectedRowKeys, selectedRows) => {
                 if (!selectedRowKeys.length) {
