@@ -70,6 +70,7 @@ class Prepayment extends React.Component {
         }];
         return this.props.buildList({
             fields,
+            rowKey: 'companyCode',
             pageCode: 632178
         });
     }

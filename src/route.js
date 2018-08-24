@@ -256,6 +256,10 @@ const ROUTES = [
       path: '/finance/prepayment',
       component: asyncComponent(() => import('container/finance/prepayment/prepayment'))
   },
+  {
+      path: '/finance/prepayment-addedit',
+      component: asyncComponent(() => import('container/finance/prepayment/prepayment-addedit'))
+  },
   //  今日已垫资
   {
       path: '/finance/funded',

@@ -58,6 +58,7 @@ import { financeRebateAddEdit } from '@redux/finance/rebate-addedit';
 
 // 预打款统计
 import { financePrepayment } from '@redux/finance/prepayment';
+import { financePrepaymentAddEdit } from '@redux/finance/prepayment-addedit';
 
 // 今日已垫资
 import { financeFunded } from '@redux/finance/funded';
@@ -1055,6 +1056,7 @@ export default combineReducers({
   financeRebate,
   financeRebateAddEdit,
   financePrepayment,
+  financePrepaymentAddEdit,
   financeFunded,
   financeInvoice,
   postloantoolsRegressesGps,
