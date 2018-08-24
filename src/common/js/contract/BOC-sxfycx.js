@@ -68,7 +68,7 @@ class ExportImport extends React.Component {
     ws['A51'].s = {font: {color: {rgb: 'FF0000'}}};
     ws['B22'].s = {font: {color: {rgb: 'FF0000'}}};
     ws['B51'].s = {font: {color: {rgb: 'FF0000'}}};
-    ws['A49'].s = {fill: {bgColor: {rgb: '993366'}}};
+    ws['A49'].s = {fill: {fgColor: {rgb: '993366'}}};
   }
   // 征信1
   createZx1(wb) {

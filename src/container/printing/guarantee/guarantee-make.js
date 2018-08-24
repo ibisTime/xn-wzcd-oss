@@ -21,6 +21,9 @@ import {
 import {
   createHt
 } from 'common/js/contract/ICBC-dbht';
+import {
+  exportBOCZdzsxffq
+} from 'common/js/contract/BOC-zdzsxffq';
 
 @CollapseWrapper(
   state => state.printingGuaranteeMake, {
@@ -341,9 +344,15 @@ class GuaranteeMake extends React.Component {
           handler: (param) => {
             param.code = this.code;
             param.operator = getUserId();
+            let num = param.guarantPrintTemplateId;
             this.props.doFetching();
             fetch(632142, param).then((data) => {
-              createHt(data);
+              if(num === '1') {
+                createHt(data);
+              } else if(num === '2') {
+                console.log(11);
+                exportBOCZdzsxffq(data);
+              }
               this.props.cancelFetching();
               showSucMsg('操作成功');
               setTimeout(() => {

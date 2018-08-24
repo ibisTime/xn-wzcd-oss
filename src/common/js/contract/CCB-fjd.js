@@ -15,6 +15,7 @@ class ExportImport extends React.Component {
     const wb = getWorkbook();
     this.createData(wb, this.state.data);
     this.createZxfqsq(wb);
+    this.createZxfqsqBm(wb);
     this.createZxKfqbb(wb);
     this.createZxKfqbbPo(wb);
     this.createZxTybzx(wb);
@@ -24,6 +25,9 @@ class ExportImport extends React.Component {
     this.createGthkcnsDbr(wb);
     this.createZjht(wb);
     this.createDbfqfwxy(wb);
+    this.createZfpz(wb);
+    this.createSqwts(wb);
+    this.createSksj(wb);
     this.createSt1(wb);
     this.createSt2(wb);
     this.createSt3(wb);
@@ -35,7 +39,7 @@ class ExportImport extends React.Component {
     this.createDkqrs(wb);
     this.createKhzl(wb);
     // download
-    wb.downloadXls('建设银行-服务费');
+    wb.downloadXls('建设银行-附加贷');
   }
   // 数据
   createData(wb, data) {
@@ -177,7 +181,7 @@ class ExportImport extends React.Component {
       s: {c: 5, r: 26}
     }];
     ws['!cols'] = [
-      {wch: 11},
+      {wch: 10.25},
       {wch: 9.88},
       {wch: 9.63},
       {wch: 4.13},
@@ -230,23 +234,24 @@ class ExportImport extends React.Component {
     ws['B21'].f = '数据!B23';
     ws['B26'].f = '数据!B12';
     ws['B27'].f = '数据!B20';
-    ws['B30'].f = '数据!B10';
+    ws['B30'].f = '数据!B14';
     ws['B32'].f = '数据!B44';
     ws['B34'].f = '数据!B34';
     ws['C9'].f = '数据!B22';
     ws['C19'] = {v: 86508880, t: 's', w: '86508880'};
     ws['C23'].f = '数据!B24';
+    ws['D19'] = {v: '金晶晶', t: 's', w: '金晶晶'};
     ws['D30'] = {v: ' ', t: 's', w: ' '};
     ws['E10'] = {v: ' ', t: 's', w: ' '};
-    ws['E30'].f = '数据!B9';
+    ws['E30'].f = '数据!B45';
     ws['F10'].f = '数据!B3';
     ws['F26'].f = '数据!B35';
     ws['F27'].f = '数据!B25';
-    ws['F32'].f = '数据!B46';
+    ws['F32'] = {v: '0', t: 's', w: '0'};
     ws['F33'].f = '数据!B13';
     ws['G9'].f = '数据!B33';
     ws['G34'].f = '数据!B28';
-    ws['H19'] = {v: 86508880, t: 's', w: '86508880'};
+    ws['H19'] = {v: 86507770, t: 's', w: '86507770'};
     ws['I29'] = {v: ' ', t: 's', w: ' '};
 
     ws['A9'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
@@ -263,6 +268,7 @@ class ExportImport extends React.Component {
     ws['C9'].s = {font: {sz: 9}, alignment: {horizontal: 'left', vertical: 'center', wrapText: true}};
     ws['C19'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
     ws['C23'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['D19'].s = {font: {sz: 10, color: {rgb: '00CCFF'}}, alignment: {horizontal: 'center', vertical: 'center'}};
     ws['D30'].s = {font: {sz: 11}, alignment: {horizontal: 'left', vertical: 'center'}};
     ws['E10'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'top'}};
     ws['E30'].s = {font: {sz: 8}, alignment: {horizontal: 'right', vertical: 'center'}};
@@ -275,6 +281,132 @@ class ExportImport extends React.Component {
     ws['G34'].s = {font: {sz: 12}, alignment: {horizontal: 'center', vertical: 'center'}};
     ws['H19'].s = {font: {sz: 10}, alignment: {horizontal: 'center', vertical: 'center'}};
     ws['I29'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
+  }
+  // 最新分期申请（背面）
+  createZxfqsqBm(wb) {
+    var ws = this.getSheet(wb, 53, 8, '最新分期申请（背面）');
+    ws['!merges'] = [{
+      e: {c: 4, r: 8},
+      s: {c: 2, r: 8}
+    }, {
+      e: {c: 1, r: 9},
+      s: {c: 0, r: 9}
+    }, {
+      e: {c: 3, r: 9},
+      s: {c: 2, r: 9}
+    }, {
+      e: {c: 7, r: 9},
+      s: {c: 5, r: 9}
+    }, {
+      e: {c: 7, r: 10},
+      s: {c: 3, r: 10}
+    }, {
+      e: {c: 3, r: 16},
+      s: {c: 1, r: 16}
+    }, {
+      e: {c: 4, r: 18},
+      s: {c: 3, r: 18}
+    }, {
+      e: {c: 4, r: 20},
+      s: {c: 1, r: 20}
+    }, {
+      e: {c: 2, r: 25},
+      s: {c: 0, r: 25}
+    }, {
+      e: {c: 6, r: 25},
+      s: {c: 5, r: 25}
+    }, {
+      e: {c: 1, r: 26},
+      s: {c: 0, r: 26}
+    }, {
+      e: {c: 6, r: 26},
+      s: {c: 5, r: 26}
+    }, {
+      e: {c: 7, r: 52},
+      s: {c: 0, r: 51}
+    }, {
+      e: {c: 7, r: 33},
+      s: {c: 6, r: 33}
+    }, {
+      e: {c: 2, r: 29},
+      s: {c: 1, r: 29}
+    }, {
+      e: {c: 5, r: 29},
+      s: {c: 4, r: 29}
+    }, {
+      e: {c: 2, r: 31},
+      s: {c: 1, r: 31}
+    }, {
+      e: {c: 2, r: 33},
+      s: {c: 1, r: 33}
+    }];
+    ws['!cols'] = [
+      {wch: 10.5},
+      {wch: 9.88},
+      {wch: 9.63},
+      {wch: 4.13},
+      {wch: 9.63},
+      {wch: 8.88},
+      {wch: 11},
+      {wch: 11.75}
+    ];
+    ws['!rows'] = [
+      null,
+      null,
+      null,
+      {hpt: 4.5, hpx: 4.5},
+      {hpt: 35.25, hpx: 35.25},
+      {hidden: true},
+      {hidden: true},
+      {hpt: 7.5, hpx: 7.5},
+      {hpt: 26.25, hpx: 26.25},
+      {hpt: 18, hpx: 18},
+      {hpt: 16.5, hpx: 16.5},
+      null,
+      {hpt: 43.5, hpx: 43.5},
+      {hpt: 3.75, hpx: 3.75},
+      {hidden: true, hpt: 9, hpx: 9},
+      {hidden: true, hpt: 0.75, hpx: 0.75},
+      {hpt: 17.25, hpx: 17.25},
+      {hpt: 9.75, hpx: 9.75},
+      {hpt: 20.25, hpx: 20.25},
+      {hpt: 22.5, hpx: 22.5},
+      {hpt: 20.25, hpx: 20.25},
+      {hpt: 7.5, hpx: 7.5},
+      {hpt: 16.5, hpx: 16.5},
+      {hpt: 8.25, hpx: 8.25},
+      {hpt: 6, hpx: 6},
+      {hpt: 22.5, hpx: 22.5},
+      {hpt: 20.25, hpx: 20.25},
+      {hpt: 21, hpx: 21},
+      {hpt: 8.25, hpx: 8.25},
+      null,
+      {hpt: 6.75, hpx: 6.75},
+      {hpt: 15.75, hpx: 15.75},
+      {hpt: 15.75, hpx: 15.75},
+      {hpt: 18.75, hpx: 18.75},
+      null,
+      null,
+      null,
+      null,
+      null,
+      {hpt: 23.25, hpx: 23.25},
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      {hpt: 14.25, hpx: 14.25}
+    ];
+    ws['A52'].f = '"申请附加费分期"&数据!B46&"元"&","&"期数"&数据!B13&"期,客户费率同购车分期费率一致,本人同意建行将附加费金额纳入购车分期承担义务。"';
+
+    ws['A52'].s = {font: {sz: 9}, alignment: {horizontal: 'left', vertical: 'center', wrapText: true}};
   }
   // 资信-开发区版本
   createZxKfqbb(wb) {
@@ -311,11 +443,11 @@ class ExportImport extends React.Component {
       {hidden: true, hpt: 0.75, hpx: 0.75}
     ];
     ws['C23'] = {v: '                  ', t: 's', w: ' '};
-    ws['A35'] = {v: '身份证', t: 's', w: '身份证'};
+    ws['C35'] = {v: '身份证', t: 's', w: '身份证'};
     ws['D35'].f = '数据!B2';
 
     ws['C23'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
-    ws['A35'].s = {font: {sz: 11}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['C35'].s = {font: {sz: 11}, alignment: {horizontal: 'left', vertical: 'center'}};
     ws['D35'].s = {font: {sz: 11}, alignment: {horizontal: 'left', vertical: 'center'}};
   }
   // 资信-开发区版本（配偶）
@@ -352,10 +484,10 @@ class ExportImport extends React.Component {
       {hpt: 13.5, hpx: 13.5},
       {hidden: true, hpt: 0.75, hpx: 0.75}
     ];
-    ws['A35'] = {v: '身份证', t: 's', w: '身份证'};
+    ws['C35'] = {v: '身份证', t: 's', w: '身份证'};
     ws['D35'].f = '数据!B7';
 
-    ws['A35'].s = {font: {sz: 11}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['C35'].s = {font: {sz: 11}, alignment: {horizontal: 'left', vertical: 'center'}};
     ws['D35'].s = {font: {sz: 11}, alignment: {horizontal: 'left', vertical: 'center'}};
   }
   // 资信-通用版最新
@@ -368,8 +500,8 @@ class ExportImport extends React.Component {
       e: {c: 2, r: 9},
       s: {c: 0, r: 9}
     }, {
-      e: {c: 5, r: 34},
-      s: {c: 3, r: 34}
+      e: {c: 5, r: 37},
+      s: {c: 3, r: 37}
     }];
     ws['!cols'] = [
       {wch: 10.38},
@@ -418,7 +550,7 @@ class ExportImport extends React.Component {
       null,
       null,
       null,
-      {hpt: 18, hpx: 18}
+      {hpt: 17.25, hpx: 17.25}
     ];
     ws['C7'].f = 'LEFT(数据!B51,FIND("支行",数据!B51)-1)';
     ws['C38'] = {v: '身份证', t: 's', w: '身份证'};
@@ -461,7 +593,7 @@ class ExportImport extends React.Component {
       null,
       {hpt: 13.5, hpx: 13.5},
       {hidden: true, hpt: 0.75, hpx: 0.75},
-      null,
+      {hpt: 18.75, hpx: 18.75},
       null,
       null,
       null,
@@ -531,7 +663,7 @@ class ExportImport extends React.Component {
       null,
       {hpt: 13.5, hpx: 13.5},
       {hidden: true, hpt: 0.75, hpx: 0.75},
-      null,
+      {hpt: 18.75, hpx: 18.75},
       null,
       null,
       null,
@@ -708,7 +840,7 @@ class ExportImport extends React.Component {
       {hpt: 6, hpx: 6},
       {hpt: 16.5, hpx: 16.5}
     ];
-    ws['A4'] = {v: '夫妻', t: 's', w: '夫妻'};
+    ws['A4'] = {v: '父子', t: 's', w: '父子'};
     ws['B29'].f = '数据!B37';
     ws['B31'].f = '数据!B38';
     ws['C2'].f = '数据!B1';
@@ -790,7 +922,7 @@ class ExportImport extends React.Component {
     ws['F17'].f = '数据!B51';
     ws['F19'].f = '数据!B29';
 
-    ws['B6'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B6'].s = {font: {sz: 12}, alignment: {horizontal: 'center', vertical: 'center'}};
     ws['B7'].s = {font: {sz: 8}, alignment: {horizontal: 'left', vertical: 'bottom'}};
     ws['B12'].s = {font: {sz: 10}, alignment: {horizontal: 'right', vertical: 'center'}};
     ws['B18'].s = {font: {sz: 12}, alignment: {horizontal: 'center', vertical: 'center'}};
@@ -802,7 +934,7 @@ class ExportImport extends React.Component {
     ws['F7'].s = {font: {sz: 12}, alignment: {horizontal: 'center', vertical: 'bottom'}};
     ws['F11'].s = {font: {sz: 10}, alignment: {horizontal: 'right', vertical: 'center'}};
     ws['F12'].s = {font: {sz: 12}, alignment: {horizontal: 'right', vertical: 'center'}};
-    ws['F17'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'top'}};
+    ws['F17'].s = {font: {sz: 9}, alignment: {horizontal: 'left', vertical: 'top'}};
     ws['F19'].s = {font: {sz: 10}, alignment: {horizontal: 'right', vertical: 'center'}};
   }
   // 担保分期服务协议
@@ -936,6 +1068,157 @@ class ExportImport extends React.Component {
     ws['G43'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
     ws['H17'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
   }
+  // 支付凭证
+  createZfpz(wb) {
+    var ws = this.getSheet(wb, 7, 8, '支付凭证');
+    ws['!merges'] = [{
+      e: {c: 2, r: 2},
+      s: {c: 1, r: 2}
+    }, {
+      e: {c: 5, r: 2},
+      s: {c: 4, r: 2}
+    }, {
+      e: {c: 5, r: 3},
+      s: {c: 4, r: 3}
+    }, {
+      e: {c: 5, r: 4},
+      s: {c: 4, r: 4}
+    }, {
+      e: {c: 2, r: 6},
+      s: {c: 1, r: 6}
+    }];
+    ws['!cols'] = [
+      {wch: 8.38},
+      {wch: 12.5},
+      {wch: 8.38},
+      {wch: 15.13},
+      {wch: 8.75},
+      {wch: 11},
+      {wch: 8.38},
+      {wch: 8.38}
+    ];
+    ws['!rows'] = [
+      null,
+      {hpt: 9.75, hpx: 9.75},
+      {hpt: 16.5, hpx: 16.5},
+      {hpt: 17.25, hpx: 17.25},
+      null,
+      {hpt: 11.25, hpx: 11.25}
+    ];
+    ws['B3'].f = '数据!B1';
+    ws['B7'].f = '数据!B9';
+    ws['E3'] = {v: '温州浩源控股有限', t: 's', w: '温州浩源控股有限'};
+    ws['E4'] = {v: '33050162613500000312', t: 's', w: '33050162613500000312'};
+    ws['E5'] = {v: '建行瑞安支行', t: 's', w: '建行瑞安支行'};
+    ws['F7'].f = '数据!B11';
+
+    ws['B3'].s = {font: {sz: 12}, alignment: {horizontal: 'center', vertical: 'bottom'}};
+    ws['B7'].s = {font: {sz: 10}, alignment: {horizontal: 'center', vertical: 'center'}};
+    ws['E3'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['E4'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['E5'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['F7'].s = {font: {sz: 12}, alignment: {horizontal: 'right', vertical: 'center'}};
+  }
+  // 授权委托书
+  createSqwts(wb) {
+    var ws = this.getSheet(wb, 10, 8, '授权委托书');
+    ws['!merges'] = [{
+      e: {c: 4, r: 9},
+      s: {c: 2, r: 9}
+    }, {
+      e: {c: 5, r: 6},
+      s: {c: 4, r: 6}
+    }];
+    ws['!cols'] = [
+      {wch: 8.38},
+      {wch: 9.5},
+      {wch: 8.38},
+      {wch: 5.88},
+      {wch: 8.38},
+      {wch: 8.38},
+      {wch: 8.38},
+      {wch: 8.38}
+    ];
+    ws['!rows'] = [
+      null,
+      null,
+      null,
+      {hpt: 12, hpx: 12},
+      {hpt: 9.75, hpx: 9.75},
+      {hpt: 9, hpx: 9},
+      null,
+      null,
+      {hpt: 27, hpx: 27}
+    ];
+    ws['C10'].f = ' E7';
+    ws['E7'].f = '数据!B51';
+
+    ws['C10'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['E7'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
+  }
+  // 收款收据
+  createSksj(wb) {
+    var ws = this.getSheet(wb, 16, 10, '收款收据');
+    ws['!merges'] = [{
+      e: {c: 5, r: 15},
+      s: {c: 4, r: 15}
+    }, {
+      e: {c: 8, r: 15},
+      s: {c: 7, r: 15}
+    }, {
+      e: {c: 6, r: 11},
+      s: {c: 2, r: 11}
+    }, {
+      e: {c: 5, r: 13},
+      s: {c: 1, r: 13}
+    }];
+    ws['!cols'] = [
+      {wch: 14.88},
+      {wch: 5.13},
+      {wch: 1.38},
+      {wch: 4.75},
+      {wch: 0.92},
+      {wch: 2.13},
+      {wch: 1.75},
+      {wch: 2.13},
+      {wch: 17},
+      {wch: 8.88}
+    ];
+    ws['!rows'] = [
+      {hpt: 34.5, hpx: 34.5},
+      null,
+      {hpt: 6.75, hpx: 6.75},
+      {hpt: 9.75, hpx: 9.75},
+      null,
+      null,
+      {hpt: 6, hpx: 6},
+      {hpt: 5.25, hpx: 5.25},
+      {hpt: 5.25, hpx: 5.25},
+      null,
+      {hpt: 6.75, hpx: 6.75},
+      null,
+      null,
+      null,
+      {hpt: 10.5, hpx: 10.5}
+    ];
+    ws['B5'].f = ' 数据!B1';
+    ws['B14'].f = '数据!B27';
+    ws['C12'].f = '数据!B12&"首付款"';
+    ws['F2'].f = 'MID(YEAR(数据!B41),3,2)';
+    ws['G16'] = {v: '滕', t: 's', w: '滕'};
+    ws['H2'].f = 'MONTH(数据!B41)';
+    ws['I2'].f = '"   "&DAY(数据!B41)';
+    ws['J14'].f = '数据!B26';
+
+    ws['B5'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B14'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['C12'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['F2'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['G16'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['H2'].s = {font: {sz: 12}, alignment: {horizontal: 'right', vertical: 'center'}};
+    ws['I2'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['J14'].s = {font: {sz: 10}, alignment: {horizontal: 'right', vertical: 'center'}};
+  }
   // 收妥1
   createSt1(wb) {
     var ws = this.getSheet(wb, 48, 10, '收妥1');
@@ -989,8 +1272,8 @@ class ExportImport extends React.Component {
     ws['B11'].f = '数据!B42';
     ws['B16'].f = '数据!B1';
     ws['C16'].f = '数据!B1';
-    ws['E16'].f = 'IF(数据!B51="瑞安支行","发票","")';
-    ws['E18'].f = 'IF(数据!B51="瑞安支行","商业险","")';
+    ws['E16'].f = 'IF(数据!B51="瑞安支行","车辆登记证书","汽车")';
+    ws['E18'].f = 'IF(数据!B51="瑞安支行","发票","")';
     ws['E20'].f = 'IF(数据!B51="瑞安支行","商业险","")';
     ws['G8'].f = '数据!B1';
     ws['I16'].f = '数据!B10';
@@ -1180,6 +1463,12 @@ class ExportImport extends React.Component {
     }, {
       e: {c: 6, r: 33},
       s: {c: 5, r: 33}
+    }, {
+      e: {c: 3, r: 9},
+      s: {c: 1, r: 9}
+    }, {
+      e: {c: 6, r: 34},
+      s: {c: 5, r: 34}
     }];
     ws['!cols'] = [
       {wch: 5.88},
@@ -1429,8 +1718,8 @@ class ExportImport extends React.Component {
   createXht12(wb) {
     var ws = this.getSheet(wb, 48, 8, '新合同12');
     ws['!merges'] = [{
-      e: {c: 6, r: 43},
-      s: {c: 2, r: 43}
+      e: {c: 6, r: 44},
+      s: {c: 2, r: 44}
     }, {
       e: {c: 4, r: 46},
       s: {c: 2, r: 46}
@@ -1547,6 +1836,9 @@ class ExportImport extends React.Component {
     }, {
       e: {c: 8, r: 18},
       s: {c: 6, r: 18}
+    }, {
+      e: {c: 8, r: 12},
+      s: {c: 7, r: 12}
     }];
     ws['!cols'] = [
       {wch: 3.88},
@@ -1602,35 +1894,35 @@ class ExportImport extends React.Component {
       {hpt: 23.25, hpx: 23.25}
     ];
     ws['C4'].f = '数据!B1';
-    // ws['C6'].f = '数据!B3';
-    // ws['C15'].f = '数据!B53';
-    // ws['D17'].f = '数据!B1';
-    // ws['D19'].f = 'G4';
-    // ws['D21'].f = '数据!B3';
-    // ws['D23'].f = '数据!B3';
-    // ws['E8'].f = '数据!B51';
-    // ws['E11'].f = '数据!B52';
-    // ws['E13'].f = '数据!B52';
-    // ws['E26'].f = '数据!B5';
-    // ws['E33'] = {v: '温州浩源控股有限公司', t: 's', w: '温州浩源控股有限公司'};
-    // ws['E35'] = {v: '91330300MA2874D937', t: 's', w: '91330300MA2874D937'};
-    // ws['E36'] = {v: '温州市东龙路19号16幢1601室', t: 's', w: '温州市东龙路19号16幢1601室'};
-    // ws['E37'] = {v: 325000, t: 's', w: '325000'};
-    // ws['E38'] = {v: '0577-86508880', t: 's', w: '0577-86508880'};
-    // ws['E39'] = {v: 13857761616, t: 's', w: '13857761616'};
-    // ws['E40'] = {v: '蔡盛义', t: 's', w: '蔡盛义'};
-    // ws['F23'].f = '数据!B4';
-    // ws['G4'].f = '"身份证："&数据!B2", w: "身份证：500242199908127196';
-    // ws['G6'].f = '数据!B3';
-    // ws['G7'].f = '数据!B5';
-    // ws['G17'].f = '数据!B6';
-    // ws['G19'].f = '"身份证："&数据!B7", w: "身份证： ';
-    // ws['G21'].f = 'D21';
-    // ws['G23'].f = 'D23';
-    // ws['G26'].f = '数据!B8';
-    // ws['H6'].f = '数据!B4';
-    // ws['H13'] = {v: '325000', t: 's', w: '325000'};
-    // ws['I23'].f = 'F23';
+    ws['C6'].f = '数据!B3';
+    ws['C15'].f = '数据!B53';
+    ws['D17'].f = '数据!B1';
+    ws['D19'].f = 'G4';
+    ws['D21'].f = '数据!B3';
+    ws['D23'].f = '数据!B3';
+    ws['E8'].f = '数据!B51';
+    ws['E11'].f = '数据!B52';
+    ws['E13'].f = '数据!B52';
+    ws['E26'].f = '数据!B5';
+    ws['E33'] = {v: '温州浩源控股有限公司', t: 's', w: '温州浩源控股有限公司'};
+    ws['E35'] = {v: '91330300MA2874D937', t: 's', w: '91330300MA2874D937'};
+    ws['E36'] = {v: '温州市东龙路19号16幢1601室', t: 's', w: '温州市东龙路19号16幢1601室'};
+    ws['E37'] = {v: 325000, t: 's', w: '325000'};
+    ws['E38'] = {v: '0577-86508880', t: 's', w: '0577-86508880'};
+    ws['E39'] = {v: 13857761616, t: 's', w: '13857761616'};
+    ws['E40'] = {v: '蔡盛义', t: 's', w: '蔡盛义'};
+    ws['F23'].f = '数据!B4';
+    ws['G4'].f = '"身份证："&数据!B2';
+    ws['G6'].f = '数据!B3';
+    ws['G7'].f = '数据!B5';
+    ws['G17'].f = '数据!B6';
+    ws['G19'].f = '"身份证："&数据!B7';
+    ws['G21'].f = 'D21';
+    ws['G23'].f = 'D23';
+    ws['G26'].f = '数据!B8';
+    ws['H6'].f = '数据!B4';
+    ws['H13'] = {v: '325000', t: 's', w: '325000'};
+    ws['I23'].f = 'F23';
 
     ws['C4'].s = {font: {sz: 12}, alignment: {horizontal: 'right', vertical: 'center'}};
     ws['C6'].s = {font: {sz: 7}, alignment: {horizontal: 'center', vertical: 'center'}};
@@ -1643,7 +1935,7 @@ class ExportImport extends React.Component {
     ws['E11'].s = {font: {sz: 8}, alignment: {horizontal: 'left', vertical: 'center'}};
     ws['E13'].s = {font: {sz: 8}, alignment: {horizontal: 'left', vertical: 'center'}};
     ws['E26'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
-    ws['E33'].s = {font: {sz: 8}, alignment: {horizontal: 'center', vertical: 'center'}};
+    ws['E33'].s = {font: {sz: 8}, alignment: {horizontal: 'center', vertical: 'center', wrapText: true}};
     ws['E35'].s = {font: {sz: 9}, alignment: {horizontal: 'left', vertical: 'center', wrapText: true}};
     ws['E36'].s = {font: {sz: 10}, alignment: {horizontal: 'center', vertical: 'center', wrapText: true}};
     ws['E37'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center', wrapText: true}};
@@ -1652,7 +1944,7 @@ class ExportImport extends React.Component {
     ws['E40'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
     ws['F23'].s = {font: {sz: 8}, alignment: {horizontal: 'left', vertical: 'center'}};
     ws['G4'].s = {font: {sz: 8}, alignment: {horizontal: 'left', vertical: 'center'}};
-    ws['G6'].s = {font: {sz: 7}, alignment: {horizontal: 'center', vertical: 'center'}};
+    ws['G6'].s = {font: {sz: 7}, alignment: {horizontal: 'center', vertical: 'center', wrapText: true}};
     ws['G7'].s = {font: {sz: 8}, alignment: {horizontal: 'left', vertical: 'center'}};
     ws['G17'].s = {font: {sz: 12}, alignment: {horizontal: 'right', vertical: 'center'}};
     ws['G19'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
@@ -1672,6 +1964,9 @@ class ExportImport extends React.Component {
     }, {
       e: {c: 8, r: 20},
       s: {c: 3, r: 15}
+    }, {
+      e: {c: 7, r: 11},
+      s: {c: 6, r: 11}
     }];
     ws['!cols'] = [
       {whidden: true},
@@ -1728,7 +2023,7 @@ class ExportImport extends React.Component {
   createKhzl(wb) {
     var ws = this.getSheet(wb, 48, 12, '客户资料');
     ws['!cols'] = [
-      {whidden: true},
+      {wch: 8.38},
       {wch: 8.38},
       {wch: 8.38},
       {wch: 14},
@@ -1759,7 +2054,7 @@ class ExportImport extends React.Component {
     ws['I1'] = {v: '放款银行', t: 's', w: '放款银行'};
     ws['I2'] = {v: '建行', t: 's', w: '建行'};
     ws['J1'] = {v: '收件时间', t: 's', w: '收件时间'};
-    ws['J2'].f = 'TODAY()';
+    ws['J2'] = {v: 43332, t: 'n', f: 'TODAY()', w: '8/20/18'};
     ws['K1'] = {v: '利率', t: 's', w: '利率'};
     ws['K2'].f = '数据!B48';
     ws['L1'] = {v: '抵押时间', t: 's', w: '抵押时间'};
