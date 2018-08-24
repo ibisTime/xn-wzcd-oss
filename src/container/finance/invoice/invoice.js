@@ -193,7 +193,7 @@ class Invoice extends React.Component {
         ws['B12'] = {v: '财务', t: 's', w: '财务'};
         ws['E12'] = {v: '出纳', t: 's', w: '出纳'};
         ws['F12'] = {v: '经办人', t: 's', w: '经办人'};
-        ws['G12'] = {v: ' ', t: 'n', w: ' '};
+        ws['G12'] = {v: ' ', t: 's', w: ' '};
         ws['H12'] = {v: '单位', t: 's', w: '单位'};
 
         ws['G2'].s = {font: {sz: 18, name: '微软雅黑', bold: true}, alignment: {vertical: 'center'}};
