@@ -87,6 +87,7 @@ class Invoice extends React.Component {
         }];
         return this.props.buildList({
             fields,
+            rowKey: 'id',
             pageCode: 632905
         });
     }
