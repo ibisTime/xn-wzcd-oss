@@ -256,6 +256,17 @@ const ROUTES = [
       path: '/finance/prepayment',
       component: asyncComponent(() => import('container/finance/prepayment/prepayment'))
   },
+  //  今日已垫资
+  {
+      path: '/finance/funded',
+      component: asyncComponent(() => import('container/finance/funded/funded'))
+  },
+
+  //  履约保证金开票
+  {
+      path: '/finance/invoice',
+      component: asyncComponent(() => import('container/finance/invoice/invoice'))
+  },
   //  车辆贷后管理
   //  车贷业务管理
   {

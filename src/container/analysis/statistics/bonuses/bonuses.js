@@ -41,39 +41,36 @@ class Bonuses extends React.Component {
     render() {
         const fields = [{
             title: '月份',
-            field: 'month'
+            field: 'yearMonth',
+            type: 'date'
         }, {
-            title: '提成单价',
-            field: 'unitPrice',
-            amount: true,
-            required: true
+            title: '业务员',
+            field: 'saleUserName'
         }, {
-            title: '本月比例',
-            field: 'monthRate',
-            number: true,
-            required: true
+            title: '自主开发笔数',
+            field: 'selfDevelopNumber'
         }, {
-            title: '留存月数',
-            field: 'retainMonths',
-            'Z+': true,
-            required: true
+            title: '自主开发奖金',
+            field: 'selfDevelopBonus',
+            amount: true
         }, {
-            title: '起始金额',
-            field: 'startAmount',
-            amount: true,
-            required: true
+            title: '非自主开发笔数',
+            field: 'notSelfDevelopNumber'
         }, {
-            title: '结束金额',
-            field: 'endAmount',
-            amount: true,
-            required: true
+            title: '非自主开发奖金',
+            field: 'notSelfDevelopBonus',
+            amount: true
         }, {
-            title: '备注',
-            field: 'remark'
+            title: '小计笔数',
+            field: 'totalNumber'
+        }, {
+            title: '小计奖金',
+            field: 'totalBonus',
+            amount: true
         }];
         return this.props.buildList({
             fields,
-            pageCode: 630902
+            pageCode: 630912
         });
     }
 }

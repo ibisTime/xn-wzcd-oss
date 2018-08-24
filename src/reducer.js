@@ -55,8 +55,15 @@ import { creditAddEdit } from '@redux/demo/credit-addedit';
 // 银行返点菜单
 import { financeRebate } from '@redux/finance/rebate';
 import { financeRebateAddEdit } from '@redux/finance/rebate-addedit';
+
 // 预打款统计
 import { financePrepayment } from '@redux/finance/prepayment';
+
+// 今日已垫资
+import { financeFunded } from '@redux/finance/funded';
+
+// 履约保证金开票
+import { financeInvoice } from '@redux/finance/invoice';
 
 //  返点支付
 import { carloanfinancePointreturn } from './redux/carloanfinance/pointreturn';
@@ -1048,6 +1055,8 @@ export default combineReducers({
   financeRebate,
   financeRebateAddEdit,
   financePrepayment,
+  financeFunded,
+  financeInvoice,
   postloantoolsRegressesGps,
   postloantoolsRegressesGpsApply,
   erweimaErweima
