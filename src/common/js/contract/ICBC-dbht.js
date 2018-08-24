@@ -84,6 +84,7 @@ function createData(wb, data) {
         ['原车发票价格', moneyReplaceComma(moneyFormat(data.invoicePrice))],
         ['原车发票价格大写', '']
     ];
+
     var ws = wb.getSheet(arr, '数据');
     ws['!margins'] = getMargins();
     ws['!cols'] = [{

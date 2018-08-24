@@ -14,6 +14,7 @@ class ExportImport extends React.Component {
   handleExport() {
     const wb = getWorkbook();
     this.createData(wb, this.state.data);
+    this.createFjfsm(wb);
     this.createZx1(wb);
     this.createZx2(wb);
     this.createJzd(wb);
@@ -47,11 +48,11 @@ class ExportImport extends React.Component {
     ws['B11'].f = 'IF(INT(ROUND(B12,2))*100=ROUND(B12,2)*100,TEXT(INT(ROUND(B12,2)),"[$-0804][DBNum2]G/通用格式")&"元",IF(INT(ROUND(B12,2)*10)=B12*10,TEXT(INT(ROUND(B12,2)),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT(ROUND(B12,2)*10-INT(ROUND(B12,2))*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(ROUND(B12,2)),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT(ROUND(B12,2)*10)=INT(ROUND(B12,2))*10,"零",TEXT(RIGHT(INT(ROUND(B12,2)*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(ROUND(B12,2)*100),"[$-0804][DBNum2]G/通用格式")&"分"))&"整"';
     ws['B13'].f = 'B12*0.085';
     ws['B15'].f = 'B14-8.5';
-    ws['B17'].f = 'IF(B16=36,8.5,IF(B16=24,7.25,""))';
+    ws['B17'] = {v: 8.5, t: 's', w: '8.5'};
     ws['B18'].f = 'IF(INT(B13)*100=B13*100,TEXT(INT(B13),"[$-0804][DBNum2]G/通用格式")&"元",IF(INT(B13*10)=B13*10,TEXT(INT(B13),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT(B13*10-INT(B13)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B13),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT(B13*10)=INT(B13)*10,"零",TEXT(RIGHT(INT(B13*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B135*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
     ws['B29'].f = 'B23-B12';
     ws['B31'].f = 'B16/12&"年"';
-    ws['B32'].f = 'B16/12';
+    ws['B32'].f = 'TEXT((B16/12),"[$-0804][DBNum2]G/通用格式")';
     ws['B35'].f = 'IF(MOD(MID(B2,17,1),2),"男","女")';
     ws['B36'].f = 'IF(MOD(MID(B8,17,1),2),"男","女")';
     ws['B38'].f = 'IF(INT(B29)*100=B29*100,TEXT(INT(B29),"[$-0804][DBNum2]G/通用格式")&"",IF(INT(B29*10)=B29*10,TEXT(INT(B29),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT(B29*10-INT(B29)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B29),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT(B29*10)=INT(B29)*10,"零",TEXT(RIGHT(INT(B29*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B29*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
@@ -61,12 +62,12 @@ class ExportImport extends React.Component {
     ws['B42'].f = 'IF(INT(B43)*100=B43*100,TEXT(INT(B43),"[$-0804][DBNum2]G/通用格式")&"元",IF(INT(B43*10)=B43*10,TEXT(INT(B43),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT(B43*10-INT(B43)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B43),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT(B43*10)=INT(B43)*10,"零",TEXT(RIGHT(INT(B43*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B43*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
     ws['B43'].f = 'B68';
     ws['B44'].f = 'B12*B15/100';
-    ws['B45'].f = 'B44';
+    ws['B45'].f = 'IF(INT(B44)*100=B44*100,TEXT(INT(B44),"[$-0804][DBNum2]G/通用格式"),IF(INT(B44*10)=B44*10,TEXT(INT(B44),"[$-0804][DBNum2]G/通用格式")&TEXT(B44*10-INT(B44)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B44),"[$-0804][DBNum2]G/通用格式")&IF(INT(B44*10)=INT(B44)*10,"零",TEXT(RIGHT(INT(B44*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B44*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
     ws['B46'].f = 'B12+B44';
     ws['B47'].f = 'B46*B17/100';
     ws['B48'].f = 'IF(INT(B47)*100=B47*100,TEXT(INT(B47),"[$-0804][DBNum2]G/通用格式")&"元",IF(INT(B47*10)=B47*10,TEXT(INT(B47),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT(B47*10-INT(B47)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B47),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT(B47*10)=INT(B47)*10,"零",TEXT(RIGHT(INT(B47*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B47*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
     ws['B49'].f = 'IF(INT(B46)*100=B46*100,TEXT(INT(B46),"[$-0804][DBNum2]G/通用格式")&"元",IF(INT(B46*10)=B46*10,TEXT(INT(B46),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT(B46*10-INT(B46)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B46),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT(B46*10)=INT(B46)*10,"零",TEXT(RIGHT(INT(B46*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B46*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
-    ws['B50'].f = 'B46';
+    ws['B50'].f = 'IF(INT(B46)*100=B46*100,TEXT(INT(B46),"[$-0804][DBNum2]G/通用格式"),IF(INT(B46*10)=B46*10,TEXT(INT(B46),"[$-0804][DBNum2]G/通用格式")&TEXT(B46*10-INT(B46)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B46),"[$-0804][DBNum2]G/通用格式")&IF(INT(B46*10)=INT(B46)*10,"零",TEXT(RIGHT(INT(B46*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B46*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
     ws['B60'].f = 'IF(INT(B23)*100=B23*100,TEXT(INT(B23),"[$-0804][DBNum2]G/通用格式")&"元整",IF(INT(B23*10)=B23*10,TEXT(INT(B23),"[$-0804][DBNum2]G/通用格式")&"元整"&TEXT(B23*10-INT(B23)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B23),"[$-0804][DBNum2]G/通用格式")&"元整"&IF(INT(B23*10)=INT(B23)*10,"零",TEXT(RIGHT(INT(B23*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B23*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
     ws['B61'].f = 'B12-(B62*(B16-1))';
     ws['B62'].f = 'INT(B12/B16)';
@@ -94,12 +95,61 @@ class ExportImport extends React.Component {
     ws['A73'].s = {font: {color: {rgb: 'FF0000'}}};
     ws['A74'].s = {font: {color: {rgb: 'FF0000'}}};
     ws['A75'].s = {font: {color: {rgb: 'FF0000'}}};
-    ws['B23'].s = {font: {color: {rgb: 'FF0000'}}};
-    ws['B49'].s = {font: {color: {rgb: 'FF0000'}}};
-    ws['B50'].s = {font: {color: {rgb: 'FF0000'}}};
-    ws['B69'].s = {font: {color: {rgb: 'FF0000'}}};
-    ws['B78'].s = {font: {color: {rgb: 'FF0000'}}};
-    ws['B80'].s = {font: {color: {rgb: 'FF0000'}}};
+    ws['A24'].s = {fill: {fgColor: {rgb: 'CCFFFF'}}};
+    ws['A25'].s = {fill: {fgColor: {rgb: 'CCFFFF'}}};
+    ws['A26'].s = {fill: {fgColor: {rgb: 'CCFFFF'}}};
+    ws['A27'].s = {fill: {fgColor: {rgb: 'CCFFFF'}}};
+    ws['A51'].s = {fill: {fgColor: {rgb: 'CCFFFF'}}};
+    ws['A52'].s = {fill: {fgColor: {rgb: 'CCFFFF'}}};
+    ws['A53'].s = {fill: {fgColor: {rgb: 'CCFFFF'}}};
+    ws['A54'].s = {fill: {fgColor: {rgb: 'CCFFFF'}}};
+    ws['A55'].s = {fill: {fgColor: {rgb: 'CCFFFF'}}};
+    ws['A56'].s = {fill: {fgColor: {rgb: 'CCFFFF'}}};
+    ws['A57'].s = {fill: {fgColor: {rgb: 'CCFFFF'}}};
+    ws['A58'].s = {fill: {fgColor: {rgb: 'CCFFFF'}}};
+    ws['A61'].s = {fill: {fgColor: {rgb: '993366'}}};
+    ws['A62'].s = {fill: {fgColor: {rgb: '993366'}}};
+    ws['A63'].s = {fill: {fgColor: {rgb: '993366'}}};
+    ws['A64'].s = {fill: {fgColor: {rgb: '993366'}}};
+    ws['A65'].s = {fill: {fgColor: {rgb: '33CCCC'}}};
+    ws['A66'].s = {fill: {fgColor: {rgb: '33CCCC'}}};
+    ws['A77'].s = {fill: {fgColor: {rgb: 'FFFF00'}}};
+    ws['A78'].s = {fill: {fgColor: {rgb: 'FFFF00'}}};
+    ws['A79'].s = {fill: {fgColor: {rgb: 'FFFF00'}}};
+    ws['A80'].s = {fill: {fgColor: {rgb: 'FFFF00'}}};
+    ws['B23'].s = {font: {color: {rgb: 'FF0000'}}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B11'].s = {fill: {fgColor: {rgb: 'FFFF00'}}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B39'].s = {fill: {fgColor: {rgb: 'FFFF00'}}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B49'].s = {font: {color: {rgb: 'FF0000'}}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B50'].s = {font: {color: {rgb: 'FF0000'}}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B60'].s = {fill: {fgColor: {rgb: 'FFFF00'}}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B61'].s = {fill: {fgColor: {rgb: '993366'}}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B62'].s = {fill: {fgColor: {rgb: '993366'}}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B69'].s = {font: {color: {rgb: 'FF0000'}}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B78'].s = {font: {color: {rgb: 'FF0000'}}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B80'].s = {font: {color: {rgb: 'FF0000'}}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B80'].s = {font: {color: {rgb: 'FF0000'}}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B13'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B15'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B29'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B32'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B41'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B43'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B44'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B45'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B46'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B47'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B64'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B66'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B67'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B68'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B71'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B72'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B73'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B74'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B75'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B77'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['B79'].s = {alignment: {horizontal: 'left', vertical: 'center'}};
   }
   // 附加费情况说明
   createFjfsm(wb) {
@@ -239,8 +289,8 @@ class ExportImport extends React.Component {
       e: {c: 2, r: 4},
       s: {c: 1, r: 4}
     }, {
-      e: {c: 3, r: 6},
-      s: {c: 1, r: 6}
+      e: {c: 2, r: 6},
+      s: {c: 0, r: 6}
     }, {
       e: {c: 2, r: 7},
       s: {c: 0, r: 7}
@@ -324,7 +374,7 @@ class ExportImport extends React.Component {
     ws['E3'].f = '数据!B1';
     ws['G4'].f = '数据!B22';
 
-    ws['B4'].s = {font: {sz: 9, name: '楷体_GB2312'}, alignment: {horizontal: 'left', vertical: 'bottom'}};
+    ws['B4'].s = {font: {sz: 8, name: '楷体_GB2312'}, alignment: {horizontal: 'left', vertical: 'bottom'}};
     ws['B8'].s = {font: {sz: 12, name: '楷体_GB2312'}, alignment: {horizontal: 'left', vertical: 'bottom'}};
     ws['C5'].s = {font: {sz: 11, name: '楷体_GB2312'}, alignment: {horizontal: 'left', vertical: 'bottom'}};
     ws['E3'].s = {font: {sz: 18, name: '楷体_GB2312'}, alignment: {horizontal: 'left', vertical: 'top'}};
@@ -554,7 +604,7 @@ class ExportImport extends React.Component {
     ];
     ws['B20'].f = '数据!B32';
     ws['C7'].f = '数据!B1';
-    ws['C18'].f = '数据!B44';
+    ws['C18'].f = 'TEXT((数据!B44),"0.00")';
     ws['C25'] = {v: '温州保利融资担保有限公司', t: 's', w: '温州保利融资担保有限公司'};
     ws['C27'] = {v: 364958350985, t: 's', w: '364958350985'};
     ws['C29'] = {v: '中国银行', t: 's', w: '中国银行'};
@@ -736,7 +786,7 @@ class ExportImport extends React.Component {
   }
   // 信用卡额度申请表
   createXykedsqb(wb) {
-    var ws = this.getSheet(wb, 33, 7, '信用卡额度申请表');
+    var ws = this.getSheet(wb, 34, 7, '信用卡额度申请表');
     ws['!merges'] = [{
       e: {c: 3, r: 33},
       s: {c: 2, r: 31}
@@ -841,7 +891,7 @@ class ExportImport extends React.Component {
     ws['G22'].f = '数据!B9';
     ws['G27'] = {v: '人民币', t: 's', w: '人民币'};
     ws['G32'].f = '数据!B12';
-    ws['G33'].f = '数据!B44';
+    ws['G34'].f = '数据!B44';
 
     ws['C3'].s = {alignment: {horizontal: 'center', vertical: 'bottom'}};
     ws['C5'].s = {font: {sz: 10}, alignment: {horizontal: 'center', vertical: 'bottom'}};
@@ -856,7 +906,7 @@ class ExportImport extends React.Component {
     ws['C24'].s = {font: {sz: 10}, alignment: {horizontal: 'center', vertical: 'bottom'}};
     ws['C28'].s = {font: {sz: 11}, alignment: {horizontal: 'left', vertical: 'bottom'}};
     ws['C30'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
-    ws['E32'].s = {font: {sz: 11}, alignment: {horizontal: 'center', vertical: 'bottom'}};
+    ws['E32'].s = {font: {sz: 11}, alignment: {horizontal: 'center', vertical: 'bottom', wrapText: true}};
     ws['F3'].s = {font: {sz: 11}, alignment: {horizontal: 'left', vertical: 'bottom'}};
     ws['F8'].s = {font: {sz: 11}, alignment: {horizontal: 'left', vertical: 'bottom'}};
     ws['F20'].s = {font: {sz: 12}, alignment: {horizontal: 'center', vertical: 'bottom'}};
@@ -871,7 +921,7 @@ class ExportImport extends React.Component {
     ws['G22'].s = {font: {sz: 11}, alignment: {horizontal: 'right', vertical: 'bottom'}};
     ws['G27'].s = {font: {sz: 11}, alignment: {horizontal: 'right', vertical: 'bottom'}};
     ws['G32'].s = {font: {sz: 11}, alignment: {horizontal: 'right', vertical: 'bottom'}};
-    ws['G33'].s = {font: {sz: 11}, alignment: {horizontal: 'right', vertical: 'bottom'}};
+    ws['G34'].s = {font: {sz: 11}, alignment: {horizontal: 'right', vertical: 'bottom'}};
   }
   // 共同还款人承诺书
   createGthkrcns(wb) {
@@ -1157,7 +1207,7 @@ class ExportImport extends React.Component {
       e: {c: 2, r: 25},
       s: {c: 2, r: 24}
     }, {
-      e: {c: 6, r: 25},
+      e: {c: 5, r: 25},
       s: {c: 5, r: 24}
     }, {
       e: {c: 5, r: 6},
@@ -1235,7 +1285,7 @@ class ExportImport extends React.Component {
     ws['D18'].f = '数据!B10';
     ws['D25'].f = '数据!B20';
     ws['D46'].f = '数据!B40';
-    ws['E11'] = {v: '913303006671217164', t: 'n', w: '913303006671217164'};
+    ws['E11'] = {v: '913303006671217164', t: 's', w: '913303006671217164'};
     ws['E14'].f = '数据!B7';
     ws['E19'].f = '数据!B44';
     ws['E23'].f = '数据!B16';
@@ -1260,7 +1310,7 @@ class ExportImport extends React.Component {
     ws['C7'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
     ws['C8'].s = {font: {sz: 10, color: {rgb: 'FF0000'}}, alignment: {horizontal: 'right', vertical: 'bottom'}};
     ws['C9'].s = {font: {sz: 10, color: {rgb: 'FF0000'}}, alignment: {horizontal: 'left', vertical: 'bottom'}};
-    ws['C10'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'bottom'}};
+    ws['C10'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
     ws['C12'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'bottom'}};
     ws['C14'].s = {font: {sz: 10}, alignment: {horizontal: 'right', vertical: 'bottom'}};
     ws['C15'].s = {font: {sz: 10}, alignment: {horizontal: 'center', vertical: 'bottom'}};
@@ -1274,7 +1324,7 @@ class ExportImport extends React.Component {
     ws['D25'].s = {font: {sz: 9}, alignment: {horizontal: 'center', vertical: 'center'}};
     ws['D46'].s = {font: {sz: 8}, alignment: {horizontal: 'center', vertical: 'bottom'}};
     ws['E11'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
-    ws['E14'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'center'}};
+    ws['E14'].s = {font: {sz: 10}, alignment: {horizontal: 'center', vertical: 'bottom'}};
     ws['E19'].s = {font: {sz: 8}, alignment: {horizontal: 'center', vertical: 'bottom'}};
     ws['E23'].s = {font: {sz: 9}, alignment: {horizontal: 'center', vertical: 'bottom'}};
     ws['E25'].s = {font: {sz: 9}, alignment: {horizontal: 'left', vertical: 'center'}};
@@ -1285,7 +1335,7 @@ class ExportImport extends React.Component {
     ws['F15'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'bottom'}};
     ws['F18'].s = {font: {sz: 8}, alignment: {horizontal: 'center', vertical: 'bottom'}};
     ws['F25'].s = {font: {sz: 9}, alignment: {horizontal: 'center', vertical: 'top', wrapText: true}};
-    ws['F46'].s = {font: {sz: 8}, alignment: {horizontal: 'right', vertical: 'top'}};
+    ws['F46'].s = {font: {sz: 8}, alignment: {horizontal: 'right', vertical: 'center'}};
     ws['G17'].s = {font: {sz: 8}, alignment: {horizontal: 'center', vertical: 'center'}};
     ws['G31'].s = {font: {sz: 8}, alignment: {horizontal: 'right', vertical: 'top'}};
     ws['G33'].s = {font: {sz: 9}, alignment: {horizontal: 'left', vertical: 'bottom'}};
@@ -1294,7 +1344,7 @@ class ExportImport extends React.Component {
   }
   // 合同7
   createHt7(wb) {
-    var ws = this.getSheet(wb, 40, 9, '合同7');
+    var ws = this.getSheet(wb, 50, 9, '合同7');
     ws['!merges'] = [{
       e: {c: 5, r: 3},
       s: {c: 3, r: 3}
@@ -1410,8 +1460,9 @@ class ExportImport extends React.Component {
     ws['D5'].f = '数据!B42';
     ws['D26'].f = '数据!B30';
     ws['D36'].f = '数据!B20';
-    ws['F7'].f = '数据!B22';
-    ws['F36'].f = '数据!B1';
+    ws['E36'].f = '数据!B22';
+    ws['F7'].f = '数据!B1';
+    ws['F36'].f = '数据!B21';
     ws['G5'].f = '数据!B43';
     ws['G23'] = {v: '温州保利融资担保有限公司', t: 's', w: '温州保利融资担保有限公司'};
     ws['I36'].f = '数据!B23';
@@ -1420,11 +1471,12 @@ class ExportImport extends React.Component {
     ws['A44'].s = {font: {sz: 10}, alignment: {horizontal: 'right', vertical: 'bottom'}};
     ws['B25'].s = {alignment: {horizontal: 'center', vertical: 'bottom'}};
     ws['B36'].s = {font: {sz: 12}, alignment: {horizontal: 'center', vertical: 'center'}};
-    ws['C36'].s = {font: {sz: 8}, alignment: {horizontal: 'center', vertical: 'top'}};
+    ws['C36'].s = {font: {sz: 8}, alignment: {horizontal: 'center', vertical: 'top', wrapText: true}};
     ws['C49'].s = {font: {sz: 12}, alignment: {horizontal: 'right', vertical: 'bottom', wrapText: true}};
     ws['D5'].s = {font: {sz: 8}, alignment: {horizontal: 'left', vertical: 'bottom'}};
     ws['D26'].s = {font: {sz: 10}, alignment: {horizontal: 'center', vertical: 'bottom'}};
     ws['D36'].s = {font: {sz: 8}, alignment: {horizontal: 'center', vertical: 'center'}};
+    ws['E36'].s = {font: {sz: 9}, alignment: {horizontal: 'center', vertical: 'center'}};
     ws['F7'].s = {font: {sz: 12}, alignment: {horizontal: 'right', vertical: 'center'}};
     ws['F36'].s = {font: {sz: 8}, alignment: {horizontal: 'center', vertical: 'center', wrapText: true}};
     ws['G5'].s = {font: {sz: 8}, alignment: {horizontal: 'left', vertical: 'bottom'}};
