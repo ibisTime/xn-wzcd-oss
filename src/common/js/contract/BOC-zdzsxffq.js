@@ -86,12 +86,12 @@ export function createData(wb, data) {
     ['单位地址', ''],
     ['汽车经销商名称', data.carDealerName],
     ['汽车经销商账号', data.carDealer.jxsCollectBankcardList[0].bankcardNumber],
-    ['汽车经销商开户行', ''],
+    ['汽车经销商开户行', data.carDealer.jxsCollectBankcardList[0].bankName],
     ['首付金额', ''],
     ['承保公司', data.insuranceCompany],
     ['年限', ''],
     ['期限', ''],
-    ['职务', ''],
+    ['职务', data.applyUserDuty],
     ['车辆型号', data.carBrand + ' ' + data.carModel],
     ['申请人性别', ''],
     ['共同还款人性别', ''],
@@ -1418,7 +1418,7 @@ function createHt7(wb) {
   ws['F17'] = {v: '￥' + moneyFormat(B42 * 1000), t: 's', w: '￥' + moneyFormat(B42 * 1000)};
   ws['F18'] = {v: '￥' + moneyFormat(B44 * 1000), t: 's', w: '￥' + moneyFormat(B44 * 1000)};
   ws['F30'].f = '数据!B27';
-  ws['G5'].f = '数据!B15';
+  ws['G5'] = {v: '￥' + moneyFormat(B15 * 1000), t: 's', w: '￥' + moneyFormat(B15 * 1000)};
   ws['G20'].f = '数据!B1';
   ws['H11'].f = '数据!B60';
 

@@ -24,6 +24,9 @@ import {
 import {
   exportBOCZdzsxffq
 } from 'common/js/contract/BOC-zdzsxffq';
+import {
+  exportBOCSxfcx
+} from 'common/js/contract/BOC-sxfycx';
 
 @CollapseWrapper(
   state => state.printingGuaranteeMake, {
@@ -350,8 +353,9 @@ class GuaranteeMake extends React.Component {
               if(num === '1') {
                 createHt(data);
               } else if(num === '2') {
-                console.log(11);
                 exportBOCZdzsxffq(data);
+              } else if(num === '3') {
+                exportBOCSxfcx(data);
               }
               this.props.cancelFetching();
               showSucMsg('操作成功');
