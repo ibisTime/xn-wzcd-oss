@@ -435,6 +435,8 @@ import { analysisRiskCustomers } from './redux/analysis/riskCustomers';
 import { analysisCarLoanInstallment } from './redux/analysis/carLoanInstallment';
 import { analysisAdvance } from './redux/analysis/advance';
 import { analysisBonuses } from './redux/analysis/bonuses';
+import { analysisAchievement } from './redux/analysis/achievement';
+import { analysisAchievementMonth } from './redux/analysis/achievementMonth';
 // 查询分析
 import { analysisSchedule } from './redux/analysis/schedule';
 import { analysisAdvMoney } from './redux/analysis/advMoney';
@@ -852,6 +854,8 @@ export default combineReducers({
   analysisTablehistory,
   analysisCarLoanInstallment,
   analysisAdvance,
+  analysisAchievement,
+  analysisAchievementMonth,
   bizHistoryBusinessManageAddeditAddedit,
   bizSettlement,
   bizSettlementApply,
