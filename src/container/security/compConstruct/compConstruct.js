@@ -101,7 +101,7 @@ class CompConstruct extends React.Component {
       cancelText: '取消',
       content: '确定删除该公司/部门？',
       onOk: () => {
-        this.props.deleteCompany(this.props.selectedKeys[0]);
+        this.props.deleteCompany(this.props.selectedKeys[0], this.props.form.setFieldsValue);
       }
     });
   }
@@ -120,12 +120,16 @@ class CompConstruct extends React.Component {
   }
   render() {
     const { compVisible } = this.state;
-    const { btnList, treeData, selectedKeys, checkedKeys,
-      defaultExpandedKeys, fetching, current } = this.props;
+    const { btnList, treeData, selectedKeys, checkedKeys, addComp,
+      defaultExpandedKeys, fetching, current, compList } = this.props;
     const { getFieldDecorator, getFieldValue } = this.props.form;
     return (
       <div>
-        <CompAdd addComp={this.props.addComp} parentCode={selectedKeys[0]} compVisible={compVisible} setCompVisible={this.setCompVisible}/>
+        <CompAdd addComp={addComp}
+          parentCode={selectedKeys[0]}
+          compVisible={compVisible}
+          setCompVisible={this.setCompVisible}
+          compList={compList} />
         <Spin spinning={fetching}>
           <div className="tools-wrapper">
             {btnList.map(v => (
