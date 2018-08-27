@@ -14,6 +14,7 @@ const SET_CHECKED_KEYS = PREFIX + 'SET_CHECKED_KEYS';
 const SET_EXPANDED_KEYS = PREFIX + 'SET_EXPANDED_KEYS';
 const SET_USER_LIST = PREFIX + 'SET_USER_LIST';
 const SET_COMP_LIST = PREFIX + 'SET_COMP_LIST';
+const SET_INIT_COMP_LIST = PREFIX + 'SET_INIT_COMP_LIST';
 const SET_CUR_PARENT_CODE = PREFIX + 'SET_CUR_PARENT_CODE';
 
 const initState = {
@@ -27,7 +28,8 @@ const initState = {
   defaultExpandedKeys: [],
   checkedKeys: [],
   selectedKeys: [],
-  compList: []
+  compList: [],
+  initCompList: []
 };
 
 let listInfo = {};
@@ -56,6 +58,8 @@ export function securityCompConstruct(state = initState, action) {
       return {...state, userList: action.payload};
     case SET_COMP_LIST:
       return {...state, compList: action.payload};
+    case SET_INIT_COMP_LIST:
+      return {...state, initCompList: action.payload};
     case SET_CUR_PARENT_CODE:
       return {...state, curParentCode: action.payload};
     default:
@@ -91,6 +95,11 @@ function setCompInfo(data) {
 // 设置compList
 function setCompList(data) {
   return { type: SET_COMP_LIST, payload: data };
+}
+
+// 设置从接口获取的初始化的complist, 用于新增公司弹窗的上下级显示用
+function setInitCompList(data) {
+  return { type: SET_INIT_COMP_LIST, payload: data };
 }
 
 function setCurParentCode(code) {
@@ -158,12 +167,13 @@ export function addComp(company) {
     let tree = [];
     getTreeNode(listInfo['ROOT'], tree);
     dispatch(setTreeData(tree));
+    dispatch(setCompList(tree));
     dispatch(setCompInfo(compInfo));
   };
 }
 
 // 删除公司
-export function deleteCompany(code) {
+export function deleteCompany(code, setFieldsValue) {
   return dispatch => {
     dispatch(doFetching());
     deleteComp(code).then(() => {
@@ -175,6 +185,18 @@ export function deleteCompany(code) {
       let tree = [];
       getTreeNode(listInfo['ROOT'], tree);
       dispatch(setTreeData(tree));
+      dispatch(setCompList(tree));
+      dispatch(_setSelectedKeys([]));
+      dispatch(_setCheckedKeys([]));
+      setFieldsValue({
+        code: '',
+        parentCode: '',
+        name: '',
+        type: '',
+        leadUserId: '',
+        orderNo: '',
+        provinceNo: ''
+      });
     }).catch(() => {
       dispatch(cancelFetching());
     });
@@ -202,6 +224,7 @@ export function updateCompany(params) {
       let tree = [];
       getTreeNode(listInfo['ROOT'], tree);
       dispatch(setTreeData(tree));
+      dispatch(setCompList(tree));
       dispatch(setCompInfo(compInfo));
     }).catch(() => {
       dispatch(cancelFetching());
@@ -220,6 +243,7 @@ export function initData() {
     ]).then(([btnData, compData, userList]) => {
       dispatch(cancelFetching());
       dispatch(setBtnList(btnData));
+      dispatch(setInitCompList(compData));
       getTree(compData, dispatch);
       getCompTree(compData, dispatch);
       dispatch(_setSelectedKeys([]));

@@ -502,7 +502,9 @@ export default class DetailComponent extends React.Component {
       });
       this.getTree[item.field] = result;
       let tree = [];
-      this.getTreeNode(result['ROOT'], tree, item);
+      if (result['ROOT']) {
+          this.getTreeNode(result['ROOT'], tree, item);
+      }
       this.setState({
         treeData: {
           ...this.state.treeData,

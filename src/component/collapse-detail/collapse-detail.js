@@ -59,6 +59,13 @@ class CollapseDetail extends DetailComp {
                                                 } else if (!this.props.selectData[f.field]) {
                                                     this.props.setSelectData({data: f.data, key: f.field});
                                                 }
+                                            } else if (f.type === 'treeSelect') {
+                                                if (!f.data) {
+                                                    f.data = this.props.selectData[f.field];
+                                                    this.first && this.getTreeSelectData(f);
+                                                } else if (!this.props.selectData[f.field]) {
+                                                    this.props.setSelectData({data: f.data, key: f.field});
+                                                }
                                             } else if (f.type === 'o2m' && f.listCode && this.first) {
                                                 this.getO2MDatas(f);
                                             }
@@ -99,6 +106,13 @@ class CollapseDetail extends DetailComp {
                     if (!field.data) {
                         field.data = this.props.selectData[field.field];
                         this.first && this.getSelectData(field);
+                    } else if (!this.props.selectData[field.field]) {
+                        this.props.setSelectData({data: field.data, key: field.field});
+                    }
+                } else if (field.type === 'treeSelect') {
+                    if (!field.data) {
+                        field.data = this.props.selectData[field.field];
+                        this.first && this.getTreeSelectData(field);
                     } else if (!this.props.selectData[field.field]) {
                         this.props.setSelectData({data: field.data, key: field.field});
                     }
