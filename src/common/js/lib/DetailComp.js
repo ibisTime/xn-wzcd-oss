@@ -634,10 +634,14 @@ export default class DetailComponent extends React.Component {
         o2mSKeys[item.field] = o2mSKeys[item.field] || [];
         const dataSource = initVal || [];
         const selectedRowKeys = o2mSKeys[item.field];
-        const rowSelection = {
+        let rowSelection = {
             selectedRowKeys,
             onChange: (selectedRowKeys) => this.onSelectChange(selectedRowKeys, item.field)
         };
+        // noSelect为true时 列表不可选
+        if (item.options.noSelect) {
+            rowSelection = null;
+        }
         item.options.key = item.options.rowKey || item.options.key || 'code';
         const hasSelected = selectedRowKeys.length > 0;
         return (
@@ -659,6 +663,7 @@ export default class DetailComponent extends React.Component {
         if (item.options.scroll) {
             props.scroll = item.options.scroll;
         }
+        console.log(props);
         return props;
     }
 

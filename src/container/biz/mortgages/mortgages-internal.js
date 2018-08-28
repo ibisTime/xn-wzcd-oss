@@ -76,6 +76,7 @@ class MortgagesInternal extends React.Component {
             hidden: this.isEntry || this.isCheckFirst || this.isAddedit,
             options: {
                 rowKey: 'id',
+                noSelect: true,
                 fields: [{
                     title: '操作人',
                     field: 'operatorName'

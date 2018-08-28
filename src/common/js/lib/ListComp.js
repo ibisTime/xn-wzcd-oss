@@ -431,11 +431,21 @@ export default class ListComponent extends React.Component {
     }
 
     getPageComponent(searchFields) {
-        const rowSelection = {
+        let rowSelection = {
             selectedRowKeys: this.state.selectedRowKeys,
             onChange: this.onSelectChange,
             type: this.options.singleSelect ? 'radio' : 'checkbox'
         };
+        let useData = this.props.tableList;
+
+        // noSelect为true时 列表不可选
+        if (this.options.noSelect) {
+            rowSelection = null;
+        }
+        // 月度业绩用
+        if (this.options.userDataAfter) {
+            useData = this.options.userDataAfter(useData);
+        }
         return (
             <div>
                 {searchFields.length ? (
@@ -456,7 +466,7 @@ export default class ListComponent extends React.Component {
                         rowSelection={rowSelection}
                         columns={this.columns}
                         rowKey={record => record[this.options.rowKey]}
-                        dataSource={this.props.tableList}
+                        dataSource={useData}
                         pagination={this.props.pagination}
                         loading={this.props.fetching}
                         onChange={this.handleTableChange}

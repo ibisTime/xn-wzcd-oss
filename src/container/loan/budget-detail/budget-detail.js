@@ -1240,12 +1240,15 @@ class BudgetDetail extends React.Component {
                 [{
                     title: '流程日志',
                     field: 'list',
+                    rowKey: 'id',
                     type: 'o2m',
                     listCode: 630176,
                     params: {
                         refOrder: this.code
                     },
                     options: {
+                        rowKey: 'id',
+                        noSelect: true,
                         fields: [{
                             title: '操作人',
                             field: 'operatorName'
