@@ -12,7 +12,7 @@ var B44 = 0;
 var B59 = 0;
 var B42 = 0;
 var B53 = 0;
-export function exportBOCSxfcx(data) {
+export function exportBOCSxfycx(data) {
   B13 = moneyReplaceComma(moneyFormat(data.loanAmount));
   B22 = moneyReplaceComma(moneyFormat(data.invoicePrice));
   B16 = data.loanPeriods;
@@ -141,7 +141,7 @@ function createData(wb, data) {
   ws['B47'].f = 'IF(INT(B22)*100=B22*100,TEXT(INT(B22),"[$-0804][DBNum2]G/通用格式")&"元整",IF(INT(B22*10)=B22*10,TEXT(INT(B22),"[$-0804][DBNum2]G/通用格式")&"元整"&TEXT(B22*10-INT(B22)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B22),"[$-0804][DBNum2]G/通用格式")&"元整"&IF(INT(B22*10)=INT(B22)*10,"零",TEXT(RIGHT(INT(B22*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B22*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
   ws['B48'].f = 'B13-(B49*(B16-1))';
   ws['B49'].f = 'INT(B13/B16)';
-  ws['B53'] = {v: '￥' + moneyFormat(B53 * 1000), t: 's', w: '￥' + moneyFormat(B53 * 1000)};
+  ws['B53'] = {v: '¥' + moneyFormat(B53 * 1000), t: 's', w: '¥' + moneyFormat(B53 * 1000)};
 
   ws['A5'].s = {font: {color: {rgb: 'FF0000'}}};
   ws['A51'].s = {font: {color: {rgb: 'FF0000'}}};
@@ -796,11 +796,11 @@ function createXykedsqb(wb) {
   ws['C24'].f = '数据!B10';
   ws['C28'].f = '数据!B16';
   ws['C30'].f = '数据!B27';
-  ws['E32'].f = {v: '￥' + moneyFormat(B22 * 1000), t: 's', w: '￥' + moneyFormat(B22 * 1000)};
+  ws['E32'].f = {v: '¥' + moneyFormat(B22 * 1000), t: 's', w: '¥' + moneyFormat(B22 * 1000)};
   ws['F3'].f = '数据!B36';
   ws['F8'].f = '数据!B34';
   ws['F20'].f = '数据!B47';
-  ws['F27'].f = {v: '￥' + moneyFormat(B13 * 1000), t: 's', w: '￥' + moneyFormat(B13 * 1000)};
+  ws['F27'].f = {v: '¥' + moneyFormat(B13 * 1000), t: 's', w: '¥' + moneyFormat(B13 * 1000)};
   ws['F28'] = {v: '购车', t: 's', w: '购车'};
   ws['G3'].f = '数据!B4';
   ws['G5'].f = '数据!B6';
@@ -810,7 +810,7 @@ function createXykedsqb(wb) {
   ws['G20'].f = '数据!B38';
   ws['G22'].f = '数据!B9';
   ws['G27'] = {v: '人民币', t: 's', w: '人民币'};
-  ws['G32'].f = {v: '￥' + moneyFormat(B13 * 1000), t: 's', w: '￥' + moneyFormat(B13 * 1000)};
+  ws['G32'].f = {v: '¥' + moneyFormat(B13 * 1000), t: 's', w: '¥' + moneyFormat(B13 * 1000)};
 
   ws['C3'].s = {alignment: {horizontal: 'center', vertical: 'bottom'}};
   ws['C5'].s = {font: {sz: 10}, alignment: {horizontal: 'center', vertical: 'bottom'}};
@@ -900,7 +900,7 @@ function createGthkrcns(wb) {
     {hpt: 0.75, hpx: 0.75},
     {hpt: 27, hpx: 27}
   ];
-  ws['A26'].f = '￥' + moneyFormat(B22 * 1000);
+  ws['A26'].f = '¥' + moneyFormat(B22 * 1000);
   ws['C13'].f = '数据!B26';
   ws['D5'].f = '数据!B7';
   ws['D10'].f = '数据!B8';
@@ -1196,10 +1196,10 @@ function createHt6(wb) {
   ws['E43'].f = '数据!B21';
   ws['F28'] = {v: '温州蝉街', t: 's', w: '温州蝉街'};
   ws['F32'].f = '数据!B8';
-  ws['F36'].f = '￥' + moneyFormat(B22 * 1000);
+  ws['F36'].f = '¥' + moneyFormat(B22 * 1000);
   ws['F43'].f = '数据!B20';
-  ws['G35'].f = '￥' + moneyFormat(B22 * 1000);
-  ws['G44'].f = '￥' + moneyFormat(B22 * 1000);
+  ws['G35'].f = '¥' + moneyFormat(B22 * 1000);
+  ws['G44'].f = '¥' + moneyFormat(B22 * 1000);
   ws['H44'].f = '数据!B14';
 
   ws['B43'].s = {font: {sz: 12}, alignment: {horizontal: 'center', vertical: 'center'}};
@@ -1362,10 +1362,10 @@ function createHt7(wb) {
   ws['D35'].f = '数据!B31';
   ws['E3'] = {v: '/', t: 's', w: '/'};
   ws['E5'].f = '数据!B17';
-  ws['F17'] = {v: '￥' + moneyFormat(B42 * 1000), t: 's', w: '￥' + moneyFormat(B42 * 1000)};
-  ws['F18'] = {v: '￥' + moneyFormat(B44 * 1000), t: 's', w: '￥' + moneyFormat(B44 * 1000)};
+  ws['F17'] = {v: '¥' + moneyFormat(B42 * 1000), t: 's', w: '¥' + moneyFormat(B42 * 1000)};
+  ws['F18'] = {v: '¥' + moneyFormat(B44 * 1000), t: 's', w: '¥' + moneyFormat(B44 * 1000)};
   ws['F30'].f = '数据!B27';
-  ws['G5'] = {v: '￥' + moneyFormat(B15 * 1000), t: 's', w: '￥' + moneyFormat(B15 * 1000)};
+  ws['G5'] = {v: '¥' + moneyFormat(B15 * 1000), t: 's', w: '¥' + moneyFormat(B15 * 1000)};
   ws['G20'].f = '数据!B1';
 
   ws['B32'].s = {font: {sz: 10}, alignment: {horizontal: 'center', vertical: 'top'}};
@@ -1479,7 +1479,7 @@ function createHt8(wb) {
   ws['D5'].f = '数据!B19';
   ws['E5'].f = '数据!B21';
   ws['F5'].f = '数据!B20';
-  ws['H5'] = {v: '￥' + moneyFormat(B22 * 1000), t: 's', w: '￥' + moneyFormat(B22 * 1000)};
+  ws['H5'] = {v: '¥' + moneyFormat(B22 * 1000), t: 's', w: '¥' + moneyFormat(B22 * 1000)};
 
   ws['A12'].s = {font: {sz: 10}, alignment: {horizontal: 'right', vertical: 'bottom'}};
   ws['B5'].s = {font: {sz: 12}, alignment: {horizontal: 'center', vertical: 'center'}};
@@ -1574,9 +1574,9 @@ function createBzxy1(wb) {
   ws['C20'] = {v: '/', t: 's', w: '/'};
   ws['C16'].f = '数据!B11';
   ws['E15'].f = '数据!B1';
-  ws['F18'] = {v: {v: '￥' + moneyFormat(B13 * 1000), t: 's', w: '￥' + moneyFormat(B13 * 1000)}, t: 's', w: {v: '￥' + moneyFormat(B13 * 1000), t: 's', w: '￥' + moneyFormat(B13 * 1000)}};
+  ws['F18'] = {v: {v: '¥' + moneyFormat(B13 * 1000), t: 's', w: '¥' + moneyFormat(B13 * 1000)}, t: 's', w: {v: '¥' + moneyFormat(B13 * 1000), t: 's', w: '¥' + moneyFormat(B13 * 1000)}};
   ws['F20'] = {v: '/', t: 's', w: '/'};
-  ws['G16'] = {v: {v: '￥' + moneyFormat(B13 * 1000), t: 's', w: '￥' + moneyFormat(B13 * 1000)}, t: 's', w: {v: '￥' + moneyFormat(B13 * 1000), t: 's', w: '￥' + moneyFormat(B13 * 1000)}};
+  ws['G16'] = {v: {v: '¥' + moneyFormat(B13 * 1000), t: 's', w: '¥' + moneyFormat(B13 * 1000)}, t: 's', w: {v: '¥' + moneyFormat(B13 * 1000), t: 's', w: '¥' + moneyFormat(B13 * 1000)}};
   ws['H9'].f = '数据!B1';
 
   ws['B7'].s = {font: {sz: 10}, alignment: {horizontal: 'left', vertical: 'bottom'}};

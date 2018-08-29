@@ -83,7 +83,8 @@ class overdueList extends React.Component {
       fields,
       pageCode: 630540,
       searchParams: {
-        curNodeCodeList: ['022_03', '022_04', '022_05', '022_06', '022_07', '022_08']
+        // curNodeCodeList: ['022_03', '022_04', '022_05', '022_06', '022_07', '022_08']
+        curNodeCodeList: ['022_03']
       },
       btnEvent: {
         message: (key, item) => {

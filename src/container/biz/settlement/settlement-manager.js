@@ -6,7 +6,7 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/settlement-check';
+} from '@redux/biz/settlement-manager';
 import {
     getQueryString,
     dateTimeFormat,
@@ -21,7 +21,7 @@ import {
 // import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
-    state => state.bizSettlementCheck, {
+    state => state.BizSettlementManager, {
         initStates,
         doFetching,
         cancelFetching,
@@ -30,7 +30,7 @@ import {
         restore
     }
 )
-class settlementCheck extends React.Component {
+class SettlementManager extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -177,7 +177,7 @@ class settlementCheck extends React.Component {
                 param.approveResult = '1';
                 param.operator = getUserId();
                 this.props.doFetching();
-                fetch(630571, param).then(() => {
+                fetch(630585, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {
@@ -193,7 +193,7 @@ class settlementCheck extends React.Component {
                 param.approveResult = '0';
                 param.operator = getUserId();
                 this.props.doFetching();
-                fetch(630571, param).then(() => {
+                fetch(630585, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {
@@ -212,4 +212,4 @@ class settlementCheck extends React.Component {
     }
 }
 
-export default settlementCheck;
+export default SettlementManager;

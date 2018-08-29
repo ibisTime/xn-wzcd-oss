@@ -56,6 +56,16 @@ class BankMoneySendList extends React.Component {
             type: 'img',
             single: true,
             required: true
+        }, {
+            title: '对账单日',
+            field: 'billDatetime',
+            number: true,
+            required: true
+        }, {
+            title: '银行还款日',
+            field: 'repayBankDate',
+            number: true,
+            required: true
         }];
         return this.props.buildDetail({
             fields,

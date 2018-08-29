@@ -194,7 +194,7 @@ class entryAddedit extends React.Component {
                 title: '与本人关系',
                 field: 'relativeRelation',
                 type: 'select',
-                key: 'credit_user_relation',
+                key: 'emergency_contact_relation',
                 readonly: true
             }, {
                 title: '职务',

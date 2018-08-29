@@ -52,10 +52,7 @@ class Repayments extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
-            field: 'code',
-            render: (v, d) => {
-                return d.budgetOrder.code;
-            },
+            field: 'refCode',
             search: true
         }, {
             title: '银行',
@@ -72,9 +69,7 @@ class Repayments extends React.Component {
         }, {
             title: '证件号',
             field: 'idNo',
-            render: (v, d) => {
-                return d.user.idNo;
-            }
+            nowrap: true
         }, {
             title: '放款日期',
             field: 'bankFkDatetime',
@@ -88,21 +83,13 @@ class Repayments extends React.Component {
             field: 'restAmount',
             amount: true
         }, {
-            title: '逾期日期',
-            field: 'repayDatetime',
-            render: (v, d) => {
-                return dateFormat(d.curMonthRepayPlan.repayDatetime);
-            }
-        }, {
             title: '月还款额',
             field: 'monthAmount',
             amount: true
         }, {
             title: '逾期金额',
-            field: 'overdueAmount',
-            render: (v, d) => {
-                return moneyFormat(d.curMonthRepayPlan.overdueAmount);
-            }
+            field: 'restOverdueAmount',
+            amount: true
         }, {
             title: '实际逾期期数',
             field: 'curOverdueCount'

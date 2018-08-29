@@ -71,7 +71,7 @@ class trailerDispose extends React.Component {
                 return d.budgetOrder.carNumber;
             }
         }, {
-            title: '银行欠款',
+            title: '剩余欠款',
             field: 'restAmount'
         }, {
             title: '处理结果',

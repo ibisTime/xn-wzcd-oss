@@ -607,6 +607,11 @@ const ROUTES = [
     path: '/biz/settlement/check',
     component: asyncComponent(() => import('container/biz/settlement/settlement-check'))
   },
+  //  结清审核 风控经理审核
+  {
+    path: '/biz/settlement/manager',
+    component: asyncComponent(() => import('container/biz/settlement/settlement-manager'))
+  },
   //  结清审核 风控总监审核
   {
     path: '/biz/settlement/totalCheck',

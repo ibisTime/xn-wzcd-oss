@@ -34,6 +34,8 @@ class RepaymentsPay extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.haveDepositReceipt = false;
+        this.haveDepositReceiptLostProof = false;
     }
     render() {
         const fields = [{
@@ -67,7 +69,7 @@ class RepaymentsPay extends React.Component {
             amount: true,
             readonly: true
         }, {
-            title: '银行欠款',
+            title: '剩余欠款',
             field: 'restAmount',
             amount: 'true',
             readonly: true
@@ -85,7 +87,7 @@ class RepaymentsPay extends React.Component {
             field: 'curReplaceRepayCount',
             readonly: true
         }, {
-            title: '押金金额',
+            title: '保证金金额',
             field: 'lyDeposit',
             amount: 'true',
             readonly: true
@@ -95,8 +97,6 @@ class RepaymentsPay extends React.Component {
             amount: 'true',
             onChange: (v) => {
                 let lyDeposit = this.props.pageData.lyDeposit;
-                console.log('lyDeposit====' + lyDeposit);
-                console.log('v====' + v);
                 this.props.setPageData({
                     ...this.props.pageData,
                     actualRefunds: moneyFormat(lyDeposit - v * 1000)
@@ -110,7 +110,8 @@ class RepaymentsPay extends React.Component {
         }, {
             title: '结清时间',
             field: 'settleDatetime',
-            type: 'date'
+            type: 'date',
+            required: true
         }, {
             title: '退款开户行',
             field: 'refundBankSubbranch',
@@ -129,6 +130,36 @@ class RepaymentsPay extends React.Component {
             bankCard: true,
             required: true
         }, {
+            title: '是否有押金单',
+            field: 'isDepositReceipt',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            onChange: (v) => {
+                this.haveDepositReceipt = v !== '0';
+                this.haveDepositReceiptLostProof = v === '0';
+            },
+            required: true
+        }, {
+            title: '押金单',
+            field: 'depositReceipt',
+            type: 'img',
+            hidden: !this.haveDepositReceipt,
+            required: true
+        }, {
+            title: '押金单遗失证明',
+            field: 'depositReceiptLostProof',
+            type: 'img',
+            hidden: !this.haveDepositReceiptLostProof,
+            required: true
+        }, {
             title: '第二年按公司指定续保',
             field: 'secondCompanyInsurance',
             amount: 'true'
@@ -137,13 +168,10 @@ class RepaymentsPay extends React.Component {
             field: 'thirdCompanyInsurance',
             amount: 'true'
         }, {
-            title: '押金单',
-            field: 'depositReceipt',
-            type: 'img'
-        }, {
             title: '结清证明',
             field: 'settleAttach',
-            type: 'img'
+            type: 'img',
+            required: true
         }, {
             title: '备注',
             field: 'remark'

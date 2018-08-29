@@ -10,7 +10,8 @@ import {
 import {
   getQueryString,
   showSucMsg,
-  getUserId
+  getUserId,
+  moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -43,6 +44,9 @@ class budgetCheck extends React.Component {
         }, {
             title: '业务编号',
             field: 'bizCode',
+            formatter: (v, d) => {
+                return d.budgetOrder.code;
+            },
             readonly: true
         }, {
             title: '预算金额',
@@ -54,12 +58,31 @@ class budgetCheck extends React.Component {
             field: 'receiptRealName',
             readonly: true
         }, {
+            title: '收款人身份证',
+            field: 'idNo',
+            formatter: (v, d) => {
+                return d.budgetOrder.idNo;
+            },
+            readonly: true
+        }, {
             title: '收款人开户行',
-            field: 'receiptBankName',
+            field: 'receiptBank',
+            type: 'select',
+            listCode: '632037',
+            keyName: 'bankCode',
+            valueName: 'bankName',
             readonly: true
         }, {
             title: '收款人账号',
             field: 'receiptAccount',
+            readonly: true
+        }, {
+            title: '贷款金额',
+            field: 'loanAmount',
+            formatter: (v, d) => {
+                return moneyFormat(d.budgetOrder.loanAmount);
+            },
+            amount: true,
             readonly: true
         }, {
             title: '是否加急',

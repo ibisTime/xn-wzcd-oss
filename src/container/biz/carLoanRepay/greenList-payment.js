@@ -54,7 +54,7 @@ class greenListPayment extends React.Component {
             readonly: true
         }, {
             title: '未还清收成本(元)',
-            field: 'restTotalCost',
+            field: 'notPayedFee',
             amount: true,
             readonly: true
         }, {

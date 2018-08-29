@@ -111,12 +111,12 @@ class transmitAddedit extends React.Component {
             required: !this.sendTypeFalg,
             hidden: this.sendTypeFalg
         }, {
-            title: '发货时间',
+            title: '发件时间',
             field: 'sendDatetime',
             type: 'datetime',
             required: true
         }, {
-            title: '发货说明',
+            title: '发件说明',
             field: 'sendNote'
         }];
         return this.props.buildDetail({

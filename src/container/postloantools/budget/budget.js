@@ -53,7 +53,10 @@ class budget extends React.Component {
             search: true
         }, {
             title: '业务编号',
-            field: 'budgetOrderCode'
+            field: 'budgetOrderCode',
+            render: (v, d) => {
+                return d.budgetOrder.code;
+            }
         }, {
             title: '预算金额',
             field: 'amount',
@@ -127,7 +130,7 @@ class budget extends React.Component {
                         this.props.doFetching();
                         return makeBill(key[0]).then(() => {
                           this.props.getPageData();
-                          showWarnMsg('操作成功');
+                          showSucMsg('操作成功');
                           setTimeout(() => {
                               this.props.getPageData();
                           }, 500);

@@ -18,15 +18,18 @@ import fetch from 'common/js/fetch';
 import {
   CollapseWrapper
 } from 'component/collapse-detail/collapse-detail';
-import {
-  createHt
-} from 'common/js/contract/ICBC-dbht';
-import {
-  exportBOCZdzsxffq
-} from 'common/js/contract/BOC-zdzsxffq';
-import {
-  exportBOCSxfcx
-} from 'common/js/contract/BOC-sxfycx';
+import { createHt } from 'common/js/contract/ICBC-dbht';
+import { exportBOCZdzsxffq } from 'common/js/contract/BOC-zdzsxffq';
+import { exportBOCSxfycx } from 'common/js/contract/BOC-sxfycx';
+import { exportBOCDy } from 'common/js/contract/BOC-dy';
+import { exportBOCCt } from 'common/js/contract/BOC-ct';
+import { exportBOCJcdy } from 'common/js/contract/BOC-jcdy';
+import { exportBOCZdzfjf } from 'common/js/contract/BOC-zdzfjf';
+import { exportCCBDy } from 'common/js/contract/CCB-dy';
+import { exportCCBFwf } from 'common/js/contract/CCB-fwf';
+import { exportBOCFjd } from 'common/js/contract/CCB-fjd';
+import { exportCCBJc } from 'common/js/contract/CCB-jc';
+import { exportCCBXydb } from 'common/js/contract/CCB-xydb';
 
 @CollapseWrapper(
   state => state.printingGuaranteeMake, {
@@ -98,6 +101,7 @@ class GuaranteeMake extends React.Component {
       ]
     }, {
       title: '配偶信息',
+      open: true,
       items: [
         [{
           title: '客户姓名',
@@ -122,7 +126,7 @@ class GuaranteeMake extends React.Component {
           title: '与客户关系',
           field: 'applyUserGhrRelation',
           type: 'select',
-          key: 'credit_user_relation',
+          key: 'emergency_contact_relation',
           readonly: true
         }, {
           title: '是否垫资',
@@ -142,6 +146,7 @@ class GuaranteeMake extends React.Component {
       ]
     }, {
       title: '车辆信息',
+      open: true,
       items: [
         [{
           title: '车辆品牌',
@@ -181,6 +186,7 @@ class GuaranteeMake extends React.Component {
       ]
     }, {
       title: '贷款银行信息',
+      open: true,
       items: [
         [{
           title: '贷款银行',
@@ -208,6 +214,7 @@ class GuaranteeMake extends React.Component {
       ]
     }, {
       title: '档案信息',
+      open: true,
       items: [
         [{
           title: '档案编号',
@@ -259,6 +266,7 @@ class GuaranteeMake extends React.Component {
       ]
     }, {
       title: '担保人信息',
+      open: true,
       items: [
         [{
           title: '担保人姓名',
@@ -297,6 +305,7 @@ class GuaranteeMake extends React.Component {
       ]
     }, {
       title: '其他信息',
+      open: true,
       items: [
         [{
           title: '承保公司',
@@ -355,7 +364,25 @@ class GuaranteeMake extends React.Component {
               } else if(num === '2') {
                 exportBOCZdzsxffq(data);
               } else if(num === '3') {
-                exportBOCSxfcx(data);
+                exportBOCSxfycx(data);
+              } else if(num === '4') {
+                exportBOCDy(data);
+              } else if(num === '5') {
+                exportBOCCt(data);
+              } else if(num === '6') {
+                exportBOCJcdy(data);
+              } else if(num === '8') {
+                exportBOCZdzfjf(data);
+              } else if(num === '9') {
+                exportCCBDy(data);
+              } else if(num === '10') {
+                exportCCBFwf(data);
+              } else if(num === '11') {
+                exportBOCFjd(data);
+              } else if(num === '12') {
+                exportCCBJc(data);
+              } else if(num === '13') {
+                exportCCBXydb(data);
               }
               this.props.cancelFetching();
               showSucMsg('操作成功');

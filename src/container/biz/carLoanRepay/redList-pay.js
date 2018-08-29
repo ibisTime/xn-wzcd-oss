@@ -11,7 +11,8 @@ import {
     getQueryString,
     getUserId,
     showSucMsg,
-    moneyFormat
+    moneyFormat,
+    getCompanyCode
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -130,6 +131,10 @@ class redListaPay extends React.Component {
             field: 'remitBankCode',
             type: 'select',
             listCode: 632007,
+            params: {
+                type: '1',
+                companyCode: getCompanyCode()
+            },
             keyName: 'code',
             valueName: '{{bankcardNumber.DATA}}-{{realName.DATA}}',
             required: true

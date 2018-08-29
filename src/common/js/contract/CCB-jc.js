@@ -1,3 +1,4 @@
+import { getWorkbook } from 'common/js/xlsx-util';
 export function exportCCBJc(data) {
   const wb = getWorkbook();
   createData(wb, data);
@@ -14,7 +15,7 @@ export function exportCCBJc(data) {
 function createData(wb, data) {
   let arr = [
     ['主贷人姓名', data.customerName],
-    ['车牌号', data.carNumber],
+    ['车牌号', data.carNumber]
   ];
   var ws = wb.getSheet(arr, '内容');
   ws['!cols'] = [{

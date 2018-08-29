@@ -90,10 +90,9 @@ class redListCheck extends React.Component {
         }, {
             title: '收款人开户行',
             field: 'tsBankName',
-            type: 'select',
-            listCode: 632037,
-            keyName: 'bankCode',
-            valueName: 'bankName',
+            formatter: (v, d) => {
+                return d.curMonthRepayPlan.tsBankName;
+            },
             readonly: true
         }, {
             title: '收款人开户支行',

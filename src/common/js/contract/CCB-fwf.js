@@ -8,9 +8,9 @@ let B43 = 0;
 let B44 = 0;
 let B46 = 0;
 export function exportCCBFwf(data) {
-  let B42 = moneyReplaceComma(moneyFormat(data.invoicePrice));
-  let B43 = moneyReplaceComma(moneyFormat(data.loanAmount));
-  let B46 = moneyReplaceComma(moneyFormat(data.fee));
+  B42 = moneyReplaceComma(moneyFormat(data.invoicePrice));
+  B43 = moneyReplaceComma(moneyFormat(data.loanAmount));
+  B46 = moneyReplaceComma(moneyFormat(data.fee));
   B20 = B42;
   B44 = B43;
   B11 = B43 + B46;
@@ -49,7 +49,7 @@ function createData(wb, data) {
     ['龙卡信用卡持卡人（甲方）', data.customerName],
     ['身份证件号码', data.idNo],
     ['住所', data.applyNowAddress],
-    ['邮政编码', '邮政编码'],
+    ['邮政编码', data.postcode],
     ['手机电话', data.mobile],
     ['配偶姓名', data.ghRealName],
     ['身份证件号码（配偶）', data.ghIdNo],
@@ -65,7 +65,7 @@ function createData(wb, data) {
     ['车辆颜色', data.carColor],
     ['车架号码', data.frameNo],
     ['发动机号码', data.engineNo],
-    ['汽车发票价(带元)', ''],
+    ['汽车发票价(带元)', moneyReplaceComma(moneyFormat2(data.invoicePrice)) + '元'],
     ['汽车发票价(大写元整)', ''],
     ['工作单位', data.applyUserCompany],
     ['汽车经销商名称', data.carDealerName],
@@ -89,7 +89,7 @@ function createData(wb, data) {
     ['开票日期', '开票日期'],
     ['汽车发票价', moneyFormat2(data.invoicePrice)],
     ['贷款额（小写）', moneyFormat2(data.loanAmount)],
-    ['贷款额（带元）', ''],
+    ['贷款额（带元）', moneyReplaceComma(moneyFormat2(data.loanAmount)) + '元'],
     ['贷款额（大写）', ''],
     ['服务费', moneyFormat2(data.fee)],
     ['担保费', '担保费'],
@@ -101,7 +101,7 @@ function createData(wb, data) {
     ['建行电话', '建行电话'],
     ['', '']
   ];
-  var ws = wb.getSheet(data, '数据');
+  var ws = wb.getSheet(arr, '数据');
   ws['!cols'] = [{
     wch: 27.5
   }, {
@@ -144,17 +144,17 @@ function createData(wb, data) {
   ws['B11'].f = 'B43+B46';
   ws['B14'].f = 'IF(INT(ROUND(B11*B48/100,2))*100=ROUND(B11*B48/100,2)*100,TEXT(INT(ROUND(B11*B48/100,2)),"[$-0804][DBNum2]G/通用格式")&"元",IF(INT(ROUND(B11*B48/100,2)*10)=ROUND(B11*B48/100,2)*10,TEXT(INT(ROUND(B11*B48/100,2)),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT(ROUND(B11*B48/100,2)*10-INT(ROUND(B11*B48/100,2))*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(ROUND(B11*B48/100,2)),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT(ROUND(B11*B48/100,2)*10)=INT(ROUND(B11*B48/100,2))*10,"零",TEXT(RIGHT(INT(ROUND(B11*B48/100,2)*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(ROUND(B11*B48/100,2)*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
   ws['B15'].f = 'IF(INT(ROUND(B11*B48/100/B13,2))*100=ROUND(B11*B48/100/B13,2)*100,TEXT(INT(ROUND(B11*B48/100/B13,2)),"[$-0804][DBNum2]G/通用格式")&"元",IF(INT(ROUND(B11*B48/100/B13,2)*10)=ROUND(B11*B48/100/B13,2)*10,TEXT(INT(ROUND(B11*B48/100/B13,2)),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT(ROUND(B11*B48/100/B13,2)*10-INT(ROUND(B11*B48/100/B13,2))*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(ROUND(B11*B48/100/B13,2)),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT(ROUND(B11*B48/100/B13,2)*10)=INT(ROUND(B11*B48/100/B13,2))*10,"零",TEXT(RIGHT(INT(ROUND(B11*B48/100/B13,2)*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(ROUND(B11*B48/100/B13,2)*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
-  ws['B20'].f = 'B42&"元"';
+  // ws['B20'].f = 'B42&"元"';
   ws['B21'].f = 'IF(INT(B42)*100=B42*100,TEXT(INT(B42),"[$-0804][DBNum2]G/通用格式")&"元",IF(INT(B42*10)=B42*10,TEXT(INT(B42),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT(B42*10-INT(B42)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B42),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT(B42*10)=INT(B42)*10,"零",TEXT(RIGHT(INT(B42*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B42*100),"[$-0804][DBNum2]G/通用格式")&"分"))&"整"';
   ws['B25'].f = 'B42-B43&"元"';
   ws['B26'].f = 'B42-B43';
   ws['B27'].f = 'IF(INT(B42-B43)*100=(B42-B43)*100,TEXT(INT(B42-B43),"[$-0804][DBNum2]G/通用格式")&"元",IF(INT(B43+B46*10)=(B42-B43)*10,TEXT(INT(B42-B43),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT((B42-B43)*10-INT(B42-B43)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B42-B43),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT((B42-B43)*10)=INT(B42-B43)*10,"零",TEXT(RIGHT(INT((B42-B43)*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT((B42-B43)*100),"[$-0804][DBNum2]G/通用格式")&"分"))&"整"';
-  ws['B28'].f = '"￥"&TEXT((B11*B48/B13/100),"0.00")';
+  ws['B28'].f = '"¥"&TEXT((B11*B48/B13/100),"0.00")';
   ws['B30'].f = 'B1&","&IF(MOD(MID(B2,17,1),2),"男","女")&","&IF(LEN(B6)>=2,"已婚",IF(B6=" ","离婚","未婚"))&","&"现居住于"&B3&","&"就业于"&B22&","&"现购自备车壹辆，主要行驶于温州区域。"';
   ws['B31'].f = 'B13/12&"年"';
   ws['B32'].f = 'IF(B13/12=3,"叁",IF(B13/12=2,"贰",IF(B13/12=1.5,"一年半",IF(B13/12=1,"壹","数据错误"))))';
   ws['B34'].f = 'B48/100/B13*100&"%"';
-  ws['B44'].f = 'B43&"元"';
+  // ws['B44'].f = 'B43&"元"';
   ws['B45'].f = 'IF(INT(B43)*100=B43*100,TEXT(INT(B43),"[$-0804][DBNum2]G/通用格式")&"元",IF(INT(B43*10)=B43*10,TEXT(INT(B43),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT(B43*10-INT(B43)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B43),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT(B43*10)=INT(B43)*10,"零",TEXT(RIGHT(INT(B43*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B43*100),"[$-0804][DBNum2]G/通用格式")&"分"))&"整"';
 
   ws['A24'].s = {font: {color: {rgb: 'FF0000'}}};

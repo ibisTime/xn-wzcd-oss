@@ -187,7 +187,7 @@ class Invoice extends React.Component {
         ws['C5'] = {v: '履约保证金', t: 's', w: '履约保证金'};
         ws['B10'] = {v: '金额（大写）', t: 's', w: '金额（大写）'};
         ws['D10'] = {v: moneyUppercase(moneyReplaceComma(moneyFormat(data.lyAmount))), t: 's', w: moneyUppercase(moneyReplaceComma(moneyFormat(data.lyAmount)))};
-        ws['H10'] = {v: '￥', t: 's', w: '￥'};
+        ws['H10'] = {v: '¥', t: 's', w: '¥'};
         ws['I10'] = {v: moneyReplaceComma(moneyFormat(data.lyAmount)), t: 'n', w: moneyFormat(data.lyAmount)};
         ws['J10'] = {v: '元', t: 's', w: '元'};
         ws['B12'] = {v: '财务', t: 's', w: '财务'};

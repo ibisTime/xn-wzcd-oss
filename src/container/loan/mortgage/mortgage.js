@@ -109,36 +109,20 @@ class Mortgage extends React.Component {
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else if (selectedRows[0].pledgeCurNodeCode !== '008_04' && selectedRows[0].pledgeCurNodeCode !== '009_09') {
-                        showWarnMsg('当前不是确认提交银行节点');
+                        showWarnMsg('当前不是待提交银行');
                     } else {
                         this.props.history.push(`/loan/mortgage/apply?code=${selectedRowKeys[0]}`);
                     }
                 },
-                done: (key, item) => {
-                    if (!key || !key.length || !item || !item.length) {
+                done: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
-                    } else if (item[0].pledgeCurNodeCode === '009_04') {
-                        this.props.history.push(`/loan/mortgage/done?code=${key[0]}`);
-                    } else if (item[0].pledgeCurNodeCode !== '008_05') {
-                        showWarnMsg('当前不是抵押完成节点');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].pledgeCurNodeCode !== '009_04' && selectedRows[0].pledgeCurNodeCode !== '008_05') {
+                        showWarnMsg('当前不是待提交抵押完成');
                     } else {
-                        Modal.confirm({
-                            okText: '确认',
-                            cancelText: '取消',
-                            content: '抵押完成？',
-                            onOk: () => {
-                                this.props.doFetching();
-                                return done(key[0]).then(() => {
-                                    this.props.getPageData();
-                                    showSucMsg('操作成功');
-                                    setTimeout(() => {
-                                        this.props.getPageData();
-                                    }, 500);
-                                }).catch(() => {
-                                    this.props.cancelFetching();
-                                });
-                            }
-                        });
+                        this.props.history.push(`/loan/mortgage/done?code=${selectedRowKeys[0]}`);
                     }
                 },
                 complete: (key, item) => {

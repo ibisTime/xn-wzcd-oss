@@ -60,10 +60,7 @@ class settlementApply extends React.Component {
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
-            formatter: (v, d) => {
-                return d.repayBiz.loanBankName;
-            },
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '贷款金额',
@@ -73,7 +70,7 @@ class settlementApply extends React.Component {
             },
             readonly: true
         }, {
-            title: '银行欠款',
+            title: '剩余欠款',
             field: 'restAmount',
             amount: 'true',
             readonly: true
@@ -91,7 +88,7 @@ class settlementApply extends React.Component {
             field: 'curReplaceRepayCount',
             readonly: true
         }, {
-            title: '押金金额',
+            title: '保证金金额',
             field: 'lyDeposit',
             amount: 'true',
             readonly: true
@@ -116,7 +113,8 @@ class settlementApply extends React.Component {
         }, {
             title: '结清时间',
             field: 'settleDatetime',
-            type: 'date'
+            type: 'date',
+            required: true
         }, {
             title: '退款开户行',
             field: 'refundBankSubbranch',
@@ -135,6 +133,42 @@ class settlementApply extends React.Component {
             bankCard: true,
             required: true
         }, {
+            title: '是否有押金单',
+            field: 'isDepositReceipt',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            onChange: (v) => {
+                this.haveDepositReceipt = v !== '0';
+                this.haveDepositReceiptLostProof = v === '0';
+            },
+            required: true
+        }, {
+            title: '押金单',
+            field: 'depositReceipt',
+            type: 'img',
+            hidden: !this.haveDepositReceipt,
+            formatter: (v, d) => {
+                return '';
+            },
+            required: true
+        }, {
+            title: '押金单遗失证明',
+            field: 'depositReceiptLostProof',
+            type: 'img',
+            hidden: !this.haveDepositReceiptLostProof,
+            formatter: (v, d) => {
+                return '';
+            },
+            required: true
+        }, {
             title: '第二年按公司指定续保',
             field: 'secondCompanyInsurance',
             amount: 'true'
@@ -143,13 +177,10 @@ class settlementApply extends React.Component {
             field: 'thirdCompanyInsurance',
             amount: 'true'
         }, {
-            title: '押金单',
-            field: 'depositReceipt',
-            type: 'img'
-        }, {
             title: '结清证明',
             field: 'settleAttach',
-            type: 'img'
+            type: 'img',
+            required: true
         }, {
             title: '备注',
             field: 'remark'

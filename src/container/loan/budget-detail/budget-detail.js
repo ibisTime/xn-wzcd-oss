@@ -471,7 +471,7 @@ class BudgetDetail extends React.Component {
                     title: '申请人共还人关系',
                     field: 'applyUserGhrRelation',
                     type: 'select',
-                    key: 'credit_user_relation'
+                    key: 'emergency_contact_relation'
                 }, {
                     title: '婚姻状况',
                     field: 'marryState',
@@ -762,7 +762,7 @@ class BudgetDetail extends React.Component {
                     field: 'emergencyRelation1',
                     title: '与申请人关系',
                     type: 'select',
-                    key: 'credit_user_relation',
+                    key: 'emergency_contact_relation',
                     required: true
                 }, {
                     field: 'emergencyMobile1',
@@ -777,7 +777,7 @@ class BudgetDetail extends React.Component {
                     field: 'emergencyRelation2',
                     title: '与申请人关系',
                     type: 'select',
-                    key: 'credit_user_relation'
+                    key: 'emergency_contact_relation'
                 }, {
                     field: 'emergencyMobile2',
                     title: '手机号码',

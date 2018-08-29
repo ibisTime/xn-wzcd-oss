@@ -53,7 +53,8 @@ class compensatory extends React.Component {
             field: 'customerUserName'
         }, {
             title: '证件号',
-            field: 'idNo'
+            field: 'idNo',
+            nowrap: true
         }, {
             title: '代偿性质',
             field: 'type',

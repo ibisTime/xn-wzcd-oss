@@ -69,7 +69,7 @@ class GpsSend extends React.Component {
             key: 'logistics_status',
             search: true
         }, {
-            title: '发货说明',
+            title: '发件说明',
             field: 'sendNote'
         }, {
             title: '补件原因',

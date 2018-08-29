@@ -169,6 +169,7 @@ import { bizSettlement } from './redux/biz/settlement';
 import { bizSettlementApply } from './redux/biz/settlement-apply';
 import { bizSettlementCheck } from './redux/biz/settlement-check';
 import { bizSettlementTotalCheck } from './redux/biz/settlement-totalCheck';
+import { BizSettlementManager } from './redux/biz/settlement-manager';
 import { bizSettlementCertain } from './redux/biz/settlement-certain';
 
 //  解除抵押 + 详情 + 申请 + 风控内勤审核 + 风控主管审核 + 回录
@@ -857,6 +858,7 @@ export default combineReducers({
   bizSettlementApply,
   bizSettlementCheck,
   bizSettlementTotalCheck,
+  BizSettlementManager,
   bizSettlementCertain,
   postloantoolsImport,
   postloantoolsImportAddedit,

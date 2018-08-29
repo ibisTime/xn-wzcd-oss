@@ -75,11 +75,11 @@ class DataCollectAddEdit extends React.Component {
         title: '快递单号',
         field: 'logisticsCode'
     }, {
-        title: '发货时间',
+        title: '发件时间',
         field: 'sendDatetime',
         type: 'datetime'
     }, {
-        title: '发货备注',
+        title: '发件备注',
         field: 'sendNote'
     }];
     return this

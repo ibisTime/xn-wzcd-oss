@@ -81,7 +81,7 @@ class Balancedetail extends React.Component {
             field: 'repayMonthAmount',
             amount: true
         }, {
-            title: '银行欠款金额',
+            title: '剩余欠款金额',
             field: 'bankDebtAmount',
             amount: true
         }, {

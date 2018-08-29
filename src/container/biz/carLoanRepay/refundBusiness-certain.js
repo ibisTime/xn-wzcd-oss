@@ -73,7 +73,7 @@ class refundBusinessCertain extends React.Component {
         amount: true,
         readonly: true
       }, {
-        title: '可退押金金额',
+        title: '可退保证金金额',
         field: 'sfAmount',
         amount: true,
         readonly: true

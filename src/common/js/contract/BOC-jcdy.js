@@ -1,3 +1,4 @@
+import { getWorkbook } from 'common/js/xlsx-util';
 export function exportBOCJcdy(data) {
   const wb = getWorkbook();
   createData(wb, data);
@@ -12,8 +13,8 @@ export function exportBOCJcdy(data) {
 function createData(wb, data) {
   let arr = [
     ['主贷人姓名', data.customerName],
-    ['车牌号', data.carNumber],
-  ]
+    ['车牌号', data.carNumber]
+  ];
   var ws = wb.getSheet(arr, '数据');
   ws['!cols'] = [{
     wch: 18.63

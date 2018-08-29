@@ -49,7 +49,8 @@ class imports extends React.Component {
             search: true
         }, {
             title: '身份证',
-            field: 'idNo'
+            field: 'idNo',
+            nowrap: true
         }, {
             title: '贷款银行',
             field: 'loanBankName'

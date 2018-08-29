@@ -62,7 +62,7 @@ class HistoryBusiness extends React.Component {
             title: '身份证',
             field: 'idNo',
             render: (v, d) => {
-                return d.user.idNo;
+                return <span style={{whiteSpace: 'nowrap'}}>{d.user.idNo}</span>;
             }
         }, {
             title: '贷款银行',

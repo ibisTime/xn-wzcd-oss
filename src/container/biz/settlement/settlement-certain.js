@@ -60,10 +60,7 @@ class settlementCertain extends React.Component {
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
-            formatter: (v, d) => {
-                return d.repayBiz.loanBankName;
-            },
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '贷款金额',
@@ -115,7 +112,7 @@ class settlementCertain extends React.Component {
             amount: 'true',
             readonly: true
         }, {
-            title: '押金单',
+            title: '保证金单',
             field: 'depositReceipt',
             type: 'img',
             readonly: true

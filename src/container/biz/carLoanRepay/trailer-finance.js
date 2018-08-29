@@ -71,7 +71,7 @@ class TrailerFinance extends React.Component {
             },
             readonly: true
         }, {
-            title: '银行欠款',
+            title: '剩余欠款',
             field: 'restAmount',
             amount: 'true',
             readonly: true
@@ -89,7 +89,7 @@ class TrailerFinance extends React.Component {
             field: 'curReplaceRepayCount',
             readonly: true
         }, {
-            title: '押金金额',
+            title: '保证金金额',
             field: 'lyDeposit',
             amount: 'true',
             readonly: true

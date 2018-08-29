@@ -779,7 +779,7 @@ class BudgetAddedit extends React.Component {
                     title: '申请人共还人关系',
                     field: 'applyUserGhrRelation',
                     type: 'select',
-                    key: 'credit_user_relation',
+                    key: 'emergency_contact_relation',
                     readonly: true
                 }, {
                     title: '婚姻状况',
@@ -997,12 +997,14 @@ class BudgetAddedit extends React.Component {
                     title: '房产证',
                     field: 'houseProperty',
                     hidden: !this.fczqk,
-                    type: 'img'
+                    type: 'img',
+                    required: true
                 }, {
                     title: '营业执照',
                     field: 'license',
                     hidden: !this.yyzz,
-                    type: 'img'
+                    type: 'img',
+                    required: true
                 }],
                 [{
                     title: '有无驾照',
@@ -1042,12 +1044,14 @@ class BudgetAddedit extends React.Component {
                     title: '驾照',
                     field: 'driceLicense',
                     hidden: !this.ywjz,
-                    type: 'img'
+                    type: 'img',
+                    required: true
                 }, {
                     title: '场地证明',
                     field: 'siteProve',
                     hidden: !this.tgcdzm,
-                    type: 'img'
+                    type: 'img',
+                    required: true
                 }],
                 [{
                     title: '现有车辆',
@@ -1084,7 +1088,7 @@ class BudgetAddedit extends React.Component {
                     field: 'emergencyRelation1',
                     title: '与申请人关系',
                     type: 'select',
-                    key: 'credit_user_relation',
+                    key: 'emergency_contact_relation',
                     required: true
                 }, {
                     field: 'emergencyMobile1',
@@ -1099,7 +1103,7 @@ class BudgetAddedit extends React.Component {
                     field: 'emergencyRelation2',
                     title: '与申请人关系',
                     type: 'select',
-                    key: 'credit_user_relation'
+                    key: 'emergency_contact_relation'
                 }, {
                     field: 'emergencyMobile2',
                     title: '手机号码',

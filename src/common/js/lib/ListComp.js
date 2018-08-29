@@ -4,7 +4,7 @@ import { Form, Select, DatePicker, Input, Button, Table } from 'antd';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import { moneyFormat, dateTimeFormat, dateFormat, tempString,
-  showWarnMsg, showSucMsg, showDelConfirm, getUserId } from 'common/js/util';
+  showWarnMsg, showSucMsg, showDelConfirm, getUserId, dateListFormat } from 'common/js/util';
 import { PIC_PREFIX } from 'common/js/config';
 import { getOwnerBtns } from 'api/menu';
 import { getDictList } from 'api/dict';
@@ -70,9 +70,9 @@ export default class ListComponent extends React.Component {
           obj.render = f.render;
         } else {
           obj.render = (v) => {
-             return f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{dateFormat(v)}</span> : dateFormat(v);
+             return f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{dateListFormat(v)}</span> : dateListFormat(v);
           };
-          this.addRender(f, dateFormat);
+          this.addRender(f, dateListFormat);
         }
       } else if (f.type === 'select' || f.type === 'provSelect') {
         if (f.key) {

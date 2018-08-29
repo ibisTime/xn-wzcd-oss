@@ -798,7 +798,7 @@ class ExportImport extends React.Component {
       {hpt: 0.75, hpx: 0.75},
       {hpt: 27, hpx: 27}
     ];
-    ws['A26'] = {v: '￥', t: 's', w: '￥'};
+    ws['A26'] = {v: '¥', t: 's', w: '¥'};
     ws['B26'].f = '数据!B13+数据!B14';
     ws['C13'].f = '数据!B29';
     ws['D5'].f = '数据!B7';

@@ -19,6 +19,7 @@ export function exportCCBDy(data) {
     let year = data.customerBirth.substr(0, 4);
     let month = data.customerBirth.substr(4, 2) - 0;
     let day = data.customerBirth.substr(6, 2) - 0;
+    let arr01 = ['', '普通', '白金'];
     let arr = [
       ['主贷人姓名', data.customerName],
       ['身份证件号码', data.idNo],
@@ -38,7 +39,7 @@ export function exportCCBDy(data) {
       ['日', day],
       ['贷款期限（年）', data.loanPeriods / 12],
       ['银行委托人', '银行委托人'],
-      ['银行名称', data.loanBankName],
+      ['银行名称', '银行名称'],
       ['银行地址', '银行地址'],
       ['银行电话', '银行电话'],
       ['委托书有效期', '委托书有效期'],

@@ -58,14 +58,17 @@ class ArchivesAddedit extends React.Component {
                 field: 'carColor'
             }, {
                 title: '车辆品牌(品牌车型)',
-                field: 'carBrand'
+                field: 'carBrand',
+                readonly: true
             }, {
                 title: '车架号码',
-                field: 'frameNo'
+                field: 'frameNo',
+                readonly: true
             }],
             [{
                 title: '发动机号码',
-                field: 'engineNo'
+                field: 'engineNo',
+                readonly: true
             }, {
                 title: '交强险',
                 field: 'forceInsurance',
@@ -73,7 +76,8 @@ class ArchivesAddedit extends React.Component {
             }, {
                 title: '商业险合计',
                 field: 'commerceInsurance',
-                amount: true
+                amount: true,
+                required: true
             }],
             [{
                 title: '保险生效日期',
@@ -85,7 +89,8 @@ class ArchivesAddedit extends React.Component {
                 type: 'select',
                 listCode: 632037,
                 keyName: 'bankCode',
-                valueName: 'bankName'
+                valueName: 'bankName',
+                readonly: true
             }, {
                 title: '业务员',
                 field: 'saleUserName',
@@ -104,11 +109,6 @@ class ArchivesAddedit extends React.Component {
                 mobile: true
             }],
             [{
-                title: '银行卡号',
-                field: 'bankCardNumber',
-                bankCard: true,
-                required: true
-            }, {
                 title: ' 首期还款金额',
                 field: 'repayFirstMonthAmount',
                 amount: true,
@@ -120,18 +120,10 @@ class ArchivesAddedit extends React.Component {
                 required: true
             }],
             [{
-                title: '对账单日',
-                field: 'billDatetime',
-                required: true
-            }, {
                 title: '首期还款日期',
                 field: 'repayFirstMonthDatetime',
                 type: 'date',
                 required: 'true'
-            }, {
-                title: '银行还款日',
-                field: 'repayBankDate',
-                number: true
             }],
             [{
                 title: '已入档清单',

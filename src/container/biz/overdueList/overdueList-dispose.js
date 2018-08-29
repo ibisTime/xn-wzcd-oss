@@ -128,7 +128,7 @@ class OverdueListDispose extends React.Component {
             key: 'collection_result',
             required: true
         }, {
-            title: '是否提供押金',
+            title: '是否提供保证金',
             field: 'depositIsProvide',
             type: 'select',
             data: [{
@@ -142,7 +142,7 @@ class OverdueListDispose extends React.Component {
             valueName: 'value',
             required: true
         }, {
-            title: '违约押金',
+            title: '违约保证金',
             field: 'overdueDeposit',
             amount: true,
             number: true,

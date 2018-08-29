@@ -35,7 +35,7 @@ function createData(wb, data) {
     ['龙卡信用卡持卡人（甲方）', data.customerName],
     ['身份证件号码', data.idNo],
     ['住所', data.applyNowAddress],
-    ['邮政编码', '邮政编码'],
+    ['邮政编码', data.postcode],
     ['手机电话', data.mobile],
     ['配偶姓名', data.ghRealName],
     ['身份证件号码（配偶）', data.ghIdNo],

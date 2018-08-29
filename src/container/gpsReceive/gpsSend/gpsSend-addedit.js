@@ -51,7 +51,7 @@ class GpsSendAddEdit extends React.Component {
         title: '快递单号',
         field: 'logisticsCode'
     }, {
-        title: '发货时间',
+        title: '发件时间',
         field: 'sendDatetime',
         type: 'datetime'
     }, {
@@ -59,7 +59,7 @@ class GpsSendAddEdit extends React.Component {
         field: 'supplementReason',
         required: true
     }, {
-        title: '发货说明',
+        title: '发件说明',
         field: 'sendNote'
     }];
     return this

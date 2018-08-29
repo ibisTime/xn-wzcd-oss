@@ -55,7 +55,8 @@ class litigation extends React.Component {
             field: 'realName'
         }, {
             title: '证件号',
-            field: 'idNo'
+            field: 'idNo',
+            nowrap: true
         }, {
             title: '手机号码',
             field: 'mobile',
@@ -71,7 +72,7 @@ class litigation extends React.Component {
             field: 'restOverdueAmount',
             amount: true
         }, {
-            title: '剩余银行欠款',
+            title: '剩余剩余欠款',
             field: 'restAmount',
             amount: true
         }, {

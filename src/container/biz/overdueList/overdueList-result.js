@@ -11,6 +11,7 @@ import {
     getQueryString,
     getUserId,
     showSucMsg,
+    showWarnMsg,
     moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
@@ -112,7 +113,7 @@ class OverdueListResult extends React.Component {
             },
             required: true
         }, {
-            title: '是否提供押金',
+            title: '是否提供保证金',
             field: 'depositIsProvide',
             type: 'select',
             data: [{
@@ -133,11 +134,14 @@ class OverdueListResult extends React.Component {
             },
             required: true
         }, {
-            title: '违约押金',
+            title: '违约保证金',
             field: 'overdueDeposit',
             amount: true,
             number: true,
             required: true,
+            formatter: (v, d) => {
+                return '';
+            },
             hidden: this.isOverdueDeposit
         }, {
             title: '实际还款金额',
@@ -145,12 +149,18 @@ class OverdueListResult extends React.Component {
             amount: true,
             number: true,
             required: true,
+            formatter: (v, d) => {
+                return '';
+            },
             hidden: this.isRealRepayAmount
         }, {
             title: '清收成本清单',
             field: 'costList',
             type: 'o2m',
             options: {
+                add: true,
+                edit: true,
+                delete: true,
                 fields: [{
                     title: '费用项',
                     field: 'item'
@@ -171,8 +181,7 @@ class OverdueListResult extends React.Component {
             title: '催收情况说明',
             field: 'collectionResultNote',
             type: 'textarea',
-            normalArea: true,
-            required: true
+            normalArea: true
         }];
         return this
             .props
@@ -184,6 +193,22 @@ class OverdueListResult extends React.Component {
                 buttons: [{
                     title: '确定',
                     handler: (param) => {
+                        let list = this.props.o2mSKeys.costList;
+                        let len = list.length;
+                        let length = param.costList.length;
+                        let arr = [];
+                        // if(!len) {
+                        //     showWarnMsg('请选择至少一条清收成本清单');
+                        //     return;
+                        // }
+                        for(let i = 0; i < len; i++) {
+                            for(let j = 0; j < length; j++) {
+                                if (list[i] === param.costList[j].code) {
+                                    arr.push(param.costList[j]);
+                                }
+                            }
+                        }
+                        param.costList = arr;
                         param.code = this.code;
                         param.operator = getUserId();
                         this.props.doFetching();

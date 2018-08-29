@@ -71,7 +71,8 @@ class HistoryBusiness extends React.Component {
         }, {
             title: '身份证号',
             field: 'idNo',
-            search: true
+            search: true,
+            nowrap: true
         }, {
             title: '购车途径',
             field: 'shopWay',

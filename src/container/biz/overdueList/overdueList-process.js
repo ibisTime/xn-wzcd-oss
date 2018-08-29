@@ -11,6 +11,7 @@ import {
     getQueryString,
     getUserId,
     showSucMsg,
+    showWarnMsg,
     moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
@@ -149,8 +150,7 @@ class OverdueListProcess extends React.Component {
             title: '催收情况说明',
             field: 'collectionProcessNote',
             type: 'textarea',
-            normalArea: true,
-            required: true
+            normalArea: true
         }];
         return this
             .props
@@ -163,6 +163,21 @@ class OverdueListProcess extends React.Component {
                     title: '确定',
                     handler: (param) => {
                         let list = this.props.o2mSKeys.costList;
+                        let len = list.length;
+                        let length = param.costList.length;
+                        let arr = [];
+                        // if(!len) {
+                        //     showWarnMsg('请选择至少一条清收成本清单');
+                        //     return;
+                        // }
+                        for(let i = 0; i < len; i++) {
+                            for(let j = 0; j < length; j++) {
+                                if (list[i] === param.costList[j].code) {
+                                    arr.push(param.costList[j]);
+                                }
+                            }
+                        }
+                        param.costList = arr;
                         param.code = this.code;
                         param.operator = getUserId();
                         this.props.doFetching();

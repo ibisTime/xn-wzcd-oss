@@ -80,7 +80,7 @@ class blackListAddedit extends React.Component {
           field: 'repayDatetime',
           type: 'date'
         }, {
-          title: '逾期押金',
+          title: '逾期保证金',
           field: 'overdueDeposit'
         }]
       }

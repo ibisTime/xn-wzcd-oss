@@ -24,6 +24,18 @@ import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
+import { createHt } from 'common/js/contract/ICBC-dbht';
+import { exportBOCZdzsxffq } from 'common/js/contract/BOC-zdzsxffq';
+import { exportBOCSxfycx } from 'common/js/contract/BOC-sxfycx';
+import { exportBOCDy } from 'common/js/contract/BOC-dy';
+import { exportBOCCt } from 'common/js/contract/BOC-ct';
+import { exportBOCJcdy } from 'common/js/contract/BOC-jcdy';
+import { exportBOCZdzfjf } from 'common/js/contract/BOC-zdzfjf';
+import { exportCCBDy } from 'common/js/contract/CCB-dy';
+import { exportCCBFwf } from 'common/js/contract/CCB-fwf';
+import { exportBOCFjd } from 'common/js/contract/CCB-fjd';
+import { exportCCBJc } from 'common/js/contract/CCB-jc';
+import { exportCCBXydb } from 'common/js/contract/CCB-xydb';
 
 @DetailWrapper(
     state => state.printingMortgageMake, {
@@ -696,13 +708,16 @@ class MortgageMake extends React.Component {
             readonly: true
         }, {
             title: '车牌号',
-            field: 'carNumber'
+            field: 'carNumber',
+            required: true
         }, {
             title: '车架号',
-            field: 'frameNo'
+            field: 'frameNo',
+            required: true
         }, {
             title: '发动机号',
-            field: 'engineNo'
+            field: 'engineNo',
+            required: true
         }, {
             title: '贷款银行',
             field: 'loanBankName',
@@ -710,14 +725,17 @@ class MortgageMake extends React.Component {
         }, {
             title: '银行贷款额',
             field: 'loanAmount',
+            amount: true,
             readonly: true
         }, {
             title: '服务费',
             field: 'fee',
+            amount: true,
             readonly: true
         }, {
             title: '履约保证金',
             field: 'lyAmount',
+            amount: true,
             readonly: true
         }, {
             title: '贷款期限（年）',
@@ -830,8 +848,33 @@ class MortgageMake extends React.Component {
                     handler: (param) => {
                         param.operator = getUserId();
                         this.props.doFetching();
+                        let num = param.pledgePrintTemplateId;
                         fetch(632192, param).then((data) => {
-                            this.createHt(data);
+                          if(num === '1') {
+                            createHt(data);
+                          } else if(num === '2') {
+                            exportBOCZdzsxffq(data);
+                          } else if(num === '3') {
+                            exportBOCSxfycx(data);
+                          } else if(num === '4') {
+                            exportBOCDy(data);
+                          } else if(num === '5') {
+                            exportBOCCt(data);
+                          } else if(num === '6') {
+                            exportBOCJcdy(data);
+                          } else if(num === '8') {
+                            exportBOCZdzfjf(data);
+                          } else if(num === '9') {
+                            exportCCBDy(data);
+                          } else if(num === '10') {
+                            exportCCBFwf(data);
+                          } else if(num === '11') {
+                            exportBOCFjd(data);
+                          } else if(num === '12') {
+                            exportCCBJc(data);
+                          } else if(num === '13') {
+                            exportCCBXydb(data);
+                          }
                             this.props.cancelFetching();
                             showSucMsg('操作成功');
                             setTimeout(() => {

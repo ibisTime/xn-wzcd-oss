@@ -65,7 +65,8 @@ class Mortgage extends React.Component {
             field: 'loanBankName'
         }, {
             title: '贷款金额',
-            field: 'loanAmount'
+            field: 'loanAmount',
+            amount: true
         }, {
             title: '利率',
             field: 'bankRate'

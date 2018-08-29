@@ -90,6 +90,9 @@ class AdvMoneyAreaCheck extends React.Component {
         }, {
             title: '收款银行',
             field: 'collectBankName',
+            formatter: (v, d) => {
+                return d.collectBankName + '-' + d.collectSubbranch + '-户名：' + d.collectAccountName;
+            },
             readonly: true
         }, {
             title: '收款银行账号',

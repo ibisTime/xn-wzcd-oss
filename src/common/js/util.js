@@ -119,6 +119,17 @@ export function dateFormat(date) {
 }
 
 /**
+ * 日期格式转化 yymmdd
+ * @param date
+ * @param format
+ */
+export function dateListFormat(date) {
+  let datestr = dateFormat(date);
+  let arr = datestr.split('-');
+  return arr[0].substr(2, 2) + arr[1] + arr[2];
+}
+
+/**
  * 日期格式转化 yyyy-MM
  * @param date
  * @param format

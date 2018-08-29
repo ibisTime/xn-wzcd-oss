@@ -59,7 +59,7 @@ function createData(wb, data) {
     ['单位地址', ''],
     ['汽车经销商名称', data.carDealerName],
     ['汽车经销商账号', data.carDealer.jxsCollectBankcardList[0].bankcardNumber],
-    ['汽车经销商开户行', ''],
+    ['汽车经销商开户行', data.carDealer.jxsCollectBankcardList[0].bankName],
     ['首付金额', ''],
     ['承保公司', data.insuranceCompany],
     ['年限', ''],

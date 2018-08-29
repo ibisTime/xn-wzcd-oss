@@ -13,9 +13,7 @@ import {
     listWrapper
 } from 'common/js/build-list';
 import {
-    showWarnMsg,
-    showSucMsg,
-    formatDate
+    dateFormat
 } from 'common/js/util';
 import {
     lowerFrame,
@@ -45,11 +43,15 @@ class Tablehistory extends React.Component {
             search: true
         }, {
             title: '导出人',
-            field: 'realName'
+            field: 'realName',
+            search: true
         }, {
             title: '导出时间',
             field: 'updateDatetime',
-            type: 'datetime'
+            rangedate: ['updateDatetimeStart', 'updateDatetimeEnd'],
+            type: 'date',
+            render: dateFormat,
+            search: true
         }];
         return this.props.buildList({
             fields,

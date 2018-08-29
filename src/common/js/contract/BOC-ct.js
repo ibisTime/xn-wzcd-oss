@@ -7,6 +7,7 @@ let B23 = 0;
 let B15 = 0;
 let B16 = 0;
 let B17 = 0;
+let B41 = 0;
 let B44 = 0;
 let B46 = 0;
 let B47 = 0;
@@ -14,12 +15,14 @@ let B61 = 0;
 let B62 = 0;
 let B64 = 0;
 let B66 = 0;
+let B67 = 0;
 let B71 = 0;
 let B72 = 0;
 let B73 = 0;
 let B74 = 0;
 let B75 = 0;
 let B77 = 0;
+let B79 = 0;
 let D73 = 0;
 export function exportBOCCt(data) {
   B12 = moneyReplaceComma(moneyFormat(data.loanAmount));
@@ -28,7 +31,7 @@ export function exportBOCCt(data) {
   B23 = moneyReplaceComma(moneyFormat(data.invoicePrice));
   B13 = B12 * 0.085;
   B15 = B14 - 8.5;
-  B17 = B16 == 36 ? 8.5 : B16 == 24 ? 7.25 : '';
+  B17 = B16 === 36 ? 8.5 : B16 === 24 ? 7.25 : '';
   B44 = B12 * B15 / 100;
   B46 = B12 + B44;
   B62 = parseInt(B12 / B16);
@@ -38,12 +41,14 @@ export function exportBOCCt(data) {
   D73 = B44 / B16;
   B73 = parseInt(D73);
   B72 = (B73 * (B16 - 1) - B44) * (-1);
-  B75 = keepTwoDecimalFull(B73 *  B17 / 100);
+  B75 = keepTwoDecimalFull(B73 * B17 / 100);
   B71 = B44 * B17 / 100;
   B74 = (B75 * (B16 - 1) - B71) * (-1);
   B67 = B61 + B64 + B72 + B74;
   B47 = B46 * B17 / 100;
   B77 = B74 + B64;
+  B79 = B75 + B66;
+  B41 = B67;
   const wb = getWorkbook();
   createData(wb, data);
   createFjfsm(wb);
@@ -131,7 +136,7 @@ function createData(wb, data) {
     ['单位地址', data.guarantorCompanyAddress],
     ['单位电话', data.guarantorCompanyPhone],
     ['住所', data.guarantorNowAddress],
-    ['邮编', '邮编'],
+    ['邮编', data.postcode],
     ['汽车发票价大写', ''],
     ['首期还款', ''],
     ['每期还款', ''],
@@ -140,7 +145,7 @@ function createData(wb, data) {
     ['每期手续费（大写）', ''],
     ['每期手续费', ''],
     ['首期还款金额', ''],
-    ['每期还款金额', '']
+    ['每期还款金额', ''],
     ['进账单', '蝉街车分期'],
     ['', ''],
     ['高息手续费', ''],
@@ -186,6 +191,7 @@ function createData(wb, data) {
   ws['B50'].f = 'IF(INT(B46)*100=B46*100,TEXT(INT(B46),"[$-0804][DBNum2]G/通用格式"),IF(INT(B46*10)=B46*10,TEXT(INT(B46),"[$-0804][DBNum2]G/通用格式")&TEXT(B46*10-INT(B46)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B46),"[$-0804][DBNum2]G/通用格式")&IF(INT(B46*10)=INT(B46)*10,"零",TEXT(RIGHT(INT(B46*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B46*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
   ws['B60'].f = 'IF(INT(B23)*100=B23*100,TEXT(INT(B23),"[$-0804][DBNum2]G/通用格式")&"元整",IF(INT(B23*10)=B23*10,TEXT(INT(B23),"[$-0804][DBNum2]G/通用格式")&"元整"&TEXT(B23*10-INT(B23)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B23),"[$-0804][DBNum2]G/通用格式")&"元整"&IF(INT(B23*10)=INT(B23)*10,"零",TEXT(RIGHT(INT(B23*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B23*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
   ws['B61'].f = 'B12-(B62*(B16-1))';
+  ws['B62'].f = 'INT(B12/B16)';
   ws['B62'].f = 'INT(B12/B16)';
   ws['B64'].f = 'ABS(B66*35-B13)';
   ws['B66'].f = 'B62*B17/100';
@@ -416,6 +422,9 @@ function createJzd(wb) {
   }, {
     e: {c: 5, r: 2},
     s: {c: 4, r: 2}
+  }, {
+    e: {c: 3, r: 5},
+    s: {c: 1, r: 5}
   }];
   ws['!cols'] = [
     {wch: 7.38},
@@ -993,11 +1002,11 @@ function createXykedsqb(wb) {
   ws['C24'].f = '数据!B3';
   ws['C28'].f = '数据!B16';
   ws['C32'].f = '数据!B28';
-  ws['E32'] = {v: '￥' + moneyFormat(B23), t: 's', w: '￥' + moneyFormat(B23)};
+  ws['E32'] = {v: '¥' + moneyFormat(B23), t: 's', w: '¥' + moneyFormat(B23)};
   ws['F3'].f = '数据!B35';
   ws['F8'].f = '数据!B33';
   ws['F20'].f = '数据!B36';
-  ws['F27'] = {v: '￥' + moneyFormat(B46), t: 's', w: '￥' + moneyFormat(B46)};
+  ws['F27'] = {v: '¥' + moneyFormat(B46), t: 's', w: '¥' + moneyFormat(B46)};
   ws['F28'] = {v: '购车', t: 's', w: '购车'};
   ws['G3'].f = '数据!B4';
   ws['G5'].f = '数据!B6';
@@ -1006,8 +1015,8 @@ function createXykedsqb(wb) {
   ws['G20'].f = '数据!B37';
   ws['G22'].f = '数据!B9';
   ws['G27'] = {v: '人民币', t: 's', w: '人民币'};
-  ws['G32'] = {v: '￥' + moneyFormat(B12), t: 's', w: '￥' + moneyFormat(B12)};
-  ws['G34'] = {v: '￥' + moneyFormat(B44), t: 's', w: '￥' + moneyFormat(B44)};
+  ws['G32'] = {v: '¥' + moneyFormat(B12), t: 's', w: '¥' + moneyFormat(B12)};
+  ws['G34'] = {v: '¥' + moneyFormat(B44), t: 's', w: '¥' + moneyFormat(B44)};
 
   ws['C3'].s = {alignment: {horizontal: 'center', vertical: 'bottom'}};
   ws['C5'].s = {font: {sz: 10}, alignment: {horizontal: 'center', vertical: 'bottom'}};
@@ -1395,7 +1404,7 @@ function createHt6(wb) {
   ws['C16'].f = '数据!B3';
   ws['C25'].f = '数据!B34';
   ws['C39'].f = '数据!B78';
-  ws['C40'] = {v: '￥' + moneyFormat(B79), t: 's', w: '￥' + moneyFormat(B79)};
+  ws['C40'] = {v: '¥' + moneyFormat(B79), t: 's', w: '¥' + moneyFormat(B79)};
   ws['D6'].f = '数据!B2';
   ws['D17'].f = '数据!B50';
   ws['D18'].f = '数据!B10';
@@ -1403,20 +1412,20 @@ function createHt6(wb) {
   ws['D46'].f = '数据!B40';
   ws['E11'] = {v: '913303006671217164', t: 's', w: '913303006671217164'};
   ws['E14'].f = '数据!B7';
-  ws['E19'] = {v: '￥' + moneyFormat(B44), t: 's', w: '￥' + moneyFormat(B44)};
+  ws['E19'] = {v: '¥' + moneyFormat(B44), t: 's', w: '¥' + moneyFormat(B44)};
   ws['E23'].f = '数据!B16';
   ws['E25'].f = '数据!B22';
-  ws['E31'] = {v: '￥' + moneyFormat(B44), t: 's', w: '￥' + moneyFormat(B44)};
+  ws['E31'] = {v: '¥' + moneyFormat(B44), t: 's', w: '¥' + moneyFormat(B44)};
   ws['E32'].f = '数据!B17';
   ws['E33'].f = '数据!B48';
-  ws['E39'] = {v: '￥' + moneyFormat(B77), t: 's', w: '￥' + moneyFormat(B77)};
+  ws['E39'] = {v: '¥' + moneyFormat(B77), t: 's', w: '¥' + moneyFormat(B77)};
   ws['F15'].f = '数据!B8';
-  ws['F18'] = {v: '￥' + moneyFormat(B12), t: 's', w: '￥' + moneyFormat(B12)};
+  ws['F18'] = {v: '¥' + moneyFormat(B12), t: 's', w: '¥' + moneyFormat(B12)};
   ws['F25'].f = '数据!B21';
-  ws['F46'] = {v: '￥' + moneyFormat(B41), t: 's', w: '￥' + moneyFormat(B41)};
-  ws['G17'] = {v: '￥' + moneyFormat(B46), t: 's', w: '￥' + moneyFormat(B46)};
-  ws['G31'] = {v: '￥' + moneyFormat(B12), t: 's', w: '￥' + moneyFormat(B12)};
-  ws['G33'] = {v: '￥' + moneyFormat(B47), t: 's', w: '￥' + moneyFormat(B47)};
+  ws['F46'] = {v: '¥' + moneyFormat(B41), t: 's', w: '¥' + moneyFormat(B41)};
+  ws['G17'] = {v: '¥' + moneyFormat(B46), t: 's', w: '¥' + moneyFormat(B46)};
+  ws['G31'] = {v: '¥' + moneyFormat(B12), t: 's', w: '¥' + moneyFormat(B12)};
+  ws['G33'] = {v: '¥' + moneyFormat(B47), t: 's', w: '¥' + moneyFormat(B47)};
   ws['G39'].f = '数据!B80';
   ws['H31'].f = '数据!B17';
 
@@ -1581,7 +1590,7 @@ function createHt7(wb) {
   ws['F36'].f = '数据!B21';
   ws['G5'].f = '数据!B43';
   ws['G23'] = {v: '温州保利融资担保有限公司', t: 's', w: '温州保利融资担保有限公司'};
-  ws['I36'] = {v: '￥' + moneyFormat(B23), t: 's', w: '￥' + moneyFormat(B23)};
+  ws['I36'] = {v: '¥' + moneyFormat(B23), t: 's', w: '¥' + moneyFormat(B23)};
   ws['J24'] = {v: ' ', t: 's', w: ' '};
 
   ws['A44'].s = {font: {sz: 10}, alignment: {horizontal: 'right', vertical: 'bottom'}};

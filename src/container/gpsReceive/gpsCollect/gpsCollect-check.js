@@ -73,12 +73,12 @@ class GpsCollectCheck extends React.Component {
         field: 'logisticsCode',
         readonly: true
     }, {
-        title: '发货时间',
+        title: '发件时间',
         field: 'sendDatetime',
         type: 'datetime',
         readonly: true
     }, {
-        title: '发货说明',
+        title: '发件说明',
         field: 'sendNote',
         readonly: true
     }, {
