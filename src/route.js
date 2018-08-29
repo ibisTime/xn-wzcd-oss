@@ -868,6 +868,18 @@ const ROUTES = [
       path: '/statistics/bonuses',
       component: asyncComponent(() => import('container/analysis/statistics/bonuses/bonuses'))
   },
+
+  //  风险客户四级分类表
+  {
+      path: '/statistics/achievement',
+      component: asyncComponent(() => import('container/analysis/statistics/achievement/achievement'))
+  },
+
+  //  风险客户四级分类表
+  {
+      path: '/statistics/achievementMonth',
+      component: asyncComponent(() => import('container/analysis/statistics/achievementMonth/achievementMonth'))
+  },
   //  查询分析-进度表
   {
     path: '/statisticQuery/schedule',

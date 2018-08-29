@@ -614,20 +614,20 @@ class DealerAddedit extends React.Component {
     }
     return start ? [moment(dateFormat(start), DATE_FORMAT), moment(dateFormat(end), DATE_FORMAT)] : null;
   }
-  // 返点帐号当前行是否可修改
+  // 返点账号当前行是否可修改
   isEditing = (record) => {
     return record.code === this.state.editingCode;
   }
-  // 点击删除返点帐号
+  // 点击删除返点账号
   delete(code, tab) {
     const data = [...this.state[tab]];
     this.setState({ [tab]: data.filter(item => item.code !== code) });
   }
-  // 点击修改返点帐号
+  // 点击修改返点账号
   edit(code) {
     this.setState({ editingCode: code });
   }
-  // 保存返点帐号修改
+  // 保存返点账号修改
   save(form, code, tab) {
     form.validateFields((error, row) => {
       if (error) {
@@ -648,7 +648,7 @@ class DealerAddedit extends React.Component {
       }
     });
   }
-  // 取消返点帐号修改
+  // 取消返点账号修改
   cancel = () => {
     this.setState({ editingCode: '' });
   };
@@ -716,7 +716,7 @@ class DealerAddedit extends React.Component {
     // 返点账号
     const { gsData, zhData, jhData } = this.state;
     if (!gsData.length && !zhData.length && !jhData.length) {
-      showWarnMsg('至少需要填写一个银行的返点帐号');
+      showWarnMsg('至少需要填写一个银行的返点账号');
       return;
     }
     this.getFdInfo(values, params);

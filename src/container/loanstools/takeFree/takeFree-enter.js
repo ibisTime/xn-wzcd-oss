@@ -153,7 +153,7 @@ class TakeFreeEnter extends React.Component {
                     title: '汇款人',
                     field: 'remitUser'
                 }, {
-                    title: '到帐日期',
+                    title: '到账日期',
                     field: 'reachDatetime',
                     type: 'date'
                 }, {

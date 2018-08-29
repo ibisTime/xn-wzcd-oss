@@ -61,6 +61,8 @@ class AdvMoneyAddedit extends React.Component {
                 refOrder: this.code
             },
             options: {
+                rowKey: 'id',
+                noSelect: true,
                 fields: [{
                     title: '操作人',
                     field: 'operatorName'
