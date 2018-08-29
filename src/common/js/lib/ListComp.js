@@ -5,7 +5,8 @@ import moment from 'moment';
 import 'moment/locale/zh-cn';
 import {
     moneyFormat, dateTimeFormat, dateFormat, tempString,
-    showWarnMsg, showSucMsg, showDelConfirm, getUserId
+    showWarnMsg, showSucMsg, showDelConfirm, getUserId,
+    dateListFormat
 } from 'common/js/util';
 import {PIC_PREFIX} from 'common/js/config';
 import {getOwnerBtns} from 'api/menu';
