@@ -8,7 +8,7 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/biz/litigation/litigation';
+} from '@redux/biz/implementCase/implementCase';
 import {
     listWrapper
 } from 'common/js/build-list';
@@ -29,7 +29,7 @@ import {
 
 @listWrapper(
     state => ({
-        ...state.bizLitigation,
+        ...state.bizImplementCase,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -42,115 +42,83 @@ import {
         setSearchData
     }
 )
-class litigation extends React.Component {
+class ImplementCase extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
             field: 'code',
             render: (v, d) => {
-                if(d.budgetOrder) {
-                    return d.budgetOrder.code;
-                }
+                return d.budgetOrder.code;
             },
             search: true
         }, {
             title: '客户姓名',
             field: 'realName'
         }, {
-            title: '原告',
-            field: 'plaintiff',
+            title: '申请人',
+            field: 'exeApplyUser',
             render: (v, d) => {
-                if(d.judge) {
-                    return d.judge.plaintiff;
-                }
+                return d.judge.exeApplyUser;
             }
         }, {
-            title: '被告',
-            field: 'defendant',
+            title: '被执行人',
+            field: 'beExeUser',
             render: (v, d) => {
-                if(d.judge) {
-                    return d.judge.defendant;
-                }
+                return d.judge.beExeUser;
             }
         }, {
-            title: '案款',
-            field: 'caseFee',
+            title: '申请标的额',
+            field: 'executeMarkAmount',
             render: (v, d) => {
-                if(d.judge) {
-                    return moneyFormat(d.judge.caseFee);
-                }
+                return moneyFormat(d.judge.executeMarkAmount);
             }
         }, {
-            title: '受理时间',
-            field: 'acceptanceTime',
+            title: '申请时间',
+            field: 'applyDatetime',
             render: (v, d) => {
-                if(d.judge) {
-                    return formatDate(d.judge.acceptanceTime);
-                }
-            }
-        }, {
-            title: '受理费',
-            field: 'acceptanceFee',
-            render: (v, d) => {
-                if(d.judge) {
-                    return moneyFormat(d.judge.acceptanceFee);
-                }
-            }
-        }, {
-            title: '受理案号',
-            field: 'caseNumber',
-            render: (v, d) => {
-                if(d.judge) {
-                    return d.judge.caseNumber;
-                }
+                return formatDate(d.judge.applyDatetime);
             }
         }, {
             title: '经办法官',
             field: 'handleJudge',
             render: (v, d) => {
-                if(d.judge) {
-                    return d.judge.handleJudge;
-                }
+                return d.judge.handleJudge;
             }
         }, {
-            title: '传票等送达日期',
-            field: 'summonsDeliveryTime',
+            title: '执行案号',
+            field: 'exeCaseNumber',
             render: (v, d) => {
-                if(d.judge) {
-                    return formatDate(d.judge.summonsDeliveryTime);
-                }
+                return formatDate(d.judge.exeCaseNumber);
             }
         }, {
-            title: '开庭日期',
-            field: 'courtDatetime',
+            title: '优先权标的物',
+            field: 'caseSubject',
             render: (v, d) => {
-                if(d.judge) {
-                    return formatDate(d.judge.courtDatetime);
-                }
+                return formatDate(d.judge.caseSubject);
             }
         }, {
-            title: '开庭地点',
-            field: 'courtAddress',
+            title: '标的物拍卖时间',
+            field: 'saleDatetime',
             render: (v, d) => {
-                if(d.judge) {
-                    return d.judge.courtAddress;
-                }
+                return formatDate(d.judge.saleDatetime);
             }
         }, {
-            title: '判决书送达时间',
-            field: 'judgePdfDeliveryTime',
+            title: '有关公告时间',
+            field: 'noticeDatetime',
             render: (v, d) => {
-                if(d.judge) {
-                    return formatDate(d.judge.judgePdfDeliveryTime);
-                }
+                return formatDate(d.judge.noticeDatetime);
             }
         }, {
-            title: '生效时间',
-            field: 'effectiveTime',
+            title: '执行结果',
+            field: 'exeResult',
             render: (v, d) => {
-                if(d.judge) {
-                    return formatDate(d.judge.effectiveTime);
-                }
+                return d.judge.exeResult;
+            }
+        }, {
+            title: '查封裁定到期时间',
+            field: 'adjudicationDeadline',
+            render: (v, d) => {
+                return formatDate(d.judge.adjudicationDeadline);
             }
         }, {
             title: '当前节点',
@@ -163,16 +131,14 @@ class litigation extends React.Component {
             title: '备注',
             field: 'remark1',
             render: (v, d) => {
-                if(d.judge) {
-                    return formatDate(d.judge.remark);
-                }
+                return formatDate(d.judge.remark);
             }
         }];
         return this.props.buildList({
             fields,
             pageCode: 630520,
             searchParams: {
-                curNodeCodeList: ['021_09', '021_10', '021_11', '021_12', '021_13', '021_14', '021_15']
+                curNodeCodeList: ['021_10', '021_11', '021_12', '021_13', '021_14', '021_15', '021_16', '021_17', '021_18', '021_19']
             },
             btnEvent: {
                 litigation: (selectedRowKeys, selectedRows) => {
@@ -180,21 +146,10 @@ class litigation extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_09') {
-                        showWarnMsg('当前节点不是司法诉讼');
+                    } else if (selectedRows[0].curNodeCode !== '021_10') {
+                        showWarnMsg('当前节点不是司法诉讼节点');
                     } else {
                         this.props.history.push(`/biz/litigation/litigation?code=${selectedRowKeys[0]}&bizCode=${selectedRows[0].budgetOrder.code}`);
-                    }
-                },
-                acceptance: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_10') {
-                        showWarnMsg('当前节点不是案件受理');
-                    } else {
-                        this.props.history.push(`/biz/litigation/acceptance?code=${selectedRowKeys[0]}`);
                     }
                 },
                 finance: (selectedRowKeys, selectedRows) => {
@@ -203,7 +158,7 @@ class litigation extends React.Component {
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else if (selectedRows[0].curNodeCode !== '021_11') {
-                        showWarnMsg('当前节点不是财务审核');
+                        showWarnMsg('当前节点不是诉讼结果录入节点');
                     } else {
                         this.props.history.push(`/biz/litigation/finance?code=${selectedRowKeys[0]}`);
                     }
@@ -219,15 +174,26 @@ class litigation extends React.Component {
                         this.props.history.push(`/biz/litigation/cashier?code=${selectedRowKeys[0]}`);
                     }
                 },
-                service: (selectedRowKeys, selectedRows) => {
+                accept: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else if (selectedRows[0].curNodeCode !== '021_13') {
-                        showWarnMsg('当前节点不是送达');
+                        showWarnMsg('当前节点不是受理');
                     } else {
-                        this.props.history.push(`/biz/litigation/service?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/biz/litigation/accept?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                court: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '021_14') {
+                        showWarnMsg('当前节点不是开庭');
+                    } else {
+                        this.props.history.push(`/biz/litigation/court?code=${selectedRowKeys[0]}`);
                     }
                 },
                 judgment: (selectedRowKeys, selectedRows) => {
@@ -235,21 +201,32 @@ class litigation extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_14') {
+                    } else if (selectedRows[0].curNodeCode !== '021_15') {
                         showWarnMsg('当前节点不是判决');
                     } else {
                         this.props.history.push(`/biz/litigation/judgment?code=${selectedRowKeys[0]}`);
                     }
                 },
-                takeEffect: (selectedRowKeys, selectedRows) => {
+                enter: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_15' && selectedRows[0].curNodeCode !== '021_17') {
-                        showWarnMsg('当前节点不是生效');
+                    } else if (selectedRows[0].curNodeCode !== '021_16' && selectedRows[0].curNodeCode !== '021_17') {
+                        showWarnMsg('当前节点不是诉讼结果录入节点');
                     } else {
-                        this.props.history.push(`/biz/litigation/takeEffect?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/biz/litigation/enter?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                certain: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '021_18') {
+                        showWarnMsg('当前节点不是财务收款');
+                    } else {
+                        this.props.history.push(`/biz/litigation/certain?code=${selectedRowKeys[0]}`);
                     }
                 },
                 again: (key, item) => {
@@ -282,4 +259,4 @@ class litigation extends React.Component {
     }
 }
 
-export default litigation;
+export default ImplementCase;

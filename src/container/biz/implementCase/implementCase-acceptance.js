@@ -6,18 +6,20 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/litigation/litigation-certain';
+} from '@redux/biz/implementCase/implementCase-acceptance';
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    formatDate,
+    moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizLitigationCertain, {
+@DetailWrapper(state => state.bizImplementCaseAcceptance, {
     initStates,
     doFetching,
     cancelFetching,
@@ -25,11 +27,12 @@ import {
     setPageData,
     restore
 })
-class litigationCertain extends React.Component {
+class ImplementCaseAcceptance extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.userId = getQueryString('userId', this.props.location.search);
     }
     render() {
         const fields = [{
@@ -48,7 +51,7 @@ class litigationCertain extends React.Component {
             field: 'idNo',
             readonly: true
         }, {
-            title: '收款金额',
+            title: '贷款金额',
             field: 'loanAmount',
             amount: true,
             readonly: true
@@ -57,34 +60,62 @@ class litigationCertain extends React.Component {
             field: 'loanBankName',
             readonly: true
         }, {
-            title: '收款时间',
-            field: 'judgeReceiptDatetime',
-            type: 'date',
-            required: true
+            title: '申请人',
+            field: 'exeApplyUser',
+            formatter: (v, d) => {
+                return d.judge.exeApplyUser;
+            },
+            readonly: true
         }, {
-            title: '贷款金额',
-            field: 'judgeReceiptAmount',
+            title: '被执行人',
+            field: 'beExeUser',
+            formatter: (v, d) => {
+                return d.judge.beExeUser;
+            },
+            readonly: true
+        }, {
+            title: '申请标的额',
+            field: 'executeMarkAmount',
+            formatter: (v, d) => {
+                return moneyFormat(d.judge.exeApplyUser);
+            },
             amount: true,
+            readonly: true
+        }, {
+            title: '申请时间',
+            field: 'applyDatetime',
+            formatter: (v, d) => {
+                return formatDate(d.judge.applyDatetime);
+            },
+            amount: true,
+            readonly: true
+        }, {
+            title: '经办法官',
+            field: 'handleJudge',
             required: true
         }, {
-            title: '收款凭证',
-            field: 'judgeBillPdf',
-            type: 'img',
+            title: '执行案号',
+            field: 'exeCaseNumber',
+            required: true
+        }, {
+            title: '优先权标的物',
+            field: 'caseSubject',
             required: true
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630563,
+            editCode: 630581,
             detailCode: 630521,
             beforeSubmit: (params) => {
-                params.repayBizCode = this.code;
                 params.operator = getUserId();
+                params.repayBizCode = params.code;
+                delete params.code;
                 return params;
             }
         });
     }
 }
 
-export default litigationCertain;
+export default ImplementCaseAcceptance;

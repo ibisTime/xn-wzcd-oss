@@ -6,16 +6,20 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/litigation/litigation-judgment';
+} from '@redux/biz/implementCase/implementCase-auction';
 import {
     getQueryString,
-    getUserId
+    getUserId,
+    showSucMsg,
+    formatDate,
+    moneyFormat
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizLitigationJudgment, {
+@DetailWrapper(state => state.bizImplementCaseAuction, {
     initStates,
     doFetching,
     cancelFetching,
@@ -23,11 +27,12 @@ import {
     setPageData,
     restore
 })
-class LitigationJudgment extends React.Component {
+class ImplementCaseAuction extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.userId = getQueryString('userId', this.props.location.search);
     }
     render() {
         const fields = [{
@@ -55,88 +60,75 @@ class LitigationJudgment extends React.Component {
             field: 'loanBankName',
             readonly: true
         }, {
-            title: '原告',
-            field: 'plaintiff',
-            type: 'select',
-            key: 'plaintiff',
-            readonly: true
-        }, {
-            title: '被告',
-            field: 'defendant',
-            type: 'select',
-            pageCode: 632119,
-            params: {
-                isFirstAudit: '1',
-                creditCode: this.bizCode
+            title: '申请人',
+            field: 'exeApplyUser',
+            formatter: (v, d) => {
+                return d.judge.exeApplyUser;
             },
-            keyName: 'userName',
-            valueName: 'userName',
-            multiple: true,
             readonly: true
         }, {
-            title: '诉讼费',
-            field: 'caseFee',
+            title: '被执行人',
+            field: 'beExeUser',
+            formatter: (v, d) => {
+                return d.judge.beExeUser;
+            },
+            readonly: true
+        }, {
+            title: '申请标的额',
+            field: 'executeMarkAmount',
+            formatter: (v, d) => {
+                return moneyFormat(d.judge.executeMarkAmount);
+            },
+            readonly: true
+        }, {
+            title: '申请时间',
+            field: 'applyDatetime',
+            formatter: (v, d) => {
+                return formatDate(d.judge.applyDatetime);
+            },
             amount: true,
-            readonly: true
-        }, {
-            title: '受理时间',
-            field: 'acceptanceTime',
-            type: 'date',
-            readonly: true
-        }, {
-            title: '受理费',
-            field: 'acceptanceFee',
-            amount: true,
-            readonly: true
-        }, {
-            title: '受理案号',
-            field: 'caseNumber',
             readonly: true
         }, {
             title: '经办法官',
             field: 'handleJudge',
+            formatter: (v, d) => {
+                return d.judge.handleJudge;
+            },
             readonly: true
         }, {
-            title: '传票等送达日期',
-            field: 'summonsDeliveryTime',
-            type: 'date',
+            title: '执行案号',
+            field: 'exeCaseNumber',
+            formatter: (v, d) => {
+                return d.judge.exeCaseNumber;
+            },
             readonly: true
         }, {
-            title: '开庭日期',
-            field: 'courtDatetime',
-            type: 'date',
+            title: '优先权标的物',
+            field: 'caseSubject',
+            formatter: (v, d) => {
+                return d.judge.caseSubject;
+            },
             readonly: true
         }, {
-            title: '开庭地点',
-            field: 'courtAddress',
-            readonly: true
-        }, {
-            title: '判决书送达时间',
-            field: 'judgePdfDeliveryTime',
+            title: '标的物拍卖时间',
+            field: 'saleDatetime',
             type: 'date',
             required: true
-        }, {
-            title: '判决书',
-            field: 'judgePdf',
-            type: 'img',
-            required: true
-        }, {
-            title: '备注',
-            field: 'remark'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630568,
+            editCode: 630582,
             detailCode: 630521,
             beforeSubmit: (params) => {
-                params.repayBizCode = this.code;
                 params.operator = getUserId();
+                params.repayBizCode = params.code;
+                delete params.code;
                 return params;
             }
         });
     }
 }
 
-export default LitigationJudgment;
+export default ImplementCaseAuction;

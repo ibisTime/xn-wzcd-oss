@@ -557,40 +557,125 @@ const ROUTES = [
       path: '/biz/litigation/litigation',
       component: asyncComponent(() => import('container/biz/litigation/litigation-litigation'))
   },
+  //  司法诉讼 案件受理
+  {
+      path: '/biz/litigation/acceptance',
+      component: asyncComponent(() => import('container/biz/litigation/litigation-acceptance'))
+  },
+  //  司法诉讼 财务审核
+  {
+      path: '/biz/litigation/finance',
+      component: asyncComponent(() => import('container/biz/litigation/litigation-finance'))
+  },
   //  司法诉讼 出纳打款
   {
       path: '/biz/litigation/cashier',
       component: asyncComponent(() => import('container/biz/litigation/litigation-cashier'))
   },
-  //  司法诉讼 受理
+  //  司法诉讼 送达
   {
-      path: '/biz/litigation/accept',
-      component: asyncComponent(() => import('container/biz/litigation/litigation-accept'))
-  },
-  //  司法诉讼 开庭
-  {
-      path: '/biz/litigation/court',
-      component: asyncComponent(() => import('container/biz/litigation/litigation-court'))
+      path: '/biz/litigation/service',
+      component: asyncComponent(() => import('container/biz/litigation/litigation-service'))
   },
   //  司法诉讼 判决
   {
       path: '/biz/litigation/judgment',
       component: asyncComponent(() => import('container/biz/litigation/litigation-judgment'))
   },
-  //  司法诉讼 执行结果录入
+  //  司法诉讼 生效
   {
-      path: '/biz/litigation/enter',
-      component: asyncComponent(() => import('container/biz/litigation/litigation-enter'))
+      path: '/biz/litigation/takeEffect',
+      component: asyncComponent(() => import('container/biz/litigation/litigation-takeEffect'))
   },
-  //  司法诉讼 财务确认收款
+  //  执行案件
   {
-      path: '/biz/litigation/certain',
-      component: asyncComponent(() => import('container/biz/litigation/litigation-certain'))
+    path: '/biz/implementCase',
+    component: asyncComponent(() => import('container/biz/implementCase/implementCase'))
   },
-  //  司法诉讼 财务审核
+  //  执行案件 详情
   {
-      path: '/biz/litigation/finance',
-      component: asyncComponent(() => import('container/biz/litigation/litigation-finance'))
+    path: '/biz/implementCase/addedit',
+    component: asyncComponent(() => import('container/biz/implementCase/implementCase-addedit'))
+  },
+  //  执行案件 申请执行
+  {
+    path: '/biz/implementCase/apply',
+    component: asyncComponent(() => import('container/biz/implementCase/implementCase-apply'))
+  },
+  //  执行案件 案件受理
+  {
+    path: '/biz/implementCase/acceptance',
+    component: asyncComponent(() => import('container/biz/implementCase/implementCase-acceptance'))
+  },
+  //  执行案件 拍卖
+  {
+    path: '/biz/implementCase/auction',
+    component: asyncComponent(() => import('container/biz/implementCase/implementCase-auction'))
+  },
+  //  执行案件 公告
+  {
+    path: '/biz/implementCase/notice',
+    component: asyncComponent(() => import('container/biz/implementCase/implementCase-notice'))
+  },
+  //  执行案件 执行结果
+  {
+    path: '/biz/implementCase/result',
+    component: asyncComponent(() => import('container/biz/implementCase/implementCase-result'))
+  },
+  //  执行案件 财务确认收款
+  {
+    path: '/biz/implementCase/finance',
+    component: asyncComponent(() => import('container/biz/implementCase/implementCase-finance'))
+  },
+  //  执行案件 录入查封裁定到期时间
+  {
+    path: '/biz/implementCase/enter',
+    component: asyncComponent(() => import('container/biz/implementCase/implementCase-enter'))
+  },
+  //  恢复执行案件
+  {
+    path: '/biz/recoveryImplementCase',
+    component: asyncComponent(() => import('container/biz/recoveryImplementCase/recoveryImplementCase'))
+  },
+  //  恢复执行案件 详情
+  {
+    path: '/biz/recoveryImplementCase/addedit',
+    component: asyncComponent(() => import('container/biz/recoveryImplementCase/recoveryImplementCase-addedit'))
+  },
+  //  恢复执行案件 申请执行
+  {
+    path: '/biz/recoveryImplementCase/apply',
+    component: asyncComponent(() => import('container/biz/recoveryImplementCase/recoveryImplementCase-apply'))
+  },
+  //  恢复执行案件 案件受理
+  {
+    path: '/biz/recoveryImplementCase/acceptance',
+    component: asyncComponent(() => import('container/biz/recoveryImplementCase/recoveryImplementCase-acceptance'))
+  },
+  //  恢复执行案件 拍卖
+  {
+    path: '/biz/recoveryImplementCase/auction',
+    component: asyncComponent(() => import('container/biz/recoveryImplementCase/recoveryImplementCase-auction'))
+  },
+  //  恢复执行案件 公告
+  {
+    path: '/biz/recoveryImplementCase/notice',
+    component: asyncComponent(() => import('container/biz/recoveryImplementCase/recoveryImplementCase-notice'))
+  },
+  //  恢复执行案件 执行结果
+  {
+    path: '/biz/recoveryImplementCase/result',
+    component: asyncComponent(() => import('container/biz/recoveryImplementCase/recoveryImplementCase-result'))
+  },
+  //  恢复执行案件 财务确认收款
+  {
+    path: '/biz/recoveryImplementCase/finance',
+    component: asyncComponent(() => import('container/biz/recoveryImplementCase/recoveryImplementCase-finance'))
+  },
+  //  恢复执行案件 录入查封裁定到期时间
+  {
+    path: '/biz/recoveryImplementCase/enter',
+    component: asyncComponent(() => import('container/biz/recoveryImplementCase/recoveryImplementCase-enter'))
   },
   //  结清审核
   {
@@ -646,6 +731,11 @@ const ROUTES = [
   {
     path: '/biz/mortgages/check',
     component: asyncComponent(() => import('container/biz/mortgages/mortgages-check'))
+  },
+  //  解除抵押 风控总监审核
+  {
+    path: '/biz/mortgages/totalCheck',
+    component: asyncComponent(() => import('container/biz/mortgages/mortgages-totalCheck'))
   },
   //  解除抵押 回录
   {

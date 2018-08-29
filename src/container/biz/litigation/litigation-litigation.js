@@ -35,9 +35,6 @@ class litigationLitigation extends React.Component {
         const fields = [{
             title: '客户姓名',
             field: 'realName',
-            formatter: (v, d) => {
-                return d.user.realName;
-            },
             readonly: true
         }, {
             title: '业务编号',
@@ -49,12 +46,9 @@ class litigationLitigation extends React.Component {
         }, {
             title: '身份证',
             field: 'idNo',
-            formatter: (v, d) => {
-                return d.user.idNo;
-            },
             readonly: true
         }, {
-            title: '收款金额',
+            title: '贷款金额',
             field: 'loanAmount',
             amount: true,
             readonly: true
@@ -82,29 +76,9 @@ class litigationLitigation extends React.Component {
             multiple: true,
             required: true
         }, {
-            title: '诉讼标的',
-            field: 'caseSubject',
-            required: true
-        }, {
-            title: '涉案车辆',
-            field: 'caseCar',
-            required: true,
-            hidden: true
-        }, {
             title: '诉讼费',
             field: 'caseFee',
             amount: true,
-            required: true
-        }, {
-            title: '起诉日期',
-            field: 'caseStartDatetime',
-            type: 'date',
-            required: true
-        }, {
-            title: '起诉附件',
-            field: 'casePdf',
-            type: 'file',
-            accept: 'application/pdf,application/vnd.ms-excel,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             required: true
         }];
         return this.props.buildDetail({

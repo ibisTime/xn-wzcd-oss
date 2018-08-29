@@ -6,16 +6,19 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/litigation/litigation-court';
+} from '@redux/biz/implementCase/implementCase-apply';
 import {
     getQueryString,
-    getUserId
+    getUserId,
+    showSucMsg,
+    formatDate
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizLitigationCourt, {
+@DetailWrapper(state => state.bizImplementCaseApply, {
     initStates,
     doFetching,
     cancelFetching,
@@ -23,11 +26,12 @@ import {
     setPageData,
     restore
 })
-class LitigationCourt extends React.Component {
+class ImplementCaseApply extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.userId = getQueryString('userId', this.props.location.search);
     }
     render() {
         const fields = [{
@@ -46,7 +50,7 @@ class LitigationCourt extends React.Component {
             field: 'idNo',
             readonly: true
         }, {
-            title: '收款金额',
+            title: '贷款金额',
             field: 'loanAmount',
             amount: true,
             readonly: true
@@ -55,36 +59,33 @@ class LitigationCourt extends React.Component {
             field: 'loanBankName',
             readonly: true
         }, {
-            title: '开庭日期',
-            field: 'courtDatetime',
-            type: 'date',
+            title: '申请人',
+            field: 'exeApplyUser',
             required: true
         }, {
-            title: '开庭地点',
-            field: 'courtAddress',
+            title: '被执行人',
+            field: 'beExeUser',
             required: true
         }, {
-            title: '经办法官',
-            field: 'handleJudge',
-            required: true
-        }, {
-            title: '审理案号',
-            field: 'hearCaseNumber',
+            title: '申请标的额',
+            field: 'executeMarkAmount',
+            amount: true,
             required: true
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630567,
+            editCode: 630580,
             detailCode: 630521,
             beforeSubmit: (params) => {
-                params.repayBizCode = this.code;
                 params.operator = getUserId();
+                params.repayBizCode = params.code;
+                delete params.code;
                 return params;
             }
         });
     }
 }
 
-export default LitigationCourt;
+export default ImplementCaseApply;

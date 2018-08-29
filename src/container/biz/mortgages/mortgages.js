@@ -91,7 +91,7 @@ class mortgages extends React.Component {
             singleSelect: false,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCodeList: ['020_06', '020_07', '020_08', '020_09', '020_10', '020_11', '020_12', '020_13']
+                curNodeCodeList: ['020_02', '020_03', '020_04', '020_05', '020_06', '020_07', '020_08', '020_09']
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {
@@ -99,7 +99,7 @@ class mortgages extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '020_06') {
+                    } else if (selectedRows[0].curNodeCode !== '020_02') {
                         showWarnMsg('当前节点不是解除抵押申请');
                     } else {
                         this.props.history.push(`/biz/mortgages/apply?code=${selectedRowKeys[0]}`);
@@ -110,7 +110,7 @@ class mortgages extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '020_07') {
+                    } else if (selectedRows[0].curNodeCode !== '020_03') {
                         showWarnMsg('当前节点不是风控内勤审核');
                     } else {
                         this.props.history.push(`/biz/mortgages/internal?code=${selectedRowKeys[0]}`);
@@ -121,62 +121,27 @@ class mortgages extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '020_08') {
+                    } else if (selectedRows[0].curNodeCode !== '020_04') {
                         showWarnMsg('当前节点不是风控经理审核');
                     } else {
                         this.props.history.push(`/biz/mortgages/check?code=${selectedRowKeys[0]}`);
                     }
                 },
-                // submit: (selectedRowKeys, selectedRows) => {
-                //     if (!selectedRowKeys.length) {
-                //         showWarnMsg('请选择记录');
-                //     } else if (selectedRowKeys.length > 1) {
-                //         showWarnMsg('请选择一条记录');
-                //     } else if (selectedRows[0].curNodeCode !== '020_12') {
-                //         showWarnMsg('当前节点不是驻行人员提交材料');
-                //     } else {
-                //         this.props.history.push(`/biz/mortgages/submit?code=${selectedRowKeys[0]}`);
-                //     }
-                // },
-                submit: (key, item) => {
-                    if (!key || !key.length || !item || !item.length) {
+                totalCheck: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
-                    } else if (item[0].curNodeCode !== '020_12') {
-                        showWarnMsg('当前节点不是提交银行');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '020_05') {
+                        showWarnMsg('当前节点不是风控总监审核');
                     } else {
-                        Modal.confirm({
-                            okText: '确认',
-                            cancelText: '取消',
-                            content: '确定提交银行？',
-                            onOk: () => {
-                                this.props.doFetching();
-                                return submitBank(key[0]).then(() => {
-                                    showSucMsg('操作成功');
-                                    setTimeout(() => {
-                                        this.props.getPageData();
-                                    }, 500);
-                                }).catch(() => {
-                                    this.props.cancelFetching();
-                                });
-                            }
-                        });
+                        this.props.history.push(`/biz/mortgages/totalCheck?code=${selectedRowKeys[0]}`);
                     }
                 },
-                // enter: (selectedRowKeys, selectedRows) => {
-                //     if (!selectedRowKeys.length) {
-                //         showWarnMsg('请选择记录');
-                //     } else if (selectedRowKeys.length > 1) {
-                //         showWarnMsg('请选择一条记录');
-                //     } else if (selectedRows[0].curNodeCode !== '020_08') {
-                //         showWarnMsg('当前节点不是风控经理审核');
-                //     } else {
-                //         this.props.history.push(`/biz/mortgages/enter?code=${selectedRowKeys[0]}`);
-                //     }
-                // },
                 complete: (key, item) => {
                     if (!key || !key.length || !item || !item.length) {
                         showWarnMsg('请选择记录');
-                    } else if (item[0].curNodeCode !== '020_10') {
+                    } else if (item[0].curNodeCode !== '020_07') {
                         showWarnMsg('当前节点不是理件完成');
                     } else {
                         Modal.confirm({
@@ -200,31 +165,31 @@ class mortgages extends React.Component {
                             }
                         });
                     }
+                },
+                submit: (key, item) => {
+                    if (!key || !key.length || !item || !item.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (item[0].curNodeCode !== '020_09') {
+                        showWarnMsg('当前节点不是提交银行');
+                    } else {
+                        Modal.confirm({
+                            okText: '确认',
+                            cancelText: '取消',
+                            content: '确定提交银行？',
+                            onOk: () => {
+                                this.props.doFetching();
+                                return submitBank(key[0]).then(() => {
+                                    showSucMsg('操作成功');
+                                    setTimeout(() => {
+                                        this.props.getPageData();
+                                    }, 500);
+                                }).catch(() => {
+                                    this.props.cancelFetching();
+                                });
+                            }
+                        });
+                    }
                 }
-                // over: (key, item) => {
-                //     if (!key || !key.length || !item || !item.length) {
-                //         showWarnMsg('请选择记录');
-                //     } else if (item[0].curNodeCode !== '020_13') {
-                //         showWarnMsg('当前节点不是解除抵押完成');
-                //     } else {
-                //         Modal.confirm({
-                //             okText: '确认',
-                //             cancelText: '取消',
-                //             content: '确定抵押完成？',
-                //             onOk: () => {
-                //                 this.props.doFetching();
-                //                 return lastComplete(key[0]).then(() => {
-                //                     showWarnMsg('操作成功');
-                //                     setTimeout(() => {
-                //                         this.props.getPageData();
-                //                     }, 500);
-                //                 }).catch(() => {
-                //                     this.props.cancelFetching();
-                //                 });
-                //             }
-                //         });
-                //     }
-                // }
             }
         });
     }

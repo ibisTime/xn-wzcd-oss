@@ -50,7 +50,7 @@ class LitigationFinance extends React.Component {
             field: 'idNo',
             readonly: true
         }, {
-            title: '收款金额',
+            title: '贷款金额',
             field: 'loanAmount',
             amount: true,
             readonly: true
@@ -63,52 +63,38 @@ class LitigationFinance extends React.Component {
             field: 'plaintiff',
             type: 'select',
             key: 'plaintiff',
-            formatter: (v, d) => {
-                return d.judge.plaintiff;
-            },
-            required: true,
             readonly: true
         }, {
             title: '被告',
             field: 'defendant',
-            formatter: (v, d) => {
-                return d.judge.defendant;
+            type: 'select',
+            pageCode: 632119,
+            params: {
+                isFirstAudit: '1',
+                creditCode: this.bizCode
             },
-            required: true,
+            keyName: 'userName',
+            valueName: 'userName',
+            multiple: true,
             readonly: true
         }, {
-            title: '诉讼标的',
-            field: 'caseSubject',
-            formatter: (v, d) => {
-                return d.judge.caseSubject;
-            },
-            required: true,
+            title: '诉讼费',
+            field: 'caseFee',
+            amount: true,
             readonly: true
         }, {
-            title: '涉案车辆',
-            field: 'caseCar',
-            formatter: (v, d) => {
-                return d.judge.caseCar;
-            },
-            required: true,
-            readonly: true,
-            hidden: true
-        }, {
-            title: '起诉日期',
-            field: 'caseStartDatetime',
-            formatter: (v, d) => {
-                return formatDate(d.judge.caseStartDatetime);
-            },
-            required: true,
+            title: '受理时间',
+            field: 'acceptanceTime',
+            type: 'date',
             readonly: true
         }, {
-            title: '起诉附件',
-            field: 'casePdf',
-            formatter: (v, d) => {
-                return d.judge.casePdf;
-            },
-            type: 'file',
-            accept: 'application/pdf,application/vnd.ms-excel,application/msword,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            title: '受理费',
+            field: 'acceptanceFee',
+            amount: true,
+            readonly: true
+        }, {
+            title: '受理案号',
+            field: 'caseNumber',
             readonly: true
         }, {
             title: '流程日志',
@@ -147,6 +133,12 @@ class LitigationFinance extends React.Component {
                     valueName: 'name'
                 }]
             }
+        }, {
+            title: '审核意见',
+            field: 'approveNote',
+            type: 'textarea',
+            normalArea: true,
+            required: true
         }];
         return this
             .props
