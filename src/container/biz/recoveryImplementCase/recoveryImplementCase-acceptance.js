@@ -6,16 +6,20 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/litigation/litigation-judgment';
+} from '@redux/biz/recoveryImplementCase/recoveryImplementCase-acceptance';
 import {
     getQueryString,
-    getUserId
+    getUserId,
+    showSucMsg,
+    formatDate,
+    moneyFormat
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizLitigationJudgment, {
+@DetailWrapper(state => state.bizRecoveryImplementCaseAcceptance, {
     initStates,
     doFetching,
     cancelFetching,
@@ -23,11 +27,12 @@ import {
     setPageData,
     restore
 })
-class LitigationJudgment extends React.Component {
+class RecoveryImplementCaseAcceptance extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.userId = getQueryString('userId', this.props.location.search);
     }
     render() {
         const fields = [{
@@ -55,88 +60,56 @@ class LitigationJudgment extends React.Component {
             field: 'loanBankName',
             readonly: true
         }, {
-            title: '原告',
-            field: 'plaintiff',
-            type: 'select',
-            key: 'plaintiff',
-            readonly: true
-        }, {
-            title: '被告',
-            field: 'defendant',
-            type: 'select',
-            pageCode: 632119,
-            params: {
-                isFirstAudit: '1',
-                creditCode: this.bizCode
+            title: '申请人',
+            field: 'exeApplyUser',
+            formatter: (v, d) => {
+                return d.judge.exeApplyUser;
             },
-            keyName: 'userName',
-            valueName: 'userName',
-            multiple: true,
             readonly: true
         }, {
-            title: '诉讼费',
-            field: 'caseFee',
-            amount: true,
+            title: '被执行人',
+            field: 'beExeUser',
+            formatter: (v, d) => {
+                return d.judge.beExeUser;
+            },
             readonly: true
         }, {
-            title: '受理时间',
-            field: 'acceptanceTime',
-            type: 'date',
-            readonly: true
-        }, {
-            title: '受理费',
-            field: 'acceptanceFee',
-            amount: true,
-            readonly: true
-        }, {
-            title: '受理案号',
+            title: '原执行根据',
             field: 'caseNumber',
+            formatter: (v, d) => {
+                return d.judge.caseNumber;
+            },
+            readonly: true
+        }, {
+            title: '恢复时间',
+            field: 'recoveryDatetime',
+            formatter: (v, d) => {
+                return formatDate(d.judge.recoveryDatetime);
+            },
             readonly: true
         }, {
             title: '经办法官',
             field: 'handleJudge',
-            readonly: true
-        }, {
-            title: '传票等送达日期',
-            field: 'summonsDeliveryTime',
-            type: 'date',
-            readonly: true
-        }, {
-            title: '开庭日期',
-            field: 'courtDatetime',
-            type: 'date',
-            readonly: true
-        }, {
-            title: '开庭地点',
-            field: 'courtAddress',
-            readonly: true
-        }, {
-            title: '判决书送达时间',
-            field: 'judgePdfDeliveryTime',
-            type: 'date',
             required: true
         }, {
-            title: '判决书',
-            field: 'judgePdf',
-            type: 'img',
+            title: '优先权标的物',
+            field: 'caseSubject',
             required: true
-        }, {
-            title: '备注',
-            field: 'remark'
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630568,
+            editCode: 630581,
             detailCode: 630521,
             beforeSubmit: (params) => {
-                params.repayBizCode = this.code;
                 params.operator = getUserId();
+                params.repayBizCode = params.code;
+                delete params.code;
                 return params;
             }
         });
     }
 }
 
-export default LitigationJudgment;
+export default RecoveryImplementCaseAcceptance;

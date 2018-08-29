@@ -6,7 +6,7 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/litigation/litigation-judgment';
+} from '@redux/biz/litigation/litigation-takeEffect';
 import {
     getQueryString,
     getUserId
@@ -15,7 +15,7 @@ import {
     DetailWrapper
 } from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizLitigationJudgment, {
+@DetailWrapper(state => state.bizLitigationTakeEffect, {
     initStates,
     doFetching,
     cancelFetching,
@@ -23,7 +23,7 @@ import {
     setPageData,
     restore
 })
-class LitigationJudgment extends React.Component {
+class LitigationTakeEffect extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -114,21 +114,23 @@ class LitigationJudgment extends React.Component {
             title: '判决书送达时间',
             field: 'judgePdfDeliveryTime',
             type: 'date',
-            required: true
+            readonly: true
         }, {
             title: '判决书',
             field: 'judgePdf',
             type: 'img',
-            required: true
+            readonly: true
         }, {
-            title: '备注',
-            field: 'remark'
+            title: '生效时间',
+            field: 'effectiveTime',
+            type: 'date',
+            readonly: true
         }];
         return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630568,
+            editCode: 630569,
             detailCode: 630521,
             beforeSubmit: (params) => {
                 params.repayBizCode = this.code;
@@ -139,4 +141,4 @@ class LitigationJudgment extends React.Component {
     }
 }
 
-export default LitigationJudgment;
+export default LitigationTakeEffect;

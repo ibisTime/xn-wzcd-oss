@@ -48,12 +48,12 @@ class redListEnter extends React.Component {
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            maount: true,
+            amount: true,
             readonly: true
         }, {
             title: '车辆型号',

@@ -86,7 +86,8 @@ class trailer extends React.Component {
             }
         }, {
             title: '收车时间',
-            field: 'takeDatetime'
+            field: 'takeDatetime',
+            type: 'date'
         }, {
             title: '当前节点',
             field: 'curNodeCode',

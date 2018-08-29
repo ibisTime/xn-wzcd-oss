@@ -36,104 +36,84 @@ class litigationAddedit extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'realName',
-            readonly: true
+            field: 'realName'
         }, {
             title: '业务编号',
             field: 'code',
             formatter: (v, d) => {
                 return d.budgetOrder.code;
-            },
-            readonly: true
+            }
         }, {
             title: '身份证',
-            field: 'idNo',
-            readonly: true
+            field: 'idNo'
         }, {
-            title: '收款金额',
+            title: '贷款金额',
             field: 'loanAmount',
-            amount: true,
-            readonly: true
+            amount: true
         }, {
             title: '贷款银行',
-            field: 'loanBankName',
-            readonly: true
-        }, {
-            title: '案号',
-            field: 'caseNumber',
-            required: true,
-            readonly: true
+            field: 'loanBankName'
         }, {
             title: '原告',
             field: 'plaintiff',
-            required: true,
-            readonly: true
+            type: 'select',
+            key: 'plaintiff'
         }, {
             title: '被告',
             field: 'defendant',
-            formatter: (v, d) => {
-                return d.judge.defendant;
-            },
-            required: true,
-            readonly: true
-        }, {
-            title: '诉讼标的',
-            field: 'caseSubject',
-            required: true,
-            readonly: true
-        }, {
-            title: '涉案车辆',
-            field: 'caseCar',
-            required: true,
-            readonly: true,
-            hidden: true
-        }, {
-            title: '起诉日期',
-            field: 'caseStartDatetime',
-            required: true,
-            readonly: true
-        }, {
-            title: '起诉附件',
-            field: 'casePdf',
-            type: 'img',
-            readonly: true
-        }, {
-            title: '流程日志',
-            field: 'list',
-            type: 'o2m',
-            listCode: 630176,
+            type: 'select',
+            pageCode: 632119,
             params: {
-                refOrder: this.code
+                isFirstAudit: '1',
+                creditCode: this.bizCode
             },
-            options: {
-                rowKey: 'id',
-                noSelect: true,
-                fields: [{
-                    title: '操作人',
-                    field: 'operatorName'
-                }, {
-                    title: '开始时间',
-                    field: 'startDatetime',
-                    type: 'datetime'
-                }, {
-                    title: '结束时间',
-                    field: 'endDatetime',
-                    type: 'datetime'
-                }, {
-                    title: '花费时长',
-                    field: 'speedTime'
-                }, {
-                    title: '审核意见',
-                    field: 'dealNote'
-                }, {
-                    title: '当前节点',
-                    field: 'dealNode',
-                    type: 'select',
-                    listCode: 630147,
-                    keyName: 'code',
-                    valueName: 'name'
-                }]
-            }
+            keyName: 'userName',
+            valueName: 'userName',
+            multiple: true
+        }, {
+            title: '诉讼费',
+            field: 'caseFee',
+            amount: true
+        }, {
+            title: '受理时间',
+            field: 'acceptanceTime',
+            type: 'date'
+        }, {
+            title: '受理费',
+            field: 'acceptanceFee',
+            amount: true
+        }, {
+            title: '受理案号',
+            field: 'caseNumber'
+        }, {
+            title: '经办法官',
+            field: 'handleJudge'
+        }, {
+            title: '传票等送达日期',
+            field: 'summonsDeliveryTime',
+            type: 'date'
+        }, {
+            title: '开庭日期',
+            field: 'courtDatetime',
+            type: 'date'
+        }, {
+            title: '开庭地点',
+            field: 'courtAddress'
+        }, {
+            title: '判决书送达时间',
+            field: 'judgePdfDeliveryTime',
+            type: 'date'
+        }, {
+            title: '判决书',
+            field: 'judgePdf',
+            type: 'img'
+        }, {
+            title: '生效时间',
+            field: 'effectiveTime',
+            type: 'date'
+        }, {
+            title: '备注',
+            field: 'remark'
         }];
         return this
             .props

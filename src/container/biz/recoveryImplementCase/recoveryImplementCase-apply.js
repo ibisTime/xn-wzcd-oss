@@ -6,16 +6,19 @@ import {
     setSelectData,
     setPageData,
     restore
-} from '@redux/biz/litigation/litigation-accept';
+} from '@redux/biz/recoveryImplementCase/recoveryImplementCase-apply';
 import {
     getQueryString,
-    getUserId
+    getUserId,
+    showSucMsg,
+    formatDate
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
 
-@DetailWrapper(state => state.bizLitigationAccept, {
+@DetailWrapper(state => state.bizRecoveryImplementCaseApply, {
     initStates,
     doFetching,
     cancelFetching,
@@ -23,11 +26,12 @@ import {
     setPageData,
     restore
 })
-class LitigationAccept extends React.Component {
+class RecoveryImplementCaseApply extends React.Component {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.userId = getQueryString('userId', this.props.location.search);
     }
     render() {
         const fields = [{
@@ -46,7 +50,7 @@ class LitigationAccept extends React.Component {
             field: 'idNo',
             readonly: true
         }, {
-            title: '收款金额',
+            title: '贷款金额',
             field: 'loanAmount',
             amount: true,
             readonly: true
@@ -55,8 +59,23 @@ class LitigationAccept extends React.Component {
             field: 'loanBankName',
             readonly: true
         }, {
-            title: '受理时间',
-            field: 'acceptanceTime',
+            title: '申请人',
+            field: 'exeApplyUser',
+            required: true
+        }, {
+            title: '被执行人',
+            field: 'beExeUser',
+            required: true
+        }, {
+            title: '原执行根据',
+            field: 'caseNumber',
+            formatter: (v, d) => {
+                return d.judge.caseNumber;
+            },
+            readonly: true
+        }, {
+            title: '恢复时间',
+            field: 'recoveryDatetime',
             type: 'date',
             required: true
         }];
@@ -64,15 +83,16 @@ class LitigationAccept extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630566,
+            editCode: 630580,
             detailCode: 630521,
             beforeSubmit: (params) => {
-                params.repayBizCode = this.code;
                 params.operator = getUserId();
+                params.repayBizCode = params.code;
+                delete params.code;
                 return params;
             }
         });
     }
 }
 
-export default LitigationAccept;
+export default RecoveryImplementCaseApply;

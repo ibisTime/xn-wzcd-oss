@@ -152,17 +152,38 @@ import { bizTrailerAddEdit } from './redux/biz/trailer-addedit';
 import { bizTrailerDispose } from './redux/biz/trailer-dispose';
 import { bizTrailerFinance } from './redux/biz/trailer-finance';
 
-//  司法诉讼 + 详情 + 司法诉讼 + 财务审核 + 出纳打款 + 受理 + 开庭 + 判决 + 执行结果  + 财务确认收款
+//  司法诉讼 + 详情 + 司法诉讼 + 案件受理 + 财务审核 + 出纳打款 + 送达 +  判决 + 生效
 import { bizLitigation } from './redux/biz/litigation/litigation';
 import { bizLitigationAddEdit } from './redux/biz/litigation/litigation-addedit';
 import { bizLitigationLitigation } from './redux/biz/litigation/litigation-litigation';
+import { bizLitigationAcceptance } from './redux/biz/litigation/litigation-acceptance';
 import { bizLitigationFinance } from './redux/biz/litigation/litigation-finance';
 import { bizLitigationCashier } from './redux/biz/litigation/litigation-cashier';
-import { bizLitigationAccept } from './redux/biz/litigation/litigation-accept';
-import { bizLitigationCourt } from './redux/biz/litigation/litigation-court';
+import { bizLitigationService } from './redux/biz/litigation/litigation-service';
 import { bizLitigationJudgment } from './redux/biz/litigation/litigation-judgment';
-import { bizLitigationEnter } from './redux/biz/litigation/litigation-enter';
-import { bizLitigationCertain } from './redux/biz/litigation/litigation-certain';
+import { bizLitigationTakeEffect } from './redux/biz/litigation/litigation-takeEffect';
+
+//  执行案件 + 详情 + 申请执行 + 案件受理 + 拍卖 + 公告 + 执行结果 + 财务确认收款 + 录入查封裁定到期时间
+import { bizImplementCase } from './redux/biz/implementCase/implementCase';
+import { bizImplementCaseAddEdit } from './redux/biz/implementCase/implementCase-addedit';
+import { bizImplementCaseApply } from './redux/biz/implementCase/implementCase-apply';
+import { bizImplementCaseAcceptance } from './redux/biz/implementCase/implementCase-acceptance';
+import { bizImplementCaseAuction } from './redux/biz/implementCase/implementCase-auction';
+import { bizImplementCaseNotice } from './redux/biz/implementCase/implementCase-notice';
+import { bizImplementCaseResult } from './redux/biz/implementCase/implementCase-result';
+import { bizImplementCaseFinance } from './redux/biz/implementCase/implementCase-finance';
+import { bizImplementCaseEnter } from './redux/biz/implementCase/implementCase-enter';
+
+//  恢复执行案件 + 详情 + 申请执行 + 案件受理 + 拍卖 + 公告 + 执行结果 + 财务确认收款 + 录入查封裁定到期时间
+import { bizRecoveryImplementCase } from './redux/biz/recoveryImplementCase/recoveryImplementCase';
+import { bizRecoveryImplementCaseAddEdit } from './redux/biz/recoveryImplementCase/recoveryImplementCase-addedit';
+import { bizRecoveryImplementCaseApply } from './redux/biz/recoveryImplementCase/recoveryImplementCase-apply';
+import { bizRecoveryImplementCaseAcceptance } from './redux/biz/recoveryImplementCase/recoveryImplementCase-acceptance';
+import { bizRecoveryImplementCaseAction } from './redux/biz/recoveryImplementCase/recoveryImplementCase-auction';
+import { bizRecoveryImplementCaseNotice } from './redux/biz/recoveryImplementCase/recoveryImplementCase-notice';
+import { bizRecoveryImplementCaseResult } from './redux/biz/recoveryImplementCase/recoveryImplementCase-result';
+import { bizRecoveryImplementCaseFinance } from './redux/biz/recoveryImplementCase/recoveryImplementCase-finance';
+import { bizRecoveryImplementCaseEnter } from './redux/biz/recoveryImplementCase/recoveryImplementCase-enter';
 
 //  结清审核 + 结清申请单 + 审核 + 确认付款
 import { bizSettlement } from './redux/biz/settlement';
@@ -172,12 +193,13 @@ import { bizSettlementTotalCheck } from './redux/biz/settlement-totalCheck';
 import { BizSettlementManager } from './redux/biz/settlement-manager';
 import { bizSettlementCertain } from './redux/biz/settlement-certain';
 
-//  解除抵押 + 详情 + 申请 + 风控内勤审核 + 风控主管审核 + 回录
+//  解除抵押 + 详情 + 申请 + 风控内勤审核 + 风控主管审核 + 风控总监审核 + 回录
 import { mortgages } from './redux/biz/mortgages/mortgages';
 import { mortgagesAddEdit } from './redux/biz/mortgages/mortgages-addedit';
 import { mortgagesApply } from './redux/biz/mortgages/mortgages-apply';
 import { mortgagesInternal } from './redux/biz/mortgages/mortgages-internal';
 import { mortgagesCheck } from './redux/biz/mortgages/mortgages-check';
+import { mortgagesTotalCheck } from './redux/biz/mortgages/mortgages-totalCheck';
 import { mortgagesEnter } from './redux/biz/mortgages/mortgages-enter';
 
 //  历史业务管理 + 详情
@@ -835,14 +857,13 @@ export default combineReducers({
   postloantoolsInstallGpsToVoid,
   bizLitigation,
   bizLitigationAddEdit,
-  bizLitigationCertain,
   bizLitigationFinance,
   bizLitigationLitigation,
-  bizLitigationEnter,
+  bizLitigationAcceptance,
   bizLitigationJudgment,
-  bizLitigationCourt,
+  bizLitigationTakeEffect,
   bizLitigationCashier,
-  bizLitigationAccept,
+  bizLitigationService,
   analysisBalancedetail,
   analysisBonuses,
   analysisInsuranceAmount,
@@ -875,6 +896,7 @@ export default combineReducers({
   mortgagesApply,
   mortgagesInternal,
   mortgagesCheck,
+  mortgagesTotalCheck,
   mortgagesEnter,
   personalarchivesParchives,
   personalarchivesParchivesAddedit,
@@ -1067,5 +1089,23 @@ export default combineReducers({
   financeInvoice,
   postloantoolsRegressesGps,
   postloantoolsRegressesGpsApply,
-  erweimaErweima
+  erweimaErweima,
+  bizImplementCase,
+  bizImplementCaseAddEdit,
+  bizImplementCaseApply,
+  bizImplementCaseAcceptance,
+  bizImplementCaseAuction,
+  bizImplementCaseNotice,
+  bizImplementCaseResult,
+  bizImplementCaseFinance,
+  bizImplementCaseEnter,
+  bizRecoveryImplementCase,
+  bizRecoveryImplementCaseAddEdit,
+  bizRecoveryImplementCaseApply,
+  bizRecoveryImplementCaseAcceptance,
+  bizRecoveryImplementCaseAction,
+  bizRecoveryImplementCaseNotice,
+  bizRecoveryImplementCaseResult,
+  bizRecoveryImplementCaseFinance,
+  bizRecoveryImplementCaseEnter
 });

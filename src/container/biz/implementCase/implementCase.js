@@ -8,7 +8,7 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/biz/litigation/litigation';
+} from '@redux/biz/implementCase/implementCase';
 import {
     listWrapper
 } from 'common/js/build-list';
@@ -29,7 +29,7 @@ import {
 
 @listWrapper(
     state => ({
-        ...state.bizLitigation,
+        ...state.bizImplementCase,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -42,7 +42,7 @@ import {
         setSearchData
     }
 )
-class litigation extends React.Component {
+class ImplementCase extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
@@ -55,40 +55,28 @@ class litigation extends React.Component {
             title: '客户姓名',
             field: 'realName'
         }, {
-            title: '原告',
-            field: 'plaintiff',
+            title: '申请人',
+            field: 'exeApplyUser',
             render: (v, d) => {
-                return d.judge.plaintiff;
+                return d.judge.exeApplyUser;
             }
         }, {
-            title: '被告',
-            field: 'defendant',
+            title: '被执行人',
+            field: 'beExeUser',
             render: (v, d) => {
-                return d.judge.defendant;
+                return d.judge.beExeUser;
             }
         }, {
-            title: '案款',
-            field: 'caseFee',
+            title: '申请标的额',
+            field: 'executeMarkAmount',
             render: (v, d) => {
-                return moneyFormat(d.judge.caseFee);
+                return moneyFormat(d.judge.executeMarkAmount);
             }
         }, {
-            title: '受理时间',
-            field: 'acceptanceTime',
+            title: '申请时间',
+            field: 'applyDatetime',
             render: (v, d) => {
-                return formatDate(d.judge.acceptanceTime);
-            }
-        }, {
-            title: '受理费',
-            field: 'acceptanceFee',
-            render: (v, d) => {
-                return moneyFormat(d.judge.acceptanceFee);
-            }
-        }, {
-            title: '受理案号',
-            field: 'caseNumber',
-            render: (v, d) => {
-                return d.judge.caseNumber;
+                return formatDate(d.judge.applyDatetime);
             }
         }, {
             title: '经办法官',
@@ -97,34 +85,40 @@ class litigation extends React.Component {
                 return d.judge.handleJudge;
             }
         }, {
-            title: '传票等送达日期',
-            field: 'summonsDeliveryTime',
+            title: '执行案号',
+            field: 'exeCaseNumber',
             render: (v, d) => {
-                return formatDate(d.judge.summonsDeliveryTime);
+                return formatDate(d.judge.exeCaseNumber);
             }
         }, {
-            title: '开庭日期',
-            field: 'courtDatetime',
+            title: '优先权标的物',
+            field: 'caseSubject',
             render: (v, d) => {
-                return formatDate(d.judge.courtDatetime);
+                return formatDate(d.judge.caseSubject);
             }
         }, {
-            title: '开庭地点',
-            field: 'courtAddress',
+            title: '标的物拍卖时间',
+            field: 'saleDatetime',
             render: (v, d) => {
-                return d.judge.courtAddress;
+                return formatDate(d.judge.saleDatetime);
             }
         }, {
-            title: '判决书送达时间',
-            field: 'judgePdfDeliveryTime',
+            title: '有关公告时间',
+            field: 'noticeDatetime',
             render: (v, d) => {
-                return formatDate(d.judge.judgePdfDeliveryTime);
+                return formatDate(d.judge.noticeDatetime);
             }
         }, {
-            title: '生效时间',
-            field: 'effectiveTime',
+            title: '执行结果',
+            field: 'exeResult',
             render: (v, d) => {
-                return formatDate(d.judge.effectiveTime);
+                return d.judge.exeResult;
+            }
+        }, {
+            title: '查封裁定到期时间',
+            field: 'adjudicationDeadline',
+            render: (v, d) => {
+                return formatDate(d.judge.adjudicationDeadline);
             }
         }, {
             title: '当前节点',
@@ -265,4 +259,4 @@ class litigation extends React.Component {
     }
 }
 
-export default litigation;
+export default ImplementCase;

@@ -72,7 +72,8 @@ class trailerDispose extends React.Component {
             }
         }, {
             title: '剩余欠款',
-            field: 'restAmount'
+            field: 'restAmount',
+            amount: true
         }, {
             title: '处理结果',
             field: 'dealResult',
