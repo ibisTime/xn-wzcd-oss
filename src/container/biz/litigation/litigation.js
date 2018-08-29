@@ -48,7 +48,9 @@ class litigation extends React.Component {
             title: '业务编号',
             field: 'code',
             render: (v, d) => {
-                return d.budgetOrder.code;
+                if(d.budgetOrder) {
+                    return d.budgetOrder.code;
+                }
             },
             search: true
         }, {
@@ -58,73 +60,97 @@ class litigation extends React.Component {
             title: '原告',
             field: 'plaintiff',
             render: (v, d) => {
-                return d.judge.plaintiff;
+                if(d.judge) {
+                    return d.judge.plaintiff;
+                }
             }
         }, {
             title: '被告',
             field: 'defendant',
             render: (v, d) => {
-                return d.judge.defendant;
+                if(d.judge) {
+                    return d.judge.defendant;
+                }
             }
         }, {
             title: '案款',
             field: 'caseFee',
             render: (v, d) => {
-                return moneyFormat(d.judge.caseFee);
+                if(d.judge) {
+                    return moneyFormat(d.judge.caseFee);
+                }
             }
         }, {
             title: '受理时间',
             field: 'acceptanceTime',
             render: (v, d) => {
-                return formatDate(d.judge.acceptanceTime);
+                if(d.judge) {
+                    return formatDate(d.judge.acceptanceTime);
+                }
             }
         }, {
             title: '受理费',
             field: 'acceptanceFee',
             render: (v, d) => {
-                return moneyFormat(d.judge.acceptanceFee);
+                if(d.judge) {
+                    return moneyFormat(d.judge.acceptanceFee);
+                }
             }
         }, {
             title: '受理案号',
             field: 'caseNumber',
             render: (v, d) => {
-                return d.judge.caseNumber;
+                if(d.judge) {
+                    return d.judge.caseNumber;
+                }
             }
         }, {
             title: '经办法官',
             field: 'handleJudge',
             render: (v, d) => {
-                return d.judge.handleJudge;
+                if(d.judge) {
+                    return d.judge.handleJudge;
+                }
             }
         }, {
             title: '传票等送达日期',
             field: 'summonsDeliveryTime',
             render: (v, d) => {
-                return formatDate(d.judge.summonsDeliveryTime);
+                if(d.judge) {
+                    return formatDate(d.judge.summonsDeliveryTime);
+                }
             }
         }, {
             title: '开庭日期',
             field: 'courtDatetime',
             render: (v, d) => {
-                return formatDate(d.judge.courtDatetime);
+                if(d.judge) {
+                    return formatDate(d.judge.courtDatetime);
+                }
             }
         }, {
             title: '开庭地点',
             field: 'courtAddress',
             render: (v, d) => {
-                return d.judge.courtAddress;
+                if(d.judge) {
+                    return d.judge.courtAddress;
+                }
             }
         }, {
             title: '判决书送达时间',
             field: 'judgePdfDeliveryTime',
             render: (v, d) => {
-                return formatDate(d.judge.judgePdfDeliveryTime);
+                if(d.judge) {
+                    return formatDate(d.judge.judgePdfDeliveryTime);
+                }
             }
         }, {
             title: '生效时间',
             field: 'effectiveTime',
             render: (v, d) => {
-                return formatDate(d.judge.effectiveTime);
+                if(d.judge) {
+                    return formatDate(d.judge.effectiveTime);
+                }
             }
         }, {
             title: '当前节点',
@@ -137,14 +163,16 @@ class litigation extends React.Component {
             title: '备注',
             field: 'remark1',
             render: (v, d) => {
-                return formatDate(d.judge.remark);
+                if(d.judge) {
+                    return formatDate(d.judge.remark);
+                }
             }
         }];
         return this.props.buildList({
             fields,
             pageCode: 630520,
             searchParams: {
-                curNodeCodeList: ['021_10', '021_11', '021_12', '021_13', '021_14', '021_15', '021_16', '021_17', '021_18', '021_19']
+                curNodeCodeList: ['021_09', '021_10', '021_11', '021_12', '021_13', '021_14', '021_15']
             },
             btnEvent: {
                 litigation: (selectedRowKeys, selectedRows) => {
@@ -152,10 +180,21 @@ class litigation extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_10') {
-                        showWarnMsg('当前节点不是司法诉讼节点');
+                    } else if (selectedRows[0].curNodeCode !== '021_09') {
+                        showWarnMsg('当前节点不是司法诉讼');
                     } else {
                         this.props.history.push(`/biz/litigation/litigation?code=${selectedRowKeys[0]}&bizCode=${selectedRows[0].budgetOrder.code}`);
+                    }
+                },
+                acceptance: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '021_10') {
+                        showWarnMsg('当前节点不是案件受理');
+                    } else {
+                        this.props.history.push(`/biz/litigation/acceptance?code=${selectedRowKeys[0]}`);
                     }
                 },
                 finance: (selectedRowKeys, selectedRows) => {
@@ -164,7 +203,7 @@ class litigation extends React.Component {
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else if (selectedRows[0].curNodeCode !== '021_11') {
-                        showWarnMsg('当前节点不是诉讼结果录入节点');
+                        showWarnMsg('当前节点不是财务审核');
                     } else {
                         this.props.history.push(`/biz/litigation/finance?code=${selectedRowKeys[0]}`);
                     }
@@ -180,26 +219,15 @@ class litigation extends React.Component {
                         this.props.history.push(`/biz/litigation/cashier?code=${selectedRowKeys[0]}`);
                     }
                 },
-                accept: (selectedRowKeys, selectedRows) => {
+                service: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
                     } else if (selectedRows[0].curNodeCode !== '021_13') {
-                        showWarnMsg('当前节点不是受理');
+                        showWarnMsg('当前节点不是送达');
                     } else {
-                        this.props.history.push(`/biz/litigation/accept?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                court: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_14') {
-                        showWarnMsg('当前节点不是开庭');
-                    } else {
-                        this.props.history.push(`/biz/litigation/court?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/biz/litigation/service?code=${selectedRowKeys[0]}`);
                     }
                 },
                 judgment: (selectedRowKeys, selectedRows) => {
@@ -207,32 +235,21 @@ class litigation extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_15') {
+                    } else if (selectedRows[0].curNodeCode !== '021_14') {
                         showWarnMsg('当前节点不是判决');
                     } else {
                         this.props.history.push(`/biz/litigation/judgment?code=${selectedRowKeys[0]}`);
                     }
                 },
-                enter: (selectedRowKeys, selectedRows) => {
+                takeEffect: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_16' && selectedRows[0].curNodeCode !== '021_17') {
-                        showWarnMsg('当前节点不是诉讼结果录入节点');
+                    } else if (selectedRows[0].curNodeCode !== '021_15' && selectedRows[0].curNodeCode !== '021_17') {
+                        showWarnMsg('当前节点不是生效');
                     } else {
-                        this.props.history.push(`/biz/litigation/enter?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                certain: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_18') {
-                        showWarnMsg('当前节点不是财务收款');
-                    } else {
-                        this.props.history.push(`/biz/litigation/certain?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/biz/litigation/takeEffect?code=${selectedRowKeys[0]}`);
                     }
                 },
                 again: (key, item) => {
