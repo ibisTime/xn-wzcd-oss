@@ -10,7 +10,9 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyFormat,
+    dateFormat
 } from 'common/js/util';
 import {
     DetailWrapper
@@ -65,20 +67,16 @@ class LitigationAcceptance extends React.Component {
         }, {
             title: '被告',
             field: 'defendant',
-            type: 'select',
-            pageCode: 632119,
-            params: {
-                isFirstAudit: '1',
-                creditCode: this.bizCode
+            formatter: (v, d) => {
+                return d.judge.defendant;
             },
-            keyName: 'userName',
-            valueName: 'userName',
-            multiple: true,
             readonly: true
         }, {
-            title: '诉讼费',
+            title: '案款',
             field: 'caseFee',
-            amount: true,
+            formatter: (v, d) => {
+                return moneyFormat(d.judge.caseFee);
+            },
             readonly: true
         }, {
             title: '受理时间',

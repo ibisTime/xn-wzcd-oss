@@ -77,7 +77,7 @@ class ImplementCaseAcceptance extends React.Component {
             title: '申请标的额',
             field: 'executeMarkAmount',
             formatter: (v, d) => {
-                return moneyFormat(d.judge.exeApplyUser);
+                return moneyFormat(d.judge.executeMarkAmount);
             },
             amount: true,
             readonly: true

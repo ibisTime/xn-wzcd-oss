@@ -24,7 +24,7 @@ import {
     Modal
 } from 'antd';
 import {
-    litigationAgain
+    implementCaseAgain
 } from 'api/biz';
 
 @listWrapper(
@@ -138,18 +138,62 @@ class ImplementCase extends React.Component {
             fields,
             pageCode: 630520,
             searchParams: {
-                curNodeCodeList: ['021_10', '021_11', '021_12', '021_13', '021_14', '021_15', '021_16', '021_17', '021_18', '021_19']
+                curNodeCodeList: ['021_16', '021_17', '021_18', '021_19', '021_20', '021_22', '021_23', '021_24']
             },
             btnEvent: {
-                litigation: (selectedRowKeys, selectedRows) => {
+                apply: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_10') {
-                        showWarnMsg('当前节点不是司法诉讼节点');
+                    } else if (selectedRows[0].curNodeCode !== '021_16') {
+                        showWarnMsg('当前节点不是申请执行');
                     } else {
-                        this.props.history.push(`/biz/litigation/litigation?code=${selectedRowKeys[0]}&bizCode=${selectedRows[0].budgetOrder.code}`);
+                        this.props.history.push(`/biz/implementCase/apply?code=${selectedRowKeys[0]}&bizCode=${selectedRows[0].budgetOrder.code}`);
+                    }
+                },
+                acceptance: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '021_17') {
+                        showWarnMsg('当前节点不是案件受理');
+                    } else {
+                        this.props.history.push(`/biz/implementCase/acceptance?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                auction: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '021_18') {
+                        showWarnMsg('当前节点不是拍卖');
+                    } else {
+                        this.props.history.push(`/biz/implementCase/auction?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                notice: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '021_19') {
+                        showWarnMsg('当前节点不是公告');
+                    } else {
+                        this.props.history.push(`/biz/implementCase/notice?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                result: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '021_20') {
+                        showWarnMsg('当前节点不是执行结果');
+                    } else {
+                        this.props.history.push(`/biz/implementCase/result?code=${selectedRowKeys[0]}`);
                     }
                 },
                 finance: (selectedRowKeys, selectedRows) => {
@@ -157,54 +201,10 @@ class ImplementCase extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_11') {
-                        showWarnMsg('当前节点不是诉讼结果录入节点');
+                    } else if (selectedRows[0].curNodeCode !== '021_22') {
+                        showWarnMsg('当前节点不是财务确认收款');
                     } else {
-                        this.props.history.push(`/biz/litigation/finance?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                cashier: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_12') {
-                        showWarnMsg('当前节点不是出纳打款');
-                    } else {
-                        this.props.history.push(`/biz/litigation/cashier?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                accept: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_13') {
-                        showWarnMsg('当前节点不是受理');
-                    } else {
-                        this.props.history.push(`/biz/litigation/accept?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                court: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_14') {
-                        showWarnMsg('当前节点不是开庭');
-                    } else {
-                        this.props.history.push(`/biz/litigation/court?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                judgment: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_15') {
-                        showWarnMsg('当前节点不是判决');
-                    } else {
-                        this.props.history.push(`/biz/litigation/judgment?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/biz/implementCase/finance?code=${selectedRowKeys[0]}`);
                     }
                 },
                 enter: (selectedRowKeys, selectedRows) => {
@@ -212,46 +212,10 @@ class ImplementCase extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_16' && selectedRows[0].curNodeCode !== '021_17') {
-                        showWarnMsg('当前节点不是诉讼结果录入节点');
+                    } else if (selectedRows[0].curNodeCode !== '021_13') {
+                        showWarnMsg('当前节点不是录入查封裁定到期时间');
                     } else {
-                        this.props.history.push(`/biz/litigation/enter?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                certain: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_18') {
-                        showWarnMsg('当前节点不是财务收款');
-                    } else {
-                        this.props.history.push(`/biz/litigation/certain?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                again: (key, item) => {
-                    if (!key || !key.length || !item || !item.length) {
-                        showWarnMsg('请选择记录');
-                    } else if(item[0].curNodeCode !== '021_14') {
-                        showWarnMsg('当前节点不是重新申请执行节点');
-                    } else {
-                        Modal.confirm({
-                            okText: '确认',
-                            cancelText: '取消',
-                            content: '确定重新执行？',
-                            onOk: () => {
-                                this.props.doFetching();
-                                return litigationAgain(key[0]).then(() => {
-                                    this.props.cancelFetching();
-                                    showSucMsg('操作成功');
-                                    setTimeout(() => {
-                                        this.props.getPageData();
-                                    }, 500);
-                                }).catch(() => {
-                                    this.props.cancelFetching();
-                                });
-                            }
-                        });
+                        this.props.history.push(`/biz/implementCase/enter?code=${selectedRowKeys[0]}`);
                     }
                 }
             }

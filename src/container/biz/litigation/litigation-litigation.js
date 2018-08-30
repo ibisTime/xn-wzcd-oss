@@ -76,7 +76,7 @@ class litigationLitigation extends React.Component {
             multiple: true,
             required: true
         }, {
-            title: '诉讼费',
+            title: '案款',
             field: 'caseFee',
             amount: true,
             required: true

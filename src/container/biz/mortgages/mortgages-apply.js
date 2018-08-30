@@ -52,10 +52,7 @@ class MortgagesApply extends React.Component {
             readonly: true
         }, {
             title: '业务编号',
-            field: 'code',
-            formatter: (v, d) => {
-                return d.budgetOrder.code;
-            },
+            field: 'budgetOrderCode',
             readonly: true
         }, {
             title: '贷款银行',

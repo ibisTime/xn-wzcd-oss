@@ -39,9 +39,6 @@ class MortgagesTotalCheck extends React.Component {
         const fields = [{
             title: '客户姓名',
             field: 'realName',
-            formatter: (v, d) => {
-                return d.user.realName;
-            },
             readonly: true
         }, {
             title: '身份证',
@@ -64,9 +61,7 @@ class MortgagesTotalCheck extends React.Component {
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanAmount);
-            },
+            amount: true,
             readonly: true
         }, {
             title: '流程日志',

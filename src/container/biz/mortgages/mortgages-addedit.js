@@ -47,19 +47,14 @@ class mortgagesAddedit extends React.Component {
             }
         }, {
             title: '业务编号',
-            field: 'code',
-            formatter: (v, d) => {
-                return d.budgetOrder.code;
-            }
+            field: 'budgetOrderCode'
         }, {
             title: '贷款银行',
             field: 'loanBankName'
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanAmount);
-            }
+            amount: true
         }, {
             title: '解除日期',
             field: 'releaseDatetime',

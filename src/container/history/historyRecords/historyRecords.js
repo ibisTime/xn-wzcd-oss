@@ -138,7 +138,8 @@ class HistoryBusiness extends React.Component {
             fields,
             pageCode: 632145,
             searchParams: {
-                enterFileStatus: '2'
+                enterFileStatus: '2',
+                curNodeCodeList: ['021_24']
             }
         });
     }

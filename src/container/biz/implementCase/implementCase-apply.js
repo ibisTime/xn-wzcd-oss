@@ -31,7 +31,7 @@ class ImplementCaseApply extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.userId = getQueryString('userId', this.props.location.search);
+        this.bizCode = getQueryString('bizCode', this.props.location.search);
     }
     render() {
         const fields = [{
@@ -65,6 +65,15 @@ class ImplementCaseApply extends React.Component {
         }, {
             title: '被执行人',
             field: 'beExeUser',
+            type: 'select',
+            pageCode: 632119,
+            params: {
+                isFirstAudit: '1',
+                creditCode: this.bizCode
+            },
+            keyName: 'userName',
+            valueName: 'userName',
+            multiple: true,
             required: true
         }, {
             title: '申请标的额',

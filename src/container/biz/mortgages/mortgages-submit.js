@@ -37,10 +37,7 @@ class MortgagesSubmit extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'realName',
-            formatter: (v, d) => {
-                return d.user.realName;
-            }
+            field: 'realName'
         }, {
             title: '身份证',
             field: 'idNo',
@@ -49,19 +46,14 @@ class MortgagesSubmit extends React.Component {
             }
         }, {
             title: '业务编号',
-            field: 'code',
-            formatter: (v, d) => {
-                return d.budgetOrder.code;
-            }
+            field: 'budgetOrderCode'
         }, {
             title: '贷款银行',
             field: 'loanBankName'
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanAmount);
-            }
+            amount: true
         }];
         return this.props.buildDetail({
             fields,

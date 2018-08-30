@@ -190,7 +190,8 @@ export function moneyFormat(money, format, isRe = true) {
  * @param rate
  */
 export function moneyParse(money, rate = 1000) {
-  return ((+('' + money).replace(/,/g, '')) * rate).toFixed(0);
+  let m0 = ('' + money).replace(/,/g, '');
+  return m0 === '' ? '' : (+m0 * rate).toFixed(0);
 }
 
 /**

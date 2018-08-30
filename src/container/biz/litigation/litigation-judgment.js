@@ -9,7 +9,9 @@ import {
 } from '@redux/biz/litigation/litigation-judgment';
 import {
     getQueryString,
-    getUserId
+    getUserId,
+    moneyFormat,
+    formatDate
 } from 'common/js/util';
 import {
     DetailWrapper
@@ -63,52 +65,66 @@ class LitigationJudgment extends React.Component {
         }, {
             title: '被告',
             field: 'defendant',
-            type: 'select',
-            pageCode: 632119,
-            params: {
-                isFirstAudit: '1',
-                creditCode: this.bizCode
+            formatter: (v, d) => {
+                return d.judge.defendant;
             },
-            keyName: 'userName',
-            valueName: 'userName',
-            multiple: true,
             readonly: true
         }, {
-            title: '诉讼费',
+            title: '案款',
             field: 'caseFee',
-            amount: true,
+            formatter: (v, d) => {
+                return moneyFormat(d.judge.caseFee);
+            },
             readonly: true
         }, {
             title: '受理时间',
             field: 'acceptanceTime',
-            type: 'date',
+            formatter: (v, d) => {
+                return formatDate(d.judge.acceptanceTime);
+            },
             readonly: true
         }, {
             title: '受理费',
             field: 'acceptanceFee',
+            formatter: (v, d) => {
+                return moneyFormat(d.judge.acceptanceFee);
+            },
             amount: true,
             readonly: true
         }, {
             title: '受理案号',
             field: 'caseNumber',
+            formatter: (v, d) => {
+                return d.judge.caseNumber;
+            },
             readonly: true
         }, {
             title: '经办法官',
             field: 'handleJudge',
+            formatter: (v, d) => {
+                return d.judge.handleJudge;
+            },
             readonly: true
         }, {
             title: '传票等送达日期',
             field: 'summonsDeliveryTime',
-            type: 'date',
+            formatter: (v, d) => {
+                return formatDate(d.judge.summonsDeliveryTime);
+            },
             readonly: true
         }, {
             title: '开庭日期',
             field: 'courtDatetime',
-            type: 'date',
+            formatter: (v, d) => {
+                return formatDate(d.judge.courtDatetime);
+            },
             readonly: true
         }, {
             title: '开庭地点',
             field: 'courtAddress',
+            formatter: (v, d) => {
+                return d.judge.courtAddress;
+            },
             readonly: true
         }, {
             title: '判决书送达时间',

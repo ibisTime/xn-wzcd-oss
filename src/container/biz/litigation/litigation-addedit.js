@@ -11,7 +11,8 @@ import {
     getQueryString,
     getUserId,
     showSucMsg,
-    formatDate
+    formatDate,
+    moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -36,84 +37,126 @@ class litigationAddedit extends React.Component {
     render() {
         const fields = [{
             title: '客户姓名',
-            field: 'realName'
+            field: 'realName',
+            readonly: true
         }, {
             title: '业务编号',
             field: 'code',
             formatter: (v, d) => {
                 return d.budgetOrder.code;
-            }
+            },
+            readonly: true
         }, {
             title: '身份证',
-            field: 'idNo'
+            field: 'idNo',
+            readonly: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            amount: true
+            amount: true,
+            readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBankName'
+            field: 'loanBankName',
+            readonly: true
         }, {
             title: '原告',
             field: 'plaintiff',
             type: 'select',
-            key: 'plaintiff'
+            key: 'plaintiff',
+            readonly: true
         }, {
             title: '被告',
             field: 'defendant',
-            type: 'select',
-            pageCode: 632119,
-            params: {
-                isFirstAudit: '1',
-                creditCode: this.bizCode
+            formatter: (v, d) => {
+                return d.judge.defendant;
             },
-            keyName: 'userName',
-            valueName: 'userName',
-            multiple: true
+            readonly: true
         }, {
-            title: '诉讼费',
+            title: '案款',
             field: 'caseFee',
-            amount: true
+            formatter: (v, d) => {
+                return moneyFormat(d.judge.caseFee);
+            },
+            readonly: true
         }, {
             title: '受理时间',
             field: 'acceptanceTime',
-            type: 'date'
+            formatter: (v, d) => {
+                return formatDate(d.judge.acceptanceTime);
+            },
+            readonly: true
         }, {
             title: '受理费',
             field: 'acceptanceFee',
-            amount: true
+            formatter: (v, d) => {
+                return moneyFormat(d.judge.acceptanceFee);
+            },
+            amount: true,
+            readonly: true
         }, {
             title: '受理案号',
-            field: 'caseNumber'
+            field: 'caseNumber',
+            formatter: (v, d) => {
+                return d.judge.caseNumber;
+            },
+            readonly: true
         }, {
             title: '经办法官',
-            field: 'handleJudge'
+            field: 'handleJudge',
+            formatter: (v, d) => {
+                return d.judge.handleJudge;
+            },
+            readonly: true
         }, {
             title: '传票等送达日期',
             field: 'summonsDeliveryTime',
-            type: 'date'
+            formatter: (v, d) => {
+                return formatDate(d.judge.summonsDeliveryTime);
+            },
+            readonly: true
         }, {
             title: '开庭日期',
             field: 'courtDatetime',
-            type: 'date'
+            formatter: (v, d) => {
+                return formatDate(d.judge.courtDatetime);
+            },
+            readonly: true
         }, {
             title: '开庭地点',
-            field: 'courtAddress'
+            field: 'courtAddress',
+            formatter: (v, d) => {
+                return d.judge.courtAddress;
+            },
+            readonly: true
         }, {
             title: '判决书送达时间',
             field: 'judgePdfDeliveryTime',
-            type: 'date'
+            formatter: (v, d) => {
+                return formatDate(d.judge.judgePdfDeliveryTime);
+            },
+            readonly: true
         }, {
             title: '判决书',
             field: 'judgePdf',
-            type: 'img'
+            formatter: (v, d) => {
+                return formatDate(d.judge.judgePdf);
+            },
+            type: 'img',
+            readonly: true
         }, {
             title: '生效时间',
             field: 'effectiveTime',
-            type: 'date'
+            formatter: (v, d) => {
+                return formatDate(d.judge.judgePdf);
+            },
+            readonly: true
         }, {
             title: '备注',
-            field: 'remark'
+            field: 'remark',
+            formatter: (v, d) => {
+                return formatDate(d.judge.remark);
+            }
         }];
         return this
             .props
