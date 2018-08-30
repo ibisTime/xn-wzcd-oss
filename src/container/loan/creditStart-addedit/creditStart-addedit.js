@@ -438,7 +438,7 @@ class CreditStartAddedit extends React.Component {
             params: {
                 refOrder: this.code
             },
-            hidden: this.isEntry || this.isAddedit,
+            hidden: this.isAddedit,
             options: {
                 rowKey: 'id',
                 noSelect: true,
@@ -477,7 +477,7 @@ class CreditStartAddedit extends React.Component {
         }, {
             title: '附件',
             field: 'accessory',
-            type: 'img',
+            type: 'file',
             hidden: !this.isCheckSalesman,
             readonly: !this.isCheckSalesman
         }];
@@ -638,7 +638,7 @@ class CreditStartAddedit extends React.Component {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {
-                            this.props.history.push(`/loan/creditStart`);
+                            this.props.history.push(`/loan/creditEntering`);
                         }, 1000);
                     }).catch(this.props.cancelFetching);
                 }

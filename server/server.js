@@ -9,7 +9,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use('/api', function (req, res) {
-  // var url = 'http://120.26.6.213:2601/forward-service/api';
   var url = 'http://47.96.161.183:2601/forward-service/api';
   var _body = req.body;
   var param = 'code=' + _body.code + '&json=' + encodeURIComponent(_body.json);

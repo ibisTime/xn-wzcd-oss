@@ -124,9 +124,7 @@ export function dateFormat(date) {
  * @param format
  */
 export function dateListFormat(date) {
-  let datestr = dateFormat(date);
-  let arr = datestr.split('-');
-  return arr[0].substr(2, 2) + arr[1] + arr[2];
+  return formatDate(date, 'yyMMdd');
 }
 
 /**

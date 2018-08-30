@@ -39,8 +39,7 @@ class bankAddedit extends React.Component {
       keyName: 'bankCode',
       valueName: '{{bankName.DATA}}-{{bankCode.DATA}}',
       required: true
-    },
-    {
+    }, {
       title: '12期',
       field: 'rate12',
       required: true
@@ -52,8 +51,7 @@ class bankAddedit extends React.Component {
       title: '36期',
       field: 'rate36',
       required: true
-    },
-    {
+    }, {
       title: '利率明细',
       field: 'bankRateList',
       type: 'o2m',
@@ -85,7 +83,10 @@ class bankAddedit extends React.Component {
           field: 'rate',
           help: '请输入0-1的数字',
           render: (v, d) => {
-            return (v * 100).toFixed(4) + '%';
+            return (v * 100).toFixed(4);
+          },
+          formatter: (v, d) => {
+            return (v * 100).toFixed(4);
           },
           required: true
         }, {

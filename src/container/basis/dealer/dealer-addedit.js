@@ -715,8 +715,8 @@ class DealerAddedit extends React.Component {
     this.getAccountInfo(values, params);
     // 返点账号
     const { gsData, zhData, jhData } = this.state;
-    if (!gsData.length && !zhData.length && !jhData.length) {
-      showWarnMsg('至少需要填写一个银行的返点账号');
+    if (!gsData.length || !zhData.length || !jhData.length) {
+      showWarnMsg('三家银行的返点账号未填写全');
       return;
     }
     this.getFdInfo(values, params);
@@ -1289,7 +1289,7 @@ class DealerAddedit extends React.Component {
             </Tabs>
           </Card>
           <Card title="返点账号" style={{ marginTop: 16, marginBottom: 16 }}>
-            <Card title="工行" type='inner'>
+            <Card title="*工行" type='inner'>
               <Table
                 pagination={false}
                 components={components}
@@ -1304,7 +1304,7 @@ class DealerAddedit extends React.Component {
                 </Button>
               )}
             </Card>
-            <Card title="中行" type='inner' style={{ marginTop: 16 }}>
+            <Card title="*中行" type='inner' style={{ marginTop: 16 }}>
               <Table
                 pagination={false}
                 components={components}
@@ -1319,7 +1319,7 @@ class DealerAddedit extends React.Component {
                 </Button>
               )}
             </Card>
-            <Card title="建行" type='inner' style={{ marginTop: 16 }}>
+            <Card title="*建行" type='inner' style={{ marginTop: 16 }}>
               <Table
                 pagination={false}
                 components={components}
