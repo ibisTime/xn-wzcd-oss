@@ -119,7 +119,7 @@ class Relieve extends React.Component {
             fields,
             pageCode: 630520,
             searchParams: {
-                curNodeCodeList: ['020_09']
+                curNodeCodeList: ['020_06']
             },
             btnEvent: {
                 make: (selectedRowKeys, selectedRows) => {

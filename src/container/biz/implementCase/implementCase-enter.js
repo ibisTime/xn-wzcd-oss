@@ -14,7 +14,6 @@ import {
     formatDate,
     moneyFormat
 } from 'common/js/util';
-import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';
@@ -97,9 +96,9 @@ class ImplementCaseEnter extends React.Component {
             readonly: true
         }, {
             title: '执行案号',
-            field: 'exeCaseNumber',
+            field: 'hearCaseNumber',
             formatter: (v, d) => {
-                return d.judge.exeCaseNumber;
+                return d.judge.hearCaseNumber;
             },
             readonly: true
         }, {
@@ -133,7 +132,7 @@ class ImplementCaseEnter extends React.Component {
             title: '备注',
             field: 'remark1',
             formatter: (v, d) => {
-                return formatDate(d.judge.remark);
+                return d.judge.remark;
             },
             readonly: true
         }, {
@@ -146,7 +145,7 @@ class ImplementCaseEnter extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630563,
+            editCode: 630584,
             detailCode: 630521,
             beforeSubmit: (params) => {
                 params.operator = getUserId();

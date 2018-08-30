@@ -75,9 +75,9 @@ class RecoveryImplementCaseAction extends React.Component {
             readonly: true
         }, {
             title: '原执行根据',
-            field: 'caseNumber',
+            field: 'hearCaseNumber',
             formatter: (v, d) => {
-                return d.judge.caseNumber;
+                return d.judge.hearCaseNumber;
             },
             readonly: true
         }, {
@@ -114,6 +114,7 @@ class RecoveryImplementCaseAction extends React.Component {
             editCode: 630582,
             detailCode: 630521,
             beforeSubmit: (params) => {
+                params.hearCaseNumber = this.props.pageData.hearCaseNumber;
                 params.operator = getUserId();
                 params.repayBizCode = params.code;
                 delete params.code;

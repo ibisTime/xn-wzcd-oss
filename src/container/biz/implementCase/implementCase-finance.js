@@ -12,7 +12,8 @@ import {
     getUserId,
     showSucMsg,
     formatDate,
-    moneyFormat
+    moneyFormat,
+    getCompanyCode
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -97,9 +98,9 @@ class ImplementCaseFinance extends React.Component {
             readonly: true
         }, {
             title: '执行案号',
-            field: 'exeCaseNumber',
+            field: 'hearCaseNumber',
             formatter: (v, d) => {
-                return d.judge.exeCaseNumber;
+                return d.judge.hearCaseNumber;
             },
             readonly: true
         }, {
@@ -133,7 +134,7 @@ class ImplementCaseFinance extends React.Component {
             title: '备注',
             field: 'remark1',
             formatter: (v, d) => {
-                return formatDate(d.judge.remark);
+                return d.judge.remark;
             },
             readonly: true
         }, {
@@ -149,14 +150,31 @@ class ImplementCaseFinance extends React.Component {
         }, {
             title: '收款银行',
             field: 'judgeReceiptBankCode',
+            type: 'select',
+            listCode: 632007,
+            params: {
+                type: '1',
+                companyCode: getCompanyCode()
+            },
+            keyName: 'code',
+            valueName: 'bankName',
             required: true
         }, {
             title: '收款账号',
             field: 'judgeReceiptBankcard',
+            type: 'select',
+            listCode: 632007,
+            params: {
+                type: '1',
+                companyCode: getCompanyCode()
+            },
+            keyName: 'code',
+            valueName: 'bankcardNumber',
             required: true
         }, {
             title: '银行回单',
             field: 'judgeBillPdf',
+            type: 'img',
             required: true
         }];
         return this.props.buildDetail({

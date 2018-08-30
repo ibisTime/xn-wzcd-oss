@@ -87,9 +87,9 @@ class ImplementCaseAddEdit extends React.Component {
             }
         }, {
             title: '执行案号',
-            field: 'exeCaseNumber',
+            field: 'hearCaseNumber',
             formatter: (v, d) => {
-                return d.judge.exeCaseNumber;
+                return d.judge.hearCaseNumber;
             }
         }, {
             title: '优先权标的物',
@@ -142,7 +142,8 @@ class ImplementCaseAddEdit extends React.Component {
             field: 'judgeReceiptBankcard'
         }, {
             title: '银行回单',
-            field: 'judgeBillPdf'
+            field: 'judgeBillPdf',
+            type: 'img'
         }];
         return this.props.buildDetail({
             fields,

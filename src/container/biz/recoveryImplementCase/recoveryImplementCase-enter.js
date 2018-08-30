@@ -75,9 +75,9 @@ class RecoveryImplementCaseEnter extends React.Component {
             readonly: true
         }, {
             title: '原执行根据',
-            field: 'caseNumber',
+            field: 'hearCaseNumber',
             formatter: (v, d) => {
-                return d.judge.caseNumber;
+                return d.judge.hearCaseNumber;
             },
             readonly: true
         }, {
@@ -85,13 +85,6 @@ class RecoveryImplementCaseEnter extends React.Component {
             field: 'recoveryDatetime',
             formatter: (v, d) => {
                 return formatDate(d.judge.recoveryDatetime);
-            },
-            readonly: true
-        }, {
-            title: '执行案号',
-            field: 'exeCaseNumber',
-            formatter: (v, d) => {
-                return d.judge.exeCaseNumber;
             },
             readonly: true
         }, {
@@ -125,7 +118,7 @@ class RecoveryImplementCaseEnter extends React.Component {
             title: '备注',
             field: 'remark1',
             formatter: (v, d) => {
-                return formatDate(d.judge.remark);
+                return d.judge.remark;
             },
             readonly: true
         }, {
@@ -138,7 +131,7 @@ class RecoveryImplementCaseEnter extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630563,
+            editCode: 630584,
             detailCode: 630521,
             beforeSubmit: (params) => {
                 params.operator = getUserId();

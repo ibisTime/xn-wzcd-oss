@@ -97,9 +97,9 @@ class ImplementCaseResult extends React.Component {
             readonly: true
         }, {
             title: '执行案号',
-            field: 'exeCaseNumber',
+            field: 'hearCaseNumber',
             formatter: (v, d) => {
-                return d.judge.exeCaseNumber;
+                return d.judge.hearCaseNumber;
             },
             readonly: true
         }, {

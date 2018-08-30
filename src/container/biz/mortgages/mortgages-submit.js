@@ -46,7 +46,10 @@ class MortgagesSubmit extends React.Component {
             }
         }, {
             title: '业务编号',
-            field: 'budgetOrderCode'
+            field: 'budgetOrderCode',
+            formatter: (v, d) => {
+                return d.budgetOrder.code;
+            }
         }, {
             title: '贷款银行',
             field: 'loanBankName'

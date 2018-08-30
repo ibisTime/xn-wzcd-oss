@@ -13,6 +13,9 @@ import {
     listWrapper
 } from 'common/js/build-list';
 import {
+    goOtherUrl
+} from 'api/biz';
+import {
     showWarnMsg,
     showSucMsg,
     getRoleCode,
@@ -27,10 +30,6 @@ import {
     Upload,
     Modal
 } from 'antd';
-import {
-    lowerFrame,
-    onShelf
-} from 'api/biz';
 import fetch from 'common/js/fetch';
 
 @listWrapper(
@@ -127,24 +126,30 @@ class Repayments extends React.Component {
                 roleCode: getRoleCode()
             },
             btnEvent: {
-              plan: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/biz/repayments/plan?code=${selectedRowKeys[0]}`);
+                plan: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/biz/repayments/plan?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                pay: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        goOtherUrl(selectedRowKeys[0]).then(d => {
+                            if (d) {
+                                this.props.history.push(`/biz/mortgages/apply?code=${selectedRowKeys[0]}`);
+                            } else {
+                                this.props.history.push(`/biz/settlement/apply?code=${selectedRowKeys[0]}`);
+                            }
+                        });
+                    }
                 }
-              },
-              pay: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/biz/repayments/pay?code=${selectedRowKeys[0]}`);
-                }
-              }
             }
         });
     }

@@ -75,9 +75,9 @@ class RecoveryImplementCaseFinance extends React.Component {
             readonly: true
         }, {
             title: '原执行根据',
-            field: 'caseNumber',
+            field: 'hearCaseNumber',
             formatter: (v, d) => {
-                return d.judge.caseNumber;
+                return d.judge.hearCaseNumber;
             },
             readonly: true
         }, {
@@ -125,7 +125,7 @@ class RecoveryImplementCaseFinance extends React.Component {
             title: '备注',
             field: 'remark1',
             formatter: (v, d) => {
-                return formatDate(d.judge.remark);
+                return d.judge.remark;
             },
             readonly: true
         }, {
@@ -149,6 +149,7 @@ class RecoveryImplementCaseFinance extends React.Component {
         }, {
             title: '银行回单',
             field: 'judgeBillPdf',
+            type: 'img',
             required: true
         }];
         return this.props.buildDetail({

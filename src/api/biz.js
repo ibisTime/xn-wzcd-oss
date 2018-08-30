@@ -256,3 +256,9 @@ export function getCode() {
     start: 0
   });
 }
+// 提前结清 根据后台返回跳转不同页面
+export function goOtherUrl(code) {
+  return fetch(630587, {
+    code
+  });
+}

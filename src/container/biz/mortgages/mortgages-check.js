@@ -53,6 +53,9 @@ class MortgagesCheck extends React.Component {
         }, {
             title: '业务编号',
             field: 'budgetOrderCode',
+            formatter: (v, d) => {
+                return d.budgetOrder.code;
+            },
             readonly: true
         }, {
             title: '贷款银行',

@@ -119,7 +119,7 @@ class MortgagesTotalCheck extends React.Component {
                 param.approveResult = '1';
                 param.operator = getUserId();
                 this.props.doFetching();
-                fetch(630575, param).then(() => {
+                fetch(630586, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {
@@ -135,7 +135,7 @@ class MortgagesTotalCheck extends React.Component {
                 param.approveResult = '0';
                 param.operator = getUserId();
                 this.props.doFetching();
-                fetch(630575, param).then(() => {
+                fetch(630586, param).then(() => {
                   showSucMsg('操作成功');
                   this.props.cancelFetching();
                   setTimeout(() => {

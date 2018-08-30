@@ -75,9 +75,9 @@ class RecoveryImplementCaseResult extends React.Component {
             readonly: true
         }, {
             title: '原执行根据',
-            field: 'caseNumber',
+            field: 'hearCaseNumber',
             formatter: (v, d) => {
-                return d.judge.caseNumber;
+                return d.judge.hearCaseNumber;
             },
             readonly: true
         }, {

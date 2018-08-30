@@ -68,9 +68,9 @@ class RecoveryImplementCase extends React.Component {
             }
         }, {
             title: '原执行根据',
-            field: 'exeCaseNumber',
+            field: 'hearCaseNumber',
             render: (v, d) => {
-                return moneyFormat(d.judge.exeCaseNumber);
+                return d.judge.hearCaseNumber;
             }
         }, {
             title: '恢复时间',
@@ -85,16 +85,10 @@ class RecoveryImplementCase extends React.Component {
                 return d.judge.handleJudge;
             }
         }, {
-            title: '执行案号',
-            field: 'exeCaseNumber',
-            render: (v, d) => {
-                return formatDate(d.judge.exeCaseNumber);
-            }
-        }, {
             title: '优先权标的物',
             field: 'caseSubject',
             render: (v, d) => {
-                return formatDate(d.judge.caseSubject);
+                return d.judge.caseSubject;
             }
         }, {
             title: '标的物拍卖时间',
@@ -131,7 +125,7 @@ class RecoveryImplementCase extends React.Component {
             title: '备注',
             field: 'remark1',
             render: (v, d) => {
-                return formatDate(d.judge.remark);
+                return d.judge.remark;
             }
         }];
         return this.props.buildList({
@@ -212,7 +206,7 @@ class RecoveryImplementCase extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_13') {
+                    } else if (selectedRows[0].curNodeCode !== '021_23') {
                         showWarnMsg('当前节点不是录入查封裁定到期时间');
                     } else {
                         this.props.history.push(`/biz/recoveryImplementCase/enter?code=${selectedRowKeys[0]}`);

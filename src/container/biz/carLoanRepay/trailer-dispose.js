@@ -99,6 +99,18 @@ class trailerDispose extends React.Component {
             readonly: false,
             hidden: this.dealResult !== '1'
         }, {
+            title: '代偿预算单',
+            field: 'ReplaceRepayCode',
+            listCode: 632327,
+            parmas: {
+                status: 2,
+                bizCode: this.code
+            },
+            keyName: 'code',
+            valueName: '{{realName.DATA}}-{{code.DATA}}',
+            required: true,
+            hidden: this.dealResult !== '3'
+        }, {
             title: '费用说明',
             field: 'feeNote',
             readonly: false

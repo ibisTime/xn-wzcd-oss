@@ -75,9 +75,9 @@ class RecoveryImplementCaseNotice extends React.Component {
             readonly: true
         }, {
             title: '原执行根据',
-            field: 'caseNumber',
+            field: 'hearCaseNumber',
             formatter: (v, d) => {
-                return d.judge.caseNumber;
+                return d.judge.hearCaseNumber;
             },
             readonly: true
         }, {
@@ -118,7 +118,7 @@ class RecoveryImplementCaseNotice extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630582,
+            editCode: 630583,
             detailCode: 630521,
             beforeSubmit: (params) => {
                 params.operator = getUserId();

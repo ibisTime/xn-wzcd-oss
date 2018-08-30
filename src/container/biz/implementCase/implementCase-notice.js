@@ -97,9 +97,9 @@ class ImplementCaseNotice extends React.Component {
             readonly: true
         }, {
             title: '执行案号',
-            field: 'exeCaseNumber',
+            field: 'hearCaseNumber',
             formatter: (v, d) => {
-                return d.judge.exeCaseNumber;
+                return d.judge.hearCaseNumber;
             },
             readonly: true
         }, {
@@ -126,7 +126,7 @@ class ImplementCaseNotice extends React.Component {
             fields,
             code: this.code,
             view: this.view,
-            editCode: 630582,
+            editCode: 630583,
             detailCode: 630521,
             beforeSubmit: (params) => {
                 params.operator = getUserId();

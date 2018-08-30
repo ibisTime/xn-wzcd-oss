@@ -95,7 +95,7 @@ class ImplementCaseAcceptance extends React.Component {
             required: true
         }, {
             title: '执行案号',
-            field: 'exeCaseNumber',
+            field: 'hearCaseNumber',
             required: true
         }, {
             title: '优先权标的物',

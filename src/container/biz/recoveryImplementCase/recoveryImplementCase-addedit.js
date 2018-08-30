@@ -62,9 +62,9 @@ class RecoveryImplementCaseAddEdit extends React.Component {
             }
         }, {
             title: '原执行根据',
-            field: 'caseNumber',
+            field: 'hearCaseNumber',
             formatter: (v, d) => {
-                return d.judge.caseNumber;
+                return d.judge.hearCaseNumber;
             },
             readonly: true
         }, {
@@ -138,7 +138,8 @@ class RecoveryImplementCaseAddEdit extends React.Component {
             field: 'judgeReceiptBankcard'
         }, {
             title: '银行回单',
-            field: 'judgeBillPdf'
+            field: 'judgeBillPdf',
+            type: 'img'
         }];
         return this.props.buildDetail({
             fields,
