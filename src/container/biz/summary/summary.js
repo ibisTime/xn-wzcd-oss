@@ -111,28 +111,29 @@ class Summary extends React.Component {
             field: 'loanAmount',
             amount: true
         }, {
-            title: '剩余金额',
-            field: 'overplusAmount',
+            title: '剩余欠款',
+            field: 'restAmount',
             amount: true
         }, {
             title: '逾期日期',
             field: 'repayDatetime',
-            type: 'date'
+            render: (v, d) => {
+                if(d.overdueRepayPlan) {
+                    return dateFormat(d.overdueRepayPlan.repayDatetime);
+                }
+            }
         }, {
             title: '月还款额',
             field: 'monthAmount',
             amount: true
         }, {
             title: '逾期金额',
-            field: 'overdueAmount',
+            field: 'restOverdueAmount',
             amount: true
         }, {
             title: '实际逾期期数',
             field: 'curOverdueCount',
             search: true
-        }, {
-            title: '连续逾期期数',
-            field: 'curOverdueCount'
         }, {
             title: '累计代偿次数',
             field: 'totalReplaceRepayCount'

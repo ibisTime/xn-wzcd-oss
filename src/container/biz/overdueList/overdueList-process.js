@@ -71,30 +71,49 @@ class OverdueListProcess extends React.Component {
             readonly: true
         }, {
             title: '逾期金额',
-            field: 'overdueAmount',
-            amount: true,
+            field: 'restOverdueAmount',
+            formatter: (v, d) => {
+                return moneyFormat(d.repayBiz.restOverdueAmount);
+            },
             readonly: true
         }, {
             title: '处理历史',
-            field: 'remindLogList',
+            field: 'overdueTreatmentList',
             type: 'o2m',
             options: {
+                noSelect: true,
                 fields: [{
                     title: '催收方式',
-                    field: 'way',
+                    field: 'collectionWay',
                     type: 'select',
-                    select: true,
-                    key: 'way'
+                    key: 'collection_way'
                 }, {
                     title: '催收对象',
-                    field: 'toUser'
+                    field: 'collectionTarget',
+                    type: 'select',
+                    multiple: true,
+                    key: 'collection_target'
                 }, {
-                    title: '催收文本',
-                    field: 'content'
+                    title: '催收过程',
+                    field: 'collectionProcess',
+                    type: 'select',
+                    key: 'collection_process'
                 }, {
-                    title: '催收时间',
-                    field: 'createDatetime',
-                    type: 'datetime'
+                    title: '客户意愿',
+                    field: 'collectionWish',
+                    type: 'select',
+                    key: 'collection_wish'
+                }, {
+                    title: '催收过程说明',
+                    field: 'collectionProcessNote'
+                }, {
+                    title: '催收结果',
+                    field: 'collectionResult',
+                    type: 'select',
+                    key: 'collection_result'
+                }, {
+                    title: '催收结果说明',
+                    field: 'collectionResultNote'
                 }]
             }
         }, {

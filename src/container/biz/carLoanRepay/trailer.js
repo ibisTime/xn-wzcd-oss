@@ -14,7 +14,7 @@ import {
 } from 'common/js/build-list';
 import {
     showWarnMsg,
-    showSucMsg
+    dateFormat
 } from 'common/js/util';
 import {
     lowerFrame,
@@ -79,15 +79,17 @@ class trailer extends React.Component {
                 return d.budgetOrder.carModel;
             }
         }, {
-            title: '拖车地点',
+            title: '收车地点',
             field: 'takeCarAddress',
             render: (v, d) => {
-                return d.curMonthRepayPlan.takeCarAddress;
+                return d.overdueRepayPlan.takeCarAddress;
             }
         }, {
             title: '收车时间',
             field: 'takeDatetime',
-            type: 'date'
+            render: (v, d) => {
+                return dateFormat(d.overdueRepayPlan.takeDatetime);
+            }
         }, {
             title: '当前节点',
             field: 'curNodeCode',
@@ -101,7 +103,7 @@ class trailer extends React.Component {
             pageCode: 630520,
             searchParams: {
                 refType: '0',
-                curNodeCodeList: ['021_08', '021_09', '021_20', '021_21', '021_22']
+                curNodeCodeList: ['021_08', '021_25', '021_26', '021_27', '021_28', '021_29']
             },
             btnEvent: {
                 dispose: (selectedRowKeys, selectedRows) => {
@@ -120,10 +122,21 @@ class trailer extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '021_21' && selectedRows[0].curNodeCode !== '021_22') {
+                    } else if (selectedRows[0].curNodeCode !== '021_26' && selectedRows[0].curNodeCode !== '021_27') {
                         showWarnMsg('当前节点不是财务审核');
                     } else {
                         this.props.history.push(`/biz/trailer/finance?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                cashier: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '021_28') {
+                        showWarnMsg('当前节点不是出纳打款');
+                    } else {
+                        this.props.history.push(`/biz/trailer/cashier?code=${selectedRowKeys[0]}`);
                     }
                 }
             }

@@ -24,7 +24,7 @@ import {
 
 @listWrapper(
     state => ({
-        ...state.bizYellowList,
+        ...state.riskYellowList,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -37,7 +37,7 @@ import {
         setSearchData
     }
 )
-class yellowList extends React.Component {
+class YellowList extends React.Component {
     render() {
       const fields = [
         {
@@ -71,4 +71,4 @@ class yellowList extends React.Component {
     }
 }
 
-export default yellowList;
+export default YellowList;

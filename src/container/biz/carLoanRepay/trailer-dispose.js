@@ -106,17 +106,19 @@ class trailerDispose extends React.Component {
             field: 'ReplaceRepayCode',
             type: 'select',
             listCode: 632327,
-            parmas: {
-                status: 2,
+            params: {
+                status: 4,
                 bizCode: this.code
             },
             keyName: 'code',
             valueName: '{{receiptRealName.DATA}}-{{code.DATA}}',
             required: true,
-            hidden: this.dealResult !== '4'
+            hidden: this.dealResult !== '5'
         }, {
             title: '处理结果说明',
-            field: 'feeNote'
+            field: 'remark',
+            type: 'textarea',
+            normalArea: true
         }, {
             title: '附件',
             field: 'dealEnclosure',

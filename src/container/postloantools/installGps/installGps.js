@@ -59,7 +59,7 @@ class InstallGps extends React.Component {
             title: '品牌型号',
             field: 'carBrand1',
             render: (v, d) => {
-                return d.carBrand + d.carModel;
+                return (typeof d.carBrand === 'undefined' ? '' : d.carBrand) + (typeof d.carModel === 'undefined' ? '' : d.carModel);
             }
         }, {
             title: '业务员',

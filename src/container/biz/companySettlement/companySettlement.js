@@ -127,7 +127,7 @@ class CompanySettlement extends React.Component {
             pageCode: 630520,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCodeList: ['020_10', '020_11', '020_12', '020_13', '020_14', '020_15']
+                curNodeCodeList: ['021_29']
             },
             btnEvent: {
                 enter: (selectedRowKeys, selectedRows) => {
@@ -135,10 +135,8 @@ class CompanySettlement extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '020_10') {
-                        showWarnMsg('当前节点不是提交结算单');
                     } else {
-                        this.props.history.push(`/biz/settlement/enter?code=${selectedRowKeys[0]}`);
+                        this.props.history.push(`/biz/companySettlement/enter?code=${selectedRowKeys[0]}`);
                     }
                 }
             }
