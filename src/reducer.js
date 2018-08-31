@@ -151,6 +151,7 @@ import { bizTrailer } from './redux/biz/trailer';
 import { bizTrailerAddEdit } from './redux/biz/trailer-addedit';
 import { bizTrailerDispose } from './redux/biz/trailer-dispose';
 import { bizTrailerFinance } from './redux/biz/trailer-finance';
+import { bizTrailerCashier } from './redux/biz/trailer-cashier';
 
 //  司法诉讼 + 详情 + 司法诉讼 + 案件受理 + 财务审核 + 出纳打款 + 送达 +  判决 + 生效
 import { bizLitigation } from './redux/biz/litigation/litigation';
@@ -192,6 +193,11 @@ import { bizSettlementCheck } from './redux/biz/settlement-check';
 import { bizSettlementTotalCheck } from './redux/biz/settlement-totalCheck';
 import { BizSettlementManager } from './redux/biz/settlement-manager';
 import { bizSettlementCertain } from './redux/biz/settlement-certain';
+
+//  公司结清 + 详情 + 录入处理意见
+import { bizCompanySettlement } from './redux/biz/companySettlement/companySettlement';
+import { bizCompanySettlementAddEdit } from './redux/biz/companySettlement/companySettlement-addedit';
+import { bizCompanySettlementEnter } from './redux/biz/companySettlement/companySettlement-enter';
 
 //  解除抵押 + 详情 + 申请 + 风控内勤审核 + 风控主管审核 + 风控总监审核 + 回录
 import { mortgages } from './redux/biz/mortgages/mortgages';
@@ -468,9 +474,12 @@ import { analysisTablehistory } from './redux/analysis/tablehistory';
 /**
  * 人事
  */
-// 人事档案 + 详情
+// 人事档案 + 详情 + 分公司总经理审批 + 行政部审批 + 网络技术审批
 import { personalarchivesParchives } from './redux/personalarchives/parchives';
 import { personalarchivesParchivesAddedit } from './redux/personalarchives/parchives-addedit';
+import { personalarchivesParchivesCompanyCheck } from './redux/personalarchives/parchives-companyCheck';
+import { personalarchivesParchivesCheck } from './redux/personalarchives/parchives-check';
+import { personalarchivesParchivesTechnology } from './redux/personalarchives/parchives-technology';
 
 // 车贷档案
 import { loanarchivesLocationcode } from './redux/loanarchives/locationcode';
@@ -829,6 +838,7 @@ export default combineReducers({
   bizTrailerAddEdit,
   bizTrailerDispose,
   bizTrailerFinance,
+  bizTrailerCashier,
   transmit,
   transmitAddedit,
   transmitSend,
@@ -900,6 +910,9 @@ export default combineReducers({
   mortgagesEnter,
   personalarchivesParchives,
   personalarchivesParchivesAddedit,
+  personalarchivesParchivesCompanyCheck,
+  personalarchivesParchivesCheck,
+  personalarchivesParchivesTechnology,
   loanarchivesLocationcode,
   loanarchivesLocationcodeAddedit,
   loanarchivesArchivesquery,
@@ -1107,5 +1120,8 @@ export default combineReducers({
   bizRecoveryImplementCaseNotice,
   bizRecoveryImplementCaseResult,
   bizRecoveryImplementCaseFinance,
-  bizRecoveryImplementCaseEnter
+  bizRecoveryImplementCaseEnter,
+  bizCompanySettlement,
+  bizCompanySettlementAddEdit,
+  bizCompanySettlementEnter
 });

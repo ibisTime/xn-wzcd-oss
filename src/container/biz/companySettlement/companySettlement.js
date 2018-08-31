@@ -8,33 +8,29 @@ import {
     doFetching,
     cancelFetching,
     setSearchData
-} from '@redux/biz/repayments/repayments';
+} from '@redux/biz/companySettlement/companySettlement';
 import {
     listWrapper
 } from 'common/js/build-list';
 import {
-    goOtherUrl
-} from 'api/biz';
-import {
     showWarnMsg,
-    showSucMsg,
+    formatDate,
     getRoleCode,
-    dateTimeFormat,
-    getUserId,
-    moneyFormat,
-    dateFormat,
-    getQueryString
+    moneyFormat
 } from 'common/js/util';
 import {
     Button,
     Upload,
     Modal
 } from 'antd';
-import fetch from 'common/js/fetch';
+import {
+    lowerFrame,
+    onShelf
+} from 'api/biz';
 
 @listWrapper(
     state => ({
-        ...state.repayments,
+        ...state.bizCompanySettlement,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -47,20 +43,18 @@ import fetch from 'common/js/fetch';
         setSearchData
     }
 )
-class Repayments extends React.Component {
+class CompanySettlement extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
-            field: 'refCode',
+            field: 'code',
+            render: (v, d) => {
+                return d.budgetOrder.code;
+            },
             search: true
         }, {
             title: '银行',
-            field: 'loanBank',
-            type: 'select',
-            listCode: 632057,
-            keyName: 'code',
-            valueName: 'fullName',
-            search: true
+            field: 'loanBankName'
         }, {
             title: '客户姓名',
             field: 'realName',
@@ -68,7 +62,9 @@ class Repayments extends React.Component {
         }, {
             title: '证件号',
             field: 'idNo',
-            nowrap: true
+            render: (v, d) => {
+                return <span style={{whiteSpace: 'nowrap'}}>{d.user.idNo}</span>;
+            }
         }, {
             title: '放款日期',
             field: 'bankFkDatetime',
@@ -82,13 +78,21 @@ class Repayments extends React.Component {
             field: 'restAmount',
             amount: true
         }, {
+            title: '逾期日期',
+            field: 'repayDatetime',
+            render: (v, d) => {
+                return formatDate(d.curMonthRepayPlan.repayDatetime);
+            }
+        }, {
             title: '月还款额',
             field: 'monthAmount',
             amount: true
         }, {
             title: '逾期金额',
-            field: 'restOverdueAmount',
-            amount: true
+            field: 'overdueAmount',
+            render: (v, d) => {
+                return moneyFormat(d.curMonthRepayPlan.overdueAmount);
+            }
         }, {
             title: '实际逾期期数',
             field: 'curOverdueCount'
@@ -118,37 +122,23 @@ class Repayments extends React.Component {
             keyName: 'code',
             valueName: 'name'
         }];
-
         return this.props.buildList({
             fields,
-            pageCode: 630522,
+            pageCode: 630520,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCodeList: ['020_01']
+                curNodeCodeList: ['020_10', '020_11', '020_12', '020_13', '020_14', '020_15']
             },
             btnEvent: {
-                plan: (selectedRowKeys, selectedRows) => {
+                enter: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '020_10') {
+                        showWarnMsg('当前节点不是提交结算单');
                     } else {
-                        this.props.history.push(`/biz/repayments/plan?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                pay: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        goOtherUrl(selectedRowKeys[0]).then(d => {
-                            if (d) {
-                                this.props.history.push(`/biz/mortgages/apply?code=${selectedRowKeys[0]}`);
-                            } else {
-                                this.props.history.push(`/biz/settlement/apply?code=${selectedRowKeys[0]}`);
-                            }
-                        });
+                        this.props.history.push(`/biz/settlement/enter?code=${selectedRowKeys[0]}`);
                     }
                 }
             }
@@ -156,4 +146,4 @@ class Repayments extends React.Component {
     }
 }
 
-export default Repayments;
+export default CompanySettlement;

@@ -63,22 +63,25 @@ class trailerDispose extends React.Component {
             field: 'carModel',
             formatter: (v, d) => {
                 return d.budgetOrder.carModel;
-            }
+            },
+            readonly: true
         }, {
             title: '车牌号',
             field: 'carNo',
             formatter: (v, d) => {
                 return d.budgetOrder.carNumber;
-            }
+            },
+            readonly: true
         }, {
             title: '剩余欠款',
             field: 'restAmount',
-            amount: true
+            amount: true,
+            readonly: true
         }, {
             title: '处理结果',
             field: 'dealResult',
             type: 'select',
-            key: 'deal_result',
+            key: 'tc_deal_result',
             required: true,
             readonly: false,
             onChange: (v, data) => {
@@ -101,24 +104,23 @@ class trailerDispose extends React.Component {
         }, {
             title: '代偿预算单',
             field: 'ReplaceRepayCode',
+            type: 'select',
             listCode: 632327,
             parmas: {
                 status: 2,
                 bizCode: this.code
             },
             keyName: 'code',
-            valueName: '{{realName.DATA}}-{{code.DATA}}',
+            valueName: '{{receiptRealName.DATA}}-{{code.DATA}}',
             required: true,
-            hidden: this.dealResult !== '3'
+            hidden: this.dealResult !== '4'
         }, {
-            title: '费用说明',
-            field: 'feeNote',
-            readonly: false
+            title: '处理结果说明',
+            field: 'feeNote'
         }, {
             title: '附件',
             field: 'dealEnclosure',
-            type: 'img',
-            readonly: false
+            type: 'img'
         }];
         return this
             .props

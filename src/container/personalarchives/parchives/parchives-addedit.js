@@ -24,7 +24,7 @@ import {
     restore
   }
 )
-class parchivesAddedit extends React.Component {
+class ParchivesAddedit extends React.Component {
   constructor(props) {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
@@ -305,4 +305,4 @@ class parchivesAddedit extends React.Component {
   }
 }
 
-export default parchivesAddedit;
+export default ParchivesAddedit;

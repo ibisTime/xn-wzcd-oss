@@ -542,6 +542,11 @@ const ROUTES = [
     path: '/biz/trailer/finance',
     component: asyncComponent(() => import('container/biz/carLoanRepay/trailer-finance'))
   },
+  //  收车管理 出纳打款
+  {
+    path: '/biz/trailer/cashier',
+    component: asyncComponent(() => import('container/biz/carLoanRepay/trailer-cashier'))
+  },
   //  司法诉讼
   {
     path: '/biz/litigation',
@@ -706,6 +711,21 @@ const ROUTES = [
   {
     path: '/biz/settlement/certain',
     component: asyncComponent(() => import('container/biz/settlement/settlement-certain'))
+  },
+  //  公司结清
+  {
+    path: '/biz/companySettlement',
+    component: asyncComponent(() => import('container/biz/companySettlement/companySettlement'))
+  },
+  //  公司结清 详情
+  {
+    path: '/biz/companySettlement/addedit',
+    component: asyncComponent(() => import('container/biz/companySettlement/companySettlement-addedit'))
+  },
+  //  公司结清 录入处理意见
+  {
+    path: '/biz/companySettlement/enter',
+    component: asyncComponent(() => import('container/biz/companySettlement/companySettlement-enter'))
   },
   //  解除抵押
   {

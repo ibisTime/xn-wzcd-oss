@@ -99,7 +99,7 @@ class mortgages extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '020_02') {
+                    } else if (selectedRows[0].curNodeCode !== '020_02' && selectedRows[0].curNodeCode !== '020_01') {
                         showWarnMsg('当前节点不是解除抵押申请');
                     } else {
                         this.props.history.push(`/biz/mortgages/apply?code=${selectedRowKeys[0]}`);
