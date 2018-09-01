@@ -140,7 +140,7 @@ class litigationAddedit extends React.Component {
             title: '判决书',
             field: 'judgePdf',
             formatter: (v, d) => {
-                return formatDate(d.judge.judgePdf);
+                return d.judge.judgePdf;
             },
             type: 'img',
             readonly: true
@@ -148,14 +148,14 @@ class litigationAddedit extends React.Component {
             title: '生效时间',
             field: 'effectiveTime',
             formatter: (v, d) => {
-                return formatDate(d.judge.judgePdf);
+                return formatDate(d.judge.effectiveTime);
             },
             readonly: true
         }, {
             title: '备注',
             field: 'remark',
             formatter: (v, d) => {
-                return formatDate(d.judge.remark);
+                return d.judge.remark;
             }
         }];
         return this

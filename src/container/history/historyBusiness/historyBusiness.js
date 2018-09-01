@@ -101,7 +101,7 @@ class HistoryBusiness extends React.Component {
             fields,
             pageCode: 630520,
             searchParams: {
-                curNodeCodeList: ['020_13']
+                curNodeCodeList: ['020_15']
             }
         });
     }

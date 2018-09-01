@@ -56,6 +56,9 @@ class InstallGps extends React.Component {
             field: 'customerName',
             search: true
         }, {
+            title: '合同编号',
+            field: 'bankContractCode'
+        }, {
             title: '品牌型号',
             field: 'carBrand1',
             render: (v, d) => {

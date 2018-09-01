@@ -67,6 +67,7 @@ class CardEnter extends React.Component {
                 check: true,
                 handler: (params) => {
                     this.props.doFetching();
+                    params.operator = getUserId();
                     fetch(632211, params).then(() => {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();

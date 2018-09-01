@@ -104,7 +104,7 @@ class MortgagesInternal extends React.Component {
                 }]
             }
         }, {
-            title: '申请说明',
+            title: '审核说明',
             field: 'approveNote',
             type: 'textarea',
             normalArea: true,
