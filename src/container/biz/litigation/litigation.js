@@ -161,10 +161,10 @@ class litigation extends React.Component {
             valueName: 'name'
         }, {
             title: '备注',
-            field: 'remark1',
+            field: 'remark',
             render: (v, d) => {
                 if(d.judge) {
-                    return formatDate(d.judge.remark);
+                    return d.judge.remark;
                 }
             }
         }];

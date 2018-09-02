@@ -40,6 +40,9 @@ class RebatesBill extends React.Component {
             field: 'carDealerCode',
             type: 'select',
             pageCode: 632065,
+            params: {
+                agreementStatus: '1'
+            },
             keyName: 'code',
             valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
             required: true,

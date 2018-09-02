@@ -84,44 +84,65 @@ class parchives extends React.Component {
       title: '生日',
       field: 'birthday',
       type: 'date'
+    }, {
+      title: '当前节点',
+      field: 'curNodeCode',
+      type: 'select',
+      listCode: 630147,
+      keyName: 'code',
+      valueName: 'name'
     }];
     return this.props.buildList({
       fields,
       deleteCode: 632801,
       pageCode: 632805,
       btnEvent: {
-        litigation: (selectedRowKeys, selectedRows) => {
+        companyCheck: (selectedRowKeys, selectedRows) => {
           if (!selectedRowKeys.length) {
             showWarnMsg('请选择记录');
           } else if (selectedRowKeys.length > 1) {
             showWarnMsg('请选择一条记录');
-          } else if (selectedRows[0].curNodeCode !== '021_09') {
+          } else if (selectedRows[0].curNodeCode !== '015_01') {
             showWarnMsg('当前节点不是分公司总经理审批');
           } else {
-            this.props.history.push(`/biz/litigation/litigation?code=${selectedRowKeys[0]}&bizCode=${selectedRows[0].budgetOrder.code}`);
+            this.props.history.push(`/personalarchives/parchives/companyCheck?code=${selectedRowKeys[0]}`);
           }
         },
-        acceptance: (selectedRowKeys, selectedRows) => {
+        check: (selectedRowKeys, selectedRows) => {
           if (!selectedRowKeys.length) {
             showWarnMsg('请选择记录');
           } else if (selectedRowKeys.length > 1) {
             showWarnMsg('请选择一条记录');
-          } else if (selectedRows[0].curNodeCode !== '021_10') {
+          } else if (selectedRows[0].curNodeCode !== '015_02') {
             showWarnMsg('当前节点不是行政部审批');
           } else {
-            this.props.history.push(`/biz/litigation/acceptance?code=${selectedRowKeys[0]}`);
+            this.props.history.push(`/personalarchives/parchives/check?code=${selectedRowKeys[0]}`);
           }
         },
-        finance: (selectedRowKeys, selectedRows) => {
+        technology: (selectedRowKeys, selectedRows) => {
           if (!selectedRowKeys.length) {
             showWarnMsg('请选择记录');
           } else if (selectedRowKeys.length > 1) {
             showWarnMsg('请选择一条记录');
-          } else if (selectedRows[0].curNodeCode !== '021_11') {
+          } else if (selectedRows[0].curNodeCode !== '015_03') {
             showWarnMsg('当前节点不是网络技术审批');
           } else {
-            this.props.history.push(`/biz/litigation/finance?code=${selectedRowKeys[0]}`);
+            this.props.history.push(`/personalarchives/parchives/technology?code=${selectedRowKeys[0]}`);
           }
+        },
+        again: (selectedRowKeys, selectedRows) => {
+          if (!selectedRowKeys.length) {
+            showWarnMsg('请选择记录');
+          } else if (selectedRowKeys.length > 1) {
+            showWarnMsg('请选择一条记录');
+          } else if (selectedRows[0].curNodeCode !== '015_04') {
+            showWarnMsg('当前节点不是重新申请');
+          } else {
+            this.props.history.push(`/personalarchives/parchives/addedit?code=${selectedRowKeys[0]}`);
+          }
+        },
+        apply: (selectedRowKeys, selectedRows) => {
+          this.props.history.push(`/personalarchives/parchives/addedit`);
         }
       }
     });

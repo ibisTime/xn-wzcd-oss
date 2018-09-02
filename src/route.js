@@ -1826,6 +1826,21 @@ const ROUTES = [
     path: '/personalarchives/parchives/addedit',
     component: asyncComponent(() => import('container/personalarchives/parchives/parchives-addedit'))
   },
+  //  人事档案 分公司总经理审批
+  {
+    path: '/personalarchives/parchives/companyCheck',
+    component: asyncComponent(() => import('container/personalarchives/parchives/parchives-companyCheck'))
+  },
+  //  人事档案 行政部审批
+  {
+    path: '/personalarchives/parchives/check',
+    component: asyncComponent(() => import('container/personalarchives/parchives/parchives-check'))
+  },
+  //  人事档案 网络技术审批
+  {
+    path: '/personalarchives/parchives/technology',
+    component: asyncComponent(() => import('container/personalarchives/parchives/parchives-technology'))
+  },
   //  人事分析
   {
     path: '/personalarchives/panalysis',

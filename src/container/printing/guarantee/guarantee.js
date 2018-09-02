@@ -82,7 +82,7 @@ class Guarantee extends React.Component {
             type: 'date'
         }, {
             title: '打件人',
-            field: 'guarantPrintUser'
+            field: 'guarantPrintName'
         }, {
             title: '业务员名称',
             field: 'saleUserName'

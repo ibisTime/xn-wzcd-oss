@@ -14,7 +14,8 @@ import {
 } from 'common/js/build-list';
 import {
   showWarnMsg,
-  showSucMsg
+  showSucMsg,
+  moneyFormat
 } from 'common/js/util';
 import {
   Button,
@@ -64,8 +65,10 @@ class overdueList extends React.Component {
       }
     }, {
       title: '逾期金额',
-      field: 'overdueAmount',
-      amount: true
+      field: 'restOverdueAmount',
+      render: (v, d) => {
+        return moneyFormat(d.repayBiz.restOverdueAmount);
+      }
     }, {
       title: '逾期日期',
       field: 'repayDatetime',

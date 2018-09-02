@@ -70,8 +70,10 @@ class OverdueListDispose extends React.Component {
             readonly: true
         }, {
             title: '逾期金额',
-            field: 'overdueAmount',
-            amount: true,
+            field: 'restOverdueAmount',
+            formatter: (v, d) => {
+                return moneyFormat(d.repayBiz.restOverdueAmount);
+            },
             readonly: true
         }, {
             title: '处理历史',

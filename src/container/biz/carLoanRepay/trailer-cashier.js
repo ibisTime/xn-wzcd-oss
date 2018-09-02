@@ -39,16 +39,10 @@ class TrailerCashier extends React.Component {
         const fields = [{
             title: '客户姓名',
             field: 'realName',
-            formatter: (v, d) => {
-                return d.user.realName;
-            },
             readonly: true
         }, {
             title: '身份证',
             field: 'idNo',
-            formatter: (v, d) => {
-                return d.user.idNo;
-            },
             readonly: true
         }, {
             title: '业务编号',
@@ -59,17 +53,12 @@ class TrailerCashier extends React.Component {
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
-            formatter: (v, d) => {
-                return d.repayBiz.loanBankName;
-            },
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanAmount);
-            },
+            amount: true,
             readonly: true
         }, {
             title: '剩余欠款',
@@ -86,18 +75,20 @@ class TrailerCashier extends React.Component {
             field: 'dealResult',
             type: 'select',
             key: 'deal_result',
-            readonly: true
+            readonly: true,
+            hidden: true
         }, {
             title: '代偿预算单',
             field: 'ReplaceRepayCode',
             listCode: 632327,
             parmas: {
-                status: 2,
+                status: 4,
                 bizCode: this.code
             },
             keyName: 'code',
             valueName: '{{receiptRealName.DATA}}-{{code.DATA}}',
-            readonly: true
+            readonly: true,
+            hidden: true
         }, {
             title: '附件',
             field: 'dealEnclosure',
@@ -105,7 +96,7 @@ class TrailerCashier extends React.Component {
             readonly: true
         }, {
             title: '处理结果说明',
-            field: 'feeNote',
+            field: 'remark',
             readonly: true
         }, {
             title: '付款银行',

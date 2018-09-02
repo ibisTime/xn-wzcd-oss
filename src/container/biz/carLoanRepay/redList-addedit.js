@@ -45,10 +45,7 @@ class redListAddedit extends React.Component {
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
-            formatter: (v, d) => {
-                return d.repayBiz.loanBankName;
-            },
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '贷款金额',
@@ -61,21 +58,21 @@ class redListAddedit extends React.Component {
             title: '收款人开户行',
             field: 'tsBankName',
             formatter: (v, d) => {
-                return d.curMonthRepayPlan.tsBankName;
+                return d.overdueRepayPlan.tsBankName;
             },
             readonly: true
         }, {
             title: '收款人开户支行',
             field: 'tsSubbranch',
             formatter: (v, d) => {
-                return d.curMonthRepayPlan.tsSubbranch;
+                return d.overdueRepayPlan.tsSubbranch;
             },
             readonly: true
         }, {
             title: '收款人账号',
             field: 'tsBankcardNumber',
             formatter: (v, d) => {
-                return d.curMonthRepayPlan.tsBankcardNumber;
+                return d.overdueRepayPlan.tsBankcardNumber;
             },
             readonly: true
         }, {

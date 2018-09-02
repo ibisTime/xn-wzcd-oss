@@ -81,7 +81,7 @@ class EstimateCertain extends React.Component {
       amount: true,
       required: true
     }, {
-      title: '水单',
+      title: '银行回单',
       field: 'waterBill',
       type: 'img',
       required: true

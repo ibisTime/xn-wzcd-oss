@@ -51,7 +51,7 @@ class CancelApply extends React.Component {
                         loanAmount: moneyFormat(info.loanAmount),
                         idNo: info.idNo,
                         bcode: data.code,
-                        dztime: dateFormat(data.advanceFund.advanceFundDatetime)
+                        dztime: data.advanceFund ? dateFormat(data.advanceFund.advanceFundDatetime) : ''
                     });
                 });
             }
