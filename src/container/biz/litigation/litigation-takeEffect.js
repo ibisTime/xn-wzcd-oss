@@ -138,8 +138,9 @@ class LitigationTakeEffect extends React.Component {
             title: '判决书',
             field: 'judgePdf',
             formatter: (v, d) => {
-                return formatImg(d.judge.judgePdf);
+                return d.judge.judgePdf;
             },
+            type: 'img',
             readonly: true
         }, {
             title: '生效时间',

@@ -62,7 +62,7 @@ class pointreturnAddedit extends React.Component {
         field: 'actualAmount',
         amount: true
     }, {
-        title: '水单',
+        title: '银行回单',
         field: 'waterBill',
         type: 'img'
     }, {

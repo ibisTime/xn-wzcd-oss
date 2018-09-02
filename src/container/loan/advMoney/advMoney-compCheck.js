@@ -42,7 +42,7 @@ class AdvMoneyAreaCheck extends React.Component {
             readonly: true
         }, {
             title: '业务编号',
-            field: 'code',
+            field: 'budgetCode',
             readonly: true
         }, {
             title: '业务公司',
@@ -91,7 +91,7 @@ class AdvMoneyAreaCheck extends React.Component {
             title: '收款银行',
             field: 'collectBankName',
             formatter: (v, d) => {
-                return d.collectBankName + '-' + d.collectSubbranch + '-户名：' + d.collectAccountName;
+                return d.collectBankName + '-' + d.collectAccountName;
             },
             readonly: true
         }, {

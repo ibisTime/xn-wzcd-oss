@@ -246,9 +246,6 @@ class GuaranteeMake extends React.Component {
         }, {
           title: '首付额',
           field: 'repayFirstMonthAmount',
-          formatter: (v, d) => {
-            return moneyFormat(d.invoicePrice - d.loanAmount);
-          },
           readonly: true
         }, {
           title: '总手续费(小写)',
@@ -282,8 +279,7 @@ class GuaranteeMake extends React.Component {
           readonly: true
         }, {
           title: '家庭电话',
-          field: 'guarantorFamilyPhone',
-          mobile: true
+          field: 'guarantorFamilyPhone'
         }, {
           title: '手机电话',
           field: 'guarantor1Mobile',
@@ -293,8 +289,7 @@ class GuaranteeMake extends React.Component {
           field: 'guarantorCompanyName'
         }, {
           title: '担保人单位电话',
-          field: 'guarantorCompanyPhone',
-          mobile: true
+          field: 'guarantorCompanyPhone'
         }, {
           title: '担保人单位地址',
           field: 'guarantorCompanyAddress'

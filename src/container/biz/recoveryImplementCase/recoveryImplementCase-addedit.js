@@ -114,7 +114,7 @@ class RecoveryImplementCaseAddEdit extends React.Component {
             title: '备注',
             field: 'remark1',
             formatter: (v, d) => {
-                return formatDate(d.judge.remark);
+                return d.judge.remark;
             }
         }, {
             title: '查封裁定到期时间',

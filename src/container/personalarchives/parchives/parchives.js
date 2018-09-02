@@ -142,7 +142,16 @@ class parchives extends React.Component {
           }
         },
         apply: (selectedRowKeys, selectedRows) => {
-          this.props.history.push(`/personalarchives/parchives/addedit`);
+          let code = selectedRowKeys ? selectedRowKeys[0] : '';
+          if (code) {
+              if (selectedRows[0].curNodeCode !== '015_04') {
+                  showWarnMsg('当前节点不是重新申请');
+                  return;
+              }
+              this.props.history.push(`/personalarchives/parchives/apply?code=${selectedRowKeys[0]}`);
+          } else {
+              this.props.history.push(`/personalarchives/parchives/apply`);
+          }
         }
       }
     });

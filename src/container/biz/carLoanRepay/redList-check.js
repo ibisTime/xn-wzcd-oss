@@ -66,17 +66,22 @@ class redListCheck extends React.Component {
                 key: '1',
                 value: '是'
             }],
+            onChange: (v) => {
+                this.isPawnshopName = v !== '0';
+            },
             keyName: 'key',
             valueName: 'value',
             readonly: true
         }, {
             title: '典当行名称',
             field: 'pawnshopName',
+            hidden: !this.isPawnshopName,
             readonly: true
         }, {
             title: '赎金小写',
             field: 'ransom',
             amount: true,
+            hidden: !this.isPawnshopName,
             readonly: true
         }, {
             title: '收车费用',
@@ -142,7 +147,7 @@ class redListCheck extends React.Component {
                 }]
             }
         }, {
-            title: '申请说明',
+            title: '审核说明',
             field: 'remark',
             type: 'textarea',
             normalArea: true,

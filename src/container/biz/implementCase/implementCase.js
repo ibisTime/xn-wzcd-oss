@@ -138,6 +138,7 @@ class ImplementCase extends React.Component {
             fields,
             pageCode: 630520,
             searchParams: {
+                isImplementAgain: '0',
                 curNodeCodeList: ['021_16', '021_17', '021_18', '021_19', '021_20', '021_22', '021_23', '021_24']
             },
             btnEvent: {

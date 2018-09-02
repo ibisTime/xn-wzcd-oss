@@ -112,18 +112,18 @@ class ArchivesAddedit extends React.Component {
                 title: ' 首期还款金额',
                 field: 'repayFirstMonthAmount',
                 amount: true,
-                required: 'true'
+                readonly: 'true'
             }, {
                 title: '每期还款额',
                 field: 'repayMonthAmount',
                 amount: true,
-                required: true
+                readonly: true
             }],
             [{
                 title: '首期还款日期',
                 field: 'repayFirstMonthDatetime',
                 type: 'date',
-                required: 'true'
+                readonly: 'true'
             }],
             [{
                 title: '已入档清单',

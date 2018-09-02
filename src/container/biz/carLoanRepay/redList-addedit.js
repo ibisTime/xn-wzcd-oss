@@ -50,9 +50,7 @@ class redListAddedit extends React.Component {
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            formatter: (v, d) => {
-                return d.repayBiz.loanAmount / 1000;
-            },
+            amount: true,
             readonly: true
         }, {
             title: '收款人开户行',

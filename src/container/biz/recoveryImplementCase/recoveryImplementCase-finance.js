@@ -12,6 +12,7 @@ import {
     getUserId,
     showSucMsg,
     formatDate,
+    getCompanyCode,
     moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
@@ -141,10 +142,26 @@ class RecoveryImplementCaseFinance extends React.Component {
         }, {
             title: '收款银行',
             field: 'judgeReceiptBankCode',
+            type: 'select',
+            listCode: 632007,
+            params: {
+                type: '1',
+                companyCode: getCompanyCode()
+            },
+            keyName: 'code',
+            valueName: 'bankName',
             required: true
         }, {
             title: '收款账号',
             field: 'judgeReceiptBankcard',
+            type: 'select',
+            listCode: 632007,
+            params: {
+                type: '1',
+                companyCode: getCompanyCode()
+            },
+            keyName: 'code',
+            valueName: 'bankcardNumber',
             required: true
         }, {
             title: '银行回单',

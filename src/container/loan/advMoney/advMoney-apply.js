@@ -91,7 +91,7 @@ class AdvMoneyApply extends React.Component {
             title: '收款银行',
             field: 'collectBankName1',
             formatter: (v, d) => {
-                return d.collectBankName + '-' + d.collectSubbranch + '-户名：' + d.collectAccountName;
+                return d.collectBankName + '-' + d.collectAccountName;
             },
             readonly: true
         }, {

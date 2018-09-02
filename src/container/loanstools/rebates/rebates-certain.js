@@ -78,7 +78,7 @@ class RebatesCertain extends React.Component {
             valueName: '{{bankName.DATA}}-{{bankcardNumber.DATA}}-{{realName.DATA}}',
             required: true
         }, {
-            title: '水单',
+            title: '银行回单',
             field: 'billPdf',
             required: true,
             type: 'img'

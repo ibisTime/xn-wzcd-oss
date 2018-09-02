@@ -41,7 +41,7 @@ class AdvMoneyAddedit extends React.Component {
             field: 'customerName'
         }, {
             title: '业务编号',
-            field: 'code'
+            field: 'budgetCode'
         }, {
             title: '身份证',
             field: 'applyUserIdNo'

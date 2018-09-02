@@ -29,7 +29,7 @@ class refundListAddedit extends React.Component {
       title: '业务编号',
       field: 'code'
     }, {
-      title: '贷款人',
+      title: '客户姓名',
       field: 'realName',
       formatter: (v, d) => {
         return d.user.realName;

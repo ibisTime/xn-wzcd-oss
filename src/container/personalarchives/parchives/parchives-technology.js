@@ -68,17 +68,7 @@ class ParchivesTechnology extends React.Component {
                 }],
                 [{
                     title: '岗位',
-                    field: 'postCode',
-                    type: 'treeSelect',
-                    disabled: (item) => item.type !== '3',
-                    listCode: 630106,
-                    params: {
-                        status: '1'
-                    },
-                    keyName: 'code',
-                    valueName: 'name',
-                    bParams: ['type'],
-                    required: true,
+                    field: 'postName',
                     readonly: true
                 }, {
                     title: '上班班次',

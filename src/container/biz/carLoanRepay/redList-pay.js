@@ -67,24 +67,30 @@ class redListaPay extends React.Component {
         }, {
             title: '是否典当行赎回',
             field: 'pawnshopIsRedeem',
-            formatter: (v, d) => {
-                let index = d.curMonthRepayPlan.pawnshopIsRedeem;
-                return this.arr[index].value;
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            onChange: (v) => {
+                this.isPawnshopName = v !== '0';
             },
+            keyName: 'key',
+            valueName: 'value',
             readonly: true
         }, {
             title: '典当行名称',
             field: 'pawnshopName',
-            formatter: (v, d) => {
-                return d.curMonthRepayPlan.pawnshopName;
-            },
+            hidden: !this.isPawnshopName,
             readonly: true
         }, {
             title: '赎金小写',
             field: 'ransom',
-            formatter: (v, d) => {
-                return moneyFormat(d.curMonthRepayPlan.ransom);
-            },
+            amount: true,
+            hidden: !this.isPawnshopName,
             readonly: true
         }, {
             title: '收车费用',

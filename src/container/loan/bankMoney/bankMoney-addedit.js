@@ -60,13 +60,19 @@ class BankMoneyAddedit extends React.Component {
             field: 'bankFkDatetime',
             type: 'date'
         }, {
+            title: '对账单日',
+            field: 'billDatetime'
+        }, {
+            title: '银行还款日',
+            field: 'repayBankDate'
+        }, {
             title: '收款账号',
             field: 'bankReceiptName'
         }, {
             title: '收款账号',
             field: 'bankReceiptNumber'
         }, {
-            title: '水单',
+            title: '银行回单',
             field: 'bankReceiptPdf',
             type: 'img'
         }, {

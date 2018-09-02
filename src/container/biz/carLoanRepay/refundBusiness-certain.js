@@ -28,7 +28,7 @@ class refundBusinessCertain extends React.Component {
   render() {
     const fields = [
       {
-        title: '贷款人',
+        title: '客户姓名',
         readonly: true,
         formatter: (v, d) => {
           return d.user.realName;

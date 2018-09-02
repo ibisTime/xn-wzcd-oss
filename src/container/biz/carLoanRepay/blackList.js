@@ -46,7 +46,7 @@ class BlackList extends React.Component {
       },
       search: true
   }, {
-      title: '贷款人',
+      title: '客户姓名',
       field: 'user',
       search: true,
       render: (v, d) => {

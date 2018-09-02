@@ -67,6 +67,9 @@ class applyGpsAddedit extends React.Component {
             field: 'repayBizCode',
             type: 'select',
             pageCode: 630520,
+            params: {
+                curNodeCodeList: ['020_01']
+            },
             keyName: 'code',
             valueName: '{{refCode.DATA}}-{{realName.DATA}}',
             required: true

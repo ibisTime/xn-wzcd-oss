@@ -6,16 +6,19 @@ import {
   setSelectData,
   setPageData,
   restore
-} from '@redux/personalarchives/parchives-addedit.js';
+} from '@redux/personalarchives/parchives-apply.js';
 import {
-  getQueryString
+  getQueryString,
+  getUserId,
+  showSucMsg
 } from 'common/js/util';
+import fetch from 'common/js/fetch';
 import {
   CollapseWrapper
 } from 'component/collapse-detail/collapse-detail';
 
 @CollapseWrapper(
-  state => state.personalarchivesParchivesAddedit, {
+  state => state.personalarchivesParchivesApply, {
     initStates,
     doFetching,
     cancelFetching,
@@ -24,7 +27,7 @@ import {
     restore
   }
 )
-class ParchivesAddedit extends React.Component {
+class ParchivesApply extends React.Component {
   constructor(props) {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
@@ -59,7 +62,16 @@ class ParchivesAddedit extends React.Component {
                 type: 'date'
             }], [{
                 title: '岗位',
-                field: 'postName',
+                field: 'postCode',
+                type: 'treeSelect',
+                disabled: (item) => item.type !== '3',
+                listCode: 630106,
+                params: {
+                    status: '1'
+                },
+                keyName: 'code',
+                valueName: 'name',
+                bParams: ['type'],
                 required: true
             }, {
                 title: '上班班次',
@@ -289,11 +301,30 @@ class ParchivesAddedit extends React.Component {
         fields,
         code: this.code,
         view: this.view,
-        addCode: 632800,
-        editCode: 632802,
-        detailCode: 632806
+        detailCode: 632806,
+        buttons: [{
+          title: '确认',
+          check: true,
+          handler: (params) => {
+            this.props.doFetching();
+            let interfaceCode = this.code ? 632802 : 632800;
+            params.operator = getUserId();
+            fetch(interfaceCode, params).then(() => {
+              showSucMsg('操作成功');
+              setTimeout(() => {
+                this.props.history.go(-1);
+              }, 1000);
+              this.props.cancelFetching();
+            }).catch(this.props.cancelFetching);
+          }
+        }, {
+          title: '返回',
+          handler: (param) => {
+            this.props.history.go(-1);
+          }
+        }]
       });
   }
 }
 
-export default ParchivesAddedit;
+export default ParchivesApply;

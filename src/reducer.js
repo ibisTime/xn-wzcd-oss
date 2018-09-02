@@ -108,12 +108,15 @@ import { summaryPlan } from './redux/biz/summary/summary-plan';
 import { bizRefundList } from './redux/biz/refundList';
 import { bizRefundListAddedit } from './redux/biz/refundList-addedit';
 
-//  逾期名单 + 详情 + 处理
+//  逾期名单 + 详情 + 录入催收过程 + 录入催收结果 + 催收记录 + 催收记录催收过程详情 + 催收记录催收结果详情
 import { bizOverdueList } from './redux/biz/overdueList/overdueList';
 import { bizOverdueListDispose } from './redux/biz/overdueList/overdueList-dispose';
 import { bizOverdueListProcess } from './redux/biz/overdueList/overdueList-process';
 import { bizOverdueListResult } from './redux/biz/overdueList/overdueList-result';
 import { bizOverdueListApply } from './redux/biz/overdueList/overdueList-apply';
+import { bizOverdueListRecord } from './redux/biz/overdueList/overdueList-record';
+import { bizOverdueListProcessAddedit } from './redux/biz/overdueList/overdueList-processAddedit';
+import { bizOverdueListResultAddedit } from './redux/biz/overdueList/overdueList-resultAddedit';
 
 //  白名单 + 详情
 import { bizWhiteList } from './redux/biz/whiteList/whiteList';
@@ -477,6 +480,7 @@ import { analysisTablehistory } from './redux/analysis/tablehistory';
 // 人事档案 + 详情 + 分公司总经理审批 + 行政部审批 + 网络技术审批
 import { personalarchivesParchives } from './redux/personalarchives/parchives';
 import { personalarchivesParchivesAddedit } from './redux/personalarchives/parchives-addedit';
+import { personalarchivesParchivesApply } from './redux/personalarchives/parchives-apply';
 import { personalarchivesParchivesCompanyCheck } from './redux/personalarchives/parchives-companyCheck';
 import { personalarchivesParchivesCheck } from './redux/personalarchives/parchives-check';
 import { personalarchivesParchivesTechnology } from './redux/personalarchives/parchives-technology';
@@ -760,6 +764,9 @@ export default combineReducers({
   bizCarLoanBusinessCheck,
   bizOverdueListDispose,
   bizOverdueListApply,
+  bizOverdueListRecord,
+  bizOverdueListProcessAddedit,
+  bizOverdueListResultAddedit,
   bizBlackListDispose,
   bizGreenListPayment,
   bizRefundCard,
@@ -910,6 +917,7 @@ export default combineReducers({
   mortgagesEnter,
   personalarchivesParchives,
   personalarchivesParchivesAddedit,
+  personalarchivesParchivesApply,
   personalarchivesParchivesCompanyCheck,
   personalarchivesParchivesCheck,
   personalarchivesParchivesTechnology,

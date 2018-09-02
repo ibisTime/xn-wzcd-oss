@@ -38,7 +38,7 @@ class greenListAddedit extends React.Component {
       readonly: true
     }, {
       field: 'user',
-      title: '贷款人',
+      title: '客户姓名',
       formatter: (v, d) => {
         return d.user.realName;
       },

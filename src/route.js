@@ -417,6 +417,21 @@ const ROUTES = [
     path: '/biz/overdueList/apply',
     component: asyncComponent(() => import('container/biz/overdueList/overdueList-apply'))
   },
+  //  逾期名单 催收记录
+  {
+    path: '/biz/overdueList/record',
+    component: asyncComponent(() => import('container/biz/overdueList/overdueList-record'))
+  },
+  //  逾期名单 催收记录 催收记录催收过程详情
+  {
+    path: '/biz/overdueList/record/processAddedit',
+    component: asyncComponent(() => import('container/biz/overdueList/overdueList-processAddedit'))
+  },
+  //  逾期名单 催收记录 催收记录催收结果详情
+  {
+    path: '/biz/overdueList/record/resultAddedit',
+    component: asyncComponent(() => import('container/biz/overdueList/overdueList-resultAddedit'))
+  },
   //  白名单
   {
     path: '/biz/whiteList',
@@ -1825,6 +1840,11 @@ const ROUTES = [
   {
     path: '/personalarchives/parchives/addedit',
     component: asyncComponent(() => import('container/personalarchives/parchives/parchives-addedit'))
+  },
+  //  人事档案 申请
+  {
+    path: '/personalarchives/parchives/apply',
+    component: asyncComponent(() => import('container/personalarchives/parchives/parchives-apply'))
   },
   //  人事档案 分公司总经理审批
   {
