@@ -834,7 +834,7 @@ class MortgageMake extends React.Component {
             title: '套打模版',
             field: 'pledgePrintTemplateId',
             type: 'select',
-            key: 'guarant_print_template_id',
+            key: 'pledge_print_template_id',
             required: true
         }];
         return this.props.buildDetail({

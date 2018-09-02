@@ -102,11 +102,13 @@ class ArchivesAddedit extends React.Component {
             }],
             [{
                 title: '担保人姓名',
-                field: 'guarantor1Name'
+                field: 'guarantor1Name',
+                readonly: !!this.props.pageData.guarantor1Name
             }, {
                 title: '担保人手机',
                 field: 'guarantor1Mobile',
-                mobile: true
+                mobile: true,
+                readonly: !!this.props.pageData.guarantor1Mobile
             }],
             [{
                 title: ' 首期还款金额',
