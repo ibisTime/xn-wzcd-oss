@@ -39,7 +39,11 @@ class Tablehistory extends React.Component {
     render() {
         const fields = [{
             title: '表格类型',
-            field: 'menuName',
+            field: 'url',
+            type: 'select',
+            listCode: 632096,
+            keyName: 'url',
+            valueName: 'name',
             search: true
         }, {
             title: '导出人',

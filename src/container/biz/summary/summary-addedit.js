@@ -64,10 +64,29 @@ class SummaryAddedit extends React.Component {
                     }
                 }],
                 [{
+                    title: '申请人就职单位',
+                    field: 'applyUserCompany',
+                    formatter: (v, d) => {
+                        return d.budgetOrder.applyUserCompany;
+                    }
+                }, {
+                    title: '申请人户籍地',
+                    field: 'applyBirthAddress',
+                    formatter: (v, d) => {
+                        return d.budgetOrder.applyBirthAddress;
+                    }
+                }, {
+                    title: '现住地址',
+                    field: 'applyNowAddress',
+                    formatter: (v, d) => {
+                        return d.budgetOrder.applyNowAddress;
+                    }
+                }],
+                [{
                     title: 'GPS',
                     field: 'budgetOrderGpsList',
                     formatter: (v, d) => {
-                        return moneyFormat(d.budgetOrder.budgetOrderGpsList);
+                        return d.budgetOrder.budgetOrderGpsList;
                     },
                     type: 'o2m',
                     options: {
@@ -187,7 +206,9 @@ class SummaryAddedit extends React.Component {
                 }, {
                     field: 'emergencyRelation1',
                     title: '与申请人关系',
-                    _keys: ['budgetOrder', 'emergencyRelation1'],
+                    formatter: (v, d) => {
+                        return d.budgetOrder.emergencyRelation1;
+                    },
                     type: 'select',
                     key: 'emergency_contact_relation',
                     required: true
@@ -207,7 +228,9 @@ class SummaryAddedit extends React.Component {
                 }, {
                     field: 'emergencyRelation2',
                     title: '与申请人关系',
-                    _keys: ['budgetOrder', 'emergencyRelation2'],
+                    formatter: (v, d) => {
+                        return d.budgetOrder.emergencyRelation2;
+                    },
                     type: 'select',
                     key: 'emergency_contact_relation'
                 }, {

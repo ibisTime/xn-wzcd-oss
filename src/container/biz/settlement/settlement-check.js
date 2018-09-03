@@ -130,18 +130,12 @@ export default class settlementCheck extends DetailUtil {
             field: 'depositReceipt',
             type: 'img',
             hidden: !this.state.haveDepositReceipt,
-            formatter: (v, d) => {
-                return '';
-            },
             readonly: true
         }, {
             title: '保证金单遗失证明',
             field: 'depositReceiptLostProof',
             type: 'img',
             hidden: !this.state.haveDepositReceiptLostProof,
-            formatter: (v, d) => {
-                return '';
-            },
             readonly: true
         }, {
             title: '结清证明',
@@ -160,7 +154,6 @@ export default class settlementCheck extends DetailUtil {
             params: {
                 refOrder: this.code
             },
-            hidden: this.isEntry || this.isCheckFirst || this.isAddedit,
             options: {
                 rowKey: 'id',
                 noSelect: true,
@@ -205,6 +198,7 @@ export default class settlementCheck extends DetailUtil {
               handler: (param) => {
                 param.approveResult = '1';
                 param.operator = getUserId();
+                param.code = this.code;
                 this.doFetching();
                 fetch(630571, param).then(() => {
                   showSucMsg('操作成功');
@@ -221,6 +215,7 @@ export default class settlementCheck extends DetailUtil {
               handler: (param) => {
                 param.approveResult = '0';
                 param.operator = getUserId();
+                param.code = this.code;
                 this.doFetching();
                 fetch(630571, param).then(() => {
                   showSucMsg('操作成功');
