@@ -1120,7 +1120,7 @@ class HistoryingAddedit extends React.Component {
       title: '企业照片',
       items: [
         [{
-          title: '企业名称照片',
+          title: '营业执照',
           field: 'companyNamePic',
           type: 'img'
         }, {
