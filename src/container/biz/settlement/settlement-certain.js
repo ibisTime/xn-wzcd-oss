@@ -15,26 +15,20 @@ import {
     showSucMsg
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-    state => state.bizSettlementCertain, {
-        initStates,
-        doFetching,
-        cancelFetching,
-        setSelectData,
-        setPageData,
-        restore
-    }
-)
-class settlementCertain extends React.Component {
+@Form.create()
+export default class settlementCertain extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.state = {
+          ...this.state,
+          haveDepositReceipt: false,
+          haveDepositReceiptLostProof: false
+        };
     }
     render() {
         const fields = [{
@@ -112,9 +106,42 @@ class settlementCertain extends React.Component {
             amount: 'true',
             readonly: true
         }, {
+            title: '是否有保证金单',
+            field: 'isDepositReceipt',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            onChange: (v) => {
+                this.setState({
+                    haveDepositReceipt: v !== '0' && v !== '',
+                    haveDepositReceiptLostProof: v === '0'
+                });
+            },
+            readonly: true
+        }, {
             title: '保证金单',
             field: 'depositReceipt',
             type: 'img',
+            hidden: !this.state.haveDepositReceipt,
+            formatter: (v, d) => {
+                return '';
+            },
+            readonly: true
+        }, {
+            title: '保证金单遗失证明',
+            field: 'depositReceiptLostProof',
+            type: 'img',
+            hidden: !this.state.haveDepositReceiptLostProof,
+            formatter: (v, d) => {
+                return '';
+            },
             readonly: true
         }, {
             title: '结清证明',
@@ -136,7 +163,7 @@ class settlementCertain extends React.Component {
             field: 'settleNote',
             required: true
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
@@ -145,14 +172,14 @@ class settlementCertain extends React.Component {
               title: '确认',
               handler: (param) => {
                 param.operator = getUserId();
-                this.props.doFetching();
+                this.doFetching();
                 fetch(630572, param).then(() => {
                   showSucMsg('操作成功');
-                  this.props.cancelFetching();
+                  this.cancelFetching();
                   setTimeout(() => {
                     this.props.history.go(-1);
                   }, 1000);
-                }).catch(this.props.cancelFetching);
+                }).catch(() => this.props.cancelFetching);
               },
               check: true,
               type: 'primary'
@@ -165,5 +192,3 @@ class settlementCertain extends React.Component {
         });
     }
 }
-
-export default settlementCertain;

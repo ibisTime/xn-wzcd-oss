@@ -25,7 +25,8 @@ export default class settlementApply extends DetailUtil {
         this.view = !!getQueryString('v', this.props.location.search);
         this.state = {
           ...this.state,
-          haveDepositReceipt: false
+          haveDepositReceipt: false,
+          haveDepositReceiptLostProof: false
         };
     }
     render() {
@@ -125,7 +126,7 @@ export default class settlementApply extends DetailUtil {
             bankCard: true,
             required: true
         }, {
-            title: '是否有押金单',
+            title: '是否有保证金单',
             field: 'isDepositReceipt',
             type: 'select',
             data: [{
@@ -139,12 +140,13 @@ export default class settlementApply extends DetailUtil {
             valueName: 'value',
             onChange: (v) => {
                 this.setState({
-                    haveDepositReceipt: v === '0'
+                    haveDepositReceipt: v !== '0' && v !== '',
+                    haveDepositReceiptLostProof: v === '0'
                 });
             },
             required: true
         }, {
-            title: '押金单',
+            title: '保证金单',
             field: 'depositReceipt',
             type: 'img',
             hidden: !this.state.haveDepositReceipt,
@@ -153,10 +155,10 @@ export default class settlementApply extends DetailUtil {
             },
             required: true
         }, {
-            title: '押金单遗失证明',
+            title: '保证金单遗失证明',
             field: 'depositReceiptLostProof',
             type: 'img',
-            hidden: this.state.haveDepositReceipt,
+            hidden: !this.state.haveDepositReceiptLostProof,
             formatter: (v, d) => {
                 return '';
             },
@@ -187,6 +189,7 @@ export default class settlementApply extends DetailUtil {
               title: '确认',
               handler: (param) => {
                 param.operator = getUserId();
+                param.code = this.code;
                 this.doFetching();
                 fetch(630570, param).then(() => {
                   showSucMsg('操作成功');
