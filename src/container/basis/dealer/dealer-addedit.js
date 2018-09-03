@@ -279,13 +279,13 @@ class DealerAddedit extends React.Component {
       fields1.forEach(f => {
         data[f + '_' + tab] = obj[f];
       });
-      data['assureFee_' + tab] = obj.assureFee || obj.assureRate * 100;
-      data['dzFee_' + tab] = obj.dzFee || obj.dzRate * 100;
-      data['lyAmountFee_' + tab] = obj.lyAmountFee || obj.lyAmountRate * 100;
-      data['gpsFee_' + tab] = obj.gpsFee || obj.gpsRate * 100;
-      data['otherFee_' + tab] = obj.otherFee || obj.otherRate * 100;
-      data['introduceFee_' + tab] = obj.introduceFee || obj.introduceRate * 100;
-      data['returnPointFee_' + tab] = obj.returnPointFee || obj.returnPointRate * 100;
+      data['assureFee_' + tab] = obj.assureFee || (!isUndefined(obj.assureRate) && (obj.assureRate * 100).toFixed(2)) || '';
+      data['dzFee_' + tab] = obj.dzFee || (!isUndefined(obj.dzRate) && (obj.dzRate * 100).toFixed(2)) || '';
+      data['lyAmountFee_' + tab] = obj.lyAmountFee || (!isUndefined(obj.lyAmountRate) && (obj.lyAmountRate * 100).toFixed(2)) || '';
+      data['gpsFee_' + tab] = obj.gpsFee || (!isUndefined(obj.gpsRate) && (obj.gpsRate * 100).toFixed(2)) || '';
+      data['otherFee_' + tab] = obj.otherFee || (!isUndefined(obj.otherRate) && (obj.otherRate * 100).toFixed(2)) || '';
+      data['introduceFee_' + tab] = obj.introduceFee || (!isUndefined(obj.introduceRate) && (obj.introduceRate * 100).toFixed(2)) || '';
+      data['returnPointFee_' + tab] = obj.returnPointFee || (!isUndefined(obj.returnPointRate) && (obj.returnPointRate * 100).toFixed(2)) || '';
     }
   }
   // 新增table的tr
@@ -328,6 +328,7 @@ class DealerAddedit extends React.Component {
                 {
                   this.view ? <div className="readonly-text">{pageData[fields[0]]}</div>
                     : getFieldDecorator(fields[0], {
+                      rules: [ruleRequired],
                       initialValue: pageData[fields[0]]
                     })(<Input />)
                 }
@@ -338,6 +339,7 @@ class DealerAddedit extends React.Component {
                 {
                   this.view ? <div className="readonly-text">{pageData[fields[1]]}</div>
                     : getFieldDecorator(fields[1], {
+                      rules: [ruleRequired],
                       initialValue: pageData[fields[1]]
                     })(<Input />)
                 }
@@ -350,6 +352,7 @@ class DealerAddedit extends React.Component {
                 {
                   this.view ? <div className="readonly-text">{pageData[fields[2]]}</div>
                     : getFieldDecorator(fields[2], {
+                      rules: [ruleRequired],
                       initialValue: pageData[fields[2]]
                     })(<Input />)
                 }
@@ -360,6 +363,7 @@ class DealerAddedit extends React.Component {
                 {
                   this.view ? <div className="readonly-text">{pageData[fields[3]]}</div>
                     : getFieldDecorator(fields[3], {
+                      rules: [ruleRequired],
                       initialValue: pageData[fields[3]]
                     })(<Input />)
                 }
@@ -372,6 +376,7 @@ class DealerAddedit extends React.Component {
                 {
                   this.view ? <div className="readonly-text">{pageData[fields[4]]}</div>
                     : getFieldDecorator(fields[4], {
+                      rules: [ruleRequired],
                       initialValue: pageData[fields[4]]
                     })(<Input />)
                 }
@@ -382,6 +387,7 @@ class DealerAddedit extends React.Component {
                 {
                   this.view ? <div className="readonly-text">{pageData[fields[5]]}</div>
                     : getFieldDecorator(fields[5], {
+                      rules: [ruleRequired],
                       initialValue: pageData[fields[5]]
                     })(<Input />)
                 }
@@ -398,6 +404,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{feeTypeDict[pageData[fields[6]]] || ''}</div>
                         : getFieldDecorator(fields[6], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[6]]
                         })(feeTypeList)
                     }
@@ -406,6 +413,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{pageData[fields[6]] === '1' ? moneyFormat(pageData[fields[7]]) : pageData[fields[7]]}</div>
                         : getFieldDecorator(fields[7], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[6]] === '1' ? moneyFormat(pageData[fields[7]]) : pageData[fields[7]]
                         })(<Input />)
                     }
@@ -420,6 +428,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{feeTypeDict[pageData[fields[8]]] || ''}</div>
                         : getFieldDecorator(fields[8], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[8]]
                         })(feeTypeList)
                     }
@@ -428,6 +437,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{pageData[fields[8]] === '1' ? moneyFormat(pageData[fields[9]]) : pageData[fields[9]]}</div>
                         : getFieldDecorator(fields[9], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[8]] === '1' ? moneyFormat(pageData[fields[9]]) : pageData[fields[9]]
                         })(<Input />)
                     }
@@ -444,6 +454,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{feeTypeDict[pageData[fields[10]]] || ''}</div>
                         : getFieldDecorator(fields[10], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[10]]
                         })(feeTypeList)
                     }
@@ -452,6 +463,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{pageData[fields[10]] === '1' ? moneyFormat(pageData[fields[11]]) : pageData[fields[11]]}</div>
                         : getFieldDecorator(fields[11], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[10]] === '1' ? moneyFormat(pageData[fields[11]]) : pageData[fields[11]]
                         })(<Input />)
                     }
@@ -466,6 +478,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{feeTypeDict[pageData[fields[12]]] || ''}</div>
                         : getFieldDecorator(fields[12], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[12]]
                         })(feeTypeList)
                     }
@@ -474,6 +487,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{pageData[fields[12]] === '1' ? moneyFormat(pageData[fields[13]]) : pageData[fields[13]]}</div>
                         : getFieldDecorator(fields[13], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[12]] === '1' ? moneyFormat(pageData[fields[13]]) : pageData[fields[13]]
                         })(<Input />)
                     }
@@ -490,6 +504,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{feeTypeDict[pageData[fields[14]]] || ''}</div>
                         : getFieldDecorator(fields[14], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[14]]
                         })(feeTypeList)
                     }
@@ -498,6 +513,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{pageData[fields[14]] === '1' ? moneyFormat(pageData[fields[15]]) : pageData[fields[15]]}</div>
                         : getFieldDecorator(fields[15], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[14]] === '1' ? moneyFormat(pageData[fields[15]]) : pageData[fields[15]]
                         })(<Input />)
                     }
@@ -512,6 +528,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{feeTypeDict[pageData[fields[16]]] || ''}</div>
                         : getFieldDecorator(fields[16], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[16]]
                         })(feeTypeList)
                     }
@@ -520,6 +537,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{pageData[fields[16]] === '1' ? moneyFormat(pageData[fields[17]]) : pageData[fields[17]]}</div>
                         : getFieldDecorator(fields[17], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[16]] === '1' ? moneyFormat(pageData[fields[17]]) : pageData[fields[17]]
                         })(<Input />)
                     }
@@ -536,6 +554,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{feeTypeDict[pageData[fields[18]]] || ''}</div>
                         : getFieldDecorator(fields[18], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[18]]
                         })(feeTypeList)
                     }
@@ -544,6 +563,7 @@ class DealerAddedit extends React.Component {
                     {
                       this.view ? <div className="readonly-text">{pageData[fields[18]] === '1' ? moneyFormat(pageData[fields[19]]) : pageData[fields[19]]}</div>
                         : getFieldDecorator(fields[19], {
+                          rules: [ruleRequired],
                           initialValue: pageData[fields[18]] === '1' ? moneyFormat(pageData[fields[19]]) : pageData[fields[19]]
                         })(<Input />)
                     }
@@ -556,6 +576,7 @@ class DealerAddedit extends React.Component {
                 {
                   this.view ? <div className="readonly-text">{tfDict[pageData[fields[20]]] || ''}</div>
                     : getFieldDecorator(fields[20], {
+                      rules: [ruleRequired],
                       initialValue: pageData[fields[20]]
                     })(
                       <Select>
@@ -631,6 +652,7 @@ class DealerAddedit extends React.Component {
   save(form, code, tab) {
     form.validateFields((error, row) => {
       if (error) {
+        console.log(error);
         return;
       }
       const newData = [...this.state[tab]];
@@ -689,6 +711,8 @@ class DealerAddedit extends React.Component {
           if (this.code) {
             code = 632062;
             params.code = this.code;
+          } else {
+            params.operator = getUserId();
           }
           this.doFetching();
           fetch(code, params).then((data) => {
@@ -1283,9 +1307,9 @@ class DealerAddedit extends React.Component {
           </Card>
           <Card style={{ marginTop: 16 }} title="协议政策">
             <Tabs defaultActiveKey="1" onChange={this.onTabChange}>
-              <TabPane tab="工行" key="tab1">{ this.getTabComp('tab1') }</TabPane>
-              <TabPane tab="中行" key="tab2">{ this.getTabComp('tab2') }</TabPane>
-              <TabPane tab="建行" key="tab3">{ this.getTabComp('tab3') }</TabPane>
+              <TabPane tab="*工行" key="tab1">{ this.getTabComp('tab1') }</TabPane>
+              <TabPane tab="*中行" key="tab2">{ this.getTabComp('tab2') }</TabPane>
+              <TabPane tab="*建行" key="tab3">{ this.getTabComp('tab3') }</TabPane>
             </Tabs>
           </Card>
           <Card title="返点账号" style={{ marginTop: 16, marginBottom: 16 }}>

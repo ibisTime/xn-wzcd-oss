@@ -53,7 +53,7 @@ class Bank extends React.Component {
         }, {
             title: '最新修改时间',
             field: 'updateDatetime',
-            type: 'date'
+            type: 'datetime'
         }];
         return this.props.buildList({
             fields,
