@@ -663,7 +663,6 @@ export default class DetailComponent extends React.Component {
         if (item.options.scroll) {
             props.scroll = item.options.scroll;
         }
-        // console.log(props);
         return props;
     }
 
