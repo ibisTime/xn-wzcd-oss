@@ -9,32 +9,24 @@ import {
 } from '@redux/biz/settlement-apply';
 import {
     getQueryString,
-    dateTimeFormat,
     moneyFormat,
     getUserId,
     showSucMsg
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-    state => state.bizSettlementApply, {
-        initStates,
-        doFetching,
-        cancelFetching,
-        setSelectData,
-        setPageData,
-        restore
-    }
-)
-class settlementApply extends React.Component {
+@Form.create()
+export default class settlementApply extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.state = {
+          ...this.state,
+          haveDepositReceipt: false
+        };
     }
     render() {
         const fields = [{
@@ -97,12 +89,12 @@ class settlementApply extends React.Component {
             field: 'cutLyDeposit',
             amount: 'true',
             onChange: (v) => {
-                let lyDeposit = this.props.pageData.lyDeposit;
-                console.log('lyDeposit====' + lyDeposit);
-                console.log('v====' + v);
-                this.props.setPageData({
-                    ...this.props.pageData,
-                    actualRefunds: moneyFormat(lyDeposit - v * 1000)
+                let lyDeposit = this.state.pageData.lyDeposit;
+                this.setState({
+                    pageData: {
+                        ...this.state.pageData,
+                        actualRefunds: moneyFormat(lyDeposit - v * 1000)
+                    }
                 });
             },
             required: true
@@ -146,15 +138,16 @@ class settlementApply extends React.Component {
             keyName: 'key',
             valueName: 'value',
             onChange: (v) => {
-                this.haveDepositReceipt = v !== '0';
-                this.haveDepositReceiptLostProof = v === '0';
+                this.setState({
+                    haveDepositReceipt: v === '0'
+                });
             },
             required: true
         }, {
             title: '押金单',
             field: 'depositReceipt',
             type: 'img',
-            hidden: !this.haveDepositReceipt,
+            hidden: !this.state.haveDepositReceipt,
             formatter: (v, d) => {
                 return '';
             },
@@ -163,7 +156,7 @@ class settlementApply extends React.Component {
             title: '押金单遗失证明',
             field: 'depositReceiptLostProof',
             type: 'img',
-            hidden: !this.haveDepositReceiptLostProof,
+            hidden: this.state.haveDepositReceipt,
             formatter: (v, d) => {
                 return '';
             },
@@ -185,7 +178,7 @@ class settlementApply extends React.Component {
             title: '备注',
             field: 'remark'
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
@@ -194,14 +187,14 @@ class settlementApply extends React.Component {
               title: '确认',
               handler: (param) => {
                 param.operator = getUserId();
-                this.props.doFetching();
+                this.doFetching();
                 fetch(630570, param).then(() => {
                   showSucMsg('操作成功');
-                  this.props.cancelFetching();
+                  this.cancelFetching();
                   setTimeout(() => {
                     this.props.history.go(-1);
                   }, 1000);
-                }).catch(this.props.cancelFetching);
+                }).catch(() => this.props.cancelFetching);
               },
               check: true,
               type: 'primary'
@@ -214,5 +207,3 @@ class settlementApply extends React.Component {
         });
     }
 }
-
-export default settlementApply;

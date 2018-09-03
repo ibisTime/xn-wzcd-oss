@@ -10,26 +10,23 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(state => state.bizredListCheck, {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-})
-class redListCheck extends React.Component {
+@Form.create()
+export default class redListCheck extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.state = {
+          ...this.state,
+          isPawnshopName: true
+        };
     }
     render() {
         const fields = [{
@@ -58,6 +55,9 @@ class redListCheck extends React.Component {
         }, {
             title: '是否典当行赎回',
             field: 'pawnshopIsRedeem',
+            formatter: (v, d) => {
+                return d.curMonthRepayPlan.pawnshopIsRedeem;
+            },
             type: 'select',
             data: [{
                 key: '0',
@@ -67,7 +67,9 @@ class redListCheck extends React.Component {
                 value: '是'
             }],
             onChange: (v) => {
-                this.isPawnshopName = v !== '0';
+                this.setState({
+                    isPawnshopName: v !== '0'
+                });
             },
             keyName: 'key',
             valueName: 'value',
@@ -75,13 +77,19 @@ class redListCheck extends React.Component {
         }, {
             title: '典当行名称',
             field: 'pawnshopName',
-            hidden: !this.isPawnshopName,
+            formatter: (v, d) => {
+                return d.curMonthRepayPlan.pawnshopName;
+            },
+            hidden: !this.state.isPawnshopName,
             readonly: true
         }, {
             title: '赎金小写',
             field: 'ransom',
+            formatter: (v, d) => {
+                return moneyFormat(d.curMonthRepayPlan.ransom);
+            },
             amount: true,
-            hidden: !this.isPawnshopName,
+            hidden: !this.state.isPawnshopName,
             readonly: true
         }, {
             title: '收车费用',
@@ -154,7 +162,6 @@ class redListCheck extends React.Component {
             required: true
         }];
         return this
-            .props
             .buildDetail({
                 fields,
                 code: this.code,
@@ -200,5 +207,3 @@ class redListCheck extends React.Component {
             });
     }
 }
-
-export default redListCheck;

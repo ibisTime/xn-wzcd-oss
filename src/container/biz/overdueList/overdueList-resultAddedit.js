@@ -1,39 +1,21 @@
-import React from 'react';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/biz/overdueList/overdueList-resultAddedit';
 import {
     getQueryString,
-    getUserId,
-    showSucMsg,
-    showWarnMsg,
     moneyFormat
 } from 'common/js/util';
-import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(state => state.bizOverdueListResultAddedit, {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-})
-class OverdueListResultAddedit extends React.Component {
+@Form.create()
+export default class OverdueListResultAddedit extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.isOverdueDeposit = true;
-        this.isRealRepayAmount = true;
+        this.state = {
+          ...this.state,
+          isOverdueDeposit: true,
+          isRealRepayAmount: true
+        };
     }
     render() {
         const fields = [{
@@ -123,11 +105,9 @@ class OverdueListResultAddedit extends React.Component {
             type: 'select',
             key: 'collection_result',
             onChange: (v) => {
-                if (v === 'part_repay') {
-                    this.isRealRepayAmount = false;
-                } else {
-                    this.isRealRepayAmount = true;
-                }
+                this.setState({
+                    isOverdueDeposit: v === 'part_repay'
+                });
             },
             required: true,
             readonly: true
@@ -145,11 +125,9 @@ class OverdueListResultAddedit extends React.Component {
             keyName: 'key',
             valueName: 'value',
             onChange: (v) => {
-                if (v === '1') {
-                    this.isOverdueDeposit = false;
-                } else {
-                    this.isOverdueDeposit = true;
-                }
+                this.setState({
+                    isRealRepayAmount: v === '1'
+                });
             },
             required: true,
             readonly: true
@@ -162,7 +140,7 @@ class OverdueListResultAddedit extends React.Component {
             formatter: (v, d) => {
                 return '';
             },
-            hidden: this.isOverdueDeposit,
+            hidden: !this.state.isRealRepayAmount,
             readonly: true
         }, {
             title: '实际还款金额',
@@ -173,7 +151,7 @@ class OverdueListResultAddedit extends React.Component {
             formatter: (v, d) => {
                 return '';
             },
-            hidden: this.isRealRepayAmount,
+            hidden: !this.state.isOverdueDeposit,
             readonly: true
         }, {
             title: '清收成本清单',
@@ -205,7 +183,6 @@ class OverdueListResultAddedit extends React.Component {
             readonly: true
         }];
         return this
-            .props
             .buildDetail({
                 fields,
                 code: this.code,
@@ -214,5 +191,3 @@ class OverdueListResultAddedit extends React.Component {
             });
     }
 }
-
-export default OverdueListResultAddedit;

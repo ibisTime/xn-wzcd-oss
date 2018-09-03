@@ -43,6 +43,10 @@ import {
     }
 )
 class ImplementCase extends React.Component {
+    constructor(props) {
+        super(props);
+        this.arr = ['执毕', '和解', '终结'];
+    }
     render() {
         const fields = [{
             title: '业务编号',
@@ -112,7 +116,7 @@ class ImplementCase extends React.Component {
             title: '执行结果',
             field: 'exeResult',
             render: (v, d) => {
-                return d.judge.exeResult;
+                return this.arr[d.judge.exeResult];
             }
         }, {
             title: '查封裁定到期时间',

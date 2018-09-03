@@ -9,7 +9,8 @@ import {
 } from '@redux/biz/archives-addedit';
 import {
     getQueryString,
-    dateTimeFormat
+    dateTimeFormat,
+    moneyFormat
 } from 'common/js/util';
 import {
     DetailWrapper

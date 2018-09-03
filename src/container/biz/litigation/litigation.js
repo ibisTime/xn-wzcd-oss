@@ -43,6 +43,10 @@ import {
     }
 )
 class litigation extends React.Component {
+    constructor(props) {
+        super(props);
+        this.arr = ['温州浩源控股有限公司', '保利有限公司'];
+    }
     render() {
         const fields = [{
             title: '业务编号',
@@ -61,7 +65,7 @@ class litigation extends React.Component {
             field: 'plaintiff',
             render: (v, d) => {
                 if(d.judge) {
-                    return d.judge.plaintiff;
+                    return this.arr[d.judge.plaintiff];
                 }
             }
         }, {
@@ -69,7 +73,7 @@ class litigation extends React.Component {
             field: 'defendant',
             render: (v, d) => {
                 if(d.judge) {
-                    return d.judge.defendant;
+                    return <span style={{whiteSpace: 'nowrap'}}>{d.judge.defendant}</span>;
                 }
             }
         }, {
@@ -77,7 +81,7 @@ class litigation extends React.Component {
             field: 'caseFee',
             render: (v, d) => {
                 if(d.judge) {
-                    return moneyFormat(d.judge.caseFee);
+                    return <span style={{whiteSpace: 'nowrap'}}>{moneyFormat(d.judge.caseFee)}</span>;
                 }
             }
         }, {

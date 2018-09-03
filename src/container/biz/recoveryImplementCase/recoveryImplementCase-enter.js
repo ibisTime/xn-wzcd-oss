@@ -111,6 +111,9 @@ class RecoveryImplementCaseEnter extends React.Component {
         }, {
             title: '执行结果',
             field: 'exeResult',
+            formatter: (v, d) => {
+                return d.judge.exeResult;
+            },
             type: 'select',
             key: 'exe_result',
             readonly: true

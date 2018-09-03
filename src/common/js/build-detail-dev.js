@@ -395,7 +395,7 @@ export default class DetailUtil extends React.Component {
   getBtns(buttons) {
     return (
       <FormItem key='btns' {...this.getBtnItemProps()}>
-        {buttons.length
+        {buttons && buttons.length
           ? buttons.map((b, i) => (
             <Button
               style={{marginRight: 20}}
@@ -473,7 +473,7 @@ export default class DetailUtil extends React.Component {
           values[v.field] = values[v.field] ? values[v.field].format(format) : values[v.field];
         }
       } else if (v.type === 'o2m') {
-        values[v.field] = this.props.pageData[v.field];
+        // values[v.field] = this.props.pageData[v.field];
       } else if (v.type === 'checkbox') {
         if (values[v.field] !== '' && values[v.field].push) {
           values[v.field] = values[v.field].join(',');

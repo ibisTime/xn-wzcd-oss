@@ -43,7 +43,10 @@ class OverdueListRecord extends React.Component {
             type: 'date'
         }, {
             title: '催收情况说明',
-            field: 'collectionProcessNote' || 'collectionResultNote'
+            field: 'collectionProcessNote',
+            render: (v, d) => {
+                return d.collectionProcessNote ? d.collectionProcessNote : d.collectionResultNote;
+            }
         }, {
             title: '类型',
             field: 'collectionType',
@@ -57,7 +60,7 @@ class OverdueListRecord extends React.Component {
             }],
             keyName: 'key',
             valueName: 'value',
-            serach: true
+            search: true
         }];
         return this.props.buildList({
             fields,
@@ -75,9 +78,9 @@ class OverdueListRecord extends React.Component {
                         showWarnMsg('请选择一条记录');
                     } else {
                         if(selectedRows[0].collectionType === '0') {
-                            this.props.history.push(`/biz/overdueList/record/processAddedit?v=1&code=${selectedRowKeys[0]}`);
-                        } else if(selectedRows[0].collectionType === '0') {
-                            this.props.history.push(`/biz/overdueList/record/resultAddedit?v=1&code=${selectedRowKeys[0]}`);
+                            this.props.history.push(`/biz/overdueList/record/processAddedit?v=1&code=${selectedRows[0].repayPlanCode}`);
+                        } else if(selectedRows[0].collectionType === '1') {
+                            this.props.history.push(`/biz/overdueList/record/resultAddedit?v=1&code=${selectedRows[0].repayPlanCode}`);
                         }
                     }
                 }

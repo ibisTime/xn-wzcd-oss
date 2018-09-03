@@ -60,6 +60,9 @@ class LitigationTakeEffect extends React.Component {
         }, {
             title: '原告',
             field: 'plaintiff',
+            formatter: (v, d) => {
+                return d.judge.plaintiff;
+            },
             type: 'select',
             key: 'plaintiff',
             readonly: true

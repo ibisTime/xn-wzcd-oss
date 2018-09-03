@@ -8,33 +8,24 @@ import {
     restore
 } from '@redux/biz/trailer-addedit';
 import {
-    getQueryString,
-    getUserId,
-    showSucMsg
+    getQueryString
 } from 'common/js/util';
-import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(state => state.bizTrailerAddEdit, {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-})
-class trailerAddedit extends React.Component {
+@Form.create()
+export default class trailerAddedit extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.userId = getQueryString('userId', this.props.location.search);
+        this.state = {
+          ...this.state,
+          dealResult: ''
+        };
     }
     render() {
         const fields = [{
-
             title: '客户姓名',
             field: 'realName'
         }, {
@@ -72,20 +63,39 @@ class trailerAddedit extends React.Component {
             title: '处理结果',
             field: 'dealResult',
             type: 'select',
-            key: 'deal_result'
+            key: 'tc_deal_result',
+            onChange: (v, data) => {
+                this.setState({
+                    dealResult: v
+                });
+            }
         }, {
             title: '出售价格',
             field: 'sellPrice',
             amount: true,
-            hidden: this.props.pageData && this.props.pageData.dealResult !== 2
+            hidden: this.state.dealResult !== '2'
         }, {
             title: '保证金',
             field: 'deposit',
             amount: true,
-            hidden: this.props.pageData && this.props.pageData.dealResult !== 3
+            hidden: this.state.dealResult !== '1'
         }, {
-            title: '费用说明',
-            field: 'feeNote'
+            title: '代偿预算单',
+            field: 'ReplaceRepayCode',
+            type: 'select',
+            listCode: 632327,
+            params: {
+                status: 4,
+                bizCode: this.code
+            },
+            keyName: 'code',
+            valueName: '{{receiptRealName.DATA}}-{{code.DATA}}',
+            hidden: this.state.dealResult !== '5'
+        }, {
+            title: '处理结果说明',
+            field: 'remark',
+            type: 'textarea',
+            normalArea: true
         }, {
             title: '当前节点',
             field: 'curNodeCode',
@@ -131,7 +141,7 @@ class trailerAddedit extends React.Component {
                 }]
             }
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
                 fields,
                 code: this.code,
                 view: this.view,
@@ -139,5 +149,3 @@ class trailerAddedit extends React.Component {
             });
     }
 }
-
-export default trailerAddedit;
