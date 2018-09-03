@@ -179,7 +179,7 @@ class BudgetAddedit extends React.Component {
         };
         let data = {
             loanAmount: moneyParse(this.props.form.getFieldValue('loanAmount')),
-            carDealerSubsidy: this.rateType === '1' ? 0 : this.props.form.getFieldValue('carDealerSubsidy'),
+            carDealerSubsidy: this.rateType === '1' ? 0 : moneyParse(this.props.form.getFieldValue('carDealerSubsidy')),
             serviceCharge: this.props.pageData.serviceCharge,
             gpsFee: this.props.pageData.gpsFee,
             isAdvanceFund: this.props.form.getFieldValue('isAdvanceFund'),
@@ -269,9 +269,16 @@ class BudgetAddedit extends React.Component {
         data.companyLoanCs = this.props.pageData.companyLoanCs;
         data.gpsDeduct = this.props.pageData.gpsDeduct;
         data.oilSubsidy = this.props.pageData.oilSubsidy;
+        data.bankRate = data.bankRate / 100;
         if (data.rateType === '1') {
             data.carDealerSubsidy = 0;
         }
+        // 删除不需要的入参
+        delete data.applyBirthAddress1;
+        delete data.applyNowAddress1;
+        delete data.ghBirthAddress1;
+        delete data.guarantor1BirthAddress1;
+        delete data.guarantor2BirthAddress1;
         this.props.doFetching();
         fetch(632120, data).then(() => {
             this.props.cancelFetching();
@@ -587,7 +594,7 @@ class BudgetAddedit extends React.Component {
                     required: true,
                     onChange: (v) => {
                         this.props.form.setFieldsValue({
-                            bankRate: v
+                            bankRate: v * 100
                         });
                         this.props.setPageData({
                             ...this.props.pageData,
@@ -600,7 +607,13 @@ class BudgetAddedit extends React.Component {
                     }
                 }, {
                     field: 'bankRate',
-                    required: true
+                    min: 0,
+                    max: 100,
+                    number: true,
+                    required: true,
+                    formatter: (v, data) => {
+                        return v * 100;
+                    }
                 }],
                 [{
                     // 贷款金额 / 发票价格
@@ -666,7 +679,8 @@ class BudgetAddedit extends React.Component {
                             return false;
                         }
                         // 应退按揭款列表
-                        let result = this.getRepointDetailList1({carDealerSubsidy: v});
+                        console.log(v);
+                        let result = this.getRepointDetailList1({carDealerSubsidy: moneyParse(v)});
                         let repointDetailList1 = result.repointDetailList1;
                         this.props.setPageData({
                             ...this.props.pageData,
@@ -691,7 +705,7 @@ class BudgetAddedit extends React.Component {
                             globalRate: this.getGlobalRate({
                                 fee: v,
                                 loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                bankRate: this.props.form.getFieldValue('bankRate')
+                                bankRate: this.props.form.getFieldValue('bankRate') / 100
                             }),
                             bankLoanCs: this.getBankLoanNum({
                                 fee: v,
@@ -1115,13 +1129,24 @@ class BudgetAddedit extends React.Component {
             items: [
                 [{
                     title: '申请人户籍地',
+                    field: 'applyBirthAddress1',
+                    type: 'citySelect',
+                    cFields: ['applyBirthAddressProvince', 'applyBirthAddressCity', 'applyBirthAddressArea'],
+                    required: true
+                }, {
                     field: 'applyBirthAddress',
                     required: true
                 }, {
                     title: '现住地址',
-                    field: 'applyNowAddress',
+                    field: 'applyNowAddress1',
+                    type: 'citySelect',
+                    cFields: ['applyNowAddressProvince', 'applyNowAddressCity', 'applyNowAddressArea'],
                     required: true
                 }, {
+                    field: 'applyNowAddress',
+                    required: true
+                }],
+                [{
                     title: '现住房屋类型',
                     field: 'houseType',
                     type: 'select',
@@ -1135,15 +1160,30 @@ class BudgetAddedit extends React.Component {
                     keyName: 'key',
                     valueName: 'value',
                     required: true
+                }, {
+                    title: '共还人户籍地',
+                    field: 'ghBirthAddress1',
+                    type: 'citySelect',
+                    cFields: ['ghBirthAddressProvince', 'ghBirthAddressCity', 'ghBirthAddressArea'],
+                    required: true
+                }, {
+                    field: 'ghBirthAddress'
                 }],
                 [{
-                    title: '共还人户籍地',
-                    field: 'ghBirthAddress'
-                }, {
                     title: '担保人1户籍地',
+                    field: 'guarantor1BirthAddress1',
+                    type: 'citySelect',
+                    cFields: ['guarantor1BirthAddressProvince', 'guarantor1BirthAddressCity', 'guarantor1BirthAddressArea'],
+                    required: true
+                }, {
                     field: 'guarantor1BirthAddress'
                 }, {
                     title: '担保人2户籍地',
+                    field: 'guarantor2BirthAddress1',
+                    type: 'citySelect',
+                    cFields: ['guarantor2BirthAddressProvince', 'guarantor2BirthAddressCity', 'guarantor2BirthAddressArea'],
+                    required: true
+                }, {
                     field: 'guarantor2BirthAddress'
                 }],
                 [{
@@ -1621,7 +1661,7 @@ class BudgetAddedit extends React.Component {
             title: '企业照片',
             items: [
                 [{
-                    title: '企业名称照片',
+                    title: '营业执照',
                     field: 'companyNamePic',
                     type: 'img'
                 }, {

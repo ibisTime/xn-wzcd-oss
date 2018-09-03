@@ -12,7 +12,9 @@ import {
 import {
     listWrapper
 } from 'common/js/build-list';
-import fetch from 'common/js/fetch';
+import {
+    moneyFormat
+} from 'common/js/util';
 
 @listWrapper(
     state => ({
@@ -54,80 +56,290 @@ class AchievementMonth extends React.Component {
             field: 'oneLoanAmount',
             nowrap: true,
             render: (v, data) => {
+                var amount = 0;
                 if (data.type === 'tbzc1') {
-                    return data.oneGrowthRate;
+                    amount = moneyFormat(data.oneGrowthRate);
                 } else if (data.type === 'jYear' || data.type === 'qYear') {
-                    return data.totalNumber;
+                    amount = data.oneNum;
                 } else if (data.type === 'tbzc2') {
-                    return data.totalNumberGrowthRate;
+                    amount = data.oneNumGrowthRate;
                 } else {
-                    return v;
+                    amount = moneyFormat(v);
                 }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
             }
         }, {
             title: '2月',
             field: 'twoLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.twoGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.twoNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.twoNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '3月',
             field: 'threeLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.threeGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.threeNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.threeNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '4月',
             field: 'fourLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.fourGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.fourNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.fourNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '5月',
             field: 'fiveLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.fiveGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.fiveNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.fiveNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '6月',
             field: 'sixLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.sixGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.sixNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.sixNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '7月',
             field: 'sevenLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.sevenGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.sevenNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.sevenNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '8月',
             field: 'eightLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.eightGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.eightNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.eightNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '9月',
             field: 'nineLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.nineGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.nineNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.nineNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '10月',
             field: 'tenLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.tenGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.tenNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.tenNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '11月',
             field: 'elevenLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.elevenGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.elevenNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.elevenNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '12月',
             field: 'twelveLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.twelveGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.twelveNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.twelveNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '一季度',
             field: 'firstQuarterLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.firstQuarterGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.firsQuartertNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.firstQuarterNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '二季度',
             field: 'secondQuarterLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.secondQuarterGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.secondQuarterNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.secondQuarterNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '三季度',
             field: 'thirdQuarterLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.thirdQuarterGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.thirdQuarterNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.thirdQuarterNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '四季度',
             field: 'fourthQuarterLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.fourthQuarterGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.fourthQuartersNum;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.fourthQuarterNumGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }, {
             title: '全年合计',
             field: 'totalLoanAmount',
-            nowrap: true
+            nowrap: true,
+            render: (v, data) => {
+                var amount = 0;
+                if (data.type === 'tbzc1') {
+                    amount = moneyFormat(data.totalGrowthRate);
+                } else if (data.type === 'jYear' || data.type === 'qYear') {
+                    amount = data.totalNumber;
+                } else if (data.type === 'tbzc2') {
+                    amount = data.totalNumberGrowthRate;
+                } else {
+                    amount = moneyFormat(v);
+                }
+                return <span style={{whiteSpace: 'nowrap'}}>{amount}</span>;
+            }
         }];
         return this.props.buildList({
             fields,
@@ -136,13 +348,19 @@ class AchievementMonth extends React.Component {
             useData: this.userData,
             noSelect: true,
             userDataAfter: d => {
-                if (this.firstLoad) {
-                    this.useData = this.tmpl;
-                    let tbzc1 = {'id': '5', 'title': '同比增长', 'type': 'tbzc1', 'year': ''};// 贷款额增长率
-                    let tbzc2 = {'id': '8', 'title': '同比增长', 'type': 'tbzc2', 'year': ''};// 笔数增长率
-                    let jYear = {'id': '6', 'title': '今年', 'type': 'jYear'};
-                    let qYear = {'id': '7', 'title': '去年', 'type': 'qYear'};
-                    this.tmpl.forEach(v => {
+                if (this.firstLoad && d.length >= 1) {
+                    this.useData = [];
+                    let tmpl = [];
+                    let tbzc1 = {'id': '4', 'title': '同比增长', 'type': 'tbzc1', 'year': ''};// 贷款额增长率
+                    let tbzc2 = {'id': '7', 'title': '同比增长', 'type': 'tbzc2', 'year': ''};// 笔数增长率
+                    let jYear = {'id': '5', 'title': '年笔数', 'type': 'jYear'};
+                    let qYear = {'id': '6', 'title': '年笔数', 'type': 'qYear'};
+                    d.forEach((v, i) => {
+                        tmpl[i] = {
+                            ...v,
+                            id: i,
+                            title: '年贷款额'
+                        };
                         if (v.year === '今年') {
                             tbzc1 = {
                                 ...v,
@@ -163,6 +381,10 @@ class AchievementMonth extends React.Component {
                             };
                         }
                     });
+                    this.useData.push(tmpl[3]);
+                    this.useData.push(tmpl[2]);
+                    this.useData.push(tmpl[1]);
+                    this.useData.push(tmpl[0]);
                     this.useData.push(tbzc1);
                     this.useData.push(jYear);
                     this.useData.push(qYear);
