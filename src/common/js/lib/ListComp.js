@@ -422,7 +422,11 @@ export default class ListComponent extends React.Component {
             ...searchParam
         }).then(data => {
             this.props.cancelFetching();
-            this.props.setTableData(data.list);
+            if (data instanceof Array) {
+                this.props.setTableData(data);
+            } else {
+                this.props.setTableData(data.list);
+            }
             this.props.setPagination({
                 ...pagination,
                 current,

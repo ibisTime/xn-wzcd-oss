@@ -165,6 +165,7 @@ export default class DetailComponent extends React.Component {
                 f.keyName = f.keyName || 'dkey';
                 f.valueName = f.valueName || 'dvalue';
 
+                // 省选择框
                 if (f.type === 'provSelect') {
                     f.keyName = 'value';
                     f.valueName = 'label';
@@ -609,7 +610,9 @@ export default class DetailComponent extends React.Component {
                     ? this.getNormalTextArea(item, initVal, rules, getFieldDecorator)
                     : this.getTextArea(item, initVal, rules, getFieldDecorator);
             case 'citySelect':
-                return this.getCitySelect(item, initVal, rules, getFieldDecorator);
+                return item.noArea
+                    ? this.getNoAreaProvSelect(item, initVal, rules, getFieldDecorator)
+                    : this.getCitySelect(item, initVal, rules, getFieldDecorator);
             case 'checkbox':
                 return this.getCheckboxComp(item, initVal, rules, getFieldDecorator);
             case 'treeSelect':
@@ -1151,7 +1154,33 @@ export default class DetailComponent extends React.Component {
         );
     }
 
+    // 省市区选择
     getCitySelect(item, initVal, rules, getFieldDecorator) {
+        let cData = [];
+        // 省市选择框
+        cityData.map(p => {
+            let city = [];
+            p.children.map(c => {
+                let area = [];
+                c.children && c.children.map(a => {
+                    area.push({
+                        value: a.value,
+                        label: a.label
+                    });
+                });
+                city.push({
+                    value: c.value,
+                    label: c.label,
+                    children: area
+                });
+            });
+
+            cData.push({
+                value: p.value,
+                label: p.label,
+                children: city
+            });
+        });
         return (
             <FormItem className={item.hidden ? 'hidden' : ''} key={item.field} {...this.getInputItemProps()} label={this.getLabel(item)}>
                 {
@@ -1160,6 +1189,38 @@ export default class DetailComponent extends React.Component {
                             rules,
                             initialValue: initVal
                         })(<Cascader placeholder="请选择" options={cityData}/>)
+                }
+            </FormItem>
+        );
+    }
+
+    // 省市选择
+    getNoAreaProvSelect(item, initVal, rules, getFieldDecorator) {
+        let cData = [];
+        // 省市选择框
+        cityData.map(p => {
+            let city = [];
+            p.children.map(c => {
+                city.push({
+                    value: c.value,
+                    label: c.label
+                });
+            });
+
+            cData.push({
+                value: p.value,
+                label: p.label,
+                children: city
+            });
+        });
+        return (
+            <FormItem className={item.hidden ? 'hidden' : ''} key={item.field} {...this.getInputItemProps()} label={this.getLabel(item)}>
+                {
+                    item.readonly ? <div className="readonly-text">{initVal}</div>
+                        : getFieldDecorator(item.field, {
+                            rules,
+                            initialValue: initVal
+                        })(<Cascader placeholder="请选择" options={cData}/>)
                 }
             </FormItem>
         );
@@ -1530,7 +1591,10 @@ export default class DetailComponent extends React.Component {
     getCityVal(item, result) {
         let cData = item._keys && result ? result : this.props.pageData;
         let prov = cData[item.cFields[0]];
-        if (prov) {
+        if (item.noArea) {
+            let city = cData[item.cFields[1]] ? cData[item.cFields[1]] : '全部';
+            result = [prov, city];
+        } else if (prov) {
             let city = cData[item.cFields[1]] ? cData[item.cFields[1]] : '全部';
             let area = cData[item.cFields[2]] ? cData[item.cFields[2]] : '全部';
             result = [prov, city, area];
