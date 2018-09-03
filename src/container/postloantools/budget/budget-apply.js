@@ -47,7 +47,8 @@ class budgetApply extends React.Component {
             pageCode: 630520,
             params: {
                 start: '0',
-                limit: '100'
+                limit: '100',
+                curNodeCodeList: ['021_08', '022_03']
             },
             keyName: 'code',
             valueName: '{{refCode.DATA}}-{{realName.DATA}}',

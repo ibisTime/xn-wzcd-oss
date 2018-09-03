@@ -30,13 +30,19 @@ import {
     }
 )
 class RegressesGpsApply extends React.Component {
-    constructor(props) {
-        super(props);
-        this.view = !!getQueryString('v', this.props.location.search);
-        this.code = getQueryString('code', this.props.location.search);
-    }
     render() {
         const fields = [{
+            title: 'gps设备号',
+            field: 'code',
+            type: 'select',
+            pageCode: 632705,
+            params: {
+                applyStatus: '2',
+                applyUser: getUserId()
+            },
+            keyName: 'code',
+            valueName: 'gpsDevNo'
+        }, {
             title: '回退原因',
             field: 'reason',
             type: 'select',
@@ -56,7 +62,6 @@ class RegressesGpsApply extends React.Component {
             buttons: [{
                 title: '确认',
                 handler: (param) => {
-                    param.code = this.code;
                     param.operator = getUserId();
                     this.props.doFetching();
                     fetch(632701, param).then(() => {
