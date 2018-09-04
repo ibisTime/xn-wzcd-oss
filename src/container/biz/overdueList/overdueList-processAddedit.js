@@ -90,7 +90,7 @@ class OverdueListProcessAddedit extends React.Component {
                 }, {
                     title: '催收对象',
                     field: 'collectionTarget',
-                    type: 'select',
+                    type: 'checkbox',
                     multiple: true,
                     key: 'collection_target'
                 }, {

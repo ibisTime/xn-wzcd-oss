@@ -63,6 +63,7 @@ class WhiteList extends React.Component {
     }];
     return this.props.buildList({
       fields,
+      rowKey: 'userId',
       pageCode: 805120,
       searchParams: {
         sign: '0'

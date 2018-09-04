@@ -67,7 +67,7 @@ class Summary extends React.Component {
             keyName: 'code',
             valueName: 'name',
             search: true,
-            hidden: true
+            noVisible: true
         }, {
             title: '银行',
             field: 'loanBank',
@@ -76,7 +76,13 @@ class Summary extends React.Component {
             keyName: 'code',
             valueName: 'fullName',
             search: true,
-            hidden: true
+            noVisible: true
+        }, {
+            title: '业务区域',
+            field: 'businessArea',
+            type: 'citySelect',
+            search: true,
+            noVisible: true
         }, {
             title: '客户姓名',
             field: 'realName',
