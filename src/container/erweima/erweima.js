@@ -33,8 +33,7 @@ class Erweima extends React.Component {
             status: '1'
         },
         keyName: 'bizCode',
-        valueName: '{{bizCode.DATA}}-{{customerName.DATA}}',
-        multiple: true
+        valueName: '{{bizCode.DATA}}-{{customerName.DATA}}'
     }];
     return this
       .props

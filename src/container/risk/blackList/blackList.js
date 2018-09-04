@@ -60,8 +60,8 @@ class blackList extends React.Component {
       }
     ];
     return this.props.buildList({
-        fields,
-        rowKey: 'userId',
+      fields,
+      rowKey: 'userId',
       pageCode: 805120,
       searchParams: {
         sign: '4'
