@@ -1134,6 +1134,7 @@ class BudgetAddedit extends React.Component {
                     cFields: ['applyBirthAddressProvince', 'applyBirthAddressCity', 'applyBirthAddressArea'],
                     required: true
                 }, {
+                    title: '详细地址',
                     field: 'applyBirthAddress',
                     required: true
                 }, {
@@ -1143,6 +1144,7 @@ class BudgetAddedit extends React.Component {
                     cFields: ['applyNowAddressProvince', 'applyNowAddressCity', 'applyNowAddressArea'],
                     required: true
                 }, {
+                    title: '详细地址',
                     field: 'applyNowAddress',
                     required: true
                 }],
@@ -1158,32 +1160,31 @@ class BudgetAddedit extends React.Component {
                         value: '租用'
                     }],
                     keyName: 'key',
-                    valueName: 'value',
-                    required: true
+                    valueName: 'value'
                 }, {
                     title: '共还人户籍地',
                     field: 'ghBirthAddress1',
                     type: 'citySelect',
-                    cFields: ['ghBirthAddressProvince', 'ghBirthAddressCity', 'ghBirthAddressArea'],
-                    required: true
+                    cFields: ['ghBirthAddressProvince', 'ghBirthAddressCity', 'ghBirthAddressArea']
                 }, {
+                    title: '详细地址',
                     field: 'ghBirthAddress'
                 }],
                 [{
                     title: '担保人1户籍地',
                     field: 'guarantor1BirthAddress1',
                     type: 'citySelect',
-                    cFields: ['guarantor1BirthAddressProvince', 'guarantor1BirthAddressCity', 'guarantor1BirthAddressArea'],
-                    required: true
+                    cFields: ['guarantor1BirthAddressProvince', 'guarantor1BirthAddressCity', 'guarantor1BirthAddressArea']
                 }, {
+                    title: '详细地址',
                     field: 'guarantor1BirthAddress'
                 }, {
                     title: '担保人2户籍地',
                     field: 'guarantor2BirthAddress1',
                     type: 'citySelect',
-                    cFields: ['guarantor2BirthAddressProvince', 'guarantor2BirthAddressCity', 'guarantor2BirthAddressArea'],
-                    required: true
+                    cFields: ['guarantor2BirthAddressProvince', 'guarantor2BirthAddressCity', 'guarantor2BirthAddressArea']
                 }, {
+                    title: '详细地址',
                     field: 'guarantor2BirthAddress'
                 }],
                 [{

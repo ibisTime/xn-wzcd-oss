@@ -50,7 +50,7 @@ class RebatesFinance extends React.Component {
             readonly: true
         }, {
             title: '返点列表',
-            field: 'repointDetailCodeList',
+            field: 'repointDetailList',
             required: true,
             type: 'o2m',
             options: {
@@ -60,7 +60,7 @@ class RebatesFinance extends React.Component {
                 fields: [{
                     title: 'code',
                     field: 'code',
-                    hidden: true
+                    noVisible: true
                 }, {
                     title: '业务编号',
                     field: 'budgetCode'
