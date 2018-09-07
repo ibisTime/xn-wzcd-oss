@@ -2507,7 +2507,7 @@ const ROUTES = [
   //  发件
   {
     path: '/erweima/erweima',
-    component: asyncComponent(() => import('container/erweima/erweima'))
+    component: asyncComponent(() => import('container/erweima/erweima1'))
   }
 ];
 
