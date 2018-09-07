@@ -73,7 +73,7 @@ class OverdueListApply extends React.Component {
                 return d.user.idNo;
             }
         }, {
-            title: '选择预算单',
+            title: '选择代偿预算单',
             field: 'replaceApplyCode',
             type: 'select',
             listCode: 632327,

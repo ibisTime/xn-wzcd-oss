@@ -114,7 +114,7 @@ class BankMoneyReceive extends React.Component {
             hidden: true,
             required: true
         }, {
-            title: '打款凭证',
+            title: '银行回单',
             field: 'bankReceiptPdf',
             type: 'img',
             required: true

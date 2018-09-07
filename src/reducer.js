@@ -56,6 +56,16 @@ import { creditAddEdit } from '@redux/demo/credit-addedit';
 import { financeRebate } from '@redux/finance/rebate';
 import { financeRebateAddEdit } from '@redux/finance/rebate-addedit';
 
+// 预打款统计
+import { financePrepayment } from '@redux/finance/prepayment';
+import { financePrepaymentAddEdit } from '@redux/finance/prepayment-addedit';
+
+// 今日已垫资
+import { financeFunded } from '@redux/finance/funded';
+
+// 履约保证金开票
+import { financeInvoice } from '@redux/finance/invoice';
+
 //  返点支付
 import { carloanfinancePointreturn } from './redux/carloanfinance/pointreturn';
 import { carloanfinancePointreturnAddedit } from './redux/carloanfinance/pointreturn-addedit';
@@ -98,12 +108,15 @@ import { summaryPlan } from './redux/biz/summary/summary-plan';
 import { bizRefundList } from './redux/biz/refundList';
 import { bizRefundListAddedit } from './redux/biz/refundList-addedit';
 
-//  逾期名单 + 详情 + 处理
+//  逾期名单 + 详情 + 录入催收过程 + 录入催收结果 + 催收记录 + 催收记录催收过程详情 + 催收记录催收结果详情
 import { bizOverdueList } from './redux/biz/overdueList/overdueList';
 import { bizOverdueListDispose } from './redux/biz/overdueList/overdueList-dispose';
 import { bizOverdueListProcess } from './redux/biz/overdueList/overdueList-process';
 import { bizOverdueListResult } from './redux/biz/overdueList/overdueList-result';
 import { bizOverdueListApply } from './redux/biz/overdueList/overdueList-apply';
+import { bizOverdueListRecord } from './redux/biz/overdueList/overdueList-record';
+import { bizOverdueListProcessAddedit } from './redux/biz/overdueList/overdueList-processAddedit';
+import { bizOverdueListResultAddedit } from './redux/biz/overdueList/overdueList-resultAddedit';
 
 //  白名单 + 详情
 import { bizWhiteList } from './redux/biz/whiteList/whiteList';
@@ -140,28 +153,62 @@ import { bizredListEnter } from './redux/biz/redList-enter';
 import { bizTrailer } from './redux/biz/trailer';
 import { bizTrailerAddEdit } from './redux/biz/trailer-addedit';
 import { bizTrailerDispose } from './redux/biz/trailer-dispose';
+import { bizTrailerFinance } from './redux/biz/trailer-finance';
+import { bizTrailerCashier } from './redux/biz/trailer-cashier';
 
-//  司法诉讼 + 详情 + 处理结果
-import { bizLitigation } from './redux/biz/litigation';
-import { bizLitigationAddEdit } from './redux/biz/litigation-addedit';
-import { bizLitigationLitigation } from './redux/biz/litigation-litigation';
-import { bizLitigationContinue } from './redux/biz/litigation-continue';
-import { bizLitigationEnter } from './redux/biz/litigation-enter';
-import { bizLitigationCertain } from './redux/biz/litigation-certain';
+//  司法诉讼 + 详情 + 司法诉讼 + 案件受理 + 财务审核 + 出纳打款 + 送达 +  判决 + 生效
+import { bizLitigation } from './redux/biz/litigation/litigation';
+import { bizLitigationAddEdit } from './redux/biz/litigation/litigation-addedit';
+import { bizLitigationLitigation } from './redux/biz/litigation/litigation-litigation';
+import { bizLitigationAcceptance } from './redux/biz/litigation/litigation-acceptance';
+import { bizLitigationFinance } from './redux/biz/litigation/litigation-finance';
+import { bizLitigationCashier } from './redux/biz/litigation/litigation-cashier';
+import { bizLitigationService } from './redux/biz/litigation/litigation-service';
+import { bizLitigationJudgment } from './redux/biz/litigation/litigation-judgment';
+import { bizLitigationTakeEffect } from './redux/biz/litigation/litigation-takeEffect';
+
+//  执行案件 + 详情 + 申请执行 + 案件受理 + 拍卖 + 公告 + 执行结果 + 财务确认收款 + 录入查封裁定到期时间
+import { bizImplementCase } from './redux/biz/implementCase/implementCase';
+import { bizImplementCaseAddEdit } from './redux/biz/implementCase/implementCase-addedit';
+import { bizImplementCaseApply } from './redux/biz/implementCase/implementCase-apply';
+import { bizImplementCaseAcceptance } from './redux/biz/implementCase/implementCase-acceptance';
+import { bizImplementCaseAuction } from './redux/biz/implementCase/implementCase-auction';
+import { bizImplementCaseNotice } from './redux/biz/implementCase/implementCase-notice';
+import { bizImplementCaseResult } from './redux/biz/implementCase/implementCase-result';
+import { bizImplementCaseFinance } from './redux/biz/implementCase/implementCase-finance';
+import { bizImplementCaseEnter } from './redux/biz/implementCase/implementCase-enter';
+
+//  恢复执行案件 + 详情 + 申请执行 + 案件受理 + 拍卖 + 公告 + 执行结果 + 财务确认收款 + 录入查封裁定到期时间
+import { bizRecoveryImplementCase } from './redux/biz/recoveryImplementCase/recoveryImplementCase';
+import { bizRecoveryImplementCaseAddEdit } from './redux/biz/recoveryImplementCase/recoveryImplementCase-addedit';
+import { bizRecoveryImplementCaseApply } from './redux/biz/recoveryImplementCase/recoveryImplementCase-apply';
+import { bizRecoveryImplementCaseAcceptance } from './redux/biz/recoveryImplementCase/recoveryImplementCase-acceptance';
+import { bizRecoveryImplementCaseAction } from './redux/biz/recoveryImplementCase/recoveryImplementCase-auction';
+import { bizRecoveryImplementCaseNotice } from './redux/biz/recoveryImplementCase/recoveryImplementCase-notice';
+import { bizRecoveryImplementCaseResult } from './redux/biz/recoveryImplementCase/recoveryImplementCase-result';
+import { bizRecoveryImplementCaseFinance } from './redux/biz/recoveryImplementCase/recoveryImplementCase-finance';
+import { bizRecoveryImplementCaseEnter } from './redux/biz/recoveryImplementCase/recoveryImplementCase-enter';
 
 //  结清审核 + 结清申请单 + 审核 + 确认付款
 import { bizSettlement } from './redux/biz/settlement';
 import { bizSettlementApply } from './redux/biz/settlement-apply';
 import { bizSettlementCheck } from './redux/biz/settlement-check';
 import { bizSettlementTotalCheck } from './redux/biz/settlement-totalCheck';
+import { BizSettlementManager } from './redux/biz/settlement-manager';
 import { bizSettlementCertain } from './redux/biz/settlement-certain';
 
-//  解除抵押 + 详情 + 申请 + 风控内勤审核 + 风控主管审核 + 回录
+//  公司结清 + 详情 + 录入处理意见
+import { bizCompanySettlement } from './redux/biz/companySettlement/companySettlement';
+import { bizCompanySettlementAddEdit } from './redux/biz/companySettlement/companySettlement-addedit';
+import { bizCompanySettlementEnter } from './redux/biz/companySettlement/companySettlement-enter';
+
+//  解除抵押 + 详情 + 申请 + 风控内勤审核 + 风控主管审核 + 风控总监审核 + 回录
 import { mortgages } from './redux/biz/mortgages/mortgages';
 import { mortgagesAddEdit } from './redux/biz/mortgages/mortgages-addedit';
 import { mortgagesApply } from './redux/biz/mortgages/mortgages-apply';
 import { mortgagesInternal } from './redux/biz/mortgages/mortgages-internal';
 import { mortgagesCheck } from './redux/biz/mortgages/mortgages-check';
+import { mortgagesTotalCheck } from './redux/biz/mortgages/mortgages-totalCheck';
 import { mortgagesEnter } from './redux/biz/mortgages/mortgages-enter';
 
 //  历史业务管理 + 详情
@@ -209,6 +256,14 @@ import { basisGpsextractAddedit } from './redux/basis/gpsextract-addedit';
 //  油补 + 修改
 import { basisOilpercentage } from './redux/basis/oilpercentage';
 import { basisOilpercentageAddedit } from './redux/basis/oilpercentage-addedit';
+
+//  车贷期数管理 + 修改
+import { basisCarloan } from './redux/basis/carloan';
+import { basisCarloanAddEdit } from './redux/basis/carloan-addedit';
+
+//  奖金提成配置 + 新增 + 修改 + 删除
+import { basisBonusesConfigure } from './redux/basis/bonusesConfigure';
+import { basisBonusesConfigureAddedit } from './redux/basis/bonusesConfigure-addedit';
 
 /**
  * 贷前管理
@@ -287,6 +342,7 @@ import { loanstoolsCancelFinance } from './redux/loanstools/cancel-finance';
 import { loanstoolsTake } from './redux/loanstools/take';
 import { loanstoolsTakeAddedit } from './redux/loanstools/take-addedit';
 import { loanstoolsTakeEnter } from './redux/loanstools/take-enter';
+import { loanstoolsTakeFinance } from './redux/loanstools/take-finance';
 
 //  收回预算款 + 详情 + 申请 + 审核 + 确认
 import { loanstoolsTakeEstimate } from './redux/loanstools/takeEstimate';
@@ -376,6 +432,9 @@ import { postloantoolsApplyGpsPersonCheck } from './redux/postloantools/applyGps
 import { postloantoolsManageGps } from './redux/postloantools/manageGps';
 import { postloantoolsManageGpsAddedit } from './redux/postloantools/manageGps-addedit';
 
+//   gps个人申领上限
+import { postloantoolsManageGpsUpperLimit } from './redux/postloantools/manageGps-UpperLimit';
+
 //  Gps退回 + 详情
 import { postloantoolsRegressesGps } from './redux/postloantools/regressesGps';
 import { postloantoolsRegressesGpsApply } from './redux/postloantools/regressesGps-apply';
@@ -399,19 +458,32 @@ import { postloantoolsInsuranceContinue } from './redux/postloantools/insurance-
 /**
  * 统计分析
  */
-import { bizBalancedetail } from './redux/analysis/balancedetail';
-import { analysisProtect } from './redux/analysis/protect';
+import { analysisBalancedetail } from './redux/analysis/balancedetail';
+import { analysisInsuranceAmount } from './redux/analysis/insuranceAmount';
+import { analysisInsuranceAmountAddedit } from './redux/analysis/insuranceAmount-addedit';
 import { analysisReplaceRepay } from './redux/analysis/replaceRepay';
 import { analysisOverdueCollection } from './redux/analysis/overdueCollection';
 import { analysisRiskCustomers } from './redux/analysis/riskCustomers';
+import { analysisCarLoanInstallment } from './redux/analysis/carLoanInstallment';
+import { analysisAdvance } from './redux/analysis/advance';
+import { analysisBonuses } from './redux/analysis/bonuses';
+import { analysisAchievement } from './redux/analysis/achievement';
+import { analysisAchievementMonth } from './redux/analysis/achievementMonth';
+// 查询分析
 import { analysisSchedule } from './redux/analysis/schedule';
+import { analysisAdvMoney } from './redux/analysis/advMoney';
+import { analysisTablehistory } from './redux/analysis/tablehistory';
 
 /**
  * 人事
  */
-// 人事档案 + 详情
+// 人事档案 + 详情 + 分公司总经理审批 + 行政部审批 + 网络技术审批
 import { personalarchivesParchives } from './redux/personalarchives/parchives';
 import { personalarchivesParchivesAddedit } from './redux/personalarchives/parchives-addedit';
+import { personalarchivesParchivesApply } from './redux/personalarchives/parchives-apply';
+import { personalarchivesParchivesCompanyCheck } from './redux/personalarchives/parchives-companyCheck';
+import { personalarchivesParchivesCheck } from './redux/personalarchives/parchives-check';
+import { personalarchivesParchivesTechnology } from './redux/personalarchives/parchives-technology';
 
 // 车贷档案
 import { loanarchivesLocationcode } from './redux/loanarchives/locationcode';
@@ -537,6 +609,10 @@ import { administrativeFixedAssetsAddedit } from './redux/administrative/fixedAs
 import { administrativeLeader } from './redux/administrative/leader';
 import { administrativeLeaderAddedit } from './redux/administrative/leader-addedit';
 
+// 费用预支申请
+import { administrativeGpsSupplier } from './redux/administrative/gpsSupplier';
+import { administrativeGpsSupplierAddedit } from './redux/administrative/gpsSupplier-addedit';
+
 // 合同打印
 // 担保合同
 import { printingGuarantee } from './redux/printing/guarantee';
@@ -568,9 +644,13 @@ import { contractTemplateRelieveAddedit } from './redux/contractTemplate/relieve
 import { historyHistoryBusiness } from './redux/history/historyBusiness';
 import { historyHistoryBusinessAddedit } from './redux/history/historyBusiness-addedit';
 
-// 历史业务(进行中)
+// 历史业务(预算单进行中)
 import { historyHistorying } from './redux/history/historying';
 import { historyHistoryingAddedit } from './redux/history/historying-addedit';
+
+// 历史业务(征信单进行中)
+import { historyCredithistory } from './redux/history/credithistory';
+import { historyCredithistoryAddedit } from './redux/history/credithistory-addedit';
 
 // 垃圾箱
 import { historyDustbin } from './redux/history/dustbin';
@@ -618,6 +698,9 @@ import { gpsReceiveGpsSendRepair } from './redux/gpsReceive/gpsSend-repair';
 import { dataReceiveGpsCollect } from './redux/gpsReceive/gpsCollect';
 import { dataReceiveGpsCollectCollect } from './redux/gpsReceive/gpsCollect-collect';
 import { dataReceiveGpsCollectCheck } from './redux/gpsReceive/gpsCollect-check';
+
+// 二维码制作
+import { erweimaErweima } from './redux/erweima/erweima';
 
 export default combineReducers({
   user,
@@ -681,6 +764,9 @@ export default combineReducers({
   bizCarLoanBusinessCheck,
   bizOverdueListDispose,
   bizOverdueListApply,
+  bizOverdueListRecord,
+  bizOverdueListProcessAddedit,
+  bizOverdueListResultAddedit,
   bizBlackListDispose,
   bizGreenListPayment,
   bizRefundCard,
@@ -723,6 +809,7 @@ export default combineReducers({
   loanstoolsTake,
   loanstoolsTakeAddedit,
   loanstoolsTakeEnter,
+  loanstoolsTakeFinance,
   loanstoolsTakeEstimate,
   loanstoolsTakeEstimateAddedit,
   loanstoolsTakeEstimateCertain,
@@ -757,6 +844,8 @@ export default combineReducers({
   bizTrailer,
   bizTrailerAddEdit,
   bizTrailerDispose,
+  bizTrailerFinance,
+  bizTrailerCashier,
   transmit,
   transmitAddedit,
   transmitSend,
@@ -778,27 +867,40 @@ export default combineReducers({
   postloantoolsApplyGpsPersonCheck,
   postloantoolsManageGps,
   postloantoolsManageGpsAddedit,
+  postloantoolsManageGpsUpperLimit,
   postloantoolsInstallGps,
   postloantoolsInstallGpsAddEdit,
   postloantoolsInstallGpsEnter,
   postloantoolsInstallGpsToVoid,
   bizLitigation,
   bizLitigationAddEdit,
-  bizLitigationContinue,
-  bizLitigationEnter,
-  bizLitigationCertain,
+  bizLitigationFinance,
   bizLitigationLitigation,
-  bizBalancedetail,
-  analysisProtect,
+  bizLitigationAcceptance,
+  bizLitigationJudgment,
+  bizLitigationTakeEffect,
+  bizLitigationCashier,
+  bizLitigationService,
+  analysisBalancedetail,
+  analysisBonuses,
+  analysisInsuranceAmount,
+  analysisInsuranceAmountAddedit,
   analysisReplaceRepay,
   analysisOverdueCollection,
   analysisRiskCustomers,
   analysisSchedule,
+  analysisAdvMoney,
+  analysisTablehistory,
+  analysisCarLoanInstallment,
+  analysisAdvance,
+  analysisAchievement,
+  analysisAchievementMonth,
   bizHistoryBusinessManageAddeditAddedit,
   bizSettlement,
   bizSettlementApply,
   bizSettlementCheck,
   bizSettlementTotalCheck,
+  BizSettlementManager,
   bizSettlementCertain,
   postloantoolsImport,
   postloantoolsImportAddedit,
@@ -811,9 +913,14 @@ export default combineReducers({
   mortgagesApply,
   mortgagesInternal,
   mortgagesCheck,
+  mortgagesTotalCheck,
   mortgagesEnter,
   personalarchivesParchives,
   personalarchivesParchivesAddedit,
+  personalarchivesParchivesApply,
+  personalarchivesParchivesCompanyCheck,
+  personalarchivesParchivesCheck,
+  personalarchivesParchivesTechnology,
   loanarchivesLocationcode,
   loanarchivesLocationcodeAddedit,
   loanarchivesArchivesquery,
@@ -881,6 +988,8 @@ export default combineReducers({
   administrativeFixedAssetsAddedit,
   administrativeLeader,
   administrativeLeaderAddedit,
+  administrativeGpsSupplier,
+  administrativeGpsSupplierAddedit,
   bizYellowList,
   bizYellowListAddEdit,
   bizYellowListPayCost,
@@ -953,10 +1062,16 @@ export default combineReducers({
   historyHistoryBusinessAddedit,
   historyHistorying,
   historyHistoryingAddedit,
+  historyCredithistory,
+  historyCredithistoryAddedit,
   basisGpsextract,
   basisGpsextractAddedit,
   basisOilpercentage,
   basisOilpercentageAddedit,
+  basisCarloan,
+  basisCarloanAddEdit,
+  basisBonusesConfigure,
+  basisBonusesConfigureAddedit,
   bizWhiteList,
   bizWhiteListAddEdit,
   riskBlackList,
@@ -989,6 +1104,32 @@ export default combineReducers({
   dataReceiveGpsCollectCheck,
   financeRebate,
   financeRebateAddEdit,
+  financePrepayment,
+  financePrepaymentAddEdit,
+  financeFunded,
+  financeInvoice,
   postloantoolsRegressesGps,
-  postloantoolsRegressesGpsApply
+  postloantoolsRegressesGpsApply,
+  erweimaErweima,
+  bizImplementCase,
+  bizImplementCaseAddEdit,
+  bizImplementCaseApply,
+  bizImplementCaseAcceptance,
+  bizImplementCaseAuction,
+  bizImplementCaseNotice,
+  bizImplementCaseResult,
+  bizImplementCaseFinance,
+  bizImplementCaseEnter,
+  bizRecoveryImplementCase,
+  bizRecoveryImplementCaseAddEdit,
+  bizRecoveryImplementCaseApply,
+  bizRecoveryImplementCaseAcceptance,
+  bizRecoveryImplementCaseAction,
+  bizRecoveryImplementCaseNotice,
+  bizRecoveryImplementCaseResult,
+  bizRecoveryImplementCaseFinance,
+  bizRecoveryImplementCaseEnter,
+  bizCompanySettlement,
+  bizCompanySettlementAddEdit,
+  bizCompanySettlementEnter
 });

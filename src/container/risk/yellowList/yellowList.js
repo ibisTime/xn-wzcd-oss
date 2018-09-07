@@ -24,7 +24,7 @@ import {
 
 @listWrapper(
     state => ({
-        ...state.bizYellowList,
+        ...state.riskYellowList,
         parentCode: state.menu.subMenuCode
     }), {
         setTableData,
@@ -37,7 +37,7 @@ import {
         setSearchData
     }
 )
-class yellowList extends React.Component {
+class YellowList extends React.Component {
     render() {
       const fields = [
         {
@@ -46,7 +46,8 @@ class yellowList extends React.Component {
           search: true
         }, {
           title: '证件号',
-          field: 'idNo'
+          field: 'idNo',
+          nowrap: true
         }, {
           title: '手机号',
           field: 'mobile'
@@ -70,4 +71,4 @@ class yellowList extends React.Component {
     }
 }
 
-export default yellowList;
+export default YellowList;

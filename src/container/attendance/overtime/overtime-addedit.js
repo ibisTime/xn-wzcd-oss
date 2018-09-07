@@ -119,7 +119,9 @@ class overtimeAddedit extends React.Component {
             hidden: ((!this.view && this.isCheck) || !this.code)
         }, {
             title: '备注',
-            field: 'remark'
+            field: 'remark',
+            hidden: !this.isCheck && !this.view,
+            readonly: !this.isCheck
         }];
         return this.props.buildDetail({
             fields,

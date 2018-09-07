@@ -248,7 +248,7 @@ class costAddedit extends React.Component {
             readonly: false,
             required: true
         }, {
-            title: '付款凭证',
+            title: '银行回单',
             field: 'payPdf',
             type: 'img',
             readonly: false,

@@ -44,7 +44,7 @@ class RebatesAddedit extends React.Component {
             type: 'date'
         }, {
             title: '返点列表',
-            field: 'repointDetailCodeList',
+            field: 'repointDetailList',
             required: true,
             type: 'o2m',
             options: {
@@ -55,7 +55,7 @@ class RebatesAddedit extends React.Component {
                 fields: [{
                     title: 'code',
                     field: 'code',
-                    hidden: true
+                    noVisible: true
                 }, {
                     title: '业务编号',
                     field: 'budgetCode'
@@ -138,7 +138,9 @@ class RebatesAddedit extends React.Component {
             title: '办理状态',
             field: 'curNodeCode',
             type: 'select',
-            key: 'repoint_status'
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildDetail({
             fields,

@@ -14,7 +14,8 @@ import {
 } from 'common/js/build-list';
 import {
   showWarnMsg,
-  showSucMsg
+  showSucMsg,
+  moneyFormat
 } from 'common/js/util';
 import {
   Button,
@@ -64,8 +65,10 @@ class overdueList extends React.Component {
       }
     }, {
       title: '逾期金额',
-      field: 'overdueAmount',
-      amount: true
+      field: 'restOverdueAmount',
+      render: (v, d) => {
+        return moneyFormat(d.repayBiz.restOverdueAmount);
+      }
     }, {
       title: '逾期日期',
       field: 'repayDatetime',
@@ -83,7 +86,8 @@ class overdueList extends React.Component {
       fields,
       pageCode: 630540,
       searchParams: {
-        curNodeCodeList: ['022_03', '022_04', '022_05', '022_06', '022_07', '022_08']
+        // curNodeCodeList: ['022_03', '022_04', '022_05', '022_06', '022_07', '022_08']
+        curNodeCodeList: ['022_03']
       },
       btnEvent: {
         message: (key, item) => {
@@ -135,6 +139,15 @@ class overdueList extends React.Component {
             showWarnMsg('请选择一条记录');
           } else {
             this.props.history.push(`/biz/overdueList/apply?code=${selectedRowKeys[0]}`);
+          }
+        },
+        record: (selectedRowKeys, selectedRows) => {
+          if (!selectedRowKeys.length) {
+            showWarnMsg('请选择记录');
+          } else if (selectedRowKeys.length > 1) {
+            showWarnMsg('请选择一条记录');
+          } else {
+            this.props.history.push(`/biz/overdueList/record?code=${selectedRowKeys[0]}`);
           }
         }
       }

@@ -48,7 +48,7 @@ class CancelCheck extends React.Component {
             normalArea: true,
             readonly: true
         }, {
-            title: '审核说明',
+            title: '审核意见',
             field: 'approveNote',
             type: 'textarea',
             normalArea: true,

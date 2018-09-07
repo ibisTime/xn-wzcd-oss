@@ -52,7 +52,7 @@ class MortgagesCheck extends React.Component {
             readonly: true
         }, {
             title: '业务编号',
-            field: 'code',
+            field: 'budgetOrderCode',
             formatter: (v, d) => {
                 return d.budgetOrder.code;
             },
@@ -64,9 +64,7 @@ class MortgagesCheck extends React.Component {
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanAmount);
-            },
+            amount: true,
             readonly: true
         }, {
             title: '流程日志',
@@ -78,6 +76,8 @@ class MortgagesCheck extends React.Component {
             },
             hidden: this.isEntry || this.isCheckFirst || this.isAddedit,
             options: {
+                rowKey: 'id',
+                noSelect: true,
                 fields: [{
                     title: '操作人',
                     field: 'operatorName'
@@ -93,7 +93,7 @@ class MortgagesCheck extends React.Component {
                     title: '花费时长',
                     field: 'speedTime'
                 }, {
-                    title: '审核说明',
+                    title: '审核意见',
                     field: 'dealNote'
                 }, {
                     title: '当前节点',

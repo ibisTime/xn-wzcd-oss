@@ -50,7 +50,8 @@ class CancelApply extends React.Component {
                         ...this.props.pageData,
                         loanAmount: moneyFormat(info.loanAmount),
                         idNo: info.idNo,
-                        bcode: data.code
+                        bcode: data.code,
+                        dztime: data.advanceFund ? dateFormat(data.advanceFund.advanceFundDatetime) : ''
                     });
                 });
             }
@@ -68,7 +69,7 @@ class CancelApply extends React.Component {
             readonly: true
         }, {
             title: '垫资日期',
-            field: '11',
+            field: 'dztime',
             readonly: true
         }, {
             title: '作废原因',

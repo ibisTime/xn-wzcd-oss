@@ -47,7 +47,7 @@ class invoice extends React.Component {
             search: true
         }, {
             title: '业务公司',
-            field: 'companyCode'
+            field: 'companyName'
         }, {
             title: '客户姓名',
             field: 'customerName',
@@ -60,14 +60,13 @@ class invoice extends React.Component {
             title: '垫资日期',
             field: 'advanceFundDatetime',
             render: (v, d) => {
-                return formatDate(d.advanceFund.advanceFundDatetime);
+                if(d.advanceFund) {
+                    return formatDate(d.advanceFund.advanceFundDatetime);
+                }
             }
         }, {
             title: '发保合预警天数',
-            field: 'fbhWarnDay',
-            render: (v, d) => {
-                return formatDate(d.advanceFund.fbhWarnDay);
-            }
+            field: 'fbhWarnDay'
         }, {
             title: '车辆发票价',
             field: 'invoicePrice',
@@ -105,7 +104,7 @@ class invoice extends React.Component {
             fields,
             pageCode: 632145,
             searchParams: {
-                roleCode: getRoleCode()
+                fbhPage: 1
             },
             btnEvent: {
                 entering: (selectedRowKeys, selectedRows) => {

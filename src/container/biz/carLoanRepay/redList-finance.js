@@ -14,19 +14,11 @@ import {
     moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(state => state.bizredListFinance, {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-})
-class RedListFinance extends React.Component {
+@Form.create()
+export default class RedListFinance extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -38,6 +30,10 @@ class RedListFinance extends React.Component {
             key: '1',
             value: '是'
         }];
+        this.state = {
+          ...this.state,
+          isPawnshopName: true
+        };
     }
     render() {
         const fields = [{
@@ -67,9 +63,23 @@ class RedListFinance extends React.Component {
             title: '是否典当行赎回',
             field: 'pawnshopIsRedeem',
             formatter: (v, d) => {
-                let index = d.curMonthRepayPlan.pawnshopIsRedeem;
-                return this.arr[index].value;
+                return d.curMonthRepayPlan.pawnshopIsRedeem;
             },
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            onChange: (v) => {
+                this.setState({
+                    isPawnshopName: v !== '0'
+                });
+            },
+            keyName: 'key',
+            valueName: 'value',
             readonly: true
         }, {
             title: '典当行名称',
@@ -77,6 +87,7 @@ class RedListFinance extends React.Component {
             formatter: (v, d) => {
                 return d.curMonthRepayPlan.pawnshopName;
             },
+            hidden: !this.state.isPawnshopName,
             readonly: true
         }, {
             title: '赎金小写',
@@ -84,6 +95,8 @@ class RedListFinance extends React.Component {
             formatter: (v, d) => {
                 return moneyFormat(d.curMonthRepayPlan.ransom);
             },
+            amount: true,
+            hidden: !this.state.isPawnshopName,
             readonly: true
         }, {
             title: '收车费用',
@@ -121,14 +134,51 @@ class RedListFinance extends React.Component {
             },
             readonly: true
         }, {
-            title: '申请说明',
+            title: '流程日志',
+            field: 'list',
+            type: 'o2m',
+            listCode: 630176,
+            params: {
+                refOrder: this.code
+            },
+            hidden: this.isEntry || this.isCheckFirst || this.isAddedit,
+            options: {
+                rowKey: 'id',
+                noSelect: true,
+                fields: [{
+                    title: '操作人',
+                    field: 'operatorName'
+                }, {
+                    title: '开始时间',
+                    field: 'startDatetime',
+                    type: 'datetime'
+                }, {
+                    title: '结束时间',
+                    field: 'endDatetime',
+                    type: 'datetime'
+                }, {
+                    title: '花费时长',
+                    field: 'speedTime'
+                }, {
+                    title: '审核意见',
+                    field: 'dealNote'
+                }, {
+                    title: '当前节点',
+                    field: 'dealNode',
+                    type: 'select',
+                    listCode: 630147,
+                    keyName: 'code',
+                    valueName: 'name'
+                }]
+            }
+        }, {
+            title: '审核说明',
             field: 'remark',
             type: 'textarea',
             normalArea: true,
             required: true
         }];
         return this
-            .props
             .buildDetail({
                 fields,
                 code: this.code,
@@ -139,14 +189,15 @@ class RedListFinance extends React.Component {
                   handler: (param) => {
                     param.approveResult = '1';
                     param.operator = getUserId();
-                    this.props.doFetching();
+                    param.code = this.code;
+                    this.doFetching();
                     fetch(630554, param).then(() => {
                       showSucMsg('操作成功');
-                      this.props.cancelFetching();
+                      this.cancelFetching();
                       setTimeout(() => {
                         this.props.history.go(-1);
                       }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    }).catch(() => this.cancelFetching());
                   },
                   check: true,
                   type: 'primary'
@@ -155,14 +206,15 @@ class RedListFinance extends React.Component {
                   handler: (param) => {
                     param.approveResult = '0';
                     param.operator = getUserId();
-                    this.props.doFetching();
+                    param.code = this.code;
+                    this.doFetching();
                     fetch(630554, param).then(() => {
                       showSucMsg('操作成功');
-                      this.props.cancelFetching();
+                      this.cancelFetching();
                       setTimeout(() => {
                         this.props.history.go(-1);
                       }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    }).catch(() => this.cancelFetching());
                   },
                   check: true
                 }, {
@@ -174,5 +226,3 @@ class RedListFinance extends React.Component {
             });
     }
 }
-
-export default RedListFinance;

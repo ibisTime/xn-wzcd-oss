@@ -10,8 +10,8 @@ import {
 import {
     getQueryString,
     showSucMsg,
-    getUserId,
-    moneyFormat
+    moneyFormat,
+    moneyReplaceComma
 } from 'common/js/util';
 import {
     DetailWrapper
@@ -58,8 +58,8 @@ class TakeEstimateAddedit extends React.Component {
             field: 'receiptAccount',
             readonly: true,
             amount: true,
-            formatter: (v, data) => {
-                return moneyFormat(data.loanAmount);
+            formatter: (v, d) => {
+                return moneyReplaceComma(moneyFormat(d.budgetAmount)) - moneyReplaceComma(moneyFormat(d.payAmount));
             }
         }, {
             title: '收款金额',

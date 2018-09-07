@@ -246,7 +246,7 @@ class BudgetDetail extends React.Component {
         }];
 
         let fields = [{
-            title: '职业及收入情况',
+            title: '预算单信息',
             items: [
                 [{
                     title: '申请人',
@@ -266,6 +266,200 @@ class BudgetDetail extends React.Component {
                     readonly: true
                 }],
                 [{
+                    title: '客户姓名',
+                    field: 'customerName',
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '业务编号',
+                    field: 'code',
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '客户类型',
+                    field: 'customerType',
+                    type: 'select',
+                    data: [{
+                        key: '1',
+                        value: '个人'
+                    }, {
+                        key: '2',
+                        value: '企业'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }],
+                [{
+                    title: '汽车经销商',
+                    field: 'carDealerName',
+                    formatter: (v, data) => {
+                        if (data.carDealer) {
+                            return data.carDealer.parentGroup + '-' + data.carDealer.abbrName;
+                        } else {
+                            return v;
+                        }
+                    }
+                }, {
+                    title: '贷款银行',
+                    field: 'loanBankName'
+                }, {
+                    title: '厂商指导价',
+                    field: 'originalPrice',
+                    amount: true,
+                    required: true
+                }],
+                [{
+                    title: '车辆型号',
+                    field: 'carModel',
+                    required: true
+                }, {
+                    title: '车架号码',
+                    field: 'frameNo',
+                    required: true
+                }, {
+                    title: '贷款周期(期)',
+                    field: 'loanPeriods',
+                    type: 'select',
+                    key: 'loan_period',
+                    required: true
+                }],
+                [{
+                    title: '购车途径',
+                    field: 'shopWay',
+                    type: 'select',
+                    key: 'budget_orde_biz_typer',
+                    readonly: true,
+                    required: true,
+                    formatter: (v, data) => {
+                        if(v === '2') {
+                            this.shopWay = false;
+                        }
+                        return v;
+                    }
+                }, {
+                    title: '发票价格',
+                    field: 'invoicePrice',
+                    amount: true,
+                    required: true
+                }, {
+                    title: '贷款金额',
+                    field: 'loanAmount',
+                    amount: true,
+                    required: true
+                }],
+                [{
+                    title: '利率类型',
+                    field: 'rateType',
+                    type: 'select',
+                    key: 'rate_type',
+                    required: true
+                }, {
+                    title: '银行利率',
+                    field: 'bankRate',
+                    formatter: (v, d) => {
+                      return (d.bankRate * 100).toFixed(4) + '%';
+                    },
+                    required: true
+                }],
+                [{
+                    // 贷款金额 / 发票价格
+                    title: '我司贷款成数',
+                    field: 'companyLoanCs',
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '是否垫资',
+                    field: 'isAdvanceFund',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }, {
+                    title: '综合利率',
+                    field: 'globalRate',
+                    readonly: true,
+                    required: true
+                }],
+                [{
+
+                    title: '服务费',
+                    field: 'fee',
+                    amount: true,
+                    required: true
+                }, {
+                    title: '厂家贴息',
+                    field: 'carDealerSubsidy',
+                    amount: true,
+                    required: true
+                }, {
+                    title: '银行贷款成数',
+                    field: 'bankLoanCs',
+                    readonly: true,
+                    required: true
+                }],
+                [{
+                    title: 'GPS',
+                    field: 'budgetOrderGpsList',
+                    type: 'o2m',
+                    options: {
+                        detail: true,
+                        fields: [{
+                            title: 'GPS',
+                            field: 'code',
+                            type: 'select',
+                            listCode: 632707,
+                            params: {
+                                applyStatus: '2',
+                                applyUser: this.saleUserId,
+                                useStatus: 0
+                            },
+                            keyName: 'code',
+                            valueName: 'gpsDevNo',
+                            required: true,
+                            noVisible: true,
+                            onChange: (v, data, props) => {
+                                props.setPageData({
+                                    gpsDevNo: data.gpsDevNo,
+                                    gpsType: data.gpsType
+                                });
+                            }
+                        }, {title: 'GPS设备号',
+                            field: 'gpsDevNo',
+                            hidden: true
+                        }, {
+                            title: 'GPS类型',
+                            field: 'gpsType',
+                            type: 'select',
+                            data: [{
+                                key: '1',
+                                value: '有线'
+                            }, {
+                                key: '0',
+                                value: '无线'
+                            }],
+                            keyName: 'key',
+                            valueName: 'value',
+                            hidden: true
+                        }, {
+                            title: 'GPS安装位置',
+                            field: 'azLocation',
+                            required: true
+                        }]
+                    }
+                }]
+            ]
+        }, {
+            title: '职业及收入情况',
+            items: [
+                [{
                     title: '申请人就职单位',
                     field: 'applyUserCompany',
                     required: true
@@ -277,7 +471,7 @@ class BudgetDetail extends React.Component {
                     title: '申请人共还人关系',
                     field: 'applyUserGhrRelation',
                     type: 'select',
-                    key: 'credit_user_relation'
+                    key: 'emergency_contact_relation'
                 }, {
                     title: '婚姻状况',
                     field: 'marryState',
@@ -456,200 +650,6 @@ class BudgetDetail extends React.Component {
                 }]
             ]
         }, {
-            title: '预算单信息',
-            items: [
-                [{
-                    title: '客户姓名',
-                    field: 'customerName',
-                    readonly: true,
-                    required: true
-                }, {
-                    title: '业务编号',
-                    field: 'code',
-                    readonly: true,
-                    required: true
-                }, {
-                    title: '客户类型',
-                    field: 'customerType',
-                    type: 'select',
-                    data: [{
-                        key: '1',
-                        value: '个人'
-                    }, {
-                        key: '2',
-                        value: '企业'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value',
-                    required: true
-                }],
-                [{
-                    title: '汽车经销商',
-                    field: 'carDealerCode',
-                    type: 'select',
-                    pageCode: 632065,
-                    params: {
-                        curNodeCode: '006_02'
-                    },
-                    keyName: 'code',
-                    valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}'
-                }, {
-                    title: '贷款银行',
-                    field: 'loanBankName'
-                }, {
-                    title: '厂商指导价',
-                    field: 'originalPrice',
-                    amount: true,
-                    required: true
-                }],
-                [{
-                    title: '车辆型号',
-                    field: 'carModel',
-                    required: true
-                }, {
-                    title: '车架号码',
-                    field: 'frameNo',
-                    required: true
-                }, {
-                    title: '贷款周期(期)',
-                    field: 'loanPeriods',
-                    type: 'select',
-                    key: 'loan_period',
-                    required: true
-                }],
-                [{
-                    title: '购车途径',
-                    field: 'shopWay',
-                    type: 'select',
-                    key: 'budget_orde_biz_typer',
-                    readonly: true,
-                    required: true,
-                    formatter: (v, data) => {
-                        if(v === '2') {
-                            this.shopWay = false;
-                        }
-                        return v;
-                    }
-                }, {
-                    title: '发票价格',
-                    field: 'invoicePrice',
-                    amount: true,
-                    required: true
-                }, {
-                    title: '贷款金额',
-                    field: 'loanAmount',
-                    amount: true,
-                    required: true
-                }],
-                [{
-                    title: '利率类型',
-                    field: 'rateType',
-                    type: 'select',
-                    key: 'rate_type',
-                    required: true
-                }, {
-                    title: '银行利率',
-                    field: 'bankRate',
-                    formatter: (v, d) => {
-                      return (d.bankRate * 100).toFixed(4) + '%';
-                    },
-                    required: true
-                }],
-                [{
-                    // 贷款金额 / 发票价格
-                    title: '我司贷款成数',
-                    field: 'companyLoanCs',
-                    readonly: true,
-                    required: true
-                }, {
-                    title: '是否垫资',
-                    field: 'isAdvanceFund',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value',
-                    required: true
-                }, {
-                    title: '综合利率',
-                    field: 'globalRate',
-                    readonly: true,
-                    required: true
-                }],
-                [{
-
-                    title: '服务费',
-                    field: 'fee',
-                    amount: true,
-                    required: true
-                }, {
-                    title: '厂家贴息',
-                    field: 'carDealerSubsidy',
-                    amount: true,
-                    required: true
-                }, {
-                    title: '银行贷款成数',
-                    field: 'bankLoanCs',
-                    readonly: true,
-                    required: true
-                }],
-                [{
-                    title: 'GPS',
-                    field: 'budgetOrderGpsList',
-                    type: 'o2m',
-                    options: {
-                        detail: true,
-                        fields: [{
-                            title: 'GPS',
-                            field: 'code',
-                            type: 'select',
-                            listCode: 632707,
-                            params: {
-                                applyStatus: '2',
-                                applyUser: this.saleUserId,
-                                useStatus: 0
-                            },
-                            keyName: 'code',
-                            valueName: 'gpsDevNo',
-                            required: true,
-                            noVisible: true,
-                            onChange: (v, data, props) => {
-                                props.setPageData({
-                                    gpsDevNo: data.gpsDevNo,
-                                    gpsType: data.gpsType
-                                });
-                            }
-                        }, {title: 'GPS设备号',
-                            field: 'gpsDevNo',
-                            hidden: true
-                        }, {
-                            title: 'GPS类型',
-                            field: 'gpsType',
-                            type: 'select',
-                            data: [{
-                                key: '1',
-                                value: '有线'
-                            }, {
-                                key: '0',
-                                value: '无线'
-                            }],
-                            keyName: 'key',
-                            valueName: 'value',
-                            hidden: true
-                        }, {
-                            title: 'GPS安装位置',
-                            field: 'azLocation',
-                            required: true
-                        }]
-                    }
-                }]
-            ]
-        }, {
             title: '资产情况',
             items: [
                 [{
@@ -762,7 +762,7 @@ class BudgetDetail extends React.Component {
                     field: 'emergencyRelation1',
                     title: '与申请人关系',
                     type: 'select',
-                    key: 'credit_user_relation',
+                    key: 'emergency_contact_relation',
                     required: true
                 }, {
                     field: 'emergencyMobile1',
@@ -777,7 +777,7 @@ class BudgetDetail extends React.Component {
                     field: 'emergencyRelation2',
                     title: '与申请人关系',
                     type: 'select',
-                    key: 'credit_user_relation'
+                    key: 'emergency_contact_relation'
                 }, {
                     field: 'emergencyMobile2',
                     title: '手机号码',
@@ -1137,7 +1137,7 @@ class BudgetDetail extends React.Component {
             title: '企业照片',
             items: [
                 [{
-                    title: '企业名称照片',
+                    title: '营业执照',
                     field: 'companyNamePic',
                     type: 'img'
                 }, {
@@ -1240,12 +1240,15 @@ class BudgetDetail extends React.Component {
                 [{
                     title: '流程日志',
                     field: 'list',
+                    rowKey: 'id',
                     type: 'o2m',
                     listCode: 630176,
                     params: {
                         refOrder: this.code
                     },
                     options: {
+                        rowKey: 'id',
+                        noSelect: true,
                         fields: [{
                             title: '操作人',
                             field: 'operatorName'
@@ -1261,7 +1264,7 @@ class BudgetDetail extends React.Component {
                             title: '花费时长',
                             field: 'speedTime'
                         }, {
-                            title: '审核说明',
+                            title: '审核意见',
                             field: 'dealNote'
                         }, {
                             title: '当前节点',
@@ -1317,7 +1320,7 @@ class BudgetDetail extends React.Component {
 
         let checkFields = [{
             field: 'approveNote',
-            title: '审核说明',
+            title: '审核意见',
             type: 'textarea',
             normalArea: true,
             readonly: false,

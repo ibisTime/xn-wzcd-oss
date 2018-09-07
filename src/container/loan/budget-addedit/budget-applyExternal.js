@@ -260,6 +260,23 @@ class BudgetApplyExternal extends React.Component {
             title: '预算单信息',
             items: [
                 [{
+                    title: '申请人',
+                    field: 'customerName',
+                    readonly: true
+                }, {
+                    title: '共还人',
+                    field: 'ghRealName',
+                    readonly: true
+                }, {
+                    title: '担保人1',
+                    field: 'guarantor1Name',
+                    readonly: true
+                }, {
+                    title: '担保人2',
+                    field: 'guarantor2Name',
+                    readonly: true
+                }],
+                [{
                     title: '客户姓名',
                     field: 'customerName',
                     readonly: true,
@@ -631,7 +648,7 @@ class BudgetApplyExternal extends React.Component {
                     title: '申请人共还人关系',
                     field: 'applyUserGhrRelation',
                     type: 'select',
-                    key: 'credit_user_relation',
+                    key: 'emergency_contact_relation',
                     readonly: true
                 }, {
                     title: '婚姻状况',
@@ -923,7 +940,7 @@ class BudgetApplyExternal extends React.Component {
                     field: 'emergencyRelation1',
                     title: '与申请人关系',
                     type: 'select',
-                    key: 'credit_user_relation',
+                    key: 'emergency_contact_relation',
                     required: true
                 }, {
                     field: 'emergencyMobile1',
@@ -938,7 +955,7 @@ class BudgetApplyExternal extends React.Component {
                     field: 'emergencyRelation2',
                     title: '与申请人关系',
                     type: 'select',
-                    key: 'credit_user_relation'
+                    key: 'emergency_contact_relation'
                 }, {
                     field: 'emergencyMobile2',
                     title: '手机号码',
@@ -1469,7 +1486,7 @@ class BudgetApplyExternal extends React.Component {
             title: '企业照片',
             items: [
                 [{
-                    title: '企业名称照片',
+                    title: '营业执照',
                     field: 'companyNamePic',
                     type: 'img'
                 }, {
@@ -1587,7 +1604,7 @@ class BudgetApplyExternal extends React.Component {
 
         let checkFields = [{
             field: 'approveNote',
-            title: '审核说明',
+            title: '审核意见',
             type: 'textarea',
             normalArea: true,
             readonly: false,

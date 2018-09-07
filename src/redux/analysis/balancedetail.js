@@ -1,6 +1,6 @@
 import { commListState } from '../common';
 
-const PREFIX = 'BIZ_BALANCEDETAIL_';
+const PREFIX = 'ANALYSIS_BALANCEDETAIL_';
 const SET_BUTTON_LIST = PREFIX + 'SET_BUTTON_LIST';
 const LOADING = PREFIX + 'LOADING';
 const CANCEL_LOADING = PREFIX + 'CANCEL_LOADING';
@@ -11,7 +11,7 @@ const SET_SEARCH_PARAM = PREFIX + 'SET_SEARCH_PARAM';
 
 const initState = { ...commListState };
 
-export function bizBalancedetail(state = initState, action) {
+export function analysisBalancedetail(state = initState, action) {
   switch(action.type) {
     case SET_BUTTON_LIST:
       return {...state, btnList: action.payload};

@@ -88,17 +88,16 @@ class AdvMoneyAreaCheck extends React.Component {
             readonly: true,
             hidden: true
         }, {
+            title: '收款银行',
+            field: 'collectBankName',
+            formatter: (v, d) => {
+                return d.collectBankName + '-' + d.collectAccountName;
+            },
+            readonly: true
+        }, {
             title: '收款银行账号',
             field: 'collectionAccountNo',
             readonly: true
-        }, {
-            title: '收款银行',
-            field: 'collectBankName',
-            readonly: true
-        }, {
-            title: '审核说明',
-            field: 'approveNote',
-            required: true
         }, {
             title: '流程日志',
             field: 'list',
@@ -108,6 +107,8 @@ class AdvMoneyAreaCheck extends React.Component {
               refOrder: this.code
             },
             options: {
+              rowKey: 'id',
+              noSelect: true,
               fields: [{
                 title: '操作人',
                 field: 'operatorName'
@@ -120,7 +121,7 @@ class AdvMoneyAreaCheck extends React.Component {
                 field: 'endDatetime',
                 type: 'datetime'
               }, {
-                title: '审核说明',
+                title: '审核意见',
                 field: 'dealNote'
             }, {
                 title: '花费时长',
@@ -134,7 +135,11 @@ class AdvMoneyAreaCheck extends React.Component {
                 valueName: 'name'
               }]
             }
-          }];
+        }, {
+            title: '审核意见',
+            field: 'approveNote',
+            required: true
+        }];
         return this.props.buildDetail({
             fields,
             code: this.code,

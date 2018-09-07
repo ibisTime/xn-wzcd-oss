@@ -53,7 +53,7 @@ class historyBusinessManageAddeditAddedit extends React.Component {
         }]
       }
     }, {
-      title: '贷款人',
+      title: '客户姓名',
       field: 'realName',
       readonly: true,
       formatter: (v, d) => {

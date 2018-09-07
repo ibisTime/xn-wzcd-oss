@@ -24,7 +24,7 @@ import {
     restore
   }
 )
-class parchivesAddedit extends React.Component {
+class ParchivesAddedit extends React.Component {
   constructor(props) {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
@@ -46,6 +46,7 @@ class parchivesAddedit extends React.Component {
             }, {
                 title: '手机号码',
                 field: 'mobile',
+                mobile: true,
                 required: true
             }], [{
                 title: '工号',
@@ -56,29 +57,10 @@ class parchivesAddedit extends React.Component {
                 field: 'entryDatetime',
                 required: true,
                 type: 'date'
-            }, {
-                title: '部门',
-                field: 'departmentCode',
-                type: 'select',
-                required: true,
-                listCode: 630106,
-                params: {
-                  typeList: ['2']
-                },
-                keyName: 'code',
-                valueName: 'name',
-                search: true
             }], [{
                 title: '岗位',
-                field: 'postCode',
-                type: 'select',
-                required: true,
-                listCode: 630106,
-                params: {
-                  typeList: ['3']
-                },
-                keyName: 'code',
-                valueName: 'name'
+                field: 'postName',
+                required: true
             }, {
                 title: '上班班次',
                 field: 'jobClasses',
@@ -231,6 +213,7 @@ class parchivesAddedit extends React.Component {
             }], [{
                 title: '社会关系',
                 field: 'socialRelationList',
+                required: true,
                 type: 'o2m',
                 options: {
                     add: true,
@@ -313,4 +296,4 @@ class parchivesAddedit extends React.Component {
   }
 }
 
-export default parchivesAddedit;
+export default ParchivesAddedit;

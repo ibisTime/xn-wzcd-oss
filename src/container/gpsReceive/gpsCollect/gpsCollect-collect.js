@@ -73,12 +73,12 @@ class GpsCollectCollect extends React.Component {
         field: 'logisticsCode',
         readonly: true
     }, {
-        title: '发货时间',
+        title: '发件时间',
         field: 'sendDatetime',
         type: 'datetime',
         readonly: true
     }, {
-        title: '发货说明',
+        title: '发件说明',
         field: 'sendNote',
         readonly: true
     }, {
@@ -95,8 +95,8 @@ class GpsCollectCollect extends React.Component {
         buttons: [{
             title: '收件并审核通过',
             handler: (param) => {
-                let codeList = [];
-                codeList.push(this.code);
+                let codeList = [].concat(param.code.split(','));
+                delete param.code;
                 param.operator = getUserId();
                 param.codeList = codeList;
                 param.supplementReason = '';
@@ -108,8 +108,8 @@ class GpsCollectCollect extends React.Component {
         }, {
             title: '收件待补件',
             handler: (param) => {
-                let codeList = [];
-                codeList.push(this.code);
+                let codeList = [].concat(param.code.split(','));
+                delete param.code;
                 param.codeList = codeList;
                 param.operator = getUserId();
                 if (!param.supplementReason) {

@@ -123,7 +123,7 @@ export function addPost(post) {
 }
 
 // 删除职位
-export function deletePost(code) {
+export function deletePost(code, setFieldsValue) {
   return dispatch => {
     dispatch(doFetching());
     deleteComp(code).then(() => {
@@ -135,6 +135,13 @@ export function deletePost(code) {
       let tree = [];
       getTreeNode(listInfo['ROOT'], tree);
       dispatch(setTreeData(tree));
+      dispatch(_setSelectedKeys([]));
+      dispatch(_setCheckedKeys([]));
+      setFieldsValue({
+        code: '',
+        parentCode: '',
+        name: ''
+      });
     }).catch(() => {
       dispatch(cancelFetching());
     });

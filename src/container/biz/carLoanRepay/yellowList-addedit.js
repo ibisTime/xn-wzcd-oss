@@ -41,7 +41,7 @@ class yellowListAddedit extends React.Component {
             }
         }, {
             field: 'user',
-            title: '贷款人',
+            title: '客户姓名',
             formatter: (v, d) => {
                 return d.user.realName;
             }
@@ -111,6 +111,8 @@ class yellowListAddedit extends React.Component {
                 refOrder: this.code
             },
             options: {
+                rowKey: 'id',
+                noSelect: true,
                 fields: [{
                     title: '操作人',
                     field: 'operatorName'
@@ -126,7 +128,7 @@ class yellowListAddedit extends React.Component {
                     title: '花费时长',
                     field: 'speedTime'
                 }, {
-                    title: '审核说明',
+                    title: '审核意见',
                     field: 'dealNote'
                 }, {
                     title: '当前节点',

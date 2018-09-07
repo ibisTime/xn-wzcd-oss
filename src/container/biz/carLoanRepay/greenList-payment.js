@@ -42,7 +42,7 @@ class greenListPayment extends React.Component {
             readonly: true
         }, {
             field: 'user',
-            title: '贷款人',
+            title: '客户姓名',
             formatter: (v, d) => {
                 return d.user.realName;
             },
@@ -54,7 +54,7 @@ class greenListPayment extends React.Component {
             readonly: true
         }, {
             title: '未还清收成本(元)',
-            field: 'restTotalCost',
+            field: 'notPayedFee',
             amount: true,
             readonly: true
         }, {

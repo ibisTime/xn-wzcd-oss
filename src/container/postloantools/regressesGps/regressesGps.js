@@ -118,15 +118,12 @@ class RegressesGps extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632705,
+            searchParams: {
+                isSendBack: '1'
+            },
             btnEvent: {
-                companyCheck: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else {
-                        this.props.history.push(`/postloantools/regresses/apply?code=${selectedRowKeys[0]}`);
-                    }
+                apply: (selectedRowKeys, selectedRows) => {
+                    this.props.history.push(`/postloantools/regressesGps/apply?code=${selectedRowKeys[0]}`);
                 }
             }
         });

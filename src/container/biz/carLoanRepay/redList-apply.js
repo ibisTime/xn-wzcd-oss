@@ -10,7 +10,8 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -30,6 +31,7 @@ class redListApply extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.isPawnshopName = false;
     }
     render() {
         const fields = [{
@@ -48,7 +50,7 @@ class redListApply extends React.Component {
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '贷款金额',
@@ -66,15 +68,23 @@ class redListApply extends React.Component {
                 key: '1',
                 value: '是'
             }],
+            onChange: (v) => {
+                this.isPawnshopName = v !== '0';
+            },
             keyName: 'key',
-            valueName: 'value'
+            valueName: 'value',
+            required: true
         }, {
             title: '典当行名称',
-            field: 'pawnshopName'
+            field: 'pawnshopName',
+            hidden: !this.isPawnshopName,
+            required: true
         }, {
             title: '赎金小写',
             field: 'ransom',
-            amount: true
+            amount: true,
+            hidden: !this.isPawnshopName,
+            required: true
         }, {
             title: '收车费用',
             field: 'tsCarAmount',
@@ -87,7 +97,7 @@ class redListApply extends React.Component {
             title: '收款人开户行',
             field: 'tsBankCode',
             type: 'select',
-            listCode: 632037,
+            listCode: 802116,
             keyName: 'bankCode',
             valueName: 'bankName',
             required: true

@@ -39,18 +39,22 @@ class bankAddedit extends React.Component {
       keyName: 'bankCode',
       valueName: '{{bankName.DATA}}-{{bankCode.DATA}}',
       required: true
-    },
-    // {
-    //   title: '12期',
-    //   field: 'rate12'
-    // }, {
-    //   title: '24期',
-    //   field: 'rate24'
-    // }, {
-    //   title: '36期',
-    //   field: 'rate36'
-    // },
-    {
+    }, {
+      title: '12期(%)',
+      field: 'rate12',
+      formatter: (v) => v ? (v * 100).toFixed(4) : '',
+      required: true
+    }, {
+      title: '24期(%)',
+      field: 'rate24',
+      formatter: (v) => v ? (v * 100).toFixed(4) : '',
+      required: true
+    }, {
+      title: '36期(%)',
+      field: 'rate36',
+      formatter: (v) => v ? (v * 100).toFixed(4) : '',
+      required: true
+    }, {
       title: '利率明细',
       field: 'bankRateList',
       type: 'o2m',
@@ -82,13 +86,20 @@ class bankAddedit extends React.Component {
           field: 'rate',
           help: '请输入0-1的数字',
           render: (v, d) => {
-            return (v * 100).toFixed(4) + '%';
+            return (v * 100).toFixed(4);
+          },
+          formatter: (v, d) => {
+            return v ? (v * 100).toFixed(4) : '';
           },
           required: true
         }, {
           title: '说明',
           field: 'remark'
-        }]
+        }],
+        beforeSubmit: (params) => {
+          params.rate /= 100;
+          return params;
+        }
       }
     }, {
       title: '备注',
@@ -106,9 +117,9 @@ class bankAddedit extends React.Component {
           showWarnMsg('至少新增一条利率明细！');
           return;
         }
-        // param.bankRateList.map(v => {
-        //   v.rate = v.rate / 100;
-        // });
+        param.rate12 /= 100;
+        param.rate24 /= 100;
+        param.rate36 /= 100;
         let bank = this.props.selectData.bankCode.find(v => v.bankCode === param.bankCode);
         param.bankName = bank.bankName;
         param.updater = getUserId();

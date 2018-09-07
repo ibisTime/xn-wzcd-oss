@@ -34,16 +34,20 @@ class EstimateCertain extends React.Component {
   }
   render() {
     const fields = [{
+      title: '预算单号',
+      field: 'code',
+      readonly: true
+    }, {
       title: '业务公司',
-      field: 'companyCode',
+      field: 'companyName',
       readonly: true
     }, {
       title: '收款银行',
-      field: 'receiptBank',
+      field: 'bankName',
       readonly: true
     }, {
       title: '收款账号',
-      field: 'receiptAccount',
+      field: 'bankcardNumber',
       readonly: true
     }, {
       title: '预算金额',
@@ -62,7 +66,7 @@ class EstimateCertain extends React.Component {
       required: true
     }, {
       title: '打款账号',
-      field: 'payBank',
+      field: 'payAccount',
       type: 'select',
       listCode: '632007',
       params: {
@@ -77,7 +81,7 @@ class EstimateCertain extends React.Component {
       amount: true,
       required: true
     }, {
-      title: '水单',
+      title: '银行回单',
       field: 'waterBill',
       type: 'img',
       required: true
@@ -92,9 +96,6 @@ class EstimateCertain extends React.Component {
         check: true,
         handler: (params) => {
           this.props.doFetching();
-          let bank = this.props.selectData.payBank.find(v => v.code === params.payBank);
-          params.payAccount = bank.bankcardNumber;
-          params.payBank = bank.bankName;
           params.operator = getUserId();
           fetch(632102, params).then(() => {
             showSucMsg('操作成功');

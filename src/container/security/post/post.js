@@ -97,7 +97,7 @@ class Post extends React.Component {
         cancelText: '取消',
         content: '确定删除该岗位？',
         onOk: () => {
-          this.props.deletePost(this.props.selectedKeys[0]);
+          this.props.deletePost(this.props.selectedKeys[0], this.props.form.setFieldsValue);
         }
       });
     }

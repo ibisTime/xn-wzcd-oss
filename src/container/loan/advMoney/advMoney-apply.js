@@ -88,12 +88,19 @@ class AdvMoneyApply extends React.Component {
             readonly: true,
             hidden: true
         }, {
+            title: '收款银行',
+            field: 'collectBankName1',
+            formatter: (v, d) => {
+                return d.collectBankName + '-' + d.collectAccountName;
+            },
+            readonly: true
+        }, {
             title: '收款银行账号',
             field: 'collectionAccountNo',
             readonly: true
         }, {
-            title: '收款银行',
-            field: 'collectBankName',
+            title: '撤销理由',
+            field: 'cancelReason',
             readonly: true
         }];
         return this.props.buildDetail({

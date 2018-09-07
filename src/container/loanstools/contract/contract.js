@@ -54,7 +54,8 @@ class contract extends React.Component {
             search: true
         }, {
             title: '身份证号',
-            field: 'idNo'
+            field: 'idNo',
+            nowrap: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',

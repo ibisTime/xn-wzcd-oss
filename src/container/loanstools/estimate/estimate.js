@@ -47,15 +47,18 @@ class estimate extends React.Component {
       field: 'companyName',
       search: true
     }, {
+      title: '户名',
+      field: 'realName'
+    }, {
       title: '预算金额',
       field: 'budgetAmount',
       amount: true
     }, {
       title: '收款账号',
-      field: 'receiptAccount'
+      field: 'bankcardNumber'
     }, {
       title: '收款银行',
-      field: 'receiptBank'
+      field: 'bankName'
     }, {
       title: '用款日期',
       field: 'useDatetime',
@@ -101,23 +104,23 @@ class estimate extends React.Component {
         apply: (selectedRowKeys, selectedRows) => {
           this.props.history.push('/loanstools/estimate/apply');
         },
-        check: (selectedRowKeys, selectedRows) => {
-          if (!selectedRowKeys.length) {
-            showWarnMsg('请选择记录');
-          } else if (selectedRowKeys.length > 1) {
-            showWarnMsg('请选择一条记录');
-          } else if (selectedRows[0].curNodeCode !== '005_02') {
-            showWarnMsg('当前节点不是财务经理审核');
-          } else {
-            this.props.history.push(`/loanstools/estimate/check?code=${selectedRowKeys[0]}`);
-          }
-        },
+        // check: (selectedRowKeys, selectedRows) => {
+        //   if (!selectedRowKeys.length) {
+        //     showWarnMsg('请选择记录');
+        //   } else if (selectedRowKeys.length > 1) {
+        //     showWarnMsg('请选择一条记录');
+        //   } else if (selectedRows[0].curNodeCode !== '005_02') {
+        //     showWarnMsg('当前节点不是财务经理审核');
+        //   } else {
+        //     this.props.history.push(`/loanstools/estimate/check?code=${selectedRowKeys[0]}`);
+        //   }
+        // },
         certain: (selectedRowKeys, selectedRows) => {
           if (!selectedRowKeys.length) {
             showWarnMsg('请选择记录');
           } else if (selectedRowKeys.length > 1) {
             showWarnMsg('请选择一条记录');
-          } else if (selectedRows[0].curNodeCode !== '005_03') {
+          } else if (selectedRows[0].curNodeCode !== '005_02') {
             showWarnMsg('当前节点不是确认放款');
           } else {
             this.props.history.push(`/loanstools/estimate/certain?code=${selectedRowKeys[0]}`);

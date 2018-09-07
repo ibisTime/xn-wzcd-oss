@@ -129,7 +129,7 @@ class leaveAddedit extends React.Component {
                 let endDatetime = new Date(dateStrings[1]); // 结束时间
                 if (startDatetime && endDatetime) {
                     let time = endDatetime.getTime() - startDatetime.getTime();
-                    let hours = (time / (3600 * 1000)).toFixed(2);
+                    let hours = (time / (3600 * 1000)).toFixed(0);
                     this.props.form.setFieldsValue({
                         totalHour: hours
                     });
@@ -177,7 +177,9 @@ class leaveAddedit extends React.Component {
             hidden: ((!this.view && this.isCheck) || !this.code)
         }, {
             title: '备注',
-            field: 'remark'
+            field: 'remark',
+            hidden: !this.isCheck && !this.view,
+            readonly: !this.isCheck
         }];
         return this.props.buildDetail({
             fields,

@@ -45,7 +45,8 @@ class blackList extends React.Component {
         search: true
       }, {
         title: '证件号',
-        field: 'idNo'
+        field: 'idNo',
+        nowrap: true
       }, {
         title: '手机号',
         field: 'mobile'
@@ -59,8 +60,8 @@ class blackList extends React.Component {
       }
     ];
     return this.props.buildList({
-        fields,
-        rowKey: 'userId',
+      fields,
+      rowKey: 'userId',
       pageCode: 805120,
       searchParams: {
         sign: '4'

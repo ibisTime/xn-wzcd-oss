@@ -11,7 +11,9 @@ import {
   getQueryString,
   showSucMsg,
   getUserId,
-  getCompanyCode
+  getCompanyCode,
+  moneyFormat,
+  moneyReplaceComma
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -40,13 +42,13 @@ class TakeEstimateCertain extends React.Component {
             field: 'companyName',
             readonly: true
         }, {
-            title: '预算金额',
-            field: 'budgetAmount',
+            title: '打款金额',
+            field: 'payAmount',
             amount: true,
             readonly: true
         }, {
             title: '垫资总额',
-            field: 'payAmount',
+            field: 'dzAmount',
             amount: true,
             readonly: true
         }, {
@@ -58,7 +60,7 @@ class TakeEstimateCertain extends React.Component {
             title: '应收金额',
             field: 'receiptAccount',
             formatter: (v, d) => {
-                return (d.budgetAmount - d.payAmount) / 1000;
+                return moneyReplaceComma(moneyFormat(d.payAmount)) - moneyReplaceComma(moneyFormat(d.dzAmount));
             },
             readonly: true
         }, {
@@ -67,8 +69,8 @@ class TakeEstimateCertain extends React.Component {
             required: true,
             amount: true
         }, {
-            title: '收款款银行',
-            field: 'collectionBank',
+            title: '收款账号',
+            field: 'collectionAccount',
             type: 'select',
             listCode: '632007',
             params: {
@@ -78,11 +80,6 @@ class TakeEstimateCertain extends React.Component {
             keyName: 'code',
             valueName: '{{bankName.DATA}} {{subbranch.DATA}} {{bankcardNumber.DATA}}',
             required: true
-        }, {
-            title: '收款账号',
-            field: 'collectionAccount',
-            required: true,
-            bankCard: true
         }, {
             title: '收款时间',
             field: 'collectionDatetime',
@@ -101,9 +98,6 @@ class TakeEstimateCertain extends React.Component {
                 check: true,
                 handler: (params) => {
                     this.props.doFetching();
-                    let bank = this.props.selectData.collectionBank.find(v => v.code === params.collectionBank);
-                    params.collectionAccount = bank.bankcardNumber;
-                    params.collectionBank = bank.bankName;
                     params.code = this.code;
                     params.operator = getUserId();
                     fetch(632103, params).then(() => {

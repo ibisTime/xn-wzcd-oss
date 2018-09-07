@@ -53,7 +53,8 @@ class Insurance extends React.Component {
             search: true
         }, {
             title: '身份证',
-            field: 'idNo'
+            field: 'idNo',
+            nowrap: true
         }, {
             title: '保险到期时间',
             field: '22',

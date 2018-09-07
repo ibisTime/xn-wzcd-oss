@@ -64,8 +64,8 @@ class applyGpsCompanyCheck extends React.Component {
           type: 'select',
           listCode: 632707,
           params: {
-            applyStatus: '0',
-            useStatus: '0'
+            useStatus: '0',
+            companyApplyStatus: '0'
           },
           keyName: 'code',
           valueName: 'gpsDevNo',
@@ -74,7 +74,7 @@ class applyGpsCompanyCheck extends React.Component {
         }]
       }
     }, {
-      title: '审核说明',
+      title: '审核意见',
       field: 'approveNote',
       required: true
     }];

@@ -14,9 +14,9 @@ import {
 } from 'common/js/build-list';
 import {
     showWarnMsg,
-    showSucMsg,
-    dateTimeFormat,
-    getRoleCode
+    formatDate,
+    getRoleCode,
+    moneyFormat
 } from 'common/js/util';
 import {
     Button,
@@ -54,15 +54,7 @@ class Settlement extends React.Component {
             search: true
         }, {
             title: '银行',
-            field: 'loanBankCode',
-            render: (v, d) => {
-                return d.budgetOrder.loanBankCode;
-            },
-            type: 'select',
-            listCode: 632057,
-            keyName: 'code',
-            valueName: 'abbrName',
-            search: true
+            field: 'loanBankName'
         }, {
             title: '客户姓名',
             field: 'realName',
@@ -71,7 +63,7 @@ class Settlement extends React.Component {
             title: '证件号',
             field: 'idNo',
             render: (v, d) => {
-                return d.user.idNo;
+                return <span style={{whiteSpace: 'nowrap'}}>{d.user.idNo}</span>;
             }
         }, {
             title: '放款日期',
@@ -79,7 +71,8 @@ class Settlement extends React.Component {
             type: 'date'
         }, {
             title: '贷款金额',
-            field: 'loanAmount'
+            field: 'loanAmount',
+            amount: true
         }, {
             title: '剩余欠款',
             field: 'restAmount',
@@ -87,7 +80,9 @@ class Settlement extends React.Component {
         }, {
             title: '逾期日期',
             field: 'repayDatetime',
-            type: 'date'
+            render: (v, d) => {
+                return formatDate(d.curMonthRepayPlan.repayDatetime);
+            }
         }, {
             title: '月还款额',
             field: 'monthAmount',
@@ -95,7 +90,9 @@ class Settlement extends React.Component {
         }, {
             title: '逾期金额',
             field: 'overdueAmount',
-            amount: true
+            render: (v, d) => {
+                return moneyFormat(d.curMonthRepayPlan.overdueAmount);
+            }
         }, {
             title: '实际逾期期数',
             field: 'curOverdueCount'
@@ -130,7 +127,7 @@ class Settlement extends React.Component {
             pageCode: 630520,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCodeList: ['020_02', '020_03', '020_03', '020_04', '020_05']
+                curNodeCodeList: ['020_10', '020_11', '020_12', '020_13', '020_14', '020_15']
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {
@@ -138,10 +135,32 @@ class Settlement extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '020_02') {
+                    } else if (selectedRows[0].curNodeCode !== '020_10') {
                         showWarnMsg('当前节点不是提交结算单');
                     } else {
                         this.props.history.push(`/biz/settlement/apply?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                manager: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '020_11') {
+                        showWarnMsg('当前节点不是风控经理审核');
+                    } else {
+                        this.props.history.push(`/biz/settlement/manager?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                totalCheck: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '020_12') {
+                        showWarnMsg('当前节点不是风控总监理审核');
+                    } else {
+                        this.props.history.push(`/biz/settlement/totalCheck?code=${selectedRowKeys[0]}`);
                     }
                 },
                 check: (selectedRowKeys, selectedRows) => {
@@ -149,7 +168,7 @@ class Settlement extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '020_04') {
+                    } else if (selectedRows[0].curNodeCode !== '020_13') {
                         showWarnMsg('当前节点不是财务审核');
                     } else {
                         this.props.history.push(`/biz/settlement/check?code=${selectedRowKeys[0]}`);
@@ -160,21 +179,10 @@ class Settlement extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '020_05') {
+                    } else if (selectedRows[0].curNodeCode !== '020_14') {
                         showWarnMsg('当前节点不是确认付款');
                     } else {
                         this.props.history.push(`/biz/settlement/certain?code=${selectedRowKeys[0]}`);
-                    }
-                },
-                totalCheck: (selectedRowKeys, selectedRows) => {
-                    if (!selectedRowKeys.length) {
-                        showWarnMsg('请选择记录');
-                    } else if (selectedRowKeys.length > 1) {
-                        showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].curNodeCode !== '020_03') {
-                        showWarnMsg('当前节点不是风控总监理审核');
-                    } else {
-                        this.props.history.push(`/biz/settlement/totalCheck?code=${selectedRowKeys[0]}`);
                     }
                 }
             }

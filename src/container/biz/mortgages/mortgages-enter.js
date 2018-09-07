@@ -52,7 +52,7 @@ class MortgagesEnter extends React.Component {
             readonly: true
         }, {
             title: '业务编号',
-            field: 'code',
+            field: 'budgetOrderCode',
             formatter: (v, d) => {
                 return d.budgetOrder.code;
             },
@@ -64,9 +64,7 @@ class MortgagesEnter extends React.Component {
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanAmount);
-            },
+            amount: true,
             readonly: true
         }, {
             title: '解除日期',

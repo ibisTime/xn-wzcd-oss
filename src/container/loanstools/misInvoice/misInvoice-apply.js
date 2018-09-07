@@ -63,22 +63,6 @@ class MisInvoiceApply extends React.Component {
             view: this.view,
             detailCode: 632146,
             buttons: [{
-                title: '保存',
-                check: true,
-                handler: (params) => {
-                    params.code = this.code;
-                    params.operator = getUserId();
-                    params.dealType = '0';
-                    this.props.doFetching();
-                    fetch(632230, params).then(() => {
-                        showSucMsg('操作成功');
-                        setTimeout(() => {
-                            this.props.history.go(-1);
-                        }, 1000);
-                        this.props.cancelFetching();
-                    }).catch(this.props.cancelFetching);
-                }
-            }, {
                 title: '发送',
                 check: true,
                 handler: (params) => {

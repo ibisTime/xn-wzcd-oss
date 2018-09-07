@@ -404,14 +404,16 @@ class CreditStartAddedit extends React.Component {
             title: '行驶证正面',
             field: 'xszFront',
             type: 'img',
-            required: true,
+            required: !this.view,
+            readonly: this.view,
             single: true,
             hidden: this.newCar
         }, {
             title: '行驶证反面',
             field: 'xszReverse',
             type: 'img',
-            required: true,
+            required: !this.view,
+            readonly: this.view,
             single: true,
             hidden: this.newCar
         }, {
@@ -436,8 +438,10 @@ class CreditStartAddedit extends React.Component {
             params: {
                 refOrder: this.code
             },
-            hidden: this.isEntry || this.isAddedit,
+            hidden: this.isAddedit,
             options: {
+                rowKey: 'id',
+                noSelect: true,
                 fields: [{
                     title: '操作人',
                     field: 'operatorName'
@@ -453,7 +457,7 @@ class CreditStartAddedit extends React.Component {
                     title: '花费时长',
                     field: 'speedTime'
                 }, {
-                    title: '审核说明',
+                    title: '审核意见',
                     field: 'dealNote'
                 }, {
                     title: '当前节点',
@@ -465,11 +469,17 @@ class CreditStartAddedit extends React.Component {
                 }]
             }
         }, {
-            title: '审核说明',
+            title: '审核意见',
             field: 'approveNote',
             readonly: !this.isCheckSalesman && !this.isCheckFirst,
             hidden: !this.isCheckSalesman && !this.isCheckFirst,
             required: true
+        }, {
+            title: '附件',
+            field: 'accessory',
+            type: 'file',
+            hidden: !this.isCheckSalesman,
+            readonly: !this.isCheckSalesman
         }];
 
         // 业务员初审
@@ -628,7 +638,7 @@ class CreditStartAddedit extends React.Component {
                         showSucMsg('操作成功');
                         this.props.cancelFetching();
                         setTimeout(() => {
-                            this.props.history.push(`/loan/creditStart`);
+                            this.props.history.push(`/loan/creditEntering`);
                         }, 1000);
                     }).catch(this.props.cancelFetching);
                 }

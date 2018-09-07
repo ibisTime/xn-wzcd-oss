@@ -36,7 +36,7 @@ import {
   setSearchParam,
   setSearchData
 })
-class blackList extends React.Component {
+class BlackList extends React.Component {
   render() {
     const fields = [{
       title: '业务编号',
@@ -46,7 +46,7 @@ class blackList extends React.Component {
       },
       search: true
   }, {
-      title: '贷款人',
+      title: '客户姓名',
       field: 'user',
       search: true,
       render: (v, d) => {
@@ -78,11 +78,12 @@ class blackList extends React.Component {
     return this.props.buildList({
       fields,
       searchParams: {
-        roleCode: getRoleCode()
+        roleCode: getRoleCode(),
+        curNodeCodeList: ['021_09', '021_10', '021_11', '021_12', '021_13', '021_14', '021_15', '021_16', '021_17', '021_18', '021_19', '021_20', '021_21', '021_22', '021_23', '021_24', '021_25', '021_27']
       },
       pageCode: 630520
     });
   }
 }
 
-export default blackList;
+export default BlackList;

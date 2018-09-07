@@ -40,7 +40,8 @@ class applyAddedit extends React.Component {
                 type: 'select',
                 listCode: 630106,
                 params: {
-                  typeList: ['3']
+                    status: '1',
+                    typeList: ['3']
                 },
                 keyName: 'code',
                 valueName: 'name'
@@ -113,7 +114,8 @@ class applyAddedit extends React.Component {
                 title: '性别',
                 field: 'gender',
                 type: 'select',
-                key: 'gender'
+                key: 'gender',
+                required: true
             }, {
                 title: '年龄',
                 field: 'age'
@@ -141,7 +143,9 @@ class applyAddedit extends React.Component {
             }],
             [{
                 title: '相关工作经验',
-                field: 'experience'
+                field: 'experience',
+                type: 'textarea',
+                normalArea: true
             }]
         ]
     }];

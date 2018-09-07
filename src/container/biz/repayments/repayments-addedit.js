@@ -56,10 +56,7 @@ class RepaymentsAddedit extends React.Component {
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
-            formatter: (v, d) => {
-                return d.repayBiz.loanBankName;
-            },
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '贷款金额',
@@ -123,6 +120,8 @@ class RepaymentsAddedit extends React.Component {
                 refOrder: this.code
             },
             options: {
+                rowKey: 'id',
+                noSelect: true,
                 fields: [{
                     title: '操作人',
                     field: 'operatorName'
@@ -138,7 +137,7 @@ class RepaymentsAddedit extends React.Component {
                     title: '花费时长',
                     field: 'speedTime'
                 }, {
-                    title: '审核说明',
+                    title: '审核意见',
                     field: 'dealNote'
                 }, {
                     title: '当前节点',

@@ -100,7 +100,6 @@ class officeSuppliesAddedit extends React.Component {
             }],
             keyName: 'dkey',
             valueName: 'dvalue',
-            value: this.code ? '' : '2',
             required: true,
             onChange: (value) => {
                 this.hideStatus = value === '2';
@@ -132,6 +131,7 @@ class officeSuppliesAddedit extends React.Component {
                 }, {
                     title: '出库价格',
                     field: 'price',
+                    amount: true,
                     readonly: true,
                     required: true
                 }, {
@@ -190,6 +190,9 @@ class officeSuppliesAddedit extends React.Component {
             detailCode: 632646,
             buttons: this.buttons,
             beforeSubmit: (data) => {
+                if(data.isPrint === '2') {
+                    data.assertGoodsList.price = this.props.pageData.price;
+                }
                 data.applyUser = getUserId();
                 return data;
             }

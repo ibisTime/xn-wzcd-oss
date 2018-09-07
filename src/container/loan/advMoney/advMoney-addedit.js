@@ -41,7 +41,7 @@ class AdvMoneyAddedit extends React.Component {
             field: 'customerName'
         }, {
             title: '业务编号',
-            field: 'code'
+            field: 'budgetCode'
         }, {
             title: '身份证',
             field: 'applyUserIdNo'
@@ -61,6 +61,8 @@ class AdvMoneyAddedit extends React.Component {
                 refOrder: this.code
             },
             options: {
+                rowKey: 'id',
+                noSelect: true,
                 fields: [{
                     title: '操作人',
                     field: 'operatorName'
@@ -76,7 +78,7 @@ class AdvMoneyAddedit extends React.Component {
                     title: '花费时长',
                     field: 'speedTime'
                 }, {
-                    title: '审核说明',
+                    title: '审核意见',
                     field: 'dealNote'
                 }, {
                     title: '当前节点',

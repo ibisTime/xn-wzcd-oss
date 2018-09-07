@@ -65,13 +65,15 @@ class Mortgage extends React.Component {
             field: 'loanBankName'
         }, {
             title: '贷款金额',
-            field: 'loanAmount'
+            field: 'loanAmount',
+            amount: true
         }, {
             title: '利率',
             field: 'bankRate'
         }, {
             title: '服务费',
-            field: 'fee'
+            field: 'fee',
+            amount: true
         }, {
             title: '品牌型号',
             field: 'carModel'
@@ -81,7 +83,7 @@ class Mortgage extends React.Component {
             type: 'date'
         }, {
             title: '打件人',
-            field: 'guarantPrintUser'
+            field: 'guarantPrintName'
         }, {
             title: '业务员名称',
             field: 'saleUserName'

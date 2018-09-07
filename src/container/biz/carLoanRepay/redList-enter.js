@@ -10,7 +10,8 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -48,12 +49,12 @@ class redListEnter extends React.Component {
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            maount: true,
+            amount: true,
             readonly: true
         }, {
             title: '车辆型号',
@@ -86,6 +87,13 @@ class redListEnter extends React.Component {
             title: '停放位置',
             field: 'takeLocation',
             required: true
+        }, {
+            title: '最终收款人',
+            field: 'finalPayee'
+        }, {
+            title: '附件上传',
+            field: 'payeeEnclosure',
+            type: 'img'
         }, {
             title: '备注',
             field: 'takeNote'

@@ -69,7 +69,7 @@ class GpsSend extends React.Component {
             key: 'logistics_status',
             search: true
         }, {
-            title: '发货说明',
+            title: '发件说明',
             field: 'sendNote'
         }, {
             title: '补件原因',
@@ -79,7 +79,8 @@ class GpsSend extends React.Component {
             fields,
             pageCode: 632155,
             searchParams: {
-                type: '2'
+                type: '2',
+                statusList: ['0', '4']
             },
             btnEvent: {
                 send: (selectedRowKeys, selectedRows) => {

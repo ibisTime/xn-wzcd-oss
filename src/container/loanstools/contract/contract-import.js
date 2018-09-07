@@ -351,7 +351,7 @@ class ContractImport extends React.Component {
                                     value={d[this.state.loanBank.keyName]}>{tempString(this.state.loanBank.valueName, d)}</Option>))}
                         </Select>)}
                 </FormItem>
-                <FormItem label='逾期名单' >
+                <FormItem label='合同名单' >
                     <Upload {...props}>
                         <Button>
                             <Icon type="upload"/>选择文件

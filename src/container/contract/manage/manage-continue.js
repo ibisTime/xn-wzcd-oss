@@ -31,8 +31,12 @@ class manageContinue extends React.Component {
   }
   render() {
     const fields = [{
-        title: '姓名',
         field: 'archiveCode',
+        hidden: true
+    }, {
+        title: '姓名',
+        field: 'code',
+        _keys: ['archiveCode'],
         listCode: 632807,
         type: 'select',
         keyName: 'code',
@@ -61,7 +65,7 @@ class manageContinue extends React.Component {
     }, {
         title: '合同附件',
         field: 'pdf',
-        type: 'img'
+        type: 'file'
     }, {
         title: '说明',
         field: 'remark'
@@ -76,6 +80,7 @@ class manageContinue extends React.Component {
         buttons: [{
           title: '确认',
           handler: (param) => {
+            // param.archiveCode = this.props.pageData.archiveCode;
             param.updater = getUserId();
             this.props.doFetching();
             fetch(632830, param).then(() => {

@@ -71,8 +71,7 @@ class handleApplyCheck extends React.Component {
             readonly: true
         }, {
             title: '备注',
-            field: 'remark',
-            readonly: true
+            field: 'remark'
         }];
         let buttons = [{
             title: '返回',
@@ -102,7 +101,7 @@ class handleApplyCheck extends React.Component {
             }, {
                 title: '不通过',
                 handler: (param) => {
-                    param.approveResult = '1';
+                    param.result = '1';
                     param.approveNote = this.projectCode;
                     param.handler = getUserId();
                     this.props.doFetching();

@@ -78,18 +78,17 @@ class take extends React.Component {
             render: dateFormat,
             search: true
         }, {
-            title: '是否提交作废申请',
-            field: 'isSubmitCancel',
+            title: '类型',
+            field: 'BackAdvanceFundType',
             type: 'select',
-            data: [{
-                key: '0',
-                value: '否'
-            }, {
-                key: '1',
-                value: '是'
-            }],
-            keyName: 'key',
-            valueName: 'value',
+            key: 'back_advance_fund_type'
+        }, {
+            title: '当前节点',
+            field: 'backAdvanceFundNodeCode',
+            type: 'select',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name',
             search: true
         }];
         return this.props.buildList({
@@ -102,30 +101,16 @@ class take extends React.Component {
               entering: (selectedRowKeys, selectedRows) => {
                 this.props.history.push(`/loanstools/take/enter`);
               },
-              remind: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys || !selectedRowKeys.length || !selectedRows || !selectedRows.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRows[0].isSubmitCancel !== '0') {
-                  showWarnMsg('当前业务已经提交作废申请');
-                } else {
-                  Modal.confirm({
-                    okText: '确认',
-                    cancelText: '取消',
-                    content: '确定发送？',
-                    onOk: () => {
-                      this.props.doFetching();
-                      return remind(selectedRowKeys[0]).then(() => {
-                        this.props.cancelFetching();
-                        showWarnMsg('操作成功');
-                        setTimeout(() => {
-                            this.props.getPageData();
-                        }, 1000);
-                      }).catch(() => {
-                        this.props.cancelFetching();
-                      });
-                    }
-                  });
-                }
+              finance: (selectedRowKeys, selectedRows) => {
+                  if (!selectedRowKeys.length) {
+                      showWarnMsg('请选择记录');
+                  } else if (selectedRowKeys.length > 1) {
+                      showWarnMsg('请选择一条记录');
+                  } else if (selectedRows[0].backAdvanceFundNodeCode !== '014_02') {
+                      showWarnMsg('当前节点不是诉讼结果录入节点');
+                  } else {
+                      this.props.history.push(`/loanstools/take/finance?code=${selectedRowKeys[0]}`);
+                  }
               }
             }
         });

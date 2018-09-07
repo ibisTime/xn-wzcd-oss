@@ -39,7 +39,7 @@ class historyBusinessManageAddedit extends React.Component {
           return d.budgetOrder.code;
       }
     }, {
-      title: '贷款人',
+      title: '客户姓名',
       field: 'realName',
       formatter: (v, d) => {
         return d.user.realName;

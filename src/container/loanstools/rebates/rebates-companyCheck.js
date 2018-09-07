@@ -50,7 +50,7 @@ class RebatesCompanyCheck extends React.Component {
             readonly: true
         }, {
             title: '返点列表',
-            field: 'repointDetailCodeList',
+            field: 'repointDetailList',
             required: true,
             type: 'o2m',
             options: {
@@ -60,7 +60,7 @@ class RebatesCompanyCheck extends React.Component {
                 fields: [{
                     title: 'code',
                     field: 'code',
-                    hidden: true
+                    noVisible: true
                 }, {
                     title: '业务编号',
                     field: 'budgetCode'
@@ -144,10 +144,12 @@ class RebatesCompanyCheck extends React.Component {
             title: '办理状态',
             field: 'curNodeCode',
             type: 'select',
-            key: 'repoint_status',
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name',
             readonly: true
         }, {
-            title: '审核说明',
+            title: '审核意见',
             field: 'approveNote',
             type: 'textarea',
             normalArea: true,

@@ -14,7 +14,6 @@ import {
 import {
     DetailWrapper
 } from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
 
 @DetailWrapper(
     state => state.loanstoolsTakeFreeAddedit, {
@@ -63,7 +62,7 @@ class TakeFreeAddedit extends React.Component {
         }, {
             title: '未收金额',
             field: '11',
-            render: (v, d) => {
+            formatter: (v, d) => {
                 return moneyFormat(d.shouldAmount - d.realAmount);
             },
             readonly: true
@@ -111,7 +110,7 @@ class TakeFreeAddedit extends React.Component {
                     title: '汇款人',
                     field: 'remitUser'
                 }, {
-                    title: '到帐日期',
+                    title: '到账日期',
                     field: 'reachDatetime',
                     type: 'date'
                 }, {

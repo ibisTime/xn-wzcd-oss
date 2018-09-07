@@ -48,3 +48,14 @@ export const tailFormItemLayout1 = {
     }
   }
 };
+
+// 定义 validateFieldsAndScroll 的滚动行为
+export const validateFieldsAndScrollOption = {
+    scroll: {
+        offsetTop: 110
+    }
+};
+
+export const DATE_FORMAT = 'YYYY-MM-DD';
+export const MONTH_FORMAT = 'YYYY-MM';
+export const DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';

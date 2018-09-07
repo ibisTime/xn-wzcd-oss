@@ -45,7 +45,7 @@ class AdvMoneyPayCar extends React.Component {
             readonly: true
         }, {
             title: '业务编号',
-            field: 'code',
+            field: 'budgetCode',
             readonly: true
         }, {
             title: '身份证',
@@ -92,14 +92,15 @@ class AdvMoneyPayCar extends React.Component {
             type: 'select',
             listCode: 632007,
             params: {
-                companyCode: getCompanyCode()
+                companyCode: getCompanyCode(),
+                type: '1'
             },
             initValue: true,
             keyName: 'code',
             valueName: 'bankcardNumber',
             required: true
         }, {
-            title: '付款凭证',
+            title: '银行回单',
             field: 'billPdf',
             type: 'img',
             required: true

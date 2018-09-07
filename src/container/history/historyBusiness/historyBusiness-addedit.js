@@ -34,9 +34,12 @@ class HistoryBusinessAddedit extends React.Component {
   render() {
     const fields = [{
       title: '业务编号',
-      field: 'code'
+      field: 'code',
+      formatter: (v, d) => {
+          return d.budgetOrder.code;
+      }
     }, {
-      title: '贷款人',
+      title: '客户姓名',
       field: 'realName',
       formatter: (v, d) => {
         return d.user.realName;

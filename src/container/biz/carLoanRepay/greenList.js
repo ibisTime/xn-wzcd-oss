@@ -38,7 +38,7 @@ class greenList extends React.Component {
         },
         search: true
       }, {
-        title: '贷款人',
+        title: '客户姓名',
         field: 'realName',
         search: true,
         render: (v, d) => {
@@ -54,7 +54,7 @@ class greenList extends React.Component {
         amount: true
       }, {
         title: '未还清收成本(元)',
-        field: 'restTotalCost',
+        field: 'notPayedFee',
         amount: true
       }, {
         title: '逾期保证金(元)',

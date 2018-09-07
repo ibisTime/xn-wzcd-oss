@@ -63,7 +63,8 @@ class ContractDispose extends React.Component {
             type: 'select',
             pageCode: 632148,
             params: {
-              roleCode: getRoleCode()
+              roleCode: getRoleCode(),
+              is_end: '0'
             },
             keyName: 'code',
             valueName: '{{code.DATA}}-{{customerName.DATA}}',

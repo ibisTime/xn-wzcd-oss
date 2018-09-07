@@ -33,7 +33,8 @@ class GreenList extends React.Component {
         search: true
       }, {
         title: '证件号',
-        field: 'idNo'
+        field: 'idNo',
+        nowrap: true
       }, {
         title: '手机号',
         field: 'mobile'

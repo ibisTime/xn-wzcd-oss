@@ -27,7 +27,7 @@ class refundBusinessAddedit extends React.Component {
   render() {
     const fields = [
       {
-        title: '贷款人',
+        title: '客户姓名',
         readonly: true,
         formatter: (v, d) => {
           return d.user.realName;
@@ -68,7 +68,7 @@ class refundBusinessAddedit extends React.Component {
         amount: true,
         readonly: true
       }, {
-        title: '可退押金金额',
+        title: '可退保证金金额',
         field: 'sfAmount',
         amount: true,
         readonly: true

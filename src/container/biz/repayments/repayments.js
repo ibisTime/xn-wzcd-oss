@@ -13,23 +13,23 @@ import {
     listWrapper
 } from 'common/js/build-list';
 import {
+    goOtherUrl
+} from 'api/biz';
+import {
     showWarnMsg,
     showSucMsg,
     getRoleCode,
     dateTimeFormat,
     getUserId,
     moneyFormat,
-    dateFormat
+    dateFormat,
+    getQueryString
 } from 'common/js/util';
 import {
     Button,
     Upload,
     Modal
 } from 'antd';
-import {
-    lowerFrame,
-    onShelf
-} from 'api/biz';
 import fetch from 'common/js/fetch';
 
 @listWrapper(
@@ -51,10 +51,7 @@ class Repayments extends React.Component {
     render() {
         const fields = [{
             title: '业务编号',
-            field: 'code',
-            render: (v, d) => {
-                return d.budgetOrder.code;
-            },
+            field: 'refCode',
             search: true
         }, {
             title: '银行',
@@ -71,9 +68,7 @@ class Repayments extends React.Component {
         }, {
             title: '证件号',
             field: 'idNo',
-            render: (v, d) => {
-                return d.user.idNo;
-            }
+            nowrap: true
         }, {
             title: '放款日期',
             field: 'bankFkDatetime',
@@ -87,21 +82,13 @@ class Repayments extends React.Component {
             field: 'restAmount',
             amount: true
         }, {
-            title: '逾期日期',
-            field: 'repayDatetime',
-            render: (v, d) => {
-                return dateFormat(d.curMonthRepayPlan.repayDatetime);
-            }
-        }, {
             title: '月还款额',
             field: 'monthAmount',
             amount: true
         }, {
             title: '逾期金额',
-            field: 'overdueAmount',
-            render: (v, d) => {
-                return moneyFormat(d.curMonthRepayPlan.overdueAmount);
-            }
+            field: 'restOverdueAmount',
+            amount: true
         }, {
             title: '实际逾期期数',
             field: 'curOverdueCount'
@@ -131,31 +118,39 @@ class Repayments extends React.Component {
             keyName: 'code',
             valueName: 'name'
         }];
+
         return this.props.buildList({
             fields,
             pageCode: 630522,
             searchParams: {
-                roleCode: getRoleCode()
+                roleCode: getRoleCode(),
+                curNodeCodeList: ['020_01']
             },
             btnEvent: {
-              plan: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/biz/repayments/plan?code=${selectedRowKeys[0]}`);
+                plan: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/biz/repayments/plan?code=${selectedRowKeys[0]}`);
+                    }
+                },
+                pay: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        goOtherUrl(selectedRowKeys[0]).then(d => {
+                            if (d) {
+                                this.props.history.push(`/biz/mortgages/apply?code=${selectedRowKeys[0]}`);
+                            } else {
+                                this.props.history.push(`/biz/settlement/apply?code=${selectedRowKeys[0]}`);
+                            }
+                        });
+                    }
                 }
-              },
-              pay: (selectedRowKeys, selectedRows) => {
-                if (!selectedRowKeys.length) {
-                  showWarnMsg('请选择记录');
-                } else if (selectedRowKeys.length > 1) {
-                  showWarnMsg('请选择一条记录');
-                } else {
-                  this.props.history.push(`/biz/repayments/pay?code=${selectedRowKeys[0]}`);
-                }
-              }
             }
         });
     }

@@ -70,7 +70,7 @@ class Subbranch extends React.Component {
             field: 'autherName'
         }, {
             title: '授权人电话',
-            field: 'autherPhoneNumber'
+            field: 'phoneNumber'
         }, {
             title: '更新人',
             field: 'updater'

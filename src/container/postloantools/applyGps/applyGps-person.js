@@ -9,10 +9,8 @@ import {
 } from '@redux/postloantools/applyGps-person';
 import {
   getQueryString,
-  getCompanyCode,
   getUserId,
-  showSucMsg,
-  showWarnMsg
+  showSucMsg
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -36,28 +34,9 @@ class applyGpsPerson extends React.Component {
   }
   render() {
     const fields = [{
-      title: '申领列表',
-      field: 'gpsList',
-      type: 'o2m',
-      options: {
-        add: true,
-        delete: true,
-        fields: [{
-          title: 'GPS设备号',
-          field: 'code',
-          type: 'select',
-          listCode: 632707,
-          params: {
-            applyStatus: '0',
-            companyApplyStatus: '1',
-            companyCode: getCompanyCode()
-          },
-          keyName: 'code',
-          valueName: 'gpsDevNo',
-          nowrap: true,
-          required: true
-        }]
-      }
+      title: '申领个数',
+      field: 'applyCount',
+      number: true
     }, {
       title: '申请说明',
       field: 'applyReason'
@@ -68,12 +47,7 @@ class applyGpsPerson extends React.Component {
       buttons: [{
         title: '确认',
         handler: (param) => {
-          param.code = this.code;
           param.applyUser = getUserId();
-          if(!param.gpsList) {
-              showWarnMsg('请新增GPS!');
-              return false;
-          }
           this.props.doFetching();
           fetch(632711, param).then(() => {
             showSucMsg('操作成功');

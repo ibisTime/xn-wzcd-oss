@@ -11,6 +11,7 @@ import {
     getQueryString,
     getUserId,
     showSucMsg,
+    showWarnMsg,
     moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
@@ -37,14 +38,14 @@ class OverdueListProcess extends React.Component {
             title: '客户姓名',
             field: 'realName',
             formatter: (v, d) => {
-                return d.repayBiz.budgetOrder.code;
+                return d.repayBiz.budgetOrder.customerName;
             },
             readonly: true
         }, {
             title: '业务编号',
             field: 'code',
             formatter: (v, d) => {
-                return d.budgetOrder.code;
+                return d.repayBiz.budgetOrder.code;
             },
             readonly: true
         }, {
@@ -70,30 +71,49 @@ class OverdueListProcess extends React.Component {
             readonly: true
         }, {
             title: '逾期金额',
-            field: 'overdueAmount',
-            amount: true,
+            field: 'restOverdueAmount',
+            formatter: (v, d) => {
+                return moneyFormat(d.repayBiz.restOverdueAmount);
+            },
             readonly: true
         }, {
             title: '处理历史',
-            field: 'remindLogList',
+            field: 'overdueTreatmentList',
             type: 'o2m',
             options: {
+                noSelect: true,
                 fields: [{
                     title: '催收方式',
-                    field: 'way',
+                    field: 'collectionWay',
                     type: 'select',
-                    select: true,
-                    key: 'way'
+                    key: 'collection_way'
                 }, {
                     title: '催收对象',
-                    field: 'toUser'
+                    field: 'collectionTarget',
+                    type: 'checkbox',
+                    multiple: true,
+                    key: 'collection_target'
                 }, {
-                    title: '催收文本',
-                    field: 'content'
+                    title: '催收过程',
+                    field: 'collectionProcess',
+                    type: 'checkbox',
+                    key: 'collection_process'
                 }, {
-                    title: '催收时间',
-                    field: 'createDatetime',
-                    type: 'datetime'
+                    title: '客户意愿',
+                    field: 'collectionWish',
+                    type: 'select',
+                    key: 'collection_wish'
+                }, {
+                    title: '催收过程说明',
+                    field: 'collectionProcessNote'
+                }, {
+                    title: '催收结果',
+                    field: 'collectionResult',
+                    type: 'select',
+                    key: 'collection_result'
+                }, {
+                    title: '催收结果说明',
+                    field: 'collectionResultNote'
                 }]
             }
         }, {
@@ -122,38 +142,6 @@ class OverdueListProcess extends React.Component {
             key: 'collection_wish',
             required: true
         }, {
-            title: '催收结果',
-            field: 'collectionResult',
-            type: 'select',
-            key: 'collection_result',
-            required: true
-        }, {
-            title: '是否提供押金',
-            field: 'depositIsProvide',
-            type: 'select',
-            data: [{
-                key: '0',
-                value: '否'
-            }, {
-                key: '1',
-                value: '是'
-            }],
-            keyName: 'key',
-            valueName: 'value',
-            required: true
-        }, {
-            title: '违约押金',
-            field: 'overdueDeposit',
-            amount: true,
-            number: true,
-            required: true
-        }, {
-            title: '实际还款金额',
-            field: 'realRepayAmount',
-            amount: true,
-            number: true,
-            required: true
-        }, {
             title: '清收成本清单',
             field: 'costList',
             type: 'o2m',
@@ -179,10 +167,9 @@ class OverdueListProcess extends React.Component {
             }
         }, {
             title: '催收情况说明',
-            field: 'collectionNote',
+            field: 'collectionProcessNote',
             type: 'textarea',
-            normalArea: true,
-            required: true
+            normalArea: true
         }];
         return this
             .props
@@ -194,10 +181,26 @@ class OverdueListProcess extends React.Component {
                 buttons: [{
                     title: '确定',
                     handler: (param) => {
+                        let list = this.props.o2mSKeys.costList;
+                        let len = list.length;
+                        let length = param.costList.length;
+                        let arr = [];
+                        // if(!len) {
+                        //     showWarnMsg('请选择至少一条清收成本清单');
+                        //     return;
+                        // }
+                        for(let i = 0; i < len; i++) {
+                            for(let j = 0; j < length; j++) {
+                                if (list[i] === param.costList[j].code) {
+                                    arr.push(param.costList[j]);
+                                }
+                            }
+                        }
+                        param.costList = arr;
                         param.code = this.code;
                         param.operator = getUserId();
                         this.props.doFetching();
-                        fetch(630532, param).then(() => {
+                        fetch(630537, param).then(() => {
                             showSucMsg('操作成功');
                             this.props.cancelFetching();
                             setTimeout(() => {

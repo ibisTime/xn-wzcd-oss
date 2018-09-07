@@ -15,26 +15,20 @@ import {
     showSucMsg
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-    state => state.bizSettlementCertain, {
-        initStates,
-        doFetching,
-        cancelFetching,
-        setSelectData,
-        setPageData,
-        restore
-    }
-)
-class settlementCertain extends React.Component {
+@Form.create()
+export default class settlementCertain extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.state = {
+          ...this.state,
+          haveDepositReceipt: false,
+          haveDepositReceiptLostProof: false
+        };
     }
     render() {
         const fields = [{
@@ -60,10 +54,7 @@ class settlementCertain extends React.Component {
             readonly: true
         }, {
             title: '贷款银行',
-            field: 'loanBank',
-            formatter: (v, d) => {
-                return d.repayBiz.loanBankName;
-            },
+            field: 'loanBankName',
             readonly: true
         }, {
             title: '贷款金额',
@@ -91,7 +82,7 @@ class settlementCertain extends React.Component {
             title: '退款开户行',
             field: 'refundBankSubbranch',
             type: 'select',
-            listCode: 632037,
+            listCode: 802116,
             keyName: 'bankCode',
             valueName: 'bankName',
             readonly: true
@@ -115,9 +106,36 @@ class settlementCertain extends React.Component {
             amount: 'true',
             readonly: true
         }, {
-            title: '押金单',
+            title: '是否有保证金单',
+            field: 'isDepositReceipt',
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value',
+            onChange: (v) => {
+                this.setState({
+                    haveDepositReceipt: v !== '0' && v !== '',
+                    haveDepositReceiptLostProof: v === '0'
+                });
+            },
+            readonly: true
+        }, {
+            title: '保证金单',
             field: 'depositReceipt',
             type: 'img',
+            hidden: !this.state.haveDepositReceipt,
+            readonly: true
+        }, {
+            title: '保证金单遗失证明',
+            field: 'depositReceiptLostProof',
+            type: 'img',
+            hidden: !this.state.haveDepositReceiptLostProof,
             readonly: true
         }, {
             title: '结清证明',
@@ -130,15 +148,16 @@ class settlementCertain extends React.Component {
             type: 'date',
             required: true
         }, {
-            title: '打款凭证',
+            title: '银行回单',
             field: 'settlePdf',
             type: 'img',
             required: true
         }, {
             title: '备注',
-            field: 'settleNote'
+            field: 'settleNote',
+            required: true
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
@@ -147,14 +166,15 @@ class settlementCertain extends React.Component {
               title: '确认',
               handler: (param) => {
                 param.operator = getUserId();
-                this.props.doFetching();
+                param.code = this.code;
+                this.doFetching();
                 fetch(630572, param).then(() => {
                   showSucMsg('操作成功');
-                  this.props.cancelFetching();
+                  this.cancelFetching();
                   setTimeout(() => {
                     this.props.history.go(-1);
                   }, 1000);
-                }).catch(this.props.cancelFetching);
+                }).catch(() => this.props.cancelFetching);
               },
               check: true,
               type: 'primary'
@@ -167,5 +187,3 @@ class settlementCertain extends React.Component {
         });
     }
 }
-
-export default settlementCertain;

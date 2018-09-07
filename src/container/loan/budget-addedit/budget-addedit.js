@@ -56,6 +56,9 @@ class BudgetAddedit extends React.Component {
             loanPeriodsData: null,
             promptFlag: this.isApply
         };
+        this.isRateType = true;
+        this.surcharge = true;
+        this.isBankType = false;
     }
 
     componentDidMount() {
@@ -176,7 +179,7 @@ class BudgetAddedit extends React.Component {
         };
         let data = {
             loanAmount: moneyParse(this.props.form.getFieldValue('loanAmount')),
-            carDealerSubsidy: this.rateType === '1' ? 0 : this.props.form.getFieldValue('carDealerSubsidy'),
+            carDealerSubsidy: this.rateType === '1' ? 0 : moneyParse(this.props.form.getFieldValue('carDealerSubsidy')),
             serviceCharge: this.props.pageData.serviceCharge,
             gpsFee: this.props.pageData.gpsFee,
             isAdvanceFund: this.props.form.getFieldValue('isAdvanceFund'),
@@ -266,9 +269,16 @@ class BudgetAddedit extends React.Component {
         data.companyLoanCs = this.props.pageData.companyLoanCs;
         data.gpsDeduct = this.props.pageData.gpsDeduct;
         data.oilSubsidy = this.props.pageData.oilSubsidy;
+        data.bankRate = data.bankRate / 100;
         if (data.rateType === '1') {
             data.carDealerSubsidy = 0;
         }
+        // 删除不需要的入参
+        delete data.applyBirthAddress1;
+        delete data.applyNowAddress1;
+        delete data.ghBirthAddress1;
+        delete data.guarantor1BirthAddress1;
+        delete data.guarantor2BirthAddress1;
         this.props.doFetching();
         fetch(632120, data).then(() => {
             this.props.cancelFetching();
@@ -284,7 +294,7 @@ class BudgetAddedit extends React.Component {
 
     render() {
         let fields = [{
-            title: '职业及收入情况',
+            title: '预算单信息',
             items: [
                 [{
                     title: '申请人',
@@ -304,6 +314,474 @@ class BudgetAddedit extends React.Component {
                     readonly: true
                 }],
                 [{
+                    title: '客户姓名',
+                    field: 'customerName',
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '客户性别',
+                    field: 'customerSex',
+                    readonly: true
+                }, {
+                    title: '业务编号',
+                    field: 'code',
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '客户类型',
+                    field: 'customerType',
+                    type: 'select',
+                    data: [{
+                        key: '1',
+                        value: '个人'
+                    }, {
+                        key: '2',
+                        value: '企业'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true
+                }],
+                [{
+                    title: '汽车经销商',
+                    field: 'carDealerCode',
+                    type: 'select',
+                    pageCode: 632065,
+                    params: {
+                        agreementStatus: '1'
+                    },
+                    keyName: 'code',
+                    valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
+                    required: true,
+                    onChange: (v, data) => {
+                        if (!v) {
+                            return;
+                        }
+                        if (!data) {
+                            return;
+                        }
+                        this.receivables = data.jxsCollectBankcardList[0];
+                        this.carDealerName = data.abbrName;
+                        data.carDealerProtocolList.forEach(d => {
+                            if (d.bankCode === this.props.pageData.bankSubbranch.bank.bankCode) {
+                                // 设置 收客户手续费合计 履约保证金 担保风险金 GPS收费 杂费
+                                let loanAmount = moneyReplaceComma(this.props.form.getFieldValue('loanAmount'));
+                                let gpsFee = d.gpsFee ? d.gpsFee : d.gpsRate * loanAmount * 1000;
+                                let lyAmount = d.lyAmountFee ? d.lyAmountFee : d.lyAmountRate * loanAmount * 1000;
+                                let fxAmount = d.assureFee ? d.assureFee : d.assureRate * loanAmount * 1000;
+                                let otherFee = d.otherFee ? d.otherFee : d.otherRate * loanAmount * 1000;
+                                let serviceCharge = this.getCustomerFeeTotal({
+                                    gpsFee,
+                                    lyAmount,
+                                    fxAmount,
+                                    otherFee
+                                });
+                                let result = this.getRepointDetailList1({gpsFee, serviceCharge});
+                                let repointDetailList1 = result.repointDetailList1;
+                                this.props.setPageData({
+                                    ...this.props.pageData,
+                                    gpsFee: gpsFee,
+                                    lyAmount: lyAmount,
+                                    fxAmount: fxAmount,
+                                    otherFee: otherFee,
+                                    serviceCharge: serviceCharge,
+                                    repointDetailList1
+                                });
+                            }
+                        });
+                    },
+                    formatter: (v, data) => {
+                        this.carDealerName = data.carDealerName;
+                        return v;
+                    }
+                }, {
+                    title: '贷款银行',
+                    field: 'loanBankName',
+                    readonly: true,
+                    required: true,
+                    formatter: (v, data) => {
+                        if (!this.bankRateList && data) {
+                            if (!this.bankRateList && data.bankSubbranch) {
+                                this.bankRateList = data.bankSubbranch.bank.bankRateList;
+                                if (!this.bankRateTypeList) {
+                                    let rateList = [];
+                                    let loanPeriodsData = [];
+                                    let tmpl = {};
+                                    this.bankRateList.forEach(item => {
+                                        if (item.period === data.loanPeriods) {
+                                            rateList.push(item);
+                                        }
+                                        if (!tmpl[item.period]) {
+                                            tmpl[item.period] = item.period;
+                                            loanPeriodsData.push({
+                                                dkey: item.period,
+                                                dvalue: item.period + '期'
+                                            });
+                                        }
+                                    });
+                                    this.bankRateTypeList = rateList;
+                                    this.loanPeriodsData = loanPeriodsData;
+                                    this.props.form.setFieldsValue({
+                                        bankRateType: data.bankRate
+                                    });
+                                }
+                            }
+                            if(data.bankSubbranch.bankType === 'BOC') {
+                                this.isBankType = true;
+                            }
+                        }
+                        return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName);
+                    }
+                }, {
+                    title: '厂商指导价',
+                    field: 'originalPrice',
+                    amount: true,
+                    required: true
+                }],
+                [{
+                    title: '车辆型号',
+                    field: 'carModel',
+                    required: true
+                }, {
+                    title: '车架号码',
+                    field: 'frameNo',
+                    required: !this.shopWay
+                }, {
+                    title: '贷款周期(期)',
+                    field: 'loanPeriods',
+                    type: 'select',
+                    data: this.loanPeriodsData,
+                    keyName: 'dkey',
+                    valueName: 'dvalue',
+                    required: true,
+                    onChange: (v, data) => {
+                        let rateList = [];
+                        this.bankRateList.forEach(item => {
+                            if (item.period === v) {
+                                rateList.push(item);
+                            }
+                        });
+                        this.bankRateTypeList = rateList;
+                        this.props.form.setFieldsValue({
+                            bankRate: 0,
+                            bankRateType: ''
+                        });
+                    }
+                }, {
+                    title: '发票价格',
+                    field: 'invoicePrice',
+                    amount: true,
+                    required: true,
+                    onChange: (v) => {
+                        this.props.setPageData({
+                            ...this.props.pageData,
+                            companyLoanCs: this.getCompanyLoanNum({
+                                invoicePrice: v,
+                                loanAmount: this.props.form.getFieldValue('loanAmount')
+                            }),
+                            bankLoanCs: this.getBankLoanNum({
+                                fee: this.props.form.getFieldValue('fee'),
+                                loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                invoicePrice: v
+                            })
+                        });
+                    }
+                }],
+                [{
+                    title: '购车途径',
+                    field: 'shopWay',
+                    type: 'select',
+                    key: 'budget_orde_biz_typer',
+                    readonly: true,
+                    required: true,
+                    formatter: (v, data) => {
+                        if (v === '2') {
+                            this.shopWay = false;
+                        }
+                        return v;
+                    }
+                }, {
+                    title: '利率类型',
+                    field: 'rateType',
+                    type: 'select',
+                    key: 'rate_type',
+                    required: true,
+                    onChange: (v, data) => {
+                        console.log(data);
+                        this.rateType = v;
+                        if (v === '1') {
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                rateType: v,
+                                carDealerSubsidy: 0
+                            });
+                            this.isRateType = true;
+                        } else {
+                            if(this.isBankType) {
+                                this.isRateType = false;
+                            }
+                        }
+                    }
+                    // formatter: (v, data) => {
+                    //     this.rateType = data.rateType;
+                    //     return v;
+                    // }
+                }, {
+                    title: '手续费收取方式',
+                    field: 'bocFeeWay',
+                    type: 'select',
+                    key: 'boc_fee_way',
+                    hidden: this.isRateType,
+                    required: true,
+                    onChange: (v) => {
+                        if(v === '3' && this.isBankType) {
+                            this.surcharge = false;
+                        } else {
+                            this.surcharge = true;
+                        }
+                    }
+                }, {
+                    title: '附加费',
+                    field: 'surcharge',
+                    type: 'select',
+                    key: 'surcharge',
+                    required: true,
+                    hidden: this.surcharge || this.isRateType
+                }],
+                [{
+                    title: '贷款金额',
+                    field: 'loanAmount',
+                    amount: true,
+                    required: true,
+                    onChange: (v) => {
+                        if (!this.getAmountRules(v)) {
+                            return false;
+                        }
+                        // gps提成，油补
+                        let oilSubsidy = 0;
+                        let gpsDeduct = 0;
+                        if (this.getAmountRules(v)) {
+                            oilSubsidy = v * 1000 * this.state.oilSubsidyValue;
+                            gpsDeduct = v * 1000 * this.state.gpsDeductValue;
+                        }
+                        // 应退按揭款列表
+                        let result = this.getRepointDetailList1({loanAmount: moneyParse(v)});
+                        let repointDetailList1 = result.repointDetailList1;
+
+                        this.props.setPageData({
+                            ...this.props.pageData,
+                            oilSubsidy: oilSubsidy,
+                            gpsDeduct: gpsDeduct,
+                            repointDetailList1: repointDetailList1,
+                            companyLoanCs: this.getCompanyLoanNum({
+                                invoicePrice: this.props.form.getFieldValue('invoicePrice'),
+                                loanAmount: v
+                            }),
+                            bankLoanCs: this.getBankLoanNum({
+                                fee: this.props.form.getFieldValue('fee'),
+                                loanAmount: v,
+                                invoicePrice: this.props.form.getFieldValue('invoicePrice')
+                            })
+                        });
+                    }
+                }, {
+                    title: '银行利率',
+                    field: 'bankRateType',
+                    type: 'select',
+                    data: this.bankRateTypeList,
+                    keyName: 'rate',
+                    valueName: '{{rate.DATA}}-{{period.DATA}}期',
+                    required: true,
+                    onChange: (v) => {
+                        this.props.form.setFieldsValue({
+                            bankRate: v * 100
+                        });
+                        this.props.setPageData({
+                            ...this.props.pageData,
+                            globalRate: this.getGlobalRate({
+                                fee: this.props.form.getFieldValue('fee'),
+                                loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                bankRate: v
+                            })
+                        });
+                    }
+                }, {
+                    field: 'bankRate',
+                    min: 0,
+                    max: 100,
+                    number: true,
+                    required: true,
+                    formatter: (v, data) => {
+                        return v * 100;
+                    }
+                }],
+                [{
+                    // 贷款金额 / 发票价格
+                    title: '我司贷款成数',
+                    field: 'companyLoanCs',
+                    readonly: true,
+                    required: true
+                }, {
+                    title: '是否垫资',
+                    field: 'isAdvanceFund',
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value',
+                    required: true,
+                    onChange: (v) => {
+                        if (v === '1') {
+                            this.setState({
+                                isAdvanceFund: true
+                            });
+                        } else {
+                            this.setState({
+                                isAdvanceFund: false
+                            });
+                        }
+                        let result = this.getRepointDetailList1({isAdvanceFund: v});
+                        let repointDetailList1 = result.repointDetailList1;
+                        this.props.setPageData({
+                            ...this.props.pageData,
+                            repointDetailList1: repointDetailList1
+                        });
+                    },
+                    formatter: (v, data) => {
+                        if(v && !this.state.isSetIsAdvanceFund) {
+                            if (v === '1') {
+                                this.setState({
+                                    isAdvanceFund: true,
+                                    isSetIsAdvanceFund: true
+                                });
+                            } else {
+                                this.setState({
+                                    isAdvanceFund: false,
+                                    isSetIsAdvanceFund: true
+                                });
+                            }
+                        }
+                        return v;
+                    }
+                }, {
+                    title: '厂家贴息',
+                    field: 'carDealerSubsidy',
+                    amount: true,
+                    required: true,
+                    readonly: this.rateType === '1',
+                    onChange: (v) => {
+                        if (!this.getAmountRules(v)) {
+                            return false;
+                        }
+                        // 应退按揭款列表
+                        console.log(v);
+                        let result = this.getRepointDetailList1({carDealerSubsidy: moneyParse(v)});
+                        let repointDetailList1 = result.repointDetailList1;
+                        this.props.setPageData({
+                            ...this.props.pageData,
+                            repointDetailList1: repointDetailList1
+                        });
+                    }
+                }, {
+                    title: '综合利率',
+                    field: 'globalRate',
+                    readonly: true,
+                    required: true,
+                    hidden: true
+                }],
+                [{
+                    title: '服务费',
+                    field: 'fee',
+                    amount: true,
+                    required: true,
+                    onChange: (v) => {
+                        this.props.setPageData({
+                            ...this.props.pageData,
+                            globalRate: this.getGlobalRate({
+                                fee: v,
+                                loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                bankRate: this.props.form.getFieldValue('bankRate') / 100
+                            }),
+                            bankLoanCs: this.getBankLoanNum({
+                                fee: v,
+                                loanAmount: this.props.form.getFieldValue('loanAmount'),
+                                invoicePrice: this.props.form.getFieldValue('invoicePrice')
+                            })
+                        });
+                    },
+                    hidden: true
+                }, {
+                    // (贷款金额+服务费) / 发票价格
+                    title: '银行贷款成数',
+                    field: 'bankLoanCs',
+                    readonly: true,
+                    required: true,
+                    hidden: true
+                }],
+                [{
+                    title: 'GPS',
+                    field: 'budgetOrderGpsList',
+                    type: 'o2m',
+                    options: {
+                        add: true,
+                        edit: true,
+                        fields: [{
+                            title: 'GPS设备号',
+                            field: 'code',
+                            type: 'select',
+                            listCode: 632707,
+                            params: {
+                                applyStatus: '2',
+                                applyUser: this.saleUserId,
+                                useStatus: 0
+                            },
+                            keyName: 'code',
+                            valueName: 'gpsDevNo',
+                            required: true,
+                            onChange: (v, data, props) => {
+                                props.setPageData({
+                                    gpsDevNo: data.gpsDevNo,
+                                    gpsType: data.gpsType
+                                });
+                            },
+                            noVisible: true
+                        }, {
+                            title: 'GPS设备号',
+                            field: 'gpsDevNo',
+                            hidden: true
+                        }, {
+                            title: 'GPS类型',
+                            field: 'gpsType',
+                            type: 'select',
+                            data: [{
+                                key: '1',
+                                value: '有线'
+                            }, {
+                                key: '0',
+                                value: '无线'
+                            }],
+                            keyName: 'key',
+                            valueName: 'value',
+                            hidden: true
+                        }, {
+                            title: 'GPS安装位置',
+                            field: 'azLocation',
+                            type: 'select',
+                            key: 'az_location',
+                            required: true
+                        }]
+                    }
+                }]
+            ]
+        }, {
+            title: '职业及收入情况',
+            items: [
+                [{
                     title: '申请人就职单位',
                     field: 'applyUserCompany',
                     required: true
@@ -315,7 +793,7 @@ class BudgetAddedit extends React.Component {
                     title: '申请人共还人关系',
                     field: 'applyUserGhrRelation',
                     type: 'select',
-                    key: 'credit_user_relation',
+                    key: 'emergency_contact_relation',
                     readonly: true
                 }, {
                     title: '婚姻状况',
@@ -492,431 +970,6 @@ class BudgetAddedit extends React.Component {
                 }]
             ]
         }, {
-            title: '预算单信息',
-            items: [
-                [{
-                    title: '客户姓名',
-                    field: 'customerName',
-                    readonly: true,
-                    required: true
-                }, {
-                    title: '客户性别',
-                    field: 'customerSex',
-                    readonly: true
-                }, {
-                    title: '业务编号',
-                    field: 'code',
-                    readonly: true,
-                    required: true
-                }, {
-                    title: '客户类型',
-                    field: 'customerType',
-                    type: 'select',
-                    data: [{
-                        key: '1',
-                        value: '个人'
-                    }, {
-                        key: '2',
-                        value: '企业'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value',
-                    required: true
-                }],
-                [{
-                    title: '汽车经销商',
-                    field: 'carDealerCode',
-                    type: 'select',
-                    pageCode: 632065,
-                    params: {
-                        curNodeCode: '006_02'
-                    },
-                    keyName: 'code',
-                    valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
-                    required: true,
-                    onChange: (v, data) => {
-                        if (!v) {
-                            return;
-                        }
-                        this.receivables = data.jxsCollectBankcardList[0];
-                        this.carDealerName = data.abbrName;
-                        data.carDealerProtocolList.forEach(d => {
-                            if (d.bankCode === this.props.pageData.bankSubbranch.bank.bankCode) {
-                                // 设置 收客户手续费合计 履约保证金 担保风险金 GPS收费 杂费
-                                let loanAmount = moneyReplaceComma(this.props.form.getFieldValue('loanAmount'));
-                                let gpsFee = d.gpsFee ? d.gpsFee : d.gpsRate * loanAmount * 1000;
-                                let lyAmount = d.lyAmountFee ? d.lyAmountFee : d.lyAmountRate * loanAmount * 1000;
-                                let fxAmount = d.assureFee ? d.assureFee : d.assureRate * loanAmount * 1000;
-                                let otherFee = d.otherFee ? d.otherFee : d.otherRate * loanAmount * 1000;
-                                let serviceCharge = this.getCustomerFeeTotal({
-                                    gpsFee,
-                                    lyAmount,
-                                    fxAmount,
-                                    otherFee
-                                });
-                                let result = this.getRepointDetailList1({gpsFee, serviceCharge});
-                                let repointDetailList1 = result.repointDetailList1;
-                                this.props.setPageData({
-                                    ...this.props.pageData,
-                                    gpsFee: gpsFee,
-                                    lyAmount: lyAmount,
-                                    fxAmount: fxAmount,
-                                    otherFee: otherFee,
-                                    serviceCharge: serviceCharge,
-                                    repointDetailList1
-                                });
-                            }
-                        });
-                    },
-                    formatter: (v, data) => {
-                        this.carDealerName = data.carDealerName;
-                        return v;
-                    }
-                }, {
-                    title: '贷款银行',
-                    field: 'loanBankName',
-                    readonly: true,
-                    required: true,
-                    formatter: (v, data) => {
-                        if (!this.bankRateList && data) {
-                            if (!this.bankRateList && data.bankSubbranch) {
-                                this.bankRateList = data.bankSubbranch.bank.bankRateList;
-                                if (!this.bankRateTypeList) {
-                                    let rateList = [];
-                                    let loanPeriodsData = [];
-                                    let tmpl = {};
-                                    this.bankRateList.forEach(item => {
-                                        if (item.period === data.loanPeriods) {
-                                            rateList.push(item);
-                                        }
-                                        if (!tmpl[item.period]) {
-                                            tmpl[item.period] = item.period;
-                                            loanPeriodsData.push({
-                                                dkey: item.period,
-                                                dvalue: item.period + '期'
-                                            });
-                                        }
-                                    });
-                                    this.bankRateTypeList = rateList;
-                                    this.loanPeriodsData = loanPeriodsData;
-                                    this.props.form.setFieldsValue({
-                                        bankRateType: data.bankRate
-                                    });
-                                }
-                            }
-                        }
-                        return data.bankSubbranch && (data.bankSubbranch.bank.bankName + '-' + data.bankSubbranch.abbrName);
-                    }
-                }, {
-                    title: '厂商指导价',
-                    field: 'originalPrice',
-                    amount: true,
-                    required: true
-                }],
-                [{
-                    title: '车辆型号',
-                    field: 'carModel',
-                    required: true
-                }, {
-                    title: '车架号码',
-                    field: 'frameNo',
-                    required: !this.shopWay
-                }, {
-                    title: '贷款周期(期)',
-                    field: 'loanPeriods',
-                    type: 'select',
-                    data: this.loanPeriodsData,
-                    keyName: 'dkey',
-                    valueName: 'dvalue',
-                    required: true,
-                    onChange: (v, data) => {
-                        let rateList = [];
-                        this.bankRateList.forEach(item => {
-                            if (item.period === v) {
-                                rateList.push(item);
-                            }
-                        });
-                        this.bankRateTypeList = rateList;
-                        this.props.form.setFieldsValue({
-                            bankRate: 0,
-                            bankRateType: ''
-                        });
-                    }
-                }, {
-                    title: '发票价格',
-                    field: 'invoicePrice',
-                    amount: true,
-                    required: true,
-                    onChange: (v) => {
-                        this.props.setPageData({
-                            ...this.props.pageData,
-                            companyLoanCs: this.getCompanyLoanNum({
-                                invoicePrice: v,
-                                loanAmount: this.props.form.getFieldValue('loanAmount')
-                            }),
-                            bankLoanCs: this.getBankLoanNum({
-                                fee: this.props.form.getFieldValue('fee'),
-                                loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                invoicePrice: v
-                            })
-                        });
-                    }
-                }],
-                [{
-                    title: '购车途径',
-                    field: 'shopWay',
-                    type: 'select',
-                    key: 'budget_orde_biz_typer',
-                    readonly: true,
-                    required: true,
-                    formatter: (v, data) => {
-                        if (v === '2') {
-                            this.shopWay = false;
-                        }
-                        return v;
-                    }
-                }, {
-                    title: '利率类型',
-                    field: 'rateType',
-                    type: 'select',
-                    key: 'rate_type',
-                    required: true,
-                    onChange: (v, data) => {
-                        this.rateType = v;
-                        if (v === '1') {
-                            this.props.setPageData({
-                                ...this.props.pageData,
-                                rateType: v,
-                                carDealerSubsidy: 0
-                            });
-                        }
-                    },
-                    formatter: (v, data) => {
-                        this.rateType = data.rateType;
-                        return v;
-                    }
-                }, {
-                    title: '贷款金额',
-                    field: 'loanAmount',
-                    amount: true,
-                    required: true,
-                    onChange: (v) => {
-                        if (!this.getAmountRules(v)) {
-                            return false;
-                        }
-                        // gps提成，油补
-                        let oilSubsidy = 0;
-                        let gpsDeduct = 0;
-                        if (this.getAmountRules(v)) {
-                            oilSubsidy = v * 1000 * this.state.oilSubsidyValue;
-                            gpsDeduct = v * 1000 * this.state.gpsDeductValue;
-                        }
-                        // 应退按揭款列表
-                        let result = this.getRepointDetailList1({loanAmount: moneyParse(v)});
-                        let repointDetailList1 = result.repointDetailList1;
-
-                        this.props.setPageData({
-                            ...this.props.pageData,
-                            oilSubsidy: oilSubsidy,
-                            gpsDeduct: gpsDeduct,
-                            repointDetailList1: repointDetailList1,
-                            companyLoanCs: this.getCompanyLoanNum({
-                                invoicePrice: this.props.form.getFieldValue('invoicePrice'),
-                                loanAmount: v
-                            }),
-                            bankLoanCs: this.getBankLoanNum({
-                                fee: this.props.form.getFieldValue('fee'),
-                                loanAmount: v,
-                                invoicePrice: this.props.form.getFieldValue('invoicePrice')
-                            })
-                        });
-                    }
-                }],
-                [{
-                    title: '银行利率',
-                    field: 'bankRateType',
-                    type: 'select',
-                    data: this.bankRateTypeList,
-                    keyName: 'rate',
-                    valueName: '{{rate.DATA}}-{{period.DATA}}期',
-                    required: true,
-                    onChange: (v) => {
-                        this.props.form.setFieldsValue({
-                            bankRate: v
-                        });
-                        this.props.setPageData({
-                            ...this.props.pageData,
-                            globalRate: this.getGlobalRate({
-                                fee: this.props.form.getFieldValue('fee'),
-                                loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                bankRate: v
-                            })
-                        });
-                    }
-                }, {
-                    field: 'bankRate',
-                    required: true
-                }],
-                [{
-                    // 贷款金额 / 发票价格
-                    title: '我司贷款成数',
-                    field: 'companyLoanCs',
-                    readonly: true,
-                    required: true
-                }, {
-                    title: '是否垫资',
-                    field: 'isAdvanceFund',
-                    type: 'select',
-                    data: [{
-                        key: '0',
-                        value: '否'
-                    }, {
-                        key: '1',
-                        value: '是'
-                    }],
-                    keyName: 'key',
-                    valueName: 'value',
-                    required: true,
-                    onChange: (v) => {
-                        if (v === '1') {
-                            this.setState({
-                                isAdvanceFund: true
-                            });
-                        } else {
-                            this.setState({
-                                isAdvanceFund: false
-                            });
-                        }
-                        let result = this.getRepointDetailList1({isAdvanceFund: v});
-                        let repointDetailList1 = result.repointDetailList1;
-                        this.props.setPageData({
-                            ...this.props.pageData,
-                            repointDetailList1: repointDetailList1
-                        });
-                    },
-                    formatter: (v, data) => {
-                        if(v && !this.state.isSetIsAdvanceFund) {
-                            if (v === '1') {
-                                this.setState({
-                                    isAdvanceFund: true,
-                                    isSetIsAdvanceFund: true
-                                });
-                            } else {
-                                this.setState({
-                                    isAdvanceFund: false,
-                                    isSetIsAdvanceFund: true
-                                });
-                            }
-                        }
-                        return v;
-                    }
-                }, {
-                    title: '综合利率',
-                    field: 'globalRate',
-                    readonly: true,
-                    required: true
-                }],
-                [{
-                    title: '服务费',
-                    field: 'fee',
-                    amount: true,
-                    required: true,
-                    onChange: (v) => {
-                        this.props.setPageData({
-                            ...this.props.pageData,
-                            globalRate: this.getGlobalRate({
-                                fee: v,
-                                loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                bankRate: this.props.form.getFieldValue('bankRate')
-                            }),
-                            bankLoanCs: this.getBankLoanNum({
-                                fee: v,
-                                loanAmount: this.props.form.getFieldValue('loanAmount'),
-                                invoicePrice: this.props.form.getFieldValue('invoicePrice')
-                            })
-                        });
-                    }
-                }, {
-                    title: '厂家贴息',
-                    field: 'carDealerSubsidy',
-                    amount: true,
-                    required: true,
-                    readonly: this.rateType === '1',
-                    onChange: (v) => {
-                        if (!this.getAmountRules(v)) {
-                            return false;
-                        }
-                        // 应退按揭款列表
-                        let result = this.getRepointDetailList1({carDealerSubsidy: v});
-                        let repointDetailList1 = result.repointDetailList1;
-                        this.props.setPageData({
-                            ...this.props.pageData,
-                            repointDetailList1: repointDetailList1
-                        });
-                    }
-                }, {
-                    // (贷款金额+服务费) / 发票价格
-                    title: '银行贷款成数',
-                    field: 'bankLoanCs',
-                    readonly: true,
-                    required: true
-                }],
-                [{
-                    title: 'GPS',
-                    field: 'budgetOrderGpsList',
-                    type: 'o2m',
-                    options: {
-                        add: true,
-                        edit: true,
-                        fields: [{
-                            title: 'GPS设备号',
-                            field: 'code',
-                            type: 'select',
-                            listCode: 632707,
-                            params: {
-                                applyStatus: '2',
-                                applyUser: this.saleUserId,
-                                useStatus: 0
-                            },
-                            keyName: 'code',
-                            valueName: 'gpsDevNo',
-                            required: true,
-                            onChange: (v, data, props) => {
-                                props.setPageData({
-                                    gpsDevNo: data.code,
-                                    gpsType: data.gpsType
-                                });
-                            },
-                            noVisible: true
-                        }, {
-                            title: 'GPS设备号',
-                            field: 'gpsDevNo',
-                            hidden: true
-                        }, {
-                            title: 'GPS类型',
-                            field: 'gpsType',
-                            type: 'select',
-                            data: [{
-                                key: '1',
-                                value: '有线'
-                            }, {
-                                key: '0',
-                                value: '无线'
-                            }],
-                            keyName: 'key',
-                            valueName: 'value',
-                            hidden: true
-                        }, {
-                            title: 'GPS安装位置',
-                            field: 'azLocation',
-                            type: 'select',
-                            key: 'az_location',
-                            required: true
-                        }]
-                    }
-                }]
-            ]
-        }, {
             title: '资产情况',
             items: [
                 [{
@@ -958,12 +1011,14 @@ class BudgetAddedit extends React.Component {
                     title: '房产证',
                     field: 'houseProperty',
                     hidden: !this.fczqk,
-                    type: 'img'
+                    type: 'img',
+                    required: true
                 }, {
                     title: '营业执照',
                     field: 'license',
                     hidden: !this.yyzz,
-                    type: 'img'
+                    type: 'img',
+                    required: true
                 }],
                 [{
                     title: '有无驾照',
@@ -1003,12 +1058,14 @@ class BudgetAddedit extends React.Component {
                     title: '驾照',
                     field: 'driceLicense',
                     hidden: !this.ywjz,
-                    type: 'img'
+                    type: 'img',
+                    required: true
                 }, {
                     title: '场地证明',
                     field: 'siteProve',
                     hidden: !this.tgcdzm,
-                    type: 'img'
+                    type: 'img',
+                    required: true
                 }],
                 [{
                     title: '现有车辆',
@@ -1045,7 +1102,7 @@ class BudgetAddedit extends React.Component {
                     field: 'emergencyRelation1',
                     title: '与申请人关系',
                     type: 'select',
-                    key: 'credit_user_relation',
+                    key: 'emergency_contact_relation',
                     required: true
                 }, {
                     field: 'emergencyMobile1',
@@ -1060,7 +1117,7 @@ class BudgetAddedit extends React.Component {
                     field: 'emergencyRelation2',
                     title: '与申请人关系',
                     type: 'select',
-                    key: 'credit_user_relation'
+                    key: 'emergency_contact_relation'
                 }, {
                     field: 'emergencyMobile2',
                     title: '手机号码',
@@ -1072,13 +1129,26 @@ class BudgetAddedit extends React.Component {
             items: [
                 [{
                     title: '申请人户籍地',
+                    field: 'applyBirthAddress1',
+                    type: 'citySelect',
+                    cFields: ['applyBirthAddressProvince', 'applyBirthAddressCity', 'applyBirthAddressArea'],
+                    required: true
+                }, {
+                    title: '详细地址',
                     field: 'applyBirthAddress',
                     required: true
                 }, {
                     title: '现住地址',
-                    field: 'applyNowAddress',
+                    field: 'applyNowAddress1',
+                    type: 'citySelect',
+                    cFields: ['applyNowAddressProvince', 'applyNowAddressCity', 'applyNowAddressArea'],
                     required: true
                 }, {
+                    title: '详细地址',
+                    field: 'applyNowAddress',
+                    required: true
+                }],
+                [{
                     title: '现住房屋类型',
                     field: 'houseType',
                     type: 'select',
@@ -1090,17 +1160,31 @@ class BudgetAddedit extends React.Component {
                         value: '租用'
                     }],
                     keyName: 'key',
-                    valueName: 'value',
-                    required: true
+                    valueName: 'value'
+                }, {
+                    title: '共还人户籍地',
+                    field: 'ghBirthAddress1',
+                    type: 'citySelect',
+                    cFields: ['ghBirthAddressProvince', 'ghBirthAddressCity', 'ghBirthAddressArea']
+                }, {
+                    title: '详细地址',
+                    field: 'ghBirthAddress'
                 }],
                 [{
-                    title: '共还人户籍地',
-                    field: 'ghBirthAddress'
-                }, {
                     title: '担保人1户籍地',
+                    field: 'guarantor1BirthAddress1',
+                    type: 'citySelect',
+                    cFields: ['guarantor1BirthAddressProvince', 'guarantor1BirthAddressCity', 'guarantor1BirthAddressArea']
+                }, {
+                    title: '详细地址',
                     field: 'guarantor1BirthAddress'
                 }, {
                     title: '担保人2户籍地',
+                    field: 'guarantor2BirthAddress1',
+                    type: 'citySelect',
+                    cFields: ['guarantor2BirthAddressProvince', 'guarantor2BirthAddressCity', 'guarantor2BirthAddressArea']
+                }, {
+                    title: '详细地址',
                     field: 'guarantor2BirthAddress'
                 }],
                 [{
@@ -1273,43 +1357,12 @@ class BudgetAddedit extends React.Component {
                             keyName: 'key',
                             valueName: 'value',
                             value: '1',
-                            hidden: true
-                        }, {
-                            title: '用款用途',
-                            field: 'useMoneyPurpose1',
-                            type: 'select',
-                            data: [{
-                                key: '1',
-                                value: '应退按揭款'
-                            }, {
-                                key: '2',
-                                value: '协议内返点'
-                            }, {
-                                key: '3',
-                                value: '协议外返点'
-                            }],
-                            keyName: 'key',
-                            valueName: 'value',
-                            value: '1',
-                            readonly: true,
-                            required: true,
-                            noVisible: true
+                            readonly: true
                         }, {
                             title: '金额小写',
                             field: 'repointAmount',
                             amount: true,
-                            required: true,
-                            hidden: true
-                        }, {
-                            title: '金额小写',
-                            field: 'repointAmountTab',
-                            amount: true,
-                            readonly: true,
-                            required: true,
-                            noVisible: true,
-                            formatter: (v, data) => {
-                                return moneyFormat(data.repointAmount);
-                            }
+                            readonly: true
                         }, {
                             title: '单位名称',
                             field: 'carDealerName',
@@ -1609,7 +1662,7 @@ class BudgetAddedit extends React.Component {
             title: '企业照片',
             items: [
                 [{
-                    title: '企业名称照片',
+                    title: '营业执照',
                     field: 'companyNamePic',
                     type: 'img'
                 }, {
@@ -1727,7 +1780,7 @@ class BudgetAddedit extends React.Component {
 
         let checkFields = [{
             field: 'approveNote',
-            title: '审核说明',
+            title: '审核意见',
             type: 'textarea',
             normalArea: true,
             readonly: false,

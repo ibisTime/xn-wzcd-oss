@@ -66,13 +66,13 @@ class GpsSendSend extends React.Component {
             hidden: this.sendTypeFalg,
             formatter: () => ''
         }, {
-            title: '发货时间',
+            title: '发件时间',
             field: 'sendDatetime',
             type: 'datetime',
             required: true,
             formatter: () => ''
         }, {
-            title: '发货说明',
+            title: '发件说明',
             field: 'sendNote',
             formatter: () => ''
         }];

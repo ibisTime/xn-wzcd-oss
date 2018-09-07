@@ -249,3 +249,16 @@ export function submitBank(code) {
     operator: getUserId()
   });
 }
+// 银行放款 理件完成
+export function getCode() {
+  return fetch(632155, {
+    limit: 10,
+    start: 0
+  });
+}
+// 提前结清 根据后台返回跳转不同页面
+export function goOtherUrl(code) {
+  return fetch(630587, {
+    code
+  });
+}

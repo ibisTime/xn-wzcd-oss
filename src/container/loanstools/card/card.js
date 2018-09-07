@@ -75,6 +75,9 @@ class card extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632145,
+            searchParams: {
+                makeCardStatusList: ['0', '1', '2', '3']
+            },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {

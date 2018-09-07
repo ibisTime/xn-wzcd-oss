@@ -48,7 +48,7 @@ class applyAddedit extends React.Component {
                 title: '编制人数',
                 field: 'establishQuantity'
             }, {
-                title: '部门现有人数：',
+                title: '部门现有人数',
                 field: 'nowQuantity'
             }], [{
                 title: '申请补人数',
@@ -140,6 +140,14 @@ class applyAddedit extends React.Component {
             [{
                 title: '相关工作经验',
                 field: 'experience'
+            }]
+        ]
+    }, {
+        title: '审核意见',
+        items: [
+            [{
+                title: '备注',
+                field: 'remark'
             }]
         ]
     }];

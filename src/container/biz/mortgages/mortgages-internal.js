@@ -51,7 +51,7 @@ class MortgagesInternal extends React.Component {
             readonly: true
         }, {
             title: '业务编号',
-            field: 'code',
+            field: 'budgetOrderCode',
             formatter: (v, d) => {
                 return d.budgetOrder.code;
             },
@@ -76,6 +76,7 @@ class MortgagesInternal extends React.Component {
             hidden: this.isEntry || this.isCheckFirst || this.isAddedit,
             options: {
                 rowKey: 'id',
+                noSelect: true,
                 fields: [{
                     title: '操作人',
                     field: 'operatorName'
@@ -91,7 +92,7 @@ class MortgagesInternal extends React.Component {
                     title: '花费时长',
                     field: 'speedTime'
                 }, {
-                    title: '审核说明',
+                    title: '审核意见',
                     field: 'dealNote'
                 }, {
                     title: '当前节点',
@@ -103,7 +104,7 @@ class MortgagesInternal extends React.Component {
                 }]
             }
         }, {
-            title: '申请说明',
+            title: '审核说明',
             field: 'approveNote',
             type: 'textarea',
             normalArea: true,

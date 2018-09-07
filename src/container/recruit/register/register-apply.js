@@ -39,6 +39,7 @@ class registerApply extends React.Component {
                     listCode: 630106,
                     type: 'select',
                     params: {
+                        status: '1',
                         typeList: ['3']
                     },
                     keyName: 'code',
@@ -187,18 +188,15 @@ class registerApply extends React.Component {
             items: [
                 [{
                     title: '姓名',
-                    field: 'relativeName',
-                    required: true
+                    field: 'relativeName'
                 }, {
                     title: '与本人关系',
                     field: 'relativeRelation',
                     type: 'select',
-                    key: 'borrower_relation',
-                    required: true
+                    key: 'borrower_relation'
                 }, {
                     title: '职务',
-                    field: 'relativePosition',
-                    required: true
+                    field: 'relativePosition'
                 }]
             ]
         }, {
@@ -265,13 +263,14 @@ class registerApply extends React.Component {
                     amount: true
                 }], [{
                     title: '工资卡账号',
-                    field: 'salaryCardNo'
+                    field: 'salaryCardNo',
+                    bankCard: true
                 }, {
                     title: '开户行',
                     field: 'bankCode',
                     type: 'select',
-                    listCode: 802016,
-                    keyName: 'code',
+                    listCode: 632007,
+                    keyName: 'bankCode',
                     valueName: 'bankName'
                 }, {
                     title: '开户行支行',
@@ -290,7 +289,6 @@ class registerApply extends React.Component {
                   title: '确认',
                   handler: (param) => {
                     param.approveResult = '1';
-                    param.approveNote = this.projectCode;
                     param.approveUser = getUserId();
                     param.operator = getUserId();
                     this.props.doFetching();

@@ -64,7 +64,8 @@ class Dustbin extends React.Component {
             search: true
         }, {
             title: '身份证',
-            field: 'idNo'
+            field: 'idNo',
+            nowrap: true
         }, {
             title: '购车途径',
             field: 'shopWay',

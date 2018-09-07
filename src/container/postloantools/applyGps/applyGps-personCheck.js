@@ -14,7 +14,9 @@ import {
   getCompanyCode,
   showWarnMsg
 } from 'common/js/util';
-import { DetailWrapper } from 'common/js/build-detail';
+import {
+  DetailWrapper
+} from 'common/js/build-detail';
 import fetch from 'common/js/fetch';
 
 @DetailWrapper(
@@ -35,32 +37,45 @@ class applyGpsPersonCheck extends React.Component {
   }
   render() {
     const fields = [{
-        title: '申领个数',
-        field: 'applyCount',
-        readonly: true
-      }, {
-        title: '申领人',
-        field: 'applyUserName',
-        readonly: true
-      }, {
-        title: '申领原因',
-        field: 'applyReason',
-        readonly: true
-      }, {
-        title: '申领列表',
-        field: 'gpsList',
-        readonly: true,
-        type: 'o2m',
-        options: {
-          add: true,
-          delete: true,
-          fields: [{
-            title: 'GPS设备号',
-            field: 'gpsDevNo',
-            nowrap: true
-          }]
-        }
-      }];
+      title: '申领个数',
+      field: 'applyCount',
+      readonly: true
+    }, {
+      title: '申领人',
+      field: 'applyUserName',
+      readonly: true
+    }, {
+      title: '申领原因',
+      field: 'applyReason',
+      readonly: true
+    }, {
+      title: '申领列表',
+      field: 'gpsList',
+      type: 'o2m',
+      options: {
+        add: true,
+        delete: true,
+        fields: [{
+          title: 'GPS设备号',
+          field: 'code',
+          type: 'select',
+          listCode: 632707,
+          params: {
+            applyStatus: '0',
+            companyApplyStatus: '1',
+            companyCode: getCompanyCode()
+          },
+          keyName: 'code',
+          valueName: 'gpsDevNo',
+          nowrap: true,
+          required: true
+        }]
+      }
+    }, {
+      title: '审核意见',
+      field: 'approveNote',
+      required: true
+    }];
     return this.props.buildDetail({
       fields,
       code: this.code,
@@ -71,9 +86,9 @@ class applyGpsPersonCheck extends React.Component {
         handler: (param) => {
           param.approveResult = '1';
           param.approveUser = getUserId();
-          if(param.gpsList.length < 1) {
-              showWarnMsg('请新增GPS!');
-              return false;
+          if (param.gpsList.length < 1) {
+            showWarnMsg('请新增GPS!');
+            return false;
           }
           this.props.doFetching();
           fetch(632713, param).then(() => {

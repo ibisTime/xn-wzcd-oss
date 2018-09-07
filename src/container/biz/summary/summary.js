@@ -58,10 +58,16 @@ class Summary extends React.Component {
             search: true
         }, {
             title: '业务公司',
-            field: 'companyName',
-            render: (v, d) => {
-                return d.budgetOrder.companyName;
-            }
+            field: 'companyCode',
+            type: 'select',
+            listCode: 630106,
+            params: {
+                typeList: ['1']
+            },
+            keyName: 'code',
+            valueName: 'name',
+            search: true,
+            noVisible: true
         }, {
             title: '银行',
             field: 'loanBank',
@@ -69,7 +75,14 @@ class Summary extends React.Component {
             listCode: 632057,
             keyName: 'code',
             valueName: 'fullName',
-            search: true
+            search: true,
+            noVisible: true
+        }, {
+            title: '业务区域',
+            field: 'businessArea',
+            type: 'citySelect',
+            search: true,
+            noVisible: true
         }, {
             title: '客户姓名',
             field: 'realName',
@@ -79,7 +92,7 @@ class Summary extends React.Component {
             search: true
         }, {
             title: '电话',
-            field: 'idNo',
+            field: 'idNo1',
             render: (v, d) => {
                 return d.user.mobile;
             }
@@ -87,7 +100,7 @@ class Summary extends React.Component {
             title: '证件号',
             field: 'idNo',
             render: (v, d) => {
-                return d.user.idNo;
+                return <span style={{whiteSpace: 'nowrap'}}>{d.user.idNo}</span>;
             }
         }, {
             title: '车牌号',
@@ -104,28 +117,29 @@ class Summary extends React.Component {
             field: 'loanAmount',
             amount: true
         }, {
-            title: '剩余金额',
-            field: 'overplusAmount',
+            title: '剩余欠款',
+            field: 'restAmount',
             amount: true
         }, {
             title: '逾期日期',
             field: 'repayDatetime',
-            type: 'date'
+            render: (v, d) => {
+                if(d.overdueRepayPlan) {
+                    return dateFormat(d.overdueRepayPlan.repayDatetime);
+                }
+            }
         }, {
             title: '月还款额',
             field: 'monthAmount',
             amount: true
         }, {
             title: '逾期金额',
-            field: 'overdueAmount',
+            field: 'restOverdueAmount',
             amount: true
         }, {
             title: '实际逾期期数',
             field: 'curOverdueCount',
             search: true
-        }, {
-            title: '连续逾期期数',
-            field: 'curOverdueCount'
         }, {
             title: '累计代偿次数',
             field: 'totalReplaceRepayCount'
@@ -141,11 +155,6 @@ class Summary extends React.Component {
         }, {
             title: '剩余期数',
             field: 'restPeriods'
-        }, {
-            title: '实际逾期期数',
-            field: 'curOverdueCount',
-            hidden: true,
-            search: true
         }];
         return this.props.buildList({
             fields,

@@ -66,7 +66,7 @@ class CreditCheck extends React.Component {
             title: '身份证号',
             field: 'idNo',
             render: (e, t) => {
-                return (t.creditUser ? t.creditUser.idNo : '-');
+                return (t.creditUser ? <span style={{whiteSpace: 'nowrap'}}>{t.creditUser.idNo}</span> : '-');
             }
         }, {
             title: '业务员',
