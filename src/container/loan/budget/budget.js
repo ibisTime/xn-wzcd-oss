@@ -106,6 +106,13 @@ class Budget extends React.Component {
         }, {
             field: 'remark',
             title: '备注'
+        }, {
+            title: '省市区',
+            field: 'applyBirthAddress1',
+            type: 'provSelect',
+            cFields: ['applyBirthAddressProvince', 'applyBirthAddressCity', 'applyBirthAddressArea'],
+            search: true,
+            noVisible: true
         }];
         return this.props.buildList({
             fields,

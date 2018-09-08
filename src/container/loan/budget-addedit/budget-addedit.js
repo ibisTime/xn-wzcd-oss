@@ -1037,9 +1037,9 @@ class BudgetAddedit extends React.Component {
                     }],
                     keyName: 'key',
                     valueName: 'value',
-                    onChange: (v, data) => {
-                        this.ywjz = v === '1';
-                    },
+                    // onChange: (v, data) => {
+                    //     this.ywjz = v === '1';
+                    // },
                     required: true
                 }, {
                     title: '提供场地证明',
@@ -1062,7 +1062,7 @@ class BudgetAddedit extends React.Component {
                     title: '驾照',
                     field: 'driceLicense',
                     // hidden: !this.ywjz && this.shopWay,
-                    hidden: !this.ywjz,
+                    // hidden: !this.ywjz,
                     type: 'img',
                     required: true
                 }, {
