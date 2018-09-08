@@ -99,10 +99,6 @@ class AdvMoneyAreaCheck extends React.Component {
             field: 'collectionAccountNo',
             readonly: true
         }, {
-            title: '审核意见',
-            field: 'approveNote',
-            required: true
-        }, {
             title: '流程日志',
             field: 'list',
             type: 'o2m',
@@ -139,7 +135,11 @@ class AdvMoneyAreaCheck extends React.Component {
                 valueName: 'name'
               }]
             }
-          }];
+        }, {
+            title: '审核意见',
+            field: 'approveNote',
+            required: true
+        }];
         return this.props.buildDetail({
             fields,
             code: this.code,

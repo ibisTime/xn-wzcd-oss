@@ -1,59 +1,31 @@
 import React from 'react';
-// const QRCode = require("js-qrcode");
-import {
-  initStates,
-  doFetching,
-  cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
-} from '@redux/erweima/erweima';
-import {getQueryString} from 'common/js/util';
-import {DetailWrapper} from 'common/js/build-detail';
+import ReactDOM from 'react-dom';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
-@DetailWrapper(state => state.erweimaErweima, {
-  initStates,
-  doFetching,
-  cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
-})
-class Erweima extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
+class App extends React.Component {
+  state = {
+    value: '11',
+    name: 'name',
+    copied: false
+  };
+
   render() {
-    const fields = [{
-        title: '关联的业务编号',
-        field: 'codeList',
-        type: 'select',
-        pageCode: 632155,
-        params: {
-            status: '1'
-        },
-        keyName: 'bizCode',
-        valueName: '{{bizCode.DATA}}-{{customerName.DATA}}',
-        multiple: true
-    }];
-    return this
-      .props
-      .buildDetail({
-        fields,
-        detailCode: 632156,
-        buttons: [{
-            title: '下载',
-            handler: () => {
-            },
-            check: true
-        }, {
-            title: '返回',
-            handler: () => {
-                this.props.history.go(-1);
-            }
-        }]
-      });
+    return (
+      <div>
+        <input value={this.state.value}
+          onChange={({target: {value}}) => this.setState({value, copied: false})} />
+
+        <CopyToClipboard text={this.state.name}
+          onCopy={() => this.setState({copied: true})}>
+          <span>Copy to clipboard with span</span>
+        </CopyToClipboard>
+
+        {this.state.copied ? <span style={{color: 'red'}}>Copied.</span> : null}
+      </div>
+    );
   }
 }
 
-export default Erweima;
+const appRoot = document.createElement('div');
+document.body.appendChild(appRoot);
+ReactDOM.render(<App />, appRoot);

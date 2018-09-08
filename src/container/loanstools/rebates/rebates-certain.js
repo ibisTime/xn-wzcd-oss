@@ -45,9 +45,94 @@ class RebatesCertain extends React.Component {
             amount: true,
             readonly: true
         }, {
-            title: '客户列表',
-            field: 'receiptAccount',
-            readonly: true
+            title: '返点列表',
+            field: 'repointDetailCodeList',
+            required: true,
+            readonly: true,
+            type: 'o2m',
+            onChange: (data) => {
+                let totalAmount = this.props.pageData.totalAmount;
+                data.map(v => {
+                    if (v.useMoneyPurpose !== '1') {
+                        totalAmount += v.repointAmount;
+                    }
+                });
+                this.props.setPageData({
+                    ...this.props.pageData,
+                    totalAmount: totalAmount
+                });
+            },
+            options: {
+                delete: true,
+                scroll: {
+                    x: 1600
+                },
+                fields: [{
+                    title: 'code',
+                    field: 'code',
+                    hidden: true
+                }, {
+                    title: '业务编号',
+                    field: 'budgetCode'
+                }, {
+                    title: '客户姓名',
+                    field: 'userName'
+                }, {
+                    title: '身份证号',
+                    field: 'idNo'
+                }, {
+                    title: '车辆型号',
+                    field: 'carType'
+                }, {
+                    title: '贷款金额',
+                    field: 'loanAmount',
+                    amount: true,
+                    required: true
+                }, {
+                    title: '银行实际利率',
+                    field: 'bankRate'
+                }, {
+                    title: '基准利率',
+                    field: 'benchmarkRate'
+                }, {
+                    title: '手续费',
+                    field: 'fee',
+                    amount: true
+                }, {
+                    title: '用款用途',
+                    field: 'useMoneyPurpose',
+                    type: 'select',
+                    data: [{
+                        key: '1',
+                        value: '应退按揭款'
+                    }, {
+                        key: '2',
+                        value: '协议内返点'
+                    }, {
+                        key: '3',
+                        value: '协议外返点'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value'
+                }, {
+                    title: '金额小写',
+                    field: 'repointAmount',
+                    amount: true,
+                    required: true
+                }, {
+                    title: '账号',
+                    field: 'accountCode',
+                    required: true
+                }, {
+                    title: '开户行',
+                    field: 'openBankName',
+                    required: true
+                }, {
+                    title: '户名',
+                    field: 'companyName',
+                    required: true
+                }]
+            }
         }, {
             title: '申请公司',
             field: 'carDealerName',
