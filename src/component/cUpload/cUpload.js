@@ -25,19 +25,49 @@ export default class CUpload extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return this.isPropsChange(nextProps) || this.isStateChange(nextState);
   }
+  // props是否改变
   isPropsChange(nextProps) {
-    const { field, isLoaded, token, rules, readonly, isSingle, isImg,
-      accept, getFieldValue, hidden, initVal, inline } = this.props;
+    const { field, isLoaded, token, rules, readonly, isSingle, isImg, isFieldValidating,
+      accept, getFieldValue, hidden, initVal, inline, getFieldError } = this.props;
     let nowFiles = getFieldValue(field);
     let flag = this.prevFiles !== nowFiles;
-    if (flag) {
-      this.prevFiles = nowFiles;
-    }
-    return nextProps.field !== field || nextProps.isLoaded !== isLoaded || nextProps.token !== token ||
-      nextProps.rules.length !== rules.length || nextProps.readonly !== readonly || nextProps.isSingle !== isSingle ||
-      nextProps.isImg !== isImg || nextProps.accept !== accept || nextProps.hidden !== hidden ||
-      nextProps.initVal !== initVal || nextProps.inline !== inline || flag;
+    this.prevFiles = flag ? nowFiles : this.prevFiles;
+    let nowErr = getFieldError(field);
+    let errFlag = this.isErrChange(nowErr);
+    this.prevErr = errFlag ? nowErr : this.prevErr;
+    let nowValid = isFieldValidating(field);
+    let validFlag = this.isValidChange(nowValid);
+    this.prevValid = validFlag ? nowValid : this.prevValid;
+    return nextProps.field !== field || nextProps.isLoaded !== isLoaded ||
+      nextProps.token !== token || nextProps.rules.length !== rules.length ||
+      nextProps.readonly !== readonly || nextProps.isSingle !== isSingle ||
+      nextProps.isImg !== isImg || nextProps.accept !== accept ||
+      nextProps.hidden !== hidden || nextProps.initVal !== initVal ||
+      nextProps.inline !== inline || flag || errFlag || validFlag;
   }
+  // 控件的错误信息是否改变
+  isErrChange(nextErr) {
+    if (isUndefined(this.prevErr) || isUndefined(nextErr)) {
+      return isUndefined(this.prevErr) && isUndefined(nextErr) ? false : this.prevErr !== nextErr;
+    } else if (this.prevErr.length !== nextErr.length) {
+      return true;
+    }
+    let flag = false;
+    this.prevErr.forEach((e, i) => {
+      if (e !== nextErr[i]) {
+        flag = true;
+      }
+    });
+    return flag;
+  }
+  // 判断校验状态是否改变
+  isValidChange(nowValid) {
+    if (isUndefined(this.prevValid) || isUndefined(nowValid)) {
+      return isUndefined(this.prevValid) && isUndefined(nowValid) ? false : this.prevValid !== nowValid;
+    }
+    return this.prevValid !== nowValid;
+  }
+  // state是否改变
   isStateChange(nextState) {
     const { previewImage, previewVisible, previewId } = this.state;
     return nextState.previewImage !== previewImage || nextState.previewVisible !== previewVisible ||
@@ -132,7 +162,8 @@ export default class CUpload extends React.Component {
     fileList.forEach(f => {
       if (!f.url && f.status === 'done' && f.response) {
         f.url = format(f.response.key);
-        callback && callback(f.response.key);
+        const { setFieldsValue, doFetching, cancelFetching } = this.props;
+        callback && callback(f.response.key, setFieldsValue, doFetching, cancelFetching);
       }
     });
   }
@@ -182,10 +213,10 @@ export default class CUpload extends React.Component {
             <div className="previewImg-wrap">
               <Carousel ref={(carousel => this.carousel = carousel)} afterChange={(a) => {
                 let url = getFieldValue(previewId).split('||')[a];
-                this.imgUrl = PIC_PREFIX + '/' + url + '?attname=' + url + '.jpg';
+                this.imgUrl = PIC_PREFIX + url + '?attname=' + url + '.jpg';
               }}>{
                 previewId && getFieldValue(previewId).split('||').map(v => {
-                  let url = PIC_PREFIX + '/' + v + PIC_BASEURL_L;
+                  let url = PIC_PREFIX + v + PIC_BASEURL_L;
                   return (<div className='img-wrap' key={v}><img alt="图片" style={{width: '100%'}} src={url}/></div>);
                 })
               }</Carousel>
@@ -218,7 +249,12 @@ CUpload.propTypes = {
   onChange: PropTypes.func,
   field: PropTypes.string.isRequired,
   getFieldValue: PropTypes.func.isRequired,
+  setFieldsValue: PropTypes.func.isRequired,
+  getFieldError: PropTypes.func.isRequired,
   getFieldDecorator: PropTypes.func.isRequired,
+  isFieldValidating: PropTypes.func.isRequired,
+  doFetching: PropTypes.func.isRequired,
+  cancelFetching: PropTypes.func.isRequired,
   isLoaded: PropTypes.bool.isRequired
 };
 
@@ -226,7 +262,12 @@ CUpload.defaultProps = {
   label: 'title',
   field: 'key',
   getFieldValue: noop,
+  setFieldsValue: noop,
+  getFieldError: noop,
   getFieldDecorator: noop,
+  isFieldValidating: noop,
+  doFetching: noop,
+  cancelFetching: noop,
   isLoaded: false,
   hidden: false
 };

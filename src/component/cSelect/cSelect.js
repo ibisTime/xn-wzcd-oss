@@ -1,13 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Select, Form } from 'antd';
-import { noop, tempString } from 'common/js/util';
+import { noop, tempString, isUndefined } from 'common/js/util';
 import { formItemLayout } from 'common/js/config';
 
 const { Option } = Select;
 const FormItem = Form.Item;
 
 export default class CSelect extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return this.isPropsChange(nextProps);
+  }
+  isPropsChange(nextProps) {
+    const { field, rules, readonly, getFieldValue, hidden, initVal, inline,
+      keyName, valueName, getFieldError, multiple, list } = this.props;
+    let nowValue = getFieldValue(field);
+    let flag = this.prevValue !== nowValue;
+    if (isUndefined(this.prevValue) || isUndefined(nowValue)) {
+      flag = isUndefined(this.prevValue) && isUndefined(nowValue) ? false : this.prevValue !== nowValue;
+    }
+    this.prevValue = flag ? nowValue : this.prevValue;
+    let nowErr = getFieldError(field);
+    let errFlag = this.isErrChange(nowErr);
+    if (errFlag) {
+      this.prevErr = nowErr;
+    }
+    return nextProps.field !== field || nextProps.rules.length !== rules.length ||
+      nextProps.readonly !== readonly || nextProps.hidden !== hidden ||
+      nextProps.initVal !== initVal || nextProps.inline !== inline ||
+      nextProps.keyName !== keyName || nextProps.valueName !== valueName ||
+      nextProps.list !== list || nextProps.multiple !== multiple || flag || errFlag;
+  }
+  // 控件的错误信息是否改变
+  isErrChange(nextErr) {
+    if (isUndefined(this.prevErr) || isUndefined(nextErr)) {
+      return isUndefined(this.prevErr) && isUndefined(nextErr) ? false : this.prevErr !== nextErr;
+    } else if (this.prevErr.length !== nextErr.length) {
+      return true;
+    }
+    let flag = false;
+    this.prevErr.forEach((e, i) => {
+      if (e !== nextErr[i]) {
+        flag = true;
+      }
+    });
+    return flag;
+  }
   getSelectProps(multiple, onChange) {
     const props = {
       mode: multiple ? 'multiple' : '',
@@ -85,13 +123,17 @@ CSelect.propTypes = {
   keyName: PropTypes.string.isRequired,
   valueName: PropTypes.string.isRequired,
   field: PropTypes.string.isRequired,
+  getFieldError: PropTypes.func.isRequired,
+  getFieldValue: PropTypes.func.isRequired,
   getFieldDecorator: PropTypes.func.isRequired
 };
 
 CSelect.defaultProps = {
   label: 'title',
   field: 'key',
+  getFieldError: noop,
   getFieldDecorator: noop,
+  getFieldValue: noop,
   hidden: false,
   inline: false,
   list: [],

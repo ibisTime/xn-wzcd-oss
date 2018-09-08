@@ -8,12 +8,6 @@ import { getIdNoFront, getIdNoReverse } from 'api/user';
 export default class Demo extends DetailUtil {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   entryVisible: false,
-    //   creditResult: [],
-    //   selectData: {},
-    //   selectKey: ''
-    // };
     this.state = {
       ...this.state,
       newCar: true
@@ -21,17 +15,7 @@ export default class Demo extends DetailUtil {
     this.code = getQueryString('code', this.props.location.search);
     // 发起征信
     this.isAddedit = !!getQueryString('isAddedit', this.props.location.search);
-    // 录入征信结果
-    this.isEntry = !!getQueryString('isEntry', this.props.location.search);
-    // 信贷专员初审
-    this.isCheck = !!getQueryString('isCheck', this.props.location.search);
-    // 准入审查
-    this.isCheckFirst = !!getQueryString('isCheckFirst', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
-    // this.newCar = true;
-    this.creditUserListIndex = 6;
-    this.buttons = [];
-    this.concatFalg = false;
   }
   render() {
     let o2mFields = [{
@@ -40,27 +24,6 @@ export default class Demo extends DetailUtil {
         nowrap: true,
         required: true,
         width: 80
-    }, {
-        title: '与借款人关系',
-        field: 'relation',
-        type: 'select',
-        key: 'credit_user_relation',
-        required: true
-    }, {
-        title: '贷款角色',
-        field: 'loanRole',
-        type: 'select',
-        key: 'credit_user_loan_role',
-        required: true
-    }, {
-        title: '手机号',
-        field: 'mobile',
-        mobile: true,
-        required: true,
-        render: (v) => {
-            let val = (v && v.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2')) || '';
-            return <span style={{whiteSpace: 'nowrap'}}>{val}</span>;
-        }
     }, {
         title: '身份证号',
         field: 'idNo',
@@ -76,9 +39,9 @@ export default class Demo extends DetailUtil {
         type: 'img',
         single: true,
         required: true,
-        onChange: (v, props) => {
+        onChange: (v, setFieldsValue, doFetching, cancelFetching) => {
             if (v) {
-                props.doFetching();
+                doFetching();
                 getIdNoFront(v).then((data) => {
                     if (data.success) {
                         let birthYear = data.birth.substr(0, 4);
@@ -89,82 +52,19 @@ export default class Demo extends DetailUtil {
                             showWarnMsg('18周岁以下征信不能提交');
                             return;
                         }
-                        props.form.setFieldsValue({
+                        setFieldsValue({
                             idNo: data.idNo,
                             userName: data.realName
                         });
                     } else {
                         showWarnMsg('识别失败，请手动输入');
                     }
-                    props.cancelFetching();
+                    cancelFetching();
                 }).catch(() => {
-                    props.cancelFetching();
+                    cancelFetching();
                 });
             }
         }
-    }, {
-        title: '身份证反面',
-        field: 'idNoReverse',
-        type: 'img',
-        single: true,
-        required: true,
-        onChange: (v, props) => {
-            if (v) {
-                props.doFetching();
-                getIdNoReverse(v).then((data) => {
-                    console.log(data);
-                    if (data.success) {
-                        let str = data.endDate;
-                        let str1 = str.substr(0, 4);
-                        let str2 = str.substr(4, 2);
-                        let str3 = str.substr(6, 2);
-                        let arr = [str1, str2, str3];
-                        let date = arr.join('/');
-                        var d = new Date('2019/09/09');
-                        var n = new Date();
-                        let days = (d.getTime() - n.getTime()).toFixed(0);
-                        if(days < 0) {
-                            showWarnMsg('身份证已经过期');
-                        }else if(days < 90) {
-                            showSucMsg('身份证有效期不足90天');
-                        }
-                    } else {
-                        showWarnMsg('识别失败，请手动输入');
-                    }
-                    props.cancelFetching();
-                }).catch(() => {
-                    props.cancelFetching();
-                });
-            }
-        }
-    }, {
-        title: '征信查询授权书',
-        field: 'authPdf',
-        type: 'img',
-        single: true,
-        required: true
-    }, {
-        title: '面签照片',
-        field: 'interviewPic',
-        type: 'img',
-        single: true,
-        required: true
-    }, {
-        title: '是否发送一审',
-        field: 'isFirstAudit',
-        type: 'select',
-        data: [{
-            key: '0',
-            value: '否'
-        }, {
-            key: '1',
-            value: '是'
-        }],
-        keyName: 'key',
-        valueName: 'value',
-        readonly: true,
-        hidden: !(this.isCheckSalesman || this.isCheckFirst),
-        noVisible: !(this.isCheckSalesman || this.isCheckFirst)
     }];
     let fields = [{
       title: '信贷专员',
@@ -177,7 +77,8 @@ export default class Demo extends DetailUtil {
       },
       keyName: 'userId',
       valueName: '{{companyName.DATA}}-{{realName.DATA}}',
-      searchName: 'realName'
+      searchName: 'realName',
+      required: true
     }, {
         title: '业务团队',
         field: 'teamName',
@@ -198,7 +99,7 @@ export default class Demo extends DetailUtil {
         required: true,
         onChange: (value) => {
             if (value) {
-                this.setState({ newCar: value === '0' });
+                this.setState({ newCar: value === '1' });
             }
         }
     }, {
@@ -227,10 +128,64 @@ export default class Demo extends DetailUtil {
             fields: o2mFields
         }
     }, {
+        title: 'GPS',
+        field: 'budgetOrderGpsList',
+        type: 'o2m',
+        options: {
+            add: true,
+            edit: true,
+            fields: [{
+                title: 'GPS设备号',
+                field: 'code',
+                type: 'select',
+                listCode: 632707,
+                params: {
+                    applyStatus: '2',
+                    applyUser: this.saleUserId,
+                    useStatus: 0
+                },
+                keyName: 'code',
+                valueName: 'gpsDevNo',
+                required: true,
+                onChange: (v, data, props) => {
+                    props.setPageData({
+                        gpsDevNo: data.gpsDevNo,
+                        gpsType: data.gpsType
+                    });
+                },
+                noVisible: true
+            }, {
+                title: 'GPS设备号',
+                field: 'gpsDevNo',
+                hidden: true
+            }, {
+                title: 'GPS类型',
+                field: 'gpsType',
+                type: 'select',
+                data: [{
+                    key: '1',
+                    value: '有线'
+                }, {
+                    key: '0',
+                    value: '无线'
+                }],
+                keyName: 'key',
+                valueName: 'value',
+                hidden: true
+            }, {
+                title: 'GPS安装位置',
+                field: 'azLocation',
+                type: 'select',
+                key: 'az_location',
+                required: true
+            }]
+        }
+    }, {
         title: '说明',
         field: 'note',
         type: 'textarea',
-        normalArea: true
+        normalArea: true,
+        required: true
     }, {
         title: '审核说明',
         field: 'approveNote',
@@ -239,21 +194,25 @@ export default class Demo extends DetailUtil {
     }, {
         field: 'jourDatetime',
         title: '流水时间',
-        type: 'datetime'
+        type: 'datetime',
+        required: true
     }, {
         field: 'jourDatetime1',
         title: '流水时间1',
         type: 'date',
-        rangedate: ['jourDatetimeStart', 'jourDatetimeEnd']
+        rangedate: ['jourDatetimeStart', 'jourDatetimeEnd'],
+        required: true
     }, {
         field: 'workDatetime',
         title: '何时进入现单位工作',
-        type: 'month'
+        type: 'month',
+        required: true
     }, {
         field: 'province',
         title: '省市区',
         type: 'citySelect',
-        onChange: (v, o) => console.log(v, o)
+        onChange: (v, o) => console.log(v, o),
+        required: true
     }, {
         title: '交款项目',
         field: 'remitProject',
@@ -273,12 +232,18 @@ export default class Demo extends DetailUtil {
             status: 1,
             typeList: [1, 2]
         },
-        onChange: (value, label, extra) => console.log(value, label, extra)
+        onChange: (value, label, extra) => console.log(value, label, extra),
+        required: true
     }, {
         field: 'description',
         title: '富文本',
         required: true,
         type: 'textarea'
+    }, {
+        field: 'pic23',
+        title: '图片',
+        required: true,
+        type: 'img'
     }];
     return this.buildDetail({
       fields,

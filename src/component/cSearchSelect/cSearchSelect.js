@@ -30,31 +30,53 @@ export default class CSearchSelect extends React.Component {
     return this.isPropsChange(nextProps) || this.isStateChange(nextState);
   }
   isPropsChange(nextProps) {
-    const { field, rules, readonly, getFieldValue, hidden, initVal,
-      inline, keyName, valueName, searchName, pageCode, isLoaded, params } = this.props;
+    const { field, rules, readonly, getFieldValue, hidden, initVal, inline,
+      keyName, valueName, searchName, pageCode, isLoaded, params, getFieldError } = this.props;
     let nowValue = getFieldValue(field);
     let flag = this.prevValue !== nowValue;
     if (isUndefined(this.prevValue) || isUndefined(nowValue)) {
       flag = isUndefined(this.prevValue) && isUndefined(nowValue) ? false : this.prevValue !== nowValue;
     }
     this.prevValue = flag ? nowValue : this.prevValue;
-    let paramFlag;
-    if (isUndefined(params) || isUndefined(nextProps.params)) {
-      paramFlag = isUndefined(params) && isUndefined(nextProps.params) ? false : params !== nextProps.params;
-    } else {
-      for (let k in params) {
-        if (params[k] !== nextProps.params[k]) {
-          paramFlag = true;
-          break;
-        }
-      }
+    let paramFlag = this.isParamsChange(params, nextProps.params);
+    let nowErr = getFieldError(field);
+    let errFlag = this.isErrChange(nowErr);
+    if (errFlag) {
+      this.prevErr = nowErr;
     }
     return nextProps.field !== field || nextProps.rules.length !== rules.length ||
       nextProps.readonly !== readonly || nextProps.hidden !== hidden ||
       nextProps.initVal !== initVal || nextProps.inline !== inline ||
       nextProps.keyName !== keyName || nextProps.valueName !== valueName ||
       nextProps.searchName !== searchName || nextProps.pageCode !== pageCode ||
-      nextProps.isLoaded !== isLoaded || flag || paramFlag;
+      nextProps.isLoaded !== isLoaded || flag || paramFlag || errFlag;
+  }
+  // item.params是否改变
+  isParamsChange(params, nextParams) {
+    if (isUndefined(params) || isUndefined(nextParams)) {
+      return isUndefined(params) && isUndefined(nextParams) ? false : params !== nextParams;
+    }
+    for (let k in params) {
+      if (params[k] !== nextParams[k]) {
+        return true;
+      }
+    }
+    return false;
+  }
+  // 控件的错误信息是否改变
+  isErrChange(nextErr) {
+    if (isUndefined(this.prevErr) || isUndefined(nextErr)) {
+      return isUndefined(this.prevErr) && isUndefined(nextErr) ? false : this.prevErr !== nextErr;
+    } else if (this.prevErr.length !== nextErr.length) {
+      return true;
+    }
+    let flag = false;
+    this.prevErr.forEach((e, i) => {
+      if (e !== nextErr[i]) {
+        flag = true;
+      }
+    });
+    return flag;
   }
   isStateChange(nextState) {
     const { selectFetch, list } = this.state;
@@ -168,7 +190,8 @@ CSearchSelect.propTypes = {
   valueName: PropTypes.string.isRequired,
   field: PropTypes.string.isRequired,
   getFieldValue: PropTypes.func.isRequired,
-  getFieldDecorator: PropTypes.func.isRequired
+  getFieldDecorator: PropTypes.func.isRequired,
+  getFieldError: PropTypes.func.isRequired
 };
 
 CSearchSelect.defaultProps = {
@@ -176,6 +199,7 @@ CSearchSelect.defaultProps = {
   field: 'key',
   getFieldDecorator: noop,
   getFieldValue: noop,
+  getFieldError: noop,
   hidden: false,
   inline: false,
   keyName: 'dkey',

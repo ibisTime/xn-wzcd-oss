@@ -13,7 +13,7 @@ export default class CCheckbox extends React.Component {
   }
   isPropsChange(nextProps) {
     const { field, rules, readonly, getFieldValue, hidden, initVal,
-      inline, list, keyName, valueName } = this.props;
+      inline, list, keyName, valueName, getFieldError } = this.props;
     let nowValue = getFieldValue(field);
     let flag;
     if (isUndefined(this.prevValue) || isUndefined(nowValue)) {
@@ -30,11 +30,31 @@ export default class CCheckbox extends React.Component {
     if (flag) {
       this.prevValue = nowValue;
     }
+    let nowErr = getFieldError(field);
+    let errFlag = this.isErrChange(nowErr);
+    if (errFlag) {
+      this.prevErr = nowErr;
+    }
     return nextProps.field !== field || nextProps.rules.length !== rules.length ||
       nextProps.readonly !== readonly || nextProps.hidden !== hidden ||
       nextProps.initVal !== initVal || nextProps.inline !== inline || flag ||
       nextProps.list.length !== list.length || nextProps.keyName !== keyName ||
-      nextProps.valueName !== valueName;
+      nextProps.valueName !== valueName || errFlag;
+  }
+  // 控件的错误信息是否改变
+  isErrChange(nextErr) {
+    if (isUndefined(this.prevErr) || isUndefined(nextErr)) {
+      return isUndefined(this.prevErr) && isUndefined(nextErr) ? false : this.prevErr !== nextErr;
+    } else if (this.prevErr.length !== nextErr.length) {
+      return true;
+    }
+    let flag = false;
+    this.prevErr.forEach((e, i) => {
+      if (e !== nextErr[i]) {
+        flag = true;
+      }
+    });
+    return flag;
   }
   getCheckProps(onChange, readonly) {
     let props = { disabled: readonly };
@@ -89,6 +109,7 @@ CCheckbox.propTypes = {
   valueName: PropTypes.string.isRequired,
   field: PropTypes.string.isRequired,
   getFieldValue: PropTypes.func.isRequired,
+  getFieldError: PropTypes.func.isRequired,
   getFieldDecorator: PropTypes.func.isRequired
 };
 
@@ -96,6 +117,7 @@ CCheckbox.defaultProps = {
   label: 'title',
   field: 'key',
   getFieldDecorator: noop,
+  getFieldError: noop,
   hidden: false,
   inline: false,
   list: [],
