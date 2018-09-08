@@ -12,7 +12,8 @@ export default class CCitySelect extends React.Component {
     return this.isPropsChange(nextProps);
   }
   isPropsChange(nextProps) {
-    const { field, rules, readonly, hidden, getFieldValue, initVal, inline } = this.props;
+    const { field, rules, readonly, hidden, getFieldValue, initVal,
+      inline, getFieldError } = this.props;
     let nowValue = getFieldValue(field);
     let flag;
     if (isUndefined(this.prevValue)) {
@@ -37,14 +38,40 @@ export default class CCitySelect extends React.Component {
         }
       });
     }
+    let nowErr = getFieldError(field);
+    let errFlag = this.isErrChange(nowErr);
+    if (errFlag) {
+      this.prevErr = nowErr;
+    }
     return nextProps.field !== field || nextProps.rules.length !== rules.length ||
       nextProps.readonly !== readonly || nextProps.hidden !== hidden || flag ||
-      initFlag || nextProps.inline !== inline;
+      initFlag || nextProps.inline !== inline || errFlag;
   }
+  // 控件的错误信息是否改变
+  isErrChange(nextErr) {
+    if (isUndefined(this.prevErr) || isUndefined(nextErr)) {
+      return isUndefined(this.prevErr) && isUndefined(nextErr) ? false : this.prevErr !== nextErr;
+    } else if (this.prevErr.length !== nextErr.length) {
+      return true;
+    }
+    let flag = false;
+    this.prevErr.forEach((e, i) => {
+      if (e !== nextErr[i]) {
+        flag = true;
+      }
+    });
+    return flag;
+  }
+
   getCasProps(onChange) {
     let props = {
       placeholder: '请选择',
-      options: cityData
+      options: cityData,
+      showSearch: {
+        filter: (inputValue, path) => {
+          return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1));
+        }
+      }
     };
     if (onChange) {
       props.onChange = (value, selectedOptions) => onChange(value, selectedOptions);
@@ -82,6 +109,7 @@ CCitySelect.propTypes = {
   inline: PropTypes.bool,
   field: PropTypes.string.isRequired,
   getFieldValue: PropTypes.func.isRequired,
+  getFieldError: PropTypes.func.isRequired,
   getFieldDecorator: PropTypes.func.isRequired
 };
 
@@ -89,6 +117,7 @@ CCitySelect.defaultProps = {
   label: 'title',
   field: 'key',
   getFieldValue: noop,
+  getFieldError: noop,
   getFieldDecorator: noop,
   hidden: false,
   inline: false

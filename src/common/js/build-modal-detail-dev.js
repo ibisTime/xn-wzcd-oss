@@ -1,24 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Modal } from 'antd';
-import {
-  initStates,
-  doFetching,
-  cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
-} from '@redux/modal/build-modal-detail';
-import DetailComp from './lib/DetailComp';
+import DetailCompDev from 'common/js/lib/DetailCompDev';
 
-class ModalDetail extends DetailComp {
-  constructor(props) {
-    super(props);
-    this.props.restore();
-  }
+class ModalDetailDev extends DetailCompDev {
   handleCancelModal = () => {
     let { hideModal } = this.props;
     hideModal && hideModal();
+  }
+  onCancel = () => {
+    this.setState({ pageData: null, isLoaded: false });
+    this.handleCancelModal();
   }
   render() {
     let {
@@ -46,15 +38,19 @@ class ModalDetail extends DetailComp {
       options.buttons = options.buttons.map(v => ({
         ...v,
         handler: (params) => {
-          v.handler(params, this.props.doFetching, this.props.cancelFetching, this.handleCancelModal);
+          this.setState({ pageData: null, isLoaded: false });
+          v.handler(params, this.handleCancelModal);
         }
       }));
       options.buttons.push({
         title: cancelText || '取消',
-        handler: this.handleCancelModal
+        handler: () => {
+          options.beforeCancel && options.beforeCancel();
+          this.onCancel();
+        }
       });
     } else {
-      options.onCancel = this.handleCancelModal;
+      options.onCancel = this.onCancel;
     }
     return (
       <Modal
@@ -62,7 +58,7 @@ class ModalDetail extends DetailComp {
         destroyOnClose
         visible={visible}
         title={title}
-        onCancel={this.handleCancelModal}
+        onCancel={this.onCancel}
         style={{minWidth: 820}}
         footer={null}>
         {this.buildDetail(options)}
@@ -71,7 +67,4 @@ class ModalDetail extends DetailComp {
   }
 }
 
-export default Form.create()(
-  connect(state => state.modalDetail,
-    { initStates, doFetching, cancelFetching, setSelectData, setPageData, restore }
-  )(ModalDetail));
+export default Form.create()(ModalDetailDev);

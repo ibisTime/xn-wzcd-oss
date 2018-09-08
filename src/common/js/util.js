@@ -591,29 +591,38 @@ export const getRules = (item) => {
 
 // 获取修改、详情页每个输入框的真实值
 export const getRealValue = ({ pageData, field, type, _keys, value, rangedate,
-  multiple, formatter, amount, amountRate, cFields, readonly }) => {
-  let result = pageData[field];
-  try {
-    if (_keys) {
-      result = getValFromKeys(_keys, pageData, type);
-    } else if (!isUndefined(value) && !result) {
-      result = value;
-    }
-    if (type === 'citySelect') {
-      result = getCityVal(_keys, cFields, result, pageData);
-    } else if (type === 'date' || type === 'datetime' || type === 'month') {
-      result = getRealDateVal(pageData, type, result, _keys, readonly, rangedate);
-    } else if (type === 'checkbox') {
-      result = getRealCheckboxVal(result);
-    } else if (multiple) {
-      result = result ? result.split(',') : [];
-    }
-    if (formatter) {
-      result = formatter(result, pageData);
-    } else if (amount) {
-      result = isUndefined(result) ? '' : moneyFormat(result, amountRate);
-    }
-  } catch (e) {}
+  multiple, formatter, amount, amountRate, cFields, readonly, listCode, selectData }) => {
+  let result;
+  pageData = isUndefined(pageData) ? {} : pageData;
+  if (pageData) {
+    result = pageData[field];
+    try {
+      if (_keys) {
+        result = getValFromKeys(_keys, pageData, type);
+      } else if (!isUndefined(value) && !result) {
+        result = value;
+      }
+      if (type === 'citySelect') {
+        result = getCityVal(_keys, cFields, result, pageData);
+      } else if (type === 'date' || type === 'datetime' || type === 'month') {
+        result = getRealDateVal(pageData, type, result, _keys, readonly, rangedate);
+      } else if (type === 'checkbox') {
+        result = getRealCheckboxVal(result);
+      } else if (multiple) {
+        result = result ? result.split(',') : [];
+      } else if (type === 'o2m') {
+        if (listCode) {
+          result = isUndefined(result) ? selectData[field] : result;
+        }
+        result = result || [];
+      }
+      if (formatter) {
+        result = formatter(result, pageData);
+      } else if (amount) {
+        result = isUndefined(result) ? '' : moneyFormat(result, amountRate);
+      }
+    } catch (e) {}
+  }
   return isUndefined(result) ? '' : result;
 };
 

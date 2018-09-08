@@ -22,8 +22,8 @@ export default class CTreeSelect extends React.Component {
     return this.isPropsChange(nextProps) || this.isStateChange(nextState);
   }
   isPropsChange(nextProps) {
-    const { field, isLoaded, rules, readonly, bParams, keyName,
-      valueName, getFieldValue, hidden, initVal, inline, list } = this.props;
+    const { field, isLoaded, rules, readonly, bParams, keyName, valueName,
+      getFieldValue, hidden, initVal, inline, list, getFieldError } = this.props;
     let nowValue = getFieldValue(field);
     let flag = this.prevValue !== nowValue;
     if (isUndefined(this.prevValue) || isUndefined(nowValue)) {
@@ -32,11 +32,32 @@ export default class CTreeSelect extends React.Component {
     if (flag) {
       this.prevValue = nowValue;
     }
+    let nowErr = getFieldError(field);
+    let errFlag = this.isErrChange(nowErr);
+    if (errFlag) {
+      this.prevErr = nowErr;
+    }
     return nextProps.field !== field || nextProps.isLoaded !== isLoaded ||
       nextProps.rules.length !== rules.length || nextProps.readonly !== readonly ||
       nextProps.bParams.length !== bParams.length || nextProps.keyName !== keyName ||
       nextProps.valueName !== valueName || nextProps.hidden !== hidden || flag ||
-      nextProps.initVal !== initVal || nextProps.inline !== inline || nextProps.list !== list;
+      nextProps.initVal !== initVal || nextProps.inline !== inline ||
+      nextProps.list !== list || errFlag;
+  }
+  // 控件的错误信息是否改变
+  isErrChange(nextErr) {
+    if (isUndefined(this.prevErr) || isUndefined(nextErr)) {
+      return isUndefined(this.prevErr) && isUndefined(nextErr) ? false : this.prevErr !== nextErr;
+    } else if (this.prevErr.length !== nextErr.length) {
+      return true;
+    }
+    let flag = false;
+    this.prevErr.forEach((e, i) => {
+      if (e !== nextErr[i]) {
+        flag = true;
+      }
+    });
+    return flag;
   }
   isStateChange(nextState) {
     return nextState.treeData.length !== this.state.treeData.length;
@@ -164,12 +185,14 @@ CTreeSelect.propTypes = {
   valueName: PropTypes.string.isRequired,
   field: PropTypes.string.isRequired,
   getFieldValue: PropTypes.func.isRequired,
+  getFieldError: PropTypes.func.isRequired,
   getFieldDecorator: PropTypes.func.isRequired
 };
 
 CTreeSelect.defaultProps = {
   label: 'title',
   field: 'key',
+  getFieldError: noop,
   getFieldDecorator: noop,
   hidden: false,
   inline: false,

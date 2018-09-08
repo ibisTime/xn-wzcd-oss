@@ -12,7 +12,8 @@ export default class CNormalTextArea extends React.Component {
     return this.isPropsChange(nextProps);
   }
   isPropsChange(nextProps) {
-    const { field, rules, readonly, getFieldValue, hidden, initVal, inline } = this.props;
+    const { field, rules, readonly, getFieldValue, hidden, initVal,
+      inline, getFieldError } = this.props;
     let nowValue = getFieldValue(field);
     let flag = this.prevValue !== nowValue;
     if (isUndefined(this.prevValue) || isUndefined(nowValue)) {
@@ -21,9 +22,29 @@ export default class CNormalTextArea extends React.Component {
     if (flag) {
       this.prevValue = nowValue;
     }
+    let nowErr = getFieldError(field);
+    let errFlag = this.isErrChange(nowErr);
+    if (errFlag) {
+      this.prevErr = nowErr;
+    }
     return nextProps.field !== field || nextProps.rules.length !== rules.length ||
       nextProps.readonly !== readonly || nextProps.hidden !== hidden || flag ||
-      nextProps.initVal !== initVal || nextProps.inline !== inline;
+      nextProps.initVal !== initVal || nextProps.inline !== inline || errFlag;
+  }
+  // 控件的错误信息是否改变
+  isErrChange(nextErr) {
+    if (isUndefined(this.prevErr) || isUndefined(nextErr)) {
+      return isUndefined(this.prevErr) && isUndefined(nextErr) ? false : this.prevErr !== nextErr;
+    } else if (this.prevErr.length !== nextErr.length) {
+      return true;
+    }
+    let flag = false;
+    this.prevErr.forEach((e, i) => {
+      if (e !== nextErr[i]) {
+        flag = true;
+      }
+    });
+    return flag;
   }
   render() {
     const { label, field, rules, readonly, hidden, getFieldDecorator,
@@ -59,12 +80,14 @@ CNormalTextArea.propTypes = {
   inline: PropTypes.bool,
   field: PropTypes.string.isRequired,
   getFieldValue: PropTypes.func.isRequired,
+  getFieldError: PropTypes.func.isRequired,
   getFieldDecorator: PropTypes.func.isRequired
 };
 
 CNormalTextArea.defaultProps = {
   label: 'title',
   field: 'key',
+  getFieldError: noop,
   getFieldDecorator: noop,
   hidden: false,
   inline: false
