@@ -1,37 +1,24 @@
-import React from 'react';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/loanstools/invoice-addedit';
 import {
     getQueryString,
-    moneyReplaceComma
+    showSucMsg,
+    getUserId,
+    padLeftZero,
+    moneyFormat
 } from 'common/js/util';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
-// import { COMPANY_CODE } from 'common/js/config';
+import fetch from 'common/js/fetch';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-    state => state.loanstoolsInvoiceAddedit, {
-        initStates,
-        doFetching,
-        cancelFetching,
-        setSelectData,
-        setPageData,
-        restore
-    }
-)
-class InvoiceAddedit extends React.Component {
+@Form.create()
+export default class InvoiceAddedit extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.hiddenStatus = true;
+        this.state = {
+          ...this.state,
+          hiddenStatus: true
+        };
     }
     render() {
         const fields = [{
@@ -67,7 +54,9 @@ class InvoiceAddedit extends React.Component {
             readonly: true,
             required: true,
             onChange: (value) => {
-                this.hiddenStatus = value === '1';
+                this.setState({
+                    hiddenStatus: value === '1'
+                });
             }
         }, {
             title: '是否垫资',
@@ -112,6 +101,13 @@ class InvoiceAddedit extends React.Component {
             title: '现发票价',
             field: 'currentInvoicePrice',
             required: true,
+            onChange: (v) => {
+                let money = this.state.pageData.loanAmount;
+                this.setState({
+                    ...this.state.pageData,
+                    PreCompanyLoanCs: moneyFormat((money / (v * 1000)) * 1000)
+                });
+            },
             amount: true
         }, {
             title: '准入贷款成数标准',
@@ -120,11 +116,26 @@ class InvoiceAddedit extends React.Component {
         }, {
             title: '新贷款成数',
             field: 'PreCompanyLoanCs',
-            formatter: (v, d) => {
-                let currentInvoicePrice = this.props.pageData.currentInvoicePrice;
-                return (d.loanAmount / currentInvoicePrice).toFixed(2);
-            },
             readonly: true
+        }, {
+            title: '车辆颜色',
+            field: 'carColor',
+            required: true
+        }, {
+            title: '车架号',
+            field: 'frameNo',
+            hidden: !this.state.hiddenStatus,
+            required: true,
+            readonly: !!this.state.pageData.frameNo
+        }, {
+            title: '交强险金额',
+            field: 'forceInsurance',
+            amount: true
+        }, {
+            title: '交强险',
+            field: 'forceInsurancePdf',
+            type: 'img',
+            required: true
         }, {
             title: '发票',
             field: 'invoice',
@@ -136,11 +147,6 @@ class InvoiceAddedit extends React.Component {
             required: true,
             type: 'img'
         }, {
-            title: '交强险',
-            field: 'forceInsurance',
-            type: 'img',
-            required: true
-        }, {
             title: '商业险',
             field: 'businessInsurance',
             required: true,
@@ -149,7 +155,7 @@ class InvoiceAddedit extends React.Component {
             title: '机动车登记证书',
             field: 'motorRegCertification',
             required: true,
-            hidden: this.hiddenStatus,
+            hidden: !this.state.hiddenStatus,
             type: 'img'
         }, {
             title: '批单',
@@ -160,7 +166,7 @@ class InvoiceAddedit extends React.Component {
             title: '备注',
             field: 'fbhRemark'
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
@@ -168,5 +174,3 @@ class InvoiceAddedit extends React.Component {
         });
     }
 }
-
-export default InvoiceAddedit;

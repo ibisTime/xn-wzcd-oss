@@ -42,7 +42,7 @@ class DataDict extends React.Component {
       field: 'dvalue',
       title: '字典值'
     }, {
-      field: 'updater',
+      field: 'updaterName',
       title: '更新人'
     },
     {

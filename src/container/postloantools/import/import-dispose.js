@@ -7,7 +7,7 @@ import {
     setPageData,
     restore
 } from '@redux/postloantools/import-dispose';
-import {getQueryString, showSucMsg, getUserId} from 'common/js/util';
+import {getQueryString, showSucMsg, getUserId, moneyFormat} from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {DetailWrapper} from 'common/js/build-detail';
 
@@ -27,13 +27,18 @@ class applyGpsAddedit extends React.Component {
         this.code = getQueryString('code', this.props.location.search);
         this.budgetOrderCode = getQueryString('budgetOrderCode', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.isSingle = false;
     }
 
     render() {
         const fields = [{
             title: '不匹配原因',
             field: 'applyUserName',
-            value: '信息不匹配',
+            type: 'select',
+            key: '11',
+            formatter: (v, d) => {
+                this.isSingle = v === '1';
+            },
             readonly: true
         }, {
             title: '导入日期',
@@ -72,7 +77,54 @@ class applyGpsAddedit extends React.Component {
             },
             keyName: 'code',
             valueName: '{{refCode.DATA}}-{{realName.DATA}}',
+            hidden: !this.isSingle,
             required: true
+        }, {
+            title: '对应业务列表',
+            field: '11',
+            hidden: this.isSingle,
+            type: 'o2m',
+            options: {
+                add: true,
+                edit: true,
+                fields: [{
+                    title: '业务编号',
+                    field: 'code',
+                    type: 'select',
+                    pageCode: 630520,
+                    params: {
+                        curNodeCodeList: ['020_01']
+                    },
+                    keyName: 'code',
+                    valueName: '{{refCode.DATA}}-{{realName.DATA}}',
+                    required: true,
+                    onChange: (v, data, props) => {
+                        props.setPageData({
+                            code: data.code,
+                            realName: data.realName,
+                            idNo: data.idNo,
+                            amount: moneyFormat(data.amount)
+                        });
+                    },
+                    noVisible: true
+                }, {
+                    title: '业务编号',
+                    field: 'code',
+                    hidden: true
+                }, {
+                    title: '客户姓名',
+                    field: 'realName',
+                    hidden: true
+                }, {
+                    title: '身份证号',
+                    field: 'idNo',
+                    hidden: true
+                }, {
+                    title: '逾期金额',
+                    field: 'amount',
+                    hidden: true
+                }]
+            }
         }];
         return this.props.buildDetail({
             fields,

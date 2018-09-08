@@ -59,6 +59,7 @@ class BudgetAddedit extends React.Component {
         this.isRateType = true;
         this.surcharge = true;
         this.isBankType = false;
+        this.haveRemark = false;
     }
 
     componentDidMount() {
@@ -522,10 +523,6 @@ class BudgetAddedit extends React.Component {
                             }
                         }
                     }
-                    // formatter: (v, data) => {
-                    //     this.rateType = data.rateType;
-                    //     return v;
-                    // }
                 }, {
                     title: '手续费收取方式',
                     field: 'bocFeeWay',
@@ -773,7 +770,14 @@ class BudgetAddedit extends React.Component {
                             field: 'azLocation',
                             type: 'select',
                             key: 'az_location',
+                            onChange: (v) => {
+                                this.haveRemark = v === '9';
+                            },
                             required: true
+                        }, {
+                            title: '备注',
+                            field: 'remark',
+                            hidden: !this.haveRemark
                         }]
                     }
                 }]
@@ -1057,6 +1061,7 @@ class BudgetAddedit extends React.Component {
                 [{
                     title: '驾照',
                     field: 'driceLicense',
+                    // hidden: !this.ywjz && this.shopWay,
                     hidden: !this.ywjz,
                     type: 'img',
                     required: true

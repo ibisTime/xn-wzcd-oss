@@ -62,6 +62,11 @@ class TakeEnter extends React.Component {
       field: 'zfReason',
       hidden: this.isZfReason,
       required: true
+    }, {
+      title: '打款凭证',
+      field: 'billPdf',
+      type: 'img',
+      required: true
     }];
     return this.props.buildDetail({
       fields,

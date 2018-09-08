@@ -58,11 +58,6 @@ class TakeFinance extends React.Component {
             type: 'date',
             required: true
         }, {
-            title: '付款水单',
-            field: 'billPdf',
-            type: 'img',
-            required: true
-        }, {
             title: '审核意见',
             field: 'approveNote',
             type: 'textarea',

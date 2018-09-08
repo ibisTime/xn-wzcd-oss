@@ -262,3 +262,10 @@ export function goOtherUrl(code) {
     code
   });
 }
+// 提前结清 根据后台返回跳转不同页面
+export function deleteList(codeList) {
+  return fetch(632302, {
+    codeList,
+    operator: getUserId()
+  });
+}

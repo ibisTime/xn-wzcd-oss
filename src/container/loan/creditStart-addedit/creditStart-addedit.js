@@ -39,9 +39,13 @@ class CreditStartAddedit extends React.Component {
         this.view = !!getQueryString('v', this.props.location.search);
         this.newCar = true;
         this.buttons = [];
+        this.state = {
+            haveRemark: false
+        };
     }
 
     render() {
+        const _this = this;
         let o2mFields = [{
             title: '姓名',
             field: 'userName',
@@ -367,12 +371,23 @@ class CreditStartAddedit extends React.Component {
                 o2mFields = o2mFields.concat([{
                     title: '法院网查询结果',
                     field: 'courtNetworkResults',
-                    type: 'textarea',
-                    normalArea: true,
+                    type: 'select',
+                    key: 'court_network_results',
                     required: true,
                     readonly: !this.isCheckFirst,
                     hidden: !this.view,
-                    noVisible: true
+                    noVisible: true,
+                    onChange: (v) => {
+                        _this.setState({
+                            haveRemark: v === '99'
+                        });
+                    }
+                }, {
+                    title: '备注',
+                    field: 'remark',
+                    required: true,
+                    readonly: !this.isCheckFirst,
+                    hidden: !_this.state.haveRemark
                 }]);
             }
         }
@@ -429,6 +444,34 @@ class CreditStartAddedit extends React.Component {
                 checkName: '录入',
                 scroll: {x: 1300},
                 fields: o2mFields
+            }
+        }, {
+            title: '征信银行卡变更记录',
+            field: 'creditChangeRecordList',
+            type: 'o2m',
+            options: {
+                rowKey: 'id',
+                noSelect: true,
+                fields: [{
+                    title: '现征信编号',
+                    field: 'nowCreditCode'
+                }, {
+                    title: '原征信编号',
+                    field: 'rawCreditCode'
+                }, {
+                    title: '更新人',
+                    field: 'operatorName'
+                }, {
+                    title: '更新时间',
+                    field: 'updateDatetime',
+                    type: 'date'
+                }, {
+                    title: '现贷款银行名称',
+                    field: 'nowLoanBankName'
+                }, {
+                    title: '原贷款银行名称',
+                    field: 'rawLoanBankName'
+                }]
             }
         }, {
             title: '流程日志',

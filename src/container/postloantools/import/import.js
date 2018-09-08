@@ -14,13 +14,14 @@ import {
   showSucMsg
 } from 'common/js/util';
 import {
+    Modal
+} from 'antd';
+import {
+    deleteList
+} from 'api/biz';
+import {
     listWrapper
 } from 'common/js/build-list';
-import {
-  lowerFrame,
-  onShelf,
-  sendMsg
-} from 'api/biz';
 
 @listWrapper(
     state => ({
@@ -91,6 +92,10 @@ class imports extends React.Component {
         return this.props.buildList({
             fields,
             pageCode: 632305,
+            singleSelect: false,
+            searchParams: {
+                status: '0'
+            },
             btnEvent: {
               import: (selectedRowKeys, selectedRows) => {
                   this.props.history.push(`/postloantools/import/import`);
@@ -105,6 +110,32 @@ class imports extends React.Component {
                 } else {
                   this.props.history.push(`/postloantools/import/dispose?code=${selectedRowKeys[0]}`);
                 }
+              },
+              deleteList: (key, item) => {
+                  if (!key || !key.length || !item || !item.length) {
+                      showWarnMsg('请选择记录');
+                  } else {
+                      Modal.confirm({
+                          okText: '确认',
+                          cancelText: '取消',
+                          content: '确定理件完成？',
+                          onOk: () => {
+                              this.props.doFetching();
+                              let list = [];
+                              for(let i = 0, len = item.length; i < len; i++) {
+                                  list.push(item[i].code);
+                              }
+                              return deleteList(list).then(() => {
+                                  showSucMsg('操作成功');
+                                  setTimeout(() => {
+                                      this.props.getPageData();
+                                  }, 500);
+                              }).catch(() => {
+                                  this.props.cancelFetching();
+                              });
+                          }
+                      });
+                  }
               }
             }
         });

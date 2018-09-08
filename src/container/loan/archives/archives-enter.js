@@ -70,10 +70,6 @@ class ArchivesAddedit extends React.Component {
                 field: 'engineNo',
                 readonly: true
             }, {
-                title: '交强险',
-                field: 'forceInsurance',
-                amount: true
-            }, {
                 title: '商业险合计',
                 field: 'commerceInsurance',
                 amount: true,

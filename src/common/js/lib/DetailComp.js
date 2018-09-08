@@ -95,7 +95,9 @@ export default class DetailComponent extends React.Component {
     componentDidMount() {
         let _this = this;
         // 对页面的富文本进行处理，添加config
+        // Object.keys(this.textareas) 这个对象所有可枚举属性的字符串数组。
         Object.keys(this.textareas).forEach(v => {
+            // 富文本属性  对应着一个个富文本内部标签的ID？
             let elem = document.getElementById(v);
             if (!elem) {
                 return;
@@ -149,18 +151,27 @@ export default class DetailComponent extends React.Component {
             ...this.options,
             ...options
         };
+        // 如果有useData这个属性。。。。。
         if (this.options.useData) {
+            // 这是干嘛？？？
             this.props.initStates({code: this.options.code, view: this.options.view});
             this.props.setPageData(this.options.useData);
+        // 第一次加载页面
         } else if (this.first) {
+            // 前两个为真 执行最后一个函数
             this.options.code && this.options.detailCode && this.getDetailInfo();
+            // this.props.initStates这个方法是继承过来的？？？？貌似是控制页面只读的 传code有啥用？
             this.props.initStates({code: this.options.code, view: this.options.view});
         }
         const children = [];
         this.options.fields.forEach(f => {
+            // 判断是否只读， 那么f.readonly 有这个属性后 最终在哪里弄得样式呢 框架给的readonly?
             f.readonly = isUndefined(f.readonly) ? this.options.view : f.readonly;
+            // 判断是不是市选择
             if (f.type === 'citySelect') {
+                // 初始化cFields 省市区
                 f.cFields = f.cFields || ['province', 'city', 'area'];
+                // 判断是否下拉多选，多选框， 省分选
             } else if (f.type === 'select' || f.type === 'checkbox' || f.type === 'provSelect') {
                 f.keyName = f.keyName || 'dkey';
                 f.valueName = f.valueName || 'dvalue';
@@ -174,12 +185,18 @@ export default class DetailComponent extends React.Component {
                         label: c.label
                     }));
                 }
+                // 如果对象的data数据为空
                 if (!f.data) {
+                    // 获取对象data数据
                     f.data = this.props.selectData[f.field];
+                    // 如果第一次加载 为当前字段所属的对象属性data赋值
                     this.first && this.getSelectData(f);
+                // 如果selectData中这个对象的data为空
                 } else if (!this.props.selectData[f.field]) {
+                    // 请求数据塞到selectData里面去
                     this.props.setSelectData({data: f.data, key: f.field});
                 }
+            // 如果是下拉树形选择框
             } else if (f.type === 'treeSelect') {
                 if (!f.data) {
                     f.data = this.props.selectData[f.field];
@@ -187,6 +204,7 @@ export default class DetailComponent extends React.Component {
                 } else if (!this.props.selectData[f.field]) {
                     this.props.setSelectData({data: f.data, key: f.field});
                 }
+            // 如果是O2M并且listCode 并且页面第一次加载
             } else if (f.type === 'o2m' && f.listCode && this.first) {
                 this.getO2MDatas(f);
             }
@@ -196,11 +214,13 @@ export default class DetailComponent extends React.Component {
         this.first = false;
         return this.getPageComponent(children);
     }
+    // 02m 请求listCode 接口渲染数据
     getO2MDatas(item) {
         item.params = item.params || {};
         fetch(item.listCode, item.params).then((data) => {
             this.props.setPageData({
                 ...this.props.pageData,
+                // 为o2m的field赋值
                 [item.field]: data
             });
         });
@@ -387,20 +407,26 @@ export default class DetailComponent extends React.Component {
     getUploadData = (file) => {
         return {token: this.state.token};
     }
-
+    // 获取详情页的pageData数据
     getDetailInfo() {
         let key = this.options.key || 'code';
         let param = {[key]: this.options.code};
+        // ??????
         this.options.beforeDetail && this.options.beforeDetail(param);
         this.props.doFetching();
+        // 去请求详情页接口 this.options.detailCode是接口号 param={code: '111'}
         fetch(this.options.detailCode, param).then(data => {
             this.props.cancelFetching();
+            // this.props.pageData这个在哪里初始化的
             let keys = Object.keys(this.props.pageData);
+            // 如果这个this.props.pageData 不是一个空对象
             if (keys.length) {
+                // 将请求回的数据扩展进this.props.pageData
                 this.props.setPageData({
                     ...this.props.pageData,
                     ...data
                 });
+            // 如果this.props.pageData是一个空对象，将请求 回来的数据赋值给this.props.pageData
             } else {
                 this.props.setPageData(data);
             }
@@ -461,13 +487,19 @@ export default class DetailComponent extends React.Component {
     // 获取select框的数据
     getSelectData(item) {
         if (item.key) {
+            // 请求数据字典
             getDictList({parentKey: item.key, bizType: item.keyCode}).then(data => {
+                // 将数据字典返回的list赋值给这个字段所属的对象  传这个key的作用就是把数据赋值给这个字段所属的对象
                 this.props.setSelectData({data, key: item.field});
             }).catch(() => {
             });
+        // 如果是listCode这种情况
         } else if (item.listCode) {
+            // 初始化入参
             let param = item.params || {};
+            // 请求listCode这个接口
             fetch(item.listCode, param).then(data => {
+                // 将数据字典返回的list赋值给这个字段所属的对象  传这个key的作用就是把数据赋值给这个字段所属的对象
                 this.props.setSelectData({data, key: item.field});
             }).catch(() => {
             });
@@ -576,11 +608,15 @@ export default class DetailComponent extends React.Component {
             </Spin>
         );
     }
-
+    // 这个方法很神秘 请见下回分解
     getItemByType(type, item) {
+        // 将this.props.form.getFieldDecorator 解构赋值给 getFieldDecorator
         const {getFieldDecorator} = this.props.form;
+        // 规则判断
         let rules = this.getRules(item);
+        // 获取item对象的真实值
         let initVal = this.getRealValue(item);
+        // 根据对象的type 格式化数据
         switch (type) {
             case 'o2m':
                 return this.getTableItem(item, initVal, rules, getFieldDecorator);
@@ -1533,69 +1569,98 @@ export default class DetailComponent extends React.Component {
 
     // 获取修改、详情页每个输入框的真实值
     getRealValue(item, info) {
+        // 初始化info
         info = info || this.props.pageData;
+        // 获取字段的值
         let result = info[item.field];
         try {
+            // 如果有_keys属性
             if (item._keys) {
+                // 将_keys的值覆盖result
                 result = this.getValFromKeys(item);
+            // item.value是什么？？？
             } else if (!isUndefined(item.value) && !result) {
                 result = item.value;
             }
+            // 上面那个是生成城市选择器，这个是取拿值
             if (item.type === 'citySelect') {
+                // 得到省市或者省市区
                 result = this.getCityVal(item, result);
+            // 如果是日期
             } else if (item.type === 'date' || item.type === 'datetime' || item.type === 'month') {
                 result = this.getRealDateVal(item, result);
+            // 如果是多选盒子
             } else if (item.type === 'checkbox') {
                 result = this.getRealCheckboxVal(item, result);
+            // 如果是多选
             } else if (item.multiple) {
+                // 将字符串转换数组去渲染
                 result = result ? result.split(',') : [];
             }
+            // 如果有formatter方法 result为formatter返回值
             if (item.formatter) {
                 result = item.formatter(result, this.props.pageData);
+            // 如果有amount属性 将数字除1000
             } else if (item.amount) {
+                // item.amountRate是什么？？？？
                 result = isUndefined(result) ? '' : moneyFormat(result, item.amountRate);
             }
         } catch (e) {
         }
+        // 如果undefined转化为空字符串
         return isUndefined(result) ? '' : result; // this.options.view ? '' :
     }
-
+    // 返回多选盒子的实际值
     getRealCheckboxVal(item, result) {
+        // 将字符串转换数组去渲染
         return result ? result.split(',') : [];
     }
-
+    // 获取日期的实际值
     getRealDateVal(item, result) {
+        // 日期格式化的 格式
         let format = item.type === 'date' ? DATE_FORMAT : item.type === 'month' ? MONTH_FORMAT : DATETIME_FORMAT;
+        // 日期格式化的方法
         let format1 = item.type === 'date' ? dateFormat : item.type === 'month' ? monthFormat : dateTimeFormat;
         let readonly = this.options.view || item.readonly;
+        // 判断只读
         if (readonly) {
             return item.rangedate
                 ? this.getRangeDateVal(item, result, format, format1, readonly)
                 : result ? format1(result, format) : null;
         }
+        // 返回日期选择器
         return item.rangedate
             ? this.getRangeDateVal(item, result, format, format1)
             : result ? moment(dateTimeFormat(result), format) : null;
     }
-
+    // 获取两段日期的值
     getRangeDateVal(item, result, format, fn, readonly) {
+        // 为啥会有一个_keys？？？
         let dates = item._keys && result ? result : this.props.pageData;
         let start = dates[item.rangedate[0]];
         let end = dates[item.rangedate[1]];
+        // 只读
         if (readonly) {
             return start ? fn(start, format) + '~' + fn(end, format) : null;
         }
+        // 不是只读 返回日期选择器
         return start ? [moment(fn(start), format), moment(fn(end), format)] : null;
     }
-
+    // 获取城市选择器的值
     getCityVal(item, result) {
+        // ???为啥会有一个item._keys
         let cData = item._keys && result ? result : this.props.pageData;
+        // 省
         let prov = cData[item.cFields[0]];
+        // 如果没有区
         if (item.noArea) {
+            // 获取市
             let city = cData[item.cFields[1]] ? cData[item.cFields[1]] : '全部';
             result = [prov, city];
         } else if (prov) {
+            // 获取市
             let city = cData[item.cFields[1]] ? cData[item.cFields[1]] : '全部';
+            // 获取区
             let area = cData[item.cFields[2]] ? cData[item.cFields[2]] : '全部';
             result = [prov, city, area];
         } else {
@@ -1603,13 +1668,16 @@ export default class DetailComponent extends React.Component {
         }
         return result;
     }
-
+    // 解析 _keys['obj', 'field']的field的值
     getValFromKeys(item) {
+        // 拷贝pageData
         let _value = {...this.props.pageData};
         let emptyObj = {};
         item._keys.forEach(key => {
+            // 如果有值 返回找的的值没有返回空对象
             _value = isUndefined(_value[key]) ? emptyObj : _value[key];
         });
+        // 如果是图片或者文件并且得到的值是空对象 返回空对象 否则返回这个值
         return (item.type === 'img' || item.type === 'file') && _value === emptyObj ? '' : _value;
     }
 
@@ -1680,7 +1748,7 @@ export default class DetailComponent extends React.Component {
     getInputItemProps() {
         return formItemLayout;
     }
-
+    // 判断规则
     getRules(item) {
         let rules = [];
         if (item.required && !item.hidden) {

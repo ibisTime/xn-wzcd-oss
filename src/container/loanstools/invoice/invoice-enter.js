@@ -1,40 +1,23 @@
-import React from 'react';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/loanstools/invoice-enter';
 import {
     getQueryString,
     showSucMsg,
     getUserId,
-    padLeftZero,
     moneyFormat
 } from 'common/js/util';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
 import fetch from 'common/js/fetch';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-    state => state.loanstoolsInvoiceEnter, {
-        initStates,
-        doFetching,
-        cancelFetching,
-        setSelectData,
-        setPageData,
-        restore
-    }
-)
-class InvoiceEnter extends React.Component {
+@Form.create()
+export default class InvoiceEnter extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.hiddenStatus = true;
+        this.state = {
+          ...this.state,
+          hiddenStatus: true
+        };
     }
     render() {
         const fields = [{
@@ -70,7 +53,9 @@ class InvoiceEnter extends React.Component {
             readonly: true,
             required: true,
             onChange: (value) => {
-                this.hiddenStatus = value === '1';
+                this.setState({
+                    hiddenStatus: value === '1'
+                });
             }
         }, {
             title: '是否垫资',
@@ -116,9 +101,9 @@ class InvoiceEnter extends React.Component {
             field: 'currentInvoicePrice',
             required: true,
             onChange: (v) => {
-                let money = this.props.pageData.loanAmount;
-                this.props.setPageData({
-                    ...this.props.pageData,
+                let money = this.state.pageData.loanAmount;
+                this.setState({
+                    ...this.state.pageData,
                     PreCompanyLoanCs: moneyFormat((money / (v * 1000)) * 1000)
                 });
             },
@@ -132,8 +117,22 @@ class InvoiceEnter extends React.Component {
             field: 'PreCompanyLoanCs',
             readonly: true
         }, {
-            title: '交强险',
+            title: '车辆颜色',
+            field: 'carColor',
+            required: true
+        }, {
+            title: '车架号',
+            field: 'frameNo',
+            hidden: !this.state.hiddenStatus,
+            required: true,
+            readonly: !!this.state.pageData.frameNo
+        }, {
+            title: '交强险金额',
             field: 'forceInsurance',
+            amount: true
+        }, {
+            title: '交强险',
+            field: 'forceInsurancePdf',
             type: 'img',
             required: true
         }, {
@@ -155,7 +154,7 @@ class InvoiceEnter extends React.Component {
             title: '机动车登记证书',
             field: 'motorRegCertification',
             required: true,
-            hidden: this.hiddenStatus,
+            hidden: !this.state.hiddenStatus,
             type: 'img'
         }, {
             title: '批单',
@@ -166,7 +165,7 @@ class InvoiceEnter extends React.Component {
             title: '备注',
             field: 'fbhRemark'
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
@@ -177,14 +176,14 @@ class InvoiceEnter extends React.Component {
                 handler: (params) => {
                     params.code = this.code;
                     params.operator = getUserId();
-                    this.props.doFetching();
+                    this.doFetching();
                     fetch(632220, params).then(() => {
                         showSucMsg('操作成功');
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    }).catch(() => this.props.cancelFetching);
                 }
             }, {
                 title: '返回',
@@ -195,5 +194,3 @@ class InvoiceEnter extends React.Component {
         });
     }
 }
-
-export default InvoiceEnter;
