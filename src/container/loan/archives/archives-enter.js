@@ -59,6 +59,9 @@ class ArchivesAddedit extends React.Component {
             }, {
                 title: '车辆品牌(品牌车型)',
                 field: 'carBrand',
+                formatter: (v, d) => {
+                    return d.carBrand + d.carModel;
+                },
                 readonly: true
             }, {
                 title: '车架号码',

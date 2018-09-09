@@ -33,9 +33,9 @@ class applyGpsAddedit extends React.Component {
     render() {
         const fields = [{
             title: '不匹配原因',
-            field: 'applyUserName',
+            field: 'notMateResult',
             type: 'select',
-            key: '11',
+            key: 'not_mate_result',
             formatter: (v, d) => {
                 this.isSingle = v === '1';
             },
@@ -89,7 +89,7 @@ class applyGpsAddedit extends React.Component {
                 edit: true,
                 fields: [{
                     title: '业务编号',
-                    field: 'code',
+                    field: 'code1',
                     type: 'select',
                     pageCode: 630520,
                     params: {

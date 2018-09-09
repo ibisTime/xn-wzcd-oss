@@ -107,7 +107,7 @@ export default class ListComponent extends React.Component {
                 };
                 this.addRender(f, dateListFormat);
             }
-        } else if (f.type === 'select' || f.type === 'provSelect') {
+        } else if (f.type === 'select' || f.type === 'provSelect' || f.type === 'citySelect') {
             if (f.key) {
                 f.keyName = f.keyName || 'dkey';
                 f.valueName = f.valueName || 'dvalue';
@@ -506,6 +506,7 @@ export default class ListComponent extends React.Component {
     getItemByType(type, item) {
         switch (type) {
             case 'provSelect':
+            case 'citySelect':
             case 'select':
                 return item.pageCode ? this.getSearchSelectItem(item) : this.getSelectItem(item);
             case 'date':

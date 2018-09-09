@@ -1062,7 +1062,7 @@ class BudgetAddedit extends React.Component {
                     title: '驾照',
                     field: 'driceLicense',
                     // hidden: !this.ywjz && this.shopWay,
-                    // hidden: !this.ywjz,
+                    hidden: !this.ywjz,
                     type: 'img',
                     required: true
                 }, {
