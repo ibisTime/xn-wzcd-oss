@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Button, Spin, Modal, Carousel, Tooltip, Icon } from 'antd';
+import { Form, Button, Spin, Modal, Carousel, Tooltip,
+  Icon, Collapse, Row, Col } from 'antd';
 import { getDictList } from 'api/dict';
 import { getQiniuToken } from 'api/general';
 import {
@@ -23,6 +24,15 @@ import CCheckbox from 'component/cCheckbox/cCheckbox';
 import CTreeSelect from 'component/cTreeSelect/cTreeSelect';
 
 const { Item: FormItem } = Form;
+const { Panel } = Collapse;
+const col1Props = { xs: 32, sm: 24, md: 24, lg: 24 };
+const col2Props = { xs: 32, sm: 24, md: 12, lg: 12 };
+const col3Props = { xs: 32, sm: 24, md: 12, lg: 8 };
+const col33Props = { xs: 32, sm: 24, md: 24, lg: 8 };
+const col4Props = { xs: 32, sm: 24, md: 12, lg: 6 };
+const col5Props = { xs: 32, sm: 24, md: 12, lg: 5 };
+const col55Props = { xs: 32, sm: 24, md: 12, lg: 4 };
+let lengthList = [];
 
 export default class DetailCompDev extends React.Component {
   constructor(props) {
@@ -45,7 +55,7 @@ export default class DetailCompDev extends React.Component {
     this.first = true;
     this.textareas = {};
   }
-  componentDidMount() {
+  initPageData() {
     let firstFn = [];
     if (this.options.useData) {
       firstFn = Promise.resolve(this.options.useData);
@@ -111,10 +121,7 @@ export default class DetailCompDev extends React.Component {
     }).catch(() => {});
   }
   buildDetail(options) {
-    // this.options = this.options ? this.options : options;
     this.options = { ...this.options, ...options };
-    console.log(this.options);
-    const children = [];
     if (!this.first && this.options.useData !== undefined) {
       if (!this.state.pageData) {
         if (this.options.useData) {
@@ -129,33 +136,101 @@ export default class DetailCompDev extends React.Component {
         }
       }
     }
-    this.options.fields.forEach(f => {
-      f.readonly = isUndefined(f.readonly) ? this.options.view : f.readonly;
-      if (f.type === 'citySelect') {
-        f.cFields = f.cFields || ['province', 'city', 'area'];
-      } else if (f.type === 'select' || f.type === 'checkbox' || f.type === 'provSelect') {
-        f.keyName = f.keyName || 'dkey';
-        f.valueName = f.valueName || 'dvalue';
-        if (f.type === 'provSelect') {
-          f.keyName = 'value';
-          f.valueName = 'label';
-          f.data = cityData.map(c => ({
-            value: c.value,
-            label: c.label
-          }));
+    let pageComp;
+    if (this.options.type === 'collapse') {
+      pageComp = this.buildCollapseDetail();
+    } else {
+      pageComp = this.buildNormalDetail();
+    }
+    if (this.first) {
+      setTimeout(() => {
+        this.initPageData();
+      }, 20);
+    }
+    this.first = false;
+    return pageComp;
+  }
+  // 构建collapse详情页
+  buildCollapseDetail() {
+    this.fields = [];
+    const children = [];
+    lengthList = ['0'];
+    this.options.fields.forEach((field, i) => {
+      let comp;
+      if (field.items) {
+        if (i !== 0 && field.open) {
+          lengthList.push(String(i));
         }
-        this.first && this.fetchList.push(f);
-      } else if (f.type === 'treeSelect') {
-        this.first && this.fetchList.push(f);
-      } else if (f.type === 'o2m' && f.listCode && this.first) {
-        this.first && this.fetchList.push(f);
+        comp = (
+          <Panel header={field.title} key={i} className={field.hidden ? 'hidden' : ''}>{
+            field.items.map((fld, k) => (
+              <Row gutter={24} key={k}>{
+                fld.map((f, j) => {
+                  f.inline = true;
+                  this.fields.push(f);
+                  this.judgeFieldType(f);
+                  let props = this.getColProps(fld, j);
+                  return (
+                    <Col {...props} key={f.field}>
+                      {this.getItemByType(f.type, f)}
+                    </Col>);
+                })}
+              </Row>
+            ))
+          }</Panel>
+        );
+        children.push(comp);
       }
+    });
+    return this.getPageComponent(children);
+  }
+  // 获取collapse的属性
+  getColProps(arr, idx) {
+    return arr.length === 1 ? col1Props
+      : arr.length === 2
+        ? col2Props
+        : arr.length === 3
+          ? idx < 2 ? col3Props : col33Props
+          : arr.length === 4
+            ? col4Props
+            : arr.length === 5
+              ? idx < 4 ? col5Props : col55Props
+              : col1Props;
+  }
+  // 构建普通的详情页
+  buildNormalDetail() {
+    const children = [];
+    this.options.fields.forEach(f => {
+      this.judgeFieldType(f);
       children.push(this.getItemByType(f.type, f));
     });
     children.push(this.getBtns(this.options.buttons));
-    this.first = false;
     return this.getPageComponent(children);
   }
+  // 根据field的type做预处理
+  judgeFieldType(f) {
+    f.readonly = isUndefined(f.readonly) ? this.options.view : f.readonly;
+    if (f.type === 'citySelect') {
+      f.cFields = f.cFields || ['province', 'city', 'area'];
+    } else if (f.type === 'select' || f.type === 'checkbox' || f.type === 'provSelect') {
+      f.keyName = f.keyName || 'dkey';
+      f.valueName = f.valueName || 'dvalue';
+      if (f.type === 'provSelect') {
+        f.keyName = 'value';
+        f.valueName = 'label';
+        f.data = cityData.map(c => ({
+          value: c.value,
+          label: c.label
+        }));
+      }
+      this.first && this.fetchList.push(f);
+    } else if (f.type === 'treeSelect') {
+      this.first && this.fetchList.push(f);
+    } else if (f.type === 'o2m' && f.listCode && this.first) {
+      this.first && this.fetchList.push(f);
+    }
+  }
+  // 设置详情页数据
   setPageData(data) {
     this.setState({ pageData: this.options.useData }, () => {
       this.setState({ isLoaded: true });
@@ -166,7 +241,18 @@ export default class DetailCompDev extends React.Component {
     return (
       <Spin spinning={this.state.fetching}>
         <Form className="detail-form-wrapper" onSubmit={this.handleSubmit}>
-          {children}
+          {
+            this.options.type === 'collapse' ? (
+              <div>
+                <Collapse defaultActiveKey={lengthList}>
+                  {children}
+                </Collapse>
+                <div style={{marginTop: 20}}>
+                  {this.getBtns(this.options.buttons)}
+                </div>
+              </div>
+            ) : children
+          }
         </Form>
       </Spin>
     );
@@ -511,8 +597,11 @@ export default class DetailCompDev extends React.Component {
     areaKeys.forEach(v => values[v] = this.textareas[v].editorContent);
     let key = this.options.key || 'code';
     values[key] = isUndefined(values[key]) ? this.options.code || '' : values[key];
-    let fields = this.fields || this.options.fields;
+    let fields = this.options.type === 'collapse' ? this.fields : this.options.fields;
     fields.forEach(v => {
+      if (v.readonly) {
+        return;
+      }
       if (v.amount) {
         values[v.field] = moneyParse(values[v.field], v.amountRate);
       } else if (v.type === 'citySelect') {
@@ -551,16 +640,9 @@ export default class DetailCompDev extends React.Component {
   // 保存并校验错误
   customSubmit = (handler) => {
     let fieldsList = [];
-    this.options.fields.forEach(v => {
-      if (v.items && !v.hidden) {
-        v.items.forEach(v1 => {
-          v1.forEach(v2 => {
-            if (!v2.readonly) {
-              fieldsList.push(v2.field);
-            }
-          });
-        });
-      } else {
+    let fields = this.options.type === 'collapse' ? this.fields : this.options.fields;
+    fields.forEach(v => {
+      if (!v.readonly) {
         fieldsList.push(v.field);
       }
     });
