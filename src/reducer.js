@@ -344,9 +344,10 @@ import { loanstoolsTakeAddedit } from './redux/loanstools/take-addedit';
 import { loanstoolsTakeEnter } from './redux/loanstools/take-enter';
 import { loanstoolsTakeFinance } from './redux/loanstools/take-finance';
 
-//  收回预算款 + 详情 + 申请 + 审核 + 确认
+//  收回预算款 + 详情 + 打款回录 + 确认收款
 import { loanstoolsTakeEstimate } from './redux/loanstools/takeEstimate';
 import { loanstoolsTakeEstimateAddedit } from './redux/loanstools/takeEstimate-addedit';
+import { loanstoolsTakeEstimateEnter } from './redux/loanstools/takeEstimate-enter';
 import { loanstoolsTakeEstimateCertain } from './redux/loanstools/takeEstimate-certain';
 
 //  收回手续费 + 详情 + 收款回录
@@ -812,6 +813,7 @@ export default combineReducers({
   loanstoolsTakeFinance,
   loanstoolsTakeEstimate,
   loanstoolsTakeEstimateAddedit,
+  loanstoolsTakeEstimateEnter,
   loanstoolsTakeEstimateCertain,
   loanstoolsTakeFree,
   loanstoolsTakeFreeAddedit,

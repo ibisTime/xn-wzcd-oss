@@ -32,7 +32,8 @@ class BudgetDetail extends React.Component {
             sfData: null,
             sfDataFetch: false,
             oilSubsidyValue: null,
-            gpsDeductValue: null
+            gpsDeductValue: null,
+            isRemark: false
         };
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
@@ -1319,12 +1320,23 @@ class BudgetDetail extends React.Component {
         }
 
         let checkFields = [{
-            field: 'approveNote',
             title: '审核意见',
-            type: 'textarea',
-            normalArea: true,
-            readonly: false,
-            required: true
+            field: 'approveNote',
+            readonly: !this.isAreaCheck && !this.isCompCheck && !this.isCheck,
+            required: true,
+            type: 'select',
+            key: 'approve_note',
+            onChange: (v) => {
+                this.setState({
+                    isRemark: v === '99'
+                });
+            }
+        }, {
+            title: '备注',
+            field: 'remark',
+            readonly: !this.isAreaCheck && !this.isCompCheck && !this.isCheck,
+            required: true,
+            hidden: !this.state.isRemark
         }];
 
         if (this.isAreaCheck || this.isCompCheck || this.isCheck) {

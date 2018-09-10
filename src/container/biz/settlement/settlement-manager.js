@@ -27,7 +27,8 @@ export default class SettlementManager extends DetailUtil {
         this.state = {
           ...this.state,
           haveDepositReceipt: false,
-          haveDepositReceiptLostProof: false
+          haveDepositReceiptLostProof: false,
+          isRemark: false
         };
     }
     render() {
@@ -185,7 +186,19 @@ export default class SettlementManager extends DetailUtil {
         }, {
             title: '审核意见',
             field: 'approveNote',
-            required: true
+            required: true,
+            type: 'select',
+            key: 'approve_note',
+            onChange: (v) => {
+                this.setState({
+                    isRemark: v === '99'
+                });
+            }
+        }, {
+            title: '备注',
+            field: 'remark',
+            required: true,
+            hidden: !this.state.isRemark
         }];
         return this.buildDetail({
             fields,

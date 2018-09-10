@@ -11,8 +11,8 @@ import {
 } from '@redux/loanstools/refund';
 import {
     showWarnMsg,
-    showSucMsg,
-    getRoleCode
+    getRoleCode,
+    getCompanyCode
 } from 'common/js/util';
 import {
     listWrapper
@@ -81,7 +81,8 @@ class refund extends React.Component {
             fields,
             pageCode: 632148,
             searchParams: {
-                roleCode: getRoleCode()
+                roleCode: getRoleCode(),
+                currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
                 certain: (selectedRowKeys, selectedRows) => {

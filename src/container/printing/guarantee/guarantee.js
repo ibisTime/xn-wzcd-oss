@@ -12,7 +12,8 @@ import {
 import {
     showWarnMsg,
     showSucMsg,
-    getRoleCode
+    getRoleCode,
+    getCompanyCode
 } from 'common/js/util';
 import {
     listWrapper
@@ -99,7 +100,8 @@ class Guarantee extends React.Component {
             pageCode: 632148,
             searchParams: {
               roleCode: getRoleCode(),
-              curNodeCodeList: ['007_03']
+              curNodeCodeList: ['007_03'],
+              currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
                 make: (selectedRowKeys, selectedRows) => {

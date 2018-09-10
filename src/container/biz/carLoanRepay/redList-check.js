@@ -25,7 +25,8 @@ export default class redListCheck extends DetailUtil {
         this.view = !!getQueryString('v', this.props.location.search);
         this.state = {
           ...this.state,
-          isPawnshopName: true
+          isPawnshopName: true,
+          isRemark: false
         };
     }
     render() {
@@ -155,11 +156,21 @@ export default class redListCheck extends DetailUtil {
                 }]
             }
         }, {
-            title: '审核说明',
+            title: '审核意见',
+            field: 'approveNote',
+            required: true,
+            type: 'select',
+            key: 'approve_note',
+            onChange: (v) => {
+                this.setState({
+                    isRemark: v === '99'
+                });
+            }
+        }, {
+            title: '备注',
             field: 'remark',
-            type: 'textarea',
-            normalArea: true,
-            required: true
+            required: true,
+            hidden: !this.state.isRemark
         }];
         return this
             .buildDetail({

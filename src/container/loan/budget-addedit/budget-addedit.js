@@ -54,7 +54,8 @@ class BudgetAddedit extends React.Component {
             oilSubsidyValue: null,
             gpsDeductValue: null,
             loanPeriodsData: null,
-            promptFlag: this.isApply
+            promptFlag: this.isApply,
+            isRemark: false
         };
         this.isRateType = true;
         this.surcharge = true;
@@ -1037,9 +1038,9 @@ class BudgetAddedit extends React.Component {
                     }],
                     keyName: 'key',
                     valueName: 'value',
-                    // onChange: (v, data) => {
-                    //     this.ywjz = v === '1';
-                    // },
+                    onChange: (v, data) => {
+                        this.ywjz = v === '1';
+                    },
                     required: true
                 }, {
                     title: '提供场地证明',
@@ -1061,7 +1062,6 @@ class BudgetAddedit extends React.Component {
                 [{
                     title: '驾照',
                     field: 'driceLicense',
-                    // hidden: !this.ywjz && this.shopWay,
                     hidden: !this.ywjz,
                     type: 'img',
                     required: true
@@ -1784,12 +1784,21 @@ class BudgetAddedit extends React.Component {
         }
 
         let checkFields = [{
-            field: 'approveNote',
             title: '审核意见',
-            type: 'textarea',
-            normalArea: true,
-            readonly: false,
-            required: true
+            field: 'approveNote',
+            required: true,
+            type: 'select',
+            key: 'approve_note',
+            onChange: (v) => {
+                this.setState({
+                    isRemark: v === '99'
+                });
+            }
+        }, {
+            title: '备注',
+            field: 'remark',
+            required: true,
+            hidden: !this.state.isRemark
         }];
 
         if (this.isAreaCheck || this.isCompCheck || this.isCheck) {

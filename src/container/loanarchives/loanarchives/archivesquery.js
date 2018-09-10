@@ -10,9 +10,8 @@ import {
     setSearchData
 } from '@redux/loanarchives/archivesquery';
 import {
-    dateTimeFormat,
-    showWarnMsg,
-    getRoleCode
+    getRoleCode,
+    getCompanyCode
 } from 'common/js/util';
 import {
     listWrapper
@@ -89,7 +88,8 @@ class Archivesquery extends React.Component {
             pageCode: 632148,
             searchParams: {
               roleCode: getRoleCode(),
-              enterFileStatusList: ['2']
+              enterFileStatusList: ['2'],
+              currentUserCompanyCode: getCompanyCode()
             }
         });
     }

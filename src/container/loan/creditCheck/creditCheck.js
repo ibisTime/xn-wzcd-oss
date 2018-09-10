@@ -11,9 +11,9 @@ import {
 } from '@redux/loan/creditCheck';
 import {
     showWarnMsg,
-    showSucMsg,
     getRoleCode,
-    dateTimeFormat
+    dateTimeFormat,
+    getCompanyCode
 } from 'common/js/util';
 import {
     listWrapper
@@ -91,7 +91,8 @@ class CreditCheck extends React.Component {
             pageCode: 632115,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCodeList: ['001_04', '001_06']
+                curNodeCodeList: ['001_04', '001_06'],
+                currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
                 check: (selectedRowKeys, selectedRows) => {

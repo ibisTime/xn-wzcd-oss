@@ -1,13 +1,4 @@
 import React from 'react';
-import moment from 'moment';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/loan/creditStart-addedit';
 import {
     getQueryString,
     showWarnMsg,
@@ -15,15 +6,13 @@ import {
     getUserId,
     isUndefined
 } from 'common/js/util';
-import { DetailWrapper } from 'common/js/build-detail';
 import { getIdNoFront, getIdNoReverse } from 'api/user';
 import fetch from 'common/js/fetch';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-    state => state.loanCreditStartAddedit,
-    {initStates, doFetching, cancelFetching, setSelectData, setPageData, restore}
-)
-class CreditStartAddedit extends React.Component {
+@Form.create()
+export default class CreditStartAddedit extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -37,10 +26,12 @@ class CreditStartAddedit extends React.Component {
         this.isCheckFirst = !!getQueryString('isCheckFirst', this.props.location.search);
         this.curNodeCode = getQueryString('curNodeCode', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.newCar = true;
         this.buttons = [];
         this.state = {
-            haveRemark: false
+            ...this.state,
+            haveRemark: false,
+            newCar: false,
+            isRemark: false
         };
     }
 
@@ -90,7 +81,7 @@ class CreditStartAddedit extends React.Component {
             required: true,
             onChange: (v, props) => {
                 if (v) {
-                    props.doFetching();
+                    this.doFetching();
                     getIdNoFront(v).then((data) => {
                         if (data.success) {
                             let birthYear = data.birth.substr(0, 4);
@@ -108,9 +99,9 @@ class CreditStartAddedit extends React.Component {
                         } else {
                             showWarnMsg('识别失败，请手动输入');
                         }
-                        props.cancelFetching();
+                        this.cancelFetching();
                     }).catch(() => {
-                        props.cancelFetching();
+                        this.cancelFetching();
                     });
                 }
             }
@@ -122,7 +113,7 @@ class CreditStartAddedit extends React.Component {
             required: true,
             onChange: (v, props) => {
                 if (v) {
-                    props.doFetching();
+                    this.doFetching();
                     getIdNoReverse(v).then((data) => {
                         console.log(data);
                         if (data.success) {
@@ -143,9 +134,9 @@ class CreditStartAddedit extends React.Component {
                         } else {
                             showWarnMsg('识别失败，请手动输入');
                         }
-                        props.cancelFetching();
+                        this.cancelFetching();
                     }).catch(() => {
-                        props.cancelFetching();
+                        this.cancelFetching();
                     });
                 }
             }
@@ -408,7 +399,9 @@ class CreditStartAddedit extends React.Component {
             value: this.code ? '' : '1',
             required: true,
             onChange: (value) => {
-                this.newCar = value === '1';
+                this.setState({
+                    newCar: value !== '1'
+                });
             }
         }, {
             title: '贷款金额',
@@ -422,7 +415,7 @@ class CreditStartAddedit extends React.Component {
             required: !this.view,
             readonly: this.view,
             single: true,
-            hidden: this.newCar
+            hidden: !this.state.newCar
         }, {
             title: '行驶证反面',
             field: 'xszReverse',
@@ -430,18 +423,19 @@ class CreditStartAddedit extends React.Component {
             required: !this.view,
             readonly: this.view,
             single: true,
-            hidden: this.newCar
+            hidden: !this.state.newCar
         }, {
             title: '征信列表',
             field: 'creditUserList',
             type: 'o2m',
+            readonly: false,
             options: {
-                add: true,
-                edit: true,
-                delete: true,
+                add: this.isAddedit,
+                edit: this.isAddedit,
+                delete: this.isAddedit,
                 detail: !(this.isEntry || this.isCheckFirst || !this.view),
-                check: (this.isEntry || this.isCheckFirst),
-                checkName: '录入',
+                custom: (this.isEntry || this.isCheckFirst),
+                customName: '录入',
                 scroll: {x: 1300},
                 fields: o2mFields
             }
@@ -514,9 +508,19 @@ class CreditStartAddedit extends React.Component {
         }, {
             title: '审核意见',
             field: 'approveNote',
-            readonly: !this.isCheckSalesman && !this.isCheckFirst,
-            hidden: !this.isCheckSalesman && !this.isCheckFirst,
-            required: true
+            required: true,
+            type: 'select',
+            key: 'approve_note',
+            onChange: (v) => {
+                this.setState({
+                    isRemark: v === '99'
+                });
+            }
+        }, {
+            title: '备注',
+            field: 'remark',
+            required: true,
+            hidden: !this.state.isRemark
         }, {
             title: '附件',
             field: 'accessory',
@@ -531,7 +535,7 @@ class CreditStartAddedit extends React.Component {
                 title: '通过并发送一审',
                 check: true,
                 handler: (params) => {
-                    let list = this.props.o2mSKeys.creditUserList;
+                    let list = this.state.selectedRowKeys.creditUserList;
                     let length = list.length;
                     let arr = [];
                     let userList = params.creditUserList;
@@ -560,14 +564,14 @@ class CreditStartAddedit extends React.Component {
                     }
                     params.approveResult = '1';
                     params.operator = getUserId();
-                    this.props.doFetching();
+                    this.doFetching();
                     fetch(632113, params).then(() => {
                         showSucMsg('操作成功');
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    }).catch(this.cancelFetching);
                 }
             }, {
                 title: '退回重新征信',
@@ -576,14 +580,14 @@ class CreditStartAddedit extends React.Component {
                     delete params.list;
                     params.approveResult = '0';
                     params.operator = getUserId();
-                    this.props.doFetching();
+                    this.doFetching();
                     fetch(632113, params).then(() => {
                         showSucMsg('操作成功');
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    }).catch(this.cancelFetching);
                 }
             }, {
                 title: '返回',
@@ -617,14 +621,14 @@ class CreditStartAddedit extends React.Component {
                     delete params.creditUserList;
                     params.approveResult = '1';
                     params.operator = getUserId();
-                    this.props.doFetching();
+                    this.doFetching();
                     fetch(632114, params).then(() => {
                         showSucMsg('操作成功');
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    }).catch(this.cancelFetching);
                 }
             }, {
                 title: '不通过',
@@ -642,19 +646,19 @@ class CreditStartAddedit extends React.Component {
                     delete params.creditUserList;
                     params.approveResult = '0';
                     params.operator = getUserId();
-                    this.props.doFetching();
+                    this.doFetching();
                     fetch(632114, params).then(() => {
                         showSucMsg('操作成功');
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    }).catch(this.cancelFetching);
                 }
             }, {
                 title: '返回',
                 handler: (param) => {
-                    this.props.history.go(-1);
+                    this.history.go(-1);
                 }
             }];
         }
@@ -676,14 +680,14 @@ class CreditStartAddedit extends React.Component {
                     }
                     data.bankCreditResultList = params.creditUserList;
                     data.operator = getUserId();
-                    this.props.doFetching();
+                    this.doFetching();
                     fetch(632111, data).then(() => {
                         showSucMsg('操作成功');
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         setTimeout(() => {
                             this.props.history.push(`/loan/creditEntering`);
                         }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    }).catch(this.cancelFetching);
                 }
             }, {
                 title: '返回',
@@ -701,18 +705,18 @@ class CreditStartAddedit extends React.Component {
                     params.creditCode = this.code;
                     params.operator = getUserId();
                     params.buttonCode = '0';
-                    this.props.doFetching();
+                    this.doFetching();
                     let bizCode = this.code ? 632112 : 632110;
                     // if(this.curNodeCode === '001_01') {
                     //     bizCode = 632110;
                     // }
                     fetch(bizCode, params).then(() => {
                         showSucMsg('操作成功');
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    }).catch(this.cancelFetching);
                 }
             }, {
                 title: '发送',
@@ -722,18 +726,18 @@ class CreditStartAddedit extends React.Component {
                     params.creditCode = this.code;
                     params.operator = getUserId();
                     params.buttonCode = '1';
-                    this.props.doFetching();
+                    this.doFetching();
                     let bizCode = this.code ? 632112 : 632110;
                     // if(this.curNodeCode === '001_01') {
                     //     bizCode = 632110;
                     // }
                     fetch(bizCode, params).then(() => {
                         showSucMsg('操作成功');
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    }).catch(this.cancelFetching);
                 }
             }, {
                 title: '返回',
@@ -742,7 +746,7 @@ class CreditStartAddedit extends React.Component {
                 }
             }];
         }
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
@@ -751,5 +755,3 @@ class CreditStartAddedit extends React.Component {
         });
     }
 }
-
-export default CreditStartAddedit;

@@ -1,12 +1,3 @@
-import React from 'react';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/loan/advMoney-areaCheck';
 import {
     getQueryString,
     getUserId,
@@ -14,26 +5,22 @@ import {
     moneyUppercase,
     moneyFormat
 } from 'common/js/util';
+import DetailUtil from 'common/js/build-detail-dev';
 import fetch from 'common/js/fetch';
 import {
-    DetailWrapper
-} from 'common/js/build-detail';
+    Form
+} from 'antd';
 
-@DetailWrapper(
-    state => state.loanAdvMoneyAreaCheck, {
-        initStates,
-        doFetching,
-        cancelFetching,
-        setSelectData,
-        setPageData,
-        restore
-    }
-)
-class AdvMoneyAreaCheck extends React.Component {
+@Form.create()
+export default class AdvMoneyAreaCheck extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.setState({
+            moneyFrom: false,
+            isRemark: false
+        });
     }
     render() {
         const fields = [{
@@ -81,12 +68,19 @@ class AdvMoneyAreaCheck extends React.Component {
             }],
             keyName: 'key',
             valueName: 'value',
+            onChange: (v) => {
+                this.setState({
+                    moneyFrom: v === '1'
+                });
+            },
             readonly: true
         }, {
-            title: '收款单位名称',
-            field: '111',
+            title: '金额来源',
+            field: 'fundSource',
+            type: 'select',
+            key: 'fund_source',
             readonly: true,
-            hidden: true
+            hidden: !this.state.moneyFrom
         }, {
             title: '收款银行',
             field: 'collectBankName',
@@ -104,86 +98,96 @@ class AdvMoneyAreaCheck extends React.Component {
             type: 'o2m',
             listCode: 630176,
             params: {
-              refOrder: this.code
+                refOrder: this.code
             },
             options: {
-              rowKey: 'id',
-              noSelect: true,
-              fields: [{
-                title: '操作人',
-                field: 'operatorName'
-              }, {
-                title: '开始时间',
-                field: 'startDatetime',
-                type: 'datetime'
-              }, {
-                title: '结束时间',
-                field: 'endDatetime',
-                type: 'datetime'
-              }, {
-                title: '审核意见',
-                field: 'dealNote'
-            }, {
-                title: '花费时长',
-                field: 'speedTime'
-              }, {
-                title: '当前节点',
-                field: 'dealNode',
-                type: 'select',
-                listCode: 630147,
-                keyName: 'code',
-                valueName: 'name'
-              }]
+                rowKey: 'id',
+                noSelect: true,
+                fields: [{
+                    title: '操作人',
+                    field: 'operatorName'
+                }, {
+                    title: '开始时间',
+                    field: 'startDatetime',
+                    type: 'datetime'
+                }, {
+                    title: '结束时间',
+                    field: 'endDatetime',
+                    type: 'datetime'
+                }, {
+                    title: '审核意见',
+                    field: 'dealNote'
+                }, {
+                    title: '花费时长',
+                    field: 'speedTime'
+                }, {
+                    title: '当前节点',
+                    field: 'dealNode',
+                    type: 'select',
+                    listCode: 630147,
+                    keyName: 'code',
+                    valueName: 'name'
+                }]
             }
         }, {
             title: '审核意见',
             field: 'approveNote',
-            required: true
+            required: true,
+            type: 'select',
+            key: 'approve_note',
+            onChange: (v) => {
+                this.setState({
+                    isRemark: v === '99'
+                });
+            }
+        }, {
+            title: '备注',
+            field: 'remark',
+            required: true,
+            hidden: !this.state.isRemark
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
             detailCode: 632186,
             buttons: [{
-              title: '通过',
-              handler: (param) => {
-                param.approveResult = '1';
-                param.operator = getUserId();
-                this.props.doFetching();
-                fetch(632171, param).then(() => {
-                  showSucMsg('操作成功');
-                  this.props.cancelFetching();
-                  setTimeout(() => {
-                    this.props.history.go(-1);
-                  }, 1000);
-                }).catch(this.props.cancelFetching);
-              },
-              check: true,
-              type: 'primary'
+                title: '通过',
+                handler: (param) => {
+                    param.approveResult = '1';
+                    param.operator = getUserId();
+                    this.doFetching();
+                    fetch(632171, param).then(() => {
+                        showSucMsg('操作成功');
+                        this.cancelFetching();
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(this.cancelFetching);
+                },
+                check: true,
+                type: 'primary'
             }, {
-              title: '不通过',
-              handler: (param) => {
-                param.approveResult = '0';
-                param.operator = getUserId();
-                this.props.doFetching();
-                fetch(632171, param).then(() => {
-                  showSucMsg('操作成功');
-                  this.props.cancelFetching();
-                  setTimeout(() => {
-                    this.props.history.go(-1);
-                  }, 1000);
-                }).catch(this.props.cancelFetching);
-              },
-              check: true
+                title: '不通过',
+                handler: (param) => {
+                    param.approveResult = '0';
+                    param.operator = getUserId();
+                    this.doFetching();
+                    fetch(632171, param).then(() => {
+                        showSucMsg('操作成功');
+                        this.cancelFetching();
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(this.cancelFetching);
+                },
+                check: true
             }, {
-              title: '返回',
-              handler: (param) => {
-                this.props.history.go(-1);
-              }
+                title: '返回',
+                handler: (param) => {
+                    this.props.history.go(-1);
+                }
             }]
         });
     }
 }
-
-export default AdvMoneyAreaCheck;

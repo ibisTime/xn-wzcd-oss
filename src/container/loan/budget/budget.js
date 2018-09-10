@@ -9,17 +9,29 @@ import {
     cancelFetching,
     setSearchData
 } from '@redux/loan/budget';
-import {listWrapper} from 'common/js/build-list';
-import {showWarnMsg, dateTimeFormat, getRoleCode} from 'common/js/util';
+import {
+    listWrapper
+} from 'common/js/build-list';
+import {
+    showWarnMsg,
+    dateTimeFormat,
+    getRoleCode,
+    getCompanyCode
+} from 'common/js/util';
 
 @listWrapper(
     state => ({
         ...state.loanBudget,
         parentCode: state.menu.subMenuCode
-    }),
-    {
-        setTableData, clearSearchParam, doFetching, setBtnList,
-        cancelFetching, setPagination, setSearchParam, setSearchData
+    }), {
+        setTableData,
+        clearSearchParam,
+        doFetching,
+        setBtnList,
+        cancelFetching,
+        setPagination,
+        setSearchParam,
+        setSearchData
     }
 )
 class Budget extends React.Component {
@@ -55,7 +67,7 @@ class Budget extends React.Component {
             field: 'loanPeriods',
             title: '贷款周期',
             render: (v) => {
-              return v ? v + '期' : '-';
+                return v ? v + '期' : '-';
             }
         }, {
             field: 'loanBankName',
@@ -65,7 +77,7 @@ class Budget extends React.Component {
             field: 'bankRate',
             title: '银行利率',
             return: (v, d) => {
-              return (d.bankRate * 100).toFixed(4) + '%';
+                return (d.bankRate * 100).toFixed(4) + '%';
             }
         }, {
             field: 'isAdvanceFund',
@@ -106,19 +118,13 @@ class Budget extends React.Component {
         }, {
             field: 'remark',
             title: '备注'
-        }, {
-            title: '省市区',
-            field: 'applyBirthAddress1',
-            type: 'citySelect',
-            cFields: ['applyBirthAddressProvince', 'applyBirthAddressCity', 'applyBirthAddressArea'],
-            search: true,
-            noVisible: true
         }];
         return this.props.buildList({
             fields,
             pageCode: 632148,
             searchParams: {
-                roleCode: getRoleCode()
+                roleCode: getRoleCode(),
+                currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {

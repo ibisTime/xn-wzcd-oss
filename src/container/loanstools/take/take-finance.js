@@ -35,6 +35,9 @@ class TakeFinance extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.state = {
+            isRemark: false
+        };
     }
     render() {
         const fields = [{
@@ -60,9 +63,19 @@ class TakeFinance extends React.Component {
         }, {
             title: '审核意见',
             field: 'approveNote',
-            type: 'textarea',
-            normalArea: true,
-            required: true
+            required: true,
+            type: 'select',
+            key: 'approve_note',
+            onChange: (v) => {
+                this.setState({
+                    isRemark: v === '99'
+                });
+            }
+        }, {
+            title: '备注',
+            field: 'remark',
+            required: true,
+            hidden: !this.state.isRemark
         }];
         return this.props.buildDetail({
             fields,

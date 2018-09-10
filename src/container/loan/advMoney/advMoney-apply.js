@@ -1,12 +1,3 @@
-import React from 'react';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/loan/advMoney-apply';
 import {
     getQueryString,
     getUserId,
@@ -14,26 +5,19 @@ import {
     moneyUppercase,
     moneyFormat
 } from 'common/js/util';
+import DetailUtil from 'common/js/build-detail-dev';
 import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import { Form } from 'antd';
 
-@DetailWrapper(
-    state => state.loanAdvMoneyApply, {
-        initStates,
-        doFetching,
-        cancelFetching,
-        setSelectData,
-        setPageData,
-        restore
-    }
-)
-class AdvMoneyApply extends React.Component {
+@Form.create()
+export default class AdvMoneyApply extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.setState({
+            moneyFrom: false
+        });
     }
     render() {
         const fields = [{
@@ -81,12 +65,19 @@ class AdvMoneyApply extends React.Component {
             }],
             keyName: 'key',
             valueName: 'value',
+            onChange: (v) => {
+                this.setState({
+                    moneyFrom: v === '1'
+                });
+            },
             required: true
         }, {
-            title: '收款单位名称',
-            field: '111',
-            readonly: true,
-            hidden: true
+            title: '金额来源',
+            field: 'fundSource',
+            type: 'select',
+            key: 'fund_source',
+            required: true,
+            hidden: !this.state.moneyFrom
         }, {
             title: '收款银行',
             field: 'collectBankName1',
@@ -103,7 +94,7 @@ class AdvMoneyApply extends React.Component {
             field: 'cancelReason',
             readonly: true
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
@@ -112,15 +103,15 @@ class AdvMoneyApply extends React.Component {
               title: '发送',
               check: true,
               handler: (params) => {
-                this.props.doFetching();
+                this.doFetching();
                 params.operator = getUserId();
                 fetch(632170, params).then(() => {
                   showSucMsg('操作成功');
                   setTimeout(() => {
                     this.props.history.go(-1);
                   }, 1000);
-                  this.props.cancelFetching();
-                }).catch(this.props.cancelFetching);
+                  this.cancelFetching();
+                }).catch(this.cancelFetching);
               }
             }, {
               title: '返回',
@@ -131,5 +122,3 @@ class AdvMoneyApply extends React.Component {
         });
     }
 }
-
-export default AdvMoneyApply;

@@ -16,7 +16,7 @@ import {
     showWarnMsg,
     showSucMsg,
     getRoleCode,
-    dateTimeFormat
+    getCompanyCode
 } from 'common/js/util';
 import {
     Button,
@@ -109,7 +109,8 @@ class MoneyCheck extends React.Component {
             pageCode: 632185,
             searchParams: {
               roleCode: getRoleCode(),
-              curNodeCodeList: ['003_04', '003_05', '003_07', '004_04', '004_05', '004_06', '004_08']
+              curNodeCodeList: ['003_04', '003_05', '003_07', '004_04', '004_05', '004_06', '004_08'],
+              currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
                 compBill: (selectedRowKeys, selectedRows) => {

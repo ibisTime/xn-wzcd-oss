@@ -10,9 +10,8 @@ import {
     setSearchData
 } from '@redux/history/dustbin';
 import {
-    showWarnMsg,
-    showSucMsg,
-    getRoleCode
+    getRoleCode,
+    getCompanyCode
 } from 'common/js/util';
 import {
     listWrapper
@@ -128,7 +127,8 @@ class Dustbin extends React.Component {
             pageCode: 632148,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCodeList: ['012_04']
+                curNodeCodeList: ['012_04'],
+                currentUserCompanyCode: getCompanyCode()
             }
         });
     }

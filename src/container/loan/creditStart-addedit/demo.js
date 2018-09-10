@@ -201,6 +201,7 @@ export default class Demo extends DetailUtil {
     }, {
         title: '审核说明',
         field: 'approveNote',
+        required: true,
         readonly: !this.isCheck,
         hidden: !this.isCheck
     }, {

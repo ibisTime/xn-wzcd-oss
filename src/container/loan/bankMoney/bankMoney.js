@@ -16,7 +16,7 @@ import {
     showWarnMsg,
     showSucMsg,
     getRoleCode,
-    dateTimeFormat
+    getCompanyCode
 } from 'common/js/util';
 import {
     Modal
@@ -66,6 +66,10 @@ class BankMoney extends React.Component {
             field: 'loanAmount',
             amount: true
         }, {
+            title: '垫资日期',
+            field: 'advanceFundDatetime',
+            type: 'date'
+        }, {
             title: '放款日期',
             field: 'bankFkDatetime',
             type: 'date',
@@ -92,7 +96,8 @@ class BankMoney extends React.Component {
             singleSelect: false,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCodeList: ['005_05', '007_01A', '007_01B', '007_02', '007_03', '007_04', '007_05', '007_06', '007_07', '007_08', '007_09']
+                curNodeCodeList: ['005_05', '007_01A', '007_01B', '007_02', '007_03', '007_04', '007_05', '007_06', '007_07', '007_08', '007_09'],
+                currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {

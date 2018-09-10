@@ -16,7 +16,8 @@ import {
     showWarnMsg,
     showSucMsg,
     getRoleCode,
-    dateTimeFormat
+    dateTimeFormat,
+    getCompanyCode
 } from 'common/js/util';
 import {
     Button,
@@ -108,7 +109,8 @@ class bankMoney extends React.Component {
             fields,
             pageCode: 632148,
             searchParams: {
-              roleCode: getRoleCode()
+              roleCode: getRoleCode(),
+              currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
               settle: (selectedRowKeys, selectedRows) => {

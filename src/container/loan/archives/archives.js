@@ -14,10 +14,8 @@ import {
 } from 'common/js/build-list';
 import {
     showWarnMsg,
-    showSucMsg,
     getRoleCode,
-    dateTimeFormat,
-    moneyFormat
+    getCompanyCode
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -93,7 +91,8 @@ class Archives extends React.Component {
             pageCode: 632148,
             searchParams: {
               roleCode: getRoleCode(),
-              enterFileStatusList: ['0', '1', '2']
+              enterFileStatusList: ['0', '1', '2'],
+              currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
                 entering: (selectedRowKeys, selectedRows) => {

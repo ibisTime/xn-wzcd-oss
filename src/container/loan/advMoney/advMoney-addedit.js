@@ -1,35 +1,11 @@
-import React from 'react';
 import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/loan/advMoney-addedit';
-import {
-    getQueryString,
-    getUserId,
-    showSucMsg,
-    moneyUppercase,
-    moneyFormat
+    getQueryString
 } from 'common/js/util';
-import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-    state => state.loanAdvMoneyAddedit, {
-        initStates,
-        doFetching,
-        cancelFetching,
-        setSelectData,
-        setPageData,
-        restore
-    }
-)
-class AdvMoneyAddedit extends React.Component {
+@Form.create()
+export default class AdvMoneyAddedit extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -90,7 +66,7 @@ class AdvMoneyAddedit extends React.Component {
                 }]
             }
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
@@ -98,5 +74,3 @@ class AdvMoneyAddedit extends React.Component {
         });
     }
 }
-
-export default AdvMoneyAddedit;

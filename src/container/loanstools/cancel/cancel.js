@@ -11,8 +11,8 @@ import {
 } from '@redux/loanstools/cancel';
 import {
     showWarnMsg,
-    showSucMsg,
-    getRoleCode
+    getRoleCode,
+    getCompanyCode
 } from 'common/js/util';
 import {
     listWrapper
@@ -85,7 +85,8 @@ class cancel extends React.Component {
             pageCode: 632148,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCodeList: ['012_01', '012_02', '012_03', '012_04']
+                curNodeCodeList: ['012_01', '012_02', '012_03', '012_04'],
+                currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {

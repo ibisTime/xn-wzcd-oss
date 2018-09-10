@@ -9,17 +9,29 @@ import {
     cancelFetching,
     setSearchData
 } from '@redux/loan/budgetCheck';
-import {listWrapper} from 'common/js/build-list';
-import {showWarnMsg, dateTimeFormat, getRoleCode} from 'common/js/util';
+import {
+    listWrapper
+} from 'common/js/build-list';
+import {
+    showWarnMsg,
+    dateTimeFormat,
+    getRoleCode,
+    getCompanyCode
+} from 'common/js/util';
 
 @listWrapper(
     state => ({
         ...state.loanBudgetCheck,
         parentCode: state.menu.subMenuCode
-    }),
-    {
-        setTableData, clearSearchParam, doFetching, setBtnList,
-        cancelFetching, setPagination, setSearchParam, setSearchData
+    }), {
+        setTableData,
+        clearSearchParam,
+        doFetching,
+        setBtnList,
+        cancelFetching,
+        setPagination,
+        setSearchParam,
+        setSearchData
     }
 )
 class BudgetCheck extends React.Component {
@@ -62,7 +74,7 @@ class BudgetCheck extends React.Component {
             field: 'bankRate',
             title: '银行利率',
             return: (v, d) => {
-              return (d.bankRate * 100).toFixed(4) + '%';
+                return (d.bankRate * 100).toFixed(4) + '%';
             }
         }, {
             field: 'isAdvanceFund',
@@ -115,7 +127,8 @@ class BudgetCheck extends React.Component {
             pageCode: 632148,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCodeList: ['002_02', '002_03', '002_04']
+                curNodeCodeList: ['002_02', '002_03', '002_04'],
+                currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
                 areaCheck: (selectedRowKeys, selectedRows) => {

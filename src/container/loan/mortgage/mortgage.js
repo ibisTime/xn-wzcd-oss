@@ -16,7 +16,7 @@ import {
     showWarnMsg,
     showSucMsg,
     getRoleCode,
-    dateTimeFormat
+    getCompanyCode
 } from 'common/js/util';
 import {
     Button,
@@ -100,7 +100,8 @@ class Mortgage extends React.Component {
             singleSelect: false,
             searchParams: {
               roleCode: getRoleCode(),
-              pledgeCurNodeCodeList: ['008_01', '008_02', '008_03', '008_04', '008_05', '008_06', '009_01', '009_02', '009_03', '009_04', '009_05', '009_06', '009_07', '009_08', '009_09', '009_10']
+              pledgeCurNodeCodeList: ['008_01', '008_02', '008_03', '008_04', '008_05', '008_06', '009_01', '009_02', '009_03', '009_04', '009_05', '009_06', '009_07', '009_08', '009_09', '009_10'],
+              currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {

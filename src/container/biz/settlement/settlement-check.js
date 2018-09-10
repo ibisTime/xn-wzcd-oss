@@ -16,7 +16,9 @@ import {
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import DetailUtil from 'common/js/build-detail-dev';
-import { Form } from 'antd';
+import {
+    Form
+} from 'antd';
 
 @Form.create()
 export default class settlementCheck extends DetailUtil {
@@ -25,9 +27,9 @@ export default class settlementCheck extends DetailUtil {
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
         this.state = {
-          ...this.state,
-          haveDepositReceipt: false,
-          haveDepositReceiptLostProof: false
+            ...this.state,
+            haveDepositReceipt: false,
+            haveDepositReceiptLostProof: false
         };
     }
     render() {
@@ -186,7 +188,19 @@ export default class settlementCheck extends DetailUtil {
         }, {
             title: '审核意见',
             field: 'approveNote',
-            required: true
+            required: true,
+            type: 'select',
+            key: 'approve_note',
+            onChange: (v) => {
+                this.setState({
+                    isRemark: v === '99'
+                });
+            }
+        }, {
+            title: '备注',
+            field: 'remark',
+            required: true,
+            hidden: !this.state.isRemark
         }];
         return this.buildDetail({
             fields,
@@ -194,43 +208,43 @@ export default class settlementCheck extends DetailUtil {
             view: this.view,
             detailCode: 630521,
             buttons: [{
-              title: '通过',
-              handler: (param) => {
-                param.approveResult = '1';
-                param.operator = getUserId();
-                param.code = this.code;
-                this.doFetching();
-                fetch(630571, param).then(() => {
-                  showSucMsg('操作成功');
-                  this.cancelFetching();
-                  setTimeout(() => {
-                    this.props.history.go(-1);
-                  }, 1000);
-                }).catch(() => this.props.cancelFetching);
-              },
-              check: true,
-              type: 'primary'
+                title: '通过',
+                handler: (param) => {
+                    param.approveResult = '1';
+                    param.operator = getUserId();
+                    param.code = this.code;
+                    this.doFetching();
+                    fetch(630571, param).then(() => {
+                        showSucMsg('操作成功');
+                        this.cancelFetching();
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(() => this.props.cancelFetching);
+                },
+                check: true,
+                type: 'primary'
             }, {
-              title: '不通过',
-              handler: (param) => {
-                param.approveResult = '0';
-                param.operator = getUserId();
-                param.code = this.code;
-                this.doFetching();
-                fetch(630571, param).then(() => {
-                  showSucMsg('操作成功');
-                  this.cancelFetching();
-                  setTimeout(() => {
-                    this.props.history.go(-1);
-                  }, 1000);
-                }).catch(() => this.props.cancelFetching);
-              },
-              check: true
+                title: '不通过',
+                handler: (param) => {
+                    param.approveResult = '0';
+                    param.operator = getUserId();
+                    param.code = this.code;
+                    this.doFetching();
+                    fetch(630571, param).then(() => {
+                        showSucMsg('操作成功');
+                        this.cancelFetching();
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(() => this.props.cancelFetching);
+                },
+                check: true
             }, {
-              title: '返回',
-              handler: (param) => {
-                this.props.history.go(-1);
-              }
+                title: '返回',
+                handler: (param) => {
+                    this.props.history.go(-1);
+                }
             }]
         });
     }

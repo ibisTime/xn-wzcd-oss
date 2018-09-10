@@ -1285,7 +1285,13 @@ const ROUTES = [
       component: asyncComponent(() => import('container/loanstools/takeEstimate/takeEstimate-addedit'))
   },
 
-  //  收回预算款 申请
+  //  收回预算款 打款回录
+  {
+      path: '/loanstools/takeEstimate/enter',
+      component: asyncComponent(() => import('container/loanstools/takeEstimate/takeEstimate-enter'))
+  },
+
+  //  收回预算款 确认打款
   {
       path: '/loanstools/takeEstimate/certain',
       component: asyncComponent(() => import('container/loanstools/takeEstimate/takeEstimate-certain'))

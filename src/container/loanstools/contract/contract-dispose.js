@@ -7,9 +7,17 @@ import {
     setPageData,
     restore
 } from '@redux/loanstools/contract-dispose';
-import {getQueryString, showSucMsg, getUserId, getRoleCode} from 'common/js/util';
+import {
+    getQueryString,
+    showSucMsg,
+    getUserId,
+    getRoleCode,
+    getCompanyCode
+} from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {DetailWrapper} from 'common/js/build-detail';
+import {
+    DetailWrapper
+} from 'common/js/build-detail';
 
 @DetailWrapper(
     state => state.loanstoolsContractDispose, {
@@ -63,8 +71,9 @@ class ContractDispose extends React.Component {
             type: 'select',
             pageCode: 632148,
             params: {
-              roleCode: getRoleCode(),
-              is_end: '0'
+                roleCode: getRoleCode(),
+                is_end: '0',
+                currentUserCompanyCode: getCompanyCode()
             },
             keyName: 'code',
             valueName: '{{code.DATA}}-{{customerName.DATA}}',

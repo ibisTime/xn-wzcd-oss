@@ -11,18 +11,13 @@ import {
 } from '@redux/loan/creditStart';
 import {
     showWarnMsg,
-    showSucMsg,
     getRoleCode,
-    dateTimeFormat
+    dateTimeFormat,
+    getCompanyCode
 } from 'common/js/util';
 import {
     listWrapper
 } from 'common/js/build-list';
-import {
-    lowerFrame,
-    onShelf,
-    sendMsg
-} from 'api/biz';
 
 @listWrapper(
     state => ({
@@ -91,7 +86,8 @@ class CreditStart extends React.Component {
             pageCode: 632115,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCode: ['001_01', '001_02', '001_03', '001_04', '001_05', '001_06']
+                curNodeCode: ['001_01', '001_02', '001_03', '001_04', '001_05', '001_06'],
+                currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {

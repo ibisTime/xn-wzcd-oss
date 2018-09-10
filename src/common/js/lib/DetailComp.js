@@ -1224,14 +1224,18 @@ export default class DetailComponent extends React.Component {
                         : getFieldDecorator(item.field, {
                             rules,
                             initialValue: initVal
-                        })(<Cascader placeholder="请选择" options={cityData}/>)
+                        })(<Cascader placeholder="请选择" options={cityData} showSearch={{ filter: this.filter }}/>)
                 }
             </FormItem>
         );
     }
-
+    // 省市区 可以搜索刷选
+    filter(inputValue, path) {
+        return (path.some(option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1));
+    }
     // 省市选择
     getNoAreaProvSelect(item, initVal, rules, getFieldDecorator) {
+        let _this = this;
         let cData = [];
         // 省市选择框
         cityData.map(p => {
@@ -1256,12 +1260,11 @@ export default class DetailComponent extends React.Component {
                         : getFieldDecorator(item.field, {
                             rules,
                             initialValue: initVal
-                        })(<Cascader placeholder="请选择" options={cData}/>)
+                        })(<Cascader placeholder="请选择" options={cData} showSearch={{ filter: this.filter }}/>)
                 }
             </FormItem>
         );
     }
-
     getCheckboxComp(item, initVal, rules, getFieldDecorator) {
         // 初始化checkAll的值
         if (item.checkAll) {

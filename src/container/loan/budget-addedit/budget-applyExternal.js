@@ -32,7 +32,8 @@ class BudgetApplyExternal extends React.Component {
             isAdvanceFund: false,
             oilSubsidyValue: null,
             gpsDeductValue: null,
-            loanPeriodsData: null
+            loanPeriodsData: null,
+            isRemark: false
         };
         this.code = getQueryString('code', this.props.location.search);
         this.saleUserId = getQueryString('saleUserId', this.props.location.search);
@@ -1603,12 +1604,21 @@ class BudgetApplyExternal extends React.Component {
         }
 
         let checkFields = [{
-            field: 'approveNote',
             title: '审核意见',
-            type: 'textarea',
-            normalArea: true,
-            readonly: false,
-            required: true
+            field: 'approveNote',
+            required: true,
+            type: 'select',
+            key: 'approve_note',
+            onChange: (v) => {
+                this.setState({
+                    isRemark: v === '99'
+                });
+            }
+        }, {
+            title: '备注',
+            field: 'remark',
+            required: true,
+            hidden: !this.state.isRemark
         }];
 
         if (this.isAreaCheck || this.isCompCheck || this.isCheck) {

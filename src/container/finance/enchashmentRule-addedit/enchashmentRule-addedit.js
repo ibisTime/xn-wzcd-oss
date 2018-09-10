@@ -7,12 +7,22 @@ import {
   setPageData,
   restore
 } from '@redux/finance/enchashmentRule-addedit';
-import { getQueryString } from 'common/js/util';
-import { DetailWrapper } from 'common/js/build-detail';
+import {
+  getQueryString
+} from 'common/js/util';
+import {
+  DetailWrapper
+} from 'common/js/build-detail';
 
 @DetailWrapper(
-  state => state.financeEnchashmentRuleAddEdit,
-  { initStates, doFetching, cancelFetching, setSelectData, setPageData, restore }
+  state => state.financeEnchashmentRuleAddEdit, {
+    initStates,
+    doFetching,
+    cancelFetching,
+    setSelectData,
+    setPageData,
+    restore
+  }
 )
 class EnchashmentRuleAddEdit extends React.Component {
   constructor(props) {
@@ -55,5 +65,4 @@ class EnchashmentRuleAddEdit extends React.Component {
     });
   }
 }
-
 export default EnchashmentRuleAddEdit;

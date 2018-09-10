@@ -11,9 +11,9 @@ import {
 } from '@redux/loanstools/misInvoice';
 import {
   showWarnMsg,
-  showSucMsg,
   dateTimeFormat,
-  getRoleCode
+  getRoleCode,
+  getCompanyCode
 } from 'common/js/util';
 import {
     listWrapper
@@ -132,7 +132,8 @@ class misInvoice extends React.Component {
             pageCode: 632148,
             searchParams: {
               roleCode: getRoleCode(),
-              curNodeCodeList: ['011_01', '011_02', '011_03', '011_04']
+              curNodeCodeList: ['011_01', '011_02', '011_03', '011_04'],
+              currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
               apply: (selectedRowKeys, selectedRows) => {

@@ -1,25 +1,21 @@
-import React from 'react';
 import {
-  initStates,
-  doFetching,
-  cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
-} from '@redux/finance/underEnchashment-check';
-import { getQueryString, getUserId, showSucMsg } from 'common/js/util';
-import { DetailWrapper } from 'common/js/build-detail';
+  getQueryString,
+  getUserId,
+  showSucMsg
+} from 'common/js/util';
 import fetch from 'common/js/fetch';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-  state => state.financeUnderEnchashmentCheck,
-  { initStates, doFetching, cancelFetching, setSelectData, setPageData, restore }
-)
-class EnchashmentsAddEdit extends React.Component {
+@Form.create()
+export default class EnchashmentsAddEdit extends DetailUtil {
   constructor(props) {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
     this.check = getQueryString('check', this.props.location.search);
+    this.state = {
+      isRemark: false
+    };
   }
   render() {
     let fields = [{
@@ -81,8 +77,21 @@ class EnchashmentsAddEdit extends React.Component {
       title: '审核时间',
       type: 'datetime'
     }, {
+      title: '审核意见',
       field: 'approveNote',
-      title: '审核意见'
+      required: true,
+      type: 'select',
+      key: 'approve_note',
+      onChange: (v) => {
+        this.setState({
+          isRemark: v === '99'
+        });
+      }
+    }, {
+      title: '备注',
+      field: 'remark',
+      required: true,
+      hidden: !this.state.isRemark
     }, {
       field: 'payUser',
       title: '回录人'
@@ -94,7 +103,7 @@ class EnchashmentsAddEdit extends React.Component {
       field: 'payNote',
       title: '回录说明'
     }];
-    return this.props.buildDetail({
+    return this.buildDetail({
       fields,
       code: this.code,
       view: true,
@@ -102,5 +111,3 @@ class EnchashmentsAddEdit extends React.Component {
     });
   }
 }
-
-export default EnchashmentsAddEdit;

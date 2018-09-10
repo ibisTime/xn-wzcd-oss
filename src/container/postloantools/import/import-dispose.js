@@ -1,33 +1,23 @@
-import React from 'react';
 import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/postloantools/import-dispose';
-import {getQueryString, showSucMsg, getUserId, moneyFormat} from 'common/js/util';
-import fetch from 'common/js/fetch';
-import {DetailWrapper} from 'common/js/build-detail';
+    getQueryString,
+    moneyFormat,
+    getUserId,
+    showSucMsg
+} from 'common/js/util';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-    state => state.postloantoolsImportDispose, {
-        initStates,
-        doFetching,
-        cancelFetching,
-        setSelectData,
-        setPageData,
-        restore
-    }
-)
-class applyGpsAddedit extends React.Component {
+@Form.create()
+export default class ApplyGpsAddedit extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.budgetOrderCode = getQueryString('budgetOrderCode', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.isSingle = false;
+        this.state = {
+            ...this.state,
+            isSingle: false
+        };
     }
 
     render() {
@@ -36,8 +26,10 @@ class applyGpsAddedit extends React.Component {
             field: 'notMateResult',
             type: 'select',
             key: 'not_mate_result',
-            formatter: (v, d) => {
-                this.isSingle = v === '1';
+            onChange: (v) => {
+                this.setState({
+                    isSingle: v === '1'
+                });
             },
             readonly: true
         }, {
@@ -77,12 +69,12 @@ class applyGpsAddedit extends React.Component {
             },
             keyName: 'code',
             valueName: '{{refCode.DATA}}-{{realName.DATA}}',
-            hidden: !this.isSingle,
+            // hidden: !this.state.isSingle,
             required: true
         }, {
             title: '对应业务列表',
-            field: '11',
-            hidden: this.isSingle,
+            field: 'codeList',
+            // hidden: !this.state.isSingle,
             type: 'o2m',
             options: {
                 add: true,
@@ -126,7 +118,7 @@ class applyGpsAddedit extends React.Component {
                 }]
             }
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
@@ -136,14 +128,14 @@ class applyGpsAddedit extends React.Component {
                 handler: (param) => {
                     param.code = this.code;
                     param.operator = getUserId();
-                    this.props.doFetching();
+                    this.doFetching();
                     fetch(632301, param).then(() => {
                         showSucMsg('操作成功');
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    }).catch(this.cancelFetching);
                 },
                 check: true,
                 type: 'primary'
@@ -156,5 +148,3 @@ class applyGpsAddedit extends React.Component {
         });
     }
 }
-
-export default applyGpsAddedit;

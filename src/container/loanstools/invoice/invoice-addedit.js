@@ -1,8 +1,5 @@
 import {
     getQueryString,
-    showSucMsg,
-    getUserId,
-    padLeftZero,
     moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
@@ -126,7 +123,7 @@ export default class InvoiceAddedit extends DetailUtil {
             field: 'frameNo',
             hidden: !this.state.hiddenStatus,
             required: true,
-            readonly: !!this.state.pageData.frameNo
+            readonly: this.state.pageData ? !!this.state.pageData.frameNo : false
         }, {
             title: '交强险金额',
             field: 'forceInsurance',

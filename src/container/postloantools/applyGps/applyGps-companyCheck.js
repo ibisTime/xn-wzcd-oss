@@ -33,6 +33,9 @@ class applyGpsCompanyCheck extends React.Component {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
+    this.state = {
+      isRemark: false
+    };
   }
   render() {
     const fields = [{
@@ -76,7 +79,19 @@ class applyGpsCompanyCheck extends React.Component {
     }, {
       title: '审核意见',
       field: 'approveNote',
-      required: true
+      required: true,
+      type: 'select',
+      key: 'approve_note',
+      onChange: (v) => {
+        this.setState({
+          isRemark: v === '99'
+        });
+      }
+    }, {
+      title: '备注',
+      field: 'remark',
+      required: true,
+      hidden: !this.state.isRemark
     }];
     return this.props.buildDetail({
       fields,
@@ -89,7 +104,7 @@ class applyGpsCompanyCheck extends React.Component {
           param.approveResult = '1';
           param.approveUser = getUserId();
           console.log(param.gpsList.length);
-          if(param.gpsList.length < 1) {
+          if (param.gpsList.length < 1) {
             showWarnMsg('请新增GPS!');
             return false;
           }

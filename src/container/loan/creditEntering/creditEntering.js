@@ -11,9 +11,9 @@ import {
 } from '@redux/loan/creditEntering';
 import {
     showWarnMsg,
-    showSucMsg,
     getRoleCode,
-    dateTimeFormat
+    dateTimeFormat,
+    getCompanyCode
 } from 'common/js/util';
 import {
     listWrapper
@@ -91,7 +91,8 @@ class CreditEntering extends React.Component {
             pageCode: 632115,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCodeList: ['001_02']
+                curNodeCodeList: ['001_02'],
+                currentUserCompanyCode: getCompanyCode()
             },
             btnEvent: {
                 edit: (selectedRowKeys, selectedRows) => {

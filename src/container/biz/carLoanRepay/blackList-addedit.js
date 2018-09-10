@@ -1,33 +1,19 @@
-import React from 'react';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/biz/blackList-addedit';
 import {
     getQueryString,
     moneyFormat
 } from 'common/js/util';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(state => state.bizBlackListAddedit, {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-})
-class blackListAddedit extends React.Component {
+@Form.create()
+export default class blackListAddedit extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.state = {
+            isRemark: false
+        };
     }
     render() {
         const fields = [{
@@ -175,7 +161,20 @@ class blackListAddedit extends React.Component {
                     field: 'speedTime'
                 }, {
                     title: '审核意见',
-                    field: 'dealNote'
+                    field: 'approveNote',
+                    required: true,
+                    type: 'select',
+                    key: 'approve_note',
+                    onChange: (v) => {
+                        this.setState({
+                            isRemark: v === '99'
+                        });
+                    }
+                }, {
+                    title: '备注',
+                    field: 'remark',
+                    required: true,
+                    hidden: !this.state.isRemark
                 }, {
                     title: '当前节点',
                     field: 'dealNode',
@@ -187,7 +186,6 @@ class blackListAddedit extends React.Component {
             }
         }];
         return this
-            .props
             .buildDetail({
                 fields,
                 code: this.code,
@@ -196,5 +194,3 @@ class blackListAddedit extends React.Component {
             });
     }
 }
-
-export default blackListAddedit;
