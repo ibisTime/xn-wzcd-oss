@@ -508,6 +508,8 @@ export default class CreditStartAddedit extends DetailUtil {
         }, {
             title: '审核意见',
             field: 'approveNote',
+            readonly: !this.isCheckSalesman && !this.isCheckFirst,
+            hidden: !this.isCheckSalesman && !this.isCheckFirst,
             required: true,
             type: 'select',
             key: 'approve_note',
@@ -519,6 +521,7 @@ export default class CreditStartAddedit extends DetailUtil {
         }, {
             title: '备注',
             field: 'remark',
+            readonly: false,
             required: true,
             hidden: !this.state.isRemark
         }, {

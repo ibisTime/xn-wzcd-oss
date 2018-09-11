@@ -18,15 +18,6 @@ import {
     getRoleCode,
     moneyFormat
 } from 'common/js/util';
-import {
-    Button,
-    Upload,
-    Modal
-} from 'antd';
-import {
-    lowerFrame,
-    onShelf
-} from 'api/biz';
 
 @listWrapper(
     state => ({
@@ -127,7 +118,7 @@ class Settlement extends React.Component {
             pageCode: 630520,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCodeList: ['020_10', '020_11', '020_12', '020_13', '020_14', '020_15']
+                curNodeCodeList: ['020_10', '020_11', '020_12', '020_13', '020_14', '020_15', '020_16']
             },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {
