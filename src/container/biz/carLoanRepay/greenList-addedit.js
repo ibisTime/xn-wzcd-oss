@@ -57,6 +57,7 @@ class greenListAddedit extends React.Component {
       field: 'costList',
       type: 'o2m',
       options: {
+        noSelect: true,
         fields: [{
           title: '费用项',
           field: 'item'

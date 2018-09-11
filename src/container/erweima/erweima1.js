@@ -1,13 +1,7 @@
 import React from 'react';
 import {
-    Select,
-    Radio,
-    Alert,
-    Button
+    Select
 } from 'antd';
-import {
-    showWarnMsg
-} from 'common/js/util';
 import fetch from 'common/js/fetch';
 import './erweima.css';
 var Barcode = require('react-barcode');

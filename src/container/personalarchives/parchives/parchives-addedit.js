@@ -216,9 +216,7 @@ class ParchivesAddedit extends React.Component {
                 required: true,
                 type: 'o2m',
                 options: {
-                    add: true,
-                    edit: true,
-                    delete: true,
+                    noSelect: true,
                     fields: [{
                         title: '成员姓名',
                         field: 'realName'

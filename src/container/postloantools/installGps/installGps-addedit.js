@@ -55,9 +55,7 @@ class InstallGpsAddedit extends React.Component {
             field: 'budgetOrderGpsList',
             type: 'o2m',
             options: {
-                add: true,
-                edit: true,
-                delete: true,
+                noSelect: true,
                 fields: [{
                     title: 'GPS设备号',
                     field: 'gpsDevNo',

@@ -85,6 +85,7 @@ class TakeFreeAddedit extends React.Component {
             field: 'BudgetOrderFeeDetailList',
             type: 'o2m',
             options: {
+                noSelect: true,
                 scroll: { x: 1300 },
                 fields: [{
                     title: '交款类型',

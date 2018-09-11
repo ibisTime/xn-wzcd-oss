@@ -880,6 +880,7 @@ class BudgetDetail extends React.Component {
                     required: true,
                     type: 'o2m',
                     options: {
+                        noSelect: true,
                         fields: [{
                             title: '用款用途',
                             field: 'useMoneyPurpose',
@@ -929,8 +930,7 @@ class BudgetDetail extends React.Component {
                     field: 'repointDetailList3',
                     type: 'o2m',
                     options: {
-                        add: true,
-                        delete: true,
+                        noSelect: true,
                         fields: [{
                             title: '用款用途',
                             field: 'useMoneyPurpose',

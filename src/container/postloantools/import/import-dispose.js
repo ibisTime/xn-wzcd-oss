@@ -5,6 +5,7 @@ import {
     showSucMsg
 } from 'common/js/util';
 import DetailUtil from 'common/js/build-detail-dev';
+import fetch from 'common/js/fetch';
 import { Form } from 'antd';
 
 @Form.create()
@@ -25,7 +26,15 @@ export default class ApplyGpsAddedit extends DetailUtil {
             title: '不匹配原因',
             field: 'notMateResult',
             type: 'select',
-            key: 'not_mate_result',
+            data: [{
+                key: '0',
+                value: '信息不匹配'
+            }, {
+                key: '1',
+                value: '一卡多贷'
+            }],
+            keyName: 'key',
+            valueName: 'value',
             onChange: (v) => {
                 this.setState({
                     isSingle: v === '1'
@@ -69,12 +78,12 @@ export default class ApplyGpsAddedit extends DetailUtil {
             },
             keyName: 'code',
             valueName: '{{refCode.DATA}}-{{realName.DATA}}',
-            // hidden: !this.state.isSingle,
+            hidden: this.state.isSingle,
             required: true
         }, {
             title: '对应业务列表',
             field: 'codeList',
-            // hidden: !this.state.isSingle,
+            hidden: !this.state.isSingle,
             type: 'o2m',
             options: {
                 add: true,

@@ -38,14 +38,10 @@ class budgetAddEdit extends React.Component {
                     key: 'replace_repay_type'
                 }, {
                     title: '业务编号',
-                    field: 'code',
-                    type: 'select',
-                    listCode: 630542,
-                    params: {
-                        repayBizCode: this.code
-                    },
-                    keyName: 'code',
-                    valueName: 'code'
+                    field: 'code1',
+                    formatter: (v, d) => {
+                        return d.budgetOrder.code;
+                    }
                 }, {
                     title: '预算金额',
                     field: 'amount',

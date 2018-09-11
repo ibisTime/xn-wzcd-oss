@@ -2512,7 +2512,7 @@ const ROUTES = [
   //  二维码制作
   //  发件
   {
-    path: '/erweima/erweima',
+    path: '/erweima/erweima1',
     component: asyncComponent(() => import('container/erweima/erweima1'))
   }
 ];

@@ -45,6 +45,7 @@ class PrepaymentAddedit extends React.Component {
                 companyCode: this.code
             },
             options: {
+                noSelect: true,
                 fields: [{
                     title: '客户姓名',
                     field: 'customerName'

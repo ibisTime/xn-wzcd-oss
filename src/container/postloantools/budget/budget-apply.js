@@ -1,37 +1,21 @@
-import React from 'react';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/postloantools/budget-apply';
 import {
   getQueryString,
   showSucMsg,
   getUserId
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-    state => state.postloantoolsBudgetApply, {
-        initStates,
-        doFetching,
-        cancelFetching,
-        setSelectData,
-        setPageData,
-        restore
-    }
-)
-class budgetApply extends React.Component {
+@Form.create()
+export default class budgetApply extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.state = {
+            ...this.state
+        };
     }
     render() {
         const fields = [{
@@ -47,8 +31,7 @@ class budgetApply extends React.Component {
             pageCode: 630520,
             params: {
                 start: '0',
-                limit: '100',
-                curNodeCodeList: ['021_08', '022_03']
+                limit: '100'
             },
             keyName: 'code',
             valueName: '{{refCode.DATA}}-{{realName.DATA}}',
@@ -76,21 +59,21 @@ class budgetApply extends React.Component {
             title: '申请说明',
             field: 'applyNote'
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             buttons: [{
                 title: '发送',
                 check: true,
                 handler: (params) => {
                     params.applyUser = getUserId();
-                    this.props.doFetching();
+                    this.doFetching();
                     fetch(632320, params).then(() => {
                         showSucMsg('操作成功');
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 500);
-                        this.props.cancelFetching();
-                    }).catch(this.props.cancelFetching);
+                        this.cancelFetching();
+                    }).catch(this.cancelFetching);
                 }
             }, {
                 title: '返回',
@@ -101,5 +84,3 @@ class budgetApply extends React.Component {
         });
     }
 }
-
-export default budgetApply;

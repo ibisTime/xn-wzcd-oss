@@ -70,6 +70,7 @@ class RepaymentsAddedit extends React.Component {
             field: 'repayPlanList',
             type: 'o2m',
             options: {
+                noSelect: true,
                 fields: [{
                     title: '当前期数',
                     field: 'curPeriods'

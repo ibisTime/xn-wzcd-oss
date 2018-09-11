@@ -78,6 +78,7 @@ class yellowListAddedit extends React.Component {
             field: 'costList',
             type: 'o2m',
             options: {
+                noSelect: true,
                 fields: [{
                     title: '编号',
                     field: 'code'

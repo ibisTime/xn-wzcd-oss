@@ -54,6 +54,7 @@ class applyGpsAddedit extends React.Component {
       field: 'gpsList',
       type: 'o2m',
       options: {
+        noSelect: true,
         fields: [{
           title: 'GPS设备号',
           field: 'gpsDevNo'
