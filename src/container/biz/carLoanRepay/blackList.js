@@ -81,7 +81,18 @@ class BlackList extends React.Component {
         roleCode: getRoleCode(),
         curNodeCodeList: ['021_09', '021_10', '021_11', '021_12', '021_13', '021_14', '021_15', '021_16', '021_17', '021_18', '021_19', '021_20', '021_21', '021_22', '021_23', '021_24', '021_25', '021_27']
       },
-      pageCode: 630520
+      pageCode: 630520,
+      btnEvent: {
+        detail: (selectedRowKeys, selectedRows) => {
+          if (!selectedRowKeys.length) {
+            showWarnMsg('请选择记录');
+          } else if (selectedRowKeys.length > 1) {
+            showWarnMsg('请选择一条记录');
+          } else {
+            this.props.history.push(`/biz/blackList/addedit?code=${selectedRows[0].budgetOrder.code}&afterCode=${selectedRowKeys[0]}&v=1`);
+          }
+        }
+      }
     });
   }
 }

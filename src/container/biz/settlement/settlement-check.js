@@ -154,7 +154,8 @@ export default class settlementCheck extends DetailUtil {
             type: 'o2m',
             listCode: 630176,
             params: {
-                refOrder: this.code
+                refOrder: this.code,
+                dealNodeList: ['020_10', '020_11', '020_12', '020_13', '020_14', '020_15', '020_16']
             },
             options: {
                 rowKey: 'id',

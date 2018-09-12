@@ -92,15 +92,19 @@ class budget extends React.Component {
             render: dateTimeFormat,
             search: true
         }, {
-            title: '状态',
-            field: 'status',
+            title: '当前节点',
+            field: 'curNodeCode',
             type: 'select',
-            key: 'replace_repay_status',
-            search: true
+            listCode: 630147,
+            keyName: 'code',
+            valueName: 'name'
         }];
         return this.props.buildList({
             fields,
             pageCode: 632325,
+            searchParmas: {
+                curNodeCodeList: ['017_01', '017_02', '017_03', '017_04', '017_05', '017_06']
+            },
             btnEvent: {
                 apply: (selectedRowKeys, selectedRows) => {
                     this.props.history.push(`/postloantools/budget/apply`);
@@ -110,7 +114,7 @@ class budget extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].status !== '1') {
+                    } else if (selectedRows[0].curNodeCode !== '017_02') {
                         showWarnMsg('不是待财务审核状态');
                     } else {
                         this.props.history.push(`/postloantools/budget/check?code=${selectedRowKeys[0]}`);
@@ -119,7 +123,7 @@ class budget extends React.Component {
                 makebill: (key, item) => {
                   if (!key || !key.length || !item || !item.length) {
                     showWarnMsg('请选择记录');
-                  } else if (item[0].status !== '2') {
+                  } else if (item[0].curNodeCode !== '017_03') {
                     showWarnMsg('该状态不可制单');
                   } else {
                     Modal.confirm({

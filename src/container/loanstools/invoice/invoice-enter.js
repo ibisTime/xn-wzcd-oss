@@ -103,8 +103,10 @@ export default class InvoiceEnter extends DetailUtil {
             onChange: (v) => {
                 let money = this.state.pageData.loanAmount;
                 this.setState({
-                    ...this.state.pageData,
-                    PreCompanyLoanCs: moneyFormat((money / (v * 1000)) * 1000)
+                    pageData: {
+                        ...this.state.pageData,
+                        PreCompanyLoanCs: moneyFormat((money / (v * 1000)) * 1000)
+                    }
                 });
             },
             amount: true

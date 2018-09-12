@@ -81,6 +81,7 @@ class Summary extends React.Component {
             title: '业务区域',
             field: 'businessArea',
             type: 'citySelect',
+            cFields: ['applyBirthAddressProvince', 'applyBirthAddressCity', 'applyBirthAddressArea'],
             search: true,
             noVisible: true
         }, {

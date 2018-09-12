@@ -1,18 +1,29 @@
+import React from 'react';
 import {
     getQueryString,
     getUserId,
-    showSucMsg
+    showSucMsg,
+    moneyUppercase
 } from 'common/js/util';
-import DetailUtil from 'common/js/build-detail-dev';
+import {CollapseWrapper} from 'component/collapse-detail/collapse-detail';
+import {
+    initStates,
+    doFetching,
+    cancelFetching,
+    setSelectData,
+    setPageData,
+    restore
+} from '@redux/loan/budget-detail';
 import fetch from 'common/js/fetch';
-import { Form } from 'antd';
 
-@Form.create()
-export default class BudgetDetail extends DetailUtil {
+@CollapseWrapper(
+    state => state.loanBudgetDetail,
+    {initStates, doFetching, cancelFetching, setSelectData, setPageData, restore}
+)
+class BudgetDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            ...this.state,
             isAdvanceFund: false,
             sfData: null,
             sfDataFetch: false,
@@ -412,10 +423,10 @@ export default class BudgetDetail extends DetailUtil {
                             required: true,
                             noVisible: true,
                             onChange: (v, data, props) => {
-                                // props.setPageData({
-                                //     gpsDevNo: data.gpsDevNo,
-                                //     gpsType: data.gpsType
-                                // });
+                                props.setPageData({
+                                    gpsDevNo: data.gpsDevNo,
+                                    gpsType: data.gpsType
+                                });
                             }
                         }, {title: 'GPS设备号',
                             field: 'gpsDevNo',
@@ -941,13 +952,13 @@ export default class BudgetDetail extends DetailUtil {
                             amount: true,
                             required: true,
                             onChange: (v, props) => {
-                                // let amountL = '';
-                                // if (v) {
-                                //     amountL = moneyUppercase(v);
-                                // }
-                                // props.setPageData({
-                                //     repointAmountL: amountL
-                                // });
+                                let amountL = '';
+                                if (v) {
+                                    amountL = moneyUppercase(v);
+                                }
+                                props.setPageData({
+                                    repointAmountL: amountL
+                                });
                             }
                         }, {
                             title: '金额大写',
@@ -1205,12 +1216,10 @@ export default class BudgetDetail extends DetailUtil {
                     field: 'creditUserList',
                     type: 'o2m',
                     formatter: (v, data) => {
-                        if (!this.state.pageData.creditUserList) {
-                            this.setState({
-                                pageData: {
-                                    ...this.state.pageData,
-                                    creditUserList: data.credit.creditUserList
-                                }
+                        if (!this.props.pageData.creditUserList) {
+                            this.props.setPageData({
+                                ...this.props.pageData,
+                                creditUserList: data.credit.creditUserList
                             });
                         }
                         return data.credit.creditUserList;
@@ -1287,15 +1296,15 @@ export default class BudgetDetail extends DetailUtil {
                     data.cancelReason = params.cancelReason;
                     data.operator = getUserId();
                     let bizCode = 632125;
-                    this.doFetching();
+                    this.props.doFetching();
                     fetch(bizCode, data).then(() => {
-                        this.cancelFetching();
+                        this.props.cancelFetching();
                         showSucMsg('操作成功');
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
                     }).catch(() => {
-                        this.cancelFetching();
+                        this.props.cancelFetching();
                     });
                 }
             }, {
@@ -1306,52 +1315,25 @@ export default class BudgetDetail extends DetailUtil {
             }];
         }
 
-        // let checkFields = [{
-        //     title: '审核意见',
-        //     field: 'approveNote',
-        //     readonly: !this.isAreaCheck && !this.isCompCheck && !this.isCheck,
-        //     required: true,
-        //     type: 'select',
-        //     key: 'approve_note',
-        //     onChange: (v) => {
-        //         this.setState({
-        //             isRemark: v === '99'
-        //         });
-        //     }
-        // }, {
-        //     title: '备注',
-        //     field: 'remark',
-        //     readonly: !this.isAreaCheck && !this.isCompCheck && !this.isCheck,
-        //     required: true,
-        //     hidden: !this.state.isRemark
-        // }];
-        let checkFields = [
-            {
-                title: '审核意见',
-                open: true,
-                items: [
-                    [{
-                        title: '审核意见',
-                        field: 'approveNote',
-                        readonly: !this.isAreaCheck && !this.isCompCheck && !this.isCheck,
-                        required: true,
-                        type: 'select',
-                        key: 'approve_note',
-                        onChange: (v) => {
-                            this.setState({
-                                isRemark: v === '99'
-                            });
-                        }
-                    }, {
-                        title: '备注',
-                        field: 'remark',
-                        readonly: !this.isAreaCheck && !this.isCompCheck && !this.isCheck,
-                        required: true,
-                        hidden: !this.state.isRemark
-                    }]
-                ]
+        let checkFields = [{
+            title: '审核意见',
+            field: 'approveNote',
+            readonly: !this.isAreaCheck && !this.isCompCheck && !this.isCheck,
+            required: true,
+            type: 'select',
+            key: 'approve_note',
+            onChange: (v) => {
+                this.setState({
+                    isRemark: v === '99'
+                });
             }
-        ];
+        }, {
+            title: '备注',
+            field: 'remark',
+            readonly: !this.isAreaCheck && !this.isCompCheck && !this.isCheck,
+            required: true,
+            hidden: !this.state.isRemark
+        }];
 
         if (this.isAreaCheck || this.isCompCheck || this.isCheck) {
             fields = fields.concat(checkFields);
@@ -1373,15 +1355,15 @@ export default class BudgetDetail extends DetailUtil {
                     } else if (this.isCheck) {
                         bizCode = 632124;
                     }
-                    this.doFetching();
+                    this.props.doFetching();
                     fetch(bizCode, data).then(() => {
-                        this.cancelFetching();
+                        this.props.cancelFetching();
                         showSucMsg('操作成功');
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
                     }).catch(() => {
-                        this.cancelFetching();
+                        this.props.cancelFetching();
                     });
                 }
             }, {
@@ -1401,15 +1383,15 @@ export default class BudgetDetail extends DetailUtil {
                     } else if (this.isCheck) {
                         bizCode = 632124;
                     }
-                    this.doFetching();
+                    this.props.doFetching();
                     fetch(bizCode, data).then(() => {
-                        this.cancelFetching();
+                        this.props.cancelFetching();
                         showSucMsg('操作成功');
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
                     }).catch(() => {
-                        this.cancelFetching();
+                        this.props.cancelFetching();
                     });
                 }
             }, {
@@ -1420,13 +1402,14 @@ export default class BudgetDetail extends DetailUtil {
             }];
         }
 
-        return this.buildDetail({
+        return this.props.buildDetail({
             fields,
             code: this.code,
             view: this.view,
             detailCode: 632146,
-            buttons: buttons,
-            type: 'collapse'
+            buttons: buttons
         });
     }
 }
+
+export default BudgetDetail;

@@ -160,6 +160,44 @@ class litigationAddedit extends React.Component {
             formatter: (v, d) => {
                 return d.judge.remark;
             }
+        }, {
+            title: '流程日志',
+            field: 'list',
+            type: 'o2m',
+            listCode: 630176,
+            params: {
+                refOrder: this.code,
+                dealNodeList: ['021_09', '021_10', '021_11', '021_12', '021_13', '021_14', '021_15']
+            },
+            options: {
+                rowKey: 'id',
+                noSelect: true,
+                fields: [{
+                    title: '操作人',
+                    field: 'operatorName'
+                }, {
+                    title: '开始时间',
+                    field: 'startDatetime',
+                    type: 'datetime'
+                }, {
+                    title: '结束时间',
+                    field: 'endDatetime',
+                    type: 'datetime'
+                }, {
+                    title: '花费时长',
+                    field: 'speedTime'
+                }, {
+                    title: '审核意见',
+                    field: 'dealNote'
+                }, {
+                    title: '当前节点',
+                    field: 'dealNode',
+                    type: 'select',
+                    listCode: 630147,
+                    keyName: 'code',
+                    valueName: 'name'
+                }]
+            }
         }];
         return this
             .props

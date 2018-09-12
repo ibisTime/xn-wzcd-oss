@@ -41,6 +41,9 @@ class compensatoryAddedit extends React.Component {
                 [{
                     title: '客户姓名',
                     field: 'customerUserName',
+                    formatter: (v, d) => {
+                        return d.user.realName;
+                    },
                     readonly: true
                 }, {
                     title: '业务编号',
@@ -49,7 +52,84 @@ class compensatoryAddedit extends React.Component {
                 }, {
                     title: '身份证',
                     field: 'idNo',
+                    formatter: (v, d) => {
+                        return d.user.idNo;
+                    },
                     readonly: true
+                }], [{
+                    title: '贷款银行',
+                    field: 'loanBankName',
+                    formatter: (v, d) => {
+                        return d.budgetOrder.loanBankName;
+                    },
+                    readonly: true
+                }, {
+                    title: '贷款金额',
+                    field: 'loanAmount',
+                    formatter: (v, d) => {
+                        return moneyFormat(d.budgetOrder.loanAmount);
+                    },
+                    readonly: true
+                }, {
+                    title: '发票价格',
+                    field: 'invoicePrice',
+                    formatter: (v, d) => {
+                        return moneyFormat(d.budgetOrder.invoicePrice);
+                    },
+                    readonly: true
+                }], [{
+                    title: '申请人就职单位',
+                    field: 'applyUserCompany',
+                    formatter: (v, d) => {
+                        return d.budgetOrder.applyUserCompany;
+                    },
+                    readonly: true
+                }, {
+                    title: '申请人户籍地',
+                    field: 'applyBirthAddress',
+                    formatter: (v, d) => {
+                        return d.budgetOrder.applyBirthAddress;
+                    },
+                    readonly: true
+                }, {
+                    title: '现住地址',
+                    field: 'applyNowAddress',
+                    formatter: (v, d) => {
+                        return d.budgetOrder.applyNowAddress;
+                    },
+                    readonly: true
+                }], [{
+                    title: 'GPS',
+                    field: 'budgetOrderGpsList1',
+                    formatter: (v, d) => {
+                        return d.budgetOrder.budgetOrderGpsList;
+                    },
+                    type: 'o2m',
+                    options: {
+                        noSelect: true,
+                        fields: [{
+                            title: 'GPS设备号',
+                            field: 'gpsDevNo'
+                        }, {
+                            title: 'GPS类型',
+                            field: 'gpsType',
+                            type: 'select',
+                            data: [{
+                                key: '1',
+                                value: '有线'
+                            }, {
+                                key: '0',
+                                value: '无线'
+                            }],
+                            keyName: 'key',
+                            valueName: 'value'
+                        }, {
+                            title: 'GPS安装位置',
+                            field: 'azLocation',
+                            type: 'select',
+                            key: 'az_location'
+                        }]
+                    }
                 }]
             ]
         }, {

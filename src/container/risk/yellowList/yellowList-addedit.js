@@ -10,7 +10,7 @@ import {
   setSearchData
 } from '@redux/risk/yellowList-addedit';
 import {listWrapper} from 'common/js/build-list';
-import {getQueryString} from 'common/js/util';
+import {getQueryString, moneyFormat} from 'common/js/util';
 
 @listWrapper(state => ({
   ...state.riskYellowListAddedit
@@ -32,18 +32,41 @@ class YellowListAddedit extends React.Component {
   render() {
     const fields = [{
       title: '业务编号',
-      field: 'code'
+      field: 'code',
+      render: (v, d) => {
+        return d.repayBiz.budgetOrder.code;
+      }
     }, {
       title: '客户姓名',
       field: 'realName'
+    }, {
+      title: '共还人',
+      field: 'ghRealName',
+      render: (v, d) => {
+        return d.repayBiz.budgetOrder.ghRealName;
+      }
+    }, {
+      title: '担保人1',
+      field: 'guarantor1Name',
+      render: (v, d) => {
+        return d.repayBiz.budgetOrder.guarantor1Name;
+      }
+    }, {
+      title: '担保人2',
+      field: 'guarantor2Name',
+      render: (v, d) => {
+        return d.repayBiz.budgetOrder.guarantor2Name;
+      }
     }, {
       title: '逾期日期',
       field: 'repayDatetime',
       type: 'date'
     }, {
       title: '逾期金额',
-      field: 'overdueAmount',
-      amount: true
+      field: 'restOverdueAmount',
+      render: (v, d) => {
+        return moneyFormat(d.repayBiz.restOverdueAmount);
+      }
     }];
     return this
       .props
@@ -51,8 +74,7 @@ class YellowListAddedit extends React.Component {
         fields,
         pageCode: 630540,
         searchParams: {
-          userId: this.code,
-          curNodeCodeList: ['021_04', '021_05', '021_06', '021_07', '021_08']
+          userId: this.code
         }
       });
   }

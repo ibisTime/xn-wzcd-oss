@@ -39,7 +39,7 @@ class OverdueListApply extends React.Component {
             key: '1',
             value: '是'
         }];
-        this.typeList = ['剩余贷款金额', '月供'];
+        this.typeList = ['', '月供', '剩余贷款金额'];
         this.state = {
             type: '',
             amount: '',
