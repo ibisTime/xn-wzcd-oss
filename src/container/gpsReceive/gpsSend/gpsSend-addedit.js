@@ -27,7 +27,7 @@ class GpsSendAddEdit extends React.Component {
   render() {
     const fields = [{
         title: '客户姓名',
-        field: 'customerName'
+        field: 'userName'
     }, {
         title: '传递方式',
         field: 'sendType',
@@ -50,6 +50,12 @@ class GpsSendAddEdit extends React.Component {
     }, {
         title: '快递单号',
         field: 'logisticsCode'
+    }, {
+        title: '状态',
+        field: 'status',
+        type: 'select',
+        key: 'logistics_status',
+        search: true
     }, {
         title: '发件时间',
         field: 'sendDatetime',

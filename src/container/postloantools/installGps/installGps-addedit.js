@@ -31,6 +31,7 @@ class InstallGpsAddedit extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.edit = getQueryString('edit', this.props.location.search);
     }
     render() {
         const fields = [{
@@ -52,28 +53,25 @@ class InstallGpsAddedit extends React.Component {
             readonly: true
         }, {
             title: 'GPS安装列表',
-            field: 'budgetOrderGpsList',
+            field: this.edit ? 'budgetOrderGpsList' : 'gpsAzList',
             type: 'o2m',
             options: {
-                noSelect: true,
                 fields: [{
                     title: 'GPS设备号',
                     field: 'gpsDevNo',
                     nowrap: true,
                     required: true
                 }, {
-                    title: 'GPS类型',
-                    field: 'gpsType',
-                    nowrap: true,
-                    required: true
-                }, {
                     title: '安装位置',
                     field: 'azLocation',
+                    type: 'select',
+                    key: 'az_location',
                     nowrap: true,
                     required: true
                 }, {
                     title: '安装时间',
                     field: 'azDatetime',
+                    type: 'date',
                     nowrap: true,
                     required: true
                 }, {
@@ -82,16 +80,19 @@ class InstallGpsAddedit extends React.Component {
                     nowrap: true,
                     required: true
                 }, {
+                    title: '状态',
+                    field: 'status',
+                    type: 'select',
+                    key: 'gps_use_status'
+                }, {
                     title: '备注',
                     field: 'remark',
-                    nowrap: true,
-                    required: true
+                    nowrap: true
                 }]
             }
         }, {
             title: '备注',
-            field: 'remark',
-            required: true
+            field: 'remark'
         }];
         return this.props.buildDetail({
             fields,

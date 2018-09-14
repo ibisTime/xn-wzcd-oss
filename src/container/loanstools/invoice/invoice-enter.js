@@ -125,7 +125,7 @@ export default class InvoiceEnter extends DetailUtil {
         }, {
             title: '车架号',
             field: 'frameNo',
-            hidden: !this.state.hiddenStatus,
+            hidden: this.state.hiddenStatus,
             required: true,
             readonly: this.state.pageData ? !!this.state.pageData.frameNo : false
         }, {

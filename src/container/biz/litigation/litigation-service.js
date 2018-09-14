@@ -10,11 +10,9 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg,
     formatDate,
     moneyFormat
 } from 'common/js/util';
-import fetch from 'common/js/fetch';
 import {
     DetailWrapper
 } from 'common/js/build-detail';

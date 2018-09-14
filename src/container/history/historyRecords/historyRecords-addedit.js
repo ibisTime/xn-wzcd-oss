@@ -1,27 +1,26 @@
-import React from 'react';
 import {
     getQueryString,
-    moneyUppercase
+    moneyFormat,
+    formatDate
 } from 'common/js/util';
-import {CollapseWrapper} from 'component/collapse-detail/collapse-detail';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/loan/budget-detail';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@CollapseWrapper(
-    state => state.loanBudgetDetail,
-    {initStates, doFetching, cancelFetching, setSelectData, setPageData, restore}
-)
-class BudgetDetail extends React.Component {
+@Form.create()
+export default class BlackListAddedit extends DetailUtil {
     constructor(props) {
         super(props);
+        this.state = {
+            ...this.state,
+            isAdvanceFund: false
+        };
         this.code = getQueryString('code', this.props.location.search);
+        this.afterCode = getQueryString('afterCode', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        // 银行利率明细列表
+        this.bankRateList = null;
+        // 购车途径
+        this.shopWay = true;
     }
 
     render() {
@@ -266,14 +265,14 @@ class BudgetDetail extends React.Component {
                 }],
                 [{
                     title: '汽车经销商',
-                    field: 'carDealerCode',
-                    type: 'select',
-                    pageCode: 632065,
-                    params: {
-                        curNodeCode: '006_02'
-                    },
-                    keyName: 'code',
-                    valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}'
+                    field: 'carDealerName',
+                    formatter: (v, data) => {
+                        if (data.carDealer) {
+                            return data.carDealer.parentGroup + '-' + data.carDealer.abbrName;
+                        } else {
+                            return v;
+                        }
+                    }
                 }, {
                     title: '贷款银行',
                     field: 'loanBankName'
@@ -400,10 +399,10 @@ class BudgetDetail extends React.Component {
                             required: true,
                             noVisible: true,
                             onChange: (v, data, props) => {
-                                props.setPageData({
-                                    gpsDevNo: data.gpsDevNo,
-                                    gpsType: data.gpsType
-                                });
+                                // props.setPageData({
+                                //     gpsDevNo: data.gpsDevNo,
+                                //     gpsType: data.gpsType
+                                // });
                             }
                         }, {title: 'GPS设备号',
                             field: 'gpsDevNo',
@@ -445,7 +444,7 @@ class BudgetDetail extends React.Component {
                     title: '申请人共还人关系',
                     field: 'applyUserGhrRelation',
                     type: 'select',
-                    key: 'credit_user_relation'
+                    key: 'emergency_contact_relation'
                 }, {
                     title: '婚姻状况',
                     field: 'marryState',
@@ -736,7 +735,7 @@ class BudgetDetail extends React.Component {
                     field: 'emergencyRelation1',
                     title: '与申请人关系',
                     type: 'select',
-                    key: 'credit_user_relation',
+                    key: 'emergency_contact_relation',
                     required: true
                 }, {
                     field: 'emergencyMobile1',
@@ -751,7 +750,7 @@ class BudgetDetail extends React.Component {
                     field: 'emergencyRelation2',
                     title: '与申请人关系',
                     type: 'select',
-                    key: 'credit_user_relation'
+                    key: 'emergency_contact_relation'
                 }, {
                     field: 'emergencyMobile2',
                     title: '手机号码',
@@ -853,6 +852,7 @@ class BudgetDetail extends React.Component {
                     required: true,
                     type: 'o2m',
                     options: {
+                        noSelect: true,
                         fields: [{
                             title: '用款用途',
                             field: 'useMoneyPurpose',
@@ -902,8 +902,7 @@ class BudgetDetail extends React.Component {
                     field: 'repointDetailList3',
                     type: 'o2m',
                     options: {
-                        add: true,
-                        delete: true,
+                        noSelect: true,
                         fields: [{
                             title: '用款用途',
                             field: 'useMoneyPurpose',
@@ -929,13 +928,13 @@ class BudgetDetail extends React.Component {
                             amount: true,
                             required: true,
                             onChange: (v, props) => {
-                                let amountL = '';
-                                if (v) {
-                                    amountL = moneyUppercase(v);
-                                }
-                                props.setPageData({
-                                    repointAmountL: amountL
-                                });
+                                // let amountL = '';
+                                // if (v) {
+                                //     amountL = moneyUppercase(v);
+                                // }
+                                // props.setPageData({
+                                //     repointAmountL: amountL
+                                // });
                             }
                         }, {
                             title: '金额大写',
@@ -1193,10 +1192,12 @@ class BudgetDetail extends React.Component {
                     field: 'creditUserList',
                     type: 'o2m',
                     formatter: (v, data) => {
-                        if (!this.props.pageData.creditUserList) {
-                            this.props.setPageData({
-                                ...this.props.pageData,
-                                creditUserList: data.credit.creditUserList
+                        if (!this.state.pageData.creditUserList) {
+                            this.setState({
+                                pageData: {
+                                    ...this.state.pageData,
+                                    creditUserList: data.credit.creditUserList
+                                }
                             });
                         }
                         return data.credit.creditUserList;
@@ -1209,15 +1210,122 @@ class BudgetDetail extends React.Component {
                 }]
             ]
         }, {
+            title: '贷后信息',
+            items: [
+                [{
+                    title: '是否提前还款',
+                    field: 'isAdvanceSettled',
+                    formatter: (v, d) => {
+                        return d.repayBiz.isAdvanceSettled;
+                    },
+                    type: 'select',
+                    data: [{
+                        key: '0',
+                        value: '否'
+                    }, {
+                        key: '1',
+                        value: '是'
+                    }],
+                    keyName: 'key',
+                    valueName: 'value'
+                }, {
+                    title: '总期数',
+                    field: 'periods',
+                    formatter: (v, d) => {
+                        return d.repayBiz.periods;
+                    }
+                }, {
+                    title: '剩余期数',
+                    field: 'restPeriods',
+                    formatter: (v, d) => {
+                        return d.repayBiz.restPeriods;
+                    }
+                }], [{
+                    title: '剩余逾期总金额',
+                    field: 'restOverdueAmount',
+                    formatter: (v, d) => {
+                        return moneyFormat(d.repayBiz.restOverdueAmount);
+                    }
+                }, {
+                    title: '剩余欠款',
+                    field: 'restAmount',
+                    formatter: (v, d) => {
+                        return moneyFormat(d.repayBiz.restAmount);
+                    }
+                }, {
+                    title: '未还清收成本',
+                    field: 'restTotalCost',
+                    formatter: (v, d) => {
+                        return moneyFormat(d.repayBiz.restTotalCost);
+                    }
+                }], [{
+                    title: '实际退款金额',
+                    field: 'actualRefunds',
+                    formatter: (v, d) => {
+                        return moneyFormat(d.repayBiz.actualRefunds);
+                    }
+                }, {
+                    title: '解除抵押时间',
+                    field: 'releaseDatetime',
+                    formatter: (v, d) => {
+                        return formatDate(d.repayBiz.releaseDatetime);
+                    }
+                }, {
+                    title: '结清时间',
+                    field: 'closeDatetime',
+                    formatter: (v, d) => {
+                        return formatDate(d.repayBiz.closeDatetime);
+                    }
+                }]
+            ]
+        }, {
+            title: '还款计划',
+            items: [
+                [{
+                    title: '还款计划表',
+                    field: 'repayPlansList',
+                    type: 'o2m',
+                    options: {
+                        fields: [{
+                            title: '当前期数',
+                            field: 'curPeriods'
+                        }, {
+                            title: '应还本息',
+                            field: 'repayInterest',
+                            render: (v, d) => {
+                                return moneyFormat(d.repayCapital + d.repayInterest);
+                            }
+                        }, {
+                            title: '实还金额',
+                            field: 'payedAmount',
+                            amount: true
+                        }, {
+                            title: '逾期金额',
+                            field: 'overdueAmount',
+                            amount: true
+                        }, {
+                            title: '还款日期',
+                            field: 'repayDatetime',
+                            type: 'date'
+                        }, {
+                            title: '剩余欠款',
+                            field: 'overplusAmount',
+                            amount: true
+                        }]
+                    }
+                }]
+            ]
+        }, {
             title: '流转日志',
             items: [
                 [{
                     title: '流程日志',
                     field: 'list',
+                    rowKey: 'id',
                     type: 'o2m',
                     listCode: 630176,
                     params: {
-                        refOrder: this.code
+                        refOrder: this.afterCode
                     },
                     options: {
                         rowKey: 'id',
@@ -1250,15 +1358,13 @@ class BudgetDetail extends React.Component {
                     }
                 }]
             ]
-        }]
-
-        return this.props.buildDetail({
+        }];
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
-            detailCode: 632146
+            detailCode: 632146,
+            type: 'collapse'
         });
     }
 }
-
-export default BudgetDetail;

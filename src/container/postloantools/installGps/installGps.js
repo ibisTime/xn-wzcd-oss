@@ -14,18 +14,8 @@ import {
 } from 'common/js/build-list';
 import {
     showWarnMsg,
-    showSucMsg,
     getRoleCode
 } from 'common/js/util';
-import {
-    Button,
-    Upload,
-    Modal
-} from 'antd';
-import {
-    lowerFrame,
-    onShelf
-} from 'api/biz';
 
 @listWrapper(
     state => ({
@@ -91,6 +81,15 @@ class InstallGps extends React.Component {
                         showWarnMsg('请选择一条记录');
                     } else {
                         this.props.history.push(`/postloantools/installGps/enter?code=${selectedRowKeys[0]}&edit=1`);
+                    }
+                },
+                detail: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else {
+                        this.props.history.push(`/postloantools/installGps/addedit?code=${selectedRowKeys[0]}&edit=1&v=1`);
                     }
                 }
             }

@@ -51,10 +51,8 @@ class CancelApply extends React.Component {
     }, {
         title: '状态',
         field: 'makeCardStatus',
-        readonly: true
-    }, {
-        title: '更新人',
-        field: 'makeCardOperator',
+        type: 'select',
+        key: 'make_card_status',
         readonly: true
     }, {
         title: '备注',

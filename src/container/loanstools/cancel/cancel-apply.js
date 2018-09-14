@@ -1,12 +1,3 @@
-import React from 'react';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/loanstools/cancel-apply';
 import {
     getQueryString,
     showSucMsg,
@@ -14,24 +5,19 @@ import {
     moneyFormat,
     dateFormat
 } from 'common/js/util';
-import {DetailWrapper} from 'common/js/build-detail';
 import fetch from 'common/js/fetch';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-    state => state.loanstoolsCancelApply, {
-        initStates,
-        doFetching,
-        cancelFetching,
-        setSelectData,
-        setPageData,
-        restore
-    }
-)
-class CancelApply extends React.Component {
+@Form.create()
+export default class CancelApply extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.state = {
+            ...this.state
+        };
     }
 
     render() {
@@ -44,14 +30,16 @@ class CancelApply extends React.Component {
             valueName: '{{customerName.DATA}}-{{code.DATA}}',
             searchName: 'customerName',
             required: true,
-            onChange: (v, data) => {
-                fetch(632146, {code: data.code}).then(info => {
-                    this.props.setPageData({
-                        ...this.props.pageData,
-                        loanAmount: moneyFormat(info.loanAmount),
-                        idNo: info.idNo,
-                        bcode: data.code,
-                        dztime: data.advanceFund ? dateFormat(data.advanceFund.advanceFundDatetime) : ''
+            onChange: (v, data, c) => {
+                fetch(632146, {code: v}).then(info => {
+                    this.setState({
+                        pageData: {
+                            ...this.state.pageData,
+                            loanAmount: moneyFormat(info.loanAmount),
+                            idNo: info.idNo,
+                            bcode: v,
+                            dztime: info.advanceFund ? dateFormat(info.advanceFund.advanceFundDatetime) : ''
+                        }
                     });
                 });
             }
@@ -78,7 +66,7 @@ class CancelApply extends React.Component {
             normalArea: true,
             required: true
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
@@ -88,14 +76,14 @@ class CancelApply extends React.Component {
                 check: true,
                 handler: (params) => {
                     params.operator = getUserId();
-                    this.props.doFetching();
+                    this.doFetching();
                     fetch(632270, params).then(() => {
                         showSucMsg('操作成功');
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
-                        this.props.cancelFetching();
-                    }).catch(this.props.cancelFetching);
+                        this.cancelFetching();
+                    }).catch(this.cancelFetching);
                 }
             }, {
                 title: '返回',
@@ -106,5 +94,3 @@ class CancelApply extends React.Component {
         });
     }
 }
-
-export default CancelApply;

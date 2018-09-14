@@ -60,10 +60,10 @@ export default class SelectSizesDemo extends React.Component {
         });
     }
     click = () => {
-        // if (!this.state.obj) {
-        //         //     showWarnMsg('请选择一条记录');
-        //         //     return;
-        //         // }
+        if (!this.state.obj) {
+                //     showWarnMsg('请选择一条记录');
+                //     return;
+                // }
         let jsbar = document.getElementById('jsbar');
         let svgXml = jsbar.innerHTML;
 
@@ -85,6 +85,7 @@ export default class SelectSizesDemo extends React.Component {
         let url = canvas.toDataURL('image/jpeg');
         download.setAttribute('href', url);
         download.click();
+        }
     }
 
     getStyle = (el, name) => {

@@ -67,7 +67,7 @@ class card extends React.Component {
             search: true
         }, {
             title: '更新人',
-            field: 'makeCardOperator'
+            field: 'makeCardOperatorName'
         }, {
             title: '备注',
             field: 'makeCardRemark'

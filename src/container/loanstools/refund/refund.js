@@ -67,7 +67,7 @@ class refund extends React.Component {
             amount: true
         }, {
             title: '应退按揭款',
-            field: 'receiptAccount',
+            field: 'shouldBackAmount',
             amount: true
         }, {
             title: '当前节点',

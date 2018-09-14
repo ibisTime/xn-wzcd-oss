@@ -112,6 +112,11 @@ class InstallGpsEnter extends React.Component {
                     nowrap: true,
                     required: true
                 }, {
+                    title: '状态',
+                    field: 'status',
+                    type: 'select',
+                    key: 'gps_use_status'
+                }, {
                     title: '备注',
                     field: 'remark',
                     nowrap: true

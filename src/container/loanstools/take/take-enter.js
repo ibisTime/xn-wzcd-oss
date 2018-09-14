@@ -1,25 +1,23 @@
-import React from 'react';
-import { initStates, doFetching, cancelFetching, setSelectData, setPageData, restore } from '@redux/loanstools/take-enter';
-import { getQueryString, showSucMsg, showWarnMsg, getUserId, getCompanyCode, moneyFormat } from 'common/js/util';
+import {
+  getQueryString,
+  showSucMsg,
+  showWarnMsg,
+  getUserId
+} from 'common/js/util';
 import fetch from 'common/js/fetch';
-import { DetailWrapper } from 'common/js/build-detail';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-  state => state.loanstoolsTakeEnter, {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-  }
-)
-class TakeEnter extends React.Component {
+@Form.create()
+export default class TakeEnter extends DetailUtil {
   constructor(props) {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
-    this.isZfReason = true;
+    this.state = {
+      ...this.state,
+      isZfReason: true
+    };
   }
   render() {
     const fields = [{
@@ -45,11 +43,9 @@ class TakeEnter extends React.Component {
       keyName: 'key',
       valueName: 'value',
       onChange: (v) => {
-        if(v === '1') {
-          this.isZfReason = false;
-        } else {
-          this.isZfReason = true;
-        }
+        this.setState({
+          isZfReason: v !== '1'
+        });
       },
       required: true
     }, {
@@ -60,7 +56,7 @@ class TakeEnter extends React.Component {
     }, {
       title: '作废原因',
       field: 'zfReason',
-      hidden: this.isZfReason,
+      hidden: this.state.isZfReason,
       required: true
     }, {
       title: '打款凭证',
@@ -68,7 +64,7 @@ class TakeEnter extends React.Component {
       type: 'img',
       required: true
     }];
-    return this.props.buildDetail({
+    return this.buildDetail({
       fields,
       code: this.code,
       view: this.view,
@@ -78,15 +74,15 @@ class TakeEnter extends React.Component {
         check: true,
         handler: (params) => {
           if (params.code) {
-            this.props.doFetching();
+            this.doFetching();
             params.operator = getUserId();
             fetch(632280, params).then(() => {
               showSucMsg('操作成功');
-              this.props.cancelFetching();
+              this.cancelFetching();
               setTimeout(() => {
                 this.props.history.go(-1);
               }, 1000);
-            }).catch(this.props.cancelFetching);
+            }).catch(this.cancelFetching);
           } else {
             showWarnMsg('未选择预算单');
           }
@@ -100,5 +96,3 @@ class TakeEnter extends React.Component {
     });
   }
 }
-
-export default TakeEnter;

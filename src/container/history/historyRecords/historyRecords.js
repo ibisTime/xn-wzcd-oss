@@ -13,18 +13,10 @@ import {
     listWrapper
 } from 'common/js/build-list';
 import {
-    showWarnMsg,
-    showSucMsg,
-    formatDate
+    moneyFormat,
+    formatDate,
+    showWarnMsg
 } from 'common/js/util';
-import {
-    Button,
-    Upload,
-    Modal
-} from 'antd';
-import {
-    sendMsg
-} from 'api/biz';
 
 @listWrapper(state => ({
     ...state.historyHistoryRecords,
@@ -40,15 +32,15 @@ import {
     setSearchData
 })
 class HistoryBusiness extends React.Component {
+    constructor(props) {
+        super(props);
+        this.shopWayArr = ['新车', '二手车'];
+        this.isflag = ['否', '是'];
+    }
     render() {
         const fields = [{
             title: '银行',
-            field: 'loanBankName',
-            type: 'select',
-            listCode: 632057,
-            keyName: 'code',
-            valueName: '{{bankName.DATA}}-{{fullName.DATA}}',
-            search: true
+            field: 'loanBankName'
         }, {
             title: '业务编号',
             field: 'code',
@@ -66,7 +58,7 @@ class HistoryBusiness extends React.Component {
             search: true
         }, {
             title: '客户姓名',
-            field: 'customerName',
+            field: 'realName',
             search: true
         }, {
             title: '身份证号',
@@ -76,27 +68,38 @@ class HistoryBusiness extends React.Component {
         }, {
             title: '购车途径',
             field: 'shopWay',
+            render: (v, d) => {
+                return this.shopWayArr[d.budgetOrder.shopWay];
+            },
             type: 'select',
             key: 'budget_orde_biz_typer',
             search: true
         }, {
             title: '汽车经销商',
             field: 'carDealerCode',
+            render: (v, d) => {
+                return d.budgetOrder.carDealerName;
+            },
             type: 'select',
-            pageCode: 632065,
+            listCode: 632067,
             params: {
-                curNodeCode: '006_02'
+                agreementStatus: '1'
             },
             keyName: 'code',
             valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
             search: true
         }, {
             title: '车辆型号',
-            field: 'carModel'
+            field: 'carModel',
+            render: (v, d) => {
+                return d.budgetOrder.carModel;
+            }
         }, {
             title: '车辆价格',
             field: 'invoicePrice',
-            amount: true
+            render: (v, d) => {
+                return moneyFormat(d.budgetOrder.invoicePrice);
+            }
         }, {
             title: '贷款金额',
             field: 'loanAmount',
@@ -109,22 +112,29 @@ class HistoryBusiness extends React.Component {
             field: 'restPeriods'
         }, {
             title: '是否垫资',
-            field: 'isAdvanceFund'
+            field: 'isAdvanceFund',
+            render: (v, d) => {
+                return this.isflag[d.budgetOrder.isAdvanceFund];
+            },
+            type: 'select',
+            data: [{
+                key: '0',
+                value: '否'
+            }, {
+                key: '1',
+                value: '是'
+            }],
+            keyName: 'key',
+            valueName: 'value'
         }, {
             title: '放款日期',
-            field: 'updater',
-            render: (v, d) => {
-                if(d.loanOrder !== undefined) {
-                    return formatDate(d.loanOrder.fkDatetime);
-                }
-            }
+            field: 'bankFkDatetime',
+            type: 'date'
         }, {
             title: '垫资日期',
-            field: 'updater',
+            field: 'advanceFundDatetime',
             render: (v, d) => {
-                if(d.loanOrder !== undefined) {
-                    return formatDate(d.loanOrder.fkDatetime);
-                }
+                return formatDate(d.budgetOrder.advanceFundDatetime);
             }
         }, {
             title: '当前节点',
@@ -136,10 +146,21 @@ class HistoryBusiness extends React.Component {
         }];
         return this.props.buildList({
             fields,
-            pageCode: 632145,
+            pageCode: 630520,
             searchParams: {
                 enterFileStatus: '2',
-                curNodeCodeList: ['021_24']
+                curNodeCodeList: ['020_15', '021_24', '021_25']
+            },
+            btnEvent: {
+              detail: (selectedRowKeys, selectedRows) => {
+                if (!selectedRowKeys.length) {
+                  showWarnMsg('请选择记录');
+                } else if (selectedRowKeys.length > 1) {
+                  showWarnMsg('请选择一条记录');
+                } else {
+                  this.props.history.push(`/history/historyRecords/addedit?code=${selectedRows[0].budgetOrder.code}&afterCode=${selectedRowKeys[0]}&v=1`);
+                }
+              }
             }
         });
     }

@@ -1367,7 +1367,6 @@ class BudgetAddedit extends React.Component {
                             title: '金额小写',
                             field: 'repointAmount',
                             amount: true,
-                            required: true,
                             readonly: true
                         }, {
                             title: '单位名称',

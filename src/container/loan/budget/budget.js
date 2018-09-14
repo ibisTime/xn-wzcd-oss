@@ -41,16 +41,30 @@ class Budget extends React.Component {
             title: '业务编号',
             search: true
         }, {
-            field: 'companyName',
             title: '业务公司',
+            field: 'companyCode',
+            listCode: 630106,
+            params: {
+                typeList: [1]
+            },
+            type: 'select',
+            keyName: 'code',
+            valueName: 'name',
             search: true
         }, {
             field: 'customerName',
             title: '客户姓名',
             search: true
         }, {
-            field: 'carDealerName',
             title: '汽车经销商',
+            field: 'carDealerCode',
+            type: 'select',
+            listCode: 632067,
+            params: {
+                agreementStatus: '1'
+            },
+            keyName: 'code',
+            valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}',
             search: true
         }, {
             field: 'carModel',
@@ -70,8 +84,12 @@ class Budget extends React.Component {
                 return v ? v + '期' : '-';
             }
         }, {
-            field: 'loanBankName',
             title: '贷款银行',
+            field: 'loanBankCode',
+            type: 'select',
+            listCode: 632057,
+            keyName: 'code',
+            valueName: 'bankName',
             search: true
         }, {
             field: 'bankRate',

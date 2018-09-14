@@ -2372,6 +2372,11 @@ const ROUTES = [
     path: '/history/historyRecords',
     component: asyncComponent(() => import('container/history/historyRecords/historyRecords'))
   },
+  //  业务管理-历史业务 详情
+  {
+    path: '/history/historyRecords/addedit',
+    component: asyncComponent(() => import('container/history/historyRecords/historyRecords-addedit'))
+  },
   //  风险名单管理
   //  黄名单
   {
