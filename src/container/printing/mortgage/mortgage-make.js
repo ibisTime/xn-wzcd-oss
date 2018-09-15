@@ -50,12 +50,7 @@ class MortgageMake extends React.Component {
         const fields = [{
             title: '主贷人姓名',
             field: 'customerName',
-            readonly: true,
-            formatter: (v, d) => {
-              this.setState({
-                bankType: d.bankSubbranch.bankType
-              });
-            }
+            readonly: true
         }, {
             title: '身份证号码',
             field: 'idNo',

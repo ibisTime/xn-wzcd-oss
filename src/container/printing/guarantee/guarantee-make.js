@@ -54,12 +54,7 @@ class GuaranteeMake extends React.Component {
         [{
           title: '客户姓名',
           field: 'customerName',
-          readonly: true,
-          formatter: (v, d) => {
-            this.setState({
-              bankType: d.bankSubbranch.bankType
-            });
-          }
+          readonly: true
         }, {
           title: '业务编号',
           field: 'code',

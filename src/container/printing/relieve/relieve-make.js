@@ -315,12 +315,7 @@ class RelieveMake extends React.Component {
         const fields = [{
             title: '客户姓名',
             field: 'realName',
-            readonly: true,
-            formatter: (v, d) => {
-              this.setState({
-                bankType: d.budgetOrder.bankSubbranch.bankType
-              });
-            }
+            readonly: true
         }, {
             title: '业务编号',
             field: 'code',
