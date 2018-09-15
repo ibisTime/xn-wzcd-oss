@@ -46,9 +46,6 @@ class GuaranteeMake extends React.Component {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
-    this.state = {
-      bankType: 'BOC'
-    };
   }
   render() {
     const fields = [{
@@ -345,24 +342,8 @@ class GuaranteeMake extends React.Component {
           field: 'guarantPrintTemplateId',
           type: 'select',
           key: 'guarant_zh_print_template_id',
-          required: true,
-          hidden: this.state.bankType === 'BOC'
-        }];
-        // , {
-        //   title: '套打模板',
-        //   field: 'guarantPrintTemplateId1',
-        //   type: 'select',
-        //   key: 'guarant_jh_print_template_id',
-        //   required: true,
-        //   hidden: this.state.bankType === 'CCB'
-        // }, {
-        //   title: '套打模板',
-        //   field: 'guarantPrintTemplateId2',
-        //   type: 'select',
-        //   key: 'guarant_gh_print_template_id',
-        //   required: true,
-        //   hidden: this.state.bankType === 'ICBC'
-        // }]
+          required: true
+        }]
       ]
     }];
     return this.props.buildDetail({
@@ -374,7 +355,6 @@ class GuaranteeMake extends React.Component {
           title: '打印',
           check: true,
           handler: (param) => {
-            // param.guarantPrintTemplateId = param.guarantPrintTemplateId || param.guarantPrintTemplateId1 || param.guarantPrintTemplateId2;
             param.code = this.code;
             param.operator = getUserId();
             let num = param.guarantPrintTemplateId;

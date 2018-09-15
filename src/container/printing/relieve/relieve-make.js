@@ -33,9 +33,6 @@ class RelieveMake extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.state = {
-          bankType: 'BOC'
-        };
     }
     // 生成担保合同
     createHt(data) {
@@ -351,29 +348,13 @@ class RelieveMake extends React.Component {
             field: 'releaseTemplateId',
             type: 'select',
             key: 'release_zh_print_template_id',
-            required: true,
-            hidden: this.state.bankType === 'BOC'
+            required: true
         }, {
             title: '备注',
             field: 'releaseNote',
             type: 'textarea',
             normalArea: true
         }];
-        //  {
-        //     title: '套打模版',
-        //     field: 'releaseTemplateId',
-        //     type: 'select',
-        //     key: 'release_jh_print_template_id',
-        //     required: true,
-        //     hidden: this.state.bankType === 'CCB'
-        // }, {
-        //     title: '套打模版',
-        //     field: 'releaseTemplateId',
-        //     type: 'select',
-        //     key: 'release_gh_print_template_id',
-        //     required: true,
-        //     hidden: this.state.bankType === 'ICBC'
-        // }];
         return this.props.buildDetail({
             fields,
             code: this.code,
@@ -383,7 +364,6 @@ class RelieveMake extends React.Component {
                     title: '打印',
                     check: true,
                     handler: (param) => {
-                      // param.releaseTemplateId = param.releaseTemplateId || param.releaseTemplateId1 || param.releaseTemplateId2;
                       param.operator = getUserId();
                       let pageData = this.props.pageData;
                       this.props.doFetching();
