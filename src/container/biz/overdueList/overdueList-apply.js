@@ -32,6 +32,7 @@ class OverdueListApply extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.repayBizCode = getQueryString('repayBizCode', this.props.location.search);
         this.arr = [{
             key: '0',
             value: '否'
@@ -77,6 +78,9 @@ class OverdueListApply extends React.Component {
             field: 'replaceApplyCode',
             type: 'select',
             listCode: 632327,
+            params: {
+                bizCode: this.repayBizCode
+            },
             keyName: 'code',
             valueName: '{{code.DATA}}-{{receiptRealName.DATA}}',
             onChange: (v, d) => {

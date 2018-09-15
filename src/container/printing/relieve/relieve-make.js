@@ -11,11 +11,7 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg,
-    moneyFormat,
-    moneyUppercase,
-    dateFormat,
-    formatDate
+    showSucMsg
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -37,6 +33,9 @@ class RelieveMake extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.state = {
+          bankType: 'BOC'
+        };
     }
     // 生成担保合同
     createHt(data) {
@@ -319,7 +318,12 @@ class RelieveMake extends React.Component {
         const fields = [{
             title: '客户姓名',
             field: 'realName',
-            readonly: true
+            readonly: true,
+            formatter: (v, d) => {
+              this.setState({
+                bankType: d.budgetOrder.bankSubbranch.bankType
+              });
+            }
         }, {
             title: '业务编号',
             field: 'code',
@@ -346,14 +350,30 @@ class RelieveMake extends React.Component {
             title: '套打模版',
             field: 'releaseTemplateId',
             type: 'select',
-            key: 'release_print_template_id',
-            required: true
+            key: 'release_zh_print_template_id',
+            required: true,
+            hidden: this.state.bankType === 'BOC'
         }, {
             title: '备注',
             field: 'releaseNote',
             type: 'textarea',
             normalArea: true
         }];
+        //  {
+        //     title: '套打模版',
+        //     field: 'releaseTemplateId',
+        //     type: 'select',
+        //     key: 'release_jh_print_template_id',
+        //     required: true,
+        //     hidden: this.state.bankType === 'CCB'
+        // }, {
+        //     title: '套打模版',
+        //     field: 'releaseTemplateId',
+        //     type: 'select',
+        //     key: 'release_gh_print_template_id',
+        //     required: true,
+        //     hidden: this.state.bankType === 'ICBC'
+        // }];
         return this.props.buildDetail({
             fields,
             code: this.code,
@@ -363,17 +383,18 @@ class RelieveMake extends React.Component {
                     title: '打印',
                     check: true,
                     handler: (param) => {
-                        param.operator = getUserId();
-                        let pageData = this.props.pageData;
-                        this.props.doFetching();
-                        fetch(630576, param).then((data) => {
-                            this.createHt(data);
-                            this.props.cancelFetching();
-                            showSucMsg('操作成功');
-                            setTimeout(() => {
-                                this.props.history.go(-1);
-                            }, 1000);
-                        }).catch(this.props.cancelFetching);
+                      // param.releaseTemplateId = param.releaseTemplateId || param.releaseTemplateId1 || param.releaseTemplateId2;
+                      param.operator = getUserId();
+                      let pageData = this.props.pageData;
+                      this.props.doFetching();
+                      fetch(630576, param).then((data) => {
+                          this.createHt(data);
+                          this.props.cancelFetching();
+                          showSucMsg('操作成功');
+                          setTimeout(() => {
+                              this.props.history.go(-1);
+                          }, 1000);
+                      }).catch(this.props.cancelFetching);
                     }
                 },
                 {

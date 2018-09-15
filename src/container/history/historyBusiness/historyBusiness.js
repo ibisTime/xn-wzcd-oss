@@ -56,9 +56,13 @@ class HistoryBusiness extends React.Component {
             }
         }, {
             title: '客户姓名',
-            field: 'realName',
+            field: 'userId',
+            type: 'select',
+            listCode: 630066,
+            keyName: 'userId',
+            valueName: 'realName',
             render: (v, d) => {
-                return d.user.realName;
+                return d.realName;
             },
             search: true
         }, {
@@ -69,11 +73,14 @@ class HistoryBusiness extends React.Component {
             }
         }, {
             title: '贷款银行',
-            field: 'loanBank',
+            field: 'loanBankCode',
             type: 'select',
             listCode: 632057,
             keyName: 'code',
             valueName: '{{bankName.DATA}}-{{fullName.DATA}}',
+            render: (v, d) => {
+                return d.loanBankName;
+            },
             search: true
         }, {
             title: '贷款金额',

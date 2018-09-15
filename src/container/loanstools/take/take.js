@@ -79,7 +79,7 @@ class take extends React.Component {
             search: true
         }, {
             title: '类型',
-            field: 'BackAdvanceFundType',
+            field: 'backAdvanceFundType',
             type: 'select',
             key: 'back_advance_fund_type'
         }, {

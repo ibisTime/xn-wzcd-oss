@@ -610,7 +610,7 @@ class BudgetAddedit extends React.Component {
                     number: true,
                     required: true,
                     formatter: (v, data) => {
-                        return v * 100;
+                        return (v * 100).toFixed(0);
                     }
                 }],
                 [{

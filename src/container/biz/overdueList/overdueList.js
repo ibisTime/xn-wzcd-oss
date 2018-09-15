@@ -138,7 +138,7 @@ class overdueList extends React.Component {
           } else if (selectedRowKeys.length > 1) {
             showWarnMsg('请选择一条记录');
           } else {
-            this.props.history.push(`/biz/overdueList/apply?code=${selectedRowKeys[0]}`);
+            this.props.history.push(`/biz/overdueList/apply?code=${selectedRowKeys[0]}&repayBizCode=${selectedRows[0].repayBizCode}`);
           }
         },
         record: (selectedRowKeys, selectedRows) => {

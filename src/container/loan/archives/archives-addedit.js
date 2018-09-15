@@ -53,7 +53,10 @@ class ArchivesAddedit extends React.Component {
                 field: 'carColor'
             }, {
                 title: '车辆品牌(品牌车型)',
-                field: 'carBrand'
+                field: 'carBrand',
+                formatter: (v, d) => {
+                    return d.carBrand + d.carModel;
+                }
             }, {
                 title: '车架号码',
                 field: 'frameNo'
@@ -102,8 +105,7 @@ class ArchivesAddedit extends React.Component {
             }, {
                 title: ' 首期还款金额',
                 field: 'repayFirstMonthAmount',
-                amount: true,
-                required: 'true'
+                amount: true
             }, {
                 title: '每期还款额',
                 field: 'monthAmount',

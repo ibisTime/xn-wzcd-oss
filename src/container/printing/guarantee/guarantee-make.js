@@ -46,6 +46,9 @@ class GuaranteeMake extends React.Component {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
+    this.state = {
+      bankType: 'BOC'
+    };
   }
   render() {
     const fields = [{
@@ -54,7 +57,12 @@ class GuaranteeMake extends React.Component {
         [{
           title: '客户姓名',
           field: 'customerName',
-          readonly: true
+          readonly: true,
+          formatter: (v, d) => {
+            this.setState({
+              bankType: d.bankSubbranch.bankType
+            });
+          }
         }, {
           title: '业务编号',
           field: 'code',
@@ -234,8 +242,9 @@ class GuaranteeMake extends React.Component {
           readonly: true
         }, {
           title: '月还款额',
-          field: 'monthAmount',
-          amount: true
+          field: 'repayMonthAmount',
+          amount: true,
+          readonly: true
         }, {
           title: '银行利率',
           field: 'bankRate',
@@ -335,9 +344,25 @@ class GuaranteeMake extends React.Component {
           title: '套打模板',
           field: 'guarantPrintTemplateId',
           type: 'select',
-          key: 'guarant_print_template_id',
-          required: true
-        }]
+          key: 'guarant_zh_print_template_id',
+          required: true,
+          hidden: this.state.bankType === 'BOC'
+        }];
+        // , {
+        //   title: '套打模板',
+        //   field: 'guarantPrintTemplateId1',
+        //   type: 'select',
+        //   key: 'guarant_jh_print_template_id',
+        //   required: true,
+        //   hidden: this.state.bankType === 'CCB'
+        // }, {
+        //   title: '套打模板',
+        //   field: 'guarantPrintTemplateId2',
+        //   type: 'select',
+        //   key: 'guarant_gh_print_template_id',
+        //   required: true,
+        //   hidden: this.state.bankType === 'ICBC'
+        // }]
       ]
     }];
     return this.props.buildDetail({
@@ -349,6 +374,7 @@ class GuaranteeMake extends React.Component {
           title: '打印',
           check: true,
           handler: (param) => {
+            // param.guarantPrintTemplateId = param.guarantPrintTemplateId || param.guarantPrintTemplateId1 || param.guarantPrintTemplateId2;
             param.code = this.code;
             param.operator = getUserId();
             let num = param.guarantPrintTemplateId;

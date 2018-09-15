@@ -49,7 +49,7 @@ class Bank extends React.Component {
             search: true
         }, {
             title: '最新修改人',
-            field: 'updater'
+            field: 'updaterName'
         }, {
             title: '最新修改时间',
             field: 'updateDatetime',

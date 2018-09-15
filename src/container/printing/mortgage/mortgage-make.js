@@ -13,12 +13,9 @@ import {
     getUserId,
     showSucMsg,
     moneyFormat,
-    moneyUppercase,
     dateFormat,
     formatDate,
-    numUppercase,
-    moneyReplaceComma,
-    moneyParse
+    moneyReplaceComma
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import {
@@ -52,6 +49,9 @@ class MortgageMake extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
+        this.state = {
+          bankType: 'BOC'
+        };
     }
     createHt(data) {
       const wb = getWorkbook();
@@ -681,7 +681,12 @@ class MortgageMake extends React.Component {
         const fields = [{
             title: '主贷人姓名',
             field: 'customerName',
-            readonly: true
+            readonly: true,
+            formatter: (v, d) => {
+              this.setState({
+                bankType: d.bankSubbranch.bankType
+              });
+            }
         }, {
             title: '身份证号码',
             field: 'idNo',
@@ -834,9 +839,25 @@ class MortgageMake extends React.Component {
             title: '套打模版',
             field: 'pledgePrintTemplateId',
             type: 'select',
-            key: 'pledge_print_template_id',
-            required: true
+            key: 'pledge_zh_print_template_id',
+            required: true,
+            hidden: this.state.bankType === 'BOC'
         }];
+        // , {
+        //     title: '套打模版',
+        //     field: 'pledgePrintTemplateId1',
+        //     type: 'select',
+        //     key: 'pledge_jh_print_template_id',
+        //     required: true,
+        //     hidden: this.state.bankType === 'CCB'
+        // }, {
+        //     title: '套打模版',
+        //     field: 'pledgePrintTemplateId2',
+        //     type: 'select',
+        //     key: 'pledge_ghS_print_template_id',
+        //     required: true,
+        //     hidden: this.state.bankType === 'ICBC'
+        // }];
         return this.props.buildDetail({
             fields,
             code: this.code,
@@ -846,6 +867,7 @@ class MortgageMake extends React.Component {
                     title: '打印',
                     check: true,
                     handler: (param) => {
+                      // param.pledgePrintTemplateId = param.pledgePrintTemplateId || param.pledgePrintTemplateId1 || param.pledgePrintTemplateId2;
                         param.operator = getUserId();
                         this.props.doFetching();
                         let num = param.pledgePrintTemplateId;

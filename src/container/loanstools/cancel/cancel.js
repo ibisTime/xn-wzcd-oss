@@ -66,11 +66,11 @@ class cancel extends React.Component {
             valueName: 'value'
         }, {
             title: '申请人',
-            field: 'applyUser',
+            field: 'operatorName',
             search: true
         }, {
             title: '申请日期',
-            field: 'applyDatetime',
+            field: 'operateDatetime',
             type: 'date'
         }, {
             title: '当前节点',

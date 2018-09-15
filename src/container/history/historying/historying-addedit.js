@@ -257,14 +257,7 @@ class HistoryingAddedit extends React.Component {
         }],
         [{
           title: '汽车经销商',
-          field: 'carDealerCode',
-          type: 'select',
-          pageCode: 632065,
-          params: {
-            curNodeCode: '006_02'
-          },
-          keyName: 'code',
-          valueName: '{{parentGroup.DATA}}-{{abbrName.DATA}}'
+          field: 'carDealerName'
         }, {
           title: '贷款银行',
           field: 'loanBankName'
