@@ -633,7 +633,10 @@ function getValFromKeys(keys, pageData, type) {
   keys.forEach(key => {
     _value = isUndefined(_value[key]) ? emptyObj : _value[key];
   });
-  return (type === 'img' || type === 'file') && _value === emptyObj ? '' : _value;
+  return _value === emptyObj
+    ? (type === 'checkbox' || type === 'citySelect' || type === 'o2m')
+      ? [] : ''
+    : _value;
 }
 
 // 获取城市的真实值

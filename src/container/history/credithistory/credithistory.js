@@ -90,7 +90,7 @@ class Credithistory extends React.Component {
             pageCode: 632115,
             searchParams: {
                 roleCode: getRoleCode(),
-                curNodeCode: ['001_01', '001_02', '001_03', '001_04', '001_05', '001_06'],
+                curNodeCodeList: ['001_01', '001_02', '001_03', '001_04', '001_05', '001_06'],
                 currentUserCompanyCode: getCompanyCode()
             }
         });

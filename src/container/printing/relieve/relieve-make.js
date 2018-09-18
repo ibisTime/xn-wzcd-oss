@@ -342,7 +342,7 @@ class RelieveMake extends React.Component {
             title: '套打模版',
             field: 'releaseTemplateId',
             type: 'select',
-            key: 'release_zh_print_template_id',
+            key: 'release_print_template_id',
             required: true
         }, {
             title: '备注',

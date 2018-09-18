@@ -336,7 +336,7 @@ class GuaranteeMake extends React.Component {
           title: '套打模板',
           field: 'guarantPrintTemplateId',
           type: 'select',
-          key: 'guarant_zh_print_template_id',
+          key: 'guarant_print_template_id',
           required: true
         }]
       ]

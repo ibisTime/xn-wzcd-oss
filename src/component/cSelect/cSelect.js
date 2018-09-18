@@ -57,7 +57,7 @@ export default class CSelect extends React.Component {
       placeholder: '请选择'
     };
     if (onChange) {
-      props.onChange = (v) => onChange(v);
+      props.onChange = (v) => onChange(v, this.props.list);
     }
     return props;
   }
