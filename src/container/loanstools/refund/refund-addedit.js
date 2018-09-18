@@ -79,7 +79,7 @@ class RefundAddedit extends React.Component {
             readonly: true
         }, {
             title: '手续费',
-            field: 'fee',
+            field: 'serviceCharge',
             amount: true,
             readonly: true
         }, {
@@ -112,7 +112,7 @@ class RefundAddedit extends React.Component {
                 type: 1
             },
             keyName: 'code',
-            valueName: '{{bankCode.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
+            valueName: '{{bankName.DATA}}-{{bankcardNumber.DATA}}-{{realName.DATA}}',
             required: true
         }, {
             title: '银行回单',

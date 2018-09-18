@@ -60,13 +60,14 @@ class invoice extends React.Component {
             title: '垫资日期',
             field: 'advanceFundDatetime',
             render: (v, d) => {
-                if(d.advanceFund) {
+                if (d.advanceFund) {
                     return formatDate(d.advanceFund.advanceFundDatetime);
                 }
             }
         }, {
             title: '发保合预警天数',
-            field: 'fbhWarnDay'
+            field: 'fbhWarnDay',
+            render: (v, d) => v || 0
         }, {
             title: '车辆发票价',
             field: 'invoicePrice',

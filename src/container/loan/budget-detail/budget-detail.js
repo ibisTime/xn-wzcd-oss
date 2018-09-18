@@ -670,11 +670,29 @@ export default class BudgetDetail extends DetailUtil {
                 [{
                     title: '房产证',
                     field: 'houseProperty',
+                    hidden: !this.state.pageData || !this.state.pageData.isHouseProperty === '1',
                     type: 'img'
                 }, {
                     title: '营业执照',
                     field: 'license',
+                    hidden: !this.state.pageData || !this.state.pageData.isLicense === '1',
                     type: 'img'
+                }],
+                [{
+                    title: '公司名称',
+                    field: 'lenderCompanyName',
+                    hidden: !this.state.pageData || !this.state.pageData.isLicense === '1',
+                    required: true
+                }, {
+                    title: '组织机构代码证',
+                    field: 'organizationCodeCard',
+                    hidden: !this.state.pageData || !this.state.pageData.isLicense === '1',
+                    required: true
+                }, {
+                    title: '代码证上的地址',
+                    field: 'codeCardAddress',
+                    hidden: !this.state.pageData || !this.state.pageData.isLicense === '1',
+                    required: true
                 }],
                 [{
                     title: '现有车辆',
@@ -775,13 +793,26 @@ export default class BudgetDetail extends DetailUtil {
             items: [
                 [{
                     title: '申请人户籍地',
+                    field: 'applyBirthAddress1',
+                    type: 'citySelect',
+                    cFields: ['applyBirthAddressProvince', 'applyBirthAddressCity', 'applyBirthAddressArea'],
+                    required: true
+                }, {
+                    title: '详细地址',
                     field: 'applyBirthAddress',
                     required: true
                 }, {
                     title: '现住地址',
-                    field: 'applyNowAddress',
+                    field: 'applyNowAddress1',
+                    type: 'citySelect',
+                    cFields: ['applyNowAddressProvince', 'applyNowAddressCity', 'applyNowAddressArea'],
                     required: true
                 }, {
+                    title: '详细地址',
+                    field: 'applyNowAddress',
+                    required: true
+                }],
+                [{
                     title: '现住房屋类型',
                     field: 'houseType',
                     type: 'select',
@@ -793,17 +824,31 @@ export default class BudgetDetail extends DetailUtil {
                         value: '租用'
                     }],
                     keyName: 'key',
-                    valueName: 'value',
-                    required: true
+                    valueName: 'value'
+                }, {
+                    title: '共还人户籍地',
+                    field: 'ghBirthAddress1',
+                    type: 'citySelect',
+                    cFields: ['ghBirthAddressProvince', 'ghBirthAddressCity', 'ghBirthAddressArea']
+                }, {
+                    title: '详细地址',
+                    field: 'ghBirthAddress'
                 }],
                 [{
-                    title: '共还人户籍地',
-                    field: 'ghBirthAddress'
-                }, {
                     title: '担保人1户籍地',
+                    field: 'guarantor1BirthAddress1',
+                    type: 'citySelect',
+                    cFields: ['guarantor1BirthAddressProvince', 'guarantor1BirthAddressCity', 'guarantor1BirthAddressArea']
+                }, {
+                    title: '详细地址',
                     field: 'guarantor1BirthAddress'
                 }, {
                     title: '担保人2户籍地',
+                    field: 'guarantor2BirthAddress1',
+                    type: 'citySelect',
+                    cFields: ['guarantor2BirthAddressProvince', 'guarantor2BirthAddressCity', 'guarantor2BirthAddressArea']
+                }, {
+                    title: '详细地址',
                     field: 'guarantor2BirthAddress'
                 }],
                 [{

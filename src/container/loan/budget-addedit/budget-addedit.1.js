@@ -1026,6 +1026,22 @@ class BudgetAddedit extends React.Component {
                     required: true
                 }],
                 [{
+                    title: '公司名称',
+                    field: 'lenderCompanyName',
+                    hidden: !this.yyzz,
+                    required: true
+                }, {
+                    title: '组织机构代码证',
+                    field: 'organizationCodeCard',
+                    hidden: !this.yyzz,
+                    required: true
+                }, {
+                    title: '代码证上的地址',
+                    field: 'codeCardAddress',
+                    hidden: !this.yyzz,
+                    required: true
+                }],
+                [{
                     title: '有无驾照',
                     field: 'isDriceLicense',
                     type: 'select',

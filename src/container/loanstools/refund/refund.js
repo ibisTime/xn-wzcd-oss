@@ -9,19 +9,8 @@ import {
     cancelFetching,
     setSearchData
 } from '@redux/loanstools/refund';
-import {
-    showWarnMsg,
-    getRoleCode,
-    getCompanyCode
-} from 'common/js/util';
-import {
-    listWrapper
-} from 'common/js/build-list';
-import {
-    lowerFrame,
-    onShelf,
-    sendMsg
-} from 'api/biz';
+import { showWarnMsg, getRoleCode, getCompanyCode } from 'common/js/util';
+import { listWrapper } from 'common/js/build-list';
 
 @listWrapper(
     state => ({
@@ -58,7 +47,7 @@ class refund extends React.Component {
             }
         }, {
             title: '放款日期',
-            field: 'useDatetime',
+            field: 'bankFkDatetime',
             type: 'date',
             search: true
         }, {

@@ -10,13 +10,10 @@ import {
 import {
     getQueryString,
     getUserId,
-    showSucMsg,
-    formatDate
+    showSucMsg
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import { DetailWrapper } from 'common/js/build-detail';
 import { createHt } from 'common/js/contract/ICBC-dyht';
 import { exportBOCZdzsxffq } from 'common/js/contract/BOC-zdzsxffq';
 import { exportBOCSxfycx } from 'common/js/contract/BOC-sxfycx';
@@ -66,6 +63,9 @@ class MortgageMake extends React.Component {
         }, {
             title: '家庭地址',
             field: 'applyNowAddress',
+            formatter: (v, d) => {
+              return d.applyNowAddressProvince ? `${d.applyNowAddressProvince} ${d.applyNowAddressCity} ${d.applyNowAddressArea} ${d.applyNowAddress}` : '';
+            },
             readonly: true
         }, {
             title: '合同编号',
@@ -142,10 +142,10 @@ class MortgageMake extends React.Component {
             },
             readonly: true
         }, {
-            title: '委托数有效期',
+            title: '委托书有效期',
             field: 'clientValidDate',
             formatter: (v, d) => {
-                return formatDate(d.bankSubbranch.clientValidDate);
+                return d.bankSubbranch.clientValidDate;
             },
             readonly: true
         }, {
@@ -219,31 +219,31 @@ class MortgageMake extends React.Component {
                         this.props.doFetching();
                         let num = param.pledgePrintTemplateId;
                         fetch(632192, param).then((data) => {
-                          if(num === '1') {
-                            createHt(data, this.props.pageData);
-                          } else if(num === '2') {
-                            exportBOCZdzsxffq(data);
-                          } else if(num === '3') {
-                            exportBOCSxfycx(data);
-                          } else if(num === '4') {
-                            exportBOCDy(data);
-                          } else if(num === '5') {
-                            exportBOCCt(data);
-                          } else if(num === '6') {
-                            exportBOCJcdy(data);
-                          } else if(num === '8') {
-                            exportBOCZdzfjf(data);
-                          } else if(num === '9') {
-                            exportCCBDy(data);
-                          } else if(num === '10') {
-                            exportCCBFwf(data);
-                          } else if(num === '11') {
-                            exportBOCFjd(data);
-                          } else if(num === '12') {
-                            exportCCBJc(data);
-                          } else if(num === '13') {
-                            exportCCBXydb(data);
-                          }
+                            if(num === '1') {
+                              createHt(data, this.props.pageData);
+                            } else if(num === '2') {
+                              exportBOCZdzsxffq(data);
+                            } else if(num === '3') {
+                              exportBOCSxfycx(data);
+                            } else if(num === '4') {
+                              exportBOCDy(data, this.props.selectData.creditCardType);
+                            } else if(num === '5') {
+                              exportBOCCt(data);
+                            } else if(num === '6') {
+                              exportBOCJcdy(data);
+                            } else if(num === '8') {
+                              exportBOCZdzfjf(data);
+                            } else if(num === '9') {
+                              exportCCBDy(data);
+                            } else if(num === '10') {
+                              exportCCBFwf(data);
+                            } else if(num === '11') {
+                              exportBOCFjd(data);
+                            } else if(num === '12') {
+                              exportCCBJc(data);
+                            } else if(num === '13') {
+                              exportCCBXydb(data);
+                            }
                             this.props.cancelFetching();
                             showSucMsg('操作成功');
                             setTimeout(() => {

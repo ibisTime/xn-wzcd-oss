@@ -31,7 +31,7 @@ class BudgetAddedit extends React.Component {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.carCompanyCode = getQueryString('carDealerCode', this.props.location.search);
-        this.saleUserId = getQueryString('saleUserId', this.props.location.search);
+        // this.saleUserId = getQueryString('saleUserId', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
         // 申请
         this.isApply = !!getQueryString('isApply', this.props.location.search);
@@ -509,7 +509,6 @@ class BudgetAddedit extends React.Component {
                     key: 'rate_type',
                     required: true,
                     onChange: (v, data) => {
-                        console.log(data);
                         this.rateType = v;
                         if (v === '1') {
                             this.props.setPageData({
@@ -592,7 +591,7 @@ class BudgetAddedit extends React.Component {
                     required: true,
                     onChange: (v) => {
                         this.props.form.setFieldsValue({
-                            bankRate: v * 100
+                            bankRate: v ? (v * 100).toFixed(2) : 0
                         });
                         this.props.setPageData({
                             ...this.props.pageData,
@@ -610,7 +609,7 @@ class BudgetAddedit extends React.Component {
                     number: true,
                     required: true,
                     formatter: (v, data) => {
-                        return (v * 100).toFixed(0);
+                        return (v * 100).toFixed(2);
                     }
                 }],
                 [{
@@ -735,7 +734,7 @@ class BudgetAddedit extends React.Component {
                             listCode: 632707,
                             params: {
                                 applyStatus: '2',
-                                applyUser: this.saleUserId,
+                                applyUser: getUserId(),
                                 useStatus: 0
                             },
                             keyName: 'code',
@@ -1023,6 +1022,22 @@ class BudgetAddedit extends React.Component {
                     field: 'license',
                     hidden: !this.yyzz,
                     type: 'img',
+                    required: true
+                }],
+                [{
+                    title: '公司名称',
+                    field: 'lenderCompanyName',
+                    hidden: !this.yyzz,
+                    required: true
+                }, {
+                    title: '组织机构代码证',
+                    field: 'organizationCodeCard',
+                    hidden: !this.yyzz,
+                    required: true
+                }, {
+                    title: '代码证上的地址',
+                    field: 'codeCardAddress',
+                    hidden: !this.yyzz,
                     required: true
                 }],
                 [{

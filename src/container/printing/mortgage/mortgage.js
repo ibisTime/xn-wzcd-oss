@@ -14,14 +14,7 @@ import {
     getRoleCode,
     getCompanyCode
 } from 'common/js/util';
-import {
-    listWrapper
-} from 'common/js/build-list';
-import {
-    lowerFrame,
-    onShelf,
-    sendMsg
-} from 'api/biz';
+import { listWrapper } from 'common/js/build-list';
 
 @listWrapper(
     state => ({
@@ -104,7 +97,6 @@ class Mortgage extends React.Component {
             },
             btnEvent: {
                 make: (selectedRowKeys, selectedRows) => {
-                    console.log(selectedRows[0]);
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {

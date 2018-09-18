@@ -703,7 +703,9 @@ class DealerAddedit extends React.Component {
   // 保存经销商协议
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    this.props.form.validateFieldsAndScroll({
+      scroll: { offsetTop: 110 }
+    }, (err, values) => {
       if (!err) {
         let params = this.beforeSubmit(values);
         if (params) {
@@ -723,6 +725,8 @@ class DealerAddedit extends React.Component {
             }, 1000);
           }).catch(this.cancelFetching);
         }
+      } else {
+        this.scrollToErr(err);
       }
     });
   }
@@ -751,6 +755,29 @@ class DealerAddedit extends React.Component {
       params.agreementPic = str;
     }
     return params;
+  }
+  // 页面滚动到错误到位置
+  scrollToErr(err) {
+    let keys = Object.keys(err);
+    if (!~keys[0].indexOf('tab')) {
+      return;
+    }
+    let t1;
+    let t2;
+    let t3;
+    keys.forEach(key => {
+      if (~key.indexOf('tab1')) {
+        t1 = true;
+      } else if (~key.indexOf('tab2')) {
+        t2 = true;
+      } else if (~key.indexOf('tab3')) {
+        t3 = true;
+      }
+    });
+    let tabName = t1 ? 'tab1' : t2 ? 'tab2' : t3 ? 'tab3' : '';
+    if (tabName) {
+      this.setState({ tabKey: tabName });
+    }
   }
   // 返点账号
   getFdInfo(values, params) {
@@ -1306,7 +1333,7 @@ class DealerAddedit extends React.Component {
             </Row>
           </Card>
           <Card style={{ marginTop: 16 }} title="协议政策">
-            <Tabs defaultActiveKey="1" onChange={this.onTabChange}>
+            <Tabs activeKey={this.state.tabKey} onChange={this.onTabChange}>
               <TabPane tab="*工行" key="tab1">{ this.getTabComp('tab1') }</TabPane>
               <TabPane tab="*中行" key="tab2">{ this.getTabComp('tab2') }</TabPane>
               <TabPane tab="*建行" key="tab3">{ this.getTabComp('tab3') }</TabPane>

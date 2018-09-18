@@ -1,8 +1,8 @@
 import { getWorkbook } from 'common/js/xlsx-util';
 import { moneyFormat, moneyFormat2, moneyReplaceComma } from 'common/js/util';
-export function exportBOCDy(data) {
+export function exportBOCDy(data, creditCardTypeList) {
   const wb = getWorkbook();
-  createData(wb, data);
+  createData(wb, data, creditCardTypeList);
   createXycdydjb(wb);
   createGpXycdydjb(wb);
   createGpWtsGsgz(wb);
@@ -18,22 +18,22 @@ export function exportBOCDy(data) {
   wb.downloadXls('中国银行 抵押');
 }
 // 内容
-function createData(wb, data) {
+function createData(wb, data, creditCardTypeList) {
   let year = data.customerBirth.substr(0, 4);
   let month = data.customerBirth.substr(4, 2) - 0;
   let day = data.customerBirth.substr(6, 2) - 0;
   let arr01 = ['', '普通', '白金'];
   let arr = [
-    ['公司名称', data.customerName],
-    ['组织机构代码证', data.customerName],
-    ['代码证上的地址', data.customerName],
+    ['公司名称', data.lenderCompanyName],
+    ['组织机构代码证', data.organizationCodeCard],
+    ['代码证上的地址', data.codeCardAddress],
     ['主贷人姓名', data.customerName],
-    ['主贷人身份证地址', data.applyBirthAddress],
+    ['主贷人身份证地址', data.applyBirthAddressProvince + data.applyBirthAddressCity + data.applyBirthAddressArea + data.applyBirthAddress],
     ['身份证件号码', data.idNo],
     ['手机号码', data.mobile],
     ['配偶姓名', data.ghRealName],
     ['身份证件号码', data.ghIdNo],
-    ['家庭住址', data.applyNowAddress],
+    ['家庭住址', data.applyNowAddressProvince + data.applyNowAddressCity + data.applyNowAddressArea + data.applyNowAddress],
     ['合同编号', data.bankContractCode],
     ['车牌号', data.carNumber],
     ['车架号', data.frameNo],
@@ -41,23 +41,23 @@ function createData(wb, data) {
     ['贷款额（大写）', ''],
     ['贷款额（小写）', moneyReplaceComma(moneyFormat2(data.loanAmount))],
     ['履约保证金（大写）', ''],
-    ['履约保证金（小写）', ''],
+    ['履约保证金（小写）', moneyReplaceComma(moneyFormat2(data.lyAmount))],
     ['年份', year],
     ['月', month],
     ['日', day],
     ['贷款期限（年）', data.loanPeriods / 12],
-    ['银行委托人', ''],
-    ['银行名称', ''],
-    ['银行地址', ''],
-    ['银行电话', ''],
-    ['委托书有效期', ''],
-    ['授权人姓名', ''],
-    ['授权人身份证', ''],
-    ['授权人住址', ''],
-    ['授权人电话', ''],
-    ['信用卡类型', ''],
-    ['信用卡名称', ''],
-    ['所属地区', '']
+    ['银行委托人', data.bankSubbranch.bankClient],
+    ['银行名称', data.bankSubbranch.fullName],
+    ['银行地址', data.bankSubbranch.address],
+    ['银行电话', data.bankSubbranch.phoneNumber],
+    ['委托书有效期', data.bankSubbranch.clientValidDate],
+    ['授权人姓名', data.bankSubbranch.autherName],
+    ['授权人身份证', data.bankSubbranch.autherIdNo],
+    ['授权人住址', data.bankSubbranch.autherAddress],
+    ['授权人电话', data.bankSubbranch.autherPhoneNumber],
+    ['信用卡类型', getCardType(creditCardTypeList, data.bankSubbranch.creditCardType)],
+    ['信用卡名称', data.bankSubbranch.creditCardName],
+    ['所属地区', data.bankSubbranch.belongArea]
   ];
   var ws = wb.getSheet(arr, '内容');
   ws['!cols'] = [{
@@ -69,7 +69,6 @@ function createData(wb, data) {
   ws['!rows'][25] = {hpt: 15, hpx: 15};
   ws['B15'].f = 'TEXT(INT(ROUND(B16,2)),"[$-0804][DBNum2]G/通用格式")';
   ws['B17'].f = 'IF(INT(ROUND(B18,2))*100=ROUND(B18,2)*100,TEXT(INT(ROUND(B18,2)),"[$-0804][DBNum2]G/通用格式")&"元",IF(INT(ROUND(B18,2)*10)=ROUND(B18,2)*10,TEXT(INT(ROUND(B18,2)),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT(ROUND(B18,2)*10-INT(ROUND(B18,2))*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(ROUND(B18,2)),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT(ROUND(B18,2)*10)=INT(ROUND(B18,2))*10,"零",TEXT(RIGHT(INT(ROUND(B18,2)*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(ROUND(B18,2)*100),"[$-0804][DBNum2]G/通用格式")&"分"))';
-  ws['B18'].f = 'B16*0.03';
 
   ws['A1'].s = {font: {color: {rgb: 'FF0000'}}};
   ws['A2'].s = {font: {color: {rgb: 'FF0000'}}};
@@ -1000,4 +999,8 @@ function getSheet(wb, row, col, name) {
   let ws = wb.getSheet(data, name);
   ws['!margins'] = getMargins();
   return ws;
+}
+function getCardType(creditCardTypeList, creditCardType) {
+  let obj = creditCardTypeList.find(v => v.dkey === creditCardType);
+  return obj ? obj.dvalue : '';
 }

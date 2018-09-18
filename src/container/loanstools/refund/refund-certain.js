@@ -84,7 +84,7 @@ class RefundCertain extends React.Component {
             readonly: true
         }, {
             title: '手续费',
-            field: 'fee',
+            field: 'serviceCharge',
             amount: true,
             readonly: true
         }, {

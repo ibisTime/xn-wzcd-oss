@@ -131,6 +131,7 @@ export default class InvoiceEnter extends DetailUtil {
         }, {
             title: '交强险金额',
             field: 'forceInsurance',
+            required: true,
             amount: true
         }, {
             title: '交强险',
