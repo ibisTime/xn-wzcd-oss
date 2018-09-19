@@ -1680,8 +1680,10 @@ export default class DetailComponent extends React.Component {
             // 如果有值 返回找的的值没有返回空对象
             _value = isUndefined(_value[key]) ? emptyObj : _value[key];
         });
-        // 如果是图片或者文件并且得到的值是空对象 返回空对象 否则返回这个值
-        return (item.type === 'img' || item.type === 'file') && _value === emptyObj ? '' : _value;
+        return _value === emptyObj
+          ? (item.type === 'checkbox' || item.type === 'citySelect' || item.type === 'o2m')
+            ? [] : ''
+          : _value;
     }
 
     getUploadBtn(item, isImg) {

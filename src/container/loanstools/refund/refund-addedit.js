@@ -67,15 +67,9 @@ class RefundAddedit extends React.Component {
             amount: true,
             readonly: true
         }, {
-            title: 'GPS收费',
-            field: 'gpsFee',
+            title: '杂费',
+            field: 'otherFee',
             amount: true,
-            readonly: true
-        }, {
-            title: 'GPS收费方式',
-            field: 'gpsFeeWay',
-            type: 'select',
-            key: 'gps_fee_way',
             readonly: true
         }, {
             title: '手续费',
@@ -87,6 +81,17 @@ class RefundAddedit extends React.Component {
             field: 'serviceChargeWay',
             type: 'select',
             key: 'fee_way',
+            readonly: true
+        }, {
+            title: 'GPS收费',
+            field: 'gpsFee',
+            amount: true,
+            readonly: true
+        }, {
+            title: 'GPS收费方式',
+            field: 'gpsFeeWay',
+            type: 'select',
+            key: 'gps_fee_way',
             readonly: true
         }, {
             title: '厂家贴息',

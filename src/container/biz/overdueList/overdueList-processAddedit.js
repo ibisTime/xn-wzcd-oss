@@ -38,82 +38,66 @@ class OverdueListProcessAddedit extends React.Component {
             title: '客户姓名',
             field: 'realName',
             formatter: (v, d) => {
-                return d.repayBiz.budgetOrder.customerName;
+                return d.repayPlan.repayBiz.budgetOrder.customerName;
             },
             readonly: true
         }, {
             title: '业务编号',
             field: 'code',
             formatter: (v, d) => {
-                return d.repayBiz.budgetOrder.code;
+                return d.repayPlan.repayBiz.budgetOrder.code;
             },
             readonly: true
         }, {
             title: '身份证',
             field: 'idNo',
             formatter: (v, d) => {
-                return d.user.idNo;
+                return d.repayPlan.user.idNo;
             },
             readonly: true
         }, {
             title: '贷款金额',
             field: 'loanAmount',
             formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanAmount);
+                return moneyFormat(d.repayPlan.repayBiz.loanAmount);
             },
             readonly: true
         }, {
             title: '贷款银行',
             field: 'loanBankName',
             formatter: (v, d) => {
-                return d.repayBiz.loanBankName;
+                return d.repayPlan.repayBiz.loanBankName;
             },
             readonly: true
         }, {
             title: '逾期金额',
             field: 'restOverdueAmount',
             formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.restOverdueAmount);
+                return moneyFormat(d.repayPlan.repayBiz.restOverdueAmount);
             },
             readonly: true
         }, {
             title: '处理历史',
-            field: 'overdueTreatmentList',
+            field: 'remindLogList',
             type: 'o2m',
+            _keys: ['repayPlan', 'remindLogList'],
             options: {
                 noSelect: true,
                 fields: [{
                     title: '催收方式',
-                    field: 'collectionWay',
+                    field: 'way',
                     type: 'select',
-                    key: 'collection_way'
+                    key: 'way'
                 }, {
                     title: '催收对象',
-                    field: 'collectionTarget',
-                    type: 'checkbox',
-                    multiple: true,
-                    key: 'collection_target'
+                    field: 'toUser'
                 }, {
-                    title: '催收过程',
-                    field: 'collectionProcess',
-                    type: 'select',
-                    key: 'collection_process'
+                    title: '催收文本',
+                    field: 'content'
                 }, {
-                    title: '客户意愿',
-                    field: 'collectionWish',
-                    type: 'select',
-                    key: 'collection_wish'
-                }, {
-                    title: '催收过程说明',
-                    field: 'collectionProcessNote'
-                }, {
-                    title: '催收结果',
-                    field: 'collectionResult',
-                    type: 'select',
-                    key: 'collection_result'
-                }, {
-                    title: '催收结果说明',
-                    field: 'collectionResultNote'
+                    title: '催收时间',
+                    field: 'createDatetime',
+                    type: 'date'
                 }]
             }
         }, {
@@ -149,6 +133,7 @@ class OverdueListProcessAddedit extends React.Component {
             title: '清收成本清单',
             field: 'costList',
             type: 'o2m',
+            _keys: ['repayPlan', 'costList'],
             options: {
                 noSelect: true,
                 fields: [{
@@ -180,7 +165,7 @@ class OverdueListProcessAddedit extends React.Component {
                 fields,
                 code: this.code,
                 view: this.view,
-                detailCode: 630541
+                detailCode: 630539
             });
     }
 }

@@ -50,12 +50,10 @@ class RebatesBill extends React.Component {
                 this.props.form.setFieldsValue({
                     bankcardCode: ''
                 });
-                if (data) {
-                  let list = [].concat(data.gsCollectBankcardList)
-                    .concat(data.jhCollectBankcardList).concat(data.zhCollectBankcardList);
-                  this.setState({
-                      bankcardCode: list
-                  });
+                if (v) {
+                    fetch(632298, { carDealerCode: v }).then(data => {
+                        this.setState({ bankcardCode: data });
+                    });
                 }
             }
         }, {
@@ -63,9 +61,8 @@ class RebatesBill extends React.Component {
             field: 'bankcardCode',
             type: 'select',
             data: this.state.bankcardCode,
-            keyName: 'code',
-            valueName: '{{realName.DATA}}-{{subbranch.DATA}}-{{bankcardNumber.DATA}}',
-            searchName: 'customerName',
+            keyName: 'accountNo',
+            valueName: '{{accountName.DATA}}-{{accountNo.DATA}}',
             required: true
         }, {
             title: '结算方式',
@@ -78,7 +75,7 @@ class RebatesBill extends React.Component {
                 if (carDealerCode && bankcardCode && v) {
                     fetch(632297, {
                         carDealerCode: carDealerCode,
-                        accountCode: bankcardCode,
+                        accountNo: bankcardCode,
                         settleWay: v
                     }).then((data) => {
                         this.props.cancelFetching();
@@ -174,7 +171,7 @@ class RebatesBill extends React.Component {
                     required: true
                 }, {
                     title: '账号',
-                    field: 'accountCode',
+                    field: 'accountNo',
                     required: true
                 }, {
                     title: '开户行',
@@ -182,7 +179,7 @@ class RebatesBill extends React.Component {
                     required: true
                 }, {
                     title: '户名',
-                    field: 'companyName',
+                    field: 'accountName',
                     required: true
                 }]
             }

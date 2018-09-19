@@ -33,8 +33,6 @@ export default class DetailUtil extends DetailCompDev {
       field: item.field,
       title: item.title,
       label: this.getLabel(item),
-      keyName: item.keyName,
-      valueName: item.valueName,
       readonly: item.readonly,
       options: item.options,
       selectedRowKeys: this.state.selectedRowKeys[item.field] || [],

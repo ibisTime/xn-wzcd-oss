@@ -2,7 +2,8 @@ import {
     getQueryString,
     showSucMsg,
     getUserId,
-    moneyFormat
+    moneyFormat,
+    moneyParse
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import DetailUtil from 'common/js/build-detail-dev';
@@ -105,7 +106,7 @@ export default class InvoiceEnter extends DetailUtil {
                 this.setState({
                     pageData: {
                         ...this.state.pageData,
-                        PreCompanyLoanCs: moneyFormat((money / (v * 1000)) * 1000)
+                        PreCompanyLoanCs: moneyFormat((money / moneyParse(v)) * 1000)
                     }
                 });
             },
@@ -125,7 +126,7 @@ export default class InvoiceEnter extends DetailUtil {
         }, {
             title: '车架号',
             field: 'frameNo',
-            hidden: this.state.hiddenStatus,
+            hidden: !this.state.hiddenStatus,
             required: true,
             readonly: this.state.pageData ? !!this.state.pageData.frameNo : false
         }, {
@@ -157,7 +158,7 @@ export default class InvoiceEnter extends DetailUtil {
             title: '机动车登记证书',
             field: 'motorRegCertification',
             required: true,
-            hidden: !this.state.hiddenStatus,
+            hidden: this.state.hiddenStatus,
             type: 'img'
         }, {
             title: '批单',

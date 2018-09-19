@@ -454,7 +454,9 @@ export default class CO2M extends React.Component {
     let layoutProps = inline ? {} : formItemLayout;
     const columns = this.getTableColumns(options);
     const dataSource = list || [];
-    const rowSelection = {
+    let noSelect = options.noSelect;
+    // noSelect为true时 列表不可选
+    const rowSelection = noSelect ? null : {
       selectedRowKeys,
       onChange: (selectedRowKeys) => setO2MSelect(field, selectedRowKeys)
     };

@@ -57,11 +57,11 @@ class Insurance extends React.Component {
             nowrap: true
         }, {
             title: '保险到期时间',
-            field: '22',
+            field: 'insuranceEndDatetime',
             type: 'date'
         }, {
             title: '备注',
-            field: '33'
+            field: 'insuranceNote'
         }];
         return this.props.buildList({
             fields,

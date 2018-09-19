@@ -7,15 +7,9 @@ import {
     setPageData,
     restore
 } from '@redux/postloantools/insurance-continue';
-import {
-  getQueryString,
-  showSucMsg,
-  getUserId
-} from 'common/js/util';
+import { getQueryString, showSucMsg, getUserId } from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
     state => state.postloantoolsInsuranceContinue, {
@@ -44,7 +38,7 @@ class insuranceContinue extends React.Component {
             readonly: true
         }, {
             title: '身份证',
-            field: '11',
+            field: 'idNo',
             readonly: true
         }, {
             title: '贷款金额',

@@ -24,7 +24,7 @@ let B75 = 0;
 let B77 = 0;
 let B79 = 0;
 let D73 = 0;
-export function exportBOCCt(data) {
+export function exportBOCCt(data, insuranceCompany) {
   B12 = moneyReplaceComma(moneyFormat(data.loanAmount));
   B14 = (data.bankRate * 100).toFixed(2);
   B16 = data.loanPeriods;
@@ -50,7 +50,7 @@ export function exportBOCCt(data) {
   B79 = B75 + B66;
   B41 = B67;
   const wb = getWorkbook();
-  createData(wb, data);
+  createData(wb, data, insuranceCompany);
   createFjfsm(wb);
   createZx1(wb);
   createZx2(wb);
@@ -74,9 +74,10 @@ export function exportBOCCt(data) {
   wb.downloadXls('中行-传统');
 }
 // 数据
-function createData(wb, data) {
+function createData(wb, data, insuranceCompany) {
   let year = data.customerBirth.substr(0, 4);
   let month = data.customerBirth.substr(4, 2) - 0;
+  let insName = insuranceCompany.find(v => v.code === data.insuranceCompany).name;
   let arr = [
     ['中银信用卡持卡人（甲方）', data.customerName],
     ['身份证件号码', data.idNo],
@@ -107,7 +108,7 @@ function createData(wb, data) {
     ['单位地址', '单位地址'],
     ['汽车经销商名称', data.carDealerName],
     ['首付金额', ''],
-    ['承保公司', data.insuranceCompany],
+    ['承保公司', insName],
     ['年限', ''],
     ['期限', ''],
     ['职务', data.applyUserDuty],

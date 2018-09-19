@@ -13,9 +13,7 @@ import {
     getUserId
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(
     state => state.loanstoolsRebatesCompanyCheck, {
@@ -57,6 +55,7 @@ class RebatesCompanyCheck extends React.Component {
             required: true,
             type: 'o2m',
             options: {
+                noSelect: true,
                 scroll: {
                     x: 1600
                 },

@@ -15,9 +15,7 @@ import {
     moneyFormat
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import { DetailWrapper } from 'common/js/build-detail';
 
 @DetailWrapper(state => state.bizOverdueListProcess, {
     initStates,
@@ -78,42 +76,25 @@ class OverdueListProcess extends React.Component {
             readonly: true
         }, {
             title: '处理历史',
-            field: 'overdueTreatmentList',
+            field: 'remindLogList',
             type: 'o2m',
             options: {
                 noSelect: true,
                 fields: [{
                     title: '催收方式',
-                    field: 'collectionWay',
+                    field: 'way',
                     type: 'select',
-                    key: 'collection_way'
+                    key: 'way'
                 }, {
                     title: '催收对象',
-                    field: 'collectionTarget',
-                    type: 'checkbox',
-                    multiple: true,
-                    key: 'collection_target'
+                    field: 'toUser'
                 }, {
-                    title: '催收过程',
-                    field: 'collectionProcess',
-                    type: 'checkbox',
-                    key: 'collection_process'
+                    title: '催收文本',
+                    field: 'content'
                 }, {
-                    title: '客户意愿',
-                    field: 'collectionWish',
-                    type: 'select',
-                    key: 'collection_wish'
-                }, {
-                    title: '催收过程说明',
-                    field: 'collectionProcessNote'
-                }, {
-                    title: '催收结果',
-                    field: 'collectionResult',
-                    type: 'select',
-                    key: 'collection_result'
-                }, {
-                    title: '催收结果说明',
-                    field: 'collectionResultNote'
+                    title: '催收时间',
+                    field: 'createDatetime',
+                    type: 'date'
                 }]
             }
         }, {
@@ -185,10 +166,6 @@ class OverdueListProcess extends React.Component {
                         let len = list.length;
                         let length = param.costList.length;
                         let arr = [];
-                        // if(!len) {
-                        //     showWarnMsg('请选择至少一条清收成本清单');
-                        //     return;
-                        // }
                         for(let i = 0; i < len; i++) {
                             for(let j = 0; j < length; j++) {
                                 if (list[i] === param.costList[j].code) {

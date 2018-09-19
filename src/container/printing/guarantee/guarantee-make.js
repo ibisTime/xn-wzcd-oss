@@ -364,7 +364,7 @@ class GuaranteeMake extends React.Component {
               } else if(num === '4') {
                 exportBOCDy(data);
               } else if(num === '5') {
-                exportBOCCt(data);
+                exportBOCCt(data, this.props.selectData.insuranceCompany);
               } else if(num === '6') {
                 exportBOCJcdy(data);
               } else if(num === '8') {

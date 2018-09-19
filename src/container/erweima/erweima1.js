@@ -1,12 +1,11 @@
 import React from 'react';
-import {
-    Select
-} from 'antd';
+import { Select, Button } from 'antd';
 import fetch from 'common/js/fetch';
+import Barcode from 'react-barcode';
 import './erweima.css';
-var Barcode = require('react-barcode');
 
 const Option = Select.Option;
+
 export default class SelectSizesDemo extends React.Component {
     constructor(props) {
         super(props);
@@ -15,10 +14,7 @@ export default class SelectSizesDemo extends React.Component {
             message: '',
             obj: '',
             data: [],
-            BCoptions: {
-                width: 300,
-                height: 100
-            }
+            curObj: null
         };
     }
 
@@ -26,7 +22,7 @@ export default class SelectSizesDemo extends React.Component {
         fetch(632155, {
             start: 0,
             limit: 100,
-            status: '1'
+            statusList: [0, 4]
         }).then(data => {
             let len = data.list.length;
             let arr = [];
@@ -43,76 +39,43 @@ export default class SelectSizesDemo extends React.Component {
 
     handleChange = (value) => {
         let data = this.state.data;
-        let len = data.length;
-        let flag = '';
-        let code = value;
-        for (let j = 0; j < len; j++) {
+        let curObj;
+        for (let j = 0; j < data.length; j++) {
             if (value === data[j].code) {
-                flag = data[j].type;
-                continue;
+                curObj = data[j];
+                break;
             }
         }
         this.setState({
-            obj: flag + code,
-            BCoptions: {
-                ...this.state.BCoptions
-            }
+            obj: curObj.type + value,
+            curObj: curObj
         });
     }
-    click = () => {
-        if (!this.state.obj) {
-                //     showWarnMsg('请选择一条记录');
-                //     return;
-                // }
-        let jsbar = document.getElementById('jsbar');
-        let svgXml = jsbar.innerHTML;
-
-        // 给图片对象写入base64编码的svg流
-        var img = new Image();
-        let imgData = 'data:image/svg+xml;' + window.btoa(unescape(encodeURIComponent(svgXml)));
-        img.src = imgData;
-
-        // 准备空画布
-        let canvas = document.createElement('canvas');
-        canvas.width = 400;
-        canvas.height = 142;
-
-        // 取得画布的2d绘图上下文
-        let context = canvas.getContext('2d');
-        context.drawImage(img, 0, 0);
-
-        let download = document.getElementById('download');
-        let url = canvas.toDataURL('image/jpeg');
-        download.setAttribute('href', url);
-        download.click();
+    download = () => {
+        if (this.state.curObj) {
+            let url = this.barCode.refs.renderElement.toDataURL('image/jpeg');
+            var alink = document.createElement('a');
+            alink.href = url;
+            alink.download = this.state.curObj.customerName || this.state.curObj.userName;
+            alink.click();
         }
     }
-
-    getStyle = (el, name) => {
-        if(window.getComputedStyle) {
-            return window.getComputedStyle(el, null);
-        }else{
-            return el.currentStyle;
-        }
-    }
-
     render() {
         return (
             <div>
                 <div>
                     <Select
-                        placeholder="Please select"
+                        placeholder="请选择业务"
                         onChange={this.handleChange}
                         style={{width: '100%'}}
                     >
                         {this.state.children}
                     </Select>
                 </div>
-                <div className="jsbar" id="jsbar" style={{overflow: 'hidden'}}>
-                    <Barcode options={this.state.BCoptions} value={this.state.obj}/>
+                <div className="jsbar" style={{overflow: 'hidden'}}>
+                    <Barcode ref={barCode => this.barCode = barCode} renderer="canvas" value={this.state.obj}/>
                 </div>
-                <a id="download" download="条形码"></a>
-                <button id="save" onClick={this.click}>点击下载</button>
+                <Button onClick={this.download}>点击下载</Button>
             </div>
         );
     }

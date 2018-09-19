@@ -9,9 +9,7 @@ import {
     cancelFetching,
     setSearchData
 } from '@redux/biz/overdueList/overdueList-record';
-import {
-    listWrapper
-} from 'common/js/build-list';
+import { listWrapper } from 'common/js/build-list';
 import { getQueryString, showWarnMsg } from 'common/js/util';
 
 @listWrapper(state => ({
@@ -78,9 +76,9 @@ class OverdueListRecord extends React.Component {
                         showWarnMsg('请选择一条记录');
                     } else {
                         if(selectedRows[0].collectionType === '0') {
-                            this.props.history.push(`/biz/overdueList/record/processAddedit?v=1&code=${selectedRows[0].repayPlanCode}`);
+                            this.props.history.push(`/biz/overdueList/record/processAddedit?v=1&code=${selectedRowKeys[0]}`);
                         } else if(selectedRows[0].collectionType === '1') {
-                            this.props.history.push(`/biz/overdueList/record/resultAddedit?v=1&code=${selectedRows[0].repayPlanCode}`);
+                            this.props.history.push(`/biz/overdueList/record/resultAddedit?v=1&code=${selectedRowKeys[0]}`);
                         }
                     }
                 }

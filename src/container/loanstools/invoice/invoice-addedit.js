@@ -98,13 +98,6 @@ export default class InvoiceAddedit extends DetailUtil {
             title: '现发票价',
             field: 'currentInvoicePrice',
             required: true,
-            onChange: (v) => {
-                let money = this.state.pageData.loanAmount;
-                this.setState({
-                    ...this.state.pageData,
-                    PreCompanyLoanCs: moneyFormat((money / (v * 1000)) * 1000)
-                });
-            },
             amount: true
         }, {
             title: '准入贷款成数标准',
@@ -152,7 +145,7 @@ export default class InvoiceAddedit extends DetailUtil {
             title: '机动车登记证书',
             field: 'motorRegCertification',
             required: true,
-            hidden: !this.state.hiddenStatus,
+            hidden: this.state.hiddenStatus,
             type: 'img'
         }, {
             title: '批单',

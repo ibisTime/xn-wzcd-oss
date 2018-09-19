@@ -49,9 +49,7 @@ export default class settlementApply extends DetailUtil {
         }, {
             title: '贷款金额',
             field: 'loanAmount',
-            formatter: (v, d) => {
-                return moneyFormat(d.repayBiz.loanAmount);
-            },
+            amount: true,
             readonly: true
         }, {
             title: '剩余欠款',
@@ -61,7 +59,7 @@ export default class settlementApply extends DetailUtil {
         }, {
             title: '代偿欠款',
             field: 'restReplaceRepayAmount',
-            amount: 'true',
+            formatter: (v, d) => v ? moneyFormat(v) : 0,
             readonly: true
         }, {
             title: '实际逾期次数',

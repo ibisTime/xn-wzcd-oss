@@ -6,15 +6,10 @@ import {
     moneyFormat,
     getUserId
 } from 'common/js/util';
-import {
-    lowerFrame,
-    onShelf,
-    sendMsg
-} from 'api/biz';
 import { readXls } from 'common/js/xlsx-util';
-import {Form, Select, Upload, Button, Icon, Table} from 'antd';
+import { Form, Select, Upload, Button, Icon, Table } from 'antd';
 import fetch from 'common/js/fetch';
-import {tailFormItemLayout} from 'common/js/config';
+import { tailFormItemLayout } from 'common/js/config';
 
 const {Item: FormItem} = Form;
 const {Option} = Select;

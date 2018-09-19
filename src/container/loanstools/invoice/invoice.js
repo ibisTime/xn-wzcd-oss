@@ -9,20 +9,8 @@ import {
     cancelFetching,
     setSearchData
 } from '@redux/loanstools/invoice';
-import {
-    showWarnMsg,
-    showSucMsg,
-    getRoleCode,
-    formatDate
-} from 'common/js/util';
-import {
-    listWrapper
-} from 'common/js/build-list';
-import {
-    lowerFrame,
-    onShelf,
-    sendMsg
-} from 'api/biz';
+import { showWarnMsg, formatDate } from 'common/js/util';
+import { listWrapper } from 'common/js/build-list';
 
 @listWrapper(
     state => ({
@@ -113,7 +101,7 @@ class invoice extends React.Component {
                         showWarnMsg('请选择记录');
                     } else if (selectedRowKeys.length > 1) {
                         showWarnMsg('请选择一条记录');
-                    } else if (selectedRows[0].fbhStatus === '1') {
+                    } else if (selectedRows[0].fbhStatus === '2') {
                         showWarnMsg('已录入不能再次录入');
                     } else {
                         this.props.history.push(`/loanstools/invoice/enter?code=${selectedRowKeys[0]}`);
