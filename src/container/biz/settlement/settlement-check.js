@@ -16,9 +16,7 @@ import {
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import DetailUtil from 'common/js/build-detail-dev';
-import {
-    Form
-} from 'antd';
+import { Form } from 'antd';
 
 @Form.create()
 export default class settlementCheck extends DetailUtil {
@@ -64,15 +62,23 @@ export default class settlementCheck extends DetailUtil {
             amount: true,
             readonly: true
         }, {
+            title: '保证金金额',
+            field: 'actualRefunds',
+            amount: 'true',
+            readonly: true
+        }, {
             title: '扣除违约金额',
             field: 'cutLyDeposit',
             amount: 'true',
             readonly: true
         }, {
             title: '实际退款金额',
-            field: 'actualRefunds',
+            field: 'actualRefunds1',
             formatter: (v, d) => {
-                return moneyFormat(d.loanAmount - d.cutLyDeposit);
+                if (d && d.actualRefunds) {
+                    return moneyFormat(d.actualRefunds - d.cutLyDeposit);
+                }
+                return '0.00';
             },
             readonly: true
         }, {
@@ -146,7 +152,8 @@ export default class settlementCheck extends DetailUtil {
             readonly: true
         }, {
             title: '备注',
-            field: 'remark',
+            field: 'remark1',
+            _keys: ['remark'],
             readonly: true
         }, {
             title: '流程日志',

@@ -1,23 +1,9 @@
 import React from 'react';
-import {
-  initStates,
-  doFetching,
-  cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
-} from '@redux/dataReceive/dataSend-repair';
 import {getQueryString} from 'common/js/util';
-import {DetailWrapper} from 'common/js/build-detail';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(state => state.dataReceiveDataSendAddEdit, {
-  initStates,
-  doFetching,
-  cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
-})
+@Form.create()
 class DataSendAddEdit extends React.Component {
   constructor(props) {
     super(props);
@@ -85,9 +71,7 @@ class DataSendAddEdit extends React.Component {
         title: '发件备注',
         field: 'sendNote'
     }];
-    return this
-      .props
-      .buildDetail({
+    return this.buildDetail({
         fields,
         code: this.code,
         view: this.view,

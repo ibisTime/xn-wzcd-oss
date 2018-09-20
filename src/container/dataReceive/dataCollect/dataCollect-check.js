@@ -139,6 +139,7 @@ class DataCollectCheck extends React.Component {
                 for(let i = 0, len = param.supplementReasonList.length; i < len; i++) {
                     for(let j = 0, length = list.length; j < length; j++) {
                         if(param.supplementReasonList[i].id === list[j]) {
+                            delete param.supplementReasonList[i].id;
                             supplementReasonList.push(param.supplementReasonList[i]);
                         }
                     }

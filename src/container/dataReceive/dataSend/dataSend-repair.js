@@ -1,36 +1,19 @@
 import React from 'react';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/dataReceive/dataSend-repair';
-import {
-    getQueryString,
-    getUserId,
-    showSucMsg
-} from 'common/js/util';
-import {
-    DetailWrapper
-} from 'common/js/build-detail';
+import { getQueryString, getUserId, showSucMsg } from 'common/js/util';
 import fetch from 'common/js/fetch';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(state => state.dataReceiveDataSendRepair, {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-})
-class DataSendRepair extends React.Component {
+@Form.create()
+class DataSendRepair extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
-        this.sendTypeFalg = false;
+        this.state = {
+          ...this.state,
+          sendTypeFalg: false
+        };
     }
     render() {
         const fields = [{
@@ -79,21 +62,21 @@ class DataSendRepair extends React.Component {
             required: true,
             value: '2',
             onChange: (value) => {
-                this.sendTypeFalg = value === '1';
+              this.setState({ sendTypeFalg: value === '1' });
             }
         }, {
             title: '快递公司',
             field: 'logisticsCompany',
             type: 'select',
             key: 'kd_company',
-            required: !this.sendTypeFalg,
-            hidden: this.sendTypeFalg,
+            required: !this.state.sendTypeFalg,
+            hidden: this.state.sendTypeFalg,
             formatter: () => ''
         }, {
             title: '快递单号',
             field: 'logisticsCode',
-            required: !this.sendTypeFalg,
-            hidden: this.sendTypeFalg,
+            required: !this.state.sendTypeFalg,
+            hidden: this.state.sendTypeFalg,
             formatter: () => ''
         }, {
             title: '发件时间',
@@ -113,7 +96,7 @@ class DataSendRepair extends React.Component {
                 }]
             }
         }];
-        return this.props.buildDetail({
+        return this.buildDetail({
             fields,
             code: this.code,
             view: this.view,
@@ -121,8 +104,8 @@ class DataSendRepair extends React.Component {
             buttons: [{
                 title: '确认',
                 handler: (param) => {
-                    let list = this.props.o2mSKeys.supplementReasonList;
-                    if (!list.length) {
+                    let list = this.state.selectedRowKeys.supplementReasonList;
+                    if (!list || !list.length) {
                         showSucMsg('请勾选补件原因');
                         return;
                     }
@@ -130,14 +113,15 @@ class DataSendRepair extends React.Component {
                       showSucMsg('补件原因还未勾选完全，无法发件');
                       return;
                     }
+                    param.supplementReasonList = list.map(v => ({ id: v }));
                     param.operator = getUserId();
                     fetch(632153, param).then(() => {
                         showSucMsg('操作成功');
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
-                    }).catch(this.props.cancelFetching);
+                    }).catch(this.cancelFetching);
                 },
                 check: true,
                 type: 'primary'

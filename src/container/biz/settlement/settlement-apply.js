@@ -71,7 +71,7 @@ export default class settlementApply extends DetailUtil {
             readonly: true
         }, {
             title: '保证金金额',
-            field: 'lyDeposit',
+            field: 'actualRefunds',
             amount: 'true',
             readonly: true
         }, {
@@ -79,18 +79,18 @@ export default class settlementApply extends DetailUtil {
             field: 'cutLyDeposit',
             amount: 'true',
             onChange: (v) => {
-                let lyDeposit = this.state.pageData.lyDeposit;
+                let actualRefunds = this.state.pageData.actualRefunds;
                 this.setState({
                     pageData: {
                         ...this.state.pageData,
-                        actualRefunds: moneyFormat(lyDeposit - v * 1000)
+                        actualRefunds1: moneyFormat(actualRefunds - v * 1000)
                     }
                 });
             },
             required: true
         }, {
             title: '实际退款金额',
-            field: 'actualRefunds',
+            field: 'actualRefunds1',
             readonly: true
         }, {
             title: '结清时间',

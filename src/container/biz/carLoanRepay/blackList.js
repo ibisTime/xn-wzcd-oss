@@ -9,19 +9,8 @@ import {
   cancelFetching,
   setSearchData
 } from '@redux/biz/blackList';
-import {
-  listWrapper
-} from 'common/js/build-list';
-import {
-  showWarnMsg,
-  showSucMsg,
-  getRoleCode
-} from 'common/js/util';
-import {
-  Button,
-  Upload,
-  Modal
-} from 'antd';
+import { listWrapper } from 'common/js/build-list';
+import { showWarnMsg, getRoleCode, moneyFormat } from 'common/js/util';
 
 @listWrapper(state => ({
   ...state.bizBlackList,
@@ -73,7 +62,9 @@ class BlackList extends React.Component {
   }, {
       title: '未还代偿金额',
       field: 'unRepayTotalAmount',
-      amount: true
+      render: (v) => {
+        return v ? moneyFormat(v) : '0.00';
+      }
   }];
     return this.props.buildList({
       fields,

@@ -685,7 +685,6 @@ import { riskWhiteListAddedit } from './redux/risk/whiteList-addedit';
 import { dataReceiveDataSend } from './redux/dataReceive/dataSend';
 import { dataReceiveDataSendAddEdit } from './redux/dataReceive/dataSend-addedit';
 import { dataReceiveDataSendSend } from './redux/dataReceive/dataSend-send';
-import { dataReceiveDataSendRepair } from './redux/dataReceive/dataSend-repair';
 import { dataReceiveDataCollect } from './redux/dataReceive/dataCollect';
 import { dataReceiveDataCollectAddEdit } from './redux/dataReceive/dataCollect-addedit';
 import { dataReceiveDataCollectCollect } from './redux/dataReceive/dataCollect-collect';
@@ -1092,7 +1091,6 @@ export default combineReducers({
   dataReceiveDataSend,
   dataReceiveDataSendAddEdit,
   dataReceiveDataSendSend,
-  dataReceiveDataSendRepair,
   dataReceiveDataCollect,
   dataReceiveDataCollectAddEdit,
   dataReceiveDataCollectCollect,

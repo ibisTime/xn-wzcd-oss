@@ -75,7 +75,7 @@ class redList extends React.Component {
         fields,
         pageCode: 630520,
         searchParams: {
-          curNodeCodeList: ['021_01', '021_02', '021_03', '021_04', '021_05', '021_06', '021_07', '021_08', '021_09', '021_10', '021_11']
+          curNodeCodeList: ['021_01', '021_02', '021_03', '021_04', '021_05', '021_06', '021_07', '021_08']
         },
         btnEvent: {
           litigation: (selectedRowKeys, selectedRows) => {

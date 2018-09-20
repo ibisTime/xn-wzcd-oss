@@ -772,7 +772,7 @@ class BudgetAddedit extends React.Component {
                             type: 'select',
                             key: 'az_location',
                             onChange: (v) => {
-                                this.haveRemark = v === '9';
+                                this.haveRemark = v === '99';
                             },
                             required: true
                         }, {

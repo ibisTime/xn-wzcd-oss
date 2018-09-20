@@ -115,16 +115,22 @@ export default class CO2M extends React.Component {
   isStateChange(nextState) {
     const { oSelectData, options, modalVisible } = this.state;
     let oSFlag = false;
-    for (let k in oSelectData) {
-      if (isUndefined(oSelectData[k]) || isUndefined(nextState.oSelectData[k])) {
-        if (!isUndefined(oSelectData[k]) || !isUndefined(nextState.oSelectData[k])) {
+    let bKeys = Object.keys(oSelectData);
+    let nKeys = Object.keys(nextState.oSelectData);
+    if (nKeys === bKeys) {
+      for (let k in oSelectData) {
+        if (isUndefined(oSelectData[k]) || isUndefined(nextState.oSelectData[k])) {
+          if (!isUndefined(oSelectData[k]) || !isUndefined(nextState.oSelectData[k])) {
+            oSFlag = true;
+            break;
+          }
+        } else if (oSelectData[k].length !== nextState.oSelectData[k].length) {
           oSFlag = true;
           break;
         }
-      } else if (oSelectData[k].length !== nextState.oSelectData[k].length) {
-        oSFlag = true;
-        break;
       }
+    } else {
+      oSFlag = true;
     }
     return nextState.modalVisible !== modalVisible || oSFlag;
   }
@@ -362,9 +368,9 @@ export default class CO2M extends React.Component {
         obj.render = f.render;
       } else {
         obj.render = (v) => {
-          return f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{dateTimeFormat(v)}</span> : dateTimeFormat(v);
+          return f.nowrap ? <span style={{whiteSpace: 'nowrap'}}>{dateFormat(v)}</span> : dateFormat(v);
         };
-        this.addRender(f, dateTimeFormat);
+        this.addRender(f, dateFormat);
       }
     } else if (f.type === 'select' || f.type === 'provSelect') {
       if (f.key) {
@@ -440,6 +446,7 @@ export default class CO2M extends React.Component {
       f.render = func;
     }
   }
+  // 获取弹出框的属性
   getModalProps() {
     return {
       title: this.options.title || '',

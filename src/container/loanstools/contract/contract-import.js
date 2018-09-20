@@ -18,6 +18,7 @@ const {Option} = Select;
 class ContractImport extends React.Component {
     constructor(props) {
         super(props);
+        // 工商银行
         let ICBCcols = [{
             title: '序号',
             dataIndex: 'id'
@@ -57,9 +58,10 @@ class ContractImport extends React.Component {
             title: '身份证号',
             dataIndex: 'idNo'
         }];
+        // 建设银行
         let CCBcols = [{
             title: '放款时间',
-            dataIndex: 'repayBankDate'
+            dataIndex: 'bankfktime'
         }, {
             title: '客户姓名',
             dataIndex: 'customerName'
@@ -80,6 +82,7 @@ class ContractImport extends React.Component {
             title: '合同时间',
             dataIndex: 'contractSignDate'
         }];
+        // 中国银行
         let BOCcols = [{
             title: '经销商',
             dataIndex: 'carDealerName'
@@ -185,6 +188,7 @@ class ContractImport extends React.Component {
 
     handleChange = (file) => {
         readXls(file).then(XLSXData => {
+            console.log(XLSXData);
             for (let i = XLSXData.length; i > 0;) {
                 if (XLSXData[--i].length) {
                     break;
@@ -194,6 +198,7 @@ class ContractImport extends React.Component {
             }
             let data = [];
             delete XLSXData[0];
+            // 工商银行
             if (this.state.bankType === 'ICBC') {
                 XLSXData.forEach((item, i) => {
                     data.push({
@@ -211,6 +216,7 @@ class ContractImport extends React.Component {
                         idNo: item[10 + 1]
                     });
                 });
+            // 建设银行
             } else if (this.state.bankType === 'CCB') {
                 XLSXData.forEach((item, i) => {
                     data.push({
@@ -220,10 +226,11 @@ class ContractImport extends React.Component {
                         loanAmount: item[2] * 1000,
                         bankCardNumber: item[3],
                         idNo: item[4],
-                        contractCode: item[5] * 1000,
+                        contractCode: item[5],
                         contractSignDate: item[6]
                     });
                 });
+            // 中国银行
             } else if (this.state.bankType === 'BOC') {
                 XLSXData.forEach((item, i) => {
                     data.push({

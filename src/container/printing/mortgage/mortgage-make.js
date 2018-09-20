@@ -7,11 +7,7 @@ import {
     setPageData,
     restore
 } from '@redux/printing/mortgage-make';
-import {
-    getQueryString,
-    getUserId,
-    showSucMsg
-} from 'common/js/util';
+import { getQueryString, getUserId, showSucMsg } from 'common/js/util';
 import fetch from 'common/js/fetch';
 import { DetailWrapper } from 'common/js/build-detail';
 import { createHt } from 'common/js/contract/ICBC-dyht';
@@ -212,53 +208,51 @@ class MortgageMake extends React.Component {
             view: this.view,
             detailCode: 632146,
             buttons: [{
-                    title: '打印',
-                    check: true,
-                    handler: (param) => {
-                        param.operator = getUserId();
-                        this.props.doFetching();
-                        let num = param.pledgePrintTemplateId;
-                        fetch(632192, param).then((data) => {
-                            if(num === '1') {
-                              createHt(data, this.props.pageData);
-                            } else if(num === '2') {
-                              exportBOCZdzsxffq(data);
-                            } else if(num === '3') {
-                              exportBOCSxfycx(data);
-                            } else if(num === '4') {
-                              exportBOCDy(data, this.props.selectData.creditCardType);
-                            } else if(num === '5') {
-                              exportBOCCt(data);
-                            } else if(num === '6') {
-                              exportBOCJcdy(data);
-                            } else if(num === '8') {
-                              exportBOCZdzfjf(data);
-                            } else if(num === '9') {
-                              exportCCBDy(data);
-                            } else if(num === '10') {
-                              exportCCBFwf(data);
-                            } else if(num === '11') {
-                              exportBOCFjd(data);
-                            } else if(num === '12') {
-                              exportCCBJc(data);
-                            } else if(num === '13') {
-                              exportCCBXydb(data);
-                            }
-                            this.props.cancelFetching();
-                            showSucMsg('操作成功');
-                            setTimeout(() => {
-                                this.props.history.go(-1);
-                            }, 1000);
-                        }).catch(this.props.cancelFetching());
-                    }
-                },
-                {
-                    title: '返回',
-                    handler: (param) => {
-                        this.props.history.go(-1);
-                    }
+                title: '打印',
+                check: true,
+                handler: (param) => {
+                    param.operator = getUserId();
+                    this.props.doFetching();
+                    let num = param.pledgePrintTemplateId;
+                    fetch(632192, param).then((data) => {
+                        if(num === '1') {
+                          createHt(data, this.props.pageData);
+                        } else if(num === '2') {
+                          exportBOCZdzsxffq(data);
+                        } else if(num === '3') {
+                          exportBOCSxfycx(data);
+                        } else if(num === '4') {
+                          exportBOCDy(data, this.props.selectData.creditCardType);
+                        } else if(num === '5') {
+                          exportBOCCt(data);
+                        } else if(num === '6') {
+                          exportBOCJcdy(data);
+                        } else if(num === '8') {
+                          exportBOCZdzfjf(data);
+                        } else if(num === '9') {
+                          exportCCBDy(data);
+                        } else if(num === '10') {
+                          exportCCBFwf(data);
+                        } else if(num === '11') {
+                          exportBOCFjd(data);
+                        } else if(num === '12') {
+                          exportCCBJc(data);
+                        } else if(num === '13') {
+                          exportCCBXydb(data);
+                        }
+                        this.props.cancelFetching();
+                        showSucMsg('操作成功');
+                        setTimeout(() => {
+                            this.props.history.go(-1);
+                        }, 1000);
+                    }).catch(this.props.cancelFetching());
                 }
-            ]
+            }, {
+                title: '返回',
+                handler: (param) => {
+                    this.props.history.go(-1);
+                }
+            }]
         });
     }
 }

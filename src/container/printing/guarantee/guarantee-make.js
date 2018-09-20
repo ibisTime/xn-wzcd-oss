@@ -15,9 +15,7 @@ import {
   moneyUppercase
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {
-  CollapseWrapper
-} from 'component/collapse-detail/collapse-detail';
+import { CollapseWrapper } from 'component/collapse-detail/collapse-detail';
 import { createHt } from 'common/js/contract/ICBC-dbht';
 import { exportBOCZdzsxffq } from 'common/js/contract/BOC-zdzsxffq';
 import { exportBOCSxfycx } from 'common/js/contract/BOC-sxfycx';

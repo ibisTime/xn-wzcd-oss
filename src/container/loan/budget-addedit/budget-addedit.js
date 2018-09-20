@@ -423,9 +423,6 @@ class BudgetAddedit extends React.Component {
                                     });
                                     this.bankRateTypeList = rateList;
                                     this.loanPeriodsData = loanPeriodsData;
-                                    this.props.form.setFieldsValue({
-                                        bankRateType: data.bankRate
-                                    });
                                 }
                             }
                             if(data.bankSubbranch.bankType === 'BOC') {
@@ -466,7 +463,7 @@ class BudgetAddedit extends React.Component {
                         this.bankRateTypeList = rateList;
                         this.props.form.setFieldsValue({
                             bankRate: 0,
-                            bankRateType: ''
+                            bankBenchmarkRate: ''
                         });
                     }
                 }, {
@@ -583,7 +580,7 @@ class BudgetAddedit extends React.Component {
                     }
                 }, {
                     title: '银行利率',
-                    field: 'bankRateType',
+                    field: 'bankBenchmarkRate',
                     type: 'select',
                     data: this.bankRateTypeList,
                     keyName: 'rate',
@@ -771,7 +768,7 @@ class BudgetAddedit extends React.Component {
                             type: 'select',
                             key: 'az_location',
                             onChange: (v) => {
-                                this.haveRemark = v === '9';
+                                this.haveRemark = v === '99';
                             },
                             required: true
                         }, {

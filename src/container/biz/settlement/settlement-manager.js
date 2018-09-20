@@ -63,15 +63,23 @@ export default class SettlementManager extends DetailUtil {
             amount: true,
             readonly: true
         }, {
+            title: '保证金金额',
+            field: 'actualRefunds',
+            amount: 'true',
+            readonly: true
+        }, {
             title: '扣除违约金额',
             field: 'cutLyDeposit',
             amount: 'true',
             readonly: true
         }, {
             title: '实际退款金额',
-            field: 'actualRefunds',
+            field: 'actualRefunds1',
             formatter: (v, d) => {
-                return moneyFormat(d.loanAmount - d.cutLyDeposit);
+                if (d && d.actualRefunds) {
+                    return moneyFormat(d.actualRefunds - d.cutLyDeposit);
+                }
+                return '0.00';
             },
             readonly: true
         }, {
@@ -145,7 +153,8 @@ export default class SettlementManager extends DetailUtil {
             readonly: true
         }, {
             title: '备注',
-            field: 'remark',
+            field: 'remark1',
+            _keys: ['remark'],
             readonly: true
         }, {
             title: '流程日志',
@@ -157,6 +166,7 @@ export default class SettlementManager extends DetailUtil {
                 dealNodeList: ['020_10', '020_11', '020_12', '020_13', '020_14', '020_15', '020_16']
             },
             options: {
+                rowKey: 'id',
                 noSelect: true,
                 fields: [{
                     title: '操作人',

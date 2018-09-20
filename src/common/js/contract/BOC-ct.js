@@ -77,7 +77,8 @@ export function exportBOCCt(data, insuranceCompany) {
 function createData(wb, data, insuranceCompany) {
   let year = data.customerBirth.substr(0, 4);
   let month = data.customerBirth.substr(4, 2) - 0;
-  let insName = insuranceCompany.find(v => v.code === data.insuranceCompany).name;
+  let company = insuranceCompany.find(v => v.code === data.insuranceCompany);
+  let insName = company ? company.name : '';
   let arr = [
     ['中银信用卡持卡人（甲方）', data.customerName],
     ['身份证件号码', data.idNo],
@@ -1396,10 +1397,10 @@ function createHt6(wb) {
   ws['B25'] = {v: 1, t: 'n', w: '1'};
   ws['C5'].f = '数据!B1';
   ws['C7'].f = '数据!B3';
-  ws['C8'] = {v: '温州蝉街', t: 'n', w: '温州蝉街'};
-  ws['C9'] = {v: '温州市蝉街113号', t: 'n', w: '温州蝉街'};
-  ws['C10'] = {v: '温州保利融资担保有限公司', t: 'n', w: '温州保利融资担保有限公司'};
-  ws['C12'] = {v: '温州市温州大道3号2幢', t: 'n', w: '温州市温州大道3号2幢'};
+  ws['C8'] = {v: '温州蝉街', t: 's', w: '温州蝉街'};
+  ws['C9'] = {v: '温州市蝉街113号', t: 's', w: '温州蝉街'};
+  ws['C10'] = {v: '温州保利融资担保有限公司', t: 's', w: '温州保利融资担保有限公司'};
+  ws['C12'] = {v: '温州市温州大道3号2幢', t: 's', w: '温州市温州大道3号2幢'};
   ws['C14'].f = '数据!B1';
   ws['C15'].f = '数据!B2';
   ws['C16'].f = '数据!B3';
@@ -1700,7 +1701,6 @@ function getMargins() {
 }
 // 获取sheet
 function getSheet(wb, row, col, name) {
-  console.log(wb, row, col, name);
   var tmp = [];
   for (let i = col; i > 0; i--) {
     tmp.push('');

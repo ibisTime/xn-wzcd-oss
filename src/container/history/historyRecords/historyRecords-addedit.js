@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     getQueryString,
     moneyFormat,
@@ -12,7 +13,8 @@ export default class BlackListAddedit extends DetailUtil {
         super(props);
         this.state = {
             ...this.state,
-            isAdvanceFund: false
+            isAdvanceFund: false,
+            haveRemark: false
         };
         this.code = getQueryString('code', this.props.location.search);
         this.afterCode = getQueryString('afterCode', this.props.location.search);
@@ -213,8 +215,6 @@ export default class BlackListAddedit extends DetailUtil {
             type: 'textarea',
             normalArea: true,
             required: true,
-            readonly: !this.isCheckFirst,
-            hidden: !this.view,
             noVisible: true
         }];
 
@@ -331,7 +331,7 @@ export default class BlackListAddedit extends DetailUtil {
                     title: '银行利率',
                     field: 'bankRate',
                     formatter: (v, d) => {
-                      return (d.bankRate * 100).toFixed(4) + '%';
+                      return v ? (v * 100).toFixed(4) + '%' : '';
                     },
                     required: true
                 }],
@@ -385,28 +385,8 @@ export default class BlackListAddedit extends DetailUtil {
                     options: {
                         detail: true,
                         fields: [{
-                            title: 'GPS',
-                            field: 'code',
-                            type: 'select',
-                            listCode: 632707,
-                            params: {
-                                applyStatus: '2',
-                                applyUser: this.saleUserId,
-                                useStatus: 0
-                            },
-                            keyName: 'code',
-                            valueName: 'gpsDevNo',
-                            required: true,
-                            noVisible: true,
-                            onChange: (v, data, props) => {
-                                // props.setPageData({
-                                //     gpsDevNo: data.gpsDevNo,
-                                //     gpsType: data.gpsType
-                                // });
-                            }
-                        }, {title: 'GPS设备号',
-                            field: 'gpsDevNo',
-                            hidden: true
+                            title: 'GPS设备号',
+                            field: 'gpsDevNo'
                         }, {
                             title: 'GPS类型',
                             field: 'gpsType',
@@ -419,12 +399,20 @@ export default class BlackListAddedit extends DetailUtil {
                                 value: '无线'
                             }],
                             keyName: 'key',
-                            valueName: 'value',
-                            hidden: true
+                            valueName: 'value'
                         }, {
                             title: 'GPS安装位置',
                             field: 'azLocation',
+                            type: 'select',
+                            key: 'az_location',
+                            onChange: (v) => {
+                                this.setState({ haveRemark: v === '99' });
+                            },
                             required: true
+                        }, {
+                            title: '备注',
+                            field: 'remark',
+                            hidden: !this.state.haveRemark
                         }]
                     }
                 }]
@@ -853,6 +841,7 @@ export default class BlackListAddedit extends DetailUtil {
                     type: 'o2m',
                     options: {
                         noSelect: true,
+                        rowKey: 'accountNo',
                         fields: [{
                             title: '用款用途',
                             field: 'useMoneyPurpose',
@@ -919,70 +908,23 @@ export default class BlackListAddedit extends DetailUtil {
                             }],
                             keyName: 'key',
                             valueName: 'value',
-                            value: '3',
-                            readonly: true,
-                            required: true
+                            value: '3'
                         }, {
                             title: '金额小写',
                             field: 'repointAmount',
-                            amount: true,
-                            required: true,
-                            onChange: (v, props) => {
-                                // let amountL = '';
-                                // if (v) {
-                                //     amountL = moneyUppercase(v);
-                                // }
-                                // props.setPageData({
-                                //     repointAmountL: amountL
-                                // });
-                            }
-                        }, {
-                            title: '金额大写',
-                            field: 'repointAmountL',
-                            required: true,
-                            readonly: true,
-                            noVisible: true
+                            amount: true
                         }, {
                             title: '单位名称',
-                            field: 'carDealerName1',
-                            required: true,
-                            formatter: (v, data) => {
-                                return data.carDealerName || data.carDealerName1;
-                            },
-                            render: (v, data) => {
-                                return data.carDealerName || data.carDealerName1;
-                            }
+                            field: 'carDealerName'
                         }, {
                             title: '户名',
-                            field: 'accountName1',
-                            required: true,
-                            formatter: (v, data) => {
-                                return data.accountName || data.accountName1;
-                            },
-                            render: (v, data) => {
-                                return data.accountName || data.accountName1;
-                            }
+                            field: 'accountName'
                         }, {
                             title: '账号',
-                            field: 'accountNo1',
-                            bankCard: true,
-                            required: true,
-                            formatter: (v, data) => {
-                                return data.accountNo || data.accountNo1;
-                            },
-                            render: (v, data) => {
-                                return data.accountNo || data.accountNo1;
-                            }
+                            field: 'accountNo'
                         }, {
                             title: '开户行',
-                            field: 'openBankName1',
-                            required: true,
-                            formatter: (v, data) => {
-                                return data.openBankName || data.openBankName1;
-                            },
-                            render: (v, data) => {
-                                return data.openBankName || data.openBankName1;
-                            }
+                            field: 'openBankName'
                         }]
                     }
                 }]
@@ -1191,20 +1133,9 @@ export default class BlackListAddedit extends DetailUtil {
                     title: '征信列表',
                     field: 'creditUserList',
                     type: 'o2m',
-                    formatter: (v, data) => {
-                        if (!this.state.pageData.creditUserList) {
-                            this.setState({
-                                pageData: {
-                                    ...this.state.pageData,
-                                    creditUserList: data.credit.creditUserList
-                                }
-                            });
-                        }
-                        return data.credit.creditUserList;
-                    },
+                    _keys: ['credit', 'creditUserList'],
                     options: {
                         detail: true,
-                        scroll: {x: 1300},
                         fields: o2mFields
                     }
                 }]
@@ -1216,7 +1147,7 @@ export default class BlackListAddedit extends DetailUtil {
                     title: '是否提前还款',
                     field: 'isAdvanceSettled',
                     formatter: (v, d) => {
-                        return d.repayBiz.isAdvanceSettled;
+                        return d.repayBiz.isAdvanceSettled || '0';
                     },
                     type: 'select',
                     data: [{
@@ -1262,7 +1193,7 @@ export default class BlackListAddedit extends DetailUtil {
                     title: '实际退款金额',
                     field: 'actualRefunds',
                     formatter: (v, d) => {
-                        return moneyFormat(d.repayBiz.actualRefunds);
+                        return moneyFormat(d.repayBiz.actualRefunds - d.repayBiz.cutLyDeposit) || 0;
                     }
                 }, {
                     title: '解除抵押时间',
@@ -1274,7 +1205,7 @@ export default class BlackListAddedit extends DetailUtil {
                     title: '结清时间',
                     field: 'closeDatetime',
                     formatter: (v, d) => {
-                        return formatDate(d.repayBiz.closeDatetime);
+                        return formatDate(d.repayBiz.settleDatetime);
                     }
                 }]
             ]
@@ -1286,6 +1217,7 @@ export default class BlackListAddedit extends DetailUtil {
                     field: 'repayPlansList',
                     type: 'o2m',
                     options: {
+                        noSelect: true,
                         fields: [{
                             title: '当前期数',
                             field: 'curPeriods'

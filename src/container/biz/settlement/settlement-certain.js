@@ -62,15 +62,23 @@ export default class settlementCertain extends DetailUtil {
             amount: true,
             readonly: true
         }, {
+            title: '保证金金额',
+            field: 'actualRefunds',
+            amount: 'true',
+            readonly: true
+        }, {
             title: '扣除违约金额',
             field: 'cutLyDeposit',
             amount: 'true',
             readonly: true
         }, {
             title: '实际退款金额',
-            field: 'actualRefunds',
+            field: 'actualRefunds1',
             formatter: (v, d) => {
-                return moneyFormat(d.loanAmount - d.cutLyDeposit);
+              if (d && d.actualRefunds) {
+                  return moneyFormat(d.actualRefunds - d.cutLyDeposit);
+              }
+              return '0.00';
             },
             readonly: true
         }, {
