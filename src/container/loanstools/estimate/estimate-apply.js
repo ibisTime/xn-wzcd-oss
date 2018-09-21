@@ -1,39 +1,12 @@
 import React from 'react';
-import {
-  initStates,
-  doFetching,
-  cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
-} from '@redux/loanstools/estimate-apply';
-import {
-  getQueryString,
-  showSucMsg,
-  getUserId,
-  getCompanyCode
-} from 'common/js/util';
-import { DetailWrapper } from 'common/js/build-detail';
-import { getCompanyBankList } from 'api/company';
+import { Form } from 'antd';
+import moment from 'moment';
+import { getUserId, getCompanyCode } from 'common/js/util';
+import DetailUtil from 'common/js/build-detail-dev';
 import fetch from 'common/js/fetch';
 
-@DetailWrapper(
-  state => state.loanstoolsEstimateApply, {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-  }
-)
-class EstimateApply extends React.Component {
-  constructor(props) {
-    super(props);
-    this.code = getQueryString('code', this.props.location.search);
-    this.view = !!getQueryString('v', this.props.location.search);
-  }
-  componentDidMount() {}
+@Form.create()
+class EstimateApply extends DetailUtil {
   render() {
     const fields = [{
       field: 'applyUser',
@@ -59,31 +32,16 @@ class EstimateApply extends React.Component {
       title: '用款日期',
       field: 'useDatetime',
       type: 'date',
+      disabledDate: (current) => {
+        let todayEnd = moment().endOf('day');
+        return current ? current < todayEnd || current > todayEnd.add(1, 'day') : null;
+      },
       required: true
     }];
-    return this.props.buildDetail({
+    return this.buildDetail({
       fields,
-      code: this.code,
-      view: this.view,
-      buttons: [{
-        title: '发送',
-        check: true,
-        handler: (params) => {
-          this.props.doFetching();
-          fetch(632100, params).then(() => {
-            showSucMsg('操作成功');
-            setTimeout(() => {
-              this.props.history.go(-1);
-            }, 1500);
-            this.props.cancelFetching();
-          }).catch(this.props.cancelFetching);
-        }
-      }, {
-        title: '返回',
-        handler: (param) => {
-          this.props.history.go(-1);
-        }
-      }]
+      addCode: 632100,
+      okText: '发送'
     });
   }
 }

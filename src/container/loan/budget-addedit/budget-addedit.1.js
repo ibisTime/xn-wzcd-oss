@@ -1,5 +1,7 @@
 import React from 'react';
 import { Prompt } from 'react-router-dom';
+import { Form } from 'antd';
+import DetailUtil from 'common/js/build-detail-dev';
 import {
     getQueryString,
     getUserId,
@@ -10,28 +12,16 @@ import {
     moneyUppercase,
     moneyReplaceComma
 } from 'common/js/util';
-import {CollapseWrapper} from 'component/collapse-detail/collapse-detail';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/loan/budget-addedit';
 import {getSystormParam} from 'api/dict';
 import fetch from 'common/js/fetch';
 
-@CollapseWrapper(
-    state => state.loanBudgetAddedit,
-    {initStates, doFetching, cancelFetching, setSelectData, setPageData, restore}
-)
-class BudgetAddedit extends React.Component {
+@Form.create()
+class BudgetAddedit extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
         this.carCompanyCode = getQueryString('carDealerCode', this.props.location.search);
-        this.saleUserId = getQueryString('saleUserId', this.props.location.search);
+        // this.saleUserId = getQueryString('saleUserId', this.props.location.search);
         this.view = !!getQueryString('v', this.props.location.search);
         // 申请
         this.isApply = !!getQueryString('isApply', this.props.location.search);
@@ -49,6 +39,7 @@ class BudgetAddedit extends React.Component {
         this.isGuarantor1IdPicz = false;
         this.isGuarantor2IdPicz = false;
         this.state = {
+            ...this.state,
             isAdvanceFund: true,
             isSetIsAdvanceFund: false,
             oilSubsidyValue: null,
@@ -65,7 +56,7 @@ class BudgetAddedit extends React.Component {
 
     componentDidMount() {
         if (this.isApply) {
-            this.props.doFetching();
+            this.doFetching();
             Promise.all([
                 fetch(632007, {
                     companyCode: this.carCompanyCode,
@@ -81,8 +72,8 @@ class BudgetAddedit extends React.Component {
                     oilSubsidyValue: oilSubsidyData.cvalue,
                     gpsDeductValue: gpsDeductData.cvalue
                 });
-                this.props.cancelFetching();
-            }).catch(this.props.cancelFetching);
+                this.cancelFetching();
+            }).catch(this.cancelFetching);
         }
     }
 
@@ -423,9 +414,6 @@ class BudgetAddedit extends React.Component {
                                     });
                                     this.bankRateTypeList = rateList;
                                     this.loanPeriodsData = loanPeriodsData;
-                                    this.props.form.setFieldsValue({
-                                        bankRateType: data.bankRate
-                                    });
                                 }
                             }
                             if(data.bankSubbranch.bankType === 'BOC') {
@@ -466,7 +454,7 @@ class BudgetAddedit extends React.Component {
                         this.bankRateTypeList = rateList;
                         this.props.form.setFieldsValue({
                             bankRate: 0,
-                            bankRateType: ''
+                            bankBenchmarkRate: ''
                         });
                     }
                 }, {
@@ -509,7 +497,6 @@ class BudgetAddedit extends React.Component {
                     key: 'rate_type',
                     required: true,
                     onChange: (v, data) => {
-                        console.log(data);
                         this.rateType = v;
                         if (v === '1') {
                             this.props.setPageData({
@@ -584,7 +571,7 @@ class BudgetAddedit extends React.Component {
                     }
                 }, {
                     title: '银行利率',
-                    field: 'bankRateType',
+                    field: 'bankBenchmarkRate',
                     type: 'select',
                     data: this.bankRateTypeList,
                     keyName: 'rate',
@@ -592,7 +579,7 @@ class BudgetAddedit extends React.Component {
                     required: true,
                     onChange: (v) => {
                         this.props.form.setFieldsValue({
-                            bankRate: v * 100
+                            bankRate: v ? (v * 100).toFixed(2) : 0
                         });
                         this.props.setPageData({
                             ...this.props.pageData,
@@ -610,7 +597,7 @@ class BudgetAddedit extends React.Component {
                     number: true,
                     required: true,
                     formatter: (v, data) => {
-                        return v * 100;
+                        return (v * 100).toFixed(2);
                     }
                 }],
                 [{
@@ -735,7 +722,7 @@ class BudgetAddedit extends React.Component {
                             listCode: 632707,
                             params: {
                                 applyStatus: '2',
-                                applyUser: this.saleUserId,
+                                applyUser: getUserId(),
                                 useStatus: 0
                             },
                             keyName: 'code',
@@ -1383,6 +1370,7 @@ class BudgetAddedit extends React.Component {
                             title: '金额小写',
                             field: 'repointAmount',
                             amount: true,
+                            required: true,
                             readonly: true
                         }, {
                             title: '单位名称',
@@ -1910,7 +1898,7 @@ class BudgetAddedit extends React.Component {
 
         return (
           <div>
-            {this.props.buildDetail({
+            {this.buildDetail({
                 fields,
                 code: this.code,
                 view: this.view,

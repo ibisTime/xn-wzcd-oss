@@ -216,7 +216,7 @@ class MortgageMake extends React.Component {
                     let num = param.pledgePrintTemplateId;
                     fetch(632192, param).then((data) => {
                         if(num === '1') {
-                          createHt(data, this.props.pageData);
+                          createHt(data, this.props.selectData.creditCardType);
                         } else if(num === '2') {
                           exportBOCZdzsxffq(data);
                         } else if(num === '3') {
@@ -230,7 +230,7 @@ class MortgageMake extends React.Component {
                         } else if(num === '8') {
                           exportBOCZdzfjf(data);
                         } else if(num === '9') {
-                          exportCCBDy(data);
+                          exportCCBDy(data, this.props.selectData.creditCardType);
                         } else if(num === '10') {
                           exportCCBFwf(data);
                         } else if(num === '11') {

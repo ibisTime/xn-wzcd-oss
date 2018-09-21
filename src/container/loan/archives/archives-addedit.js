@@ -119,10 +119,6 @@ class ArchivesAddedit extends React.Component {
                 field: 'repayFirstMonthDatetime',
                 type: 'date',
                 required: 'true'
-            }, {
-                title: '银行还款日',
-                field: 'repayBankDate',
-                number: true
             }],
             [{
                 title: '已入档清单',

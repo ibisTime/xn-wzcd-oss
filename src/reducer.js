@@ -327,7 +327,6 @@ import { loaNarchivesEnter } from './redux/loan/archives-enter';
 //  垫资请款预算单 + 详情 + 申请 + 审核 + 确认
 import { loanstoolsEstimate } from './redux/loanstools/estimate';
 import { loanstoolsEstimateAddEdit } from './redux/loanstools/estimate-addedit';
-import { loanstoolsEstimateApply } from './redux/loanstools/estimate-apply';
 import { loanstoolsEstimateCheck } from './redux/loanstools/estimate-check';
 import { loanstoolsEstimateCertian } from './redux/loanstools/estimate-certain';
 
@@ -438,7 +437,6 @@ import { postloantoolsManageGpsUpperLimit } from './redux/postloantools/manageGp
 
 //  Gps退回 + 详情
 import { postloantoolsRegressesGps } from './redux/postloantools/regressesGps';
-import { postloantoolsRegressesGpsApply } from './redux/postloantools/regressesGps-apply';
 
 //  Gps安装 + 详情 + 安装回录 + 回收作废
 import { postloantoolsInstallGps } from './redux/postloantools/installGps';
@@ -798,7 +796,6 @@ export default combineReducers({
   loanCreditCheck,
   loanstoolsEstimate,
   loanstoolsEstimateAddEdit,
-  loanstoolsEstimateApply,
   loanstoolsEstimateCheck,
   loanstoolsEstimateCertian,
   loanstoolsCancel,
@@ -1109,7 +1106,6 @@ export default combineReducers({
   financeFunded,
   financeInvoice,
   postloantoolsRegressesGps,
-  postloantoolsRegressesGpsApply,
   erweimaErweima,
   bizImplementCase,
   bizImplementCaseAddEdit,

@@ -49,7 +49,7 @@ export default class CDate extends React.Component {
     });
     return flag;
   }
-  getDateProps(onChange, isTime) {
+  getDateProps(onChange, isTime, disabledDate) {
     let props = {
       locale,
       allowClear: false,
@@ -60,11 +60,14 @@ export default class CDate extends React.Component {
     if (onChange) {
       props.onChange = (date, dateString) => onChange(date, dateString);
     }
+    if (disabledDate) {
+      props.disabledDate = disabledDate;
+    }
     return props;
   }
   render() {
     const { label, field, rules, readonly, hidden, getFieldDecorator,
-      isTime, initVal, inline, onChange } = this.props;
+      isTime, initVal, inline, onChange, disabledDate } = this.props;
     let layoutProps = inline ? {} : formItemLayout;
     return (
       <FormItem key={field} {...layoutProps} className={hidden ? 'hidden' : ''} label={label}>
@@ -74,7 +77,7 @@ export default class CDate extends React.Component {
                 rules,
                 initialValue: initVal || null
             })(
-            <DatePicker {...this.getDateProps(onChange, isTime)}/>)
+            <DatePicker {...this.getDateProps(onChange, isTime, disabledDate)}/>)
         }
       </FormItem>
     );
@@ -97,6 +100,7 @@ CDate.propTypes = {
   isTime: PropTypes.bool,
   inline: PropTypes.bool,
   field: PropTypes.string.isRequired,
+  disabledDate: PropTypes.func,
   getFieldValue: PropTypes.func.isRequired,
   getFieldError: PropTypes.func.isRequired,
   getFieldDecorator: PropTypes.func.isRequired

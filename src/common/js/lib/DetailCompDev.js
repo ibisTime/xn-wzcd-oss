@@ -433,6 +433,7 @@ export default class DetailCompDev extends React.Component {
       label: this.getLabel(item),
       readonly: item.readonly,
       onChange: item.onChange,
+      disabledDate: item.disabledDate,
       getFieldError: this.props.form.getFieldError,
       getFieldValue: this.props.form.getFieldValue
     };

@@ -1,5 +1,5 @@
 import { getWorkbook } from 'common/js/xlsx-util';
-import { moneyFormat, moneyFormat2, moneyReplaceComma } from 'common/js/util';
+import { moneyFormat, moneyFormat2, moneyReplaceComma, dateFormat } from 'common/js/util';
 export function exportBOCDy(data, creditCardTypeList) {
   const wb = getWorkbook();
   createData(wb, data, creditCardTypeList);
@@ -19,10 +19,10 @@ export function exportBOCDy(data, creditCardTypeList) {
 }
 // 内容
 function createData(wb, data, creditCardTypeList) {
-  let year = data.customerBirth.substr(0, 4);
-  let month = data.customerBirth.substr(4, 2) - 0;
-  let day = data.customerBirth.substr(6, 2) - 0;
-  let arr01 = ['', '普通', '白金'];
+  let contractSignDate = dateFormat(data.contractSignDate);
+  let year = contractSignDate.substr(0, 4);
+  let month = contractSignDate.substr(5, 2);
+  let day = contractSignDate.substr(8, 2);
   let arr = [
     ['公司名称', data.lenderCompanyName],
     ['组织机构代码证', data.organizationCodeCard],
@@ -39,9 +39,9 @@ function createData(wb, data, creditCardTypeList) {
     ['车架号', data.frameNo],
     ['发动机号', data.engineNo],
     ['贷款额（大写）', ''],
-    ['贷款额（小写）', moneyReplaceComma(moneyFormat2(data.loanAmount))],
+    ['贷款额（小写）', moneyReplaceComma(moneyFormat2(data.loanAmount)) * 1000 / 1000],
     ['履约保证金（大写）', ''],
-    ['履约保证金（小写）', moneyReplaceComma(moneyFormat2(data.lyAmount))],
+    ['履约保证金（小写）', moneyReplaceComma(moneyFormat2(data.lyAmount)) * 1000 / 1000],
     ['年份', year],
     ['月', month],
     ['日', day],

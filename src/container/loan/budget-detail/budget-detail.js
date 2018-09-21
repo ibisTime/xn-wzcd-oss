@@ -1,3 +1,4 @@
+import { Form } from 'antd';
 import {
     getQueryString,
     getUserId,
@@ -5,7 +6,6 @@ import {
 } from 'common/js/util';
 import DetailUtil from 'common/js/build-detail-dev';
 import fetch from 'common/js/fetch';
-import { Form } from 'antd';
 
 @Form.create()
 export default class BudgetDetail extends DetailUtil {
@@ -437,7 +437,8 @@ export default class BudgetDetail extends DetailUtil {
                         }, {
                             title: 'GPS安装位置',
                             field: 'azLocation',
-                            required: true
+                            type: 'select',
+                            key: 'az_location'
                         }]
                     }
                 }]
