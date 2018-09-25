@@ -147,7 +147,6 @@ class budgetCheck extends React.Component {
               title: '不通过',
               handler: (param) => {
                 param.approveResult = '0';
-                param.approveNote = this.projectCode;
                 param.operator = getUserId();
                 this.props.doFetching();
                 fetch(632321, param).then(() => {

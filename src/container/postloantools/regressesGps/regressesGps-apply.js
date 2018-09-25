@@ -1,8 +1,6 @@
-import React from 'react';
 import { Form } from 'antd';
 import DetailUtil from 'common/js/build-detail-dev';
 import { getUserId } from 'common/js/util';
-import fetch from 'common/js/fetch';
 
 @Form.create()
 class RegressesGpsApply extends DetailUtil {

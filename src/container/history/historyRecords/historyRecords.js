@@ -34,7 +34,7 @@ import {
 class HistoryBusiness extends React.Component {
     constructor(props) {
         super(props);
-        this.shopWayArr = ['新车', '二手车'];
+        this.shopWayArr = ['', '新车', '二手车'];
         this.isflag = ['否', '是'];
     }
     render() {

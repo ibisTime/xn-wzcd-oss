@@ -46,7 +46,7 @@ class RebatesCertain extends React.Component {
             readonly: true
         }, {
             title: '返点列表',
-            field: 'repointDetailCodeList',
+            field: 'repointDetailList',
             required: true,
             readonly: true,
             type: 'o2m',

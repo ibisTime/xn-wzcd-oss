@@ -57,7 +57,11 @@ class Historying extends React.Component {
             search: true
         }, {
             title: '贷款银行',
-            field: 'loanBankName',
+            field: 'loanBankCode',
+            type: 'select',
+            listCode: 632057,
+            keyName: 'code',
+            valueName: 'bankName',
             search: true
         }, {
             title: '贷款金额',
