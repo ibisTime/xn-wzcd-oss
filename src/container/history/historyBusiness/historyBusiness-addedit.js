@@ -36,7 +36,7 @@ class HistoryBusinessAddedit extends React.Component {
       title: '业务编号',
       field: 'code',
       formatter: (v, d) => {
-          return d.budgetOrder.code;
+        return d.budgetOrder.code;
       }
     }, {
       title: '客户姓名',
@@ -72,6 +72,16 @@ class HistoryBusinessAddedit extends React.Component {
       title: '未还清收总成本',
       field: 'restTotalCost',
       amount: true
+    }, {
+      title: '保证金金额',
+      field: 'actualRefunds',
+      amount: 'true',
+      readonly: true
+    }, {
+      title: '扣除违约金额',
+      field: 'cutLyDeposit',
+      amount: 'true',
+      required: true
     }, {
       title: '实际退款金额',
       field: 'actualRefunds',

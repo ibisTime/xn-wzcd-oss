@@ -166,8 +166,8 @@ export default class CreditStartAddedit extends DetailUtil {
             keyName: 'key',
             valueName: 'value',
             readonly: true,
-            hidden: !(this.isCheckSalesman || this.isCheckFirst),
-            noVisible: !(this.isCheckSalesman || this.isCheckFirst)
+            hidden: this.isAddedit || this.isEntry,
+            noVisible: this.isAddedit || this.isEntry
         }];
         if (!this.isAddedit) {
             o2mFields = o2mFields.concat([{

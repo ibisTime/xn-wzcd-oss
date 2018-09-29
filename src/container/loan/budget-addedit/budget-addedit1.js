@@ -1,11 +1,9 @@
 import React from 'react';
 import { Prompt } from 'react-router-dom';
 import { Form } from 'antd';
-import DetailUtil from 'common/js/build-detail-dev';
 import {
     getQueryString,
     getUserId,
-    showWarnMsg,
     showSucMsg,
     moneyParse,
     moneyFormat,
@@ -13,10 +11,11 @@ import {
     moneyReplaceComma
 } from 'common/js/util';
 import {getSystormParam} from 'api/dict';
+import DetailUtil from 'common/js/build-detail-dev';
 import fetch from 'common/js/fetch';
 
 @Form.create()
-class BudgetAddedit extends DetailUtil {
+export default class BudgetAddedit extends DetailUtil {
     constructor(props) {
         super(props);
         this.code = getQueryString('code', this.props.location.search);
@@ -52,6 +51,11 @@ class BudgetAddedit extends DetailUtil {
         this.surcharge = true;
         this.isBankType = false;
         this.haveRemark = false;
+        this.state = {
+            ...this.state,
+            surcharge: false,
+            isRateType: false
+        };
     }
 
     componentDidMount() {
@@ -272,16 +276,16 @@ class BudgetAddedit extends DetailUtil {
         delete data.ghBirthAddress1;
         delete data.guarantor1BirthAddress1;
         delete data.guarantor2BirthAddress1;
-        this.props.doFetching();
+        this.doFetching();
         fetch(632120, data).then(() => {
-            this.props.cancelFetching();
+            this.cancelFetching();
             showSucMsg('操作成功');
             this.setState({ promptFlag: false });
             setTimeout(() => {
                 this.props.history.go(-1);
             }, 1000);
         }).catch(() => {
-            this.props.cancelFetching();
+            this.cancelFetching();
         });
     }
 
@@ -504,10 +508,14 @@ class BudgetAddedit extends DetailUtil {
                                 rateType: v,
                                 carDealerSubsidy: 0
                             });
-                            this.isRateType = true;
+                            this.setState({
+                                isRateType: true
+                            });
                         } else {
                             if(this.isBankType) {
-                                this.isRateType = false;
+                                this.setState({
+                                    isRateType: false
+                                });
                             }
                         }
                     }
@@ -516,13 +524,17 @@ class BudgetAddedit extends DetailUtil {
                     field: 'bocFeeWay',
                     type: 'select',
                     key: 'boc_fee_way',
-                    hidden: this.isRateType,
+                    hidden: this.state.isRateType,
                     required: true,
                     onChange: (v) => {
                         if(v === '3' && this.isBankType) {
-                            this.surcharge = false;
+                            this.setState({
+                                surcharge: false
+                            });
                         } else {
-                            this.surcharge = true;
+                            this.setState({
+                                surcharge: true
+                            });
                         }
                     }
                 }, {
@@ -531,7 +543,7 @@ class BudgetAddedit extends DetailUtil {
                     type: 'select',
                     key: 'surcharge',
                     required: true,
-                    hidden: this.surcharge || this.isRateType
+                    hidden: this.state.surcharge || this.isRateType
                 }],
                 [{
                     title: '贷款金额',
@@ -1768,15 +1780,15 @@ class BudgetAddedit extends DetailUtil {
                     data.cancelReason = params.cancelReason;
                     data.operator = getUserId();
                     let bizCode = 632125;
-                    this.props.doFetching();
+                    this.doFetching();
                     fetch(bizCode, data).then(() => {
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         showSucMsg('操作成功');
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
                     }).catch(() => {
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                     });
                 }
             }, {
@@ -1825,15 +1837,15 @@ class BudgetAddedit extends DetailUtil {
                     } else if (this.isCheck) {
                         bizCode = 632124;
                     }
-                    this.props.doFetching();
+                    this.doFetching();
                     fetch(bizCode, data).then(() => {
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         showSucMsg('操作成功');
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
                     }).catch(() => {
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                     });
                 }
             }, {
@@ -1853,15 +1865,15 @@ class BudgetAddedit extends DetailUtil {
                     } else if (this.isCheck) {
                         bizCode = 632124;
                     }
-                    this.props.doFetching();
+                    this.doFetching();
                     fetch(bizCode, data).then(() => {
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                         showSucMsg('操作成功');
                         setTimeout(() => {
                             this.props.history.go(-1);
                         }, 1000);
                     }).catch(() => {
-                        this.props.cancelFetching();
+                        this.cancelFetching();
                     });
                 }
             }, {
@@ -1913,5 +1925,3 @@ class BudgetAddedit extends DetailUtil {
         );
     }
 }
-
-export default BudgetAddedit;

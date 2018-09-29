@@ -3,7 +3,6 @@ import { Prompt } from 'react-router-dom';
 import {
     getQueryString,
     getUserId,
-    showWarnMsg,
     showSucMsg,
     moneyParse,
     moneyFormat,

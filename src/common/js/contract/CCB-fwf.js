@@ -69,7 +69,7 @@ function createData(wb, data) {
     ['汽车发票价(大写元整)', ''],
     ['工作单位', data.applyUserCompany],
     ['汽车经销商名称', data.carDealerName],
-    ['汽车经销商（联系电话）', '汽车经销商（联系电话）'],
+    ['汽车经销商（联系电话）', data.carDealer.contactPhone],
     ['首付金额', ''],
     ['首付金额（无元）', ''],
     ['首付金额（大写）', ''],
@@ -153,12 +153,10 @@ function createData(wb, data) {
   ws['B30'].f = 'B1&","&IF(MOD(MID(B2,17,1),2),"男","女")&","&IF(LEN(B6)>=2,"已婚",IF(B6=" ","离婚","未婚"))&","&"现居住于"&B3&","&"就业于"&B22&","&"现购自备车壹辆，主要行驶于温州区域。"';
   ws['B31'].f = 'B13/12&"年"';
   ws['B32'].f = 'IF(B13/12=3,"叁",IF(B13/12=2,"贰",IF(B13/12=1.5,"一年半",IF(B13/12=1,"壹","数据错误"))))';
-  ws['B34'].f = 'B48/100/B13*100&"%"';
-  // ws['B44'].f = 'B43&"元"';
+  ws['B34'].f = 'ROUND(B48/100/B13*100,2)&"%"';
   ws['B45'].f = 'IF(INT(B43)*100=B43*100,TEXT(INT(B43),"[$-0804][DBNum2]G/通用格式")&"元",IF(INT(B43*10)=B43*10,TEXT(INT(B43),"[$-0804][DBNum2]G/通用格式")&"元"&TEXT(B43*10-INT(B43)*10,"[$-0804][DBNum2]G/通用格式")&"角",TEXT(INT(B43),"[$-0804][DBNum2]G/通用格式")&"元"&IF(INT(B43*10)=INT(B43)*10,"零",TEXT(RIGHT(INT(B43*10)),"[$-0804][DBNum2]G/通用格式")&"角")&TEXT(RIGHT(B43*100),"[$-0804][DBNum2]G/通用格式")&"分"))&"整"';
 
   ws['A24'].s = {font: {color: {rgb: 'FF0000'}}};
-  ws['A28'].s = {font: {color: {rgb: 'FF0000'}}};
   ws['A42'].s = {font: {color: {rgb: 'FF0000'}}};
   ws['A43'].s = {font: {color: {rgb: 'FF0000'}}};
   ws['A44'].s = {font: {color: {rgb: 'FF0000'}}};
@@ -166,6 +164,8 @@ function createData(wb, data) {
   ws['A46'].s = {font: {color: {rgb: 'FF0000'}}};
   ws['A47'].s = {font: {color: {rgb: 'FF0000'}}};
   ws['A48'].s = {font: {color: {rgb: '0066CC'}}};
+  ws['B10'].s = {font: {color: {rgb: 'FF0000'}}};
+  ws['B13'].s = {font: {color: {rgb: 'FF0000'}}};
   ws['B20'].s = {font: {color: {rgb: 'FF0000'}}};
   ws['B24'].s = {font: {color: {rgb: 'FF0000'}}};
   ws['B25'].s = {font: {color: {rgb: 'FF0000'}}};
@@ -177,7 +177,7 @@ function createData(wb, data) {
   ws['B46'].s = {font: {color: {rgb: 'FF0000'}}};
   ws['B47'].s = {font: {color: {rgb: 'FF0000'}}};
   ws['B48'].s = {font: {color: {rgb: '0066CC'}}};
-  ws['A28'].s = {fill: {fgColor: {rgb: 'CCCCFF'}}};
+  ws['A28'].s = {font: {color: {rgb: 'FF0000'}}, fill: {fgColor: {rgb: 'CCCCFF'}}};
   ws['A50'].s = {fill: {fgColor: {rgb: 'CCCCFF'}}};
   ws['A51'].s = {fill: {fgColor: {rgb: 'CCCCFF'}}};
   ws['A52'].s = {fill: {fgColor: {rgb: 'CCCCFF'}}};
@@ -187,11 +187,12 @@ function createData(wb, data) {
   ws['B52'].s = {fill: {fgColor: {rgb: 'CCCCFF'}}};
   ws['B53'].s = {fill: {fgColor: {rgb: 'CCCCFF'}}};
   ws['B54'].s = {fill: {fgColor: {rgb: 'CCCCFF'}}};
-  ws['B11'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
+  ws['B11'].s = {font: {sz: 12, color: {rgb: '0066CC'}}, alignment: {horizontal: 'left', vertical: 'center'}};
   ws['B26'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
-  ws['B28'].s = {fill: {fgColor: {rgb: 'CCCCFF'}}, font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
+  ws['B28'].s = {font: {sz: 12, color: {rgb: '0066CC'}}, fill: {fgColor: {rgb: 'CCCCFF'}}, alignment: {horizontal: 'left', vertical: 'center'}};
   ws['B30'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center', wrapText: true}};
   ws['B34'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
+  ws['B48'].s = {font: {sz: 12}, alignment: {horizontal: 'left', vertical: 'center'}};
 }
 // 最新分期申请
 function createZxfqsq(wb) {

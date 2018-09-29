@@ -1369,7 +1369,7 @@ export default class DetailComponent extends React.Component {
                             rules,
                             initialValue: initVal || ''
                         })(
-                        <Select {...this.getSelectProps(item, initVal)}>
+                        <Select {...this.getSelectProps(item, initVal)} placeholder="请输入关键字搜索">
                             {item.data ? item.data.map(d => (
                                 <Option key={d[item.keyName]} value={d[item.keyName]}>
                                     {d[item.valueName] ? d[item.valueName] : tempString(item.valueName, d)}

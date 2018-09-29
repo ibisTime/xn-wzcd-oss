@@ -146,7 +146,7 @@ class RebatesBill extends React.Component {
                     field: 'benchmarkRate'
                 }, {
                     title: '手续费',
-                    field: 'fee',
+                    field: 'serviceCharge',
                     amount: true
                 }, {
                     title: '用款用途',

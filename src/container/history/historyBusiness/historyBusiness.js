@@ -13,18 +13,8 @@ import {
     listWrapper
 } from 'common/js/build-list';
 import {
-    showWarnMsg,
-    showSucMsg,
     formatDate
 } from 'common/js/util';
-import {
-    Button,
-    Upload,
-    Modal
-} from 'antd';
-import {
-    sendMsg
-} from 'api/biz';
 
 @listWrapper(state => ({
     ...state.historyHistoryBusiness,
@@ -56,14 +46,7 @@ class HistoryBusiness extends React.Component {
             }
         }, {
             title: '客户姓名',
-            field: 'userId',
-            type: 'select',
-            listCode: 630066,
-            keyName: 'userId',
-            valueName: 'realName',
-            render: (v, d) => {
-                return d.realName;
-            },
+            field: 'realName',
             search: true
         }, {
             title: '身份证',
@@ -73,7 +56,7 @@ class HistoryBusiness extends React.Component {
             }
         }, {
             title: '贷款银行',
-            field: 'loanBankCode',
+            field: 'loanBank',
             type: 'select',
             listCode: 632057,
             keyName: 'code',

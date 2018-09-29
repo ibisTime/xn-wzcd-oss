@@ -85,6 +85,11 @@ class quitarchives extends React.Component {
             valueName: 'realName',
             required: true
         }, {
+            title: '状态',
+            field: 'status',
+            type: 'select',
+            key: 'people_status'
+        }, {
             title: '备注',
             field: 'remark'
         }];
