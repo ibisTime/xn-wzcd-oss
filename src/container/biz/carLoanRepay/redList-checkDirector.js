@@ -1,12 +1,3 @@
-import React from 'react';
-import {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-} from '@redux/biz/redList-checkDirector';
 import {
     getQueryString,
     getUserId,

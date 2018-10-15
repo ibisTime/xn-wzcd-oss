@@ -1,37 +1,22 @@
-import React from 'react';
-import {
-  initStates,
-  doFetching,
-  cancelFetching,
-  setSelectData,
-  setPageData,
-  restore
-} from '@redux/loanstools/misInvoice-check';
 import {
   getQueryString,
   showSucMsg,
   getUserId
 } from 'common/js/util';
 import fetch from 'common/js/fetch';
-import {
-  DetailWrapper
-} from 'common/js/build-detail';
+import DetailUtil from 'common/js/build-detail-dev';
+import { Form } from 'antd';
 
-@DetailWrapper(
-  state => state.loanstoolsMisInvoiceCheck, {
-    initStates,
-    doFetching,
-    cancelFetching,
-    setSelectData,
-    setPageData,
-    restore
-  }
-)
-class MisInvoiceCheck extends React.Component {
+@Form.create()
+export default class MisInvoiceCheck extends DetailUtil {
   constructor(props) {
     super(props);
     this.code = getQueryString('code', this.props.location.search);
     this.view = !!getQueryString('v', this.props.location.search);
+    this.state = {
+      ...this.state,
+      isRemark: false
+    };
   }
   render() {
     const fields = [{
@@ -56,10 +41,23 @@ class MisInvoiceCheck extends React.Component {
       field: 'loanBankName',
       readonly: true
     }, {
+      title: '审核意见',
+      field: 'approveNote',
+      required: true,
+      type: 'select',
+      key: 'approve_note',
+      onChange: (v) => {
+          this.setState({
+              isRemark: v === '99'
+          });
+      }
+  }, {
       title: '备注',
-      field: 'approveNote'
-    }];
-    return this.props.buildDetail({
+      field: 'remark',
+      required: true,
+      hidden: !this.state.isRemark
+  }];
+    return this.buildDetail({
       fields,
       code: this.code,
       view: this.view,
@@ -69,14 +67,14 @@ class MisInvoiceCheck extends React.Component {
         handler: (param) => {
           param.approveResult = '1';
           param.operator = getUserId();
-          this.props.doFetching();
+          this.doFetching();
           fetch(632231, param).then(() => {
             showSucMsg('操作成功');
-            this.props.cancelFetching();
+            this.cancelFetching();
             setTimeout(() => {
               this.props.history.go(-1);
             }, 1000);
-          }).catch(this.props.cancelFetching);
+          }).catch(this.cancelFetching);
         },
         check: true,
         type: 'primary'
@@ -85,14 +83,14 @@ class MisInvoiceCheck extends React.Component {
         handler: (param) => {
           param.approveResult = '0';
           param.operator = getUserId();
-          this.props.doFetching();
+          this.doFetching();
           fetch(632231, param).then(() => {
             showSucMsg('操作成功');
-            this.props.cancelFetching();
+            this.cancelFetching();
             setTimeout(() => {
               this.props.history.go(-1);
             }, 1000);
-          }).catch(this.props.cancelFetching);
+          }).catch(this.cancelFetching);
         },
         check: true
       }, {
@@ -104,5 +102,3 @@ class MisInvoiceCheck extends React.Component {
     });
   }
 }
-
-export default MisInvoiceCheck;
