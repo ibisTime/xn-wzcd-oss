@@ -167,6 +167,7 @@ class Budget extends React.Component {
                         this.props.history.push(`/loan/budget/applyExternal?isApply=1&code=${selectedRowKeys[0]}&saleUserId=${selectedRows[0].saleUserId}`);
                     }
                 },
+                // 撤销
                 revoke: (selectedRowKeys, selectedRows) => {
                     if (!selectedRowKeys.length) {
                         showWarnMsg('请选择记录');
@@ -174,6 +175,18 @@ class Budget extends React.Component {
                         showWarnMsg('请选择一条记录');
                     } else {
                         this.props.history.push(`/loan/budget/detail?isRevoke=1&v=1&code=${selectedRowKeys[0]}`);
+                    }
+                },
+                // 车300估值
+                valuation: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode !== '002_01' && selectedRows[0].curNodeCode !== '002_05') {
+                        showWarnMsg('当前不是填写预算单或重新填写预算单的节点，无法进行估值');
+                    } else {
+                        this.props.history.push(`/loan/budget/valuation?code=${selectedRowKeys[0]}`);
                     }
                 },
                 detail: (selectedRowKeys, selectedRows) => {

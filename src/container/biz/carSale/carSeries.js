@@ -14,6 +14,7 @@ import OnOrDownShelf from 'component/onordownshelf/onordownshelf';
 import { showWarnMsg, showSucMsg } from 'common/js/util';
 import { Button, Upload, Modal } from 'antd';
 import { lowerFrameSys, onShelfSys } from 'api/biz';
+import fetch from 'common/js/fetch';
 
 @listWrapper(
   state => ({
@@ -58,6 +59,22 @@ class CarSeries extends React.Component {
       type: 'select',
       key: 'status'
     }, {
+      title: 'UI位置',
+      field: 'location',
+      type: 'select',
+      data: [{
+        key: 0,
+        value: '首页推荐'
+      }, {
+        key: 1,
+        value: '普通'
+      }],
+      keyName: 'key',
+      valueName: 'value'
+    }, {
+      field: 'orderNo',
+      title: 'UI次序'
+    }, {
       title: '最新修改人',
       field: 'updaterName'
     }, {
@@ -69,6 +86,16 @@ class CarSeries extends React.Component {
       field: 'remark'
     }];
     const btnEvent = {
+      // 修改
+      edit: (key, item) => {
+        if (!key || !key.length || !item || !item.length) {
+          showWarnMsg('请选择记录');
+        } else if (item[0].status === '1') {
+          showWarnMsg('该状态不可修改');
+        } else {
+          this.props.history.push(`/biz/carSeries/addedit?code=${key[0]}`);
+        }
+      },
       lowerSys: (key, item) => {
         if (!key || !key.length || !item || !item.length) {
           showWarnMsg('请选择记录');
@@ -105,6 +132,25 @@ class CarSeries extends React.Component {
             shelfVisible: true
           });
         }
+      },
+      // 刷新
+      refresh: () => {
+        Modal.confirm({
+          okText: '确认',
+          cancelText: '取消',
+          content: '确定刷新数据吗？',
+          onOk: () => {
+            this.props.doFetching();
+            return fetch(630418).then(() => {
+              showSucMsg('操作成功');
+              setTimeout(() => {
+                this.props.getPageData();
+              }, 500);
+            }).catch(() => {
+              this.props.cancelFetching();
+            });
+          }
+        });
       }
     };
     return (

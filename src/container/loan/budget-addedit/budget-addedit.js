@@ -1698,7 +1698,7 @@ class BudgetAddedit extends React.Component {
                 }]
             ]
         }, {
-            title: '二手车照片',
+            title: '二手车材料',
             hidden: this.shopWay,
             items: [
                 [{
@@ -1720,9 +1720,10 @@ class BudgetAddedit extends React.Component {
                     type: 'img'
                 }],
                 [{
-                    title: '车300评估页',
+                    title: '车300评估报告',
                     field: 'second300Pdf',
-                    type: 'img'
+                    type: 'link',
+                    linkName: '查看报告'
                 }, {
                     title: '汽修宝截图',
                     field: 'secondQxbPic',
@@ -1886,6 +1887,9 @@ class BudgetAddedit extends React.Component {
                 handler: (data) => {
                     data.type = '1';
                     data.dealType = '0';
+                    if (this.code && this.props.pageData.second300Pdf) {
+                      data.second300Pdf = this.props.pageData.second300Pdf;
+                    }
                     this.getSubmit(data);
                 }
             }, {
@@ -1894,6 +1898,7 @@ class BudgetAddedit extends React.Component {
                 handler: (data) => {
                     data.type = '1';
                     data.dealType = '1';
+                    data.second300Pdf = this.props.pageData.second300Pdf;
                     this.getSubmit(data);
                 }
             }, {

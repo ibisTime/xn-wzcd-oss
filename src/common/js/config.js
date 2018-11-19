@@ -1,8 +1,8 @@
 export const SYSTEM_CODE = 'CD-CWZCD000020';
 // 七牛上传地址
-export const UPLOAD_URL = 'http://up-z2.qiniup.com';
+export const UPLOAD_URL = 'http://up-z0.qiniup.com';
 // 七牛图片前缀
-export const PIC_PREFIX = 'http://ounm8iw2d.bkt.clouddn.com/';
+export const PIC_PREFIX = 'http://pi8arp14o.bkt.clouddn.com/';
 export const PIC_BASEURL_L = '?imageMogr2/auto-orient/thumbnail/!1000x1000r';
 
 // 系统userid

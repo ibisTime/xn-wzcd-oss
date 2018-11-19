@@ -265,6 +265,9 @@ import { basisCarloanAddEdit } from './redux/basis/carloan-addedit';
 import { basisBonusesConfigure } from './redux/basis/bonusesConfigure';
 import { basisBonusesConfigureAddedit } from './redux/basis/bonusesConfigure-addedit';
 
+//  车300城市列表
+import { basisCities } from './redux/basis/cities';
+import { basisCitiesAddedit } from './redux/basis/cities-addedit';
 /**
  * 贷前管理
  */
@@ -273,6 +276,7 @@ import { loanBudget } from './redux/loan/budget';
 import { loanBudgetAddedit } from './redux/loan/budget-addedit';
 import { loanBudgetApplyExternal } from './redux/loan/budget-applyExternal';
 import { loanBudgetDetail } from './redux/loan/budget-detail';
+import { loanBudgetValuation } from './redux/loan/budget-valuation';
 
 // 贷款审查
 import { loanBudgetCheck } from './redux/loan/budgetCheck';
@@ -789,6 +793,7 @@ export default combineReducers({
   loanBudgetAddedit,
   loanBudgetApplyExternal,
   loanBudgetDetail,
+  loanBudgetValuation,
   loanBudgetCheck,
   loanCreditStart,
   loanCreditStartAddedit,
@@ -1009,6 +1014,8 @@ export default combineReducers({
   basisLoanPercentAddedit,
   basisBank,
   basisBankAddEdit,
+  basisCities,
+  basisCitiesAddedit,
   loanBankMoney,
   loanBankMoneyAddedit,
   loanBankMoneyApply,

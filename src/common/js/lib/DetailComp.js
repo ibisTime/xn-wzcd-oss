@@ -653,6 +653,8 @@ export default class DetailComponent extends React.Component {
                 return this.getCheckboxComp(item, initVal, rules, getFieldDecorator);
             case 'treeSelect':
                 return this.getTreeSelectComp(item, initVal, rules, getFieldDecorator);
+            case 'link':
+                return this.getLinkComp(item, initVal, rules, getFieldDecorator);
             default:
                 return this.getInputComp(item, initVal, rules, getFieldDecorator);
         }
@@ -1381,7 +1383,20 @@ export default class DetailComponent extends React.Component {
             </FormItem>
         );
     }
-
+    getLinkComp(item, initVal, rules, getFieldDecorator) {
+        let val = (initVal && initVal.split('||')) || [];
+        return (
+            <FormItem className={item.hidden ? 'hidden' : ''}
+                key={item.field}
+                {...this.getInputItemProps()}
+                label={item.title ? this.getLabel(item) : ''}>
+                {item.title ? '' : <samp>&nbsp;</samp>}
+                {
+                    val.map(v => <a href={v} target="_blank">{item.linkName}</a>)
+                }
+            </FormItem>
+        );
+    }
     getInputComp(item, initVal, rules, getFieldDecorator) {
         let props = {
             type: item.type ? item.type : item.hidden ? 'hidden' : 'text'

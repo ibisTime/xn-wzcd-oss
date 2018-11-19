@@ -946,6 +946,18 @@ const ROUTES = [
       component: asyncComponent(() => import('container/basis/bonusesConfigure/bonusesConfigure-addedit'))
   },
 
+  // 车300城市管理
+  {
+      path: '/basis/cities',
+      component: asyncComponent(() => import('container/basis/cities/cities'))
+  },
+
+  // 车300城市管理 新增修改
+  {
+      path: '/basis/cities/addedit',
+      component: asyncComponent(() => import('container/basis/cities/cities-addedit'))
+  },
+
   //  统计分析模块
   //  车贷分期业务统计表
   {
@@ -1049,6 +1061,11 @@ const ROUTES = [
   {
       path: '/loan/budgetCheck',
       component: asyncComponent(() => import('container/loan/budgetCheck/budgetCheck'))
+  },
+  // 车300估值
+  {
+      path: '/loan/budget/valuation',
+      component: asyncComponent(() => import('container/loan/budget-valuation/budget-valuation'))
   },
   // 发起征信查询
   {
