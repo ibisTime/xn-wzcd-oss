@@ -34,6 +34,7 @@ module.exports = {
   },
   'globals': {
     'BigDecimal': true,
-    'MathContext': true
+    'MathContext': true,
+    '$': true
   }
 }

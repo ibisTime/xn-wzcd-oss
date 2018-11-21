@@ -967,6 +967,11 @@ class BudgetAddedit extends React.Component {
                     field: 'otherIncomeNote',
                     type: 'textarea',
                     normalArea: true
+                }, {
+                    title: '申请人现有银行卡号',
+                    field: 'cardNumber',
+                    help: '用于查询同盾报告',
+                    required: true
                 }]
             ]
         }, {

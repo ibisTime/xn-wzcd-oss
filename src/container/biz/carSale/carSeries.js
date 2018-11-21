@@ -75,9 +75,6 @@ class CarSeries extends React.Component {
       field: 'orderNo',
       title: 'UI次序'
     }, {
-      title: '最新修改人',
-      field: 'updaterName'
-    }, {
       title: '最新修改时间',
       field: 'updateDatetime',
       type: 'datetime'

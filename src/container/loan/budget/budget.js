@@ -197,6 +197,18 @@ class Budget extends React.Component {
                     } else {
                         this.props.history.push(`/loan/budget/detail?v=1&code=${selectedRowKeys[0]}`);
                     }
+                },
+                // 同盾报告
+                tdReport: (selectedRowKeys, selectedRows) => {
+                    if (!selectedRowKeys.length) {
+                        showWarnMsg('请选择记录');
+                    } else if (selectedRowKeys.length > 1) {
+                        showWarnMsg('请选择一条记录');
+                    } else if (selectedRows[0].curNodeCode === '002_01' || selectedRows[0].curNodeCode === '002_05') {
+                        showWarnMsg('必须申请预算单后，才可以查看同盾报告');
+                    } else {
+                        this.props.history.push(`/loan/budget/tdReport?code=${selectedRowKeys[0]}`);
+                    }
                 }
             }
         });

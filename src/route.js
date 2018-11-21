@@ -1067,6 +1067,11 @@ const ROUTES = [
       path: '/loan/budget/valuation',
       component: asyncComponent(() => import('container/loan/budget-valuation/budget-valuation'))
   },
+  // 同盾报告
+  {
+      path: '/loan/budget/tdReport',
+      component: asyncComponent(() => import('container/loan/budget-tdReport/budget-tdReport'))
+  },
   // 发起征信查询
   {
       path: '/loan/creditStart',
