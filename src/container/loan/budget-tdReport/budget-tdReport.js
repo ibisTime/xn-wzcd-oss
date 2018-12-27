@@ -51,10 +51,12 @@ export default class TdReport extends React.Component {
     const { fetching, budget, mobile, card, police, online, homeAddress, WzhyWeb } = this.state;
     return (
       <Spin spinning={fetching}>
-        <Card title="贷前反欺诈报告" style={{marginTop: 20}}>
+        <Card title="贷前反欺诈报告">
           <WzhyReport report={WzhyWeb} />
         </Card>
-        <Card title="三要素认证"><MobileReport report={mobile} budget={budget} /></Card>
+        <Card title="三要素认证" style={{marginTop: 20}}>
+          <MobileReport report={mobile} budget={budget} />
+        </Card>
         <Card title="四要素认证" style={{marginTop: 20}}>
           <BankcardReport report={card} budget={budget} />
         </Card>

@@ -22,7 +22,7 @@ export default class HomeAddrReport extends React.Component {
     const { report, budget } = this.props;
     let result = '';
     if (report.result_desc) {
-      result = resultDict[report.result_desc.ANTIFRAUD_INFOQUERY.FamilyAddressCheck.home_address_consistence];
+      result = report.result_desc.ANTIFRAUD_INFOQUERY.FamilyAddressCheck.home_address_consistence;
     }
     return (
       <Form className="detail-form-wrapper">

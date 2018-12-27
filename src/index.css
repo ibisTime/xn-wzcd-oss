@@ -126,3 +126,9 @@ li {
 .report-container .nav-tab span a {
   color: inherit;
 }
+.report-container, .report-mask {
+  position: fixed !important;
+}
+.report-container .left-nav, .report-container .report-a-close {
+  position: absolute !important;
+}
