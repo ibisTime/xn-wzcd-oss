@@ -1,0 +1,21 @@
+.declare-detail-wrap {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+.declare-detail-wrap .title {
+  text-align: center;
+  font-size: 24px;
+}
+.declare-detail-wrap .content {
+  margin: 20px 0 70px;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.declare-detail-wrap .sub-title {
+  padding: 8px 0;
+  font-size: 20px;
+}
+.declare-detail-wrap .content .tip {
+  color: rgb(73, 153, 231);
+}
